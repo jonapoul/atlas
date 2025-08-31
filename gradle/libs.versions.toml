@@ -1,0 +1,24 @@
+[versions]
+agp = "8.13.0"
+jacoco = "0.8.13"
+kotlin = "2.2.0"
+
+[libraries]
+agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+assertk = { module = "com.willowtreeapps.assertk:assertk", version = "0.28.1" }
+junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version = "5.13.4" }
+junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+[plugins]
+agp-app = { id = "com.android.application", version.ref = "agp" }
+agp-lib = { id = "com.android.library", version.ref = "agp" }
+dependencyVersions = { id = "com.github.ben-manes.versions", version = "0.52.0" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.8" }
+dokka = { id = "org.jetbrains.dokka", version = "2.0.0" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version = "0.9.1" }
+licensee = { id = "app.cash.licensee", version = "1.13.0" }
+publish = { id = "com.vanniktech.maven.publish", version = "0.32.0" }

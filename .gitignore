@@ -1,0 +1,12 @@
+.gradle/
+.kotlin/
+build/
+local.properties
+
+# Keystore files
+*.keystore
+*.jks
+
+# IDE files
+.idea/
+!.idea/detekt.xml

@@ -1,0 +1,24 @@
+package modular.test
+
+import assertk.Assert
+import assertk.fail
+import org.gradle.testkit.runner.BuildResult
+import org.gradle.testkit.runner.BuildTask
+import org.gradle.testkit.runner.TaskOutcome
+import java.io.File
+
+internal fun Assert<BuildResult>.taskWasSuccessful(name: String) = taskHadResult(name, expected = TaskOutcome.SUCCESS)
+
+internal fun Assert<BuildResult>.taskHadResult(name: String, expected: TaskOutcome) =
+  given { result -> assertThat(result.task(name)).hadResult(expected) }
+
+internal fun Assert<BuildTask?>.hadResult(expected: TaskOutcome) = given { result ->
+  if (result?.outcome == expected) return
+  fail("Failed taskHadResult: expected=$expected, actual=${result?.outcome}")
+}
+
+internal fun Assert<File>.contentEquals(expected: String) = given { file ->
+  val contents = file.readText()
+  if (contents == expected) return
+  fail("Failed contentEquals: expected='$expected', actual='$contents'")
+}

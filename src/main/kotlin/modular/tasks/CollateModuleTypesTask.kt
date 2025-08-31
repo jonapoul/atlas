@@ -1,0 +1,85 @@
+package modular.tasks
+
+import modular.gradle.ModularExtension
+import modular.internal.MODULAR_TASK_GROUP
+import modular.internal.TypedModule
+import modular.internal.TypedModules
+import modular.internal.fileInReportDirectory
+import org.gradle.api.DefaultTask
+import org.gradle.api.Project
+import org.gradle.api.file.ConfigurableFileCollection
+import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.CacheableTask
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFiles
+import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity.ABSOLUTE
+import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.TaskProvider
+import org.gradle.kotlin.dsl.named
+import org.gradle.kotlin.dsl.register
+
+@CacheableTask
+abstract class CollateModuleTypesTask : DefaultTask() {
+  @get:[PathSensitive(ABSOLUTE) InputFiles] abstract val projectTypeFiles: ConfigurableFileCollection
+  @get:Input abstract val separator: Property<String>
+  @get:OutputFile abstract val outputFile: RegularFileProperty
+
+  init {
+    group = MODULAR_TASK_GROUP
+    description = "Collates the calculated types of all modules in the project"
+  }
+
+  @TaskAction
+  fun execute() {
+    val outputFile = outputFile.get().asFile
+    val separator = separator.get()
+    val modulesWithType = projectTypeFiles
+      .map { file -> TypedModule(file.readText(), separator) }
+      .toSortedSet()
+    TypedModules.write(modulesWithType, outputFile, separator)
+
+    logger.info("CollateModuleTypesTask: ${modulesWithType.size} modules")
+    modulesWithType.forEach { (projectPath, type, _) ->
+      logger.info("CollateModuleTypesTask:     path=$projectPath, type=${type.name}")
+    }
+  }
+
+  companion object {
+    private const val NAME = "collateModuleTypes"
+
+    fun get(target: Project): TaskProvider<CollateModuleTypesTask> =
+      target.tasks.named<CollateModuleTypesTask>(NAME)
+
+    fun register(
+      target: Project,
+      extension: ModularExtension,
+    ): TaskProvider<CollateModuleTypesTask> = with(target) {
+      val task = tasks.register<CollateModuleTypesTask>(NAME) {
+        outputFile.set(fileInReportDirectory("module-types"))
+        separator.set(extension.separator)
+      }
+
+      gradle.projectsEvaluated {
+        task.configure { t ->
+          val dumpTasks = rootProject
+            .subprojects
+            .toList()
+            .mapNotNull(DumpModuleTypeTask::get)
+
+          t.dependsOn(dumpTasks)
+
+          t.projectTypeFiles.from(
+            dumpTasks.map { taskProvider ->
+              taskProvider.map { it.outputFile.get() }
+            },
+          )
+        }
+      }
+
+      task
+    }
+  }
+}

@@ -1,0 +1,72 @@
+package modular.test
+
+import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
+import org.gradle.testkit.runner.GradleRunner
+import org.intellij.lang.annotations.Language
+import org.junit.jupiter.api.Assumptions.assumeFalse
+import org.junit.jupiter.api.Assumptions.assumeTrue
+import java.io.File
+
+internal fun File.buildRunner(androidHome: File? = null) = GradleRunner
+  .create()
+  .withPluginClasspath()
+  .withGradleVersion(System.getProperty("test.version.gradle"))
+  .withProjectDir(this)
+  .apply {
+    if (androidHome != null) {
+      withEnvironment(mapOf("ANDROID_HOME" to androidHome.absolutePath))
+    }
+  }
+
+internal fun File.runTask(task: String, androidHome: File? = null) = buildRunner(androidHome).runTask(task)
+
+internal fun GradleRunner.runTask(task: String) = withArguments(
+  task,
+  "--configuration-cache",
+  "-Pandroid.useAndroidX=true", // needed for android builds to work, unused otherwise
+)
+
+internal fun basicSettingsFile(): File = System
+  .getProperty("test.repositoriesFile")
+  .let(::File)
+
+internal fun androidHomeOrSkip(): File {
+  val androidHome = System.getProperty("test.androidHome")
+  assumeFalse(androidHome.isNullOrBlank())
+  val androidHomeFile = File(androidHome)
+  assumeTrue(androidHomeFile.exists())
+  return androidHomeFile
+}
+
+internal val settingsFileRepositories: String
+  get() = basicSettingsFile().readText()
+
+@Language("kotlin")
+internal val BASIC_JAVA_BUILD_SCRIPT = """
+  plugins {
+    id("java")
+    id("dev.jonpoulton.modular")
+  }
+
+""".trimIndent()
+@Language("kotlin")
+internal val BASIC_JVM_BUILD_SCRIPT = """
+  plugins {
+    kotlin("jvm")
+    id("dev.jonpoulton.modular")
+  }
+""".trimIndent()
+
+@Language("kotlin")
+internal val BASIC_ANDROID_BUILD_SCRIPT = """
+  plugins {
+    kotlin("android")
+    id("com.android.library")
+    id("dev.jonpoulton.modular")
+  }
+
+  android {
+    namespace = "$packageName"
+    compileSdk = 36
+  }
+""".trimIndent()

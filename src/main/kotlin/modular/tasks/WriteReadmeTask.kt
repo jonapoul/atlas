@@ -1,0 +1,55 @@
+package modular.tasks
+
+import modular.internal.FILENAME_ROOT
+import modular.internal.REMOVE_MODULE_PREFIX
+import org.gradle.api.DefaultTask
+import org.gradle.api.Project
+import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.CacheableTask
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.TaskProvider
+import org.gradle.kotlin.dsl.register
+
+@CacheableTask
+abstract class WriteReadmeTask : DefaultTask() {
+  @get:Input abstract val projectPath: Property<String>
+  @get:Input abstract val legendPngRelativePath: Property<String>
+  @get:OutputFile abstract val readmeFile: RegularFileProperty
+
+  @TaskAction
+  fun action() {
+    val legendPngRelativePath = legendPngRelativePath.get()
+    val expectedTitle = projectPath.get().removePrefix(prefix = ":")
+
+    val contents = buildString {
+      appendLine("# $expectedTitle")
+      appendLine("![modules]($FILENAME_ROOT.png)")
+      appendLine("![legend]($legendPngRelativePath)")
+    }
+
+    readmeFile.asFile.get().writeText(contents)
+  }
+
+  companion object {
+    fun register(target: Project): TaskProvider<WriteReadmeTask> = with(target) {
+      val modifiedPath = providers
+        .gradleProperty(REMOVE_MODULE_PREFIX)
+        .map { path.removePrefix(it) }
+
+//      val legendPng = rootProject.file(GenerateLegendDotFileTask.PNG_PATH)
+      val projectDir = layout.projectDirectory.asFile
+      val legendTask = GenerateLegendDotFileTask.get(rootProject)
+
+      tasks.register<WriteReadmeTask>("writeReadme") {
+        group = "reporting"
+        readmeFile.set(file("README.md"))
+        projectPath.set(modifiedPath)
+//        legendPngRelativePath.set(legendPng.relativeTo(projectDir).toString())
+        dependsOn(legendTask)
+      }
+    }
+  }
+}
