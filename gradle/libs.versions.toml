@@ -1,7 +1,7 @@
 [versions]
 agp = "8.13.0"
 jacoco = "0.8.13"
-kotlin = "2.2.0"
+kotlin = "2.2.10"
 
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
