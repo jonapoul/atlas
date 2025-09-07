@@ -1,6 +1,5 @@
 [versions]
 agp = "8.13.0"
-jacoco = "0.8.13"
 kotlin = "2.2.10"
 
 [libraries]
@@ -20,7 +19,6 @@ dokka = { id = "org.jetbrains.dokka", version = "2.0.0" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.9.1" }
 licensee = { id = "app.cash.licensee", version = "1.13.0" }
 publish = { id = "com.vanniktech.maven.publish", version = "0.34.0" }
 spotless = { id = "com.diffplug.spotless", version = "7.2.1" }

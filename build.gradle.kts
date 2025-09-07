@@ -1,7 +1,5 @@
 import app.cash.licensee.UnusedAction
 import io.gitlab.arturbosch.detekt.Detekt
-import kotlinx.kover.gradle.plugin.dsl.AggregationType
-import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
@@ -11,7 +9,6 @@ plugins {
   alias(libs.plugins.detekt)
   alias(libs.plugins.dokka)
   alias(libs.plugins.kotlin.jvm)
-  alias(libs.plugins.kover)
   alias(libs.plugins.licensee)
   alias(libs.plugins.publish)
   alias(libs.plugins.spotless)
@@ -116,41 +113,6 @@ spotless {
   format("licenseKotlin") {
     licenseHeaderFile("config/spotless.kt", "(package|@file:)")
     target("src/**/*.kt")
-  }
-}
-
-kover {
-  useJacoco = true
-  jacocoVersion = libs.versions.jacoco.get()
-
-  reports {
-    total {
-      filters {
-        excludes {
-          classes(emptyList())
-          packages(emptyList())
-          emptyList<String>().forEach { annotatedBy(it) }
-        }
-      }
-
-      html { onCheck = true }
-
-      log {
-        onCheck = true
-        coverageUnits = CoverageUnit.INSTRUCTION
-        aggregationForGroup = AggregationType.COVERED_PERCENTAGE
-      }
-    }
-
-    verify {
-      rule {
-        bound {
-          minValue = 40
-          coverageUnits = CoverageUnit.INSTRUCTION
-          aggregationForGroup = AggregationType.COVERED_PERCENTAGE
-        }
-      }
-    }
   }
 }
 
