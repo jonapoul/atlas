@@ -15,6 +15,7 @@ import org.gradle.api.NamedDomainObjectProvider
  */
 
 @ModularDsl
+@JvmOverloads
 fun NamedDomainObjectContainer<ModuleType>.androidApp(
   name: String = "Android App",
   color: String = "#09AD35", // darker green
@@ -25,6 +26,7 @@ fun NamedDomainObjectContainer<ModuleType>.androidApp(
 )
 
 @ModularDsl
+@JvmOverloads
 fun NamedDomainObjectContainer<ModuleType>.androidLibrary(
   name: String = "Android Library",
   color: String = "#55FF55", // light green
@@ -35,6 +37,7 @@ fun NamedDomainObjectContainer<ModuleType>.androidLibrary(
 )
 
 @ModularDsl
+@JvmOverloads
 fun NamedDomainObjectContainer<ModuleType>.java(
   name: String = "Java",
   color: String = "#FF8800", // orange
@@ -45,6 +48,7 @@ fun NamedDomainObjectContainer<ModuleType>.java(
 )
 
 @ModularDsl
+@JvmOverloads
 fun NamedDomainObjectContainer<ModuleType>.kotlinJvm(
   name: String = "Kotlin JVM",
   color: String = "#CA66FF", // lavender
@@ -55,6 +59,7 @@ fun NamedDomainObjectContainer<ModuleType>.kotlinJvm(
 )
 
 @ModularDsl
+@JvmOverloads
 fun NamedDomainObjectContainer<ModuleType>.kotlinMultiplatform(
   name: String = "Kotlin Multiplatform",
   color: String = "#9D8DF1", // lilac
@@ -65,6 +70,7 @@ fun NamedDomainObjectContainer<ModuleType>.kotlinMultiplatform(
 )
 
 @ModularDsl
+@JvmOverloads
 fun NamedDomainObjectContainer<ModuleType>.other(
   name: String = "Other",
   color: String = "#808080", // grey
