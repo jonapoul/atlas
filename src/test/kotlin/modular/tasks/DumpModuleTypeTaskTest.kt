@@ -58,7 +58,7 @@ class DumpModuleTypeTaskTest : ModularTaskTest() {
 
     // then
     assertThat(result).taskWasSuccessful(":test-jvm:dumpModuleType")
-    val moduleTypeFile = resolve("test-jvm/build/reports/modular/module-type")
+    val moduleTypeFile = resolve("test-jvm/build/modular/module-type")
     assertThat(moduleTypeFile).exists()
     assertThat(moduleTypeFile("test-jvm")).isEqualTo(":test-jvm,Kotlin JVM,#CA66FF")
 
@@ -85,5 +85,5 @@ class DumpModuleTypeTaskTest : ModularTaskTest() {
   }
 
   private fun File.moduleTypeFile(modulePath: String): String =
-    resolve("$modulePath/build/reports/modular/module-type").readText()
+    resolve("$modulePath/build/modular/module-type").readText()
 }

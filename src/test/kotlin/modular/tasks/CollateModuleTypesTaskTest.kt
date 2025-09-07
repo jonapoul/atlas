@@ -79,5 +79,5 @@ class CollateModuleTypesTaskTest : ModularTaskTest() {
     assertThat(moduleTypesFile).contentEquals(expected = "")
   }
 
-  private val File.moduleTypesFile get() = resolve("build/reports/modular/module-types")
+  private val File.moduleTypesFile get() = resolve("build/modular/module-types")
 }
