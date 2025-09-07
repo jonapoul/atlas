@@ -13,6 +13,7 @@ plugins {
   alias(libs.plugins.kover)
   alias(libs.plugins.licensee)
   alias(libs.plugins.publish)
+  alias(libs.plugins.spotless)
   id("java-gradle-plugin")
 }
 
@@ -101,6 +102,15 @@ detektTasks.configureEach {
 licensee {
   unusedAction(UnusedAction.IGNORE)
   listOf("Apache-2.0", "MIT").forEach(::allow)
+}
+
+spotless {
+  format("misc") {
+    target("*.gradle", "*.md", ".gitignore")
+    trimTrailingWhitespace()
+    leadingTabsToSpaces(2)
+    endWithNewline()
+  }
 }
 
 kover {
