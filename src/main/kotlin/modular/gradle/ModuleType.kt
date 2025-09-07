@@ -27,7 +27,7 @@ abstract class ModuleType @Inject constructor(val name: String) {
 }
 
 @Serializable
-data class ModuleTypeModel(
+class ModuleTypeModel(
   val name: String,
   val color: String,
 ) : java.io.Serializable

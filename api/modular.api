@@ -37,15 +37,8 @@ public abstract class modular/gradle/ModuleType {
 
 public final class modular/gradle/ModuleTypeModel : java/io/Serializable {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lmodular/gradle/ModuleTypeModel;
-	public static synthetic fun copy$default (Lmodular/gradle/ModuleTypeModel;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/gradle/ModuleTypeModel;
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColor ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/DefaultTask {
