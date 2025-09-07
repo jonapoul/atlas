@@ -8,7 +8,7 @@ import modular.test.BASIC_JVM_BUILD_SCRIPT
 import modular.test.Scenario
 import modular.test.settingsFileRepositories
 
-object OneModuleWithMatchingBuiltIn : Scenario {
+object OneKotlinJvmModule : Scenario {
   override val settingsFile = """
     $settingsFileRepositories
     include(":test-jvm")

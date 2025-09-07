@@ -9,7 +9,7 @@ import java.io.File
 import kotlin.test.BeforeTest
 
 @Suppress("UnnecessaryAbstractClass")
-abstract class ModularTest {
+abstract class ModularTaskTest {
   @TempDir lateinit var projectRoot: File
 
   @BeforeTest

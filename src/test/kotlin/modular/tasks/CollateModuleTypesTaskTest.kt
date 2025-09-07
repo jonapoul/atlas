@@ -6,7 +6,7 @@ package modular.tasks
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import modular.test.ModularTest
+import modular.test.ModularTaskTest
 import modular.test.contentEquals
 import modular.test.runTask
 import modular.test.scenarios.NoSubmodules
@@ -16,7 +16,7 @@ import modular.test.taskWasSuccessful
 import java.io.File
 import kotlin.test.Test
 
-class CollateModuleTypesTaskTest : ModularTest() {
+class CollateModuleTypesTaskTest : ModularTaskTest() {
   @Test
   fun `Collate three custom types`() = runScenario(ThreeModulesWithCustomTypes) {
     // when
@@ -79,5 +79,5 @@ class CollateModuleTypesTaskTest : ModularTest() {
     assertThat(moduleTypesFile).contentEquals(expected = "")
   }
 
-  private val File.moduleTypesFile get() = resolve("build/reports/modular/module-types")
+  private val File.moduleTypesFile get() = resolve("build/modular/module-types")
 }

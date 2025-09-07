@@ -6,13 +6,13 @@ package modular.tasks
 
 import assertk.assertThat
 import assertk.assertions.contains
-import modular.test.ModularTest
+import modular.test.ModularTaskTest
 import modular.test.buildRunner
 import modular.test.scenarios.ModuleTypeWithNoIdentifiers
 import modular.test.scenarios.NoModuleTypesDeclared
 import kotlin.test.Test
 
-class ValidateModuleTypesTest : ModularTest() {
+class ValidateModuleTypesTest : ModularTaskTest() {
   @Test
   fun `Warn if module type is declared with no identifiers`() = runScenario(ModuleTypeWithNoIdentifiers) {
     // when we're not running any of our tasks
