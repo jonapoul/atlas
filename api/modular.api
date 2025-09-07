@@ -202,17 +202,29 @@ public abstract interface annotation class org/gradle/kotlin/dsl/ModularDsl : ja
 }
 
 public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {
+	public static final fun androidApp (Lorg/gradle/api/NamedDomainObjectContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidApp (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun androidApp (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun androidApp$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Lorg/gradle/api/NamedDomainObjectContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun androidLibrary (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun androidLibrary$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun builtIns (Lorg/gradle/api/NamedDomainObjectContainer;)V
+	public static final fun java (Lorg/gradle/api/NamedDomainObjectContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun java (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun java$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Lorg/gradle/api/NamedDomainObjectContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun kotlinJvm (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun kotlinJvm$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Lorg/gradle/api/NamedDomainObjectContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun kotlinMultiplatform (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun kotlinMultiplatform$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Lorg/gradle/api/NamedDomainObjectContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun other (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun other$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun registerByPathContains (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
