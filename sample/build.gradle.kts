@@ -11,6 +11,4 @@ modular {
   moduleTypes {
     builtIns()
   }
-
-  applyToSubprojects = true
 }

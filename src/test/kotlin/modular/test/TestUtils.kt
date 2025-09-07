@@ -14,6 +14,7 @@ import java.io.File
 internal fun File.buildRunner(androidHome: File? = null) = GradleRunner
   .create()
   .withPluginClasspath()
+  // .withDebug(true)
   .withGradleVersion(System.getProperty("test.version.gradle"))
   .withProjectDir(this)
   .apply {
@@ -27,6 +28,7 @@ internal fun File.runTask(task: String, androidHome: File? = null) = buildRunner
 internal fun GradleRunner.runTask(task: String) = withArguments(
   task,
   "--configuration-cache",
+  // "--info",
   "-Pandroid.useAndroidX=true", // needed for android builds to work, unused otherwise
 )
 
