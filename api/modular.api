@@ -1,0 +1,229 @@
+public final class modular/gradle/ModularDotFileConfig {
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
+	public final fun getChartDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public final fun getEnabled ()Lorg/gradle/api/provider/Property;
+	public final fun getLegendDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public class modular/gradle/ModularExtension {
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
+	public final fun dotFile (Lorg/gradle/api/Action;)V
+	public final fun getApplyToSubprojects ()Lorg/gradle/api/provider/Property;
+	public final fun getDotFile ()Lmodular/gradle/ModularDotFileConfig;
+	public final fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
+	public final fun getGenerateReadme ()Lorg/gradle/api/provider/Property;
+	public final fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
+	public final fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public final fun getRemoveModulePrefix ()Lorg/gradle/api/provider/Property;
+	public final fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public final fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/gradle/ModularPlugin : org/gradle/api/Plugin {
+	public static final field EXTENSION_NAME Ljava/lang/String;
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public abstract class modular/gradle/ModuleType {
+	public fun <init> (Ljava/lang/String;)V
+	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
+	public final fun getName ()Ljava/lang/String;
+	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/gradle/ModuleTypeModel : java/io/Serializable {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lmodular/gradle/ModuleTypeModel;
+	public static synthetic fun copy$default (Lmodular/gradle/ModuleTypeModel;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/gradle/ModuleTypeModel;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/tasks/CalculateModuleTreeTask$Companion;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getCollatedLinks ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/tasks/CalculateModuleTreeTask$Companion {
+	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/tasks/CheckDotFileTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/tasks/CheckDotFileTask$Companion;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getActualDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getExpectedDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/tasks/CheckDotFileTask$Companion {
+	public final fun register (Lorg/gradle/api/Project;Lorg/gradle/api/tasks/TaskProvider;Lorg/gradle/api/file/RegularFile;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/tasks/CollateModuleLinksTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/tasks/CollateModuleLinksTask$Companion;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getModuleLinkFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/tasks/CollateModuleLinksTask$Companion {
+	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/tasks/CollateModuleTypesTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/tasks/CollateModuleTypesTask$Companion;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectTypeFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/tasks/CollateModuleTypesTask$Companion {
+	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/tasks/DumpModuleLinksTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/tasks/DumpModuleLinksTask$Companion;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getModuleLinks ()Lorg/gradle/api/provider/MapProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/tasks/DumpModuleLinksTask$Companion {
+	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/tasks/DumpModuleTypeTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/tasks/DumpModuleTypeTask$Companion;
+	public static final field NAME Ljava/lang/String;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getAllModuleTypes ()Lorg/gradle/api/provider/ListProperty;
+	public abstract fun getModuleType ()Lorg/gradle/api/provider/Property;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/tasks/DumpModuleTypeTask$Companion {
+	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/tasks/GenerateLegendDotFileTask$Companion;
+	public static final field DOT_PATH Ljava/lang/String;
+	public static final field TASK_NAME Ljava/lang/String;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
+	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/tasks/GenerateLegendDotFileTask$Companion {
+	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/tasks/GenerateModulesDotFileTask$Companion;
+	public static final field TASK_NAME Ljava/lang/String;
+	public fun <init> ()V
+	public final fun action ()V
+	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getPrintOutput ()Lorg/gradle/api/provider/Property;
+	public abstract fun getReplacement ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getToRemove ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/tasks/GenerateModulesDotFileTask$Companion {
+	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;Ljava/lang/String;Lorg/gradle/api/provider/Provider;Z)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/tasks/GeneratePngFileTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/tasks/GeneratePngFileTask$Companion;
+	public static final field NAME_LEGEND Ljava/lang/String;
+	public static final field NAME_MODULES Ljava/lang/String;
+	public fun <init> ()V
+	public final fun action ()V
+	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getErrorFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getPngFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public final class modular/tasks/GeneratePngFileTask$Companion {
+	public final fun get (Lorg/gradle/api/Project;Ljava/lang/String;)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun registerModules (Lorg/gradle/api/Project;Lorg/gradle/api/tasks/TaskProvider;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/tasks/WriteReadmeTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/tasks/WriteReadmeTask$Companion;
+	public fun <init> ()V
+	public final fun action ()V
+	public abstract fun getLegendPngRelativePath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getReadmeFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public final class modular/tasks/WriteReadmeTask$Companion {
+	public final fun register (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract interface annotation class org/gradle/kotlin/dsl/ModularDsl : java/lang/annotation/Annotation {
+}
+
+public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {
+	public static final fun androidApp (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun androidApp$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun androidLibrary$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun builtIns (Lorg/gradle/api/NamedDomainObjectContainer;)V
+	public static final fun java (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun java$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun kotlinJvm$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun kotlinMultiplatform$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun other$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun registerByPathContains (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun registerByPathMatches (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun registerByPluginId (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
