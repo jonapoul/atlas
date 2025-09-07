@@ -1,3 +1,7 @@
+/**
+ * Copyright © 2025 Jon Poulton
+ * SPDX-License-Identifier: Apache-2.0
+ */
 @file:Suppress("unused")
 
 package org.gradle.kotlin.dsl
