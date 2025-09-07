@@ -111,6 +111,11 @@ spotless {
     leadingTabsToSpaces(2)
     endWithNewline()
   }
+
+  format("licenseKotlin") {
+    licenseHeaderFile("config/spotless.kt", "(package|@file:)")
+    target("src/**/*.kt")
+  }
 }
 
 kover {
