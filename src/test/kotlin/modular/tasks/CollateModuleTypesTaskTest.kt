@@ -55,7 +55,7 @@ class CollateModuleTypesTaskTest : ModularTest() {
       expected = """
         :test-data,Java,#FF8800
         :test-domain,Kotlin JVM,#CA66FF
-        :test-ui,Android Library,#9D8DF1
+        :test-ui,Android Library,#55FF55
 
       """.trimIndent()
     )
