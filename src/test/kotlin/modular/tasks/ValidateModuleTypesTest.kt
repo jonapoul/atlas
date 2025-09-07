@@ -23,7 +23,7 @@ class ValidateModuleTypesTest : ModularTaskTest() {
     // then the build didn't fail, but we get a log warning
     assertThat(result.output).contains(
       "Warning: Module type 'custom' will be ignored - you need to set one of " +
-        "pathContains, pathMatches or hasPluginId."
+        "pathContains, pathMatches or hasPluginId.",
     )
   }
 

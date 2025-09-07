@@ -1,3 +1,7 @@
+/**
+ * Copyright © 2025 Jon Poulton
+ * SPDX-License-Identifier: Apache-2.0
+ */
 package modular.tasks
 
 import assertk.assertThat
@@ -54,7 +58,7 @@ class CollateModuleLinksTaskTest : ModularTaskTest() {
         ":mid-b,:bottom,implementation",
         ":top,:mid-a,api",
         ":top,:mid-b,implementation",
-      )
+      ),
     )
   }
 
@@ -75,7 +79,7 @@ class CollateModuleLinksTaskTest : ModularTaskTest() {
         ":b1,:c2,implementation",
         ":b2,:c2,implementation",
         ":b2,:c3,implementation",
-      )
+      ),
     )
   }
 
