@@ -6,6 +6,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
+  alias(libs.plugins.binaryCompatibility)
   alias(libs.plugins.dependencyVersions)
   alias(libs.plugins.detekt)
   alias(libs.plugins.dokka)
