@@ -8,13 +8,13 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.exists
 import assertk.assertions.isEqualTo
-import modular.test.ModularTest
+import modular.test.ModularTaskTest
 import modular.test.androidHomeOrSkip
 import modular.test.buildRunner
 import modular.test.runTask
 import modular.test.scenarios.ModuleTypesDeclaredButNoneMatch
 import modular.test.scenarios.NoModuleTypesDeclared
-import modular.test.scenarios.OneModuleWithMatchingBuiltIn
+import modular.test.scenarios.OneKotlinJvmModule
 import modular.test.scenarios.ThreeModulesWithCustomTypes
 import modular.test.taskHadResult
 import modular.test.taskWasSuccessful
@@ -22,7 +22,7 @@ import org.gradle.testkit.runner.TaskOutcome
 import java.io.File
 import kotlin.test.Test
 
-class DumpModuleTypeTaskTest : ModularTest() {
+class DumpModuleTypeTaskTest : ModularTaskTest() {
   @Test
   fun `Fail if no module types declared`() = runScenario(NoModuleTypesDeclared) {
     // when
@@ -52,7 +52,7 @@ class DumpModuleTypeTaskTest : ModularTest() {
   }
 
   @Test
-  fun `Write file if built-in type matches`() = runScenario(OneModuleWithMatchingBuiltIn) {
+  fun `Write file if built-in type matches`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("dumpModuleType").build()
 
