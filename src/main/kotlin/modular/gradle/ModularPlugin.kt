@@ -6,9 +6,9 @@
 
 package modular.gradle
 
-import modular.spec.DotFileOutputSpec
 import modular.internal.FILENAME_ROOT
 import modular.internal.orderedTypes
+import modular.spec.DotFileOutputSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.CollateModuleLinksTask
 import modular.tasks.CollateModuleTypesTask

@@ -28,4 +28,3 @@ class DotFileLegendSpec(objects: ObjectFactory, project: Project) : LegendSpec {
   val cellSpacing: Property<Int> = objects.property<Int>().convention(properties.cellSpacing)
   val cellPadding: Property<Int> = objects.property<Int>().convention(properties.cellPadding)
 }
-

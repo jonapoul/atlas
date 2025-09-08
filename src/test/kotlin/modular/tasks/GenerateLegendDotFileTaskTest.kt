@@ -48,7 +48,7 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
         </TABLE>
         >];
         }
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 
@@ -74,7 +74,7 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
         </TABLE>
         >];
         }
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 
@@ -100,7 +100,7 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
         </TABLE>
         >];
         }
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 }

@@ -26,10 +26,16 @@ internal class ModularProperties(private val project: Project) {
   val cellPadding: Provider<Int> = int(key = "modular.dotfile.legend.cellPadding", default = 4)
 
   private fun bool(key: String, default: Boolean) =
-    project.providers.gradleProperty(key).map { it.toBooleanStrict() }.orElse(default)
+    project.providers
+      .gradleProperty(key)
+      .map { it.toBooleanStrict() }
+      .orElse(default)
 
   private fun int(key: String, default: Int) =
-    project.providers.gradleProperty(key).map { it.toInt() }.orElse(default)
+    project.providers
+      .gradleProperty(key)
+      .map { it.toInt() }
+      .orElse(default)
 
   private fun string(key: String, default: String) =
     project.providers.gradleProperty(key).orElse(default)
