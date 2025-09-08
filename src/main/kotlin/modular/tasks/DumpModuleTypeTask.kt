@@ -4,14 +4,14 @@
  */
 package modular.tasks
 
-import modular.spec.ModuleType
-import modular.spec.ModuleTypeModel
 import modular.gradle.ModularExtension
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.TypedModule
 import modular.internal.fileInReportDirectory
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
+import modular.spec.ModuleType
+import modular.spec.ModuleTypeModel
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException
