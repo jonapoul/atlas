@@ -21,6 +21,7 @@ abstract class ModularTaskTest {
     with(projectRoot) {
       resolve("settings.gradle.kts").writeText(scenario.settingsFile)
       resolve("build.gradle.kts").writeText(scenario.rootBuildFile)
+      resolve("gradle.properties").writeText(scenario.gradlePropertiesFile)
       scenario.submoduleBuildFiles.forEach { (path, contents) ->
         resolve(path)
           .also { it.mkdirs() }

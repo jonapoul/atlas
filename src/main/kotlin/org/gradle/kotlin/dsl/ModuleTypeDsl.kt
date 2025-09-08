@@ -6,7 +6,8 @@
 
 package org.gradle.kotlin.dsl
 
-import modular.gradle.ModuleType
+import modular.gradle.ModularDsl
+import modular.spec.ModuleType
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 
@@ -121,6 +122,3 @@ fun NamedDomainObjectContainer<ModuleType>.registerByPathContains(
   type.color.set(color)
   type.pathContains.set(pathContains)
 }
-
-@DslMarker
-annotation class ModularDsl

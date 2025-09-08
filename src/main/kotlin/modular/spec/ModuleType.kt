@@ -2,11 +2,10 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.gradle
+package modular.spec
 
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
-import org.gradle.internal.impldep.kotlinx.serialization.Serializable
 import javax.inject.Inject
 
 abstract class ModuleType @Inject constructor(val name: String) {
@@ -25,9 +24,3 @@ abstract class ModuleType @Inject constructor(val name: String) {
     hasPluginId.unsetConvention()
   }
 }
-
-@Serializable
-class ModuleTypeModel(
-  val name: String,
-  val color: String,
-) : java.io.Serializable

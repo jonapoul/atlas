@@ -11,4 +11,10 @@ modular {
   moduleTypes {
     builtIns()
   }
+
+  dotFile {
+    legend {
+      file = file("modules-legend.dot")
+    }
+  }
 }

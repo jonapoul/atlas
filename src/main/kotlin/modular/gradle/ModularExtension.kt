@@ -5,13 +5,14 @@
 package modular.gradle
 
 import modular.internal.OrderedNamedContainer
-import modular.internal.dotFile
 import modular.internal.gradleBoolProperty
 import modular.internal.gradleStringProperty
+import modular.spec.DotFileOutputSpec
+import modular.spec.ModuleType
+import modular.spec.OutputSpec
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
-import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
@@ -22,9 +23,11 @@ import org.gradle.kotlin.dsl.setProperty
 import javax.inject.Inject
 
 open class ModularExtension @Inject constructor(
-  objects: ObjectFactory,
-  project: Project,
+  private val objects: ObjectFactory,
+  private val project: Project,
 ) {
+  val outputs: NamedDomainObjectContainer<OutputSpec<*>> = objects.domainObjectContainer(OutputSpec::class)
+
   val moduleTypes: NamedDomainObjectContainer<ModuleType> = OrderedNamedContainer(
     container = objects.domainObjectContainer(ModuleType::class) { name ->
       objects.newInstance(ModuleType::class, name)
@@ -62,21 +65,18 @@ open class ModularExtension @Inject constructor(
     .property<String>()
     .convention(project.gradleStringProperty(key = "modular.separator", default = ","))
 
-  val dotFile = ModularDotFileConfig(objects, project)
+  @ModularDsl
+  fun dotFile(action: Action<DotFileOutputSpec>? = null) {
+    val config = DotFileOutputSpec(objects, project)
+    action?.execute(config)
+    outputs.add(config)
+  }
 
-  fun dotFile(action: Action<ModularDotFileConfig>) = action.execute(dotFile)
-}
-
-class ModularDotFileConfig(objects: ObjectFactory, project: Project) {
-  val enabled: Property<Boolean> = objects
-    .property<Boolean>()
-    .convention(project.gradleBoolProperty(key = "modular.dotfile.enabled", default = false))
-
-  val chartDotFile: RegularFileProperty = objects
-    .fileProperty()
-    .convention(project.dotFile(name = "modules"))
-
-  val legendDotFile: RegularFileProperty = objects
-    .fileProperty()
-    .convention(project.rootProject.dotFile(name = "legend"))
+  //  fun mermaid(action: Action<MermaidOutputConfig>? = null) {
+  //    val config = outputConfigs[MermaidOutputConfig::class]
+  //      as? MermaidOutputConfig
+  //      ?: MermaidOutputConfig(objects, project)
+  //    action?.execute(config)
+  //    outputConfigs[MermaidOutputConfig::class] = config
+  //  }
 }
