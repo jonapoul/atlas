@@ -4,7 +4,7 @@
  */
 package modular.spec
 
-import modular.internal.gradleIntProperty
+import modular.internal.ModularProperties
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.model.ObjectFactory
@@ -12,6 +12,8 @@ import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.property
 
 class DotFileLegendSpec(objects: ObjectFactory, project: Project) : LegendSpec {
+  private val properties = ModularProperties(project)
+
   override val file: RegularFileProperty = objects
     .fileProperty()
     .convention(
@@ -21,20 +23,9 @@ class DotFileLegendSpec(objects: ObjectFactory, project: Project) : LegendSpec {
         .file("modules-legend.dot"),
     )
 
-  val tableBorder: Property<Int> = objects
-    .property<Int>()
-    .convention(project.gradleIntProperty(key = "modular.dotfile.legend.tableBorder", default = 0))
-
-  val cellBorder: Property<Int> = objects
-    .property<Int>()
-    .convention(project.gradleIntProperty(key = "modular.dotfile.legend.cellBorder", default = 1))
-
-  val cellSpacing: Property<Int> = objects
-    .property<Int>()
-    .convention(project.gradleIntProperty(key = "modular.dotfile.legend.cellSpacing", default = 0))
-
-  val cellPadding: Property<Int> = objects
-    .property<Int>()
-    .convention(project.gradleIntProperty(key = "modular.dotfile.legend.cellPadding", default = 4))
+  val tableBorder: Property<Int> = objects.property<Int>().convention(properties.tableBorder)
+  val cellBorder: Property<Int> = objects.property<Int>().convention(properties.cellBorder)
+  val cellSpacing: Property<Int> = objects.property<Int>().convention(properties.cellSpacing)
+  val cellPadding: Property<Int> = objects.property<Int>().convention(properties.cellPadding)
 }
 

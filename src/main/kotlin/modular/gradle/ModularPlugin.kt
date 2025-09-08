@@ -2,6 +2,8 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
+@file:Suppress("unused") // public API
+
 package modular.gradle
 
 import modular.spec.DotFileOutputSpec
@@ -18,7 +20,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.getByName
 
-@Suppress("unused")
 class ModularPlugin : Plugin<Project> {
   override fun apply(target: Project): Unit = with(target) {
     if (target == rootProject) {
