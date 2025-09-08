@@ -14,6 +14,3 @@ internal val Project.outputDirectory: Provider<Directory>
 
 internal fun Project.fileInReportDirectory(path: String): Provider<RegularFile> =
   outputDirectory.map { it.file(path) }
-
-internal fun Project.dotFile(name: String): Provider<RegularFile> =
-  outputDirectory.map { it.file("$name.dot") }

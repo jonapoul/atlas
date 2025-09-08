@@ -4,7 +4,7 @@
  */
 package modular.internal
 
-import modular.gradle.ModuleType
+import modular.spec.ModuleType
 import org.gradle.api.GradleException
 import org.gradle.api.logging.Logger
 

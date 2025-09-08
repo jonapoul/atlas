@@ -13,6 +13,12 @@ internal fun Project.gradleBoolProperty(key: String, default: Boolean): Provider
     .map { it.toBooleanStrict() }
     .orElse(default)
 
+internal fun Project.gradleIntProperty(key: String, default: Int): Provider<Int> =
+  providers
+    .gradleProperty(key)
+    .map { it.toInt() }
+    .orElse(default)
+
 internal fun Project.gradleStringProperty(key: String, default: String): Provider<String> =
   providers
     .gradleProperty(key)

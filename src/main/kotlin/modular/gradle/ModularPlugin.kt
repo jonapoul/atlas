@@ -4,7 +4,9 @@
  */
 package modular.gradle
 
+import modular.spec.DotFileOutputSpec
 import modular.internal.FILENAME_ROOT
+import modular.internal.orderedTypes
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.CollateModuleLinksTask
 import modular.tasks.CollateModuleTypesTask
@@ -28,30 +30,40 @@ class ModularPlugin : Plugin<Project> {
 
   private fun Project.applyToRoot() {
     val extension = extensions.create<ModularExtension>(EXTENSION_NAME)
+
+    CollateModuleTypesTask.register(project, extension)
+    CollateModuleLinksTask.register(project, extension)
+
+    extension.outputs.configureEach { outputConfig ->
+      when (outputConfig) {
+        is DotFileOutputSpec -> GenerateLegendDotFileTask.register(
+          target = project,
+          config = outputConfig,
+          extension = extension,
+        )
+
+        else -> error("Unknown output config $outputConfig")
+      }
+    }
+
+    //      GeneratePngFileTask.registerLegend(project, generateLegend)
+
     afterEvaluate {
       if (extension.applyToSubprojects.get()) {
         subprojects { p ->
           p.pluginManager.apply("dev.jonpoulton.modular")
         }
       }
-    }
 
-    CollateModuleTypesTask.register(project, extension)
-    CollateModuleLinksTask.register(project, extension)
-
-    val generateLegend = GenerateLegendDotFileTask.register(project, extension)
-    //      GeneratePngFileTask.registerLegend(project, generateLegend)
-
-    afterEvaluate {
-      val types = extension.moduleTypes.asMap
+      val types = extension.orderedTypes()
       if (types.isEmpty()) {
         logger.warn("Warning: No module types have been registered!")
       }
 
-      types.forEach { (name, type) ->
+      types.forEach { type ->
         if (!type.pathContains.isPresent && !type.pathMatches.isPresent && !type.hasPluginId.isPresent) {
           logger.warn(
-            "Warning: Module type '$name' will be ignored - you need to set one of " +
+            "Warning: Module type '${type.name}' will be ignored - you need to set one of " +
               "pathContains, pathMatches or hasPluginId.",
           )
         }

@@ -1,19 +1,16 @@
-public final class modular/gradle/ModularDotFileConfig {
-	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
-	public final fun getChartDotFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public final fun getEnabled ()Lorg/gradle/api/provider/Property;
-	public final fun getLegendDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+public abstract interface annotation class modular/gradle/ModularDsl : java/lang/annotation/Annotation {
 }
 
 public class modular/gradle/ModularExtension {
 	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
 	public final fun dotFile (Lorg/gradle/api/Action;)V
+	public static synthetic fun dotFile$default (Lmodular/gradle/ModularExtension;Lorg/gradle/api/Action;ILjava/lang/Object;)V
 	public final fun getApplyToSubprojects ()Lorg/gradle/api/provider/Property;
-	public final fun getDotFile ()Lmodular/gradle/ModularDotFileConfig;
 	public final fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
 	public final fun getGenerateReadme ()Lorg/gradle/api/provider/Property;
 	public final fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
 	public final fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public final fun getOutputs ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public final fun getRemoveModulePrefix ()Lorg/gradle/api/provider/Property;
 	public final fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public final fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
@@ -26,7 +23,31 @@ public final class modular/gradle/ModularPlugin : org/gradle/api/Plugin {
 	public fun apply (Lorg/gradle/api/Project;)V
 }
 
-public abstract class modular/gradle/ModuleType {
+public final class modular/spec/DotFileLegendSpec : modular/spec/LegendSpec {
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
+	public final fun getCellBorder ()Lorg/gradle/api/provider/Property;
+	public final fun getCellPadding ()Lorg/gradle/api/provider/Property;
+	public final fun getCellSpacing ()Lorg/gradle/api/provider/Property;
+	public fun getFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public final fun getTableBorder ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/spec/DotFileOutputSpec : modular/spec/OutputSpec {
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
+	public final fun getChartDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public fun getLegend ()Lmodular/spec/DotFileLegendSpec;
+	public synthetic fun getLegend ()Lmodular/spec/LegendSpec;
+	public fun getName ()Ljava/lang/String;
+	public fun legend (Ljava/io/File;)V
+	public fun legend (Lorg/gradle/api/Action;)V
+	public fun legend (Lorg/gradle/api/provider/Provider;)V
+}
+
+public abstract interface class modular/spec/LegendSpec {
+	public abstract fun getFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public abstract class modular/spec/ModuleType {
 	public fun <init> (Ljava/lang/String;)V
 	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
 	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
@@ -35,10 +56,32 @@ public abstract class modular/gradle/ModuleType {
 	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/gradle/ModuleTypeModel : java/io/Serializable {
+public final class modular/spec/ModuleTypeModel : java/io/Serializable {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lmodular/spec/ModuleTypeModel;
+	public static synthetic fun copy$default (Lmodular/spec/ModuleTypeModel;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/spec/ModuleTypeModel;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColor ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class modular/spec/OutputSpec {
+	public abstract fun getLegend ()Lmodular/spec/LegendSpec;
+	public fun getName ()Ljava/lang/String;
+	public fun legend (Ljava/io/File;)V
+	public fun legend (Lorg/gradle/api/Action;)V
+	public fun legend (Lorg/gradle/api/provider/Provider;)V
+}
+
+public final class modular/spec/OutputSpec$DefaultImpls {
+	public static fun getName (Lmodular/spec/OutputSpec;)Ljava/lang/String;
+	public static fun legend (Lmodular/spec/OutputSpec;Ljava/io/File;)V
+	public static fun legend (Lmodular/spec/OutputSpec;Lorg/gradle/api/Action;)V
+	public static fun legend (Lmodular/spec/OutputSpec;Lorg/gradle/api/provider/Provider;)V
 }
 
 public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/DefaultTask {
@@ -133,7 +176,6 @@ public final class modular/tasks/DumpModuleTypeTask$Companion {
 
 public abstract class modular/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask {
 	public static final field Companion Lmodular/tasks/GenerateLegendDotFileTask$Companion;
-	public static final field DOT_PATH Ljava/lang/String;
 	public static final field TASK_NAME Ljava/lang/String;
 	public fun <init> ()V
 	public final fun execute ()V
@@ -142,12 +184,13 @@ public abstract class modular/tasks/GenerateLegendDotFileTask : org/gradle/api/D
 	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
 	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
 }
 
 public final class modular/tasks/GenerateLegendDotFileTask$Companion {
 	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Lmodular/spec/DotFileOutputSpec;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask {
@@ -196,9 +239,6 @@ public abstract class modular/tasks/WriteReadmeTask : org/gradle/api/DefaultTask
 
 public final class modular/tasks/WriteReadmeTask$Companion {
 	public final fun register (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
-public abstract interface annotation class org/gradle/kotlin/dsl/ModularDsl : java/lang/annotation/Annotation {
 }
 
 public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {

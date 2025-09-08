@@ -4,13 +4,14 @@
  */
 package modular.tasks
 
+import modular.spec.ModuleType
+import modular.spec.ModuleTypeModel
 import modular.gradle.ModularExtension
-import modular.gradle.ModuleType
-import modular.gradle.ModuleTypeModel
 import modular.internal.MODULAR_TASK_GROUP
-import modular.internal.OrderedNamedContainer
 import modular.internal.TypedModule
 import modular.internal.fileInReportDirectory
+import modular.internal.moduleTypeModel
+import modular.internal.orderedTypes
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException
@@ -75,9 +76,9 @@ abstract class DumpModuleTypeTask : DefaultTask() {
       }
 
       afterEvaluate {
-        val types = (extension.moduleTypes as OrderedNamedContainer<ModuleType>).getInOrder()
+        val types = extension.orderedTypes()
         val type = types.firstOrNull { t -> t.matches(target) }
-        val matching = type?.let { t -> ModuleTypeModel(name = t.name, color = t.color.get()) }
+        val matching = type?.let(::moduleTypeModel)
         task.configure { t ->
           t.moduleType.set(matching)
           t.allModuleTypes.set(types.map { it.name })

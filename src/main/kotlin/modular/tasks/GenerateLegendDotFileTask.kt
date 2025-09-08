@@ -5,8 +5,11 @@
 package modular.tasks
 
 import modular.gradle.ModularExtension
-import modular.gradle.ModuleTypeModel
 import modular.internal.MODULAR_TASK_GROUP
+import modular.internal.moduleTypeModel
+import modular.internal.orderedTypes
+import modular.spec.DotFileOutputSpec
+import modular.spec.ModuleTypeModel
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -26,6 +29,7 @@ abstract class GenerateLegendDotFileTask : DefaultTask() {
   @get:Input abstract val cellBorder: Property<Int>
   @get:Input abstract val cellSpacing: Property<Int>
   @get:Input abstract val cellPadding: Property<Int>
+  @get:Input abstract val separator: Property<String>
   @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
   @get:OutputFile abstract val dotFile: RegularFileProperty
 
@@ -40,13 +44,14 @@ abstract class GenerateLegendDotFileTask : DefaultTask() {
     val cb = cellBorder.get()
     val cs = cellSpacing.get()
     val cp = cellPadding.get()
+    val moduleTypes = moduleTypes.get()
 
     val dotFileContents = buildString {
       appendLine("digraph G {")
       appendLine("node [shape=plaintext]")
       appendLine("table1 [label=<")
       appendLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
-      moduleTypes.get().forEach { type ->
+      moduleTypes.forEach { type ->
         appendLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">module-name</TD></TR>")
       }
       appendLine("</TABLE>")
@@ -55,22 +60,29 @@ abstract class GenerateLegendDotFileTask : DefaultTask() {
     }
 
     dotFile.get().asFile.writeText(dotFileContents)
+
+    logger.lifecycle("Written ${dotFileContents.length} chars to ${dotFile.get().asFile}")
   }
 
   companion object {
     const val TASK_NAME: String = "generateLegendDotFile"
-    const val DOT_PATH: String = "docs/legend/legend.dot"
 
     fun get(target: Project): TaskProvider<GenerateLegendDotFileTask> =
       target.tasks.named<GenerateLegendDotFileTask>(TASK_NAME)
 
     fun register(
       target: Project,
+      config: DotFileOutputSpec,
       extension: ModularExtension,
     ): TaskProvider<GenerateLegendDotFileTask> = with(target) {
       tasks.register<GenerateLegendDotFileTask>(TASK_NAME) {
-        //        moduleTypes.set(types)
-        dotFile.set(provider { target.layout.projectDirectory.file(DOT_PATH) })
+        tableBorder.set(config.legend.tableBorder)
+        cellBorder.set(config.legend.cellBorder)
+        cellSpacing.set(config.legend.cellSpacing)
+        cellPadding.set(config.legend.cellPadding)
+        separator.set(extension.separator)
+        dotFile.set(config.legend.file)
+        moduleTypes.set(extension.orderedTypes().map(::moduleTypeModel))
       }
     }
   }

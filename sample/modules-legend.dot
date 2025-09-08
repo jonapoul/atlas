@@ -1,0 +1,13 @@
+digraph G {
+node [shape=plaintext]
+table1 [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+<TR><TD>Android App</TD><TD BGCOLOR="#09AD35">module-name</TD></TR>
+<TR><TD>Kotlin Multiplatform</TD><TD BGCOLOR="#9D8DF1">module-name</TD></TR>
+<TR><TD>Android Library</TD><TD BGCOLOR="#55FF55">module-name</TD></TR>
+<TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
+<TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
+<TR><TD>Other</TD><TD BGCOLOR="#808080">module-name</TD></TR>
+</TABLE>
+>];
+}
