@@ -6,19 +6,8 @@ package modular.test.scenarios
 
 import modular.test.BASIC_JVM_BUILD_SCRIPT
 import modular.test.Scenario
-import modular.test.settingsFileRepositories
 
 object TriangleGraph : Scenario {
-  override val settingsFile = """
-    $settingsFileRepositories
-    include(":a")
-    include(":b1")
-    include(":b2")
-    include(":c1")
-    include(":c2")
-    include(":c3")
-  """.trimIndent()
-
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false
@@ -58,7 +47,9 @@ object TriangleGraph : Scenario {
     """.trimIndent(),
 
     "c1" to BASIC_JVM_BUILD_SCRIPT,
+
     "c2" to BASIC_JVM_BUILD_SCRIPT,
+
     "c3" to BASIC_JVM_BUILD_SCRIPT,
   )
 }

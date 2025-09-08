@@ -72,7 +72,6 @@ tasks.pluginUnderTestMetadata {
 tasks.test {
   useJUnitPlatform()
   systemProperty("test.version.gradle", GradleVersion.current().version)
-  systemProperty("test.repositoriesFile", rootProject.file("gradle/repositories.gradle.kts").absolutePath)
   androidHome()?.let { systemProperty("test.androidHome", it) }
 }
 
