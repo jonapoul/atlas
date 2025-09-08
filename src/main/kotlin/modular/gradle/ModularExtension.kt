@@ -2,11 +2,12 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
+@file:Suppress("unused") // public API
+
 package modular.gradle
 
+import modular.internal.ModularProperties
 import modular.internal.OrderedNamedContainer
-import modular.internal.gradleBoolProperty
-import modular.internal.gradleStringProperty
 import modular.spec.DotFileOutputSpec
 import modular.spec.ModuleType
 import modular.spec.OutputSpec
@@ -26,6 +27,7 @@ open class ModularExtension @Inject constructor(
   private val objects: ObjectFactory,
   private val project: Project,
 ) {
+  private val properties = ModularProperties(project)
   val outputs: NamedDomainObjectContainer<OutputSpec<*>> = objects.domainObjectContainer(OutputSpec::class)
 
   val moduleTypes: NamedDomainObjectContainer<ModuleType> = OrderedNamedContainer(
@@ -36,19 +38,19 @@ open class ModularExtension @Inject constructor(
 
   val applyToSubprojects: Property<Boolean> = objects
     .property<Boolean>()
-    .convention(project.gradleBoolProperty(key = "modular.applyToSubprojects", default = true))
+    .convention(properties.applyToSubprojects)
 
   val supportUpwardsTraversal: Property<Boolean> = objects
     .property<Boolean>()
-    .convention(project.gradleBoolProperty(key = "modular.supportUpwardsTraversal", default = false))
+    .convention(properties.supportUpwardsTraversal)
 
   val generateOnSync: Property<Boolean> = objects
     .property<Boolean>()
-    .convention(project.gradleBoolProperty(key = "modular.generateOnSync", default = false))
+    .convention(properties.generateOnSync)
 
   val generateReadme: Property<Boolean> = objects
     .property<Boolean>()
-    .convention(project.gradleBoolProperty(key = "modular.generateReadme", default = false))
+    .convention(properties.generateReadme)
 
   val ignoredModules: SetProperty<Regex> = objects
     .setProperty<Regex>()
@@ -56,14 +58,14 @@ open class ModularExtension @Inject constructor(
 
   val removeModulePrefix: Property<String> = objects
     .property<String>()
-    .unsetConvention()
+    .convention(properties.removeModulePrefix)
 
   /**
    * Only change if any of your [Project] names or any [ModuleType] names contain a comma.
    */
   val separator: Property<String> = objects
     .property<String>()
-    .convention(project.gradleStringProperty(key = "modular.separator", default = ","))
+    .convention(properties.separator)
 
   @ModularDsl
   fun dotFile(action: Action<DotFileOutputSpec>? = null) {
