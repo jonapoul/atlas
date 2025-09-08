@@ -1,3 +1,23 @@
+public final class modular/gradle/Color {
+	public static final field Companion Lmodular/gradle/Color$Companion;
+	public static final synthetic fun box-impl (Ljava/lang/String;)Lmodular/gradle/Color;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
+	public final fun getHexValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/lang/String;)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Ljava/lang/String;
+}
+
+public final class modular/gradle/Color$Companion {
+	public final fun from-pdF6yho (I)Ljava/lang/String;
+	public final fun from-pdF6yho (J)Ljava/lang/String;
+	public final fun from-pdF6yho (Ljava/lang/String;)Ljava/lang/String;
+}
+
 public abstract interface annotation class modular/gradle/ModularDsl : java/lang/annotation/Annotation {
 }
 
@@ -8,6 +28,7 @@ public class modular/gradle/ModularExtension {
 	public final fun getApplyToSubprojects ()Lorg/gradle/api/provider/Property;
 	public final fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
 	public final fun getGenerateReadme ()Lorg/gradle/api/provider/Property;
+	public final fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
 	public final fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
 	public final fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public final fun getOutputs ()Lorg/gradle/api/NamedDomainObjectContainer;
@@ -57,13 +78,13 @@ public abstract class modular/spec/ModuleType {
 }
 
 public final class modular/spec/ModuleTypeModel : java/io/Serializable {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lmodular/spec/ModuleTypeModel;
-	public static synthetic fun copy$default (Lmodular/spec/ModuleTypeModel;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/spec/ModuleTypeModel;
+	public final fun component2-0RhWm6c ()Ljava/lang/String;
+	public final fun copy-YJRc4t8 (Ljava/lang/String;Ljava/lang/String;)Lmodular/spec/ModuleTypeModel;
+	public static synthetic fun copy-YJRc4t8$default (Lmodular/spec/ModuleTypeModel;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/spec/ModuleTypeModel;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getColor ()Ljava/lang/String;
+	public final fun getColor-0RhWm6c ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

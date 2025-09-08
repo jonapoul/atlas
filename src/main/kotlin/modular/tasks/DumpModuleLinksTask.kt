@@ -64,7 +64,7 @@ abstract class DumpModuleLinksTask : DefaultTask() {
     ): TaskProvider<DumpModuleLinksTask> = with(target) {
       tasks.register<DumpModuleLinksTask>(NAME) {
         thisPath.set(target.path)
-        moduleLinks.set(ModuleLinks.of(target))
+        moduleLinks.set(ModuleLinks.of(target, extension.ignoredConfigs.get()))
         outputFile.set(fileInReportDirectory("module-links"))
         separator.set(extension.separator)
       }
