@@ -2,8 +2,6 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("unused") // public API
-
 package modular.gradle
 
 import modular.internal.ModularProperties
@@ -59,6 +57,10 @@ open class ModularExtension @Inject constructor(
   val removeModulePrefix: Property<String> = objects
     .property<String>()
     .convention(properties.removeModulePrefix)
+
+  val ignoredConfigs: SetProperty<String> = objects
+    .setProperty<String>()
+    .convention(setOf("debug", "kover", "ksp", "test"))
 
   /**
    * Only change if any of your [Project] names or any [ModuleType] names contain a comma.

@@ -10,6 +10,8 @@ import assertk.assertions.isEqualTo
 import modular.test.ModularTaskTest
 import modular.test.allSuccessful
 import modular.test.runTask
+import modular.test.scenarios.CustomConfigurationExcluded
+import modular.test.scenarios.CustomConfigurations
 import modular.test.scenarios.DiamondGraph
 import modular.test.scenarios.OneKotlinJvmModule
 import modular.test.scenarios.ThreeModulesWithBuiltInTypes
@@ -83,6 +85,32 @@ class DumpModuleLinksTaskTest : ModularTaskTest() {
     assertThat(moduleLinks(module = "c1")).isEmpty()
     assertThat(moduleLinks(module = "c2")).isEmpty()
     assertThat(moduleLinks(module = "c3")).isEmpty()
+  }
+
+  @Test
+  fun `Custom configuration is picked up if we dont exclude it`() = runScenario(CustomConfigurations) {
+    // when
+    val result = runTask("dumpModuleLinks").build()
+
+    // then the task was run
+    assertThat(result.tasks).allSuccessful()
+
+    // and the two custom configs were detected as links
+    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b,abc", ":a,:b,xyz"))
+    assertThat(moduleLinks(module = "b")).isEmpty()
+  }
+
+  @Test
+  fun `Custom configuration is excluded`() = runScenario(CustomConfigurationExcluded) {
+    // when
+    val result = runTask("dumpModuleLinks").build()
+
+    // then the task was run
+    assertThat(result.tasks).allSuccessful()
+
+    // and the two custom configs were detected as links, but the xyz config was excluded
+    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b,abc"))
+    assertThat(moduleLinks(module = "b")).isEmpty()
   }
 
   private fun moduleLinks(module: String) = projectRoot

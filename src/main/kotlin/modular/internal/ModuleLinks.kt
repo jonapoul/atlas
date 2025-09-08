@@ -12,11 +12,14 @@ import java.io.File
 import java.util.SortedMap
 
 internal object ModuleLinks {
-  fun of(project: Project): Provider<Map<String, List<String>>> = project.provider {
+  fun of(
+    project: Project,
+    ignoredConfigs: Collection<String>,
+  ): Provider<Map<String, List<String>>> = project.provider {
     val map = hashMapOf<String, List<String>>()
     project
       .configurations
-      .filterUseful()
+      .filterUseful(ignoredConfigs)
       .forEach { c ->
         c.dependencies
           .filterIsInstance<ProjectDependency>()
@@ -80,16 +83,8 @@ private fun ModuleLink(line: String, separator: String): ModuleLink {
   return ModuleLink(fromPath, toPath, configuration, separator)
 }
 
-// TODO: make configurable
-private val BLOCKED_CONFIGS = setOf(
-  "debug",
-  "kover",
-  "ksp",
-  "test",
-)
-
-private fun ConfigurationContainer.filterUseful() = filter { c ->
-  BLOCKED_CONFIGS.none { blocked ->
+private fun ConfigurationContainer.filterUseful(ignoredConfigs: Collection<String>) = filter { c ->
+  ignoredConfigs.none { blocked ->
     c.name.contains(blocked, ignoreCase = true)
   }
 }
