@@ -6,17 +6,8 @@ package modular.test.scenarios
 
 import modular.test.BASIC_JVM_BUILD_SCRIPT
 import modular.test.Scenario
-import modular.test.settingsFileRepositories
 
 object DiamondGraph : Scenario {
-  override val settingsFile = """
-    $settingsFileRepositories
-    include(":top")
-    include(":mid-a")
-    include(":mid-b")
-    include(":bottom")
-  """.trimIndent()
-
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false

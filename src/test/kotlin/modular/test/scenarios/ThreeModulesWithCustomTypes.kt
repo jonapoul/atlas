@@ -7,16 +7,8 @@ package modular.test.scenarios
 import modular.test.BASIC_ANDROID_BUILD_SCRIPT
 import modular.test.BASIC_JVM_BUILD_SCRIPT
 import modular.test.Scenario
-import modular.test.settingsFileRepositories
 
 object ThreeModulesWithCustomTypes : Scenario {
-  override val settingsFile = """
-    $settingsFileRepositories
-    include(":test-data")
-    include(":test-domain")
-    include(":test-ui")
-  """.trimIndent()
-
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false

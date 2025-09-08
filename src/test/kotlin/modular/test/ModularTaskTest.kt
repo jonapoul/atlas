@@ -6,20 +6,19 @@ package modular.test
 
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
-import kotlin.test.BeforeTest
 
 @Suppress("UnnecessaryAbstractClass")
 abstract class ModularTaskTest {
   @TempDir lateinit var projectRoot: File
 
-  @BeforeTest
-  fun beforeModularTest() {
-    basicSettingsFile().copyTo(projectRoot.resolve("settings.gradle.kts"))
-  }
-
   protected fun <T> runScenario(scenario: Scenario, test: File.() -> T) {
+    val settingsFile = """
+      $REPOSITORIES_GRADLE_KTS
+      ${scenario.submoduleBuildFiles.keys.joinToString { name -> "include(\":$name\")\n" }}
+    """.trimIndent()
+
     with(projectRoot) {
-      resolve("settings.gradle.kts").writeText(scenario.settingsFile)
+      resolve("settings.gradle.kts").writeText(settingsFile)
       resolve("build.gradle.kts").writeText(scenario.rootBuildFile)
       resolve("gradle.properties").writeText(scenario.gradlePropertiesFile)
       scenario.submoduleBuildFiles.forEach { (path, contents) ->

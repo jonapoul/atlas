@@ -5,13 +5,8 @@
 package modular.test.scenarios
 
 import modular.test.Scenario
-import modular.test.settingsFileRepositories
 
 object DotFileBasic : Scenario {
-  override val settingsFile = settingsFileRepositories
-
-  override val submoduleBuildFiles = mapOf<String, String>()
-
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false

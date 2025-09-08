@@ -32,10 +32,6 @@ internal fun GradleRunner.runTask(task: String) = withArguments(
   "-Pandroid.useAndroidX=true", // needed for android builds to work, unused otherwise
 )
 
-internal fun basicSettingsFile(): File = System
-  .getProperty("test.repositoriesFile")
-  .let(::File)
-
 internal fun androidHomeOrSkip(): File {
   val androidHome = System.getProperty("test.androidHome")
   assumeFalse(androidHome.isNullOrBlank())
@@ -43,9 +39,6 @@ internal fun androidHomeOrSkip(): File {
   assumeTrue(androidHomeFile.exists())
   return androidHomeFile
 }
-
-internal val settingsFileRepositories: String
-  get() = basicSettingsFile().readText()
 
 @Language("kotlin")
 internal val BASIC_JAVA_BUILD_SCRIPT = """
@@ -55,6 +48,7 @@ internal val BASIC_JAVA_BUILD_SCRIPT = """
   }
 
 """.trimIndent()
+
 @Language("kotlin")
 internal val BASIC_JVM_BUILD_SCRIPT = """
   plugins {
@@ -76,3 +70,22 @@ internal val BASIC_ANDROID_BUILD_SCRIPT = """
     compileSdk = 36
   }
 """.trimIndent()
+
+@Language("kotlin")
+internal const val REPOSITORIES_GRADLE_KTS = """
+pluginManagement {
+  repositories {
+    mavenCentral()
+    google()
+    gradlePluginPortal()
+  }
+}
+
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositories {
+    google()
+    mavenCentral()
+  }
+}
+"""

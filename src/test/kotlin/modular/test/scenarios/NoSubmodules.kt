@@ -5,11 +5,8 @@
 package modular.test.scenarios
 
 import modular.test.Scenario
-import modular.test.settingsFileRepositories
 
 object NoSubmodules : Scenario {
-  override val settingsFile = settingsFileRepositories
-
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false
@@ -24,6 +21,4 @@ object NoSubmodules : Scenario {
       }
     }
   """.trimIndent()
-
-  override val submoduleBuildFiles = emptyMap<String, String>()
 }
