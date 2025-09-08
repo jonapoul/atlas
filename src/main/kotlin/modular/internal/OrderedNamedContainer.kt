@@ -11,7 +11,7 @@ import org.gradle.api.NamedDomainObjectProvider
 import java.util.function.IntFunction
 
 internal class OrderedNamedContainer<T : Any>(
-  private val container: NamedDomainObjectContainer<T>
+  private val container: NamedDomainObjectContainer<T>,
 ) : NamedDomainObjectContainer<T> by container {
   private val orderedNames = mutableSetOf<String>()
 

@@ -33,7 +33,7 @@ class DumpModuleTypeTaskTest : ModularTaskTest() {
       """
         Execution failed for task ':test-jvm:dumpModuleType'.
         > No module type matching :test-jvm. All types = []
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 
@@ -47,7 +47,7 @@ class DumpModuleTypeTaskTest : ModularTaskTest() {
       """
         Execution failed for task ':test-jvm:dumpModuleType'.
         > No module type matching :test-jvm. All types = ["Android App", "Kotlin Multiplatform", "Android Library"]
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 

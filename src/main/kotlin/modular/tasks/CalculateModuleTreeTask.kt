@@ -41,21 +41,24 @@ abstract class CalculateModuleTreeTask : DefaultTask() {
 
   @TaskAction
   fun execute() {
-    val collatedLinksFile = collatedLinks.get().asFile
     val thisPath = thisPath.get()
     val separator = separator.get()
-    val supportUpwardsTraversal = supportUpwardsTraversal.get()
 
-    val allLinks = ModuleLinks.read(collatedLinksFile, separator)
+    val allLinks = ModuleLinks.read(collatedLinks.get().asFile, separator)
     val tree = mutableSetOf<ModuleLink>()
 
-    if (supportUpwardsTraversal) {
+    if (supportUpwardsTraversal.get()) {
       calculate(thisPath, Direction.Up, allLinks, tree)
     }
     calculate(thisPath, Direction.Down, allLinks, tree)
 
     val outputFile = outputFile.get().asFile
     ModuleLinks.write(tree, outputFile, separator)
+
+    logger.info("CalculateModuleTreeTask: written ${tree.size} links from ${allLinks.size} across the project")
+    tree.forEach { (from, to, config) ->
+      logger.info("CalculateModuleTreeTask:     from=$from, to=$to, config=$config")
+    }
   }
 
   private enum class Direction { Up, Down }

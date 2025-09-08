@@ -15,7 +15,7 @@ flowchart TD
   GeneratePngFileTask --> GenerateLegendDotFileTask
 ```
 
-For `DumpModuleLinksTask`, `DumpModuleTypeTask` and `CalculateModuleTreeTask`, one instance of each is registered for each of your smodules. All other tasks are attached on the root project. So your (filtered) task lists will look like below:
+For `DumpModuleLinksTask`, `DumpModuleTypeTask` and `CalculateModuleTreeTask`, one instance of each is registered for each of your submodules. All other tasks are attached on the root project. So your (filtered) task lists will look like below:
 
 ```
 # Root project

@@ -52,7 +52,7 @@ class ModularPlugin : Plugin<Project> {
         if (!type.pathContains.isPresent && !type.pathMatches.isPresent && !type.hasPluginId.isPresent) {
           logger.warn(
             "Warning: Module type '$name' will be ignored - you need to set one of " +
-              "pathContains, pathMatches or hasPluginId."
+              "pathContains, pathMatches or hasPluginId.",
           )
         }
       }

@@ -53,6 +53,6 @@ object DiamondGraph : Scenario {
       }
     """.trimIndent(),
 
-    "bottom" to BASIC_JVM_BUILD_SCRIPT
+    "bottom" to BASIC_JVM_BUILD_SCRIPT,
   )
 }

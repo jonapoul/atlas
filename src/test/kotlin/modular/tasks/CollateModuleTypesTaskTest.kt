@@ -37,7 +37,7 @@ class CollateModuleTypesTaskTest : ModularTaskTest() {
         :test-domain,Domain,#123ABC
         :test-ui,Android,#A1B2C3
 
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 
@@ -61,7 +61,7 @@ class CollateModuleTypesTaskTest : ModularTaskTest() {
         :test-domain,Kotlin JVM,#CA66FF
         :test-ui,Android Library,#55FF55
 
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 

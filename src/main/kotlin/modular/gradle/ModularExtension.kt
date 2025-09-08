@@ -28,7 +28,7 @@ open class ModularExtension @Inject constructor(
   val moduleTypes: NamedDomainObjectContainer<ModuleType> = OrderedNamedContainer(
     container = objects.domainObjectContainer(ModuleType::class) { name ->
       objects.newInstance(ModuleType::class, name)
-    }
+    },
   )
 
   val applyToSubprojects: Property<Boolean> = objects
@@ -79,5 +79,4 @@ class ModularDotFileConfig(objects: ObjectFactory, project: Project) {
   val legendDotFile: RegularFileProperty = objects
     .fileProperty()
     .convention(project.rootProject.dotFile(name = "legend"))
-
 }
