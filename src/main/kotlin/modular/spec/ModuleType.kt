@@ -9,7 +9,7 @@ import org.gradle.api.tasks.Input
 import javax.inject.Inject
 
 abstract class ModuleType @Inject constructor(val name: String) {
-  // Optional - defaults to grey
+  // Optional - defaults to white
   @get:Input abstract val color: Property<String>
 
   // Exactly one of these is required
@@ -18,7 +18,7 @@ abstract class ModuleType @Inject constructor(val name: String) {
   @get:Input abstract val hasPluginId: Property<String>
 
   init {
-    color.convention("#FFFFFF") // white
+    color.convention("#FFFFFF")
     pathContains.unsetConvention()
     pathMatches.unsetConvention()
     hasPluginId.unsetConvention()
