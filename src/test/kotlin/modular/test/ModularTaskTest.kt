@@ -14,7 +14,7 @@ abstract class ModularTaskTest {
   protected fun <T> runScenario(scenario: Scenario, test: File.() -> T) {
     val settingsFile = """
       $REPOSITORIES_GRADLE_KTS
-      ${scenario.submoduleBuildFiles.keys.joinToString { name -> "include(\":$name\")\n" }}
+      ${scenario.submoduleBuildFiles.keys.joinToString(separator = "\n") { name -> "include(\":$name\")" }}
     """.trimIndent()
 
     with(projectRoot) {
