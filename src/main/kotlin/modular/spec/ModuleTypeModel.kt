@@ -4,11 +4,10 @@
  */
 package modular.spec
 
-import modular.gradle.Color
 import org.gradle.internal.impldep.kotlinx.serialization.Serializable
 
 @Serializable
 data class ModuleTypeModel(
   val name: String,
-  val color: Color,
+  val color: String,
 ) : java.io.Serializable

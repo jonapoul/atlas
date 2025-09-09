@@ -4,7 +4,6 @@
  */
 package modular.internal
 
-import modular.gradle.Color
 import modular.spec.ModuleTypeModel
 import java.io.File
 
@@ -34,6 +33,6 @@ internal data class TypedModule(
 }
 
 internal fun TypedModule(string: String, separator: String): TypedModule {
-  val (path, name, hexColor) = string.split(separator)
-  return TypedModule(path, ModuleTypeModel(name, Color.from(hexColor)), separator)
+  val (path, name, color) = string.split(separator)
+  return TypedModule(path, ModuleTypeModel(name, color), separator)
 }
