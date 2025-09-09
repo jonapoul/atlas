@@ -7,8 +7,8 @@ env:
   CI: true
 
 permissions:
-  contents: write
-  checks: write
+  contents: read
+  pull-requests: read
 
 concurrency:
   group: 'ci-${{ github.event.merge_group.head_ref || github.head_ref }}-${{ github.workflow }}'
@@ -27,6 +27,7 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: filter
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           filters: |
             build:
               - '**.kts'
