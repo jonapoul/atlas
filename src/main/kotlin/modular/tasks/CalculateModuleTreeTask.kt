@@ -23,11 +23,11 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CalculateModuleTreeTask : DefaultTask() {
+abstract class CalculateModuleTreeTask : DefaultTask(), TaskWithSeparator {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val collatedLinks: RegularFileProperty
   @get:Input abstract val supportUpwardsTraversal: Property<Boolean>
   @get:Input abstract val thisPath: Property<String>
-  @get:Input abstract val separator: Property<String>
+  @get:Input abstract override val separator: Property<String>
   @get:OutputFile abstract val outputFile: RegularFileProperty
 
   init {
@@ -96,7 +96,6 @@ abstract class CalculateModuleTreeTask : DefaultTask() {
     ): TaskProvider<CalculateModuleTreeTask> = with(target) {
       val calculateTree = tasks.register(NAME, CalculateModuleTreeTask::class.java) { task ->
         task.thisPath.set(target.path)
-        task.separator.set(extension.separator)
         task.supportUpwardsTraversal.set(extension.supportUpwardsTraversal)
         task.outputFile.set(fileInReportDirectory("module-tree"))
       }

@@ -6,6 +6,9 @@ package modular.gradle
 
 import modular.internal.ModularProperties
 import modular.internal.OrderedNamedContainer
+import modular.internal.bool
+import modular.internal.set
+import modular.internal.string
 import modular.spec.DotFileOutputSpec
 import modular.spec.ModuleType
 import modular.spec.OutputSpec
@@ -22,7 +25,8 @@ open class ModularExtension @Inject constructor(
   private val project: Project,
 ) {
   private val properties = ModularProperties(project)
-  val outputs: NamedDomainObjectContainer<OutputSpec<*>> = objects.domainObjectContainer(OutputSpec::class.java)
+
+  val outputs: NamedDomainObjectContainer<OutputSpec<*, *>> = objects.domainObjectContainer(OutputSpec::class.java)
 
   val moduleTypes: NamedDomainObjectContainer<ModuleType> = OrderedNamedContainer(
     container = objects.domainObjectContainer(ModuleType::class.java) { name ->
@@ -30,40 +34,13 @@ open class ModularExtension @Inject constructor(
     },
   )
 
-  val autoApplyLeaves: Property<Boolean> = objects
-    .property(Boolean::class.java)
-    .convention(properties.autoApplyLeaves)
-
-  val supportUpwardsTraversal: Property<Boolean> = objects
-    .property(Boolean::class.java)
-    .convention(properties.supportUpwardsTraversal)
-
-  val generateOnSync: Property<Boolean> = objects
-    .property(Boolean::class.java)
-    .convention(properties.generateOnSync)
-
-  val generateReadme: Property<Boolean> = objects
-    .property(Boolean::class.java)
-    .convention(properties.generateReadme)
-
-  val ignoredModules: SetProperty<Regex> = objects
-    .setProperty(Regex::class.java)
-    .convention(emptySet())
-
-  val removeModulePrefix: Property<String> = objects
-    .property(String::class.java)
-    .convention(properties.removeModulePrefix)
-
-  val ignoredConfigs: SetProperty<String> = objects
-    .setProperty(String::class.java)
-    .convention(setOf("debug", "kover", "ksp", "test"))
-
-  /**
-   * Only change if any of your [Project] names or any [ModuleType] names contain a comma.
-   */
-  val separator: Property<String> = objects
-    .property(String::class.java)
-    .convention(properties.separator)
+  val generateOnSync: Property<Boolean> = objects.bool(properties.generateOnSync)
+  val generateReadme: Property<Boolean> = objects.bool(properties.generateReadme)
+  val ignoredConfigs: SetProperty<String> = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
+  val ignoredModules: SetProperty<Regex> = objects.set(convention = emptySet())
+  val removeModulePrefix: Property<String> = objects.string(properties.removeModulePrefix)
+  val separator: Property<String> = objects.string(properties.separator)
+  val supportUpwardsTraversal: Property<Boolean> = objects.bool(properties.supportUpwardsTraversal)
 
   @ModularDsl
   fun dotFile(action: Action<DotFileOutputSpec>? = null) {

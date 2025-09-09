@@ -6,43 +6,38 @@
 
 package modular.gradle
 
-import modular.internal.FILENAME_ROOT
+import modular.internal.configureSeparators
+import modular.spec.DotFileOutputSpec
+import modular.spec.OutputSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.DumpModuleLinksTask
 import modular.tasks.DumpModuleTypeTask
+import modular.tasks.GenerateModulesDotFileTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.file.RegularFile
 
 class ModularLeafPlugin : Plugin<Project> {
   override fun apply(target: Project): Unit = with(target) {
     if (target == rootProject) {
-      error("ModularLeafPlugin is not meant to be applied on a non-root project - you applied it to $path")
+      error("ModularLeafPlugin is only meant to be applied on a non-root project!")
     }
 
     val extension = rootProject.extensions.getByType(ModularExtension::class.java)
-
-    val realDotFile = layout.projectDirectory.file("$FILENAME_ROOT.dot")
+    configureSeparators(extension)
 
     DumpModuleTypeTask.register(project, extension)
     DumpModuleLinksTask.register(project, extension)
-
     CalculateModuleTreeTask.register(project, extension)
 
-    //
-    //    val generateModulesDotFileTask = GenerateModulesDotFileTask.register(
-    //      target = project,
-    //      name = GenerateModulesDotFileTask.TASK_NAME,
-    //      dotFile = provider { realDotFile },
-    //      printOutput = true,
-    //    )
-    //
-    //    val generateTempDotFileTask = GenerateModulesDotFileTask.register(
-    //      target = project,
-    //      name = "generateTempDotFile",
-    //      dotFile = layout.buildDirectory.file("diagrams-modules-temp/$FILENAME_ROOT.dot"),
-    //      printOutput = false,
-    //    )
-    //
+    extension.outputs.configureEach { spec ->
+      val file = outputFile(spec)
+      when (spec) {
+        is DotFileOutputSpec -> registerDotFileTasks(extension, spec, file)
+        else -> error("Unexpected output spec $spec")
+      }
+    }
+
     //    GeneratePngFileTask.registerModules(project, generateModulesDotFileTask)
     //    WriteReadmeTask.register(project)
     //
@@ -53,5 +48,33 @@ class ModularLeafPlugin : Plugin<Project> {
     //        check.dependsOn(checkDotFiles)
     //      }
     //    }
+  }
+
+  private fun Project.registerDotFileTasks(extension: ModularExtension, spec: DotFileOutputSpec, file: RegularFile) {
+    GenerateModulesDotFileTask.register(
+      target = this,
+      name = GenerateModulesDotFileTask.TASK_NAME,
+      spec = spec.chart,
+      dotFile = file,
+      printOutput = true,
+    )
+
+    //    val generateTempDotFileTask = GenerateModulesDotFileTask.register(
+    //      target = this,
+    //      name = "generateTempDotFile",
+    //      chartSpec = TBC,
+    //      dotFile = outputDirectory.map { it.file("modules-temp.dot") },
+    //      printOutput = false,
+    //    )
+  }
+
+  private fun Project.outputFile(spec: OutputSpec<*, *>): RegularFile {
+    val relative = spec.chart
+      .file
+      .get()
+      .asFile
+      .relativeTo(rootProject.projectDir)
+      .path
+    return layout.projectDirectory.file(relative)
   }
 }

@@ -1,4 +1,8 @@
 ---
+complexity:
+  TooManyFunctions:
+    thresholdInFiles: 20
+
 style:
   MaxLineLength:
     maxLineLength: 120
