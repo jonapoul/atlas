@@ -7,6 +7,7 @@
 package modular.gradle
 
 import modular.internal.FILENAME_ROOT
+import modular.internal.HEX_COLOR_REGEX
 import modular.internal.orderedTypes
 import modular.spec.DotFileOutputSpec
 import modular.tasks.CalculateModuleTreeTask
@@ -15,6 +16,7 @@ import modular.tasks.CollateModuleTypesTask
 import modular.tasks.DumpModuleLinksTask
 import modular.tasks.DumpModuleTypeTask
 import modular.tasks.GenerateLegendDotFileTask
+import org.codehaus.groovy.syntax.Types.REGEX_PATTERN
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
@@ -59,6 +61,13 @@ class ModularPlugin : Plugin<Project> {
       val types = extension.orderedTypes()
       if (types.isEmpty()) {
         logger.warn("Warning: No module types have been registered!")
+      }
+
+      extension.moduleTypes.configureEach { type ->
+        val color = type.color.get()
+        if (!color.matches(HEX_COLOR_REGEX)) {
+          error("Invalid color string '$color' - should match regex pattern '$REGEX_PATTERN'")
+        }
       }
 
       types.forEach { type ->
