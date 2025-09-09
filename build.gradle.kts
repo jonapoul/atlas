@@ -20,12 +20,22 @@ gradlePlugin {
   website = "https://github.com/jonapoul/modular"
 
   plugins {
-    create("modular") {
-      id = "dev.jonpoulton.modular"
-      implementationClass = "modular.gradle.ModularPlugin"
-      displayName = "Modular"
-      description = properties["POM_DESCRIPTION"] as String
-      tags.addAll("gradle", "kotlin", "modules", "diagrams", "markdown", "dotfile", "chart")
+    val allTags = listOf("gradle", "kotlin", "modules", "diagrams", "markdown", "dotfile", "chart")
+    val desc = properties["POM_DESCRIPTION"] as String
+
+    create("trunk") {
+      id = "dev.jonpoulton.modular.trunk"
+      implementationClass = "modular.gradle.ModularTrunkPlugin"
+      displayName = "Modular Trunk"
+      description = desc
+      tags.addAll(allTags)
+    }
+    create("leaf") {
+      id = "dev.jonpoulton.modular.leaf"
+      implementationClass = "modular.gradle.ModularLeafPlugin"
+      displayName = "Modular Leaf"
+      description = desc
+      tags.addAll(allTags)
     }
   }
 }

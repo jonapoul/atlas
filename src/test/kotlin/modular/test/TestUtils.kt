@@ -44,7 +44,7 @@ internal fun androidHomeOrSkip(): File {
 internal val BASIC_JAVA_BUILD_SCRIPT = """
   plugins {
     id("java")
-    id("dev.jonpoulton.modular")
+    id("dev.jonpoulton.modular.leaf")
   }
 
 """.trimIndent()
@@ -53,7 +53,7 @@ internal val BASIC_JAVA_BUILD_SCRIPT = """
 internal val BASIC_JVM_BUILD_SCRIPT = """
   plugins {
     kotlin("jvm")
-    id("dev.jonpoulton.modular")
+    id("dev.jonpoulton.modular.leaf")
   }
 """.trimIndent()
 
@@ -62,7 +62,7 @@ internal val BASIC_ANDROID_BUILD_SCRIPT = """
   plugins {
     kotlin("android")
     id("com.android.library")
-    id("dev.jonpoulton.modular")
+    id("dev.jonpoulton.modular.leaf")
   }
 
   android {

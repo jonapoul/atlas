@@ -11,7 +11,7 @@ object NoModuleTypesDeclared : Scenario {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false
-      id("dev.jonpoulton.modular")
+      id("dev.jonpoulton.modular.trunk")
     }
   """.trimIndent()
 
