@@ -48,7 +48,7 @@ class ValidateModuleTypesTest : ModularTaskTest() {
 
     // then the build failed
     assertThat(result.output).contains(
-      "Invalid color string 'ABCXYZ' - should match regex pattern '$REGEX_PATTERN'"
+      "Invalid color string 'ABCXYZ' - should match regex pattern '$REGEX_PATTERN'",
     )
   }
 }

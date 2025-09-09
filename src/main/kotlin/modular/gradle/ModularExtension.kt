@@ -34,9 +34,9 @@ open class ModularExtension @Inject constructor(
     },
   )
 
-  val applyToSubprojects: Property<Boolean> = objects
+  val autoApplyLeaves: Property<Boolean> = objects
     .property<Boolean>()
-    .convention(properties.applyToSubprojects)
+    .convention(properties.autoApplyLeaves)
 
   val supportUpwardsTraversal: Property<Boolean> = objects
     .property<Boolean>()
@@ -83,4 +83,8 @@ open class ModularExtension @Inject constructor(
   //    action?.execute(config)
   //    outputConfigs[MermaidOutputConfig::class] = config
   //  }
+
+  internal companion object {
+    internal const val NAME = "modular"
+  }
 }

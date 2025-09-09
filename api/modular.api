@@ -5,7 +5,7 @@ public class modular/gradle/ModularExtension {
 	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
 	public final fun dotFile (Lorg/gradle/api/Action;)V
 	public static synthetic fun dotFile$default (Lmodular/gradle/ModularExtension;Lorg/gradle/api/Action;ILjava/lang/Object;)V
-	public final fun getApplyToSubprojects ()Lorg/gradle/api/provider/Property;
+	public final fun getAutoApplyLeaves ()Lorg/gradle/api/provider/Property;
 	public final fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
 	public final fun getGenerateReadme ()Lorg/gradle/api/provider/Property;
 	public final fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
@@ -17,8 +17,13 @@ public class modular/gradle/ModularExtension {
 	public final fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/gradle/ModularPlugin : org/gradle/api/Plugin {
-	public static final field EXTENSION_NAME Ljava/lang/String;
+public final class modular/gradle/ModularLeafPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class modular/gradle/ModularTrunkPlugin : org/gradle/api/Plugin {
 	public fun <init> ()V
 	public synthetic fun apply (Ljava/lang/Object;)V
 	public fun apply (Lorg/gradle/api/Project;)V

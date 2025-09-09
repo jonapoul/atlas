@@ -12,7 +12,7 @@ import org.gradle.api.provider.Provider
  */
 internal class ModularProperties(private val project: Project) {
   // General settings
-  val applyToSubprojects: Provider<Boolean> = bool(key = "modular.applyToSubprojects", default = true)
+  val autoApplyLeaves: Provider<Boolean> = bool(key = "modular.autoApplyLeaves", default = true)
   val generateOnSync: Provider<Boolean> = bool(key = "modular.generateOnSync", default = false)
   val generateReadme: Provider<Boolean> = bool(key = "modular.generateReadme", default = false)
   val removeModulePrefix: Provider<String> = string(key = "modular.removeModulePrefix", default = "")
