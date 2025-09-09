@@ -20,6 +20,10 @@ import org.gradle.kotlin.dsl.create
 
 class ModularTrunkPlugin : Plugin<Project> {
   override fun apply(target: Project): Unit = with(target) {
+    if (target != rootProject) {
+      error("ModularTrunkPlugin should only be applied on the root project - you applied it to $path")
+    }
+
     val extension = extensions.create<ModularExtension>(ModularExtension.NAME)
 
     CollateModuleTypesTask.register(project, extension)

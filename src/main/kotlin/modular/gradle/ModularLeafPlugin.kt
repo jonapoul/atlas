@@ -16,6 +16,10 @@ import org.gradle.kotlin.dsl.getByName
 
 class ModularLeafPlugin : Plugin<Project> {
   override fun apply(target: Project): Unit = with(target) {
+    if (target == rootProject) {
+      error("ModularLeafPlugin is not meant to be applied on a non-root project - you applied it to $path")
+    }
+
     val extension = rootProject.extensions.getByName<ModularExtension>(ModularExtension.NAME)
 
     val realDotFile = layout.projectDirectory.file("$FILENAME_ROOT.dot")

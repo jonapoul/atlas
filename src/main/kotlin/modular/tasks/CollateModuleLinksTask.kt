@@ -78,10 +78,6 @@ abstract class CollateModuleLinksTask : DefaultTask() {
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<CollateModuleLinksTask> = with(target) {
-      if (target != rootProject) {
-        error("Should only ever register CollateModuleLinksTask on root project, not $path")
-      }
-
       val task = tasks.register<CollateModuleLinksTask>(NAME) {
         outputFile.set(fileInReportDirectory("module-links"))
         ignoredModules.set(extension.ignoredModules)
