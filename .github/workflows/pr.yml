@@ -1,0 +1,108 @@
+name: PR
+
+on:
+  pull_request:
+
+env:
+  CI: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: 'ci-${{ github.event.merge_group.head_ref || github.head_ref }}-${{ github.workflow }}'
+  cancel-in-progress: true
+
+jobs:
+  identify:
+    runs-on: ubuntu-latest
+    outputs:
+      build: ${{ steps.filter.outputs.build }}
+      github: ${{ steps.filter.outputs.github }}
+      kotlin: ${{ steps.filter.outputs.kotlin }}
+      src: ${{ steps.filter.outputs.src }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filters: |
+            build:
+              - '**.kts'
+              - '**.properties'
+              - '**.conf'
+              - 'build-logic/**'
+              - 'gradle/**'
+            github:
+              - '.github/**'
+            kotlin:
+              - '**.kt'
+              - '**.kts'
+            src:
+              - '**.kt'
+              - '**.kts'
+              - '**/src/**'
+
+  ktlint:
+    needs: [ identify ]
+    if: needs.identify.outputs.kotlin == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Install ktlint
+        run: |
+          curl -sSLO https://github.com/pinterest/ktlint/releases/download/1.7.1/ktlint
+          chmod a+x ktlint
+          sudo mv ktlint /usr/local/bin/
+
+      - name: Run ktlint
+        run: scripts/ktlintCheck.sh
+
+  check:
+    needs: [ identify ]
+    if: needs.identify.outputs.src == 'true' || needs.identify.outputs.build == 'true' || needs.identify.outputs.github == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          ref: ${{ github.head_ref }}
+
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version-file: .github/workflows/.java-version
+          distribution: "zulu"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          add-job-summary: on-failure
+
+      - name: Check
+        run: ./gradlew check
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: check-reports
+          path: |
+            ./*/build/reports
+            ./build/reports
+          if-no-files-found: warn
+
+      - name: Publish test reports
+        uses: mikepenz/action-junit-report@v5
+        if: always()
+        with:
+          report_paths: "**/build/test-results/*/TEST-*.xml"
