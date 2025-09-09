@@ -22,8 +22,6 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.ABSOLUTE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.register
 
 @CacheableTask
 abstract class CollateModuleTypesTask : DefaultTask() {
@@ -55,19 +53,19 @@ abstract class CollateModuleTypesTask : DefaultTask() {
     private const val NAME = "collateModuleTypes"
 
     fun get(target: Project): TaskProvider<CollateModuleTypesTask> =
-      target.tasks.named<CollateModuleTypesTask>(NAME)
+      target.tasks.named(NAME, CollateModuleTypesTask::class.java)
 
     fun register(
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<CollateModuleTypesTask> = with(target) {
-      val task = tasks.register<CollateModuleTypesTask>(NAME) {
-        outputFile.set(fileInReportDirectory("module-types"))
-        separator.set(extension.separator)
+      val collateTypes = tasks.register(NAME, CollateModuleTypesTask::class.java) { task ->
+        task.outputFile.set(fileInReportDirectory("module-types"))
+        task.separator.set(extension.separator)
       }
 
       gradle.projectsEvaluated {
-        task.configure { t ->
+        collateTypes.configure { t ->
           val dumpTasks = rootProject
             .subprojects
             .toList()
@@ -83,7 +81,7 @@ abstract class CollateModuleTypesTask : DefaultTask() {
         }
       }
 
-      task
+      collateTypes
     }
   }
 }

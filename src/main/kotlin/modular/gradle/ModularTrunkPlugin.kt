@@ -16,7 +16,6 @@ import modular.tasks.GenerateLegendDotFileTask
 import org.codehaus.groovy.syntax.Types.REGEX_PATTERN
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.create
 
 class ModularTrunkPlugin : Plugin<Project> {
   override fun apply(target: Project): Unit = with(target) {
@@ -24,7 +23,7 @@ class ModularTrunkPlugin : Plugin<Project> {
       error("ModularTrunkPlugin should only be applied on the root project - you applied it to $path")
     }
 
-    val extension = extensions.create<ModularExtension>(ModularExtension.NAME)
+    val extension = extensions.create(ModularExtension.NAME, ModularExtension::class.java)
 
     CollateModuleTypesTask.register(project, extension)
     CollateModuleLinksTask.register(project, extension)

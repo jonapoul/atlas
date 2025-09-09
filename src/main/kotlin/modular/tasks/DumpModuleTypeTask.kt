@@ -24,8 +24,6 @@ import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.register
 
 @CacheableTask
 abstract class DumpModuleTypeTask : DefaultTask() {
@@ -60,7 +58,7 @@ abstract class DumpModuleTypeTask : DefaultTask() {
     const val NAME = "dumpModuleType"
 
     fun get(target: Project): TaskProvider<DumpModuleTypeTask>? = try {
-      target.tasks.named<DumpModuleTypeTask>(NAME)
+      target.tasks.named(NAME, DumpModuleTypeTask::class.java)
     } catch (_: UnknownTaskException) {
       null
     }
@@ -69,23 +67,23 @@ abstract class DumpModuleTypeTask : DefaultTask() {
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<DumpModuleTypeTask> = with(target) {
-      val task = tasks.register<DumpModuleTypeTask>(NAME) {
-        projectPath.set(target.path)
-        separator.set(extension.separator)
-        outputFile.set(fileInReportDirectory("module-type"))
+      val dumpModule = tasks.register(NAME, DumpModuleTypeTask::class.java) { task ->
+        task.projectPath.set(target.path)
+        task.separator.set(extension.separator)
+        task.outputFile.set(fileInReportDirectory("module-type"))
       }
 
       afterEvaluate {
         val types = extension.orderedTypes()
         val type = types.firstOrNull { t -> t.matches(target) }
         val matching = type?.let(::moduleTypeModel)
-        task.configure { t ->
+        dumpModule.configure { t ->
           t.moduleType.set(matching)
           t.allModuleTypes.set(types.map { it.name })
         }
       }
 
-      task
+      dumpModule
     }
 
     private fun ModuleType.matches(project: Project): Boolean = with(project) {

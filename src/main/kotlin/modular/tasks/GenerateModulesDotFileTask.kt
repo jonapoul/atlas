@@ -25,7 +25,6 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.register
 
 @CacheableTask
 abstract class GenerateModulesDotFileTask : DefaultTask() {
@@ -121,28 +120,28 @@ abstract class GenerateModulesDotFileTask : DefaultTask() {
       val toRemove = providers.gradleProperty(REMOVE_MODULE_PREFIX)
       val replacement = providers.gradleProperty(REPLACEMENT_MODULE_PREFIX)
 
-      val task = tasks.register<GenerateModulesDotFileTask>(name) {
-        group = "reporting"
-        description = "Generates a project dependency graph for $path"
-        this.dotFile.set(dotFile)
-        this.toRemove.set(toRemove)
-        this.separator.set(extension.separator)
-        this.replacement.set(replacement)
-        this.printOutput.set(printOutput)
-        this.thisPath.set(target.path)
+      val generateDotFile = tasks.register(name, GenerateModulesDotFileTask::class.java) { task ->
+        task.group = "reporting"
+        task.description = "Generates a project dependency graph for $path"
+        task.dotFile.set(dotFile)
+        task.toRemove.set(toRemove)
+        task.separator.set(extension.separator)
+        task.replacement.set(replacement)
+        task.printOutput.set(printOutput)
+        task.thisPath.set(target.path)
       }
 
       gradle.projectsEvaluated {
-        val collateModuleTypes = CollateModuleTypesTask.get(rootProject)
+        // val collateModuleTypes = CollateModuleTypesTask.get(rootProject)
         val calculateProjectTree = CalculateModuleTreeTask.get(target)
-        task.configure { t ->
+        generateDotFile.configure { t ->
           t.linksFile.set(calculateProjectTree.map { it.outputFile.get() })
           t.moduleTypesFile.unset()
-          //          t.moduleTypesFile.set(collateModuleTypes.map { it.outputFile.get() })
+          // t.moduleTypesFile.set(collateModuleTypes.map { it.outputFile.get() })
         }
       }
 
-      task
+      generateDotFile
     }
   }
 }

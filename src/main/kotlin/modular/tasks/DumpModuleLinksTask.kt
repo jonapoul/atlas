@@ -19,8 +19,6 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.register
 
 @CacheableTask
 abstract class DumpModuleLinksTask : DefaultTask() {
@@ -53,7 +51,7 @@ abstract class DumpModuleLinksTask : DefaultTask() {
     private const val NAME = "dumpModuleLinks"
 
     fun get(target: Project): TaskProvider<DumpModuleLinksTask>? = try {
-      target.tasks.named<DumpModuleLinksTask>(NAME)
+      target.tasks.named(NAME, DumpModuleLinksTask::class.java)
     } catch (_: UnknownTaskException) {
       null
     }
@@ -62,11 +60,11 @@ abstract class DumpModuleLinksTask : DefaultTask() {
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<DumpModuleLinksTask> = with(target) {
-      tasks.register<DumpModuleLinksTask>(NAME) {
-        thisPath.set(target.path)
-        moduleLinks.set(ModuleLinks.of(target, extension.ignoredConfigs.get()))
-        outputFile.set(fileInReportDirectory("module-links"))
-        separator.set(extension.separator)
+      tasks.register(NAME, DumpModuleLinksTask::class.java) { task ->
+        task.thisPath.set(target.path)
+        task.moduleLinks.set(ModuleLinks.of(target, extension.ignoredConfigs.get()))
+        task.outputFile.set(fileInReportDirectory("module-links"))
+        task.separator.set(extension.separator)
       }
     }
   }

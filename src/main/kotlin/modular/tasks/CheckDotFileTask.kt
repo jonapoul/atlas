@@ -17,7 +17,6 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.register
 
 @CacheableTask
 abstract class CheckDotFileTask : DefaultTask() {
@@ -56,11 +55,11 @@ abstract class CheckDotFileTask : DefaultTask() {
       generateDotFile: TaskProvider<GenerateModulesDotFileTask>,
       realDotFile: RegularFile,
     ): TaskProvider<CheckDotFileTask> = with(target) {
-      tasks.register<CheckDotFileTask>("checkDotFiles") {
-        group = JavaBasePlugin.VERIFICATION_GROUP
-        taskPath.set("$path:${GenerateModulesDotFileTask.TASK_NAME}")
-        expectedDotFile.set(generateDotFile.map { it.dotFile.get() })
-        actualDotFile.set(realDotFile)
+      tasks.register("checkDotFiles", CheckDotFileTask::class.java) { task ->
+        task.group = JavaBasePlugin.VERIFICATION_GROUP
+        task.taskPath.set("$path:${GenerateModulesDotFileTask.TASK_NAME}")
+        task.expectedDotFile.set(generateDotFile.map { it.dotFile.get() })
+        task.actualDotFile.set(realDotFile)
       }
     }
   }

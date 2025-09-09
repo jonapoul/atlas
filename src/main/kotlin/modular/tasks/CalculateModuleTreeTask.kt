@@ -8,13 +8,11 @@ import modular.gradle.ModularExtension
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLink
 import modular.internal.ModuleLinks
-import modular.internal.SUPPORT_UPWARDS_TRAVERSAL
 import modular.internal.fileInReportDirectory
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
-import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
@@ -23,8 +21,6 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.register
 
 @CacheableTask
 abstract class CalculateModuleTreeTask : DefaultTask() {
@@ -92,35 +88,28 @@ abstract class CalculateModuleTreeTask : DefaultTask() {
     private const val NAME = "calculateModuleTree"
 
     fun get(target: Project): TaskProvider<CalculateModuleTreeTask> =
-      target.tasks.named<CalculateModuleTreeTask>(NAME)
+      target.tasks.named(NAME, CalculateModuleTreeTask::class.java)
 
     fun register(
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<CalculateModuleTreeTask> = with(target) {
-      val task = tasks.register<CalculateModuleTreeTask>(NAME) {
-        thisPath.set(target.path)
-        separator.set(extension.separator)
-        supportUpwardsTraversal.set(supportUpwards(extension))
-        outputFile.set(fileInReportDirectory("module-tree"))
+      val calculateTree = tasks.register(NAME, CalculateModuleTreeTask::class.java) { task ->
+        task.thisPath.set(target.path)
+        task.separator.set(extension.separator)
+        task.supportUpwardsTraversal.set(extension.supportUpwardsTraversal)
+        task.outputFile.set(fileInReportDirectory("module-tree"))
       }
 
       gradle.projectsEvaluated {
         val collateProjectLinks = CollateModuleLinksTask.get(rootProject)
-        task.configure { t ->
+        calculateTree.configure { t ->
           t.collatedLinks.set(collateProjectLinks.map { it.outputFile.get() })
           t.dependsOn(collateProjectLinks)
         }
       }
 
-      task
-    }
-
-    private fun Project.supportUpwards(extension: ModularExtension): Provider<Boolean> {
-      val propertyProvider = providers
-        .gradleProperty(SUPPORT_UPWARDS_TRAVERSAL)
-        .map { it.toBoolean() }
-      return extension.supportUpwardsTraversal.orElse(propertyProvider)
+      calculateTree
     }
   }
 }

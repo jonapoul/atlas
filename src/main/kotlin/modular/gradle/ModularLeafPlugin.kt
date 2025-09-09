@@ -12,7 +12,6 @@ import modular.tasks.DumpModuleLinksTask
 import modular.tasks.DumpModuleTypeTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.getByName
 
 class ModularLeafPlugin : Plugin<Project> {
   override fun apply(target: Project): Unit = with(target) {
@@ -20,7 +19,7 @@ class ModularLeafPlugin : Plugin<Project> {
       error("ModularLeafPlugin is not meant to be applied on a non-root project - you applied it to $path")
     }
 
-    val extension = rootProject.extensions.getByName<ModularExtension>(ModularExtension.NAME)
+    val extension = rootProject.extensions.getByType(ModularExtension::class.java)
 
     val realDotFile = layout.projectDirectory.file("$FILENAME_ROOT.dot")
 

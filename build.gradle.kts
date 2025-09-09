@@ -30,6 +30,7 @@ gradlePlugin {
       description = desc
       tags.addAll(allTags)
     }
+
     create("leaf") {
       id = "dev.jonpoulton.modular.leaf"
       implementationClass = "modular.gradle.ModularLeafPlugin"
@@ -57,7 +58,6 @@ val testPluginClasspath by configurations.registering { isCanBeResolved = true }
 
 dependencies {
   compileOnly(libs.kotlin.gradle)
-  compileOnly(gradleKotlinDsl())
 
   testImplementation(gradleTestKit())
   testImplementation(kotlin("test"))
