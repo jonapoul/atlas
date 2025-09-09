@@ -20,8 +20,6 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.register
 
 @CacheableTask
 abstract class GenerateLegendDotFileTask : DefaultTask() {
@@ -68,21 +66,21 @@ abstract class GenerateLegendDotFileTask : DefaultTask() {
     const val TASK_NAME: String = "generateLegendDotFile"
 
     fun get(target: Project): TaskProvider<GenerateLegendDotFileTask> =
-      target.tasks.named<GenerateLegendDotFileTask>(TASK_NAME)
+      target.tasks.named(TASK_NAME, GenerateLegendDotFileTask::class.java)
 
     fun register(
       target: Project,
       config: DotFileOutputSpec,
       extension: ModularExtension,
     ): TaskProvider<GenerateLegendDotFileTask> = with(target) {
-      tasks.register<GenerateLegendDotFileTask>(TASK_NAME) {
-        tableBorder.set(config.legend.tableBorder)
-        cellBorder.set(config.legend.cellBorder)
-        cellSpacing.set(config.legend.cellSpacing)
-        cellPadding.set(config.legend.cellPadding)
-        separator.set(extension.separator)
-        dotFile.set(config.legend.file)
-        moduleTypes.set(extension.orderedTypes().map(::moduleTypeModel))
+      tasks.register(TASK_NAME, GenerateLegendDotFileTask::class.java) { task ->
+        task.tableBorder.set(config.legend.tableBorder)
+        task.cellBorder.set(config.legend.cellBorder)
+        task.cellSpacing.set(config.legend.cellSpacing)
+        task.cellPadding.set(config.legend.cellPadding)
+        task.separator.set(extension.separator)
+        task.dotFile.set(config.legend.file)
+        task.moduleTypes.set(extension.orderedTypes().map(::moduleTypeModel))
       }
     }
   }

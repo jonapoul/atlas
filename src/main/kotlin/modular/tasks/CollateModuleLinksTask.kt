@@ -23,8 +23,6 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.register
 
 @CacheableTask
 abstract class CollateModuleLinksTask : DefaultTask() {
@@ -72,20 +70,20 @@ abstract class CollateModuleLinksTask : DefaultTask() {
     private const val NAME = "collateModuleLinks"
 
     fun get(target: Project): TaskProvider<CollateModuleLinksTask> =
-      target.tasks.named<CollateModuleLinksTask>(NAME)
+      target.tasks.named(NAME, CollateModuleLinksTask::class.java)
 
     fun register(
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<CollateModuleLinksTask> = with(target) {
-      val task = tasks.register<CollateModuleLinksTask>(NAME) {
-        outputFile.set(fileInReportDirectory("module-links"))
-        ignoredModules.set(extension.ignoredModules)
-        separator.set(extension.separator)
+      val collateLinks = tasks.register(NAME, CollateModuleLinksTask::class.java) { task ->
+        task.outputFile.set(fileInReportDirectory("module-links"))
+        task.ignoredModules.set(extension.ignoredModules)
+        task.separator.set(extension.separator)
       }
 
       gradle.projectsEvaluated {
-        task.configure { t ->
+        collateLinks.configure { t ->
           val dumpTasks = rootProject
             .subprojects
             .toList()
@@ -97,7 +95,7 @@ abstract class CollateModuleLinksTask : DefaultTask() {
         }
       }
 
-      task
+      collateLinks
     }
   }
 }

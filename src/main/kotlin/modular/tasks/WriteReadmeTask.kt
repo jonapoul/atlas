@@ -15,7 +15,6 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.register
 
 @CacheableTask
 abstract class WriteReadmeTask : DefaultTask() {
@@ -44,15 +43,15 @@ abstract class WriteReadmeTask : DefaultTask() {
         .map { path.removePrefix(it) }
 
 //      val legendPng = rootProject.file(GenerateLegendDotFileTask.PNG_PATH)
-      val projectDir = layout.projectDirectory.asFile
+//      val projectDir = layout.projectDirectory.asFile
       val legendTask = GenerateLegendDotFileTask.get(rootProject)
 
-      tasks.register<WriteReadmeTask>("writeReadme") {
-        group = "reporting"
-        readmeFile.set(file("README.md"))
-        projectPath.set(modifiedPath)
-//        legendPngRelativePath.set(legendPng.relativeTo(projectDir).toString())
-        dependsOn(legendTask)
+      tasks.register("writeReadme", WriteReadmeTask::class.java) { task ->
+        task.group = "reporting"
+        task.readmeFile.set(file("README.md"))
+        task.projectPath.set(modifiedPath)
+//        task.legendPngRelativePath.set(legendPng.relativeTo(projectDir).toString())
+        task.dependsOn(legendTask)
       }
     }
   }

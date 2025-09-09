@@ -15,10 +15,6 @@ import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
-import org.gradle.kotlin.dsl.domainObjectContainer
-import org.gradle.kotlin.dsl.newInstance
-import org.gradle.kotlin.dsl.property
-import org.gradle.kotlin.dsl.setProperty
 import javax.inject.Inject
 
 open class ModularExtension @Inject constructor(
@@ -26,47 +22,47 @@ open class ModularExtension @Inject constructor(
   private val project: Project,
 ) {
   private val properties = ModularProperties(project)
-  val outputs: NamedDomainObjectContainer<OutputSpec<*>> = objects.domainObjectContainer(OutputSpec::class)
+  val outputs: NamedDomainObjectContainer<OutputSpec<*>> = objects.domainObjectContainer(OutputSpec::class.java)
 
   val moduleTypes: NamedDomainObjectContainer<ModuleType> = OrderedNamedContainer(
-    container = objects.domainObjectContainer(ModuleType::class) { name ->
-      objects.newInstance(ModuleType::class, name)
+    container = objects.domainObjectContainer(ModuleType::class.java) { name ->
+      objects.newInstance(ModuleType::class.java, name)
     },
   )
 
   val autoApplyLeaves: Property<Boolean> = objects
-    .property<Boolean>()
+    .property(Boolean::class.java)
     .convention(properties.autoApplyLeaves)
 
   val supportUpwardsTraversal: Property<Boolean> = objects
-    .property<Boolean>()
+    .property(Boolean::class.java)
     .convention(properties.supportUpwardsTraversal)
 
   val generateOnSync: Property<Boolean> = objects
-    .property<Boolean>()
+    .property(Boolean::class.java)
     .convention(properties.generateOnSync)
 
   val generateReadme: Property<Boolean> = objects
-    .property<Boolean>()
+    .property(Boolean::class.java)
     .convention(properties.generateReadme)
 
   val ignoredModules: SetProperty<Regex> = objects
-    .setProperty<Regex>()
+    .setProperty(Regex::class.java)
     .convention(emptySet())
 
   val removeModulePrefix: Property<String> = objects
-    .property<String>()
+    .property(String::class.java)
     .convention(properties.removeModulePrefix)
 
   val ignoredConfigs: SetProperty<String> = objects
-    .setProperty<String>()
+    .setProperty(String::class.java)
     .convention(setOf("debug", "kover", "ksp", "test"))
 
   /**
    * Only change if any of your [Project] names or any [ModuleType] names contain a comma.
    */
   val separator: Property<String> = objects
-    .property<String>()
+    .property(String::class.java)
     .convention(properties.separator)
 
   @ModularDsl
