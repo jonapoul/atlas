@@ -43,17 +43,14 @@ open class ModularExtension @Inject constructor(
   val separator: Property<String> = objects.string(properties.separator)
   val supportUpwardsTraversal: Property<Boolean> = objects.bool(properties.supportUpwardsTraversal)
 
-  @ModularDsl
-  fun dotFile(action: Action<DotFileOutputSpec>? = null) {
+  @ModularDsl fun dotFile(action: Action<DotFileOutputSpec>? = null) {
     val config = DotFileOutputSpec(objects, project)
     action?.execute(config)
     outputs.add(config)
   }
 
   val moduleNames = ModuleNameSpec(objects)
-
-  @ModularDsl
-  fun moduleNames(action: Action<ModuleNameSpec>) = action.execute(moduleNames)
+  @ModularDsl fun moduleNames(action: Action<ModuleNameSpec>) = action.execute(moduleNames)
 
   //  fun mermaid(action: Action<MermaidOutputConfig>? = null) {
   //    val config = outputConfigs[MermaidOutputConfig::class]

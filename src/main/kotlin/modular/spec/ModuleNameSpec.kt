@@ -15,14 +15,12 @@ import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 class ModuleNameSpec internal constructor(objects: ObjectFactory) {
   val replacements: SetProperty<Replacement> = objects.setProperty(Replacement::class.java)
 
-  @ModularDsl
-  fun replace(
+  @ModularDsl fun replace(
     pattern: Regex,
     replacement: String,
   ) = replacements.add(Replacement(pattern, replacement))
 
-  @ModularDsl
-  fun replace(
+  @ModularDsl fun replace(
     @Language("RegExp") pattern: String,
     replacement: String,
   ) = replacements.add(Replacement(pattern.toRegex(), replacement))
