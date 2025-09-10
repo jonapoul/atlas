@@ -1,0 +1,102 @@
+/**
+ * Copyright © 2025 Jon Poulton
+ * SPDX-License-Identifier: Apache-2.0
+ */
+@file:Suppress("LongParameterList")
+
+package modular.spec
+
+import modular.internal.ModuleLink
+import modular.internal.TypedModule
+
+internal class DotFile(
+  private val typedModules: Set<TypedModule>,
+  private val links: Set<ModuleLink>,
+  private val toRemove: String,
+  private val replacement: String,
+  private val thisPath: String,
+  private val arrowHead: String,
+  private val arrowTail: String,
+  private val dpi: Int,
+  private val fontSize: Int,
+  private val rankDir: RankDir,
+  private val rankSep: Float,
+  private val showArrows: Boolean,
+) {
+  operator fun invoke(): String = buildString {
+    appendLine("digraph {")
+    appendHeader()
+    appendNodes()
+    appendLinks()
+    appendLine("}")
+  }
+
+  private fun StringBuilder.appendHeader() {
+    appendHeaderGroup(
+      name = "edge",
+      items = mapOf(
+        "dir" to if (showArrows) "forward" else "none",
+        "arrowhead" to arrowHead,
+        "arrowtail" to arrowTail,
+      ),
+    )
+    appendHeaderGroup(
+      name = "graph",
+      items = mapOf(
+        "dpi" to dpi,
+        "fontsize" to fontSize,
+        "ranksep" to rankSep,
+        "rankdir" to rankDir,
+      ),
+    )
+    appendHeaderGroup(
+      name = "node",
+      items = mapOf("style" to "filled"),
+    )
+  }
+
+  private fun StringBuilder.appendHeaderGroup(name: String, items: Map<String, Any?>) {
+    append("$name [")
+    val itemsString = items
+      .toList()
+      .joinToString(separator = ",") { (k, v) -> if (v == null) "" else "\"$k\"=\"$v\"" }
+    append(itemsString)
+    append("]")
+    appendLine()
+  }
+
+  private fun StringBuilder.appendLinks() {
+    links
+      .map { link -> link.copy(fromPath = link.fromPath.cleaned(), toPath = link.toPath.cleaned()) }
+      .sortedWith(compareBy({ it.fromPath }, { it.toPath }))
+      .forEach { (fromPath, toPath, configuration) ->
+        val attrs = if (configuration.contains("implementation", ignoreCase = true)) {
+          " [\"style\"=\"dotted\"]"
+        } else {
+          ""
+        }
+        appendLine("\"$fromPath\" -> \"$toPath\"$attrs")
+      }
+  }
+
+  private fun StringBuilder.appendNodes() {
+    typedModules
+      .filter { module -> module in links }
+      .map { it.copy(projectPath = it.projectPath.cleaned()) }
+      .sortedBy { module -> module.projectPath }
+      .forEach { module ->
+        val attrs = if (module.projectPath == thisPath) {
+          "\"color\"=\"black\",\"penwidth\"=\"3\",\"shape\"=\"box\""
+        } else {
+          "\"shape\"=\"none\""
+        }
+
+        appendLine("\"${module.projectPath}\" [\"fillcolor\"=\"${module.type.color}\",$attrs]")
+      }
+  }
+
+  private fun String.cleaned() = replace(toRemove, replacement)
+
+  private operator fun Set<ModuleLink>.contains(module: TypedModule): Boolean =
+    any { (from, to, _) -> from == module.projectPath || to == module.projectPath }
+}

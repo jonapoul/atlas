@@ -30,7 +30,7 @@ abstract class GeneratePngFileTask : DefaultTask() {
   abstract val errorFile: RegularFileProperty
 
   @TaskAction
-  fun action() {
+  fun execute() {
     val dotFile = dotFile.get().asFile.absolutePath
     val pngFile = pngFile.get().asFile
     val errorFile = errorFile.get().asFile
@@ -64,7 +64,7 @@ abstract class GeneratePngFileTask : DefaultTask() {
       val legend = get(rootProject, NAME_LEGEND)
       tasks.register(NAME_MODULES, GeneratePngFileTask::class.java) { task ->
         task.group = "reporting"
-        task.dotFile.set(generateModules.map { it.dotFile.get() })
+        task.dotFile.set(generateModules.map { it.outputFile.get() })
         task.pngFile.set(layout.projectDirectory.file("$FILENAME_ROOT.png"))
         task.errorFile.set(layout.projectDirectory.file("$FILENAME_ROOT-error.log"))
         task.dependsOn(legend)

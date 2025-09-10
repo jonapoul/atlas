@@ -38,7 +38,7 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
     // and contains expected contents, with modules in declaration order
     assertThat(legendFile.readText()).contains(
       """
-        digraph G {
+        digraph {
         node [shape=plaintext]
         table1 [label=<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
@@ -64,7 +64,7 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
     // and contains expected contents, with modules in declaration order
     assertThat(legendFile.readText()).contains(
       """
-        digraph G {
+        digraph {
         node [shape=plaintext]
         table1 [label=<
         <TABLE BORDER="5" CELLBORDER="2" CELLSPACING="4" CELLPADDING="3">
@@ -90,7 +90,7 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
     // and contains expected contents, overriding build script
     assertThat(legendFile.readText()).contains(
       """
-        digraph G {
+        digraph {
         node [shape=plaintext]
         table1 [label=<
         <TABLE BORDER="10" CELLBORDER="20" CELLSPACING="30" CELLPADDING="40">

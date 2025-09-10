@@ -23,7 +23,7 @@ abstract class WriteReadmeTask : DefaultTask() {
   @get:OutputFile abstract val readmeFile: RegularFileProperty
 
   @TaskAction
-  fun action() {
+  fun execute() {
     val legendPngRelativePath = legendPngRelativePath.get()
     val expectedTitle = projectPath.get().removePrefix(prefix = ":")
 

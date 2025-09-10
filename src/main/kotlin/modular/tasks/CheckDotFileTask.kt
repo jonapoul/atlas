@@ -58,7 +58,7 @@ abstract class CheckDotFileTask : DefaultTask() {
       tasks.register("checkDotFiles", CheckDotFileTask::class.java) { task ->
         task.group = JavaBasePlugin.VERIFICATION_GROUP
         task.taskPath.set("$path:${GenerateModulesDotFileTask.TASK_NAME}")
-        task.expectedDotFile.set(generateDotFile.map { it.dotFile.get() })
+        task.expectedDotFile.set(generateDotFile.map { it.outputFile.get() })
         task.actualDotFile.set(realDotFile)
       }
     }

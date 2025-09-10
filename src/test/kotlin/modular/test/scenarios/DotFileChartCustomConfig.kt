@@ -4,12 +4,13 @@
  */
 package modular.test.scenarios
 
-import modular.test.BASIC_JAVA_BUILD_SCRIPT
-import modular.test.BASIC_JVM_BUILD_SCRIPT
 import modular.test.Scenario
 
-object DotFileBasic : Scenario {
+object DotFileChartCustomConfig : Scenario by DotFileBasic {
   override val rootBuildFile = """
+    import modular.spec.ArrowType
+    import modular.spec.RankDir
+
     plugins {
       kotlin("jvm") apply false
       id("dev.jonpoulton.modular.trunk")
@@ -22,21 +23,17 @@ object DotFileBasic : Scenario {
         registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
 
-      dotFile()
+      dotFile {
+        chart {
+          arrowHead = "halfopen"
+          arrowTail(ArrowType.Open)
+          dpi = 150
+          fontSize = 20
+          rankDir = RankDir.LeftToRight
+          rankSep = 2.5f
+          showArrows = false
+        }
+      }
     }
   """.trimIndent()
-
-  override val submoduleBuildFiles = mapOf(
-    "a" to """
-      $BASIC_JVM_BUILD_SCRIPT
-      dependencies {
-        api(project(":b"))
-        implementation(project(":c"))
-      }
-    """.trimIndent(),
-
-    "b" to BASIC_JAVA_BUILD_SCRIPT,
-
-    "c" to BASIC_JAVA_BUILD_SCRIPT,
-  )
 }

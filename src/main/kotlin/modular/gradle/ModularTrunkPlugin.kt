@@ -7,6 +7,7 @@
 package modular.gradle
 
 import modular.internal.HEX_COLOR_REGEX
+import modular.internal.configureSeparators
 import modular.internal.orderedTypes
 import modular.spec.DotFileOutputSpec
 import modular.spec.ModuleType
@@ -24,8 +25,9 @@ class ModularTrunkPlugin : Plugin<Project> {
     }
 
     val extension = extensions.create(ModularExtension.NAME, ModularExtension::class.java)
+    configureSeparators(extension)
 
-    CollateModuleTypesTask.register(project, extension)
+    CollateModuleTypesTask.register(project)
     CollateModuleLinksTask.register(project, extension)
 
     extension.outputs.configureEach { outputConfig ->
@@ -43,20 +45,11 @@ class ModularTrunkPlugin : Plugin<Project> {
     //      GeneratePngFileTask.registerLegend(project, generateLegend)
 
     afterEvaluate {
-      applyLeavesIfConfigured(extension)
       failIfInvalidColors(extension)
 
       val types = extension.orderedTypes()
       warnIfNoModuleTypes(types)
       warnIfModuleTypesSpecifyNothing(types)
-    }
-  }
-
-  private fun Project.applyLeavesIfConfigured(extension: ModularExtension) {
-    if (extension.autoApplyLeaves.get()) {
-      subprojects { p ->
-        p.pluginManager.apply("dev.jonpoulton.modular.leaf")
-      }
     }
   }
 

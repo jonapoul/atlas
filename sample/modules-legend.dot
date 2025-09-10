@@ -1,7 +1,7 @@
-digraph G {
+digraph {
 node [shape=plaintext]
 table1 [label=<
-<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+<TABLE BORDER="4" CELLBORDER="1" CELLSPACING="4" CELLPADDING="4">
 <TR><TD>Android App</TD><TD BGCOLOR="#09AD35">module-name</TD></TR>
 <TR><TD>Kotlin Multiplatform</TD><TD BGCOLOR="#9D8DF1">module-name</TD></TR>
 <TR><TD>Android Library</TD><TD BGCOLOR="#55FF55">module-name</TD></TR>

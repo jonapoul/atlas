@@ -22,18 +22,18 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateLegendDotFileTask : DefaultTask() {
+abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator {
   @get:Input abstract val tableBorder: Property<Int>
   @get:Input abstract val cellBorder: Property<Int>
   @get:Input abstract val cellSpacing: Property<Int>
   @get:Input abstract val cellPadding: Property<Int>
-  @get:Input abstract val separator: Property<String>
+  @get:Input abstract override val separator: Property<String>
   @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
   @get:OutputFile abstract val dotFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP
-    description = "Generates the legend for a project dependency graph."
+    description = "Generates the legend for a project dependency graph"
   }
 
   @TaskAction
@@ -45,7 +45,7 @@ abstract class GenerateLegendDotFileTask : DefaultTask() {
     val moduleTypes = moduleTypes.get()
 
     val dotFileContents = buildString {
-      appendLine("digraph G {")
+      appendLine("digraph {")
       appendLine("node [shape=plaintext]")
       appendLine("table1 [label=<")
       appendLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
@@ -78,7 +78,6 @@ abstract class GenerateLegendDotFileTask : DefaultTask() {
         task.cellBorder.set(config.legend.cellBorder)
         task.cellSpacing.set(config.legend.cellSpacing)
         task.cellPadding.set(config.legend.cellPadding)
-        task.separator.set(extension.separator)
         task.dotFile.set(config.legend.file)
         task.moduleTypes.set(extension.orderedTypes().map(::moduleTypeModel))
       }
