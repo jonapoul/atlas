@@ -9,6 +9,7 @@ import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.appendIndentedLine
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
+import modular.spec.DotFileLegendSpec
 import modular.spec.DotFileOutputSpec
 import modular.spec.ModuleTypeModel
 import org.gradle.api.DefaultTask
@@ -71,15 +72,15 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator {
 
     fun register(
       target: Project,
-      config: DotFileOutputSpec,
+      spec: DotFileLegendSpec,
       extension: ModularExtension,
     ): TaskProvider<GenerateLegendDotFileTask> = with(target) {
       tasks.register(TASK_NAME, GenerateLegendDotFileTask::class.java) { task ->
-        task.tableBorder.set(config.legend.tableBorder)
-        task.cellBorder.set(config.legend.cellBorder)
-        task.cellSpacing.set(config.legend.cellSpacing)
-        task.cellPadding.set(config.legend.cellPadding)
-        task.dotFile.set(config.legend.file)
+        task.tableBorder.set(spec.tableBorder)
+        task.cellBorder.set(spec.cellBorder)
+        task.cellSpacing.set(spec.cellSpacing)
+        task.cellPadding.set(spec.cellPadding)
+        task.dotFile.set(spec.file)
         task.moduleTypes.set(extension.orderedTypes().map(::moduleTypeModel))
       }
     }
