@@ -8,6 +8,8 @@ package modular.spec
 
 import modular.internal.ModuleLink
 import modular.internal.TypedModule
+import modular.internal.appendIndented
+import modular.internal.appendIndentedLine
 
 internal class DotFile(
   private val typedModules: Set<TypedModule>,
@@ -56,7 +58,7 @@ internal class DotFile(
   }
 
   private fun StringBuilder.appendHeaderGroup(name: String, items: Map<String, Any?>) {
-    append("$name [")
+    appendIndented("$name [")
     val itemsString = items
       .toList()
       .joinToString(separator = ",") { (k, v) -> if (v == null) "" else "\"$k\"=\"$v\"" }
@@ -75,7 +77,7 @@ internal class DotFile(
         } else {
           ""
         }
-        appendLine("\"$fromPath\" -> \"$toPath\"$attrs")
+        appendIndentedLine("\"$fromPath\" -> \"$toPath\"$attrs")
       }
   }
 
@@ -101,7 +103,7 @@ internal class DotFile(
     } else {
       "\"shape\"=\"none\""
     }
-    appendLine("\"${module.projectPath}\" [\"fillcolor\"=\"${module.type.color}\",$attrs]")
+    appendIndentedLine("\"${module.projectPath}\" [\"fillcolor\"=\"${module.type.color}\",$attrs]")
   }
 
   private fun String.cleaned() = replace(toRemove, replacement)

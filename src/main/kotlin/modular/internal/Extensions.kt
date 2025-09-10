@@ -56,3 +56,10 @@ internal val Project.outputDirectory: Provider<Directory>
 
 internal fun Project.fileInReportDirectory(path: String): Provider<RegularFile> =
   outputDirectory.map { it.file(path) }
+
+internal fun StringBuilder.appendIndented(value: Any) = append("  $value")
+
+internal fun StringBuilder.appendIndentedLine(value: Any) {
+  appendIndented(value)
+  appendLine()
+}

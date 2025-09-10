@@ -39,14 +39,14 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
     assertThat(legendFile.readText()).contains(
       """
         digraph {
-        node [shape=plaintext]
-        table1 [label=<
-        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-        <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
-        <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
-        <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
-        </TABLE>
-        >];
+          node [shape=plaintext]
+          table1 [label=<
+          <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
+          <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
+          <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
+          </TABLE>
+          >];
         }
       """.trimIndent(),
     )
@@ -65,14 +65,14 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
     assertThat(legendFile.readText()).contains(
       """
         digraph {
-        node [shape=plaintext]
-        table1 [label=<
-        <TABLE BORDER="5" CELLBORDER="2" CELLSPACING="4" CELLPADDING="3">
-        <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
-        <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
-        <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
-        </TABLE>
-        >];
+          node [shape=plaintext]
+          table1 [label=<
+          <TABLE BORDER="5" CELLBORDER="2" CELLSPACING="4" CELLPADDING="3">
+          <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
+          <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
+          <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
+          </TABLE>
+          >];
         }
       """.trimIndent(),
     )
@@ -91,14 +91,14 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
     assertThat(legendFile.readText()).contains(
       """
         digraph {
-        node [shape=plaintext]
-        table1 [label=<
-        <TABLE BORDER="10" CELLBORDER="20" CELLSPACING="30" CELLPADDING="40">
-        <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
-        <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
-        <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
-        </TABLE>
-        >];
+          node [shape=plaintext]
+          table1 [label=<
+          <TABLE BORDER="10" CELLBORDER="20" CELLSPACING="30" CELLPADDING="40">
+          <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
+          <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
+          <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
+          </TABLE>
+          >];
         }
       """.trimIndent(),
     )

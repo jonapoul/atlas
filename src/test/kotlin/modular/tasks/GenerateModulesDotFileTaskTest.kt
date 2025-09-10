@@ -40,14 +40,14 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
     assertThat(dotFileA.readText()).contains(
       """
         digraph {
-        edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
-        graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
-        node ["style"="filled"]
-        ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
-        ":b" ["fillcolor"="#FF8800","shape"="none"]
-        ":c" ["fillcolor"="#FF8800","shape"="none"]
-        ":a" -> ":b"
-        ":a" -> ":c" ["style"="dotted"]
+          edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
+          graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+          node ["style"="filled"]
+          ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          ":b" ["fillcolor"="#FF8800","shape"="none"]
+          ":c" ["fillcolor"="#FF8800","shape"="none"]
+          ":a" -> ":b"
+          ":a" -> ":c" ["style"="dotted"]
         }
       """.trimIndent(),
     )
@@ -55,20 +55,20 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
     assertThat(dotFileB.readText()).contains(
       """
         digraph {
-        edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
-        graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
-        node ["style"="filled"]
-        ":b" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
+          edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
+          graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+          node ["style"="filled"]
+          ":b" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
         }
       """.trimIndent(),
     )
     assertThat(dotFileC.readText()).contains(
       """
         digraph {
-        edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
-        graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
-        node ["style"="filled"]
-        ":c" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
+          edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
+          graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+          node ["style"="filled"]
+          ":c" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
         }
       """.trimIndent(),
     )
@@ -87,14 +87,14 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
     assertThat(dotFile.readText()).contains(
       """
         digraph {
-        edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
-        graph ["dpi"="150","fontsize"="20","ranksep"="2.5","rankdir"="LR"]
-        node ["style"="filled"]
-        ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
-        ":b" ["fillcolor"="#FF8800","shape"="none"]
-        ":c" ["fillcolor"="#FF8800","shape"="none"]
-        ":a" -> ":b"
-        ":a" -> ":c" ["style"="dotted"]
+          edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
+          graph ["dpi"="150","fontsize"="20","ranksep"="2.5","rankdir"="LR"]
+          node ["style"="filled"]
+          ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          ":b" ["fillcolor"="#FF8800","shape"="none"]
+          ":c" ["fillcolor"="#FF8800","shape"="none"]
+          ":a" -> ":b"
+          ":a" -> ":c" ["style"="dotted"]
         }
       """.trimIndent(),
     )
@@ -113,14 +113,14 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
     assertThat(dotFile.readText()).contains(
       """
         digraph {
-        edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
-        graph ["dpi"="150","fontsize"="20","ranksep"="2.5","rankdir"="LR"]
-        node ["style"="filled"]
-        ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
-        ":b" ["fillcolor"="#FF8800","shape"="none"]
-        ":c" ["fillcolor"="#FF8800","shape"="none"]
-        ":a" -> ":b"
-        ":a" -> ":c" ["style"="dotted"]
+          edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
+          graph ["dpi"="150","fontsize"="20","ranksep"="2.5","rankdir"="LR"]
+          node ["style"="filled"]
+          ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          ":b" ["fillcolor"="#FF8800","shape"="none"]
+          ":c" ["fillcolor"="#FF8800","shape"="none"]
+          ":a" -> ":b"
+          ":a" -> ":c" ["style"="dotted"]
         }
       """.trimIndent(),
     )
