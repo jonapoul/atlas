@@ -7,6 +7,7 @@ package modular.internal
 import modular.gradle.ModularExtension
 import modular.spec.ModuleType
 import modular.spec.ModuleTypeModel
+import modular.tasks.ModularGenerationTask
 import modular.tasks.TaskWithSeparator
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
@@ -48,6 +49,17 @@ internal inline fun <reified E : Enum<E>> ObjectFactory.enum(convention: Provide
 internal fun Project.configureSeparators(extension: ModularExtension) {
   tasks.withType(TaskWithSeparator::class.java).configureEach { t ->
     t.separator.convention(extension.separator)
+  }
+}
+
+internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
+  afterEvaluate {
+    val isGradleSync = System.getProperty("idea.sync.active") == "true"
+
+    if (extension.generateOnSync.get() && isGradleSync) {
+      val modularGenerationTasks = tasks.withType(ModularGenerationTask::class.java)
+      tasks.maybeCreate("prepareKotlinIdeaImport").dependsOn(modularGenerationTasks)
+    }
   }
 }
 

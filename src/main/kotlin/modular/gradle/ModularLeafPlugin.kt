@@ -7,6 +7,7 @@
 package modular.gradle
 
 import modular.internal.configureSeparators
+import modular.internal.registerGenerationTaskOnSync
 import modular.spec.DotFileOutputSpec
 import modular.spec.OutputSpec
 import modular.tasks.CalculateModuleTreeTask
@@ -25,6 +26,7 @@ class ModularLeafPlugin : Plugin<Project> {
 
     val extension = rootProject.extensions.getByType(ModularExtension::class.java)
     configureSeparators(extension)
+    registerGenerationTaskOnSync(extension)
 
     DumpModuleTypeTask.register(project, extension)
     DumpModuleLinksTask.register(project, extension)

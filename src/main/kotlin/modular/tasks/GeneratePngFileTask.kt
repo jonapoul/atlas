@@ -18,7 +18,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GeneratePngFileTask : DefaultTask() {
+abstract class GeneratePngFileTask : DefaultTask(), ModularGenerationTask {
   @get:PathSensitive(RELATIVE)
   @get:InputFile
   abstract val dotFile: RegularFileProperty

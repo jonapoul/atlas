@@ -28,7 +28,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateModulesDotFileTask : DefaultTask(), TaskWithSeparator {
+abstract class GenerateModulesDotFileTask : DefaultTask(), TaskWithSeparator, ModularGenerationTask {
   // Files
   @get:[PathSensitive(RELATIVE) InputFile] abstract val linksFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] abstract val moduleTypesFile: RegularFileProperty

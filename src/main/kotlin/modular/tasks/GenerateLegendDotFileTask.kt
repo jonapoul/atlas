@@ -23,7 +23,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator {
+abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, ModularGenerationTask {
   @get:Input abstract val tableBorder: Property<Int>
   @get:Input abstract val cellBorder: Property<Int>
   @get:Input abstract val cellSpacing: Property<Int>

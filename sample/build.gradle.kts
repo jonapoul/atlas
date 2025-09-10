@@ -10,6 +10,8 @@ plugins {
 }
 
 modular {
+  generateOnSync = true
+
   moduleTypes {
     builtIns()
   }
