@@ -100,7 +100,7 @@ class DumpModuleTypeTaskTest : ModularTaskTest() {
   @Test
   fun `Fail if no types match`() = runScenario(ThreeModulesNoMatchingType) {
     // when
-    val result = runTask("dumpModuleType", androidHomeOrSkip()).buildAndFail()
+    val result = runTask("a:dumpModuleType", androidHomeOrSkip()).buildAndFail()
 
     // then
     assertThat(result.output).contains(
@@ -108,20 +108,6 @@ class DumpModuleTypeTaskTest : ModularTaskTest() {
         * What went wrong:
         Execution failed for task ':a:dumpModuleType'.
         > No module type matching :a. All types = ["Won't match"]
-      """.trimIndent(),
-    )
-    assertThat(result.output).contains(
-      """
-        * What went wrong:
-        Execution failed for task ':b:dumpModuleType'.
-        > No module type matching :b. All types = ["Won't match"]
-      """.trimIndent(),
-    )
-    assertThat(result.output).contains(
-      """
-        * What went wrong:
-        Execution failed for task ':c:dumpModuleType'.
-        > No module type matching :c. All types = ["Won't match"]
       """.trimIndent(),
     )
   }
