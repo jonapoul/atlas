@@ -9,6 +9,7 @@ package modular.gradle
 import modular.internal.HEX_COLOR_REGEX
 import modular.internal.configureSeparators
 import modular.internal.orderedTypes
+import modular.internal.registerGenerationTaskOnSync
 import modular.spec.DotFileOutputSpec
 import modular.spec.ModuleType
 import modular.tasks.CollateModuleLinksTask
@@ -26,6 +27,7 @@ class ModularTrunkPlugin : Plugin<Project> {
 
     val extension = extensions.create(ModularExtension.NAME, ModularExtension::class.java)
     configureSeparators(extension)
+    registerGenerationTaskOnSync(extension)
 
     CollateModuleTypesTask.register(project)
     CollateModuleLinksTask.register(project, extension)

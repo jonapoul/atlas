@@ -264,7 +264,7 @@ public final class modular/tasks/DumpModuleTypeTask$Companion {
 	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
 }
 
-public abstract class modular/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithSeparator {
+public abstract class modular/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithSeparator {
 	public static final field Companion Lmodular/tasks/GenerateLegendDotFileTask$Companion;
 	public static final field TASK_NAME Ljava/lang/String;
 	public fun <init> ()V
@@ -283,7 +283,7 @@ public final class modular/tasks/GenerateLegendDotFileTask$Companion {
 	public final fun register (Lorg/gradle/api/Project;Lmodular/spec/DotFileLegendSpec;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
 }
 
-public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithSeparator {
+public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithSeparator {
 	public static final field Companion Lmodular/tasks/GenerateModulesDotFileTask$Companion;
 	public static final field TASK_NAME Ljava/lang/String;
 	public fun <init> ()V
@@ -308,7 +308,7 @@ public final class modular/tasks/GenerateModulesDotFileTask$Companion {
 	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/spec/ModuleNameSpec;Lmodular/spec/DotFileChartSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
 }
 
-public abstract class modular/tasks/GeneratePngFileTask : org/gradle/api/DefaultTask {
+public abstract class modular/tasks/GeneratePngFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask {
 	public static final field Companion Lmodular/tasks/GeneratePngFileTask$Companion;
 	public static final field NAME_LEGEND Ljava/lang/String;
 	public static final field NAME_MODULES Ljava/lang/String;
