@@ -12,7 +12,15 @@ plugins {
   alias(libs.plugins.licensee)
   alias(libs.plugins.publish)
   alias(libs.plugins.spotless)
-  id("java-gradle-plugin")
+  `java-gradle-plugin`
+  idea
+}
+
+idea {
+  module {
+    isDownloadJavadoc = true
+    isDownloadSources = true
+  }
 }
 
 gradlePlugin {

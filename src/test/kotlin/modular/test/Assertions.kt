@@ -5,6 +5,7 @@
 package modular.test
 
 import assertk.Assert
+import assertk.assertions.support.expected
 import assertk.fail
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.BuildTask
@@ -31,4 +32,11 @@ internal fun Assert<File>.contentEquals(expected: String) = given { file ->
   val contents = file.readText()
   if (contents == expected) return@given
   fail("Failed contentEquals: expected='$expected', actual='$contents'")
+}
+
+// Copied from assertk repo but they haven't published in ages
+// https://github.com/assertk-org/assertk/blob/main/assertk/src/jvmMain/kotlin/assertk/assertions/file.kt
+internal fun Assert<File>.doesNotExist() = given { actual ->
+  if (!actual.exists()) return
+  expected("not to exist")
 }

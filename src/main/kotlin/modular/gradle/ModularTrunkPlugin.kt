@@ -7,15 +7,20 @@
 package modular.gradle
 
 import modular.internal.HEX_COLOR_REGEX
+import modular.internal.MODULAR_TASK_GROUP
+import modular.internal.configureSeparators
 import modular.internal.orderedTypes
-import modular.spec.DotFileOutputSpec
+import modular.internal.registerGenerationTaskOnSync
+import modular.spec.DotFileSpec
 import modular.spec.ModuleType
 import modular.tasks.CollateModuleLinksTask
 import modular.tasks.CollateModuleTypesTask
+import modular.tasks.GenerateGraphvizFileTask
 import modular.tasks.GenerateLegendDotFileTask
 import org.codehaus.groovy.syntax.Types.REGEX_PATTERN
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.TaskProvider
 
 class ModularTrunkPlugin : Plugin<Project> {
   override fun apply(target: Project): Unit = with(target) {
@@ -24,39 +29,30 @@ class ModularTrunkPlugin : Plugin<Project> {
     }
 
     val extension = extensions.create(ModularExtension.NAME, ModularExtension::class.java)
+    configureSeparators(extension)
+    registerGenerationTaskOnSync(extension)
 
-    CollateModuleTypesTask.register(project, extension)
+    CollateModuleTypesTask.register(project)
     CollateModuleLinksTask.register(project, extension)
 
-    extension.outputs.configureEach { outputConfig ->
-      when (outputConfig) {
-        is DotFileOutputSpec -> GenerateLegendDotFileTask.register(
-          target = project,
-          config = outputConfig,
-          extension = extension,
-        )
-
-        else -> error("Unknown output config $outputConfig")
-      }
+    val generateLegend = tasks.register("generateLegend") { t ->
+      t.group = MODULAR_TASK_GROUP
+      t.description = "Wrapper task for the other 'generateLegendX' tasks"
     }
 
-    //      GeneratePngFileTask.registerLegend(project, generateLegend)
+    extension.specs.configureEach { spec ->
+      val tasks = when (spec) {
+        is DotFileSpec -> registerDotFileTasks(extension, spec)
+      }
+      generateLegend.get().dependsOn(tasks)
+    }
 
     afterEvaluate {
-      applyLeavesIfConfigured(extension)
       failIfInvalidColors(extension)
 
       val types = extension.orderedTypes()
       warnIfNoModuleTypes(types)
       warnIfModuleTypesSpecifyNothing(types)
-    }
-  }
-
-  private fun Project.applyLeavesIfConfigured(extension: ModularExtension) {
-    if (extension.autoApplyLeaves.get()) {
-      subprojects { p ->
-        p.pluginManager.apply("dev.jonpoulton.modular.leaf")
-      }
     }
   }
 
@@ -85,4 +81,26 @@ class ModularTrunkPlugin : Plugin<Project> {
       }
     }
   }
+
+  private fun Project.registerDotFileTasks(
+    extension: ModularExtension,
+    spec: DotFileSpec,
+  ): List<TaskProvider<GenerateGraphvizFileTask>> = spec.legend
+    ?.let { legend ->
+      // Only create a legend if one of the legend functions was explicitly called
+      val dotFileTask = GenerateLegendDotFileTask.register(
+        target = this,
+        legendSpec = legend,
+        spec = spec,
+        extension = extension,
+      )
+
+      GenerateGraphvizFileTask.register(
+        target = this,
+        output = extension.outputs,
+        spec = spec,
+        variant = Variant.Legend,
+        dotFileTask = dotFileTask,
+      )
+    }.orEmpty()
 }

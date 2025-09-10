@@ -4,7 +4,6 @@
  */
 package modular.tasks
 
-import modular.gradle.ModularExtension
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.TypedModule
 import modular.internal.TypedModules
@@ -24,10 +23,10 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CollateModuleTypesTask : DefaultTask() {
+abstract class CollateModuleTypesTask : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:[PathSensitive(ABSOLUTE) InputFiles] abstract val projectTypeFiles: ConfigurableFileCollection
-  @get:Input abstract val separator: Property<String>
-  @get:OutputFile abstract val outputFile: RegularFileProperty
+  @get:Input abstract override val separator: Property<String>
+  @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP
@@ -55,13 +54,9 @@ abstract class CollateModuleTypesTask : DefaultTask() {
     fun get(target: Project): TaskProvider<CollateModuleTypesTask> =
       target.tasks.named(NAME, CollateModuleTypesTask::class.java)
 
-    fun register(
-      target: Project,
-      extension: ModularExtension,
-    ): TaskProvider<CollateModuleTypesTask> = with(target) {
+    fun register(target: Project): TaskProvider<CollateModuleTypesTask> = with(target) {
       val collateTypes = tasks.register(NAME, CollateModuleTypesTask::class.java) { task ->
         task.outputFile.set(fileInReportDirectory("module-types"))
-        task.separator.set(extension.separator)
       }
 
       gradle.projectsEvaluated {

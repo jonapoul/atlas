@@ -4,6 +4,8 @@
  */
 package modular.test.scenarios
 
+import modular.test.BASIC_JAVA_BUILD_SCRIPT
+import modular.test.BASIC_JVM_BUILD_SCRIPT
 import modular.test.Scenario
 
 object DotFileBasic : Scenario {
@@ -23,4 +25,18 @@ object DotFileBasic : Scenario {
       dotFile()
     }
   """.trimIndent()
+
+  override val submoduleBuildFiles = mapOf(
+    "a" to """
+      $BASIC_JVM_BUILD_SCRIPT
+      dependencies {
+        api(project(":b"))
+        implementation(project(":c"))
+      }
+    """.trimIndent(),
+
+    "b" to BASIC_JAVA_BUILD_SCRIPT,
+
+    "c" to BASIC_JAVA_BUILD_SCRIPT,
+  )
 }

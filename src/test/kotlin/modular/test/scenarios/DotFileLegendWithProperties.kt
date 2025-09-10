@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileLegendWithProperties : Scenario by DotFileBasic {
+object DotFileLegendWithProperties : Scenario by DotFileBasicWithBasicLegend {
   override val gradlePropertiesFile = """
     modular.dotfile.legend.tableBorder=10
     modular.dotfile.legend.cellBorder=20

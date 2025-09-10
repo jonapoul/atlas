@@ -1,4 +1,10 @@
 ---
+complexity:
+  LongParameterList:
+    functionThreshold: 8
+  TooManyFunctions:
+    thresholdInFiles: 20
+
 style:
   MaxLineLength:
     maxLineLength: 120

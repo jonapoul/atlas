@@ -6,9 +6,13 @@ package modular.gradle
 
 import modular.internal.ModularProperties
 import modular.internal.OrderedNamedContainer
-import modular.spec.DotFileOutputSpec
+import modular.internal.bool
+import modular.internal.set
+import modular.internal.string
+import modular.spec.DotFileSpec
+import modular.spec.ModuleNameSpec
 import modular.spec.ModuleType
-import modular.spec.OutputSpec
+import modular.spec.Spec
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
@@ -22,55 +26,33 @@ open class ModularExtension @Inject constructor(
   private val project: Project,
 ) {
   private val properties = ModularProperties(project)
-  val outputs: NamedDomainObjectContainer<OutputSpec<*>> = objects.domainObjectContainer(OutputSpec::class.java)
 
-  val moduleTypes: NamedDomainObjectContainer<ModuleType> = OrderedNamedContainer(
+  @ModularDsl val moduleTypes: NamedDomainObjectContainer<ModuleType> = OrderedNamedContainer(
     container = objects.domainObjectContainer(ModuleType::class.java) { name ->
       objects.newInstance(ModuleType::class.java, name)
     },
   )
 
-  val autoApplyLeaves: Property<Boolean> = objects
-    .property(Boolean::class.java)
-    .convention(properties.autoApplyLeaves)
+  val generateOnSync: Property<Boolean> = objects.bool(properties.generateOnSync)
+  val generateReadme: Property<Boolean> = objects.bool(properties.generateReadme)
+  val ignoredConfigs: SetProperty<String> = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
+  val ignoredModules: SetProperty<Regex> = objects.set(convention = emptySet())
+  val separator: Property<String> = objects.string(properties.separator)
+  val supportUpwardsTraversal: Property<Boolean> = objects.bool(properties.supportUpwardsTraversal)
 
-  val supportUpwardsTraversal: Property<Boolean> = objects
-    .property(Boolean::class.java)
-    .convention(properties.supportUpwardsTraversal)
+  val outputs = OutputSpec(objects, project)
+  @ModularDsl fun outputs(action: Action<OutputSpec>) = action.execute(outputs)
 
-  val generateOnSync: Property<Boolean> = objects
-    .property(Boolean::class.java)
-    .convention(properties.generateOnSync)
+  val specs: NamedDomainObjectContainer<Spec<*, *>> = objects.domainObjectContainer(Spec::class.java)
 
-  val generateReadme: Property<Boolean> = objects
-    .property(Boolean::class.java)
-    .convention(properties.generateReadme)
-
-  val ignoredModules: SetProperty<Regex> = objects
-    .setProperty(Regex::class.java)
-    .convention(emptySet())
-
-  val removeModulePrefix: Property<String> = objects
-    .property(String::class.java)
-    .convention(properties.removeModulePrefix)
-
-  val ignoredConfigs: SetProperty<String> = objects
-    .setProperty(String::class.java)
-    .convention(setOf("debug", "kover", "ksp", "test"))
-
-  /**
-   * Only change if any of your [Project] names or any [ModuleType] names contain a comma.
-   */
-  val separator: Property<String> = objects
-    .property(String::class.java)
-    .convention(properties.separator)
-
-  @ModularDsl
-  fun dotFile(action: Action<DotFileOutputSpec>? = null) {
-    val config = DotFileOutputSpec(objects, project)
-    action?.execute(config)
-    outputs.add(config)
+  @ModularDsl fun dotFile(action: Action<DotFileSpec>? = null) {
+    val spec = DotFileSpec(objects, project)
+    action?.execute(spec)
+    specs.add(spec)
   }
+
+  val moduleNames = ModuleNameSpec(objects)
+  @ModularDsl fun moduleNames(action: Action<ModuleNameSpec>) = action.execute(moduleNames)
 
   //  fun mermaid(action: Action<MermaidOutputConfig>? = null) {
   //    val config = outputConfigs[MermaidOutputConfig::class]

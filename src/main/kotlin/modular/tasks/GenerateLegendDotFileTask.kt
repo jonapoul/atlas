@@ -6,9 +6,11 @@ package modular.tasks
 
 import modular.gradle.ModularExtension
 import modular.internal.MODULAR_TASK_GROUP
+import modular.internal.appendIndentedLine
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
-import modular.spec.DotFileOutputSpec
+import modular.spec.DotFileLegendSpec
+import modular.spec.DotFileSpec
 import modular.spec.ModuleTypeModel
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -22,18 +24,18 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateLegendDotFileTask : DefaultTask() {
+abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, ModularGenerationTask, TaskWithOutputFile {
   @get:Input abstract val tableBorder: Property<Int>
   @get:Input abstract val cellBorder: Property<Int>
   @get:Input abstract val cellSpacing: Property<Int>
   @get:Input abstract val cellPadding: Property<Int>
-  @get:Input abstract val separator: Property<String>
+  @get:Input abstract override val separator: Property<String>
   @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
-  @get:OutputFile abstract val dotFile: RegularFileProperty
+  @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP
-    description = "Generates the legend for a project dependency graph."
+    description = "Generates the legend for a project dependency graph"
   }
 
   @TaskAction
@@ -45,21 +47,21 @@ abstract class GenerateLegendDotFileTask : DefaultTask() {
     val moduleTypes = moduleTypes.get()
 
     val dotFileContents = buildString {
-      appendLine("digraph G {")
-      appendLine("node [shape=plaintext]")
-      appendLine("table1 [label=<")
-      appendLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
+      appendLine("digraph {")
+      appendIndentedLine("node [shape=plaintext]")
+      appendIndentedLine("table1 [label=<")
+      appendIndentedLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
       moduleTypes.forEach { type ->
-        appendLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">module-name</TD></TR>")
+        appendIndentedLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">module-name</TD></TR>")
       }
-      appendLine("</TABLE>")
-      appendLine(">];")
+      appendIndentedLine("</TABLE>")
+      appendIndentedLine(">];")
       appendLine("}")
     }
 
-    dotFile.get().asFile.writeText(dotFileContents)
+    outputFile.get().asFile.writeText(dotFileContents)
 
-    logger.lifecycle("Written ${dotFileContents.length} chars to ${dotFile.get().asFile}")
+    logger.lifecycle("Written ${dotFileContents.length} chars to ${outputFile.get().asFile}")
   }
 
   companion object {
@@ -70,16 +72,22 @@ abstract class GenerateLegendDotFileTask : DefaultTask() {
 
     fun register(
       target: Project,
-      config: DotFileOutputSpec,
+      legendSpec: DotFileLegendSpec,
+      spec: DotFileSpec,
       extension: ModularExtension,
     ): TaskProvider<GenerateLegendDotFileTask> = with(target) {
+      val outputFile = extension.outputs.legendOutputDirectory.map { dir ->
+        val filename = extension.outputs.legendRootFilename.get()
+        val fileExtension = spec.extension.get()
+        dir.file("$filename.$fileExtension")
+      }
+
       tasks.register(TASK_NAME, GenerateLegendDotFileTask::class.java) { task ->
-        task.tableBorder.set(config.legend.tableBorder)
-        task.cellBorder.set(config.legend.cellBorder)
-        task.cellSpacing.set(config.legend.cellSpacing)
-        task.cellPadding.set(config.legend.cellPadding)
-        task.separator.set(extension.separator)
-        task.dotFile.set(config.legend.file)
+        task.tableBorder.set(legendSpec.tableBorder)
+        task.cellBorder.set(legendSpec.cellBorder)
+        task.cellSpacing.set(legendSpec.cellSpacing)
+        task.cellPadding.set(legendSpec.cellPadding)
+        task.outputFile.set(outputFile)
         task.moduleTypes.set(extension.orderedTypes().map(::moduleTypeModel))
       }
     }

@@ -21,15 +21,15 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class DumpModuleLinksTask : DefaultTask() {
+abstract class DumpModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract val moduleLinks: MapProperty<String, List<String>>
   @get:Input abstract val thisPath: Property<String>
-  @get:Input abstract val separator: Property<String>
-  @get:OutputFile abstract val outputFile: RegularFileProperty
+  @get:Input abstract override val separator: Property<String>
+  @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP
-    description = "Finds links between this module and its children."
+    description = "Finds links between this module and its children"
   }
 
   @TaskAction
@@ -64,7 +64,6 @@ abstract class DumpModuleLinksTask : DefaultTask() {
         task.thisPath.set(target.path)
         task.moduleLinks.set(ModuleLinks.of(target, extension.ignoredConfigs.get()))
         task.outputFile.set(fileInReportDirectory("module-links"))
-        task.separator.set(extension.separator)
       }
     }
   }
