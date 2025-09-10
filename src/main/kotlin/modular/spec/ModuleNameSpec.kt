@@ -29,7 +29,7 @@ class ModuleNameSpec internal constructor(objects: ObjectFactory) {
 }
 
 @Serializable
-data class Replacement(
+class Replacement(
   val pattern: Regex,
   val replacement: String,
 ) : java.io.Serializable

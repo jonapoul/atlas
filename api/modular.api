@@ -168,17 +168,10 @@ public final class modular/spec/RankDir : java/lang/Enum {
 	public static fun values ()[Lmodular/spec/RankDir;
 }
 
-public final class modular/spec/Replacement {
+public final class modular/spec/Replacement : java/io/Serializable {
 	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
-	public final fun component1 ()Lkotlin/text/Regex;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Lkotlin/text/Regex;Ljava/lang/String;)Lmodular/spec/Replacement;
-	public static synthetic fun copy$default (Lmodular/spec/Replacement;Lkotlin/text/Regex;Ljava/lang/String;ILjava/lang/Object;)Lmodular/spec/Replacement;
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun getPattern ()Lkotlin/text/Regex;
 	public final fun getReplacement ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithSeparator {
@@ -377,7 +370,5 @@ public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {
 	public static final fun registerByPathContains (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun registerByPathMatches (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun registerByPluginId (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun replacedBy (Ljava/lang/String;Ljava/lang/String;)Lmodular/spec/Replacement;
-	public static final fun replacedBy (Lkotlin/text/Regex;Ljava/lang/String;)Lmodular/spec/Replacement;
 }
 

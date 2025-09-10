@@ -108,7 +108,7 @@ internal class DotFile(
 
   private fun String.cleaned(): String {
     var string = this
-    replacements.forEach { (pattern, replacement) -> string = string.replace(pattern, replacement) }
+    replacements.forEach { r -> string = string.replace(r.pattern, r.replacement) }
     return string
   }
 
