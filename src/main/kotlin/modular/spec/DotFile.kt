@@ -14,8 +14,7 @@ import modular.internal.appendIndentedLine
 internal class DotFile(
   private val typedModules: Set<TypedModule>,
   private val links: Set<ModuleLink>,
-  private val toRemove: String,
-  private val replacement: String,
+  private val replacements: Set<Replacement>,
   private val thisPath: String,
   private val arrowHead: String,
   private val arrowTail: String,
@@ -98,15 +97,20 @@ internal class DotFile(
   }
 
   private fun StringBuilder.appendNode(module: TypedModule) {
-    val attrs = if (module.projectPath == thisPath) {
+    val path = module.projectPath.cleaned()
+    val attrs = if (thisPath.cleaned() == path) {
       "\"color\"=\"black\",\"penwidth\"=\"3\",\"shape\"=\"box\""
     } else {
       "\"shape\"=\"none\""
     }
-    appendIndentedLine("\"${module.projectPath}\" [\"fillcolor\"=\"${module.type.color}\",$attrs]")
+    appendIndentedLine("\"$path\" [\"fillcolor\"=\"${module.type.color}\",$attrs]")
   }
 
-  private fun String.cleaned() = replace(toRemove, replacement)
+  private fun String.cleaned(): String {
+    var string = this
+    replacements.forEach { (pattern, replacement) -> string = string.replace(pattern, replacement) }
+    return string
+  }
 
   private operator fun Set<ModuleLink>.contains(module: TypedModule): Boolean =
     any { (from, to, _) -> from == module.projectPath || to == module.projectPath }

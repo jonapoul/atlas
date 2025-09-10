@@ -14,6 +14,10 @@ modular {
     builtIns()
   }
 
+  moduleNames {
+    replace("^:modules:", ":")
+  }
+
   dotFile {
     legend {
       file = file("modules-legend.dot")

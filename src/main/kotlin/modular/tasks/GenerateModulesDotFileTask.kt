@@ -6,17 +6,18 @@ package modular.tasks
 
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLinks
-import modular.internal.REMOVE_MODULE_PREFIX
-import modular.internal.REPLACEMENT_MODULE_PREFIX
 import modular.internal.TypedModules
 import modular.spec.DotFile
 import modular.spec.DotFileChartSpec
+import modular.spec.ModuleNameSpec
 import modular.spec.RankDir
+import modular.spec.Replacement
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
@@ -34,8 +35,7 @@ abstract class GenerateModulesDotFileTask : DefaultTask(), TaskWithSeparator {
   @get:OutputFile abstract val outputFile: RegularFileProperty
 
   // General
-  @get:Input abstract val replacement: Property<String>
-  @get:Input abstract val toRemove: Property<String>
+  @get:Input abstract val replacements: SetProperty<Replacement>
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val printOutput: Property<Boolean>
 
@@ -63,8 +63,7 @@ abstract class GenerateModulesDotFileTask : DefaultTask(), TaskWithSeparator {
     val dotFile = DotFile(
       typedModules = TypedModules.read(moduleTypesFile, separator),
       links = ModuleLinks.read(linksFile, separator),
-      toRemove = toRemove.get(),
-      replacement = replacement.get(),
+      replacements = replacements.get(),
       thisPath = thisPath.get(),
       arrowHead = arrowHead.get(),
       arrowTail = arrowTail.get(),
@@ -89,13 +88,11 @@ abstract class GenerateModulesDotFileTask : DefaultTask(), TaskWithSeparator {
     fun register(
       target: Project,
       name: String,
+      moduleNames: ModuleNameSpec,
       spec: DotFileChartSpec,
       dotFile: RegularFile,
       printOutput: Boolean,
     ): TaskProvider<GenerateModulesDotFileTask> = with(target) {
-      val toRemove = providers.gradleProperty(REMOVE_MODULE_PREFIX).orElse("")
-      val replacement = providers.gradleProperty(REPLACEMENT_MODULE_PREFIX).orElse("")
-
       val collateModuleTypes = CollateModuleTypesTask.get(rootProject)
       val calculateProjectTree = CalculateModuleTreeTask.get(target)
 
@@ -104,8 +101,7 @@ abstract class GenerateModulesDotFileTask : DefaultTask(), TaskWithSeparator {
         task.moduleTypesFile.set(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.set(dotFile)
 
-        task.toRemove.set(toRemove)
-        task.replacement.set(replacement)
+        task.replacements.set(moduleNames.replacements)
         task.printOutput.set(printOutput)
 
         task.arrowHead.set(spec.arrowHead)

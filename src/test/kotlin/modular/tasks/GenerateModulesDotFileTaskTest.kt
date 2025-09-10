@@ -13,6 +13,7 @@ import modular.test.runTask
 import modular.test.scenarios.DotFileBasic
 import modular.test.scenarios.DotFileChartCustomConfig
 import modular.test.scenarios.DotFileChartWithProperties
+import modular.test.scenarios.DotFileChartWithReplacements
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
@@ -121,6 +122,32 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
           ":c" ["fillcolor"="#FF8800","shape"="none"]
           ":a" -> ":b"
           ":a" -> ":c" ["style"="dotted"]
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Replace module names`() = runScenario(DotFileChartWithReplacements) {
+    // when
+    runTask("generateModulesDotFile").build()
+
+    // then the file was generated
+    val dotFile = resolve("a/modules.dot")
+    assertThat(dotFile).exists()
+
+    // and contains expected contents, colons removed from module prefixes and "b" -> "B"
+    assertThat(dotFile.readText()).contains(
+      """
+        digraph {
+          edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
+          graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+          node ["style"="filled"]
+          "B" ["fillcolor"="#FF8800","shape"="none"]
+          "a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          "c" ["fillcolor"="#FF8800","shape"="none"]
+          "a" -> "B"
+          "a" -> "c" ["style"="dotted"]
         }
       """.trimIndent(),
     )

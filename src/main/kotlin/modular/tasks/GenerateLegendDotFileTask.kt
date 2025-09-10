@@ -10,7 +10,6 @@ import modular.internal.appendIndentedLine
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
 import modular.spec.DotFileLegendSpec
-import modular.spec.DotFileOutputSpec
 import modular.spec.ModuleTypeModel
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project

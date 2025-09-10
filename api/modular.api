@@ -9,11 +9,13 @@ public class modular/gradle/ModularExtension {
 	public final fun getGenerateReadme ()Lorg/gradle/api/provider/Property;
 	public final fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
 	public final fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
+	public final fun getModuleNames ()Lmodular/spec/ModuleNameSpec;
 	public final fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public final fun getOutputs ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public final fun getRemoveModulePrefix ()Lorg/gradle/api/provider/Property;
 	public final fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public final fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
+	public final fun moduleNames (Lorg/gradle/api/Action;)V
 }
 
 public final class modular/gradle/ModularLeafPlugin : org/gradle/api/Plugin {
@@ -106,6 +108,12 @@ public abstract interface class modular/spec/LegendSpec {
 	public abstract fun getFile ()Lorg/gradle/api/file/RegularFileProperty;
 }
 
+public final class modular/spec/ModuleNameSpec {
+	public final fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public final fun replace (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
+}
+
 public abstract class modular/spec/ModuleType {
 	public fun <init> (Ljava/lang/String;)V
 	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
@@ -158,6 +166,19 @@ public final class modular/spec/RankDir : java/lang/Enum {
 	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/RankDir;
 	public static fun values ()[Lmodular/spec/RankDir;
+}
+
+public final class modular/spec/Replacement {
+	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
+	public final fun component1 ()Lkotlin/text/Regex;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Lkotlin/text/Regex;Ljava/lang/String;)Lmodular/spec/Replacement;
+	public static synthetic fun copy$default (Lmodular/spec/Replacement;Lkotlin/text/Regex;Ljava/lang/String;ILjava/lang/Object;)Lmodular/spec/Replacement;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPattern ()Lkotlin/text/Regex;
+	public final fun getReplacement ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithSeparator {
@@ -284,15 +305,14 @@ public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/
 	public abstract fun getPrintOutput ()Lorg/gradle/api/provider/Property;
 	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
 	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
-	public abstract fun getReplacement ()Lorg/gradle/api/provider/Property;
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getShowArrows ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-	public abstract fun getToRemove ()Lorg/gradle/api/provider/Property;
 }
 
 public final class modular/tasks/GenerateModulesDotFileTask$Companion {
-	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/spec/DotFileChartSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/spec/ModuleNameSpec;Lmodular/spec/DotFileChartSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract class modular/tasks/GeneratePngFileTask : org/gradle/api/DefaultTask {
@@ -357,5 +377,7 @@ public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {
 	public static final fun registerByPathContains (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun registerByPathMatches (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun registerByPluginId (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun replacedBy (Ljava/lang/String;Ljava/lang/String;)Lmodular/spec/Replacement;
+	public static final fun replacedBy (Lkotlin/text/Regex;Ljava/lang/String;)Lmodular/spec/Replacement;
 }
 

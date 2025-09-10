@@ -54,6 +54,7 @@ class ModularLeafPlugin : Plugin<Project> {
     GenerateModulesDotFileTask.register(
       target = this,
       name = GenerateModulesDotFileTask.TASK_NAME,
+      moduleNames = extension.moduleNames,
       spec = spec.chart,
       dotFile = file,
       printOutput = true,
