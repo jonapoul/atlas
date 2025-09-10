@@ -9,8 +9,10 @@ import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import assertk.assertions.exists
 import modular.test.ModularTaskTest
+import modular.test.doesNotExist
 import modular.test.runTask
 import modular.test.scenarios.DotFileBasic
+import modular.test.scenarios.DotFileBasicWithBasicLegend
 import modular.test.scenarios.DotFileLegendCustomConfig
 import modular.test.scenarios.DotFileLegendWithProperties
 import modular.test.scenarios.OneKotlinJvmModule
@@ -18,7 +20,7 @@ import kotlin.test.Test
 
 class GenerateLegendDotFileTaskTest : ModularTaskTest() {
   @Test
-  fun `Don't register legend task if none was configured`() = runScenario(OneKotlinJvmModule) {
+  fun `Don't register legend task if no outputs are configured`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("tasks").build()
 
@@ -27,7 +29,20 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
   }
 
   @Test
-  fun `Generate dotfile legend from basic config`() = runScenario(DotFileBasic) {
+  fun `Don't register legend task if legend wasnt configured`() = runScenario(DotFileBasic) {
+    // when
+    val result = runTask("generateLegendDotFile").buildAndFail()
+
+    // then the task wasn't run because it wasnt registered
+    assertThat(result.output).contains("Task 'generateLegendDotFile' not found in root project")
+
+    // and the legend file wasn't generated
+    val legendFile = resolve("modules-legend.dot")
+    assertThat(legendFile).doesNotExist()
+  }
+
+  @Test
+  fun `Generate dotfile legend from basic config`() = runScenario(DotFileBasicWithBasicLegend) {
     // when
     runTask("generateLegendDotFile").build()
 

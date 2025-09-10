@@ -91,9 +91,15 @@ public final class modular/spec/DotFileOutputSpec : modular/spec/OutputSpec {
 	public fun getLegend ()Lmodular/spec/DotFileLegendSpec;
 	public synthetic fun getLegend ()Lmodular/spec/LegendSpec;
 	public fun getName ()Ljava/lang/String;
-	public fun legend (Ljava/io/File;)V
+	public fun legend ()Lmodular/spec/DotFileLegendSpec;
+	public synthetic fun legend ()Lmodular/spec/LegendSpec;
+	public fun legend (Ljava/io/File;)Lmodular/spec/DotFileLegendSpec;
+	public synthetic fun legend (Ljava/io/File;)Lmodular/spec/LegendSpec;
 	public fun legend (Lorg/gradle/api/Action;)V
-	public fun legend (Lorg/gradle/api/provider/Provider;)V
+	public fun legend (Lorg/gradle/api/provider/Provider;)Lmodular/spec/DotFileLegendSpec;
+	public synthetic fun legend (Lorg/gradle/api/provider/Provider;)Lmodular/spec/LegendSpec;
+	public fun setLegend (Lmodular/spec/DotFileLegendSpec;)V
+	public synthetic fun setLegend (Lmodular/spec/LegendSpec;)V
 }
 
 public abstract interface class modular/spec/LegendSpec {
@@ -129,9 +135,11 @@ public abstract interface class modular/spec/OutputSpec {
 	public abstract fun getChart ()Lmodular/spec/ChartSpec;
 	public abstract fun getLegend ()Lmodular/spec/LegendSpec;
 	public fun getName ()Ljava/lang/String;
-	public fun legend (Ljava/io/File;)V
-	public fun legend (Lorg/gradle/api/Action;)V
-	public fun legend (Lorg/gradle/api/provider/Provider;)V
+	public abstract fun legend ()Lmodular/spec/LegendSpec;
+	public abstract fun legend (Ljava/io/File;)Lmodular/spec/LegendSpec;
+	public abstract fun legend (Lorg/gradle/api/Action;)V
+	public abstract fun legend (Lorg/gradle/api/provider/Provider;)Lmodular/spec/LegendSpec;
+	public abstract fun setLegend (Lmodular/spec/LegendSpec;)V
 }
 
 public final class modular/spec/OutputSpec$DefaultImpls {
@@ -139,9 +147,6 @@ public final class modular/spec/OutputSpec$DefaultImpls {
 	public static fun chart (Lmodular/spec/OutputSpec;Lorg/gradle/api/Action;)V
 	public static fun chart (Lmodular/spec/OutputSpec;Lorg/gradle/api/provider/Provider;)V
 	public static fun getName (Lmodular/spec/OutputSpec;)Ljava/lang/String;
-	public static fun legend (Lmodular/spec/OutputSpec;Ljava/io/File;)V
-	public static fun legend (Lmodular/spec/OutputSpec;Lorg/gradle/api/Action;)V
-	public static fun legend (Lmodular/spec/OutputSpec;Lorg/gradle/api/provider/Provider;)V
 }
 
 public final class modular/spec/RankDir : java/lang/Enum {
@@ -261,7 +266,7 @@ public abstract class modular/tasks/GenerateLegendDotFileTask : org/gradle/api/D
 
 public final class modular/tasks/GenerateLegendDotFileTask$Companion {
 	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-	public final fun register (Lorg/gradle/api/Project;Lmodular/spec/DotFileOutputSpec;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Lmodular/spec/DotFileLegendSpec;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithSeparator {

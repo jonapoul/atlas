@@ -30,19 +30,11 @@ class ModularTrunkPlugin : Plugin<Project> {
     CollateModuleTypesTask.register(project)
     CollateModuleLinksTask.register(project, extension)
 
-    extension.outputs.configureEach { outputConfig ->
-      when (outputConfig) {
-        is DotFileOutputSpec -> GenerateLegendDotFileTask.register(
-          target = project,
-          config = outputConfig,
-          extension = extension,
-        )
-
-        else -> error("Unknown output config $outputConfig")
+    extension.outputs.configureEach { spec ->
+      when (spec) {
+        is DotFileOutputSpec -> registerDotFileTasks(extension, spec)
       }
     }
-
-    //      GeneratePngFileTask.registerLegend(project, generateLegend)
 
     afterEvaluate {
       failIfInvalidColors(extension)
@@ -76,6 +68,17 @@ class ModularTrunkPlugin : Plugin<Project> {
             "pathContains, pathMatches or hasPluginId.",
         )
       }
+    }
+  }
+
+  private fun Project.registerDotFileTasks(extension: ModularExtension, spec: DotFileOutputSpec) {
+    // Only create a legend if one of the legend functions was explicitly called
+    spec.legend?.let { legend ->
+      GenerateLegendDotFileTask.register(
+        target = this,
+        spec = legend,
+        extension = extension,
+      )
     }
   }
 }

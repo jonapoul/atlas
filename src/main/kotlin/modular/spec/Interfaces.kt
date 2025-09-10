@@ -16,12 +16,13 @@ interface OutputSpec<L : LegendSpec, C : ChartSpec> {
   // allows us store to store OutputSpec in a NamedDomainObjectContainer
   val name get() = this::class.jvmName
 
-  val legend: L
-  fun legend(file: File) = legend.file.set(file)
-  fun legend(file: Provider<RegularFile>) = legend.file.set(file)
+  var legend: L?
+  fun legend(): L
+  fun legend(file: File): L
+  fun legend(file: Provider<RegularFile>): L
 
   @ModularDsl
-  fun legend(action: Action<L>) = action.execute(legend)
+  fun legend(action: Action<L>)
 
   val chart: C
   fun chart(file: File) = chart.file.set(file)
