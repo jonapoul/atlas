@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileLegendCustomConfig : Scenario by DotFileBasic {
+object DotFileBasicWithThreeOutputFormats : Scenario by DotFileBasic {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false
@@ -17,20 +17,13 @@ object DotFileLegendCustomConfig : Scenario by DotFileBasic {
       moduleTypes {
         kotlinJvm()
         java()
-        registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
-      }
-
-      outputs {
-        legendRootFilename = "legend-filename"
-        saveLegendsRelativeToRootModule("legend-dir")
       }
 
       dotFile {
-        legend {
-          cellBorder = 2
-          cellPadding = 3
-          cellSpacing = 4
-          tableBorder = 5
+        fileFormats {
+          svg()
+          png()
+          eps()
         }
       }
     }

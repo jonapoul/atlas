@@ -1,0 +1,16 @@
+digraph {
+  edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
+  graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+  node ["style"="filled"]
+  "abc_android" ["fillcolor"="#55FF55","shape"="none"]
+  "abc_java" ["fillcolor"="#FF8800","shape"="none"]
+  "abc_kotlin_jvm" ["fillcolor"="#CA66FF","shape"="none"]
+  "abc_kotlin_mp" ["fillcolor"="#9D8DF1","shape"="none"]
+  "app_android" ["fillcolor"="#09AD35","color"="black","penwidth"="3","shape"="box"]
+  "abc_android" -> "abc_kotlin_jvm" ["style"="dotted"]
+  "abc_kotlin_mp" -> "abc_android"
+  "abc_kotlin_mp" -> "abc_java" ["style"="dotted"]
+  "abc_kotlin_mp" -> "abc_kotlin_jvm"
+  "app_android" -> "abc_android" ["style"="dotted"]
+  "app_android" -> "abc_kotlin_mp" ["style"="dotted"]
+}

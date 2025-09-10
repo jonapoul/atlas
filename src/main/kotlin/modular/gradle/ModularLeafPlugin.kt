@@ -6,13 +6,15 @@
 
 package modular.gradle
 
+import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.configureSeparators
+import modular.internal.outputFile
 import modular.internal.registerGenerationTaskOnSync
-import modular.spec.DotFileOutputSpec
-import modular.spec.OutputSpec
+import modular.spec.DotFileSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.DumpModuleLinksTask
 import modular.tasks.DumpModuleTypeTask
+import modular.tasks.GenerateGraphvizFileTask
 import modular.tasks.GenerateModulesDotFileTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -32,11 +34,10 @@ class ModularLeafPlugin : Plugin<Project> {
     DumpModuleLinksTask.register(project, extension)
     CalculateModuleTreeTask.register(project, extension)
 
-    extension.outputs.configureEach { spec ->
-      val file = outputFile(spec)
+    extension.specs.configureEach { spec ->
+      val file = outputFile(extension.outputs, Variant.Modules, fileExtension = spec.extension.get())
       when (spec) {
-        is DotFileOutputSpec -> registerDotFileTasks(extension, spec, file)
-        else -> error("Unexpected output spec $spec")
+        is DotFileSpec -> registerDotFileTasks(extension, spec, file)
       }
     }
 
@@ -52,32 +53,39 @@ class ModularLeafPlugin : Plugin<Project> {
     //    }
   }
 
-  private fun Project.registerDotFileTasks(extension: ModularExtension, spec: DotFileOutputSpec, file: RegularFile) {
-    GenerateModulesDotFileTask.register(
+  private fun Project.registerDotFileTasks(extension: ModularExtension, spec: DotFileSpec, file: RegularFile) {
+    val dotFileTask = GenerateModulesDotFileTask.register(
       target = this,
       name = GenerateModulesDotFileTask.TASK_NAME,
       moduleNames = extension.moduleNames,
       spec = spec.chart,
-      dotFile = file,
+      outputFile = file,
       printOutput = true,
     )
 
     //    val generateTempDotFileTask = GenerateModulesDotFileTask.register(
     //      target = this,
     //      name = "generateTempDotFile",
-    //      chartSpec = TBC,
-    //      dotFile = outputDirectory.map { it.file("modules-temp.dot") },
+    //      moduleNames = extension.moduleNames,
+    //      chartSpec = spec.chart,
+    //      dotFile = modularBuildDirectory.map { it.file("modules-temp.dot") },
     //      printOutput = false,
     //    )
-  }
 
-  private fun Project.outputFile(spec: OutputSpec<*, *>): RegularFile {
-    val relative = spec.chart
-      .file
-      .get()
-      .asFile
-      .relativeTo(rootProject.projectDir)
-      .path
-    return layout.projectDirectory.file(relative)
+    val outputTasks = GenerateGraphvizFileTask.register(
+      target = this,
+      output = extension.outputs,
+      spec = spec,
+      variant = Variant.Modules,
+      dotFileTask = dotFileTask,
+    )
+
+    if (outputTasks.isNotEmpty()) {
+      tasks.register("generateModules") { t ->
+        t.group = MODULAR_TASK_GROUP
+        t.description = "Wrapper task for the other 'generateModulesX' tasks"
+        t.dependsOn(outputTasks)
+      }
+    }
   }
 }

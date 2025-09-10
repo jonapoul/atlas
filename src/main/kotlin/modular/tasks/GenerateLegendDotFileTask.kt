@@ -10,6 +10,7 @@ import modular.internal.appendIndentedLine
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
 import modular.spec.DotFileLegendSpec
+import modular.spec.DotFileSpec
 import modular.spec.ModuleTypeModel
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -23,14 +24,14 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, ModularGenerationTask {
+abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, ModularGenerationTask, TaskWithOutputFile {
   @get:Input abstract val tableBorder: Property<Int>
   @get:Input abstract val cellBorder: Property<Int>
   @get:Input abstract val cellSpacing: Property<Int>
   @get:Input abstract val cellPadding: Property<Int>
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
-  @get:OutputFile abstract val dotFile: RegularFileProperty
+  @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP
@@ -58,9 +59,9 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
       appendLine("}")
     }
 
-    dotFile.get().asFile.writeText(dotFileContents)
+    outputFile.get().asFile.writeText(dotFileContents)
 
-    logger.lifecycle("Written ${dotFileContents.length} chars to ${dotFile.get().asFile}")
+    logger.lifecycle("Written ${dotFileContents.length} chars to ${outputFile.get().asFile}")
   }
 
   companion object {
@@ -71,15 +72,22 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
 
     fun register(
       target: Project,
-      spec: DotFileLegendSpec,
+      legendSpec: DotFileLegendSpec,
+      spec: DotFileSpec,
       extension: ModularExtension,
     ): TaskProvider<GenerateLegendDotFileTask> = with(target) {
+      val outputFile = extension.outputs.legendOutputDirectory.map { dir ->
+        val filename = extension.outputs.legendRootFilename.get()
+        val fileExtension = spec.extension.get()
+        dir.file("$filename.$fileExtension")
+      }
+
       tasks.register(TASK_NAME, GenerateLegendDotFileTask::class.java) { task ->
-        task.tableBorder.set(spec.tableBorder)
-        task.cellBorder.set(spec.cellBorder)
-        task.cellSpacing.set(spec.cellSpacing)
-        task.cellPadding.set(spec.cellPadding)
-        task.dotFile.set(spec.file)
+        task.tableBorder.set(legendSpec.tableBorder)
+        task.cellBorder.set(legendSpec.cellBorder)
+        task.cellSpacing.set(legendSpec.cellSpacing)
+        task.cellPadding.set(legendSpec.cellPadding)
+        task.outputFile.set(outputFile)
         task.moduleTypes.set(extension.orderedTypes().map(::moduleTypeModel))
       }
     }

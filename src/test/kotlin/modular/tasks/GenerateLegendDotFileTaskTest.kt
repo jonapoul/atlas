@@ -37,7 +37,7 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
     assertThat(result.output).contains("Task 'generateLegendDotFile' not found in root project")
 
     // and the legend file wasn't generated
-    val legendFile = resolve("modules-legend.dot")
+    val legendFile = resolve("legend.dot")
     assertThat(legendFile).doesNotExist()
   }
 
@@ -47,7 +47,7 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
     runTask("generateLegendDotFile").build()
 
     // then the file was generated
-    val legendFile = resolve("modules-legend.dot")
+    val legendFile = resolve("legend.dot")
     assertThat(legendFile).exists()
 
     // and contains expected contents, with modules in declaration order
@@ -73,7 +73,7 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
     runTask("generateLegendDotFile").build()
 
     // then the file was generated
-    val legendFile = resolve("custom-legend.dot")
+    val legendFile = resolve("legend-dir/legend-filename.dot")
     assertThat(legendFile).exists()
 
     // and contains expected contents, with modules in declaration order
@@ -99,7 +99,7 @@ class GenerateLegendDotFileTaskTest : ModularTaskTest() {
     runTask("generateLegendDotFile").build()
 
     // then the file was generated
-    val legendFile = resolve("modules-legend.dot")
+    val legendFile = resolve("legend.dot")
     assertThat(legendFile).exists()
 
     // and contains expected contents, overriding build script

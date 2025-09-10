@@ -26,12 +26,12 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator {
+abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract val projectPath: Property<String>
   @get:[Input Optional] abstract val moduleType: Property<ModuleTypeModel>
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val allModuleTypes: ListProperty<String>
-  @get:OutputFile abstract val outputFile: RegularFileProperty
+  @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP

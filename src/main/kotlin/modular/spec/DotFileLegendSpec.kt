@@ -7,21 +7,11 @@ package modular.spec
 import modular.internal.ModularProperties
 import modular.internal.int
 import org.gradle.api.Project
-import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 
 class DotFileLegendSpec(objects: ObjectFactory, project: Project) : LegendSpec {
   private val properties = ModularProperties(project)
-
-  override val file: RegularFileProperty = objects
-    .fileProperty()
-    .convention(
-      project.rootProject
-        .layout
-        .projectDirectory
-        .file("modules-legend.dot"),
-    )
 
   val cellBorder: Property<Int> = objects.int(properties.cellBorder)
   val cellPadding: Property<Int> = objects.int(properties.cellPadding)
