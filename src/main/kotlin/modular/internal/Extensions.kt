@@ -5,12 +5,15 @@
 package modular.internal
 
 import modular.gradle.ModularExtension
+import modular.gradle.OutputSpec
+import modular.gradle.Variant
 import modular.spec.ModuleType
 import modular.spec.ModuleTypeModel
 import modular.tasks.ModularGenerationTask
 import modular.tasks.TaskWithSeparator
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
+import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFile
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
@@ -37,11 +40,14 @@ internal fun ObjectFactory.float(convention: Provider<Float>): Property<Float> =
 internal fun ObjectFactory.string(convention: Provider<String>): Property<String> =
   property(String::class.java).convention(convention)
 
+internal fun ObjectFactory.string(convention: String): Property<String> =
+  property(String::class.java).convention(convention)
+
 internal inline fun <reified T : Any> ObjectFactory.set(convention: Set<T>): SetProperty<T> =
   setProperty(T::class.java).convention(convention)
 
-internal inline fun <reified E : Enum<E>> ObjectFactory.enum(convention: E): Property<E> =
-  property(E::class.java).convention(convention)
+internal fun ObjectFactory.directory(convention: Directory): DirectoryProperty =
+  directoryProperty().convention(convention)
 
 internal inline fun <reified E : Enum<E>> ObjectFactory.enum(convention: Provider<E>): Property<E> =
   property(E::class.java).convention(convention)
@@ -63,15 +69,40 @@ internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
   }
 }
 
-internal val Project.outputDirectory: Provider<Directory>
+internal val Project.modularBuildDirectory: Provider<Directory>
   get() = project.layout.buildDirectory.dir("modular")
 
 internal fun Project.fileInReportDirectory(path: String): Provider<RegularFile> =
-  outputDirectory.map { it.file(path) }
+  modularBuildDirectory.map { it.file(path) }
 
 internal fun StringBuilder.appendIndented(value: Any) = append("  $value")
 
 internal fun StringBuilder.appendIndentedLine(value: Any) {
   appendIndented(value)
   appendLine()
+}
+
+internal fun Project.outputFile(
+  output: OutputSpec,
+  variant: Variant,
+  fileExtension: String,
+): RegularFile {
+  val baseName = baseName(output, variant).get()
+  val relativeToRoot = configuredOutputDir(output, variant).file("$baseName.$fileExtension")
+  val relativeToSubmodule = relativeToRoot
+    .get()
+    .asFile
+    .relativeTo(rootProject.projectDir)
+    .path
+  return layout.projectDirectory.file(relativeToSubmodule)
+}
+
+private fun baseName(output: OutputSpec, variant: Variant) = when (variant) {
+  Variant.Chart -> output.chartRootFilename
+  Variant.Legend -> output.legendRootFilename
+}
+
+private fun configuredOutputDir(output: OutputSpec, variant: Variant) = when (variant) {
+  Variant.Chart -> output.chartOutputDirectory
+  Variant.Legend -> output.legendOutputDirectory
 }

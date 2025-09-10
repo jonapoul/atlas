@@ -4,7 +4,6 @@
  */
 package modular.tasks
 
-import modular.internal.FILENAME_ROOT
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -28,7 +27,7 @@ abstract class WriteReadmeTask : DefaultTask() {
 
     val contents = buildString {
       appendLine("# $expectedTitle")
-      appendLine("![modules]($FILENAME_ROOT.png)")
+      appendLine("![modules](modules.png)")
       appendLine("![legend]($legendPngRelativePath)")
     }
 

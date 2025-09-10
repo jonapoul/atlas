@@ -11,18 +11,31 @@ plugins {
 
 modular {
   generateOnSync = true
+  ignoredConfigs = setOf("debug", "kover", "ksp", "test")
+  ignoredModules = emptySet()
+  supportUpwardsTraversal = false
 
   moduleTypes {
     builtIns()
   }
 
   moduleNames {
-    replace("^:modules:", ":")
+    remove(pattern = "^:sample-")
+    replace(pattern = "lib", replacement = "abc")
+    replace(pattern = "-", replacement = "_")
+  }
+
+  outputs {
+    chartRootFilename = "modules"
+    legendRootFilename = "legend"
+    saveChartsRelativeToSubmodule("modules")
+    saveLegendsRelativeToRootModule("legend")
   }
 
   dotFile {
+    extension = "dot"
+
     legend {
-      file = file("modules-legend.dot")
       cellBorder = 1
       cellPadding = 4
       cellSpacing = 0
@@ -30,11 +43,16 @@ modular {
     }
 
     chart {
-      file = file("modules.dot")
       showArrows = true
       rankSep = 1.5f
       rankDir = RankDir.TopToBottom
       dpi = 100
+    }
+
+    fileFormats {
+      eps()
+      png()
+      svg()
     }
   }
 }

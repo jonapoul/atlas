@@ -13,21 +13,11 @@ import modular.internal.float
 import modular.internal.int
 import modular.internal.string
 import org.gradle.api.Project
-import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 
 class DotFileChartSpec(objects: ObjectFactory, project: Project) : ChartSpec {
   private val properties = ModularProperties(project)
-
-  override val file: RegularFileProperty = objects
-    .fileProperty()
-    .convention(
-      project.rootProject
-        .layout
-        .projectDirectory
-        .file("modules.dot"),
-    )
 
   val arrowHead: Property<String> = objects.string(properties.arrowHead)
   val arrowTail: Property<String> = objects.string(properties.arrowTail)

@@ -9,10 +9,10 @@ import modular.internal.OrderedNamedContainer
 import modular.internal.bool
 import modular.internal.set
 import modular.internal.string
-import modular.spec.DotFileOutputSpec
+import modular.spec.DotFileSpec
 import modular.spec.ModuleNameSpec
 import modular.spec.ModuleType
-import modular.spec.OutputSpec
+import modular.spec.Spec
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
@@ -27,9 +27,7 @@ open class ModularExtension @Inject constructor(
 ) {
   private val properties = ModularProperties(project)
 
-  val outputs: NamedDomainObjectContainer<OutputSpec<*, *>> = objects.domainObjectContainer(OutputSpec::class.java)
-
-  val moduleTypes: NamedDomainObjectContainer<ModuleType> = OrderedNamedContainer(
+  @ModularDsl val moduleTypes: NamedDomainObjectContainer<ModuleType> = OrderedNamedContainer(
     container = objects.domainObjectContainer(ModuleType::class.java) { name ->
       objects.newInstance(ModuleType::class.java, name)
     },
@@ -39,14 +37,18 @@ open class ModularExtension @Inject constructor(
   val generateReadme: Property<Boolean> = objects.bool(properties.generateReadme)
   val ignoredConfigs: SetProperty<String> = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
   val ignoredModules: SetProperty<Regex> = objects.set(convention = emptySet())
-  val removeModulePrefix: Property<String> = objects.string(properties.removeModulePrefix)
   val separator: Property<String> = objects.string(properties.separator)
   val supportUpwardsTraversal: Property<Boolean> = objects.bool(properties.supportUpwardsTraversal)
 
-  @ModularDsl fun dotFile(action: Action<DotFileOutputSpec>? = null) {
-    val config = DotFileOutputSpec(objects, project)
-    action?.execute(config)
-    outputs.add(config)
+  val outputs = OutputSpec(objects, project)
+  @ModularDsl fun outputs(action: Action<OutputSpec>) = action.execute(outputs)
+
+  val specs: NamedDomainObjectContainer<Spec<*, *>> = objects.domainObjectContainer(Spec::class.java)
+
+  @ModularDsl fun dotFile(action: Action<DotFileSpec>? = null) {
+    val spec = DotFileSpec(objects, project)
+    action?.execute(spec)
+    specs.add(spec)
   }
 
   val moduleNames = ModuleNameSpec(objects)

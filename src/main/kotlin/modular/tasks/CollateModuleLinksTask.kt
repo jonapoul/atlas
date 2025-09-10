@@ -25,11 +25,11 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CollateModuleLinksTask : DefaultTask(), TaskWithSeparator {
+abstract class CollateModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFiles] abstract val moduleLinkFiles: ConfigurableFileCollection
   @get:Input abstract val ignoredModules: SetProperty<Regex>
   @get:Input abstract override val separator: Property<String>
-  @get:OutputFile abstract val outputFile: RegularFileProperty
+  @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP

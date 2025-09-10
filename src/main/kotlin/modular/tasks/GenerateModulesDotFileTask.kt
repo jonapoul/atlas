@@ -28,11 +28,15 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateModulesDotFileTask : DefaultTask(), TaskWithSeparator, ModularGenerationTask {
+abstract class GenerateModulesDotFileTask :
+  DefaultTask(),
+  TaskWithSeparator,
+  ModularGenerationTask,
+  TaskWithOutputFile {
   // Files
   @get:[PathSensitive(RELATIVE) InputFile] abstract val linksFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] abstract val moduleTypesFile: RegularFileProperty
-  @get:OutputFile abstract val outputFile: RegularFileProperty
+  @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General
   @get:Input abstract val replacements: SetProperty<Replacement>
@@ -90,7 +94,7 @@ abstract class GenerateModulesDotFileTask : DefaultTask(), TaskWithSeparator, Mo
       name: String,
       moduleNames: ModuleNameSpec,
       spec: DotFileChartSpec,
-      dotFile: RegularFile,
+      outputFile: RegularFile,
       printOutput: Boolean,
     ): TaskProvider<GenerateModulesDotFileTask> = with(target) {
       val collateModuleTypes = CollateModuleTypesTask.get(rootProject)
@@ -99,7 +103,7 @@ abstract class GenerateModulesDotFileTask : DefaultTask(), TaskWithSeparator, Mo
       tasks.register(name, GenerateModulesDotFileTask::class.java) { task ->
         task.linksFile.set(calculateProjectTree.map { it.outputFile.get() })
         task.moduleTypesFile.set(collateModuleTypes.map { it.outputFile.get() })
-        task.outputFile.set(dotFile)
+        task.outputFile.set(outputFile)
 
         task.replacements.set(moduleNames.replacements)
         task.printOutput.set(printOutput)

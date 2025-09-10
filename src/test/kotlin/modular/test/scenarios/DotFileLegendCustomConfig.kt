@@ -20,9 +20,13 @@ object DotFileLegendCustomConfig : Scenario by DotFileBasic {
         registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
 
+      outputs {
+        legendRootFilename = "legend-filename"
+        saveLegendsRelativeToRootModule("legend-dir")
+      }
+
       dotFile {
         legend {
-          file = file("custom-legend.dot")
           cellBorder = 2
           cellPadding = 3
           cellSpacing = 4

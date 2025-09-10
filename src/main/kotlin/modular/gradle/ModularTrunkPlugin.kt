@@ -7,17 +7,20 @@
 package modular.gradle
 
 import modular.internal.HEX_COLOR_REGEX
+import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.configureSeparators
 import modular.internal.orderedTypes
 import modular.internal.registerGenerationTaskOnSync
-import modular.spec.DotFileOutputSpec
+import modular.spec.DotFileSpec
 import modular.spec.ModuleType
 import modular.tasks.CollateModuleLinksTask
 import modular.tasks.CollateModuleTypesTask
+import modular.tasks.GenerateGraphvizFileTask
 import modular.tasks.GenerateLegendDotFileTask
 import org.codehaus.groovy.syntax.Types.REGEX_PATTERN
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.TaskProvider
 
 class ModularTrunkPlugin : Plugin<Project> {
   override fun apply(target: Project): Unit = with(target) {
@@ -32,10 +35,16 @@ class ModularTrunkPlugin : Plugin<Project> {
     CollateModuleTypesTask.register(project)
     CollateModuleLinksTask.register(project, extension)
 
-    extension.outputs.configureEach { spec ->
-      when (spec) {
-        is DotFileOutputSpec -> registerDotFileTasks(extension, spec)
+    val generateLegend = tasks.register("generateLegend") { t ->
+      t.group = MODULAR_TASK_GROUP
+      t.description = "Wrapper task for the other 'generateLegendX' tasks"
+    }
+
+    extension.specs.configureEach { spec ->
+      val tasks = when (spec) {
+        is DotFileSpec -> registerDotFileTasks(extension, spec)
       }
+      generateLegend.get().dependsOn(tasks)
     }
 
     afterEvaluate {
@@ -73,14 +82,24 @@ class ModularTrunkPlugin : Plugin<Project> {
     }
   }
 
-  private fun Project.registerDotFileTasks(extension: ModularExtension, spec: DotFileOutputSpec) {
+  private fun Project.registerDotFileTasks(
+    extension: ModularExtension,
+    spec: DotFileSpec,
+  ): List<TaskProvider<GenerateGraphvizFileTask>> = spec.legend?.let { legend ->
     // Only create a legend if one of the legend functions was explicitly called
-    spec.legend?.let { legend ->
-      GenerateLegendDotFileTask.register(
-        target = this,
-        spec = legend,
-        extension = extension,
-      )
-    }
-  }
+    val dotFileTask = GenerateLegendDotFileTask.register(
+      target = this,
+      legendSpec = legend,
+      spec = spec,
+      extension = extension,
+    )
+
+    GenerateGraphvizFileTask.register(
+      target = this,
+      output = extension.outputs,
+      spec = spec,
+      variant = Variant.Legend,
+      dotFileTask = dotFileTask,
+    )
+  }.orEmpty()
 }
