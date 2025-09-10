@@ -6,6 +6,7 @@ package modular.tasks
 
 import modular.gradle.ModularExtension
 import modular.internal.MODULAR_TASK_GROUP
+import modular.internal.appendIndentedLine
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
 import modular.spec.DotFileOutputSpec
@@ -46,14 +47,14 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator {
 
     val dotFileContents = buildString {
       appendLine("digraph {")
-      appendLine("node [shape=plaintext]")
-      appendLine("table1 [label=<")
-      appendLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
+      appendIndentedLine("node [shape=plaintext]")
+      appendIndentedLine("table1 [label=<")
+      appendIndentedLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
       moduleTypes.forEach { type ->
-        appendLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">module-name</TD></TR>")
+        appendIndentedLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">module-name</TD></TR>")
       }
-      appendLine("</TABLE>")
-      appendLine(">];")
+      appendIndentedLine("</TABLE>")
+      appendIndentedLine(">];")
       appendLine("}")
     }
 
