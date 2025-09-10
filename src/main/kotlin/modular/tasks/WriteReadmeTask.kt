@@ -5,7 +5,6 @@
 package modular.tasks
 
 import modular.internal.FILENAME_ROOT
-import modular.internal.REMOVE_MODULE_PREFIX
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -38,9 +37,9 @@ abstract class WriteReadmeTask : DefaultTask() {
 
   companion object {
     fun register(target: Project): TaskProvider<WriteReadmeTask> = with(target) {
-      val modifiedPath = providers
-        .gradleProperty(REMOVE_MODULE_PREFIX)
-        .map { path.removePrefix(it) }
+//      val modifiedPath = providers
+//        .gradleProperty(REMOVE_MODULE_PREFIX)
+//        .map { path.removePrefix(it) }
 
 //      val legendPng = rootProject.file(GenerateLegendDotFileTask.PNG_PATH)
 //      val projectDir = layout.projectDirectory.asFile
@@ -49,7 +48,7 @@ abstract class WriteReadmeTask : DefaultTask() {
       tasks.register("writeReadme", WriteReadmeTask::class.java) { task ->
         task.group = "reporting"
         task.readmeFile.set(file("README.md"))
-        task.projectPath.set(modifiedPath)
+        task.projectPath.set(path) // TBC: CLEAN PATH
 //        task.legendPngRelativePath.set(legendPng.relativeTo(projectDir).toString())
         task.dependsOn(legendTask)
       }

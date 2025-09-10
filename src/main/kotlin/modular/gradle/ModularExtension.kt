@@ -10,6 +10,7 @@ import modular.internal.bool
 import modular.internal.set
 import modular.internal.string
 import modular.spec.DotFileOutputSpec
+import modular.spec.ModuleNameSpec
 import modular.spec.ModuleType
 import modular.spec.OutputSpec
 import org.gradle.api.Action
@@ -48,6 +49,11 @@ open class ModularExtension @Inject constructor(
     action?.execute(config)
     outputs.add(config)
   }
+
+  val moduleNames = ModuleNameSpec(objects)
+
+  @ModularDsl
+  fun moduleNames(action: Action<ModuleNameSpec>) = action.execute(moduleNames)
 
   //  fun mermaid(action: Action<MermaidOutputConfig>? = null) {
   //    val config = outputConfigs[MermaidOutputConfig::class]

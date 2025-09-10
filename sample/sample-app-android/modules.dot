@@ -1,16 +1,16 @@
 digraph {
-edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
-graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
-node ["style"="filled"]
-":sample-app-android" ["fillcolor"="#09AD35","color"="black","penwidth"="3","shape"="box"]
-":sample-lib-android" ["fillcolor"="#55FF55","shape"="none"]
-":sample-lib-java" ["fillcolor"="#FF8800","shape"="none"]
-":sample-lib-kotlin-jvm" ["fillcolor"="#CA66FF","shape"="none"]
-":sample-lib-kotlin-mp" ["fillcolor"="#9D8DF1","shape"="none"]
-":sample-app-android" -> ":sample-lib-android" ["style"="dotted"]
-":sample-app-android" -> ":sample-lib-kotlin-mp" ["style"="dotted"]
-":sample-lib-android" -> ":sample-lib-kotlin-jvm" ["style"="dotted"]
-":sample-lib-kotlin-mp" -> ":sample-lib-android"
-":sample-lib-kotlin-mp" -> ":sample-lib-java" ["style"="dotted"]
-":sample-lib-kotlin-mp" -> ":sample-lib-kotlin-jvm"
+  edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
+  graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+  node ["style"="filled"]
+  ":sample-app-android" ["fillcolor"="#09AD35","color"="black","penwidth"="3","shape"="box"]
+  ":sample-lib-android" ["fillcolor"="#55FF55","shape"="none"]
+  ":sample-lib-java" ["fillcolor"="#FF8800","shape"="none"]
+  ":sample-lib-kotlin-jvm" ["fillcolor"="#CA66FF","shape"="none"]
+  ":sample-lib-kotlin-mp" ["fillcolor"="#9D8DF1","shape"="none"]
+  ":sample-app-android" -> ":sample-lib-android" ["style"="dotted"]
+  ":sample-app-android" -> ":sample-lib-kotlin-mp" ["style"="dotted"]
+  ":sample-lib-android" -> ":sample-lib-kotlin-jvm" ["style"="dotted"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-android"
+  ":sample-lib-kotlin-mp" -> ":sample-lib-java" ["style"="dotted"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-kotlin-jvm"
 }

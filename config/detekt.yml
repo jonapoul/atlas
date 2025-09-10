@@ -1,5 +1,7 @@
 ---
 complexity:
+  LongParameterList:
+    functionThreshold: 8
   TooManyFunctions:
     thresholdInFiles: 20
 
