@@ -85,21 +85,22 @@ class ModularTrunkPlugin : Plugin<Project> {
   private fun Project.registerDotFileTasks(
     extension: ModularExtension,
     spec: DotFileSpec,
-  ): List<TaskProvider<GenerateGraphvizFileTask>> = spec.legend?.let { legend ->
-    // Only create a legend if one of the legend functions was explicitly called
-    val dotFileTask = GenerateLegendDotFileTask.register(
-      target = this,
-      legendSpec = legend,
-      spec = spec,
-      extension = extension,
-    )
+  ): List<TaskProvider<GenerateGraphvizFileTask>> = spec.legend
+    ?.let { legend ->
+      // Only create a legend if one of the legend functions was explicitly called
+      val dotFileTask = GenerateLegendDotFileTask.register(
+        target = this,
+        legendSpec = legend,
+        spec = spec,
+        extension = extension,
+      )
 
-    GenerateGraphvizFileTask.register(
-      target = this,
-      output = extension.outputs,
-      spec = spec,
-      variant = Variant.Legend,
-      dotFileTask = dotFileTask,
-    )
-  }.orEmpty()
+      GenerateGraphvizFileTask.register(
+        target = this,
+        output = extension.outputs,
+        spec = spec,
+        variant = Variant.Legend,
+        dotFileTask = dotFileTask,
+      )
+    }.orEmpty()
 }

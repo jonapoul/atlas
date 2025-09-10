@@ -31,7 +31,7 @@ class GenerateGraphvizFileTaskTest : ModularTaskTest() {
         :c:generateModulesDotFile SKIPPED
 
         BUILD SUCCESSFUL
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 

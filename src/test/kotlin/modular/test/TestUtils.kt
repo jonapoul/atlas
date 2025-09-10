@@ -35,7 +35,7 @@ internal fun GradleRunner.runTask(task: String, extras: List<String> = emptyList
     "--configuration-cache",
     // "--info",
     "-Pandroid.useAndroidX=true", // needed for android builds to work, unused otherwise
-  ) + extras
+  ) + extras,
 )
 
 internal fun androidHomeOrSkip(): File {
