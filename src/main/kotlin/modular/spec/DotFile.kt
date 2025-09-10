@@ -84,15 +84,24 @@ internal class DotFile(
       .filter { module -> module in links }
       .map { it.copy(projectPath = it.projectPath.cleaned()) }
       .sortedBy { module -> module.projectPath }
-      .forEach { module ->
-        val attrs = if (module.projectPath == thisPath) {
-          "\"color\"=\"black\",\"penwidth\"=\"3\",\"shape\"=\"box\""
-        } else {
-          "\"shape\"=\"none\""
-        }
+      .forEach { appendNode(it) }
 
-        appendLine("\"${module.projectPath}\" [\"fillcolor\"=\"${module.type.color}\",$attrs]")
-      }
+    if (links.isEmpty()) {
+      // Single-module case - we still want this module to be shown along with its type
+      val typedModule = typedModules
+        .firstOrNull { it.projectPath == thisPath }
+        ?: error("No type found for $thisPath")
+      appendNode(typedModule)
+    }
+  }
+
+  private fun StringBuilder.appendNode(module: TypedModule) {
+    val attrs = if (module.projectPath == thisPath) {
+      "\"color\"=\"black\",\"penwidth\"=\"3\",\"shape\"=\"box\""
+    } else {
+      "\"shape\"=\"none\""
+    }
+    appendLine("\"${module.projectPath}\" [\"fillcolor\"=\"${module.type.color}\",$attrs]")
   }
 
   private fun String.cleaned() = replace(toRemove, replacement)

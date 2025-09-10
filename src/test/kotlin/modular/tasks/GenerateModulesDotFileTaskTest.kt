@@ -52,13 +52,13 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
       """.trimIndent(),
     )
 
-    // TODO https://github.com/jonapoul/modular/issues/48 - list B and C boxes in these two cases
     assertThat(dotFileB.readText()).contains(
       """
         digraph {
         edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
         graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
         node ["style"="filled"]
+        ":b" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
         }
       """.trimIndent(),
     )
@@ -68,6 +68,7 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
         edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
         graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
         node ["style"="filled"]
+        ":c" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
         }
       """.trimIndent(),
     )
