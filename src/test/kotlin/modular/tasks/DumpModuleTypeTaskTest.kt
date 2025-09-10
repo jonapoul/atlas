@@ -15,6 +15,8 @@ import modular.test.runTask
 import modular.test.scenarios.ModuleTypesDeclaredButNoneMatch
 import modular.test.scenarios.NoModuleTypesDeclared
 import modular.test.scenarios.OneKotlinJvmModule
+import modular.test.scenarios.ThreeModulesNoMatchingType
+import modular.test.scenarios.ThreeModulesOnlyMatchingOther
 import modular.test.scenarios.ThreeModulesWithCustomTypes
 import modular.test.taskHadResult
 import modular.test.taskWasSuccessful
@@ -82,6 +84,46 @@ class DumpModuleTypeTaskTest : ModularTaskTest() {
     assertThat(moduleTypeFile("test-data")).isEqualTo(":test-data,Data,#ABC123")
     assertThat(moduleTypeFile("test-domain")).isEqualTo(":test-domain,Domain,#123ABC")
     assertThat(moduleTypeFile("test-ui")).isEqualTo(":test-ui,Android,#A1B2C3")
+  }
+
+  @Test
+  fun `Fall back to other if no types match`() = runScenario(ThreeModulesOnlyMatchingOther) {
+    // when
+    runTask("dumpModuleType", androidHomeOrSkip()).build()
+
+    // then
+    assertThat(moduleTypeFile("a")).isEqualTo(":a,Other,#808080")
+    assertThat(moduleTypeFile("b")).isEqualTo(":b,Other,#808080")
+    assertThat(moduleTypeFile("c")).isEqualTo(":c,Other,#808080")
+  }
+
+  @Test
+  fun `Fail if no types match`() = runScenario(ThreeModulesNoMatchingType) {
+    // when
+    val result = runTask("dumpModuleType", androidHomeOrSkip()).buildAndFail()
+
+    // then
+    assertThat(result.output).contains(
+      """
+        * What went wrong:
+        Execution failed for task ':a:dumpModuleType'.
+        > No module type matching :a. All types = ["Won't match"]
+      """.trimIndent()
+    )
+    assertThat(result.output).contains(
+      """
+        * What went wrong:
+        Execution failed for task ':b:dumpModuleType'.
+        > No module type matching :b. All types = ["Won't match"]
+      """.trimIndent()
+    )
+    assertThat(result.output).contains(
+      """
+        * What went wrong:
+        Execution failed for task ':c:dumpModuleType'.
+        > No module type matching :c. All types = ["Won't match"]
+      """.trimIndent()
+    )
   }
 
   private fun File.moduleTypeFile(modulePath: String): String =
