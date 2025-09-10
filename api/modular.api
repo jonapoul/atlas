@@ -42,8 +42,8 @@ public final class modular/gradle/OutputSpec {
 }
 
 public final class modular/gradle/Variant : java/lang/Enum {
-	public static final field Chart Lmodular/gradle/Variant;
 	public static final field Legend Lmodular/gradle/Variant;
+	public static final field Modules Lmodular/gradle/Variant;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/gradle/Variant;
 	public static fun values ()[Lmodular/gradle/Variant;

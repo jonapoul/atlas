@@ -23,13 +23,19 @@ internal fun File.buildRunner(androidHome: File? = null) = GradleRunner
     }
   }
 
-internal fun File.runTask(task: String, androidHome: File? = null) = buildRunner(androidHome).runTask(task)
+internal fun File.runTask(
+  task: String,
+  androidHome: File? = null,
+  extras: List<String> = emptyList(),
+) = buildRunner(androidHome).runTask(task, extras)
 
-internal fun GradleRunner.runTask(task: String) = withArguments(
-  task,
-  "--configuration-cache",
-  // "--info",
-  "-Pandroid.useAndroidX=true", // needed for android builds to work, unused otherwise
+internal fun GradleRunner.runTask(task: String, extras: List<String> = emptyList()) = withArguments(
+  listOf(
+    task,
+    "--configuration-cache",
+    // "--info",
+    "-Pandroid.useAndroidX=true", // needed for android builds to work, unused otherwise
+  ) + extras
 )
 
 internal fun androidHomeOrSkip(): File {

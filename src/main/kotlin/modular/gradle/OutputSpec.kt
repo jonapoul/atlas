@@ -41,4 +41,4 @@ class OutputSpec(objects: ObjectFactory, project: Project) {
     legendOutputDirectory.set(relativeToRoot?.let(projectDir::dir) ?: projectDir)
 }
 
-enum class Variant { Chart, Legend }
+enum class Variant { Modules, Legend }

@@ -35,7 +35,7 @@ class ModularLeafPlugin : Plugin<Project> {
     CalculateModuleTreeTask.register(project, extension)
 
     extension.specs.configureEach { spec ->
-      val file = outputFile(extension.outputs, Variant.Chart, fileExtension = spec.extension.get())
+      val file = outputFile(extension.outputs, Variant.Modules, fileExtension = spec.extension.get())
       when (spec) {
         is DotFileSpec -> registerDotFileTasks(extension, spec, file)
       }
@@ -76,7 +76,7 @@ class ModularLeafPlugin : Plugin<Project> {
       target = this,
       output = extension.outputs,
       spec = spec,
-      variant = Variant.Chart,
+      variant = Variant.Modules,
       dotFileTask = dotFileTask,
     )
 
