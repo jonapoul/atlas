@@ -20,16 +20,12 @@ interface OutputSpec<L : LegendSpec, C : ChartSpec> {
   fun legend(): L
   fun legend(file: File): L
   fun legend(file: Provider<RegularFile>): L
-
-  @ModularDsl
-  fun legend(action: Action<L>)
+  @ModularDsl fun legend(action: Action<L>)
 
   val chart: C
   fun chart(file: File) = chart.file.set(file)
   fun chart(file: Provider<RegularFile>) = chart.file.set(file)
-
-  @ModularDsl
-  fun chart(action: Action<C>) = action.execute(chart)
+  @ModularDsl fun chart(action: Action<C>) = action.execute(chart)
 }
 
 interface ChartSpec {
