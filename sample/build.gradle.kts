@@ -54,5 +54,9 @@ modular {
       png()
       svg()
     }
+
+    experimental {
+      adjustSvgViewBox = true
+    }
   }
 }

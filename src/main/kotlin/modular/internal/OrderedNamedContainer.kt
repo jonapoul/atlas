@@ -5,12 +5,20 @@
 package modular.internal
 
 import groovy.lang.Closure
+import modular.spec.ModuleType
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
+import org.gradle.api.model.ObjectFactory
 import java.util.function.IntFunction
 
-internal class OrderedNamedContainer<T : Any>(
+internal class ModuleTypeContainer(objects: ObjectFactory) : OrderedNamedContainer<ModuleType>(
+  container = objects.domainObjectContainer(ModuleType::class.java) { name ->
+    objects.newInstance(ModuleType::class.java, name)
+  },
+)
+
+internal open class OrderedNamedContainer<T : Any>(
   private val container: NamedDomainObjectContainer<T>,
 ) : NamedDomainObjectContainer<T> by container {
   private val orderedNames = mutableSetOf<String>()

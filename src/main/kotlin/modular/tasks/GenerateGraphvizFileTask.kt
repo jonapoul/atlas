@@ -4,11 +4,13 @@
  */
 package modular.tasks
 
-import modular.gradle.OutputSpec
+import modular.gradle.ModularExtension
 import modular.gradle.Variant
 import modular.internal.MODULAR_TASK_GROUP
+import modular.internal.doGraphVizPostProcessing
 import modular.internal.outputFile
 import modular.spec.DotFileSpec
+import modular.spec.ExperimentalFlags
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -17,6 +19,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.Nested
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
@@ -27,6 +30,7 @@ import org.gradle.api.tasks.TaskProvider
 abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val dotFile: RegularFileProperty
   @get:Input abstract val outputFormat: Property<String>
+  @get:Nested abstract val experimental: ExperimentalFlags
   @get:OutputFile abstract override val outputFile: RegularFileProperty
   @get:OutputFile abstract val errorFile: RegularFileProperty
 
@@ -60,6 +64,8 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
       logger.lifecycle(outputFile.absolutePath)
       errorFile.delete()
     }
+
+    doGraphVizPostProcessing(experimental, outputFile, outputFormat)
   }
 
   companion object {
@@ -78,14 +84,14 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
 
     fun <T : TaskWithOutputFile> register(
       target: Project,
-      output: OutputSpec,
+      extension: ModularExtension,
       spec: DotFileSpec,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
     ): List<TaskProvider<GenerateGraphvizFileTask>> = with(target) {
       spec.fileFormats.outputFormats.get().map { format ->
-        val outputFile = outputFile(output, variant, fileExtension = format)
-        val errorFile = outputFile(output, variant, fileExtension = "$format.log")
+        val outputFile = outputFile(extension.outputs, variant, fileExtension = format)
+        val errorFile = outputFile(extension.outputs, variant, fileExtension = "$format.log")
         val taskName = taskName(variant, format)
         logger.info("Registering $taskName for output format $format")
 
@@ -94,6 +100,10 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
           task.outputFormat.set(format)
           task.outputFile.set(outputFile)
           task.errorFile.set(errorFile)
+
+          with(task.experimental) {
+            adjustSvgViewBox.set(extension.experimental.adjustSvgViewBox)
+          }
         }
       }
     }

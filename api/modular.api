@@ -5,6 +5,8 @@ public class modular/gradle/ModularExtension {
 	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
 	public final fun dotFile (Lorg/gradle/api/Action;)V
 	public static synthetic fun dotFile$default (Lmodular/gradle/ModularExtension;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public final fun experimental (Lorg/gradle/api/Action;)V
+	public final fun getExperimental ()Lmodular/spec/ExperimentalSpec;
 	public final fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
 	public final fun getGenerateReadme ()Lorg/gradle/api/provider/Property;
 	public final fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
@@ -16,7 +18,9 @@ public class modular/gradle/ModularExtension {
 	public final fun getSpecs ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public final fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
 	public final fun moduleNames (Lorg/gradle/api/Action;)V
+	public final fun moduleTypes (Lorg/gradle/api/Action;)V
 	public final fun outputs (Lorg/gradle/api/Action;)V
+	public final fun specs (Lorg/gradle/api/Action;)V
 }
 
 public final class modular/gradle/ModularLeafPlugin : org/gradle/api/Plugin {
@@ -166,6 +170,16 @@ public final class modular/spec/DotFileSpec : modular/spec/Spec {
 	public synthetic fun setLegend (Lmodular/spec/LegendSpec;)V
 }
 
+public abstract class modular/spec/ExperimentalFlags {
+	public fun <init> ()V
+	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/spec/ExperimentalSpec {
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
+	public final fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
+}
+
 public abstract interface class modular/spec/LegendSpec {
 }
 
@@ -221,7 +235,7 @@ public abstract interface class modular/spec/Spec {
 	public abstract fun getChart ()Lmodular/spec/ChartSpec;
 	public abstract fun getExtension ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLegend ()Lmodular/spec/LegendSpec;
-	public fun getName ()Ljava/lang/String;
+	public abstract fun getName ()Ljava/lang/String;
 	public abstract fun legend ()Lmodular/spec/LegendSpec;
 	public abstract fun legend (Lorg/gradle/api/Action;)V
 	public abstract fun setLegend (Lmodular/spec/LegendSpec;)V
@@ -229,7 +243,6 @@ public abstract interface class modular/spec/Spec {
 
 public final class modular/spec/Spec$DefaultImpls {
 	public static fun chart (Lmodular/spec/Spec;Lorg/gradle/api/Action;)V
-	public static fun getName (Lmodular/spec/Spec;)Ljava/lang/String;
 }
 
 public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
@@ -329,13 +342,14 @@ public abstract class modular/tasks/GenerateGraphvizFileTask : org/gradle/api/De
 	public fun getDescription ()Ljava/lang/String;
 	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getErrorFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getExperimental ()Lmodular/spec/ExperimentalFlags;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
 }
 
 public final class modular/tasks/GenerateGraphvizFileTask$Companion {
 	public final fun get (Lorg/gradle/api/Project;Ljava/lang/String;)Lorg/gradle/api/tasks/TaskProvider;
-	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/OutputSpec;Lmodular/spec/DotFileSpec;Lmodular/gradle/Variant;Lorg/gradle/api/tasks/TaskProvider;)Ljava/util/List;
+	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;Lmodular/spec/DotFileSpec;Lmodular/gradle/Variant;Lorg/gradle/api/tasks/TaskProvider;)Ljava/util/List;
 }
 
 public abstract class modular/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {

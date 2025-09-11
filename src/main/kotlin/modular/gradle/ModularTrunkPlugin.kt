@@ -97,7 +97,7 @@ class ModularTrunkPlugin : Plugin<Project> {
 
       GenerateGraphvizFileTask.register(
         target = this,
-        output = extension.outputs,
+        extension = extension,
         spec = spec,
         variant = Variant.Legend,
         dotFileTask = dotFileTask,

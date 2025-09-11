@@ -5,11 +5,12 @@
 package modular.gradle
 
 import modular.internal.ModularProperties
-import modular.internal.OrderedNamedContainer
+import modular.internal.ModuleTypeContainer
 import modular.internal.bool
 import modular.internal.set
 import modular.internal.string
 import modular.spec.DotFileSpec
+import modular.spec.ExperimentalSpec
 import modular.spec.ModuleNameSpec
 import modular.spec.ModuleType
 import modular.spec.Spec
@@ -21,17 +22,15 @@ import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
 import javax.inject.Inject
 
-open class ModularExtension @Inject constructor(
-  private val objects: ObjectFactory,
-  private val project: Project,
-) {
+open class ModularExtension @Inject constructor(private val objects: ObjectFactory, private val project: Project) {
   private val properties = ModularProperties(project)
 
-  @ModularDsl val moduleTypes: NamedDomainObjectContainer<ModuleType> = OrderedNamedContainer(
-    container = objects.domainObjectContainer(ModuleType::class.java) { name ->
-      objects.newInstance(ModuleType::class.java, name)
-    },
-  )
+  val experimental = ExperimentalSpec(objects, project)
+  val moduleNames = ModuleNameSpec(objects)
+  val outputs = OutputSpec(objects, project)
+
+  val moduleTypes: NamedDomainObjectContainer<ModuleType> = ModuleTypeContainer(objects)
+  val specs: NamedDomainObjectContainer<Spec<*, *>> = objects.domainObjectContainer(Spec::class.java)
 
   val generateOnSync: Property<Boolean> = objects.bool(properties.generateOnSync)
   val generateReadme: Property<Boolean> = objects.bool(properties.generateReadme)
@@ -40,27 +39,19 @@ open class ModularExtension @Inject constructor(
   val separator: Property<String> = objects.string(properties.separator)
   val supportUpwardsTraversal: Property<Boolean> = objects.bool(properties.supportUpwardsTraversal)
 
-  val outputs = OutputSpec(objects, project)
+  @ModularDsl fun experimental(action: Action<ExperimentalSpec>) = action.execute(experimental)
+  @ModularDsl fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleType>>) = action.execute(moduleTypes)
   @ModularDsl fun outputs(action: Action<OutputSpec>) = action.execute(outputs)
 
-  val specs: NamedDomainObjectContainer<Spec<*, *>> = objects.domainObjectContainer(Spec::class.java)
-
-  @ModularDsl fun dotFile(action: Action<DotFileSpec>? = null) {
-    val spec = DotFileSpec(objects, project)
-    action?.execute(spec)
-    specs.add(spec)
-  }
-
-  val moduleNames = ModuleNameSpec(objects)
   @ModularDsl fun moduleNames(action: Action<ModuleNameSpec>) = action.execute(moduleNames)
+  @ModularDsl fun specs(action: Action<NamedDomainObjectContainer<Spec<*, *>>>) = action.execute(specs)
 
-  //  fun mermaid(action: Action<MermaidOutputConfig>? = null) {
-  //    val config = outputConfigs[MermaidOutputConfig::class]
-  //      as? MermaidOutputConfig
-  //      ?: MermaidOutputConfig(objects, project)
-  //    action?.execute(config)
-  //    outputConfigs[MermaidOutputConfig::class] = config
-  //  }
+  @ModularDsl
+  fun dotFile(action: Action<DotFileSpec>? = null) {
+    val spec = specs.findByName(DotFileSpec.NAME) as? DotFileSpec
+      ?: DotFileSpec(objects, project).also { specs.add(it) }
+    action?.execute(spec)
+  }
 
   internal companion object {
     internal const val NAME = "modular"
