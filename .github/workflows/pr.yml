@@ -15,39 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  identify:
-    runs-on: ubuntu-latest
-    outputs:
-      build: ${{ steps.filter.outputs.build }}
-      github: ${{ steps.filter.outputs.github }}
-      kotlin: ${{ steps.filter.outputs.kotlin }}
-      src: ${{ steps.filter.outputs.src }}
-    steps:
-      - uses: actions/checkout@v5
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          filters: |
-            build:
-              - '**.kts'
-              - '**.properties'
-              - '**.conf'
-              - 'build-logic/**'
-              - 'gradle/**'
-            github:
-              - '.github/**'
-            kotlin:
-              - '**.kt'
-              - '**.kts'
-            src:
-              - '**.kt'
-              - '**.kts'
-              - '**/src/**'
-
-  ktlint:
-    needs: [ identify ]
-    if: needs.identify.outputs.kotlin == 'true'
+  check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -55,6 +23,13 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
+          ref: ${{ github.head_ref }}
+
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: ./config/gitleaks.toml
 
       - name: Install ktlint
         run: |
@@ -64,18 +39,6 @@ jobs:
 
       - name: Run ktlint
         run: scripts/ktlintCheck.sh
-
-  check:
-    needs: [ identify ]
-    if: needs.identify.outputs.src == 'true' || needs.identify.outputs.build == 'true' || needs.identify.outputs.github == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-          fetch-tags: true
-          ref: ${{ github.head_ref }}
 
       - name: Install Graphviz
         run: |
