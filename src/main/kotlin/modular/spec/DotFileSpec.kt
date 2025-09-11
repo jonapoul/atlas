@@ -11,7 +11,6 @@ import modular.internal.string
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
-import kotlin.reflect.jvm.jvmName
 
 class DotFileSpec(
   private val objects: ObjectFactory,
@@ -32,6 +31,6 @@ class DotFileSpec(
   private fun getOrBuildLegend() = legend ?: DotFileLegendSpec(objects, project).also { legend = it }
 
   internal companion object {
-    internal val NAME = DotFileSpec::class.jvmName
+    internal const val NAME = "DotFileSpec"
   }
 }
