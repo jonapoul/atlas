@@ -9,11 +9,10 @@ package modular.spec
 import modular.gradle.ModularDsl
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
-import kotlin.reflect.jvm.jvmName
 
 sealed interface Spec<L : LegendSpec, C : ChartSpec> {
   // allows us store to store Spec in a NamedDomainObjectContainer
-  val name get() = this::class.jvmName
+  val name: String
   val extension: Property<String>
 
   var legend: L?

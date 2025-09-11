@@ -19,6 +19,9 @@ internal class ModularProperties(private val project: Project) {
   val separator: Provider<String> = string(key = "modular.separator", default = ",")
   val supportUpwardsTraversal: Provider<Boolean> = bool(key = "modular.supportUpwardsTraversal", default = false)
 
+  // Experimental
+  val adjustSvgViewBox: Provider<Boolean> = bool(key = "modular.experimental.adjustSvgViewBox", default = false)
+
   // Dotfile legend
   val cellBorder: Provider<Int> = int(key = "modular.dotfile.legend.cellBorder", default = 1)
   val cellPadding: Provider<Int> = int(key = "modular.dotfile.legend.cellPadding", default = 4)
@@ -28,7 +31,7 @@ internal class ModularProperties(private val project: Project) {
   // Dotfile chart
   val arrowHead: Provider<String> = string(key = "modular.dotfile.chart.arrowHead", default = ArrowType.Normal)
   val arrowTail: Provider<String> = string(key = "modular.dotfile.chart.arrowTail", default = ArrowType.None)
-  val dpi: Provider<Int> = int(key = "modular.dotfile.chart.dpi", default = 100)
+  val dpi: Provider<Int> = int(key = "modular.dotfile.chart.dpi", default = 72)
   val fontSize: Provider<Int> = int(key = "modular.dotfile.chart.fontSize", default = 30)
   val rankDir: Provider<RankDir> = enum(key = "modular.dotfile.chart.rankDir", default = RankDir.TopToBottom)
   val rankSep: Provider<Float> = float(key = "modular.dotfile.chart.rankSep", default = 1.5f)

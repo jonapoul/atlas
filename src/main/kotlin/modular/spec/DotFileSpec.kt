@@ -16,6 +16,7 @@ class DotFileSpec(
   private val objects: ObjectFactory,
   private val project: Project,
 ) : Spec<DotFileLegendSpec, DotFileChartSpec> {
+  override val name = NAME
   override val extension = objects.string(convention = "dot")
 
   override var legend: DotFileLegendSpec? = null
@@ -28,4 +29,8 @@ class DotFileSpec(
   @ModularDsl fun fileFormats(action: Action<DotFileOutputFormatSpec>) = action.execute(fileFormats)
 
   private fun getOrBuildLegend() = legend ?: DotFileLegendSpec(objects, project).also { legend = it }
+
+  internal companion object {
+    internal const val NAME = "DotFileSpec"
+  }
 }

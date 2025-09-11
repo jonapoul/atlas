@@ -74,7 +74,7 @@ class ModularLeafPlugin : Plugin<Project> {
 
     val outputTasks = GenerateGraphvizFileTask.register(
       target = this,
-      output = extension.outputs,
+      extension = extension,
       spec = spec,
       variant = Variant.Modules,
       dotFileTask = dotFileTask,

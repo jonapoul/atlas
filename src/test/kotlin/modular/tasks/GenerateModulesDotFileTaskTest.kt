@@ -42,7 +42,7 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
       """
         digraph {
           edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
-          graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+          graph ["dpi"="72","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
           node ["style"="filled"]
           ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
           ":b" ["fillcolor"="#FF8800","shape"="none"]
@@ -57,7 +57,7 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
       """
         digraph {
           edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
-          graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+          graph ["dpi"="72","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
           node ["style"="filled"]
           ":b" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
         }
@@ -67,7 +67,7 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
       """
         digraph {
           edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
-          graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+          graph ["dpi"="72","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
           node ["style"="filled"]
           ":c" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
         }
@@ -141,7 +141,7 @@ class GenerateModulesDotFileTaskTest : ModularTaskTest() {
       """
         digraph {
           edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
-          graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+          graph ["dpi"="72","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
           node ["style"="filled"]
           "B" ["fillcolor"="#FF8800","shape"="none"]
           "a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]

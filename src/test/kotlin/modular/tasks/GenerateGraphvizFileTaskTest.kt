@@ -12,6 +12,8 @@ import modular.test.RequiresGraphviz
 import modular.test.runTask
 import modular.test.scenarios.DotFileBasic
 import modular.test.scenarios.DotFileBasicWithThreeOutputFormats
+import modular.test.scenarios.DotFileBigGraph100DpiSvg
+import modular.test.scenarios.DotFileBigGraph100DpiSvgWithAdjustment
 import kotlin.test.Test
 
 class GenerateGraphvizFileTaskTest : ModularTaskTest() {
@@ -62,5 +64,50 @@ class GenerateGraphvizFileTaskTest : ModularTaskTest() {
       assertThat(resolve("$submodule/modules.svg")).exists()
       assertThat(resolve("$submodule/modules.eps")).exists()
     }
+  }
+
+  @Test
+  @RequiresGraphviz
+  fun `SVG viewBox scales with nondefault DPI with flag enabled`() =
+    runScenario(DotFileBigGraph100DpiSvgWithAdjustment) {
+      // when
+      runTask(":app:generateModulesSvg").build()
+
+      // then the app graph was generated as an svg
+      val contents = resolve("app/modules.svg").readText()
+
+      // and the viewBox matches the width/height
+      assertThat(contents).contains(
+        """
+        <svg width="486pt" height="661pt"
+        """.trimIndent(),
+      )
+      assertThat(contents).contains(
+        """
+        viewBox="0.00 0.00 486.00 661.00"
+        """.trimIndent(),
+      )
+    }
+
+  @Test
+  @RequiresGraphviz
+  fun `SVG doesn't scale viewBox if experimental flag is unset`() = runScenario(DotFileBigGraph100DpiSvg) {
+    // when
+    runTask(":app:generateModulesSvg").build()
+
+    // then the app graph was generated as an svg
+    val contents = resolve("app/modules.svg").readText()
+
+    // and the viewBox doesn't match the width/height
+    assertThat(contents).contains(
+      """
+        <svg width="486pt" height="661pt"
+      """.trimIndent(),
+    )
+    assertThat(contents).contains(
+      """
+        viewBox="0.00 0.00 350.00 476.00"
+      """.trimIndent(),
+    )
   }
 }
