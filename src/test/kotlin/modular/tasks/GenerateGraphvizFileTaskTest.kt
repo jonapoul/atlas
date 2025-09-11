@@ -79,12 +79,12 @@ class GenerateGraphvizFileTaskTest : ModularTaskTest() {
       // and the viewBox matches the width/height
       assertThat(contents).contains(
         """
-        <svg width="486pt" height="661pt"
+        <svg width="486pt" height="361pt"
         """.trimIndent(),
       )
       assertThat(contents).contains(
         """
-        viewBox="0.00 0.00 486.00 661.00"
+        viewBox="0.00 0.00 486.00 361.00"
         """.trimIndent(),
       )
     }
@@ -101,12 +101,12 @@ class GenerateGraphvizFileTaskTest : ModularTaskTest() {
     // and the viewBox doesn't match the width/height
     assertThat(contents).contains(
       """
-        <svg width="486pt" height="661pt"
+        <svg width="486pt" height="361pt"
       """.trimIndent(),
     )
     assertThat(contents).contains(
       """
-        viewBox="0.00 0.00 350.00 476.00"
+        viewBox="0.00 0.00 350.00 260.00"
       """.trimIndent(),
     )
   }

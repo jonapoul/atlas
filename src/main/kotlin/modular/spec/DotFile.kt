@@ -16,12 +16,12 @@ internal class DotFile(
   private val links: Set<ModuleLink>,
   private val replacements: Set<Replacement>,
   private val thisPath: String,
-  private val arrowHead: String,
-  private val arrowTail: String,
-  private val dpi: Int,
-  private val fontSize: Int,
+  private val arrowHead: String?,
+  private val arrowTail: String?,
+  private val dpi: Int?,
+  private val fontSize: Int?,
   private val rankDir: RankDir,
-  private val rankSep: Float,
+  private val rankSep: Float?,
   private val showArrows: Boolean,
 ) {
   operator fun invoke(): String = buildString {
@@ -60,7 +60,8 @@ internal class DotFile(
     appendIndented("$name [")
     val itemsString = items
       .toList()
-      .joinToString(separator = ",") { (k, v) -> if (v == null) "" else "\"$k\"=\"$v\"" }
+      .mapNotNull { (k, v) -> if (v == null) null else "\"$k\"=\"$v\"" }
+      .joinToString(separator = ",")
     append(itemsString)
     append("]")
     appendLine()
