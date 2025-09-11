@@ -21,6 +21,7 @@ import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
@@ -44,14 +45,14 @@ abstract class GenerateModulesDotFileTask :
   @get:Input abstract val printOutput: Property<Boolean>
 
   // Dotfile config
-  @get:Input abstract val arrowHead: Property<String>
-  @get:Input abstract val arrowTail: Property<String>
-  @get:Input abstract val dpi: Property<Int>
-  @get:Input abstract val fontSize: Property<Int>
   @get:Input abstract val rankDir: Property<RankDir>
-  @get:Input abstract val rankSep: Property<Float>
   @get:Input abstract val showArrows: Property<Boolean>
   @get:Input abstract val thisPath: Property<String>
+  @get:[Input Optional] abstract val arrowHead: Property<String>
+  @get:[Input Optional] abstract val arrowTail: Property<String>
+  @get:[Input Optional] abstract val dpi: Property<Int>
+  @get:[Input Optional] abstract val fontSize: Property<Int>
+  @get:[Input Optional] abstract val rankSep: Property<Float>
 
   init {
     group = MODULAR_TASK_GROUP
@@ -69,12 +70,12 @@ abstract class GenerateModulesDotFileTask :
       links = ModuleLinks.read(linksFile, separator),
       replacements = replacements.get(),
       thisPath = thisPath.get(),
-      arrowHead = arrowHead.get(),
-      arrowTail = arrowTail.get(),
-      dpi = dpi.get(),
-      fontSize = fontSize.get(),
+      arrowHead = arrowHead.orNull,
+      arrowTail = arrowTail.orNull,
+      dpi = dpi.orNull,
+      fontSize = fontSize.orNull,
       rankDir = rankDir.get(),
-      rankSep = rankSep.get(),
+      rankSep = rankSep.orNull,
       showArrows = showArrows.get(),
     )
 

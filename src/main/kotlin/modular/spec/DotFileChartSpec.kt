@@ -6,6 +6,7 @@
 
 package modular.spec
 
+import modular.gradle.ModularDsl
 import modular.internal.ModularProperties
 import modular.internal.bool
 import modular.internal.enum
@@ -27,6 +28,6 @@ class DotFileChartSpec(objects: ObjectFactory, project: Project) : ChartSpec {
   val rankSep: Property<Float> = objects.float(properties.rankSep)
   val showArrows: Property<Boolean> = objects.bool(properties.showArrows)
 
-  fun arrowHead(type: ArrowType) = arrowHead.set(type.toString())
-  fun arrowTail(type: ArrowType) = arrowTail.set(type.toString())
+  @ModularDsl fun arrowHead(type: ArrowType) = arrowHead.set(type.toString())
+  @ModularDsl fun arrowTail(type: ArrowType) = arrowTail.set(type.toString())
 }

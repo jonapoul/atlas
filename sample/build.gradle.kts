@@ -1,3 +1,4 @@
+import modular.spec.ArrowType
 import modular.spec.RankDir
 
 plugins {
@@ -43,10 +44,13 @@ modular {
     }
 
     chart {
-      showArrows = true
-      rankSep = 1.5f
-      rankDir = RankDir.TopToBottom
+      arrowHead(ArrowType.Normal)
+      arrowTail(ArrowType.None)
       dpi = 100
+      fontSize = 30
+      rankDir = RankDir.TopToBottom
+      rankSep = 1.5f
+      showArrows = true
     }
 
     fileFormats {
