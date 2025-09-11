@@ -100,10 +100,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
           task.outputFormat.set(format)
           task.outputFile.set(outputFile)
           task.errorFile.set(errorFile)
-
-          with(task.experimental) {
-            adjustSvgViewBox.set(extension.experimental.adjustSvgViewBox)
-          }
+          task.experimental.adjustSvgViewBox.set(extension.experimental.adjustSvgViewBox)
         }
       }
     }
