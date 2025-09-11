@@ -48,9 +48,11 @@ open class ModularExtension @Inject constructor(private val objects: ObjectFacto
 
   @ModularDsl
   fun dotFile(action: Action<DotFileSpec>? = null) {
-    val spec = specs.findByName(DotFileSpec.NAME) as? DotFileSpec
-      ?: DotFileSpec(objects, project).also { specs.add(it) }
+    val spec = specs.findByName(DotFileSpec.NAME)
+      as? DotFileSpec
+      ?: DotFileSpec(objects, project)
     action?.execute(spec)
+    specs.add(spec)
   }
 
   internal companion object {
