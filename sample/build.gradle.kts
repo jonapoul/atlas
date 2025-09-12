@@ -1,4 +1,5 @@
 import modular.spec.ArrowType
+import modular.spec.LayoutEngine
 import modular.spec.RankDir
 
 plugins {
@@ -46,6 +47,7 @@ modular {
     chart {
       arrowHead(ArrowType.Normal)
       arrowTail(ArrowType.None)
+      layoutEngine(LayoutEngine.Dot)
       dpi = 100
       fontSize = 30
       rankDir = RankDir.TopToBottom

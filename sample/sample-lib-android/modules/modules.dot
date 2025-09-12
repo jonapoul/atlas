@@ -1,6 +1,6 @@
 digraph {
   edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
-  graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+  graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TopToBottom"]
   node ["style"="filled"]
   "abc_android" ["fillcolor"="#55FF55","color"="black","penwidth"="3","shape"="box"]
   "abc_kotlin_jvm" ["fillcolor"="#CA66FF","shape"="none"]

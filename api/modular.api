@@ -53,7 +53,7 @@ public final class modular/gradle/Variant : java/lang/Enum {
 	public static fun values ()[Lmodular/gradle/Variant;
 }
 
-public final class modular/spec/ArrowType : java/lang/Enum {
+public final class modular/spec/ArrowType : java/lang/Enum, modular/spec/StringEnum {
 	public static final field Box Lmodular/spec/ArrowType;
 	public static final field Crow Lmodular/spec/ArrowType;
 	public static final field Diamond Lmodular/spec/ArrowType;
@@ -74,7 +74,7 @@ public final class modular/spec/ArrowType : java/lang/Enum {
 	public static final field Tee Lmodular/spec/ArrowType;
 	public static final field Vee Lmodular/spec/ArrowType;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public fun toString ()Ljava/lang/String;
+	public fun getString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/ArrowType;
 	public static fun values ()[Lmodular/spec/ArrowType;
 }
@@ -90,9 +90,12 @@ public final class modular/spec/DotFileChartSpec : modular/spec/ChartSpec {
 	public final fun getArrowTail ()Lorg/gradle/api/provider/Property;
 	public final fun getDpi ()Lorg/gradle/api/provider/Property;
 	public final fun getFontSize ()Lorg/gradle/api/provider/Property;
+	public final fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
 	public final fun getRankDir ()Lorg/gradle/api/provider/Property;
 	public final fun getRankSep ()Lorg/gradle/api/provider/Property;
 	public final fun getShowArrows ()Lorg/gradle/api/provider/Property;
+	public final fun layoutEngine (Ljava/lang/String;)V
+	public final fun layoutEngine (Lmodular/spec/LayoutEngine;)V
 }
 
 public final class modular/spec/DotFileLegendSpec : modular/spec/LegendSpec {
@@ -180,6 +183,23 @@ public final class modular/spec/ExperimentalSpec {
 	public final fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
 }
 
+public final class modular/spec/LayoutEngine : java/lang/Enum, modular/spec/StringEnum {
+	public static final field Circo Lmodular/spec/LayoutEngine;
+	public static final field Dot Lmodular/spec/LayoutEngine;
+	public static final field Fdp Lmodular/spec/LayoutEngine;
+	public static final field Neato Lmodular/spec/LayoutEngine;
+	public static final field Nop Lmodular/spec/LayoutEngine;
+	public static final field Nop2 Lmodular/spec/LayoutEngine;
+	public static final field Osage Lmodular/spec/LayoutEngine;
+	public static final field Patchwork Lmodular/spec/LayoutEngine;
+	public static final field Sfdp Lmodular/spec/LayoutEngine;
+	public static final field TwoPi Lmodular/spec/LayoutEngine;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/LayoutEngine;
+	public static fun values ()[Lmodular/spec/LayoutEngine;
+}
+
 public abstract interface class modular/spec/LegendSpec {
 }
 
@@ -213,13 +233,13 @@ public final class modular/spec/ModuleTypeModel : java/io/Serializable {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class modular/spec/RankDir : java/lang/Enum {
+public final class modular/spec/RankDir : java/lang/Enum, modular/spec/StringEnum {
 	public static final field BottomToTop Lmodular/spec/RankDir;
 	public static final field LeftToRight Lmodular/spec/RankDir;
 	public static final field RightToLeft Lmodular/spec/RankDir;
 	public static final field TopToBottom Lmodular/spec/RankDir;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public fun toString ()Ljava/lang/String;
+	public fun getString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/RankDir;
 	public static fun values ()[Lmodular/spec/RankDir;
 }
@@ -341,7 +361,7 @@ public abstract class modular/tasks/GenerateGraphvizFileTask : org/gradle/api/De
 	public final fun execute ()V
 	public fun getDescription ()Ljava/lang/String;
 	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getErrorFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getEngine ()Lorg/gradle/api/provider/Property;
 	public abstract fun getExperimental ()Lmodular/spec/ExperimentalFlags;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;

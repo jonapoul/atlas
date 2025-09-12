@@ -31,6 +31,7 @@ internal class ModularProperties(private val project: Project) {
   val arrowHead: Provider<String> = string(key = "modular.dotfile.chart.arrowHead", default = null)
   val arrowTail: Provider<String> = string(key = "modular.dotfile.chart.arrowTail", default = null)
   val dpi: Provider<Int> = int(key = "modular.dotfile.chart.dpi", default = null)
+  val layoutEngine: Provider<String> = string(key = "modular.dotfile.chart.layoutEngine", default = null)
   val fontSize: Provider<Int> = int(key = "modular.dotfile.chart.fontSize", default = null)
   val rankDir: Provider<RankDir> = enum(key = "modular.dotfile.chart.rankDir", default = RankDir.TopToBottom)
   val rankSep: Provider<Float> = float(key = "modular.dotfile.chart.rankSep", default = null)

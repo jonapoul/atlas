@@ -23,11 +23,14 @@ class DotFileChartSpec(objects: ObjectFactory, project: Project) : ChartSpec {
   val arrowHead: Property<String> = objects.string(properties.arrowHead)
   val arrowTail: Property<String> = objects.string(properties.arrowTail)
   val dpi: Property<Int> = objects.int(properties.dpi)
+  val layoutEngine: Property<String> = objects.string(properties.layoutEngine)
   val fontSize: Property<Int> = objects.int(properties.fontSize)
   val rankDir: Property<RankDir> = objects.enum(properties.rankDir)
   val rankSep: Property<Float> = objects.float(properties.rankSep)
   val showArrows: Property<Boolean> = objects.bool(properties.showArrows)
 
-  @ModularDsl fun arrowHead(type: ArrowType) = arrowHead.set(type.toString())
-  @ModularDsl fun arrowTail(type: ArrowType) = arrowTail.set(type.toString())
+  @ModularDsl fun arrowHead(type: ArrowType) = arrowHead.set(type.string)
+  @ModularDsl fun arrowTail(type: ArrowType) = arrowTail.set(type.string)
+  @ModularDsl fun layoutEngine(layoutEngine: LayoutEngine) = layoutEngine(layoutEngine.string)
+  @ModularDsl fun layoutEngine(layoutEngine: String) = this.layoutEngine.set(layoutEngine)
 }

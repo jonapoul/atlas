@@ -6,23 +6,24 @@
 
 package modular.spec
 
+internal interface StringEnum {
+  val string: String
+}
+
 /**
  * https://graphviz.org/docs/attr-types/rankdir/
  */
-enum class RankDir(private val string: String) {
+enum class RankDir(override val string: String) : StringEnum {
   TopToBottom("TB"),
   BottomToTop("BT"),
   LeftToRight("LR"),
   RightToLeft("RL"),
-  ;
-
-  override fun toString() = string
 }
 
 /**
  * https://graphviz.org/docs/attr-types/arrowType/
  */
-enum class ArrowType(private val string: String) {
+enum class ArrowType(override val string: String) : StringEnum {
   Box("box"),
   Crow("crow"),
   Diamond("diamond"),
@@ -42,7 +43,25 @@ enum class ArrowType(private val string: String) {
   Open("open"),
   Tee("tee"),
   Vee("vee"),
-  ;
+}
 
-  override fun toString() = string
+/**
+ * https://graphviz.org/docs/layouts/
+ *
+ * Your machine might not have some of these, or it might have more! Use [modular.spec.DotFileChartSpec.layoutEngine]
+ * with a string parameter to configure a custom layout engine. [Dot] is the implicit default.
+ *
+ * Run `dot -v` and check under "layout" to see what you have locally.
+ */
+enum class LayoutEngine(override val string: String) : StringEnum {
+  Dot("dot"),
+  Neato("neato"),
+  Fdp("fdp"),
+  Sfdp("sfdp"),
+  Circo("circo"),
+  TwoPi("twopi"),
+  Nop("nop"),
+  Nop2("nop2"),
+  Osage("osage"),
+  Patchwork("patchwork"),
 }
