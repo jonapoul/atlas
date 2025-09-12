@@ -8,8 +8,8 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.containsMatch
 import assertk.assertions.exists
-import modular.test.ModularTaskTest
 import modular.test.RequiresGraphviz
+import modular.test.ScenarioTest
 import modular.test.runTask
 import modular.test.scenarios.DotFileBasic
 import modular.test.scenarios.DotFileBasicWithThreeOutputFormats
@@ -20,7 +20,7 @@ import modular.test.scenarios.DotFileInvalidLayoutEngine
 import kotlin.test.Test
 import kotlin.text.RegexOption.MULTILINE
 
-class GenerateGraphvizFileTaskTest : ModularTaskTest() {
+class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @Test
   fun `Wrapper task has no dependents if no file formats have been declared`() = runScenario(DotFileBasic) {
     // when

@@ -8,7 +8,7 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import assertk.assertions.exists
-import modular.test.ModularTaskTest
+import modular.test.ScenarioTest
 import modular.test.runTask
 import modular.test.scenarios.DotFileBasic
 import modular.test.scenarios.DotFileChartCustomConfig
@@ -17,7 +17,7 @@ import modular.test.scenarios.DotFileChartWithReplacements
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
-class GenerateModulesDotFileTaskTest : ModularTaskTest() {
+class GenerateModulesDotFileTaskTest : ScenarioTest() {
   @Test
   fun `Don't register task if no outputs configured`() = runScenario(OneKotlinJvmModule) {
     // when

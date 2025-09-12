@@ -38,6 +38,9 @@ internal class ModularProperties(private val project: Project) {
   val rankSep: Provider<Float> = float(key = "modular.dotfile.chart.rankSep", default = null)
   val showArrows: Provider<Boolean> = bool(key = "modular.dotfile.chart.showArrows", default = true)
 
+  // Suppressions
+  val suppressSvgViewBoxWarning: Provider<Boolean> = bool(key = "modular.suppress.adjustSvgViewBox", default = false)
+
   private fun bool(key: String, default: Boolean? = null) = prop(key, default, mapper = String::toBooleanStrict)
   private fun float(key: String, default: Float? = null) = prop(key, default, mapper = String::toFloat)
   private fun int(key: String, default: Int? = null) = prop(key, default, mapper = String::toInt)

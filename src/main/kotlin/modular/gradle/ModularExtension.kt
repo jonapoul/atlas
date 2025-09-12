@@ -23,7 +23,7 @@ import org.gradle.api.provider.SetProperty
 import javax.inject.Inject
 
 open class ModularExtension @Inject constructor(private val objects: ObjectFactory, private val project: Project) {
-  private val properties = ModularProperties(project)
+  internal val properties = ModularProperties(project)
 
   val experimental = ExperimentalSpec(objects, project)
   val moduleNames = ModuleNameSpec(objects)
