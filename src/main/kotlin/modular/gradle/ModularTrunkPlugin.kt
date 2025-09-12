@@ -6,18 +6,19 @@
 
 package modular.gradle
 
-import modular.internal.HEX_COLOR_REGEX
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.configureSeparators
+import modular.internal.failIfInvalidColors
 import modular.internal.orderedTypes
 import modular.internal.registerGenerationTaskOnSync
+import modular.internal.warnIfModuleTypesSpecifyNothing
+import modular.internal.warnIfNoModuleTypes
+import modular.internal.warnIfSvgSelectedWithCustomDpi
 import modular.spec.DotFileSpec
-import modular.spec.ModuleType
 import modular.tasks.CollateModuleLinksTask
 import modular.tasks.CollateModuleTypesTask
 import modular.tasks.GenerateGraphvizFileTask
 import modular.tasks.GenerateLegendDotFileTask
-import org.codehaus.groovy.syntax.Types.REGEX_PATTERN
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskProvider
@@ -49,36 +50,11 @@ class ModularTrunkPlugin : Plugin<Project> {
 
     afterEvaluate {
       failIfInvalidColors(extension)
+      warnIfSvgSelectedWithCustomDpi(extension)
 
       val types = extension.orderedTypes()
       warnIfNoModuleTypes(types)
       warnIfModuleTypesSpecifyNothing(types)
-    }
-  }
-
-  private fun failIfInvalidColors(extension: ModularExtension) {
-    extension.moduleTypes.configureEach { type ->
-      val color = type.color.get()
-      if (!color.matches(HEX_COLOR_REGEX)) {
-        error("Invalid color string '$color' - should match regex pattern '$REGEX_PATTERN'")
-      }
-    }
-  }
-
-  private fun Project.warnIfNoModuleTypes(types: List<ModuleType>) {
-    if (types.isEmpty()) {
-      logger.warn("Warning: No module types have been registered!")
-    }
-  }
-
-  private fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
-    types.forEach { type ->
-      if (!type.pathContains.isPresent && !type.pathMatches.isPresent && !type.hasPluginId.isPresent) {
-        logger.warn(
-          "Warning: Module type '${type.name}' will be ignored - you need to set one of " +
-            "pathContains, pathMatches or hasPluginId.",
-        )
-      }
     }
   }
 
