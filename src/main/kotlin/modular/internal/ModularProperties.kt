@@ -5,6 +5,7 @@
 package modular.internal
 
 import modular.spec.RankDir
+import modular.spec.StringEnum
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
 
@@ -42,8 +43,8 @@ internal class ModularProperties(private val project: Project) {
   private fun int(key: String, default: Int? = null) = prop(key, default, mapper = String::toInt)
   private fun string(key: String, default: String? = null) = prop(key, default, mapper = { it })
 
-  private inline fun <reified E : Enum<E>> enum(key: String, default: E? = null) =
-    prop(key, default) { value -> enumValues<E>().firstOrNull { it.toString() == value } ?: default }
+  private inline fun <reified E> enum(key: String, default: E? = null) where E : Enum<E>, E : StringEnum =
+    prop(key, default) { value -> enumValues<E>().firstOrNull { it.string == value } ?: default }
 
   private inline fun <reified T : Any> prop(key: String, default: T?, noinline mapper: (String) -> T?) =
     project.providers
