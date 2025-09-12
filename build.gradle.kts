@@ -1,5 +1,7 @@
 import app.cash.licensee.UnusedAction
 import io.gitlab.arturbosch.detekt.Detekt
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
@@ -89,8 +91,19 @@ tasks.pluginUnderTestMetadata {
 
 tasks.test {
   useJUnitPlatform()
+
   systemProperty("test.version.gradle", GradleVersion.current().version)
   androidHome()?.let { systemProperty("test.androidHome", it) }
+
+  testLogging {
+    events = setOf(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
+    exceptionFormat = TestExceptionFormat.FULL
+    showCauses = true
+    showExceptions = true
+    showStackTraces = true
+    showStandardStreams = true
+    displayGranularity = 2
+  }
 }
 
 tasks.dependencyUpdates {
