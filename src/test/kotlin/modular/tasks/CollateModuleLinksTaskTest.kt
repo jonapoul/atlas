@@ -106,7 +106,7 @@ class CollateModuleLinksTaskTest : ModularTaskTest() {
         ":mid-b,:bottom,implementation",
         ":top,:mid-a,api",
         ":top,:mid-b,implementation",
-      )
+      ),
     )
   }
 
