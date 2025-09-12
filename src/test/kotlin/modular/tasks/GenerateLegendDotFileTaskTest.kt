@@ -8,7 +8,7 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import assertk.assertions.exists
-import modular.test.ModularTaskTest
+import modular.test.ScenarioTest
 import modular.test.doesNotExist
 import modular.test.runTask
 import modular.test.scenarios.DotFileBasic
@@ -18,7 +18,7 @@ import modular.test.scenarios.DotFileLegendWithProperties
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
-class GenerateLegendDotFileTaskTest : ModularTaskTest() {
+class GenerateLegendDotFileTaskTest : ScenarioTest() {
   @Test
   fun `Don't register legend task if no outputs are configured`() = runScenario(OneKotlinJvmModule) {
     // when

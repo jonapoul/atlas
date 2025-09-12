@@ -7,7 +7,7 @@ package modular.tasks
 import assertk.assertThat
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
-import modular.test.ModularTaskTest
+import modular.test.ScenarioTest
 import modular.test.allSuccessful
 import modular.test.doesNotExist
 import modular.test.runTask
@@ -20,7 +20,7 @@ import modular.test.taskWasSuccessful
 import java.io.File
 import kotlin.test.Test
 
-class CollateModuleLinksTaskTest : ModularTaskTest() {
+class CollateModuleLinksTaskTest : ScenarioTest() {
   @Test
   fun `Empty file for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when

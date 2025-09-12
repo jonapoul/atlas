@@ -8,7 +8,7 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.exists
 import assertk.assertions.isEqualTo
-import modular.test.ModularTaskTest
+import modular.test.ScenarioTest
 import modular.test.androidHomeOrSkip
 import modular.test.buildRunner
 import modular.test.runTask
@@ -24,7 +24,7 @@ import org.gradle.testkit.runner.TaskOutcome
 import java.io.File
 import kotlin.test.Test
 
-class DumpModuleTypeTaskTest : ModularTaskTest() {
+class DumpModuleTypeTaskTest : ScenarioTest() {
   @Test
   fun `Fail if no module types declared`() = runScenario(NoModuleTypesDeclared) {
     // when

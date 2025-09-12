@@ -8,7 +8,7 @@ import org.junit.jupiter.api.io.TempDir
 import java.io.File
 
 @Suppress("UnnecessaryAbstractClass")
-abstract class ModularTaskTest {
+abstract class ScenarioTest {
   @TempDir lateinit var projectRoot: File
 
   protected fun <T> runScenario(scenario: Scenario, test: File.() -> T) {

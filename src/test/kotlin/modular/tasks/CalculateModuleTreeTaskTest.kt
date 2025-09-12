@@ -7,7 +7,7 @@ package modular.tasks
 import assertk.assertThat
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
-import modular.test.ModularTaskTest
+import modular.test.ScenarioTest
 import modular.test.allSuccessful
 import modular.test.runTask
 import modular.test.scenarios.DiamondGraph
@@ -18,7 +18,7 @@ import modular.test.scenarios.TriangleGraph
 import modular.test.scenarios.TriangleGraphWithUpwardsTraversal
 import kotlin.test.Test
 
-class CalculateModuleTreeTaskTest : ModularTaskTest() {
+class CalculateModuleTreeTaskTest : ScenarioTest() {
   @Test
   fun `Empty files for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when

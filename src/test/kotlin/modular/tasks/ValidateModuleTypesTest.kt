@@ -6,7 +6,7 @@ package modular.tasks
 
 import assertk.assertThat
 import assertk.assertions.contains
-import modular.test.ModularTaskTest
+import modular.test.ScenarioTest
 import modular.test.buildRunner
 import modular.test.scenarios.InvalidColorDeclaration
 import modular.test.scenarios.ModuleTypeWithNoIdentifiers
@@ -14,7 +14,7 @@ import modular.test.scenarios.NoModuleTypesDeclared
 import org.codehaus.groovy.syntax.Types.REGEX_PATTERN
 import kotlin.test.Test
 
-class ValidateModuleTypesTest : ModularTaskTest() {
+class ValidateModuleTypesTest : ScenarioTest() {
   @Test
   fun `Warn if module type is declared with no identifiers`() = runScenario(ModuleTypeWithNoIdentifiers) {
     // when we're not running any of our tasks
