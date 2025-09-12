@@ -83,12 +83,12 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
       }
 
       tasks.register(TASK_NAME, GenerateLegendDotFileTask::class.java) { task ->
-        task.tableBorder.set(legendSpec.tableBorder)
-        task.cellBorder.set(legendSpec.cellBorder)
-        task.cellSpacing.set(legendSpec.cellSpacing)
-        task.cellPadding.set(legendSpec.cellPadding)
-        task.outputFile.set(outputFile)
-        task.moduleTypes.set(extension.orderedTypes().map(::moduleTypeModel))
+        task.tableBorder.convention(legendSpec.tableBorder)
+        task.cellBorder.convention(legendSpec.cellBorder)
+        task.cellSpacing.convention(legendSpec.cellSpacing)
+        task.cellPadding.convention(legendSpec.cellPadding)
+        task.outputFile.convention(outputFile)
+        task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
       }
     }
   }

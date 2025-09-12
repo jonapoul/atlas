@@ -7,7 +7,7 @@ package modular.tasks
 import modular.gradle.ModularExtension
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.TypedModule
-import modular.internal.fileInReportDirectory
+import modular.internal.fileInBuildDirectory
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
 import modular.spec.ModuleType
@@ -68,8 +68,8 @@ abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOu
       extension: ModularExtension,
     ): TaskProvider<DumpModuleTypeTask> = with(target) {
       val dumpModule = tasks.register(NAME, DumpModuleTypeTask::class.java) { task ->
-        task.projectPath.set(target.path)
-        task.outputFile.set(fileInReportDirectory("module-type"))
+        task.projectPath.convention(target.path)
+        task.outputFile.convention(fileInBuildDirectory("module-type"))
       }
 
       afterEvaluate {
@@ -77,8 +77,8 @@ abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOu
         val type = types.firstOrNull { t -> t.matches(target) }
         val matching = type?.let(::moduleTypeModel)
         dumpModule.configure { t ->
-          t.moduleType.set(matching)
-          t.allModuleTypes.set(types.map { it.name })
+          t.moduleType.convention(matching)
+          t.allModuleTypes.convention(types.map { it.name })
         }
       }
 

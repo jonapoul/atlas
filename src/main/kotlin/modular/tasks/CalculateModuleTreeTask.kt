@@ -8,7 +8,7 @@ import modular.gradle.ModularExtension
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLink
 import modular.internal.ModuleLinks
-import modular.internal.fileInReportDirectory
+import modular.internal.fileInBuildDirectory
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -95,15 +95,15 @@ abstract class CalculateModuleTreeTask : DefaultTask(), TaskWithSeparator, TaskW
       extension: ModularExtension,
     ): TaskProvider<CalculateModuleTreeTask> = with(target) {
       val calculateTree = tasks.register(NAME, CalculateModuleTreeTask::class.java) { task ->
-        task.thisPath.set(target.path)
-        task.supportUpwardsTraversal.set(extension.supportUpwardsTraversal)
-        task.outputFile.set(fileInReportDirectory("module-tree"))
+        task.thisPath.convention(target.path)
+        task.supportUpwardsTraversal.convention(extension.supportUpwardsTraversal)
+        task.outputFile.convention(fileInBuildDirectory("module-tree"))
       }
 
       gradle.projectsEvaluated {
         val collateProjectLinks = CollateModuleLinksTask.get(rootProject)
         calculateTree.configure { t ->
-          t.collatedLinks.set(collateProjectLinks.map { it.outputFile.get() })
+          t.collatedLinks.convention(collateProjectLinks.map { it.outputFile.get() })
           t.dependsOn(collateProjectLinks)
         }
       }

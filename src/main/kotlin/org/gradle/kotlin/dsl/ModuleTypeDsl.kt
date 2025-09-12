@@ -97,8 +97,8 @@ fun NamedDomainObjectContainer<ModuleType>.other(
   color: String,
   pluginId: String,
 ): NamedDomainObjectProvider<ModuleType> = register(name) { type ->
-  type.color.set(color)
-  type.hasPluginId.set(pluginId)
+  type.color.convention(color)
+  type.hasPluginId.convention(pluginId)
 }
 
 @ModularDsl fun NamedDomainObjectContainer<ModuleType>.registerByPathMatches(
@@ -106,8 +106,8 @@ fun NamedDomainObjectContainer<ModuleType>.other(
   color: String,
   pathMatches: Regex,
 ): NamedDomainObjectProvider<ModuleType> = register(name) { type ->
-  type.color.set(color)
-  type.pathMatches.set(pathMatches)
+  type.color.convention(color)
+  type.pathMatches.convention(pathMatches)
 }
 
 @ModularDsl fun NamedDomainObjectContainer<ModuleType>.registerByPathContains(
@@ -115,6 +115,6 @@ fun NamedDomainObjectContainer<ModuleType>.other(
   color: String,
   pathContains: String,
 ): NamedDomainObjectProvider<ModuleType> = register(name) { type ->
-  type.color.set(color)
-  type.pathContains.set(pathContains)
+  type.color.convention(color)
+  type.pathContains.convention(pathContains)
 }

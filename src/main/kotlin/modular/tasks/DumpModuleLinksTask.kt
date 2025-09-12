@@ -7,7 +7,7 @@ package modular.tasks
 import modular.gradle.ModularExtension
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLinks
-import modular.internal.fileInReportDirectory
+import modular.internal.fileInBuildDirectory
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException
@@ -61,9 +61,9 @@ abstract class DumpModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithO
       extension: ModularExtension,
     ): TaskProvider<DumpModuleLinksTask> = with(target) {
       tasks.register(NAME, DumpModuleLinksTask::class.java) { task ->
-        task.thisPath.set(target.path)
-        task.moduleLinks.set(ModuleLinks.of(target, extension.ignoredConfigs.get()))
-        task.outputFile.set(fileInReportDirectory("module-links"))
+        task.thisPath.convention(target.path)
+        task.moduleLinks.convention(ModuleLinks.of(target, extension.ignoredConfigs.get()))
+        task.outputFile.convention(fileInBuildDirectory("module-links"))
       }
     }
   }

@@ -72,7 +72,7 @@ internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
 internal val Project.modularBuildDirectory: Provider<Directory>
   get() = project.layout.buildDirectory.dir("modular")
 
-internal fun Project.fileInReportDirectory(path: String): Provider<RegularFile> =
+internal fun Project.fileInBuildDirectory(path: String): Provider<RegularFile> =
   modularBuildDirectory.map { it.file(path) }
 
 internal fun StringBuilder.appendIndented(value: Any) = append("  $value")
