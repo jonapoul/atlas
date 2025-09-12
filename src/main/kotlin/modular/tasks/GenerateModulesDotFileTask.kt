@@ -102,21 +102,21 @@ abstract class GenerateModulesDotFileTask :
       val calculateProjectTree = CalculateModuleTreeTask.get(target)
 
       tasks.register(name, GenerateModulesDotFileTask::class.java) { task ->
-        task.linksFile.set(calculateProjectTree.map { it.outputFile.get() })
-        task.moduleTypesFile.set(collateModuleTypes.map { it.outputFile.get() })
-        task.outputFile.set(outputFile)
+        task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
+        task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
+        task.outputFile.convention(outputFile)
 
-        task.replacements.set(moduleNames.replacements)
-        task.printOutput.set(printOutput)
+        task.replacements.convention(moduleNames.replacements)
+        task.printOutput.convention(printOutput)
 
-        task.arrowHead.set(spec.arrowHead)
-        task.arrowTail.set(spec.arrowTail)
-        task.dpi.set(spec.dpi)
-        task.fontSize.set(spec.fontSize)
-        task.rankDir.set(spec.rankDir)
-        task.rankSep.set(spec.rankSep)
-        task.showArrows.set(spec.showArrows)
-        task.thisPath.set(target.path)
+        task.arrowHead.convention(spec.arrowHead)
+        task.arrowTail.convention(spec.arrowTail)
+        task.dpi.convention(spec.dpi)
+        task.fontSize.convention(spec.fontSize)
+        task.rankDir.convention(spec.rankDir)
+        task.rankSep.convention(spec.rankSep)
+        task.showArrows.convention(spec.showArrows)
+        task.thisPath.convention(target.path)
       }
     }
   }

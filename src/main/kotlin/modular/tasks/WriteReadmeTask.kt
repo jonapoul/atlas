@@ -46,9 +46,9 @@ abstract class WriteReadmeTask : DefaultTask() {
 
       tasks.register("writeReadme", WriteReadmeTask::class.java) { task ->
         task.group = "reporting"
-        task.readmeFile.set(file("README.md"))
-        task.projectPath.set(path) // TBC: CLEAN PATH
-//        task.legendPngRelativePath.set(legendPng.relativeTo(projectDir).toString())
+        task.readmeFile.convention(layout.projectDirectory.file("README.md"))
+        task.projectPath.convention(path) // TBC: CLEAN PATH
+//        task.legendPngRelativePath.convention(legendPng.relativeTo(projectDir).toString())
         task.dependsOn(legendTask)
       }
     }

@@ -8,7 +8,7 @@ import modular.gradle.ModularExtension
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLink
 import modular.internal.ModuleLinks
-import modular.internal.fileInReportDirectory
+import modular.internal.fileInBuildDirectory
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
@@ -77,8 +77,8 @@ abstract class CollateModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWi
       extension: ModularExtension,
     ): TaskProvider<CollateModuleLinksTask> = with(target) {
       val collateLinks = tasks.register(NAME, CollateModuleLinksTask::class.java) { task ->
-        task.outputFile.set(fileInReportDirectory("module-links"))
-        task.ignoredModules.set(extension.ignoredModules)
+        task.outputFile.convention(fileInBuildDirectory("module-links"))
+        task.ignoredModules.convention(extension.ignoredModules)
       }
 
       gradle.projectsEvaluated {

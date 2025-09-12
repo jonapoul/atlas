@@ -7,7 +7,7 @@ package modular.tasks
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.TypedModule
 import modular.internal.TypedModules
-import modular.internal.fileInReportDirectory
+import modular.internal.fileInBuildDirectory
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
@@ -56,7 +56,7 @@ abstract class CollateModuleTypesTask : DefaultTask(), TaskWithSeparator, TaskWi
 
     fun register(target: Project): TaskProvider<CollateModuleTypesTask> = with(target) {
       val collateTypes = tasks.register(NAME, CollateModuleTypesTask::class.java) { task ->
-        task.outputFile.set(fileInReportDirectory("module-types"))
+        task.outputFile.convention(fileInBuildDirectory("module-types"))
       }
 
       gradle.projectsEvaluated {
@@ -68,7 +68,7 @@ abstract class CollateModuleTypesTask : DefaultTask(), TaskWithSeparator, TaskWi
 
           t.dependsOn(dumpTasks)
 
-          t.projectTypeFiles.from(
+          t.projectTypeFiles.convention(
             dumpTasks.map { taskProvider ->
               taskProvider.map { it.outputFile.get() }
             },

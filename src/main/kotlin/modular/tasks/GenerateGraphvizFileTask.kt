@@ -100,11 +100,11 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
         logger.info("Registering $taskName for output format $format")
 
         tasks.register(taskName, GenerateGraphvizFileTask::class.java) { task ->
-          task.dotFile.set(dotFileTask.map { it.outputFile.get() })
-          task.engine.set(spec.chart.layoutEngine)
-          task.outputFormat.set(format)
-          task.outputFile.set(outputFile)
-          task.experimental.adjustSvgViewBox.set(extension.experimental.adjustSvgViewBox)
+          task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
+          task.engine.convention(spec.chart.layoutEngine)
+          task.outputFormat.convention(format)
+          task.outputFile.convention(outputFile)
+          task.experimental.adjustSvgViewBox.convention(extension.experimental.adjustSvgViewBox)
         }
       }
     }

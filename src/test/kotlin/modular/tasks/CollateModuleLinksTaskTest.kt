@@ -9,12 +9,15 @@ import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import modular.test.ModularTaskTest
 import modular.test.allSuccessful
+import modular.test.doesNotExist
 import modular.test.runTask
 import modular.test.scenarios.DiamondGraph
 import modular.test.scenarios.OneKotlinJvmModule
+import modular.test.scenarios.OverrideModuleLinksFile
 import modular.test.scenarios.ThreeModulesWithBuiltInTypes
 import modular.test.scenarios.TriangleGraph
 import modular.test.taskWasSuccessful
+import java.io.File
 import kotlin.test.Test
 
 class CollateModuleLinksTaskTest : ModularTaskTest() {
@@ -83,9 +86,35 @@ class CollateModuleLinksTaskTest : ModularTaskTest() {
     )
   }
 
+  @Test
+  fun `Can override task conventions from build script`() = runScenario(OverrideModuleLinksFile) {
+    // when
+    runTask("collateModuleLinks").build()
+
+    // then the default config file wasn't created
+    assertThat(moduleLinksFile).doesNotExist()
+
+    // but the custom one does
+    val customModuleLinksFileContents = resolve("custom-module-links-file.txt")
+      .readLines()
+      .filter { it.isNotBlank() }
+
+    // and it contains the same from the diamond test a bit up from here
+    assertThat(customModuleLinksFileContents).isEqualTo(
+      listOf(
+        ":mid-a,:bottom,api",
+        ":mid-b,:bottom,implementation",
+        ":top,:mid-a,api",
+        ":top,:mid-b,implementation",
+      ),
+    )
+  }
+
+  private val moduleLinksFile: File
+    get() = projectRoot.resolve("build/modular/module-links")
+
   private val moduleLinks: List<String>
-    get() = projectRoot
-      .resolve("build/modular/module-links")
+    get() = moduleLinksFile
       .readLines()
       .filter { it.isNotBlank() }
 }
