@@ -20,6 +20,7 @@ import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Nested
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
@@ -30,9 +31,9 @@ import org.gradle.api.tasks.TaskProvider
 abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val dotFile: RegularFileProperty
   @get:Input abstract val outputFormat: Property<String>
+  @get:[Input Optional] abstract val engine: Property<String>
   @get:Nested abstract val experimental: ExperimentalFlags
   @get:OutputFile abstract override val outputFile: RegularFileProperty
-  @get:OutputFile abstract val errorFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP
@@ -45,24 +46,28 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
   fun execute() {
     val dotFile = dotFile.get().asFile.absolutePath
     val outputFile = outputFile.get().asFile
-    val errorFile = errorFile.get().asFile
     val outputFormat = outputFormat.get()
+    val engine = engine.orNull
 
-    val command = listOf("dot", "-T$outputFormat", dotFile)
-    logger.info("Starting GraphViz for $dotFile")
+    val command = buildList {
+      add("dot")
+      if (engine != null) add("-K$engine")
+      add("-T$outputFormat")
+      add(dotFile)
+    }
+
+    logger.info("Starting GraphViz: $command")
     val dotProcess = ProcessBuilder(command)
       .redirectOutput(outputFile)
-      .redirectError(errorFile)
       .start()
 
-    val status = dotProcess.waitFor()
-    if (status != 0) {
+    val result = dotProcess.waitFor()
+    if (result != 0) {
       val fullCommand = command.joinToString(separator = " ")
-      val error = errorFile.bufferedReader().readText()
-      throw GradleException("GraphViz error code $status running '$fullCommand': $error")
+      val error = dotProcess.errorReader().readText()
+      throw GradleException("GraphViz error code $result running '$fullCommand': $error")
     } else {
       logger.lifecycle(outputFile.absolutePath)
-      errorFile.delete()
     }
 
     doGraphVizPostProcessing(experimental, outputFile, outputFormat)
@@ -91,15 +96,14 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
     ): List<TaskProvider<GenerateGraphvizFileTask>> = with(target) {
       spec.fileFormats.outputFormats.get().map { format ->
         val outputFile = outputFile(extension.outputs, variant, fileExtension = format)
-        val errorFile = outputFile(extension.outputs, variant, fileExtension = "$format.log")
         val taskName = taskName(variant, format)
         logger.info("Registering $taskName for output format $format")
 
         tasks.register(taskName, GenerateGraphvizFileTask::class.java) { task ->
           task.dotFile.set(dotFileTask.map { it.outputFile.get() })
+          task.engine.set(spec.chart.layoutEngine)
           task.outputFormat.set(format)
           task.outputFile.set(outputFile)
-          task.errorFile.set(errorFile)
           task.experimental.adjustSvgViewBox.set(extension.experimental.adjustSvgViewBox)
         }
       }

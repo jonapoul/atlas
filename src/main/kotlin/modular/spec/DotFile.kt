@@ -47,7 +47,7 @@ internal class DotFile(
         "dpi" to dpi,
         "fontsize" to fontSize,
         "ranksep" to rankSep,
-        "rankdir" to rankDir,
+        "rankdir" to rankDir.string,
       ),
     )
     appendHeaderGroup(

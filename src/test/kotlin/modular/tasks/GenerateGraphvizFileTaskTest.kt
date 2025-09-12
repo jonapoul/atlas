@@ -6,6 +6,7 @@ package modular.tasks
 
 import assertk.assertThat
 import assertk.assertions.contains
+import assertk.assertions.containsMatch
 import assertk.assertions.exists
 import modular.test.ModularTaskTest
 import modular.test.RequiresGraphviz
@@ -14,7 +15,10 @@ import modular.test.scenarios.DotFileBasic
 import modular.test.scenarios.DotFileBasicWithThreeOutputFormats
 import modular.test.scenarios.DotFileBigGraph100DpiSvg
 import modular.test.scenarios.DotFileBigGraph100DpiSvgWithAdjustment
+import modular.test.scenarios.DotFileCustomLayoutEngine
+import modular.test.scenarios.DotFileInvalidLayoutEngine
 import kotlin.test.Test
+import kotlin.text.RegexOption.MULTILINE
 
 class GenerateGraphvizFileTaskTest : ModularTaskTest() {
   @Test
@@ -109,5 +113,29 @@ class GenerateGraphvizFileTaskTest : ModularTaskTest() {
         viewBox="0.00 0.00 350.00 260.00"
       """.trimIndent(),
     )
+  }
+
+  @Test
+  @RequiresGraphviz
+  fun `Fail with useful message for invalid layout engine`() = runScenario(DotFileInvalidLayoutEngine) {
+    // when
+    val result = runTask(":app:generateModulesSvg").buildAndFail()
+
+    // then the error log contains a useful message from graphviz
+    assertThat(result.output).contains("There is no layout engine support for \"abc123\"")
+
+    // on my machine the bit following this is "circo dot fdp neato nop nop1 nop2 osage patchwork sfdp twopi", but
+    // it'll probs be installation-dependent
+    assertThat(result.output).contains("Use one of: ")
+  }
+
+  @Test
+  @RequiresGraphviz
+  fun `Choose custom layout engine`() = runScenario(DotFileCustomLayoutEngine) {
+    // when we specify the "neato" layout engine
+    val result = runTask(":app:generateModulesSvg").build()
+
+    // then the SVG file printed in the log exists. There's probably more I can be checking here but ¯\_(ツ)_/¯
+    assertThat(result.output).containsMatch("^(.*?\\.svg)$".toRegex(MULTILINE))
   }
 }

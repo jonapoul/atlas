@@ -4,7 +4,6 @@
  */
 package modular.test
 
-import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
 import org.gradle.testkit.runner.GradleRunner
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Assumptions.assumeFalse
@@ -52,7 +51,6 @@ internal val BASIC_JAVA_BUILD_SCRIPT = """
     id("java")
     id("dev.jonpoulton.modular.leaf")
   }
-
 """.trimIndent()
 
 @Language("kotlin")
@@ -72,7 +70,7 @@ internal val BASIC_ANDROID_BUILD_SCRIPT = """
   }
 
   android {
-    namespace = "$packageName"
+    namespace = "dev.jonpoulton.dummy"
     compileSdk = 36
   }
 """.trimIndent()
