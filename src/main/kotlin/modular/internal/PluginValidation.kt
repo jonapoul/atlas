@@ -55,7 +55,7 @@ internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtension)
           }
 
         or add "modular.suppress.adjustSvgViewBox=true" to your gradle.properties file to suppress this warning.
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 }
