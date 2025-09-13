@@ -10,7 +10,7 @@ import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 
-class DotFileLegendSpec(objects: ObjectFactory, project: Project) : LegendSpec {
+class DotFileLegendSpec(objects: ObjectFactory, project: Project) {
   private val properties = ModularProperties(project)
 
   val cellBorder: Property<Int> = objects.int(properties.cellBorder)

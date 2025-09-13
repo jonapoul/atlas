@@ -10,23 +10,15 @@ import modular.gradle.ModularDsl
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
-sealed interface Spec<L : LegendSpec, C : ChartSpec> {
+sealed interface Spec<LegendSpec : Any, ChartSpec : Any> {
   // allows us store to store Spec in a NamedDomainObjectContainer
   val name: String
   val extension: Property<String>
 
-  var legend: L?
-  fun legend(): L
-  @ModularDsl fun legend(action: Action<L>)
+  var legend: LegendSpec?
+  fun legend(): LegendSpec
+  @ModularDsl fun legend(action: Action<LegendSpec>)
 
-  val chart: C
-  @ModularDsl fun chart(action: Action<C>) = action.execute(chart)
-}
-
-interface ChartSpec {
-  // TBC
-}
-
-interface LegendSpec {
-  // TBC
+  val chart: ChartSpec
+  @ModularDsl fun chart(action: Action<ChartSpec>) = action.execute(chart)
 }

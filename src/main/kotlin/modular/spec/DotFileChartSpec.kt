@@ -17,7 +17,7 @@ import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 
-class DotFileChartSpec(objects: ObjectFactory, project: Project) : ChartSpec {
+class DotFileChartSpec(objects: ObjectFactory, project: Project) {
   private val properties = ModularProperties(project)
 
   val arrowHead: Property<String> = objects.string(properties.arrowHead)
