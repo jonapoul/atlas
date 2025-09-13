@@ -49,7 +49,7 @@ class ModularLeafPlugin : Plugin<Project> {
     val dotFileTask = GenerateModulesDotFileTask.register(
       target = this,
       name = GenerateModulesDotFileTask.TASK_NAME,
-      moduleNames = extension.moduleNames,
+      modulePathTransforms = extension.modulePathTransforms,
       spec = spec.chart,
       outputFile = file,
       printOutput = true,

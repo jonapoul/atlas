@@ -10,7 +10,7 @@ import modular.internal.ModuleLinks
 import modular.internal.Replacement
 import modular.internal.TypedModules
 import modular.spec.DotFileChartSpec
-import modular.spec.ModuleNameSpec
+import modular.spec.ModulePathTransformSpec
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile
@@ -92,7 +92,7 @@ abstract class GenerateModulesDotFileTask :
     fun register(
       target: Project,
       name: String,
-      moduleNames: ModuleNameSpec,
+      modulePathTransforms: ModulePathTransformSpec,
       spec: DotFileChartSpec,
       outputFile: RegularFile,
       printOutput: Boolean,
@@ -105,7 +105,7 @@ abstract class GenerateModulesDotFileTask :
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.convention(outputFile)
 
-        task.replacements.convention(moduleNames.replacements)
+        task.replacements.convention(modulePathTransforms.get())
         task.printOutput.convention(printOutput)
 
         task.arrowHead.convention(spec.arrowHead)

@@ -13,7 +13,7 @@ import modular.spec.DotFileOutputFormatSpec
 import modular.spec.DotFileSpec
 import modular.spec.ExperimentalSpec
 import modular.spec.LayoutEngine
-import modular.spec.ModuleNameSpec
+import modular.spec.ModulePathTransformSpec
 import modular.spec.ModuleType
 import modular.spec.OutputSpec
 import modular.spec.RankDir
@@ -37,8 +37,8 @@ internal open class ModularExtensionImpl @Inject constructor(
   override val experimental = ExperimentalSpecImpl(objects, properties)
   override fun experimental(action: Action<ExperimentalSpec>) = action.execute(experimental)
 
-  override val moduleNames = ModuleNameSpecImpl(objects)
-  override fun moduleNames(action: Action<ModuleNameSpec>) = action.execute(moduleNames)
+  override val modulePathTransforms = ModulePathTransformSpecImpl(objects)
+  override fun modulePathTransforms(action: Action<ModulePathTransformSpec>) = action.execute(modulePathTransforms)
 
   override val moduleTypes = ModuleTypeContainer(objects)
   override fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleType>>) = action.execute(moduleTypes)
@@ -73,9 +73,10 @@ internal class ExperimentalSpecImpl(objects: ObjectFactory, properties: ModularP
   override val adjustSvgViewBox = objects.bool(convention = properties.adjustSvgViewBox)
 }
 
-internal class ModuleNameSpecImpl(objects: ObjectFactory) : ModuleNameSpec {
-  override val replacements: ListProperty<Replacement> = objects.listProperty(Replacement::class.java)
-  override fun replace(pattern: Regex, replacement: String) = replacements.add(Replacement(pattern, replacement))
+internal class ModulePathTransformSpecImpl(objects: ObjectFactory) :
+  ModulePathTransformSpec,
+  SetProperty<Replacement> by objects.setProperty(Replacement::class.java) {
+  override fun replace(pattern: Regex, replacement: String) = add(Replacement(pattern, replacement))
   override fun replace(pattern: String, replacement: String) = replace(pattern.toRegex(), replacement)
   override fun remove(pattern: Regex) = replace(pattern, replacement = "")
   override fun remove(pattern: String) = remove(pattern.toRegex())

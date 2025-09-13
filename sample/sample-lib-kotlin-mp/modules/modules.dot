@@ -2,12 +2,12 @@ digraph {
   edge ["arrowhead"="normal","arrowtail"="none"]
   graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
   node ["style"="filled"]
-  "abc_android" ["fillcolor"="#55FF55","shape"="none"]
-  "abc_java" ["fillcolor"="#FF8800","shape"="none"]
-  "abc_kotlin_jvm" ["fillcolor"="#CA66FF","shape"="none"]
-  "abc_kotlin_mp" ["fillcolor"="#9D8DF1","color"="black","penwidth"="3","shape"="box"]
-  "abc_android" -> "abc_kotlin_jvm" ["style"="dotted"]
-  "abc_kotlin_mp" -> "abc_android"
-  "abc_kotlin_mp" -> "abc_java" ["style"="dotted"]
-  "abc_kotlin_mp" -> "abc_kotlin_jvm"
+  "Lib android" ["fillcolor"="#55FF55","shape"="none"]
+  "Lib java" ["fillcolor"="#FF8800","shape"="none"]
+  "Lib kotlin jvm" ["fillcolor"="#CA66FF","shape"="none"]
+  "Lib kotlin mp" ["fillcolor"="#9D8DF1","color"="black","penwidth"="3","shape"="box"]
+  "Lib android" -> "Lib kotlin jvm" ["style"="dotted"]
+  "Lib kotlin mp" -> "Lib android"
+  "Lib kotlin mp" -> "Lib java" ["style"="dotted"]
+  "Lib kotlin mp" -> "Lib kotlin jvm"
 }
