@@ -34,16 +34,13 @@ internal annotation class RequiresCommand(val command: String)
 
 internal class RequiresCommandExtension : ExecutionCondition {
   override fun evaluateExecutionCondition(context: ExtensionContext): ConditionEvaluationResult {
-    val element = context.element.orElse(null)
-      ?: return ConditionEvaluationResult.enabled("No element found")
-
-    val allCommands = element
-      .annotations
-      .mapNotNull { a ->
-        a.annotationClass.java
-          .getAnnotation(RequiresCommand::class.java)
-          ?.command
-      }
+    val allCommands = context
+      .element
+      .orElse(null)
+      ?.annotations
+      ?.mapNotNull { a -> a.commandOrNull() }
+      .orEmpty()
+      .ifEmpty { return ConditionEvaluationResult.enabled("No element found") }
 
     val missingCommands = allCommands.filter { cmd -> !isCommandAvailable(cmd) }
 
@@ -54,6 +51,11 @@ internal class RequiresCommandExtension : ExecutionCondition {
       ConditionEvaluationResult.disabled(reason)
     }
   }
+
+  private fun Annotation.commandOrNull() =
+    annotationClass.java
+      .getAnnotation(RequiresCommand::class.java)
+      ?.command
 
   private fun isCommandAvailable(command: String): Boolean = try {
     ProcessBuilder()
