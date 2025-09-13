@@ -1,12 +1,9 @@
+!.idea/detekt.xml
+*.jks
+*.keystore
+*.sarif
 .gradle/
+.idea/
 .kotlin/
 build/
 local.properties
-
-# Keystore files
-*.keystore
-*.jks
-
-# IDE files
-.idea/
-!.idea/detekt.xml

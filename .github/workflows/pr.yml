@@ -65,7 +65,7 @@ jobs:
         run: |
           if [[ -n "$(git status --porcelain)" ]]; then
             echo "❌ Uncommitted changes found:"
-            git status --short
+            git --no-pager diff
             exit 1
           else
             echo "✅ No diffs found."
