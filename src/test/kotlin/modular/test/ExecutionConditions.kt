@@ -39,7 +39,11 @@ internal class RequiresCommandExtension : ExecutionCondition {
 
     val allCommands = element
       .annotations
-      .mapNotNull { a -> a.annotationClass.java.getAnnotation(RequiresCommand::class.java)?.command }
+      .mapNotNull { a ->
+        a.annotationClass.java
+          .getAnnotation(RequiresCommand::class.java)
+          ?.command
+      }
 
     val missingCommands = allCommands.filter { cmd -> !isCommandAvailable(cmd) }
 
