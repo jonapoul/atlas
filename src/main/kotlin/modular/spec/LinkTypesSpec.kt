@@ -9,8 +9,8 @@ import modular.gradle.ModularDsl
 import org.gradle.api.provider.SetProperty
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 import kotlin.text.RegexOption.IGNORE_CASE
-import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 import java.io.Serializable as JSerializable
+import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 
 /**
  * Used to configure expected link "types" between your modules. The majority of the time, these are only ever
