@@ -4,10 +4,10 @@
  */
 package modular.tasks
 
+import modular.internal.DotFile
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLinks
 import modular.internal.TypedModules
-import modular.spec.DotFile
 import modular.spec.DotFileChartSpec
 import modular.spec.ModuleNameSpec
 import modular.spec.RankDir

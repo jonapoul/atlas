@@ -4,12 +4,10 @@
  */
 @file:Suppress("LongParameterList")
 
-package modular.spec
+package modular.internal
 
-import modular.internal.ModuleLink
-import modular.internal.TypedModule
-import modular.internal.appendIndented
-import modular.internal.appendIndentedLine
+import modular.spec.RankDir
+import modular.spec.Replacement
 
 internal class DotFile(
   private val typedModules: Set<TypedModule>,
