@@ -9,6 +9,7 @@ import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import modular.test.ScenarioTest
 import modular.test.buildRunner
+import modular.test.scenarios.DotFileBasic
 import modular.test.scenarios.DotFileBigGraph100DpiSvg
 import modular.test.scenarios.InvalidColorDeclaration
 import modular.test.scenarios.ModuleTypeWithNoIdentifiers
@@ -72,5 +73,25 @@ class PluginValidationTest : ScenarioTest() {
 
     // Then the warning wasn't printed
     assertThat(suppressedResult.output).doesNotContain(msg)
+  }
+
+  @Test
+  fun `Warn if GraphViz config has no file outputs configured`() = runScenario(DotFileBasic) {
+    // when an irrelevant task is run (AKA gradle is initialised)
+    val result = buildRunner()
+      .withArguments("help")
+      .build()
+
+    // then a warning was printed to enable the experimental property
+    val expectedWarning = "No file formats have been registered as GraphViz outputs"
+    assertThat(result.output).contains(expectedWarning)
+
+    // when we run again with the suppress property enabled
+    val suppressedResult = buildRunner()
+      .withArguments("help", "-Pmodular.suppress.noGraphVizOutputs=true")
+      .build()
+
+    // Then the warning wasn't printed
+    assertThat(suppressedResult.output).doesNotContain(expectedWarning)
   }
 }

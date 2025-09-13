@@ -17,6 +17,7 @@ import modular.internal.failIfInvalidColors
 import modular.internal.orderedTypes
 import modular.internal.registerGenerationTaskOnSync
 import modular.internal.warnIfModuleTypesSpecifyNothing
+import modular.internal.warnIfNoGraphVizOutputs
 import modular.internal.warnIfNoModuleTypes
 import modular.internal.warnIfSvgSelectedWithCustomDpi
 import modular.tasks.CollateModuleLinksTask
@@ -58,6 +59,7 @@ class ModularTrunkPlugin : Plugin<Project> {
     afterEvaluate {
       failIfInvalidColors(extension)
       warnIfSvgSelectedWithCustomDpi(extension)
+      warnIfNoGraphVizOutputs(extension)
 
       val types = extension.orderedTypes()
       warnIfNoModuleTypes(types)
