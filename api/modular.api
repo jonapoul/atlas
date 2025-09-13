@@ -2,8 +2,6 @@ public abstract interface annotation class modular/gradle/ModularDsl : java/lang
 }
 
 public abstract interface class modular/gradle/ModularExtension {
-	public abstract fun dotFile ()V
-	public abstract fun dotFile (Lorg/gradle/api/Action;)V
 	public abstract fun experimental (Lorg/gradle/api/Action;)V
 	public abstract fun getExperimental ()Lmodular/spec/ExperimentalSpec;
 	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
@@ -15,6 +13,8 @@ public abstract interface class modular/gradle/ModularExtension {
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getSpecs ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
+	public abstract fun graphViz ()V
+	public abstract fun graphViz (Lorg/gradle/api/Action;)V
 	public abstract fun modulePathTransforms (Lorg/gradle/api/Action;)V
 	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
 	public abstract fun outputs (Lorg/gradle/api/Action;)V
@@ -33,50 +33,7 @@ public final class modular/gradle/ModularTrunkPlugin : org/gradle/api/Plugin {
 	public fun apply (Lorg/gradle/api/Project;)V
 }
 
-public final class modular/internal/Replacement : java/io/Serializable {
-	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
-	public final fun getPattern ()Lkotlin/text/Regex;
-	public final fun getReplacement ()Ljava/lang/String;
-}
-
-public final class modular/spec/ArrowType : java/lang/Enum, modular/spec/StringEnum {
-	public static final field Box Lmodular/spec/ArrowType;
-	public static final field Crow Lmodular/spec/ArrowType;
-	public static final field Diamond Lmodular/spec/ArrowType;
-	public static final field Dot Lmodular/spec/ArrowType;
-	public static final field Ediamond Lmodular/spec/ArrowType;
-	public static final field Empty Lmodular/spec/ArrowType;
-	public static final field HalfOpen Lmodular/spec/ArrowType;
-	public static final field Inv Lmodular/spec/ArrowType;
-	public static final field InvEmpty Lmodular/spec/ArrowType;
-	public static final field Invdot Lmodular/spec/ArrowType;
-	public static final field Invodot Lmodular/spec/ArrowType;
-	public static final field None Lmodular/spec/ArrowType;
-	public static final field Normal Lmodular/spec/ArrowType;
-	public static final field Obox Lmodular/spec/ArrowType;
-	public static final field Odiamond Lmodular/spec/ArrowType;
-	public static final field Odot Lmodular/spec/ArrowType;
-	public static final field Open Lmodular/spec/ArrowType;
-	public static final field Tee Lmodular/spec/ArrowType;
-	public static final field Vee Lmodular/spec/ArrowType;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public fun getString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/ArrowType;
-	public static fun values ()[Lmodular/spec/ArrowType;
-}
-
-public final class modular/spec/Dir : java/lang/Enum, modular/spec/StringEnum {
-	public static final field Back Lmodular/spec/Dir;
-	public static final field Both Lmodular/spec/Dir;
-	public static final field Forward Lmodular/spec/Dir;
-	public static final field None Lmodular/spec/Dir;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public fun getString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/Dir;
-	public static fun values ()[Lmodular/spec/Dir;
-}
-
-public abstract interface class modular/spec/DotFileChartSpec {
+public abstract interface class modular/graphviz/spec/GraphVizChartSpec {
 	public abstract fun arrowHead (Ljava/lang/String;)V
 	public abstract fun arrowHead (Lmodular/spec/ArrowType;)V
 	public abstract fun arrowTail (Ljava/lang/String;)V
@@ -97,14 +54,7 @@ public abstract interface class modular/spec/DotFileChartSpec {
 	public abstract fun rankDir (Lmodular/spec/RankDir;)V
 }
 
-public abstract interface class modular/spec/DotFileLegendSpec {
-	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
-	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
-}
-
-public abstract interface class modular/spec/DotFileOutputFormatSpec : org/gradle/api/provider/SetProperty {
+public abstract interface class modular/graphviz/spec/GraphVizFileFormatSpec : org/gradle/api/provider/SetProperty {
 	public abstract fun add (Ljava/lang/String;)V
 	public abstract fun add (Lorg/gradle/api/provider/Provider;)V
 	public abstract fun addAll (Ljava/lang/Iterable;)V
@@ -156,67 +106,190 @@ public abstract interface class modular/spec/DotFileOutputFormatSpec : org/gradl
 	public fun xlib ()V
 }
 
-public final class modular/spec/DotFileOutputFormatSpec$DefaultImpls {
-	public static fun canon (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun cmap (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun cmapx (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun cmapxNp (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun dot (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun dotJson (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun eps (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun fig (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun gd (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun gd2 (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun gif (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun gv (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun imap (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun imapNp (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun ismap (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun jpe (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun jpeg (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun jpg (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun json (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun json0 (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun mp (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun pdf (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun pic (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun plain (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun plainExt (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun png (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun pov (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun ps (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun ps2 (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun svg (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun svgz (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun tk (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun vdx (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun vml (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun vmlz (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun vrml (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun wbmp (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun webp (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun x11 (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun xdot (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun xdot12 (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun xdot14 (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun xdotJson (Lmodular/spec/DotFileOutputFormatSpec;)V
-	public static fun xlib (Lmodular/spec/DotFileOutputFormatSpec;)V
+public final class modular/graphviz/spec/GraphVizFileFormatSpec$DefaultImpls {
+	public static fun canon (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun cmap (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun cmapx (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun cmapxNp (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun dot (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun dotJson (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun eps (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun fig (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun gd (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun gd2 (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun gif (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun gv (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun imap (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun imapNp (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun ismap (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun jpe (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun jpeg (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun jpg (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun json (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun json0 (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun mp (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun pdf (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun pic (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun plain (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun plainExt (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun png (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun pov (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun ps (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun ps2 (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun svg (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun svgz (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun tk (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun vdx (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun vml (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun vmlz (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun vrml (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun wbmp (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun webp (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun x11 (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun xdot (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun xdot12 (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun xdot14 (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun xdotJson (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
+	public static fun xlib (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
 }
 
-public abstract interface class modular/spec/DotFileSpec : modular/spec/Spec {
+public abstract interface class modular/graphviz/spec/GraphVizLegendSpec {
+	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract interface class modular/graphviz/spec/GraphVizSpec : modular/spec/Spec {
 	public abstract fun fileFormats (Lorg/gradle/api/Action;)V
-	public abstract fun getChart ()Lmodular/spec/DotFileChartSpec;
-	public abstract fun getExtension ()Lorg/gradle/api/provider/Property;
-	public abstract fun getFileFormats ()Lmodular/spec/DotFileOutputFormatSpec;
-	public abstract fun getLegend ()Lmodular/spec/DotFileLegendSpec;
+	public abstract fun getChart ()Lmodular/graphviz/spec/GraphVizChartSpec;
+	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFileFormats ()Lmodular/graphviz/spec/GraphVizFileFormatSpec;
+	public abstract fun getLegend ()Lmodular/graphviz/spec/GraphVizLegendSpec;
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
-	public abstract fun legend ()Lmodular/spec/DotFileLegendSpec;
+	public abstract fun legend ()Lmodular/graphviz/spec/GraphVizLegendSpec;
 	public abstract fun legend (Lorg/gradle/api/Action;)V
-	public abstract fun setLegend (Lmodular/spec/DotFileLegendSpec;)V
+	public abstract fun setLegend (Lmodular/graphviz/spec/GraphVizLegendSpec;)V
 }
 
-public final class modular/spec/DotFileSpec$DefaultImpls {
-	public static fun chart (Lmodular/spec/DotFileSpec;Lorg/gradle/api/Action;)V
+public final class modular/graphviz/spec/GraphVizSpec$DefaultImpls {
+	public static fun chart (Lmodular/graphviz/spec/GraphVizSpec;Lorg/gradle/api/Action;)V
+}
+
+public abstract class modular/graphviz/tasks/CheckDotFileTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lmodular/graphviz/tasks/CheckDotFileTask$Companion;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getActualDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getExpectedDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/graphviz/tasks/CheckDotFileTask$Companion {
+	public final fun register (Lorg/gradle/api/Project;Lorg/gradle/api/tasks/TaskProvider;Lorg/gradle/api/file/RegularFile;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/graphviz/tasks/GenerateGraphvizFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile {
+	public static final field Companion Lmodular/graphviz/tasks/GenerateGraphvizFileTask$Companion;
+	public fun <init> ()V
+	public final fun execute ()V
+	public fun getDescription ()Ljava/lang/String;
+	public abstract fun getEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getExperimental ()Lmodular/spec/ExperimentalFlags;
+	public abstract fun getGraphViz ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/graphviz/tasks/GenerateGraphvizFileTask$Companion {
+	public final fun get (Lorg/gradle/api/Project;Ljava/lang/String;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/graphviz/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
+	public static final field Companion Lmodular/graphviz/tasks/GenerateLegendDotFileTask$Companion;
+	public static final field TASK_NAME Ljava/lang/String;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
+	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/graphviz/tasks/GenerateLegendDotFileTask$Companion {
+	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/graphviz/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
+	public static final field Companion Lmodular/graphviz/tasks/GenerateModulesDotFileTask$Companion;
+	public static final field TASK_NAME Ljava/lang/String;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
+	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getPrintOutput ()Lorg/gradle/api/provider/Property;
+	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
+	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/graphviz/tasks/GenerateModulesDotFileTask$Companion {
+	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/spec/ModulePathTransformSpec;Lmodular/graphviz/spec/GraphVizChartSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public final class modular/internal/Replacement : java/io/Serializable {
+	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
+	public final fun getPattern ()Lkotlin/text/Regex;
+	public final fun getReplacement ()Ljava/lang/String;
+}
+
+public final class modular/spec/ArrowType : java/lang/Enum, modular/spec/StringEnum {
+	public static final field Box Lmodular/spec/ArrowType;
+	public static final field Crow Lmodular/spec/ArrowType;
+	public static final field Diamond Lmodular/spec/ArrowType;
+	public static final field Dot Lmodular/spec/ArrowType;
+	public static final field Ediamond Lmodular/spec/ArrowType;
+	public static final field Empty Lmodular/spec/ArrowType;
+	public static final field HalfOpen Lmodular/spec/ArrowType;
+	public static final field Inv Lmodular/spec/ArrowType;
+	public static final field InvEmpty Lmodular/spec/ArrowType;
+	public static final field Invdot Lmodular/spec/ArrowType;
+	public static final field Invodot Lmodular/spec/ArrowType;
+	public static final field None Lmodular/spec/ArrowType;
+	public static final field Normal Lmodular/spec/ArrowType;
+	public static final field Obox Lmodular/spec/ArrowType;
+	public static final field Odiamond Lmodular/spec/ArrowType;
+	public static final field Odot Lmodular/spec/ArrowType;
+	public static final field Open Lmodular/spec/ArrowType;
+	public static final field Tee Lmodular/spec/ArrowType;
+	public static final field Vee Lmodular/spec/ArrowType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/ArrowType;
+	public static fun values ()[Lmodular/spec/ArrowType;
+}
+
+public final class modular/spec/Dir : java/lang/Enum, modular/spec/StringEnum {
+	public static final field Back Lmodular/spec/Dir;
+	public static final field Both Lmodular/spec/Dir;
+	public static final field Forward Lmodular/spec/Dir;
+	public static final field None Lmodular/spec/Dir;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/Dir;
+	public static fun values ()[Lmodular/spec/Dir;
 }
 
 public abstract class modular/spec/ExperimentalFlags {
@@ -301,7 +374,7 @@ public final class modular/spec/RankDir : java/lang/Enum, modular/spec/StringEnu
 public abstract interface class modular/spec/Spec {
 	public fun chart (Lorg/gradle/api/Action;)V
 	public abstract fun getChart ()Ljava/lang/Object;
-	public abstract fun getExtension ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLegend ()Ljava/lang/Object;
 	public abstract fun getName ()Ljava/lang/String;
 	public abstract fun legend ()Ljava/lang/Object;
@@ -327,19 +400,6 @@ public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/Def
 public final class modular/tasks/CalculateModuleTreeTask$Companion {
 	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
 	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
-public abstract class modular/tasks/CheckDotFileTask : org/gradle/api/DefaultTask {
-	public static final field Companion Lmodular/tasks/CheckDotFileTask$Companion;
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getActualDotFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getExpectedDotFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/tasks/CheckDotFileTask$Companion {
-	public final fun register (Lorg/gradle/api/Project;Lorg/gradle/api/tasks/TaskProvider;Lorg/gradle/api/file/RegularFile;)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract class modular/tasks/CollateModuleLinksTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
@@ -401,66 +461,6 @@ public abstract class modular/tasks/DumpModuleTypeTask : org/gradle/api/DefaultT
 public final class modular/tasks/DumpModuleTypeTask$Companion {
 	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
 	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
-public abstract class modular/tasks/GenerateGraphvizFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile {
-	public static final field Companion Lmodular/tasks/GenerateGraphvizFileTask$Companion;
-	public fun <init> ()V
-	public final fun execute ()V
-	public fun getDescription ()Ljava/lang/String;
-	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getEngine ()Lorg/gradle/api/provider/Property;
-	public abstract fun getExperimental ()Lmodular/spec/ExperimentalFlags;
-	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
-	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/tasks/GenerateGraphvizFileTask$Companion {
-	public final fun get (Lorg/gradle/api/Project;Ljava/lang/String;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
-public abstract class modular/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/tasks/GenerateLegendDotFileTask$Companion;
-	public static final field TASK_NAME Ljava/lang/String;
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
-	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
-	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/tasks/GenerateLegendDotFileTask$Companion {
-	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
-public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/tasks/GenerateModulesDotFileTask$Companion;
-	public static final field TASK_NAME Ljava/lang/String;
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
-	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
-	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
-	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
-	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getPrintOutput ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
-	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/tasks/GenerateModulesDotFileTask$Companion {
-	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/spec/ModulePathTransformSpec;Lmodular/spec/DotFileChartSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract interface class modular/tasks/ModularGenerationTask : org/gradle/api/Task {

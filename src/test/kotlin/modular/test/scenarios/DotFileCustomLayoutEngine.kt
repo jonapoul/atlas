@@ -20,7 +20,7 @@ object DotFileCustomLayoutEngine : Scenario by DotFileBigGraph {
         kotlinJvm()
       }
 
-      dotFile {
+      graphViz {
         chart {
           layoutEngine(Neato)
         }

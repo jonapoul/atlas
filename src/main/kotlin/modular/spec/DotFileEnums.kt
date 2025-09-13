@@ -48,7 +48,7 @@ enum class ArrowType(override val string: String) : StringEnum {
 /**
  * https://graphviz.org/docs/layouts/
  *
- * Your machine might not have some of these, or it might have more! Use [modular.spec.DotFileChartSpec.layoutEngine]
+ * Your machine might not have some of these, or it might have more! Use [modular.graphviz.spec.GraphVizChartSpec.layoutEngine]
  * with a string parameter to configure a custom layout engine. [Dot] is the implicit default.
  *
  * Run `dot -v` and check under "layout" to see what you have locally.

@@ -24,7 +24,7 @@ object DotFileChartCustomConfig : Scenario by DotFileBasic {
         registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
 
-      dotFile {
+      graphViz {
         chart {
           arrowHead = "halfopen"
           arrowTail(ArrowType.Open)

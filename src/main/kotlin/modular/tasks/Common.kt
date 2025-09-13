@@ -22,4 +22,4 @@ interface TaskWithOutputFile : Task {
  * Just so we can easily grab all instances of the top-level tasks from this plugin. See
  * [modular.internal.registerGenerationTaskOnSync]
  */
-sealed interface ModularGenerationTask : Task
+interface ModularGenerationTask : Task

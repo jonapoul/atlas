@@ -2,7 +2,7 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.spec
+package modular.graphviz.spec
 
 import org.gradle.api.provider.Property
 
@@ -11,7 +11,7 @@ import org.gradle.api.provider.Property
  * their allocated names and colours. They will be listed in the order you declare them, which is descending priority
  * order.
  */
-interface DotFileLegendSpec {
+interface GraphVizLegendSpec {
   val cellBorder: Property<Int>
   val cellPadding: Property<Int>
   val cellSpacing: Property<Int>

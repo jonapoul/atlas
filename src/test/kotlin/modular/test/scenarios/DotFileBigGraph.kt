@@ -19,7 +19,7 @@ object DotFileBigGraph : Scenario {
         kotlinJvm()
       }
 
-      dotFile()
+      graphViz()
     }
   """.trimIndent()
 

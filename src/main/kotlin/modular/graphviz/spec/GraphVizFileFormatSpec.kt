@@ -4,7 +4,7 @@
  */
 @file:Suppress("TooManyFunctions", "unused", "SpellCheckingInspection") // public API
 
-package modular.spec
+package modular.graphviz.spec
 
 import modular.gradle.ModularDsl
 import org.gradle.api.provider.Provider
@@ -14,7 +14,7 @@ import org.gradle.api.provider.SetProperty
  * The formats supported on your machine will depend on the version of GraphViz you use.
  * See https://graphviz.org/docs/outputs/
  */
-interface DotFileOutputFormatSpec : SetProperty<String> {
+interface GraphVizFileFormatSpec : SetProperty<String> {
   @ModularDsl override fun add(provider: Provider<out String>)
   @ModularDsl override fun add(element: String)
   @ModularDsl override fun addAll(elements: Iterable<String>)

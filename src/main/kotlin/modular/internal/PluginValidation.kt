@@ -5,7 +5,7 @@
 package modular.internal
 
 import modular.gradle.ModularExtension
-import modular.spec.DotFileSpec
+import modular.graphviz.spec.GraphVizSpec
 import modular.spec.ModuleType
 import org.codehaus.groovy.syntax.Types.REGEX_PATTERN
 import org.gradle.api.Project
@@ -38,9 +38,9 @@ internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
 
 internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionImpl) {
   val adjustSvgViewBox = extension.experimental.adjustSvgViewBox.get()
-  val dotFileSpec = extension.specs.filterIsInstance<DotFileSpec>().firstOrNull()
+  val graphVizSpec = extension.specs.filterIsInstance<GraphVizSpec>().firstOrNull()
   val warningIsSuppressed = extension.properties.suppressSvgViewBoxWarning.get()
-  val dpiIsConfigured = dotFileSpec?.chart?.dpi?.isPresent == true
+  val dpiIsConfigured = graphVizSpec?.chart?.dpi?.isPresent == true
   if (!adjustSvgViewBox && dpiIsConfigured && !warningIsSuppressed) {
     val msg = "Configuring a custom DPI on a dotfile's with SVG output enabled will likely cause a misaligned " +
       "viewBox. Try adding the following property to your build file to automatically attempt a fix:"

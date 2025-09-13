@@ -2,15 +2,20 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.tasks
+package modular.graphviz.tasks
 
-import modular.internal.DotFile
+import modular.graphviz.internal.DotFileWriter
+import modular.graphviz.spec.GraphVizChartSpec
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLinks
 import modular.internal.Replacement
 import modular.internal.TypedModules
-import modular.spec.DotFileChartSpec
 import modular.spec.ModulePathTransformSpec
+import modular.tasks.CalculateModuleTreeTask
+import modular.tasks.CollateModuleTypesTask
+import modular.tasks.ModularGenerationTask
+import modular.tasks.TaskWithOutputFile
+import modular.tasks.TaskWithSeparator
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile
@@ -64,7 +69,7 @@ abstract class GenerateModulesDotFileTask :
     val moduleTypesFile = moduleTypesFile.get().asFile
     val separator = separator.get()
 
-    val dotFile = DotFile(
+    val writer = DotFileWriter(
       typedModules = TypedModules.read(moduleTypesFile, separator),
       links = ModuleLinks.read(linksFile, separator),
       replacements = replacements.get(),
@@ -79,7 +84,7 @@ abstract class GenerateModulesDotFileTask :
     )
 
     val outputFile = outputFile.get().asFile
-    outputFile.writeText(dotFile())
+    outputFile.writeText(writer())
 
     if (printOutput.get()) {
       logger.lifecycle(outputFile.absolutePath)
@@ -93,12 +98,12 @@ abstract class GenerateModulesDotFileTask :
       target: Project,
       name: String,
       modulePathTransforms: ModulePathTransformSpec,
-      spec: DotFileChartSpec,
+      spec: GraphVizChartSpec,
       outputFile: RegularFile,
       printOutput: Boolean,
     ): TaskProvider<GenerateModulesDotFileTask> = with(target) {
-      val collateModuleTypes = CollateModuleTypesTask.get(rootProject)
-      val calculateProjectTree = CalculateModuleTreeTask.get(target)
+      val collateModuleTypes = CollateModuleTypesTask.Companion.get(rootProject)
+      val calculateProjectTree = CalculateModuleTreeTask.Companion.get(target)
 
       tasks.register(name, GenerateModulesDotFileTask::class.java) { task ->
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })

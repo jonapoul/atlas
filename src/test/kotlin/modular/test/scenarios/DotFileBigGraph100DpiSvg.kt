@@ -18,7 +18,7 @@ object DotFileBigGraph100DpiSvg : Scenario by DotFileBigGraph {
         kotlinJvm()
       }
 
-      dotFile {
+      graphViz {
         chart {
           dpi = 100
         }

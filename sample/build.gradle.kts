@@ -1,5 +1,4 @@
 import modular.spec.ArrowType
-import modular.spec.Dir
 import modular.spec.LayoutEngine
 import modular.spec.RankDir
 
@@ -35,8 +34,8 @@ modular {
     saveLegendsRelativeToRootModule("legend")
   }
 
-  dotFile {
-    extension = "dot"
+  graphViz {
+    fileExtension = "dot"
 
     legend {
       cellBorder = 1

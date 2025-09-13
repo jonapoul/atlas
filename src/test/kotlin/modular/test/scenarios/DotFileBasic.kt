@@ -22,7 +22,7 @@ object DotFileBasic : Scenario {
         registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
 
-      dotFile()
+      graphViz()
     }
   """.trimIndent()
 

@@ -6,18 +6,18 @@
 
 package modular.gradle
 
+import modular.graphviz.spec.GraphVizSpec
+import modular.graphviz.tasks.GenerateGraphvizFileTask
+import modular.graphviz.tasks.GenerateModulesDotFileTask
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
 import modular.internal.configureSeparators
 import modular.internal.outputFile
 import modular.internal.registerGenerationTaskOnSync
-import modular.spec.DotFileSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.DumpModuleLinksTask
 import modular.tasks.DumpModuleTypeTask
-import modular.tasks.GenerateGraphvizFileTask
-import modular.tasks.GenerateModulesDotFileTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile
@@ -38,14 +38,15 @@ class ModularLeafPlugin : Plugin<Project> {
     CalculateModuleTreeTask.register(project, extension)
 
     extension.specs.configureEach { spec ->
-      val file = outputFile(extension.outputs, Variant.Modules, fileExtension = spec.extension.get())
+      val file = outputFile(extension.outputs, Variant.Modules, fileExtension = spec.fileExtension.get())
       when (spec) {
-        is DotFileSpec -> registerDotFileTasks(extension, spec, file)
+        is GraphVizSpec -> registerGraphVizTasks(extension, spec, file)
+        else -> logger.warn("Not sure how to handle spec: ${spec.javaClass.canonicalName}")
       }
     }
   }
 
-  private fun Project.registerDotFileTasks(extension: ModularExtensionImpl, spec: DotFileSpec, file: RegularFile) {
+  private fun Project.registerGraphVizTasks(extension: ModularExtensionImpl, spec: GraphVizSpec, file: RegularFile) {
     val dotFileTask = GenerateModulesDotFileTask.register(
       target = this,
       name = GenerateModulesDotFileTask.TASK_NAME,

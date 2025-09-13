@@ -6,6 +6,9 @@
 
 package modular.gradle
 
+import modular.graphviz.spec.GraphVizSpec
+import modular.graphviz.tasks.GenerateGraphvizFileTask
+import modular.graphviz.tasks.GenerateLegendDotFileTask
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
@@ -16,11 +19,8 @@ import modular.internal.registerGenerationTaskOnSync
 import modular.internal.warnIfModuleTypesSpecifyNothing
 import modular.internal.warnIfNoModuleTypes
 import modular.internal.warnIfSvgSelectedWithCustomDpi
-import modular.spec.DotFileSpec
 import modular.tasks.CollateModuleLinksTask
 import modular.tasks.CollateModuleTypesTask
-import modular.tasks.GenerateGraphvizFileTask
-import modular.tasks.GenerateLegendDotFileTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskProvider
@@ -49,10 +49,10 @@ class ModularTrunkPlugin : Plugin<Project> {
     }
 
     extension.specs.configureEach { spec ->
-      val tasks = when (spec) {
-        is DotFileSpec -> registerDotFileTasks(extension, spec)
+      when (spec) {
+        is GraphVizSpec -> generateLegend.get().dependsOn(registerGraphVizTasks(extension, spec))
+        else -> logger.warn("Not sure how to handle spec: ${spec.javaClass.canonicalName}")
       }
-      generateLegend.get().dependsOn(tasks)
     }
 
     afterEvaluate {
@@ -65,9 +65,9 @@ class ModularTrunkPlugin : Plugin<Project> {
     }
   }
 
-  private fun Project.registerDotFileTasks(
+  private fun Project.registerGraphVizTasks(
     extension: ModularExtensionImpl,
-    spec: DotFileSpec,
+    spec: GraphVizSpec,
   ): List<TaskProvider<GenerateGraphvizFileTask>> = spec.legend
     ?.let { legend ->
       // Only create a legend if one of the legend functions was explicitly called

@@ -18,7 +18,7 @@ object DotFileInvalidLayoutEngine : Scenario by DotFileBigGraph {
         kotlinJvm()
       }
 
-      dotFile {
+      graphViz {
         chart {
           layoutEngine = "abc123"
         }
