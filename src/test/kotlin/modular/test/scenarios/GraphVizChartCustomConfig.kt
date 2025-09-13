@@ -8,9 +8,9 @@ import modular.test.Scenario
 
 object GraphVizChartCustomConfig : Scenario by GraphVizBasic {
   override val rootBuildFile = """
-    import modular.spec.ArrowType
-    import modular.spec.Dir
-    import modular.spec.RankDir
+    import modular.graphviz.spec.ArrowType
+    import modular.graphviz.spec.Dir
+    import modular.graphviz.spec.RankDir
 
     plugins {
       kotlin("jvm") apply false

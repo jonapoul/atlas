@@ -48,7 +48,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
           ":b" ["fillcolor"="#FF8800","shape"="none"]
           ":c" ["fillcolor"="#FF8800","shape"="none"]
           ":a" -> ":b"
-          ":a" -> ":c" ["style"="dotted"]
+          ":a" -> ":c"
         }
       """.trimIndent(),
     )
@@ -95,7 +95,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
           ":b" ["fillcolor"="#FF8800","shape"="none"]
           ":c" ["fillcolor"="#FF8800","shape"="none"]
           ":a" -> ":b"
-          ":a" -> ":c" ["style"="dotted"]
+          ":a" -> ":c"
         }
       """.trimIndent(),
     )
@@ -121,7 +121,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
           ":b" ["fillcolor"="#FF8800","shape"="none"]
           ":c" ["fillcolor"="#FF8800","shape"="none"]
           ":a" -> ":b"
-          ":a" -> ":c" ["style"="dotted"]
+          ":a" -> ":c"
         }
       """.trimIndent(),
     )
@@ -147,7 +147,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
           "a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
           "c" ["fillcolor"="#FF8800","shape"="none"]
           "a" -> "B"
-          "a" -> "c" ["style"="dotted"]
+          "a" -> "c"
         }
       """.trimIndent(),
     )
