@@ -7,12 +7,15 @@
 package modular.gradle
 
 import modular.graphviz.spec.GraphVizSpec
+import modular.graphviz.tasks.CheckDotFileTask
 import modular.graphviz.tasks.GenerateGraphvizFileTask
 import modular.graphviz.tasks.GenerateLegendDotFileTask
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
 import modular.internal.configureSeparators
+import modular.internal.modularBuildDirectory
 import modular.internal.orderedTypes
+import modular.internal.outputFile
 import modular.internal.registerGenerationTaskOnSync
 import modular.internal.warnIfModuleTypesSpecifyNothing
 import modular.internal.warnIfNoGraphVizOutputs
@@ -23,6 +26,7 @@ import modular.tasks.CollateModuleTypesTask
 import modular.tasks.MODULAR_TASK_GROUP
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.tasks.TaskProvider
 
 class ModularTrunkPlugin : Plugin<Project> {
@@ -50,7 +54,7 @@ class ModularTrunkPlugin : Plugin<Project> {
 
     extension.specs.configureEach { spec ->
       when (spec) {
-        is GraphVizSpec -> generateLegend.get().dependsOn(registerGraphVizTasks(extension, spec))
+        is GraphVizSpec -> registerGraphVizTasks(extension, spec, generateLegend)
         else -> logger.warn("Not sure how to handle spec: ${spec.javaClass.canonicalName}")
       }
     }
@@ -68,22 +72,38 @@ class ModularTrunkPlugin : Plugin<Project> {
   private fun Project.registerGraphVizTasks(
     extension: ModularExtensionImpl,
     spec: GraphVizSpec,
-  ): List<TaskProvider<GenerateGraphvizFileTask>> = spec.legend
-    ?.let { legend ->
+    generateLegend: TaskProvider<Task>,
+  ) {
+    val legend = spec.legend
+    if (legend != null) {
       // Only create a legend if one of the legend functions was explicitly called
+      val outputFile = GenerateLegendDotFileTask.defaultOutputFile(extension, spec)
       val dotFileTask = GenerateLegendDotFileTask.register(
         target = this,
+        name = GenerateLegendDotFileTask.TASK_NAME,
         legendSpec = legend,
-        spec = spec,
         extension = extension,
+        outputFile = outputFile,
+      )
+      val graphVizTasks = GenerateGraphvizFileTask.register(this, extension, spec, Variant.Legend, dotFileTask)
+      generateLegend.configure { it.dependsOn(graphVizTasks) }
+
+      // Also validate the legend's dotfile when we call gradle check
+      val tempTask = GenerateLegendDotFileTask.register(
+        target = this,
+        name = GenerateLegendDotFileTask.TASK_NAME_FOR_CHECKING,
+        legendSpec = legend,
+        extension = extension,
+        outputFile = modularBuildDirectory.map { it.file("legend-temp.dot") },
       )
 
-      GenerateGraphvizFileTask.register(
+      val checkTask = CheckDotFileTask.register(
         target = this,
-        extension = extension,
-        spec = spec,
-        variant = Variant.Legend,
-        dotFileTask = dotFileTask,
+        name = CheckDotFileTask.NAME_LEGEND,
+        generateDotFile = tempTask,
+        realDotFile = outputFile(extension.outputs, Variant.Legend, fileExtension = spec.fileExtension.get()),
       )
-    }.orEmpty()
+      tasks.maybeCreate("check").dependsOn(checkTask)
+    }
+  }
 }

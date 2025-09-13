@@ -59,7 +59,7 @@ modular {
     }
 
     linkTypes {
-      "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
+      "jvmMainImplementation"(style = LinkStyle.Bold, color = "#888")
       api(LinkStyle.Solid)
       implementation(LinkStyle.Dotted)
     }

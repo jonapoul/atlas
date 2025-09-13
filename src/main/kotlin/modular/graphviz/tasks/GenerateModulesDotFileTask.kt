@@ -57,6 +57,7 @@ abstract class GenerateModulesDotFileTask :
   @get:[Input Optional] abstract val dir: Property<String>
   @get:[Input Optional] abstract val dpi: Property<Int>
   @get:[Input Optional] abstract val fontSize: Property<Int>
+  @get:[Input Optional] abstract val layoutEngine: Property<String>
   @get:[Input Optional] abstract val rankDir: Property<String>
   @get:[Input Optional] abstract val rankSep: Property<Float>
 
@@ -82,6 +83,7 @@ abstract class GenerateModulesDotFileTask :
       dir = dir.orNull,
       dpi = dpi.orNull,
       fontSize = fontSize.orNull,
+      layoutEngine = layoutEngine.orNull,
       rankDir = rankDir.orNull,
       rankSep = rankSep.orNull,
     )
@@ -95,7 +97,8 @@ abstract class GenerateModulesDotFileTask :
   }
 
   companion object {
-    const val TASK_NAME: String = "generateModulesDotFile"
+    internal const val TASK_NAME = "generateModulesDotFile"
+    internal const val TASK_NAME_FOR_CHECKING = "generateModulesDotFileForChecking"
 
     fun register(
       target: Project,
@@ -121,6 +124,7 @@ abstract class GenerateModulesDotFileTask :
         task.arrowTail.convention(spec.chart.arrowTail)
         task.dpi.convention(spec.chart.dpi)
         task.fontSize.convention(spec.chart.fontSize)
+        task.layoutEngine.convention(spec.chart.layoutEngine)
         task.rankDir.convention(spec.chart.rankDir)
         task.rankSep.convention(spec.chart.rankSep)
         task.dir.convention(spec.chart.dir)

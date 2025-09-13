@@ -8,12 +8,12 @@ import modular.test.Scenario
 
 object GraphVizChartWithProperties : Scenario by GraphVizBasic {
   override val gradlePropertiesFile = """
-    modular.dotfile.chart.arrowHead=halfopen
-    modular.dotfile.chart.arrowTail=open
-    modular.dotfile.chart.dpi=150
-    modular.dotfile.chart.fontSize=20
-    modular.dotfile.chart.rankDir=LR
-    modular.dotfile.chart.rankSep=2.5
-    modular.dotfile.chart.dir=none
+    modular.graphViz.chart.arrowHead=halfopen
+    modular.graphViz.chart.arrowTail=open
+    modular.graphViz.chart.dpi=150
+    modular.graphViz.chart.fontSize=20
+    modular.graphViz.chart.rankDir=LR
+    modular.graphViz.chart.rankSep=2.5
+    modular.graphViz.chart.dir=none
   """.trimIndent()
 }

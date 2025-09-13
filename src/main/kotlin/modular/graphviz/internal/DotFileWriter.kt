@@ -28,6 +28,7 @@ internal class DotFileWriter(
   private val dir: String?,
   private val dpi: Int?,
   private val fontSize: Int?,
+  private val layoutEngine: String?,
   private val rankDir: String?,
   private val rankSep: Float?,
 ) {
@@ -53,6 +54,7 @@ internal class DotFileWriter(
       items = mapOf(
         "dpi" to dpi,
         "fontsize" to fontSize,
+        "layout" to layoutEngine,
         "ranksep" to rankSep,
         "rankdir" to rankDir,
       ),
@@ -64,12 +66,13 @@ internal class DotFileWriter(
   }
 
   private fun StringBuilder.appendHeaderGroup(name: String, items: Map<String, Any?>) {
-    appendIndented("$name [")
-    val itemsString = items
+    val itemStrings = items
       .toList()
       .mapNotNull { (k, v) -> if (v == null) null else "\"$k\"=\"$v\"" }
-      .joinToString(separator = ",")
-    append(itemsString)
+    if (itemStrings.isEmpty()) return
+
+    appendIndented("$name [")
+    append(itemStrings.joinToString(separator = ","))
     append("]")
     appendLine()
   }

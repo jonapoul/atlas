@@ -17,9 +17,11 @@ import modular.tasks.TaskWithOutputFile
 import modular.tasks.TaskWithSeparator
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.api.file.RegularFile
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
@@ -68,24 +70,20 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
   }
 
   companion object {
-    const val TASK_NAME: String = "generateLegendDotFile"
+    internal const val TASK_NAME: String = "generateLegendDotFile"
+    internal const val TASK_NAME_FOR_CHECKING: String = "generateLegendDotFileForChecking"
 
     fun get(target: Project): TaskProvider<GenerateLegendDotFileTask> =
       target.tasks.named(TASK_NAME, GenerateLegendDotFileTask::class.java)
 
     internal fun register(
       target: Project,
+      name: String,
       legendSpec: GraphVizLegendSpec,
-      spec: GraphVizSpec,
       extension: ModularExtensionImpl,
+      outputFile: Provider<RegularFile>,
     ): TaskProvider<GenerateLegendDotFileTask> = with(target) {
-      val outputFile = extension.outputs.legendOutputDirectory.map { dir ->
-        val filename = extension.outputs.legendRootFilename.get()
-        val fileExtension = spec.fileExtension.get()
-        dir.file("$filename.$fileExtension")
-      }
-
-      tasks.register(TASK_NAME, GenerateLegendDotFileTask::class.java) { task ->
+      tasks.register(name, GenerateLegendDotFileTask::class.java) { task ->
         task.tableBorder.convention(legendSpec.tableBorder)
         task.cellBorder.convention(legendSpec.cellBorder)
         task.cellSpacing.convention(legendSpec.cellSpacing)
@@ -93,6 +91,15 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
         task.outputFile.convention(outputFile)
         task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
       }
+    }
+
+    internal fun defaultOutputFile(
+      extension: ModularExtensionImpl,
+      spec: GraphVizSpec,
+    ): Provider<RegularFile> = extension.outputs.legendOutputDirectory.map { dir ->
+      val filename = extension.outputs.legendRootFilename.get()
+      val fileExtension = spec.fileExtension.get()
+      dir.file("$filename.$fileExtension")
     }
   }
 }
