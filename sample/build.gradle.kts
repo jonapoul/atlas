@@ -24,8 +24,8 @@ modular {
 
   modulePathTransforms {
     remove(pattern = "^:sample-")
-    replace(pattern = "lib", replacement = "abc")
-    replace(pattern = "-", replacement = "_")
+    replace(pattern = "lib", replacement = "Lib")
+    replace(pattern = "-", replacement = " ")
   }
 
   outputs {

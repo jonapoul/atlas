@@ -9,7 +9,7 @@ public abstract interface class modular/gradle/ModularExtension {
 	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
 	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getModuleNames ()Lmodular/spec/ModuleNameSpec;
+	public abstract fun getModulePathTransforms ()Lmodular/spec/ModulePathTransformSpec;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public abstract fun getOutputs ()Lmodular/spec/OutputSpec;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
@@ -245,8 +245,12 @@ public final class modular/spec/LayoutEngine : java/lang/Enum, modular/spec/Stri
 	public static fun values ()[Lmodular/spec/LayoutEngine;
 }
 
-public abstract interface class modular/spec/ModuleNameSpec {
-	public abstract fun getReplacements ()Lorg/gradle/api/provider/ListProperty;
+public abstract interface class modular/spec/ModulePathTransformSpec : org/gradle/api/provider/SetProperty {
+	public abstract fun add (Lmodular/internal/Replacement;)V
+	public abstract fun add (Lorg/gradle/api/provider/Provider;)V
+	public abstract fun addAll (Ljava/lang/Iterable;)V
+	public abstract fun addAll (Lorg/gradle/api/provider/Provider;)V
+	public abstract fun addAll ([Lmodular/internal/Replacement;)V
 	public abstract fun remove (Ljava/lang/String;)V
 	public abstract fun remove (Lkotlin/text/Regex;)V
 	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
@@ -456,7 +460,7 @@ public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/
 }
 
 public final class modular/tasks/GenerateModulesDotFileTask$Companion {
-	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/spec/ModuleNameSpec;Lmodular/spec/DotFileChartSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/spec/ModulePathTransformSpec;Lmodular/spec/DotFileChartSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract interface class modular/tasks/ModularGenerationTask : org/gradle/api/Task {

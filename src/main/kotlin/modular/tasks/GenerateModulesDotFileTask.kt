@@ -105,7 +105,7 @@ abstract class GenerateModulesDotFileTask :
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.convention(outputFile)
 
-        task.replacements.convention(modulePathTransforms)
+        task.replacements.convention(modulePathTransforms.get())
         task.printOutput.convention(printOutput)
 
         task.arrowHead.convention(spec.arrowHead)
