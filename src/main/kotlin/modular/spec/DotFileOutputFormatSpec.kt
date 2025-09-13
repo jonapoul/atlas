@@ -2,22 +2,24 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("TooManyFunctions", "unused") // public API
+@file:Suppress("TooManyFunctions", "unused", "SpellCheckingInspection") // public API
 
 package modular.spec
 
 import modular.gradle.ModularDsl
-import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.Provider
+import org.gradle.api.provider.SetProperty
 
 /**
- * https://graphviz.org/docs/outputs/
- *
- * Which ones are supported on your machine will depend on the version of GraphViz you use.
- * Intentionally skipped over the DOT and imagemap outputs (for now?)
+ * The formats supported on your machine will depend on the version of GraphViz you use.
+ * See https://graphviz.org/docs/outputs/
  */
-class DotFileOutputFormatSpec(objects: ObjectFactory) {
-  internal val outputFormats = objects.setProperty(String::class.java)
-  @ModularDsl fun add(value: String) = outputFormats.add(value)
+interface DotFileOutputFormatSpec : SetProperty<String> {
+  @ModularDsl override fun add(provider: Provider<out String>)
+  @ModularDsl override fun add(element: String)
+  @ModularDsl override fun addAll(elements: Iterable<String>)
+  @ModularDsl override fun addAll(vararg elements: String)
+  @ModularDsl override fun addAll(provider: Provider<out Iterable<String>>)
 
   @ModularDsl fun canon() = add("canon")
   @ModularDsl fun cmap() = add("cmap")

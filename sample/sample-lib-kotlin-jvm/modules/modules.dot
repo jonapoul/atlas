@@ -1,5 +1,5 @@
 digraph {
-  edge ["dir"="forward","arrowhead"="normal","arrowtail"="none"]
+  edge ["arrowhead"="normal","arrowtail"="none"]
   graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
   node ["style"="filled"]
   "abc_kotlin_jvm" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]

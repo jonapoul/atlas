@@ -1,4 +1,5 @@
 import modular.spec.ArrowType
+import modular.spec.Dir
 import modular.spec.LayoutEngine
 import modular.spec.RankDir
 
@@ -48,11 +49,10 @@ modular {
       arrowHead(ArrowType.Normal)
       arrowTail(ArrowType.None)
       layoutEngine(LayoutEngine.Dot)
+      rankDir(RankDir.TopToBottom)
       dpi = 100
       fontSize = 30
-      rankDir = RankDir.TopToBottom
       rankSep = 1.5f
-      showArrows = true
     }
 
     fileFormats {

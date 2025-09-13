@@ -2,35 +2,88 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("unused") // public API
-
 package modular.spec
 
 import modular.gradle.ModularDsl
-import modular.internal.ModularProperties
-import modular.internal.bool
-import modular.internal.enum
-import modular.internal.float
-import modular.internal.int
-import modular.internal.string
-import org.gradle.api.Project
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 
-class DotFileChartSpec(objects: ObjectFactory, project: Project) {
-  private val properties = ModularProperties(project)
+/**
+ * Configures the contents of your GraphViz dotfile: layout, style, scale, size. Access with:
+ *
+ * ```kotlin
+ * modular {
+ *   dotFile {
+ *     chart {
+ *       // config here
+ *     }
+ *   }
+ * }
+ * ```
+ */
+interface DotFileChartSpec {
+  /**
+   * Configure the arrow type from a module pointing to its dependency. Defaults to unset, so GraphViz will fall back
+   * to [ArrowType.Normal]. Default arrows are specified in the [ArrowType] enum, but if you have any extras available
+   * you can pass them into [arrowHead] as a string instead.
+   * See https://graphviz.org/docs/attrs/arrowhead/
+   */
+  val arrowHead: Property<String>
+  @ModularDsl fun arrowHead(type: ArrowType)
+  @ModularDsl fun arrowHead(type: String)
 
-  val arrowHead: Property<String> = objects.string(properties.arrowHead)
-  val arrowTail: Property<String> = objects.string(properties.arrowTail)
-  val dpi: Property<Int> = objects.int(properties.dpi)
-  val layoutEngine: Property<String> = objects.string(properties.layoutEngine)
-  val fontSize: Property<Int> = objects.int(properties.fontSize)
-  val rankDir: Property<RankDir> = objects.enum(properties.rankDir)
-  val rankSep: Property<Float> = objects.float(properties.rankSep)
-  val showArrows: Property<Boolean> = objects.bool(properties.showArrows)
+  /**
+   * Configure the arrow type from a dependency pointing to its dependent. Defaults to unset, so GraphViz will fall back
+   * to [ArrowType.None]. Default arrows are specified in the [ArrowType] enum, but if you have any extras available
+   * you can pass them into [arrowTail] as a string instead.
+   * See https://graphviz.org/docs/attrs/arrowtail/
+   */
+  val arrowTail: Property<String>
+  @ModularDsl fun arrowTail(type: ArrowType)
+  @ModularDsl fun arrowTail(type: String)
 
-  @ModularDsl fun arrowHead(type: ArrowType) = arrowHead.set(type.string)
-  @ModularDsl fun arrowTail(type: ArrowType) = arrowTail.set(type.string)
-  @ModularDsl fun layoutEngine(layoutEngine: LayoutEngine) = layoutEngine(layoutEngine.string)
-  @ModularDsl fun layoutEngine(layoutEngine: String) = this.layoutEngine.set(layoutEngine)
+  /**
+   * Customise the layout engine used to organise your module nodes in the chart. Defaults to [LayoutEngine.Dot].
+   * Default engines are specified in the [LayoutEngine] enum, but if you have any extras available you can pass them
+   * into [layoutEngine] as a string instead.
+   * See https://graphviz.org/docs/layouts/
+   */
+  val layoutEngine: Property<String>
+  @ModularDsl fun layoutEngine(layoutEngine: LayoutEngine)
+  @ModularDsl fun layoutEngine(layoutEngine: String)
+
+  /**
+   * Specifies the expected number of pixels per inch on a display device. Defaults to unset, but GraphViz will fall
+   * back to 96 internally.
+   * See https://graphviz.org/docs/attrs/dpi/
+   */
+  val dpi: Property<Int>
+
+  /**
+   * Font size, in points, used for text. Unset by default, but GraphViz will fall back to 14.0 internally.
+   * See https://graphviz.org/docs/attrs/fontsize/
+   */
+  val fontSize: Property<Int>
+
+  /**
+   * Sets direction of graph layout. Unset by default, but GraphViz will fall back to [RankDir.TopToBottom] internally.
+   * See https://graphviz.org/docs/attrs/rankdir/
+   */
+  val rankDir: Property<String>
+  @ModularDsl fun rankDir(rankDir: RankDir)
+  @ModularDsl fun rankDir(rankDir: String)
+
+  /**
+   * Specifies separation between ranks in the chart. Unset by default, GraphViz will use a different default value
+   * depending on your [layoutEngine] value. 0.5 for [LayoutEngine.Dot], 1.0 for [LayoutEngine.TwoPi].
+   * See https://graphviz.org/docs/attrs/ranksep/
+   */
+  val rankSep: Property<Float>
+
+  /**
+   * Edge type for drawing arrowheads. Unset by default, GraphViz will
+   * See https://graphviz.org/docs/attrs/dir/
+   */
+  val dir: Property<String>
+  @ModularDsl fun dir(dir: Dir)
+  @ModularDsl fun dir(dir: String)
 }

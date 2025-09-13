@@ -7,33 +7,89 @@
 package modular.spec
 
 import modular.gradle.ModularDsl
-import modular.internal.string
 import org.gradle.api.Action
-import org.gradle.api.Project
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 
-class DotFileSpec(
-  private val objects: ObjectFactory,
-  private val project: Project,
-) : Spec<DotFileLegendSpec, DotFileChartSpec> {
-  override val name = NAME
-  override val extension: Property<String> = objects.string(convention = "dot")
+/**
+ * Used to configure GraphViz output from Modular. For barebones output to a `.dot` file, you can just call:
+ *
+ * ```kotlin
+ * modular {
+ *   dotFile()
+ * }
+ * ```
+ *
+ * Or a more fleshed-out config:
+ *
+ * ```kotlin
+ * modular {
+ *   dotFile {
+ *     extension = "dot"
+ *     pathToDotCommand = "/custom/path/to/dot"
+ *
+ *     legend()
+ *
+ *     fileFormats {
+ *       png()
+ *       svg()
+ *     }
+ *   }
+ * }
+ * ```
+ */
+interface DotFileSpec : Spec<DotFileLegendSpec, DotFileChartSpec> {
+  /**
+   * To configure the file extension of generated dotfiles. Defaults to "dot".
+   */
+  override val extension: Property<String>
 
-  override var legend: DotFileLegendSpec? = null
-  override fun legend() = getOrBuildLegend()
-  @ModularDsl override fun legend(action: Action<DotFileLegendSpec>) = action.execute(getOrBuildLegend())
+  /**
+   * Use this if you want to specify a "dot" command which isn't on the system path. This should be an absolute path.
+   */
+  val pathToDotCommand: Property<String>
 
-  override val chart = DotFileChartSpec(objects, project)
+  /**
+   * Use this to manually configure the [DotFileLegendSpec], or set it to null if you want to explicitly disable
+   * legend generation. Defaults to null.
+   */
+  override var legend: DotFileLegendSpec?
 
-  val fileFormats = DotFileOutputFormatSpec(objects)
-  @ModularDsl fun fileFormats(action: Action<DotFileOutputFormatSpec>) = action.execute(fileFormats)
+  /**
+   * Call this to enable legend generation with default settings.
+   */
+  override fun legend(): DotFileLegendSpec
 
-  val pathToDotCommand: Property<String> = objects.property(String::class.java).unsetConvention()
+  /**
+   * Call this to enable legend generation and customise the [DotFileLegendSpec] settings.
+   */
+  @ModularDsl override fun legend(action: Action<DotFileLegendSpec>)
 
-  private fun getOrBuildLegend() = legend ?: DotFileLegendSpec(objects, project).also { legend = it }
+  /**
+   * Call this to configure the chart contents, orientation, font size, arrows, etc. Example:
+   * ```kotlin
+   * modular {
+   *   chart {
+   *     arrowHead = "diamond"
+   *     dpi = 150
+   *     fontSize = 25
+   *     rankSep = 4.0
+   *   }
+   * }
+   * ```
+   *
+   * Not required - the chart will be generated with default settings without calling this.
+   */
+  override val chart: DotFileChartSpec
 
-  internal companion object {
-    internal const val NAME = "DotFileSpec"
-  }
+  /**
+   * Manually interact with output formats from GraphViz. Defaults to an empty set, meaning the only output will
+   * be a `.dot` file.
+   */
+  val fileFormats: DotFileOutputFormatSpec
+
+  /**
+   * DSL to configure output formats. See [DotFileOutputFormatSpec] for some default options, but bear in mind your
+   * machine may not have them all available (depending on GraphViz version).
+   */
+  @ModularDsl fun fileFormats(action: Action<DotFileOutputFormatSpec>)
 }

@@ -5,10 +5,9 @@
 package modular.internal
 
 import modular.gradle.ModularExtension
-import modular.gradle.OutputSpec
-import modular.gradle.Variant
 import modular.spec.ModuleType
 import modular.spec.ModuleTypeModel
+import modular.spec.OutputSpec
 import modular.tasks.ModularGenerationTask
 import modular.tasks.TaskWithSeparator
 import org.gradle.api.Project
@@ -83,7 +82,7 @@ internal fun StringBuilder.appendIndentedLine(value: Any) {
 }
 
 internal fun Project.outputFile(
-  output: OutputSpec,
+  output: OutputSpecImpl,
   variant: Variant,
   fileExtension: String,
 ): RegularFile {
@@ -102,7 +101,7 @@ private fun baseName(output: OutputSpec, variant: Variant) = when (variant) {
   Variant.Legend -> output.legendRootFilename
 }
 
-private fun configuredOutputDir(output: OutputSpec, variant: Variant) = when (variant) {
+private fun configuredOutputDir(output: OutputSpecImpl, variant: Variant) = when (variant) {
   Variant.Modules -> output.chartOutputDirectory
   Variant.Legend -> output.legendOutputDirectory
 }

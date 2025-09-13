@@ -4,12 +4,7 @@
  */
 @file:Suppress("LongParameterList")
 
-package modular.spec
-
-import modular.internal.ModuleLink
-import modular.internal.TypedModule
-import modular.internal.appendIndented
-import modular.internal.appendIndentedLine
+package modular.internal
 
 internal class DotFile(
   private val typedModules: Set<TypedModule>,
@@ -18,11 +13,11 @@ internal class DotFile(
   private val thisPath: String,
   private val arrowHead: String?,
   private val arrowTail: String?,
+  private val dir: String?,
   private val dpi: Int?,
   private val fontSize: Int?,
-  private val rankDir: RankDir,
+  private val rankDir: String?,
   private val rankSep: Float?,
-  private val showArrows: Boolean,
 ) {
   operator fun invoke(): String = buildString {
     appendLine("digraph {")
@@ -36,7 +31,7 @@ internal class DotFile(
     appendHeaderGroup(
       name = "edge",
       items = mapOf(
-        "dir" to if (showArrows) "forward" else "none",
+        "dir" to dir,
         "arrowhead" to arrowHead,
         "arrowtail" to arrowTail,
       ),
@@ -47,7 +42,7 @@ internal class DotFile(
         "dpi" to dpi,
         "fontsize" to fontSize,
         "ranksep" to rankSep,
-        "rankdir" to rankDir.string,
+        "rankdir" to rankDir,
       ),
     )
     appendHeaderGroup(

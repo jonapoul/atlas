@@ -9,6 +9,7 @@ import modular.test.Scenario
 object DotFileChartCustomConfig : Scenario by DotFileBasic {
   override val rootBuildFile = """
     import modular.spec.ArrowType
+    import modular.spec.Dir
     import modular.spec.RankDir
 
     plugins {
@@ -29,9 +30,9 @@ object DotFileChartCustomConfig : Scenario by DotFileBasic {
           arrowTail(ArrowType.Open)
           dpi = 150
           fontSize = 20
-          rankDir = RankDir.LeftToRight
+          rankDir(RankDir.LeftToRight)
           rankSep = 2.5f
-          showArrows = false
+          dir(Dir.None)
         }
       }
     }

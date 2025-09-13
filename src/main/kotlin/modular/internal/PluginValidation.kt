@@ -36,7 +36,7 @@ internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
   }
 }
 
-internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtension) {
+internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionImpl) {
   val adjustSvgViewBox = extension.experimental.adjustSvgViewBox.get()
   val dotFileSpec = extension.specs.filterIsInstance<DotFileSpec>().firstOrNull()
   val warningIsSuppressed = extension.properties.suppressSvgViewBoxWarning.get()

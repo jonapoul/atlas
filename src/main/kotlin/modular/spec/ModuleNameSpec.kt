@@ -2,40 +2,51 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("unused") // public API
-
 package modular.spec
 
 import modular.gradle.ModularDsl
-import org.gradle.api.model.ObjectFactory
+import modular.internal.Replacement
 import org.gradle.api.provider.ListProperty
-import org.gradle.internal.impldep.kotlinx.serialization.Serializable
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 
-class ModuleNameSpec internal constructor(objects: ObjectFactory) {
-  val replacements: ListProperty<Replacement> = objects.listProperty(Replacement::class.java)
+/**
+ * API for modifying module names when inserting them into any generated diagrams. For example if your modules are
+ * within a heavily-nested `"modules"` directory in your project's root, you might want to call something like:
+ *
+ * ```kotlin
+ * modular {
+ *   moduleNames {
+ *     remove("^:modules:")
+ *     replace(":", " ")
+ *   }
+ * }
+ * ```
+ *
+ * then a path of `":modules:path:to:module"` will be mapped to `"path to module"`. Remember the declarations inside
+ * `moduleNames` are called in descending order.
+ *
+ * Regex groups aren't supported, just standard matches.
+ */
+interface ModuleNameSpec {
+  val replacements: ListProperty<Replacement>
 
-  @ModularDsl fun replace(
-    pattern: Regex,
-    replacement: String,
-  ) = replacements.add(Replacement(pattern, replacement))
+  @ModularDsl
+  fun remove(
+    @Language("RegExp") pattern: String,
+  )
 
-  @ModularDsl fun replace(
+  @ModularDsl
+  fun remove(pattern: Regex)
+
+  @ModularDsl
+  fun replace(
     @Language("RegExp") pattern: String,
     replacement: String,
-  ) = replace(pattern.toRegex(), replacement)
+  )
 
-  @ModularDsl fun remove(
+  @ModularDsl
+  fun replace(
     pattern: Regex,
-  ) = replace(pattern, replacement = "")
-
-  @ModularDsl fun remove(
-    @Language("RegExp") pattern: String,
-  ) = remove(pattern.toRegex())
+    replacement: String,
+  )
 }
-
-@Serializable
-class Replacement(
-  val pattern: Regex,
-  val replacement: String,
-) : java.io.Serializable

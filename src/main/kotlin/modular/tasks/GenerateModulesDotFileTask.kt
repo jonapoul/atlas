@@ -4,14 +4,13 @@
  */
 package modular.tasks
 
+import modular.internal.DotFile
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLinks
+import modular.internal.Replacement
 import modular.internal.TypedModules
-import modular.spec.DotFile
 import modular.spec.DotFileChartSpec
 import modular.spec.ModuleNameSpec
-import modular.spec.RankDir
-import modular.spec.Replacement
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile
@@ -40,18 +39,18 @@ abstract class GenerateModulesDotFileTask :
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General
-  @get:Input abstract val replacements: SetProperty<Replacement>
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val printOutput: Property<Boolean>
+  @get:Input abstract val replacements: SetProperty<Replacement>
+  @get:Input abstract val thisPath: Property<String>
 
   // Dotfile config
-  @get:Input abstract val rankDir: Property<RankDir>
-  @get:Input abstract val showArrows: Property<Boolean>
-  @get:Input abstract val thisPath: Property<String>
   @get:[Input Optional] abstract val arrowHead: Property<String>
   @get:[Input Optional] abstract val arrowTail: Property<String>
+  @get:[Input Optional] abstract val dir: Property<String>
   @get:[Input Optional] abstract val dpi: Property<Int>
   @get:[Input Optional] abstract val fontSize: Property<Int>
+  @get:[Input Optional] abstract val rankDir: Property<String>
   @get:[Input Optional] abstract val rankSep: Property<Float>
 
   init {
@@ -72,11 +71,11 @@ abstract class GenerateModulesDotFileTask :
       thisPath = thisPath.get(),
       arrowHead = arrowHead.orNull,
       arrowTail = arrowTail.orNull,
+      dir = dir.orNull,
       dpi = dpi.orNull,
       fontSize = fontSize.orNull,
-      rankDir = rankDir.get(),
+      rankDir = rankDir.orNull,
       rankSep = rankSep.orNull,
-      showArrows = showArrows.get(),
     )
 
     val outputFile = outputFile.get().asFile
@@ -115,7 +114,7 @@ abstract class GenerateModulesDotFileTask :
         task.fontSize.convention(spec.fontSize)
         task.rankDir.convention(spec.rankDir)
         task.rankSep.convention(spec.rankSep)
-        task.showArrows.convention(spec.showArrows)
+        task.dir.convention(spec.dir)
         task.thisPath.convention(target.path)
       }
     }
