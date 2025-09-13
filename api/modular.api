@@ -79,10 +79,7 @@ public final class modular/spec/ArrowType : java/lang/Enum, modular/spec/StringE
 	public static fun values ()[Lmodular/spec/ArrowType;
 }
 
-public abstract interface class modular/spec/ChartSpec {
-}
-
-public final class modular/spec/DotFileChartSpec : modular/spec/ChartSpec {
+public final class modular/spec/DotFileChartSpec {
 	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
 	public final fun arrowHead (Lmodular/spec/ArrowType;)V
 	public final fun arrowTail (Lmodular/spec/ArrowType;)V
@@ -98,7 +95,7 @@ public final class modular/spec/DotFileChartSpec : modular/spec/ChartSpec {
 	public final fun layoutEngine (Lmodular/spec/LayoutEngine;)V
 }
 
-public final class modular/spec/DotFileLegendSpec : modular/spec/LegendSpec {
+public final class modular/spec/DotFileLegendSpec {
 	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
 	public final fun getCellBorder ()Lorg/gradle/api/provider/Property;
 	public final fun getCellPadding ()Lorg/gradle/api/provider/Property;
@@ -159,18 +156,18 @@ public final class modular/spec/DotFileSpec : modular/spec/Spec {
 	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
 	public fun chart (Lorg/gradle/api/Action;)V
 	public final fun fileFormats (Lorg/gradle/api/Action;)V
-	public synthetic fun getChart ()Lmodular/spec/ChartSpec;
+	public synthetic fun getChart ()Ljava/lang/Object;
 	public fun getChart ()Lmodular/spec/DotFileChartSpec;
 	public fun getExtension ()Lorg/gradle/api/provider/Property;
 	public final fun getFileFormats ()Lmodular/spec/DotFileOutputFormatSpec;
+	public synthetic fun getLegend ()Ljava/lang/Object;
 	public fun getLegend ()Lmodular/spec/DotFileLegendSpec;
-	public synthetic fun getLegend ()Lmodular/spec/LegendSpec;
 	public fun getName ()Ljava/lang/String;
+	public synthetic fun legend ()Ljava/lang/Object;
 	public fun legend ()Lmodular/spec/DotFileLegendSpec;
-	public synthetic fun legend ()Lmodular/spec/LegendSpec;
 	public fun legend (Lorg/gradle/api/Action;)V
+	public synthetic fun setLegend (Ljava/lang/Object;)V
 	public fun setLegend (Lmodular/spec/DotFileLegendSpec;)V
-	public synthetic fun setLegend (Lmodular/spec/LegendSpec;)V
 }
 
 public abstract class modular/spec/ExperimentalFlags {
@@ -198,9 +195,6 @@ public final class modular/spec/LayoutEngine : java/lang/Enum, modular/spec/Stri
 	public fun getString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/LayoutEngine;
 	public static fun values ()[Lmodular/spec/LayoutEngine;
-}
-
-public abstract interface class modular/spec/LegendSpec {
 }
 
 public final class modular/spec/ModuleNameSpec {
@@ -252,13 +246,13 @@ public final class modular/spec/Replacement : java/io/Serializable {
 
 public abstract interface class modular/spec/Spec {
 	public fun chart (Lorg/gradle/api/Action;)V
-	public abstract fun getChart ()Lmodular/spec/ChartSpec;
+	public abstract fun getChart ()Ljava/lang/Object;
 	public abstract fun getExtension ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLegend ()Lmodular/spec/LegendSpec;
+	public abstract fun getLegend ()Ljava/lang/Object;
 	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun legend ()Lmodular/spec/LegendSpec;
+	public abstract fun legend ()Ljava/lang/Object;
 	public abstract fun legend (Lorg/gradle/api/Action;)V
-	public abstract fun setLegend (Lmodular/spec/LegendSpec;)V
+	public abstract fun setLegend (Ljava/lang/Object;)V
 }
 
 public final class modular/spec/Spec$DefaultImpls {
