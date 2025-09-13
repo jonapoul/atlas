@@ -18,6 +18,7 @@ import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.Input
 import javax.inject.Inject
 
@@ -68,7 +69,7 @@ internal class ExperimentalSpecImpl(objects: ObjectFactory, properties: GradlePr
 }
 
 internal class ModulePathTransformSpecImpl(objects: ObjectFactory) : ModulePathTransformSpec {
-  override val replacements = objects.setProperty(Replacement::class.java)
+  override val replacements: SetProperty<Replacement> = objects.setProperty(Replacement::class.java)
   override fun replace(pattern: Regex, replacement: String) = replacements.add(Replacement(pattern, replacement))
   override fun replace(pattern: String, replacement: String) = replace(pattern.toRegex(), replacement)
   override fun remove(pattern: Regex) = replace(pattern, replacement = "")

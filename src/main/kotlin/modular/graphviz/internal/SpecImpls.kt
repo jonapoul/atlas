@@ -84,7 +84,7 @@ internal class GraphVizFileFormatSpecImpl(objects: ObjectFactory) :
   SetProperty<String> by objects.setProperty(String::class.java)
 
 internal class GraphVizLinkTypesSpecImpl(objects: ObjectFactory) : GraphVizLinkTypesSpec {
-  override val linkTypes = objects.setProperty(LinkType::class.java)
+  override val linkTypes: SetProperty<LinkType> = objects.setProperty(LinkType::class.java)
 
   override fun add(configuration: Regex, style: String?, color: String?) =
     linkTypes.add(LinkType(configuration, style, color))
