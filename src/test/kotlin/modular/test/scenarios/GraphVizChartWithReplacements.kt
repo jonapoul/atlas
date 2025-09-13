@@ -8,8 +8,8 @@ import modular.test.Scenario
 
 object GraphVizChartWithReplacements : Scenario by GraphVizBasic {
   override val rootBuildFile = """
-    import modular.spec.ArrowType
-    import modular.spec.RankDir
+    import modular.graphviz.spec.ArrowType
+    import modular.graphviz.spec.RankDir
 
     plugins {
       kotlin("jvm") apply false

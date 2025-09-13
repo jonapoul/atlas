@@ -5,10 +5,6 @@
 package modular.graphviz.spec
 
 import modular.gradle.ModularDsl
-import modular.spec.ArrowType
-import modular.spec.Dir
-import modular.spec.LayoutEngine
-import modular.spec.RankDir
 import org.gradle.api.provider.Property
 
 /**
@@ -27,8 +23,8 @@ import org.gradle.api.provider.Property
 interface GraphVizChartSpec {
   /**
    * Configure the arrow type from a module pointing to its dependency. Defaults to unset, so GraphViz will fall back
-   * to [modular.spec.ArrowType.Normal]. Default arrows are specified in the [modular.spec.ArrowType] enum, but if you
-   * have any extras available you can pass them into [arrowHead] as a string instead.
+   * to [ArrowType.Normal]. Default arrows are specified in the [ArrowType] enum, but if you have any extras available
+   * you can pass them into [arrowHead] as a string instead.
    * See https://graphviz.org/docs/attrs/arrowhead/
    */
   val arrowHead: Property<String>
@@ -46,9 +42,9 @@ interface GraphVizChartSpec {
   @ModularDsl fun arrowTail(type: String)
 
   /**
-   * Customise the layout engine used to organise your module nodes in the chart. Defaults to
-   * [modular.spec.LayoutEngine.Dot]. Default engines are specified in the [modular.spec.LayoutEngine] enum, but if you
-   * have any extras available you can pass them into [layoutEngine] as a string instead.
+   * Customise the layout engine used to organise your module nodes in the chart. Defaults to [LayoutEngine.Dot].
+   * Default engines are specified in the [LayoutEngine] enum, but if you have any extras available you can pass them
+   * into [layoutEngine] as a string instead.
    * See https://graphviz.org/docs/layouts/
    */
   val layoutEngine: Property<String>
@@ -69,8 +65,7 @@ interface GraphVizChartSpec {
   val fontSize: Property<Int>
 
   /**
-   * Sets direction of graph layout. Unset by default, but GraphViz will fall back to [modular.spec.RankDir.TopToBottom]
-   * internally.
+   * Sets direction of graph layout. Unset by default, but GraphViz will fall back to [RankDir.TopToBottom] internally.
    * See https://graphviz.org/docs/attrs/rankdir/
    */
   val rankDir: Property<String>

@@ -4,6 +4,7 @@
  */
 package modular.internal
 
+import modular.gradle.ExperimentalModularApi
 import modular.gradle.ModularExtension
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.spec.GraphVizSpec
@@ -62,14 +63,14 @@ internal open class ModularExtensionImpl @Inject constructor(
   }
 }
 
+@OptIn(ExperimentalModularApi::class)
 internal class ExperimentalSpecImpl(objects: ObjectFactory, properties: GradleProperties) : ExperimentalSpec {
   override val adjustSvgViewBox = objects.bool(convention = properties.adjustSvgViewBox)
 }
 
-internal class ModulePathTransformSpecImpl(objects: ObjectFactory) :
-  ModulePathTransformSpec,
-  SetProperty<Replacement> by objects.setProperty(Replacement::class.java) {
-  override fun replace(pattern: Regex, replacement: String) = add(Replacement(pattern, replacement))
+internal class ModulePathTransformSpecImpl(objects: ObjectFactory) : ModulePathTransformSpec {
+  override val replacements: SetProperty<Replacement> = objects.setProperty(Replacement::class.java)
+  override fun replace(pattern: Regex, replacement: String) = replacements.add(Replacement(pattern, replacement))
   override fun replace(pattern: String, replacement: String) = replace(pattern.toRegex(), replacement)
   override fun remove(pattern: Regex) = replace(pattern, replacement = "")
   override fun remove(pattern: String) = remove(pattern.toRegex())

@@ -51,7 +51,7 @@ class ModularLeafPlugin : Plugin<Project> {
       target = this,
       name = GenerateModulesDotFileTask.TASK_NAME,
       modulePathTransforms = extension.modulePathTransforms,
-      spec = spec.chart,
+      spec = spec,
       outputFile = file,
       printOutput = true,
     )

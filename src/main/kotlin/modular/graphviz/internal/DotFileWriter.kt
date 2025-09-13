@@ -11,6 +11,7 @@ import modular.internal.Replacement
 import modular.internal.TypedModule
 import modular.internal.appendIndented
 import modular.internal.appendIndentedLine
+import modular.spec.LinkType
 
 /**
  * Copyright © 2025 Jon Poulton
@@ -19,6 +20,7 @@ import modular.internal.appendIndentedLine
 internal class DotFileWriter(
   private val typedModules: Set<TypedModule>,
   private val links: Set<ModuleLink>,
+  private val linkTypes: Set<LinkType>,
   private val replacements: Set<Replacement>,
   private val thisPath: String,
   private val arrowHead: String?,
@@ -77,13 +79,21 @@ internal class DotFileWriter(
       .map { link -> link.copy(fromPath = link.fromPath.cleaned(), toPath = link.toPath.cleaned()) }
       .sortedWith(compareBy({ it.fromPath }, { it.toPath }))
       .forEach { (fromPath, toPath, configuration) ->
-        val attrs = if (configuration.contains("implementation", ignoreCase = true)) {
-          " [\"style\"=\"dotted\"]"
-        } else {
-          ""
-        }
+        val attrs = linkAttrs(configuration)
         appendIndentedLine("\"$fromPath\" -> \"$toPath\"$attrs")
       }
+  }
+
+  private fun linkAttrs(configuration: String): String {
+    val type = linkTypes
+      .firstOrNull { s -> s.configuration.matches(configuration) }
+      ?: return ""
+
+    val attrs = mapOf("style" to type.style, "color" to type.color)
+      .mapNotNull { (k, v) -> if (v == null) null else "\"$k\"=\"$v\"" }
+      .joinToString(separator = ",")
+
+    return " [$attrs]"
   }
 
   private fun StringBuilder.appendNodes() {

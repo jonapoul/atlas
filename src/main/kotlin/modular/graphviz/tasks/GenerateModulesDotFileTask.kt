@@ -5,11 +5,12 @@
 package modular.graphviz.tasks
 
 import modular.graphviz.internal.DotFileWriter
-import modular.graphviz.spec.GraphVizChartSpec
+import modular.graphviz.spec.GraphVizSpec
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLinks
 import modular.internal.Replacement
 import modular.internal.TypedModules
+import modular.spec.LinkType
 import modular.spec.ModulePathTransformSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.CollateModuleTypesTask
@@ -50,6 +51,7 @@ abstract class GenerateModulesDotFileTask :
   @get:Input abstract val thisPath: Property<String>
 
   // Dotfile config
+  @get:Input abstract val linkTypes: SetProperty<LinkType>
   @get:[Input Optional] abstract val arrowHead: Property<String>
   @get:[Input Optional] abstract val arrowTail: Property<String>
   @get:[Input Optional] abstract val dir: Property<String>
@@ -72,6 +74,7 @@ abstract class GenerateModulesDotFileTask :
     val writer = DotFileWriter(
       typedModules = TypedModules.read(moduleTypesFile, separator),
       links = ModuleLinks.read(linksFile, separator),
+      linkTypes = linkTypes.get(),
       replacements = replacements.get(),
       thisPath = thisPath.get(),
       arrowHead = arrowHead.orNull,
@@ -98,28 +101,29 @@ abstract class GenerateModulesDotFileTask :
       target: Project,
       name: String,
       modulePathTransforms: ModulePathTransformSpec,
-      spec: GraphVizChartSpec,
+      spec: GraphVizSpec,
       outputFile: RegularFile,
       printOutput: Boolean,
     ): TaskProvider<GenerateModulesDotFileTask> = with(target) {
-      val collateModuleTypes = CollateModuleTypesTask.Companion.get(rootProject)
-      val calculateProjectTree = CalculateModuleTreeTask.Companion.get(target)
+      val collateModuleTypes = CollateModuleTypesTask.get(rootProject)
+      val calculateProjectTree = CalculateModuleTreeTask.get(target)
 
       tasks.register(name, GenerateModulesDotFileTask::class.java) { task ->
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.convention(outputFile)
 
-        task.replacements.convention(modulePathTransforms.get())
+        task.replacements.convention(modulePathTransforms.replacements)
         task.printOutput.convention(printOutput)
 
-        task.arrowHead.convention(spec.arrowHead)
-        task.arrowTail.convention(spec.arrowTail)
-        task.dpi.convention(spec.dpi)
-        task.fontSize.convention(spec.fontSize)
-        task.rankDir.convention(spec.rankDir)
-        task.rankSep.convention(spec.rankSep)
-        task.dir.convention(spec.dir)
+        task.linkTypes.convention(spec.linkTypes.linkTypes)
+        task.arrowHead.convention(spec.chart.arrowHead)
+        task.arrowTail.convention(spec.chart.arrowTail)
+        task.dpi.convention(spec.chart.dpi)
+        task.fontSize.convention(spec.chart.fontSize)
+        task.rankDir.convention(spec.chart.rankDir)
+        task.rankSep.convention(spec.chart.rankSep)
+        task.dir.convention(spec.chart.dir)
         task.thisPath.convention(target.path)
       }
     }

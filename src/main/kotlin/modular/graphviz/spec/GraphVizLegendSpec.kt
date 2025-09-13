@@ -8,7 +8,7 @@ import org.gradle.api.provider.Property
 
 /**
  * Configures the layout and spacing of the generated legend, which will contain all configured module types with
- * their allocated names and colours. They will be listed in the order you declare them, which is descending priority
+ * their allocated names and colors. They will be listed in the order you declare them, which is descending priority
  * order.
  */
 interface GraphVizLegendSpec {

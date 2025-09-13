@@ -8,7 +8,7 @@ import modular.test.Scenario
 
 object GraphVizCustomDotExecutable : Scenario by GraphVizBasic {
   override val rootBuildFile = """
-    import modular.spec.LayoutEngine.Neato
+    import modular.graphviz.spec.LayoutEngine.Neato
 
     plugins {
       kotlin("jvm") apply false
