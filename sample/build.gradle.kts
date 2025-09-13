@@ -22,7 +22,7 @@ modular {
     builtIns()
   }
 
-  moduleNames {
+  modulePathTransforms {
     remove(pattern = "^:sample-")
     replace(pattern = "lib", replacement = "abc")
     replace(pattern = "-", replacement = "_")

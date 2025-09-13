@@ -6,7 +6,7 @@ package modular.gradle
 
 import modular.spec.DotFileSpec
 import modular.spec.ExperimentalSpec
-import modular.spec.ModuleNameSpec
+import modular.spec.ModulePathTransformSpec
 import modular.spec.ModuleType
 import modular.spec.OutputSpec
 import modular.spec.Spec
@@ -22,8 +22,8 @@ interface ModularExtension {
   val experimental: ExperimentalSpec
   @ModularDsl fun experimental(action: Action<ExperimentalSpec>)
 
-  val moduleNames: ModuleNameSpec
-  @ModularDsl fun moduleNames(action: Action<ModuleNameSpec>)
+  val modulePathTransforms: ModulePathTransformSpec
+  @ModularDsl fun modulePathTransforms(action: Action<ModulePathTransformSpec>)
 
   val moduleTypes: NamedDomainObjectContainer<ModuleType>
   @ModularDsl fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleType>>)

@@ -22,7 +22,7 @@ object DotFileChartWithReplacements : Scenario by DotFileBasic {
         java()
       }
 
-      moduleNames {
+      modulePathTransforms {
         replace(pattern = "^:", replacement = "") // remove ":" prefix
         replace(pattern = "^b$", replacement = "B") // rename one module to uppercase
       }

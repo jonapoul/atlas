@@ -15,7 +15,7 @@ public abstract interface class modular/gradle/ModularExtension {
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getSpecs ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
-	public abstract fun moduleNames (Lorg/gradle/api/Action;)V
+	public abstract fun modulePathTransforms (Lorg/gradle/api/Action;)V
 	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
 	public abstract fun outputs (Lorg/gradle/api/Action;)V
 	public abstract fun specs (Lorg/gradle/api/Action;)V
