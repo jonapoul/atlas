@@ -9,8 +9,8 @@ import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import modular.test.ScenarioTest
 import modular.test.buildRunner
-import modular.test.scenarios.DotFileBasic
-import modular.test.scenarios.DotFileBigGraph100DpiSvg
+import modular.test.scenarios.GraphVizBasic
+import modular.test.scenarios.GraphVizBigGraph100DpiSvg
 import modular.test.scenarios.InvalidColorDeclaration
 import modular.test.scenarios.ModuleTypeWithNoIdentifiers
 import modular.test.scenarios.NoModuleTypesDeclared

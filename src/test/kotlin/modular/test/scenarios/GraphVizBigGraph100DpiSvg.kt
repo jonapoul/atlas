@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileBigGraph100DpiSvgWithAdjustment : Scenario by DotFileBigGraph {
+object GraphVizBigGraph100DpiSvg : Scenario by GraphVizBigGraph {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false
@@ -26,10 +26,6 @@ object DotFileBigGraph100DpiSvgWithAdjustment : Scenario by DotFileBigGraph {
         fileFormats {
           svg()
         }
-      }
-
-      experimental {
-        adjustSvgViewBox = true
       }
     }
   """.trimIndent()

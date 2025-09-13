@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileBasicWithBasicLegend : Scenario by DotFileBasic {
+object GraphVizBasicWithBasicLegend : Scenario by GraphVizBasic {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false

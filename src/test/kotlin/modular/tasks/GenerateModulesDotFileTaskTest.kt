@@ -10,10 +10,10 @@ import assertk.assertions.doesNotContain
 import assertk.assertions.exists
 import modular.test.ScenarioTest
 import modular.test.runTask
-import modular.test.scenarios.DotFileBasic
-import modular.test.scenarios.DotFileChartCustomConfig
-import modular.test.scenarios.DotFileChartWithProperties
-import modular.test.scenarios.DotFileChartWithReplacements
+import modular.test.scenarios.GraphVizBasic
+import modular.test.scenarios.GraphVizChartCustomConfig
+import modular.test.scenarios.GraphVizChartWithProperties
+import modular.test.scenarios.GraphVizChartWithReplacements
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 

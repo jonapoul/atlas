@@ -8,7 +8,7 @@ import modular.test.BASIC_JAVA_BUILD_SCRIPT
 import modular.test.BASIC_JVM_BUILD_SCRIPT
 import modular.test.Scenario
 
-object DotFileBasic : Scenario {
+object GraphVizBasic : Scenario {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false

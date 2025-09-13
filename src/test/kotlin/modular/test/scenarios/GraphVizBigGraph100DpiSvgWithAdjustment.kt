@@ -6,10 +6,8 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileCustomLayoutEngine : Scenario by DotFileBigGraph {
+object GraphVizBigGraph100DpiSvgWithAdjustment : Scenario by GraphVizBigGraph {
   override val rootBuildFile = """
-    import modular.spec.LayoutEngine.Neato
-
     plugins {
       kotlin("jvm") apply false
       id("dev.jonpoulton.modular.trunk")
@@ -22,12 +20,16 @@ object DotFileCustomLayoutEngine : Scenario by DotFileBigGraph {
 
       graphViz {
         chart {
-          layoutEngine(Neato)
+          dpi = 100
         }
 
         fileFormats {
           svg()
         }
+      }
+
+      experimental {
+        adjustSvgViewBox = true
       }
     }
   """.trimIndent()

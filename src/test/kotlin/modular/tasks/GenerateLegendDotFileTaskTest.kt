@@ -11,10 +11,10 @@ import assertk.assertions.exists
 import modular.test.ScenarioTest
 import modular.test.doesNotExist
 import modular.test.runTask
-import modular.test.scenarios.DotFileBasic
-import modular.test.scenarios.DotFileBasicWithBasicLegend
-import modular.test.scenarios.DotFileLegendCustomConfig
-import modular.test.scenarios.DotFileLegendWithProperties
+import modular.test.scenarios.GraphVizBasic
+import modular.test.scenarios.GraphVizBasicWithBasicLegend
+import modular.test.scenarios.GraphVizLegendCustomConfig
+import modular.test.scenarios.GraphVizLegendWithProperties
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 

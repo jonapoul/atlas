@@ -16,13 +16,13 @@ import modular.test.ScenarioTest
 import modular.test.allSuccessful
 import modular.test.doesNotExist
 import modular.test.runTask
-import modular.test.scenarios.DotFileBasic
-import modular.test.scenarios.DotFileBasicWithThreeOutputFormats
-import modular.test.scenarios.DotFileBigGraph100DpiSvg
-import modular.test.scenarios.DotFileBigGraph100DpiSvgWithAdjustment
-import modular.test.scenarios.DotFileCustomDotExecutable
-import modular.test.scenarios.DotFileCustomLayoutEngine
-import modular.test.scenarios.DotFileInvalidLayoutEngine
+import modular.test.scenarios.GraphVizBasic
+import modular.test.scenarios.GraphVizBasicWithThreeOutputFormats
+import modular.test.scenarios.GraphVizBigGraph100DpiSvg
+import modular.test.scenarios.GraphVizBigGraph100DpiSvgWithAdjustment
+import modular.test.scenarios.GraphVizCustomDotExecutable
+import modular.test.scenarios.GraphVizCustomLayoutEngine
+import modular.test.scenarios.GraphVizInvalidLayoutEngine
 import kotlin.test.Test
 import kotlin.text.RegexOption.MULTILINE
 

@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileChartWithProperties : Scenario by DotFileBasic {
+object GraphVizChartWithProperties : Scenario by GraphVizBasic {
   override val gradlePropertiesFile = """
     modular.dotfile.chart.arrowHead=halfopen
     modular.dotfile.chart.arrowTail=open
