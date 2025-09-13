@@ -10,6 +10,8 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 
+internal const val MODULAR_TASK_GROUP = "modular"
+
 interface TaskWithSeparator : Task {
   @get:Input val separator: Property<String>
 }

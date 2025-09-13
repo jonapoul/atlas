@@ -9,7 +9,6 @@ package modular.gradle
 import modular.graphviz.spec.GraphVizSpec
 import modular.graphviz.tasks.GenerateGraphvizFileTask
 import modular.graphviz.tasks.GenerateModulesDotFileTask
-import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
 import modular.internal.configureSeparators
@@ -18,6 +17,7 @@ import modular.internal.registerGenerationTaskOnSync
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.DumpModuleLinksTask
 import modular.tasks.DumpModuleTypeTask
+import modular.tasks.MODULAR_TASK_GROUP
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile

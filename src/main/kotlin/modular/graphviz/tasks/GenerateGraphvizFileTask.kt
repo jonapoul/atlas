@@ -6,11 +6,11 @@ package modular.graphviz.tasks
 
 import modular.graphviz.internal.doGraphVizPostProcessing
 import modular.graphviz.spec.GraphVizSpec
-import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
 import modular.internal.outputFile
 import modular.spec.ExperimentalFlags
+import modular.tasks.MODULAR_TASK_GROUP
 import modular.tasks.ModularGenerationTask
 import modular.tasks.TaskWithOutputFile
 import org.gradle.api.DefaultTask

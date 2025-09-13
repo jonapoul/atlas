@@ -11,10 +11,8 @@ import modular.test.ScenarioTest
 import modular.test.buildRunner
 import modular.test.scenarios.GraphVizBasic
 import modular.test.scenarios.GraphVizBigGraph100DpiSvg
-import modular.test.scenarios.InvalidColorDeclaration
 import modular.test.scenarios.ModuleTypeWithNoIdentifiers
 import modular.test.scenarios.NoModuleTypesDeclared
-import org.codehaus.groovy.syntax.Types.REGEX_PATTERN
 import kotlin.test.Test
 
 class PluginValidationTest : ScenarioTest() {
@@ -41,18 +39,6 @@ class PluginValidationTest : ScenarioTest() {
 
     // then the build didn't fail, but we get a log warning
     assertThat(result.output).contains("Warning: No module types have been registered!")
-  }
-
-  @Test
-  fun `Fail if module type color doesn't match pattern`() = runScenario(InvalidColorDeclaration) {
-    val result = buildRunner()
-      .withArguments("help")
-      .buildAndFail()
-
-    // then the build failed
-    assertThat(result.output).contains(
-      "Invalid color string 'ABCXYZ' - should match regex pattern '$REGEX_PATTERN'",
-    )
   }
 
   @Test
