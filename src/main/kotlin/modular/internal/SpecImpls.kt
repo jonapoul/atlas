@@ -25,7 +25,7 @@ internal open class ModularExtensionImpl @Inject constructor(
   private val objects: ObjectFactory,
   project: Project,
 ) : ModularExtension {
-  internal val properties = ModularProperties(project)
+  internal val properties = GradleProperties(project)
 
   override val experimental = ExperimentalSpecImpl(objects, properties)
   override fun experimental(action: Action<ExperimentalSpec>) = action.execute(experimental)
@@ -62,7 +62,7 @@ internal open class ModularExtensionImpl @Inject constructor(
   }
 }
 
-internal class ExperimentalSpecImpl(objects: ObjectFactory, properties: ModularProperties) : ExperimentalSpec {
+internal class ExperimentalSpecImpl(objects: ObjectFactory, properties: GradleProperties) : ExperimentalSpec {
   override val adjustSvgViewBox = objects.bool(convention = properties.adjustSvgViewBox)
 }
 

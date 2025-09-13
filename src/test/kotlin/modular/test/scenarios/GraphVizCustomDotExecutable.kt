@@ -6,8 +6,10 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileBasicWithThreeOutputFormats : Scenario by DotFileBasic {
+object GraphVizCustomDotExecutable : Scenario by GraphVizBasic {
   override val rootBuildFile = """
+    import modular.spec.LayoutEngine.Neato
+
     plugins {
       kotlin("jvm") apply false
       id("dev.jonpoulton.modular.trunk")
@@ -20,11 +22,8 @@ object DotFileBasicWithThreeOutputFormats : Scenario by DotFileBasic {
       }
 
       graphViz {
-        fileFormats {
-          svg()
-          png()
-          eps()
-        }
+        pathToDotCommand = file("path/to/custom/dot").absolutePath
+        fileFormats.svg()
       }
     }
   """.trimIndent()

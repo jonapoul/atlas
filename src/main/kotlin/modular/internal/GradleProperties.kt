@@ -10,7 +10,7 @@ import org.gradle.api.provider.Provider
 /**
  * Just to keep all gradle property references together - easier to document
  */
-internal class ModularProperties(private val project: Project) {
+internal class GradleProperties(private val project: Project) {
   // General settings
   val generateOnSync: Provider<Boolean> = bool(key = "modular.generateOnSync", default = false)
   val separator: Provider<String> = string(key = "modular.separator", default = ",")
@@ -37,6 +37,7 @@ internal class ModularProperties(private val project: Project) {
 
   // Suppressions
   val suppressSvgViewBoxWarning: Provider<Boolean> = bool(key = "modular.suppress.adjustSvgViewBox", default = false)
+  val suppressNoGraphVizOutputs: Provider<Boolean> = bool(key = "modular.suppress.noGraphVizOutputs", default = false)
 
   private fun bool(key: String, default: Boolean? = null) = prop(key, default, mapper = String::toBooleanStrict)
   private fun float(key: String, default: Float? = null) = prop(key, default, mapper = String::toFloat)

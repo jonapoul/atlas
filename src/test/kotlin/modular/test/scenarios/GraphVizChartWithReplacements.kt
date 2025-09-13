@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileChartWithReplacements : Scenario by DotFileBasic {
+object GraphVizChartWithReplacements : Scenario by GraphVizBasic {
   override val rootBuildFile = """
     import modular.spec.ArrowType
     import modular.spec.RankDir

@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileBigGraph100DpiSvg : Scenario by DotFileBigGraph {
+object GraphVizInvalidLayoutEngine : Scenario by GraphVizBigGraph {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false
@@ -20,7 +20,7 @@ object DotFileBigGraph100DpiSvg : Scenario by DotFileBigGraph {
 
       graphViz {
         chart {
-          dpi = 100
+          layoutEngine = "abc123"
         }
 
         fileFormats {

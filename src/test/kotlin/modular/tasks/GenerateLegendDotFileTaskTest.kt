@@ -11,10 +11,10 @@ import assertk.assertions.exists
 import modular.test.ScenarioTest
 import modular.test.doesNotExist
 import modular.test.runTask
-import modular.test.scenarios.DotFileBasic
-import modular.test.scenarios.DotFileBasicWithBasicLegend
-import modular.test.scenarios.DotFileLegendCustomConfig
-import modular.test.scenarios.DotFileLegendWithProperties
+import modular.test.scenarios.GraphVizBasic
+import modular.test.scenarios.GraphVizBasicWithBasicLegend
+import modular.test.scenarios.GraphVizLegendCustomConfig
+import modular.test.scenarios.GraphVizLegendWithProperties
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
@@ -29,7 +29,7 @@ class GenerateLegendDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Don't register legend task if legend wasnt configured`() = runScenario(DotFileBasic) {
+  fun `Don't register legend task if legend wasnt configured`() = runScenario(GraphVizBasic) {
     // when
     val result = runTask("generateLegendDotFile").buildAndFail()
 
@@ -42,7 +42,7 @@ class GenerateLegendDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Generate dotfile legend from basic config`() = runScenario(DotFileBasicWithBasicLegend) {
+  fun `Generate dotfile legend from basic config`() = runScenario(GraphVizBasicWithBasicLegend) {
     // when
     runTask("generateLegendDotFile").build()
 
@@ -68,7 +68,7 @@ class GenerateLegendDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Customise dotfile legend from build script`() = runScenario(DotFileLegendCustomConfig) {
+  fun `Customise dotfile legend from build script`() = runScenario(GraphVizLegendCustomConfig) {
     // when
     runTask("generateLegendDotFile").build()
 
@@ -94,7 +94,7 @@ class GenerateLegendDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Customise dotfile legend from gradle properties`() = runScenario(DotFileLegendWithProperties) {
+  fun `Customise dotfile legend from gradle properties`() = runScenario(GraphVizLegendWithProperties) {
     // when
     runTask("generateLegendDotFile").build()
 

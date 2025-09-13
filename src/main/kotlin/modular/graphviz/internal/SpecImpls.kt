@@ -8,7 +8,7 @@ import modular.graphviz.spec.GraphVizChartSpec
 import modular.graphviz.spec.GraphVizFileFormatSpec
 import modular.graphviz.spec.GraphVizLegendSpec
 import modular.graphviz.spec.GraphVizSpec
-import modular.internal.ModularProperties
+import modular.internal.GradleProperties
 import modular.internal.float
 import modular.internal.int
 import modular.internal.string
@@ -23,7 +23,7 @@ import org.gradle.api.provider.SetProperty
 
 internal class GraphVizSpecImpl(
   private val objects: ObjectFactory,
-  private val properties: ModularProperties,
+  private val properties: GradleProperties,
 ) : GraphVizSpec {
   override val name = NAME
   override val fileExtension = objects.string(convention = "dot")
@@ -45,14 +45,14 @@ internal class GraphVizSpecImpl(
   }
 }
 
-internal class GraphVizLegendSpecImpl(objects: ObjectFactory, properties: ModularProperties) : GraphVizLegendSpec {
+internal class GraphVizLegendSpecImpl(objects: ObjectFactory, properties: GradleProperties) : GraphVizLegendSpec {
   override val cellBorder = objects.int(properties.cellBorder)
   override val cellPadding = objects.int(properties.cellPadding)
   override val cellSpacing = objects.int(properties.cellSpacing)
   override val tableBorder = objects.int(properties.tableBorder)
 }
 
-internal class GraphVizChartSpecImpl(objects: ObjectFactory, properties: ModularProperties) : GraphVizChartSpec {
+internal class GraphVizChartSpecImpl(objects: ObjectFactory, properties: GradleProperties) : GraphVizChartSpec {
   override fun arrowHead(type: ArrowType) = arrowHead(type.string)
   override fun arrowHead(type: String) = arrowHead.set(type)
   override fun arrowTail(type: ArrowType) = arrowTail(type.string)

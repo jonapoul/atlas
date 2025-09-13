@@ -6,12 +6,8 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileChartCustomConfig : Scenario by DotFileBasic {
+object GraphVizLegendCustomConfig : Scenario by GraphVizBasic {
   override val rootBuildFile = """
-    import modular.spec.ArrowType
-    import modular.spec.Dir
-    import modular.spec.RankDir
-
     plugins {
       kotlin("jvm") apply false
       id("dev.jonpoulton.modular.trunk")
@@ -24,15 +20,17 @@ object DotFileChartCustomConfig : Scenario by DotFileBasic {
         registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
 
+      outputs {
+        legendRootFilename = "legend-filename"
+        saveLegendsRelativeToRootModule("legend-dir")
+      }
+
       graphViz {
-        chart {
-          arrowHead = "halfopen"
-          arrowTail(ArrowType.Open)
-          dpi = 150
-          fontSize = 20
-          rankDir(RankDir.LeftToRight)
-          rankSep = 2.5f
-          dir(Dir.None)
+        legend {
+          cellBorder = 2
+          cellPadding = 3
+          cellSpacing = 4
+          tableBorder = 5
         }
       }
     }

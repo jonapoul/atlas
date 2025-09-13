@@ -6,8 +6,10 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object DotFileInvalidLayoutEngine : Scenario by DotFileBigGraph {
+object GraphVizCustomLayoutEngine : Scenario by GraphVizBigGraph {
   override val rootBuildFile = """
+    import modular.spec.LayoutEngine.Neato
+
     plugins {
       kotlin("jvm") apply false
       id("dev.jonpoulton.modular.trunk")
@@ -20,7 +22,7 @@ object DotFileInvalidLayoutEngine : Scenario by DotFileBigGraph {
 
       graphViz {
         chart {
-          layoutEngine = "abc123"
+          layoutEngine(Neato)
         }
 
         fileFormats {

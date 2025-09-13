@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.BASIC_JVM_BUILD_SCRIPT
 import modular.test.Scenario
 
-object DotFileBigGraph : Scenario {
+object GraphVizBigGraph : Scenario {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false

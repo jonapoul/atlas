@@ -10,10 +10,10 @@ import assertk.assertions.doesNotContain
 import assertk.assertions.exists
 import modular.test.ScenarioTest
 import modular.test.runTask
-import modular.test.scenarios.DotFileBasic
-import modular.test.scenarios.DotFileChartCustomConfig
-import modular.test.scenarios.DotFileChartWithProperties
-import modular.test.scenarios.DotFileChartWithReplacements
+import modular.test.scenarios.GraphVizBasic
+import modular.test.scenarios.GraphVizChartCustomConfig
+import modular.test.scenarios.GraphVizChartWithProperties
+import modular.test.scenarios.GraphVizChartWithReplacements
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
@@ -28,7 +28,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Generate dotfiles from basic config`() = runScenario(DotFileBasic) {
+  fun `Generate dotfiles from basic config`() = runScenario(GraphVizBasic) {
     // when
     runTask("generateModulesDotFile").build()
 
@@ -76,7 +76,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Customise dotfile from build script`() = runScenario(DotFileChartCustomConfig) {
+  fun `Customise dotfile from build script`() = runScenario(GraphVizChartCustomConfig) {
     // when
     runTask("generateModulesDotFile").build()
 
@@ -102,7 +102,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Customise dotfile from gradle properties`() = runScenario(DotFileChartWithProperties) {
+  fun `Customise dotfile from gradle properties`() = runScenario(GraphVizChartWithProperties) {
     // when
     runTask("generateModulesDotFile").build()
 
@@ -128,7 +128,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Replace module names`() = runScenario(DotFileChartWithReplacements) {
+  fun `Replace module names`() = runScenario(GraphVizChartWithReplacements) {
     // when
     runTask("generateModulesDotFile").build()
 
