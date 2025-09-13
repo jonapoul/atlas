@@ -37,22 +37,14 @@ internal class RequiresCommandExtension : ExecutionCondition {
     val element = context.element.orElse(null)
       ?: return ConditionEvaluationResult.enabled("No element found")
 
-    val annotations = element.getAnnotationsByType(RequiresCommand::class.java)
-    val missingCommands = mutableListOf<String>()
+    val allCommands = element
+      .annotations
+      .mapNotNull { a -> a.annotationClass.java.getAnnotation(RequiresCommand::class.java)?.command }
 
-    for (a in annotations) {
-      val cmd = a.annotationClass.java.getAnnotation(RequiresCommand::class.java)
-      if (cmd != null) {
-        if (!isCommandAvailable(cmd.command)) {
-          val message = "Command '${cmd.command}' is not available (required by @${a.annotationClass.simpleName})"
-          missingCommands.add(message)
-        }
-      }
-    }
+    val missingCommands = allCommands.filter { cmd -> !isCommandAvailable(cmd) }
 
     return if (missingCommands.isEmpty()) {
-      val allCommands = annotations.joinToString { it.command }
-      ConditionEvaluationResult.enabled("All required commands are available: $allCommands")
+      ConditionEvaluationResult.enabled("All required commands are available: ${allCommands.joinToString()}")
     } else {
       val reason = "Missing required commands: ${missingCommands.joinToString()}"
       ConditionEvaluationResult.disabled(reason)
@@ -60,14 +52,12 @@ internal class RequiresCommandExtension : ExecutionCondition {
   }
 
   private fun isCommandAvailable(command: String): Boolean = try {
-    println("isCommandAvailable $command")
     ProcessBuilder()
       .apply { command(if (isWindows()) "where" else "which", command) }
       .redirectErrorStream(true)
       .start()
       .waitFor() == 0
   } catch (_: Exception) {
-    println("isCommandAvailable $command failed!")
     false
   }
 

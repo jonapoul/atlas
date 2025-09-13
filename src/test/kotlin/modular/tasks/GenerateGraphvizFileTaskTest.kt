@@ -180,7 +180,6 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
     // then it fails as expected
     assertThat(result.output).containsMatch(
       """
-        \* What went wrong:
         Execution failed for task ':a:generateModulesSvg'.
         > java.io.IOException: Cannot run program ".*?/path/to/custom/dot": error=2, No such file or directory
       """.trimIndent().toRegex(),
