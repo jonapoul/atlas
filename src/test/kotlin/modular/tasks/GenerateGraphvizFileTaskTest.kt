@@ -23,24 +23,37 @@ import modular.test.scenarios.GraphVizBigGraph100DpiSvgWithAdjustment
 import modular.test.scenarios.GraphVizCustomDotExecutable
 import modular.test.scenarios.GraphVizCustomLayoutEngine
 import modular.test.scenarios.GraphVizInvalidLayoutEngine
+import org.gradle.testkit.runner.TaskOutcome
+import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import kotlin.test.Test
 import kotlin.text.RegexOption.MULTILINE
 
 class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @Test
-  fun `Wrapper task has no dependents if no file formats have been declared`() = runScenario(GraphVizBasic) {
+  fun `Wrapper task fails if no file formats have been declared`() = runScenario(GraphVizBasic) {
     // when
     val result = runTask("generateModules", extras = listOf("--dry-run")).build()
 
     // then no PNGs, SVGs, or anything else were generated besides the dotfile
     assertThat(result.output).contains(
       """
+        :a:dumpModuleType SKIPPED
+        :b:dumpModuleType SKIPPED
+        :c:dumpModuleType SKIPPED
+        :collateModuleTypes SKIPPED
+        :a:dumpModuleLinks SKIPPED
+        :b:dumpModuleLinks SKIPPED
+        :c:dumpModuleLinks SKIPPED
+        :collateModuleLinks SKIPPED
         :a:calculateModuleTree SKIPPED
         :a:generateModulesDotFile SKIPPED
+        :a:generateModules SKIPPED
         :b:calculateModuleTree SKIPPED
         :b:generateModulesDotFile SKIPPED
+        :b:generateModules SKIPPED
         :c:calculateModuleTree SKIPPED
         :c:generateModulesDotFile SKIPPED
+        :c:generateModules SKIPPED
 
         BUILD SUCCESSFUL
       """.trimIndent(),
@@ -64,8 +77,8 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
       ":c:generateModulesPng",
       ":c:generateModulesSvg",
       ":c:generateModulesEps",
-    ).forEach {
-      assertThat(result.output).contains(it)
+    ).forEach { t ->
+      assertThat(result.task(t)?.outcome).isEqualTo(SUCCESS)
     }
 
     // and the relevant files exist

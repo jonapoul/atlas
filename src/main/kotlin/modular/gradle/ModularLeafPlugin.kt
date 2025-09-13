@@ -84,12 +84,11 @@ class ModularLeafPlugin : Plugin<Project> {
       dotFileTask = dotFileTask,
     )
 
-    if (outputTasks.isNotEmpty()) {
-      tasks.register("generateModules") { t ->
-        t.group = MODULAR_TASK_GROUP
-        t.description = "Wrapper task for the other 'generateModulesX' tasks"
-        t.dependsOn(outputTasks)
-      }
+    tasks.register("generateModules") { t ->
+      t.group = MODULAR_TASK_GROUP
+      t.description = "Wrapper task for the other 'generateModulesX' tasks"
+      t.dependsOn(dotFileTask)
+      t.dependsOn(outputTasks)
     }
   }
 }
