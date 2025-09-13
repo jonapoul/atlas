@@ -56,6 +56,21 @@ jobs:
         with:
           add-job-summary: on-failure
 
+      - name: Run generate on sample
+        working-directory: ./sample
+        run: ./gradlew generateLegend generateModules
+
+      - name: Check for local diffs
+        working-directory: ./sample
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "❌ Uncommitted changes found:"
+            git status --short
+            exit 1
+          else
+            echo "✅ No diffs found."
+          fi
+
       - name: Check
         run: ./gradlew check
 
