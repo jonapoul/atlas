@@ -9,11 +9,9 @@ package modular.gradle
 import modular.graphviz.spec.GraphVizSpec
 import modular.graphviz.tasks.GenerateGraphvizFileTask
 import modular.graphviz.tasks.GenerateLegendDotFileTask
-import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
 import modular.internal.configureSeparators
-import modular.internal.failIfInvalidColors
 import modular.internal.orderedTypes
 import modular.internal.registerGenerationTaskOnSync
 import modular.internal.warnIfModuleTypesSpecifyNothing
@@ -22,6 +20,7 @@ import modular.internal.warnIfNoModuleTypes
 import modular.internal.warnIfSvgSelectedWithCustomDpi
 import modular.tasks.CollateModuleLinksTask
 import modular.tasks.CollateModuleTypesTask
+import modular.tasks.MODULAR_TASK_GROUP
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskProvider
@@ -57,7 +56,6 @@ class ModularTrunkPlugin : Plugin<Project> {
     }
 
     afterEvaluate {
-      failIfInvalidColors(extension)
       warnIfSvgSelectedWithCustomDpi(extension)
       warnIfNoGraphVizOutputs(extension)
 

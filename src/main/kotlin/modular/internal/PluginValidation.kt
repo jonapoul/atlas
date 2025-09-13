@@ -4,20 +4,9 @@
  */
 package modular.internal
 
-import modular.gradle.ModularExtension
 import modular.graphviz.spec.GraphVizSpec
 import modular.spec.ModuleType
-import org.codehaus.groovy.syntax.Types.REGEX_PATTERN
 import org.gradle.api.Project
-
-internal fun failIfInvalidColors(extension: ModularExtension) {
-  extension.moduleTypes.configureEach { type ->
-    val color = type.color.get()
-    if (!color.matches(HEX_COLOR_REGEX)) {
-      error("Invalid color string '$color' - should match regex pattern '$REGEX_PATTERN'")
-    }
-  }
-}
 
 internal fun Project.warnIfNoModuleTypes(types: List<ModuleType>) {
   if (types.isEmpty()) {

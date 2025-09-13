@@ -6,7 +6,6 @@ package modular.graphviz.tasks
 
 import modular.graphviz.internal.DotFileWriter
 import modular.graphviz.spec.GraphVizSpec
-import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLinks
 import modular.internal.Replacement
 import modular.internal.TypedModules
@@ -14,6 +13,7 @@ import modular.spec.LinkType
 import modular.spec.ModulePathTransformSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.CollateModuleTypesTask
+import modular.tasks.MODULAR_TASK_GROUP
 import modular.tasks.ModularGenerationTask
 import modular.tasks.TaskWithOutputFile
 import modular.tasks.TaskWithSeparator

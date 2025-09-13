@@ -4,10 +4,10 @@
  */
 package modular.tasks
 
-import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.TypedModule
 import modular.internal.TypedModules
 import modular.internal.fileInBuildDirectory
+import modular.tasks.MODULAR_TASK_GROUP
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
