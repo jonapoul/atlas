@@ -4,7 +4,7 @@
  */
 package modular.gradle
 
-import modular.spec.DotFileSpec
+import modular.graphviz.spec.GraphVizSpec
 import modular.spec.ExperimentalSpec
 import modular.spec.ModulePathTransformSpec
 import modular.spec.ModuleType
@@ -34,8 +34,8 @@ interface ModularExtension {
   val specs: NamedDomainObjectContainer<Spec<*, *>>
   @ModularDsl fun specs(action: Action<NamedDomainObjectContainer<Spec<*, *>>>)
 
-  @ModularDsl fun dotFile()
-  @ModularDsl fun dotFile(action: Action<DotFileSpec>)
+  @ModularDsl fun graphViz()
+  @ModularDsl fun graphViz(action: Action<GraphVizSpec>)
 
   /**
    * When set to true, syncing the IDE (IntelliJ or Android Studio) will automatically trigger regeneration of your

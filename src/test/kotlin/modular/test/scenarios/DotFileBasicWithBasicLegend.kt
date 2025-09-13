@@ -20,7 +20,7 @@ object DotFileBasicWithBasicLegend : Scenario by DotFileBasic {
         registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
 
-      dotFile {
+      graphViz {
         legend()
       }
     }

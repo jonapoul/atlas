@@ -19,7 +19,7 @@ object DotFileBasicWithThreeOutputFormats : Scenario by DotFileBasic {
         java()
       }
 
-      dotFile {
+      graphViz {
         fileFormats {
           svg()
           png()

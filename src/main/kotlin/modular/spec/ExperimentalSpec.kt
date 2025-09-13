@@ -41,7 +41,7 @@ interface ExperimentalSpec {
 }
 
 /**
- * Injected in [modular.tasks.GenerateGraphvizFileTask]
+ * Injected in [modular.graphviz.tasks.GenerateGraphvizFileTask]
  */
 @Suppress("UnnecessaryAbstractClass")
 abstract class ExperimentalFlags @Inject constructor() {

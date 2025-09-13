@@ -2,7 +2,7 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.tasks
+package modular.graphviz.tasks
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -14,20 +14,24 @@ import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.RELATIVE
+import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
+/**
+ * Copyright © 2025 Jon Poulton
+ * SPDX-License-Identifier: Apache-2.0
+ */
 @CacheableTask
 abstract class CheckDotFileTask : DefaultTask() {
   @get:Input
   abstract val taskPath: Property<String>
 
-  @get:PathSensitive(RELATIVE)
+  @get:PathSensitive(PathSensitivity.RELATIVE)
   @get:InputFile
   abstract val expectedDotFile: RegularFileProperty
 
-  @get:PathSensitive(RELATIVE)
+  @get:PathSensitive(PathSensitivity.RELATIVE)
   @get:InputFile
   abstract val actualDotFile: RegularFileProperty
 

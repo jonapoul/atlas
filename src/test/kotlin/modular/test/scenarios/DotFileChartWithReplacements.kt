@@ -27,7 +27,7 @@ object DotFileChartWithReplacements : Scenario by DotFileBasic {
         replace(pattern = "^b$", replacement = "B") // rename one module to uppercase
       }
 
-      dotFile()
+      graphViz()
     }
   """.trimIndent()
 }

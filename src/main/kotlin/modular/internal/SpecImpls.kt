@@ -5,24 +5,17 @@
 package modular.internal
 
 import modular.gradle.ModularExtension
-import modular.spec.ArrowType
-import modular.spec.Dir
-import modular.spec.DotFileChartSpec
-import modular.spec.DotFileLegendSpec
-import modular.spec.DotFileOutputFormatSpec
-import modular.spec.DotFileSpec
+import modular.graphviz.internal.GraphVizSpecImpl
+import modular.graphviz.spec.GraphVizSpec
 import modular.spec.ExperimentalSpec
-import modular.spec.LayoutEngine
 import modular.spec.ModulePathTransformSpec
 import modular.spec.ModuleType
 import modular.spec.OutputSpec
-import modular.spec.RankDir
 import modular.spec.Spec
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
-import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.Input
@@ -55,11 +48,11 @@ internal open class ModularExtensionImpl @Inject constructor(
   override val separator = objects.string(properties.separator)
   override val supportUpwardsTraversal = objects.bool(properties.supportUpwardsTraversal)
 
-  override fun dotFile() = dotFile { /* No-op */ }
-  override fun dotFile(action: Action<DotFileSpec>) {
-    val spec = specs.findByName(DotFileSpecImpl.NAME)
-      as? DotFileSpec
-      ?: DotFileSpecImpl(objects, properties)
+  override fun graphViz() = graphViz { /* No-op */ }
+  override fun graphViz(action: Action<GraphVizSpec>) {
+    val spec = specs.findByName(GraphVizSpecImpl.NAME)
+      as? GraphVizSpec
+      ?: GraphVizSpecImpl(objects, properties)
     action.execute(spec)
     specs.add(spec)
   }
@@ -124,59 +117,3 @@ internal class OutputSpecImpl(objects: ObjectFactory, project: Project) : Output
   override fun saveLegendsRelativeToRootModule(relativeToRoot: String) =
     legendOutputDirectory.set(projectDir.dir(relativeToRoot))
 }
-
-internal class DotFileSpecImpl(
-  private val objects: ObjectFactory,
-  private val properties: ModularProperties,
-) : DotFileSpec {
-  override val name = NAME
-  override val extension = objects.string(convention = "dot")
-  override val pathToDotCommand: Property<String> = objects.property(String::class.java).unsetConvention()
-
-  override var legend: DotFileLegendSpec? = null
-  override fun legend() = getOrBuildLegend()
-  override fun legend(action: Action<DotFileLegendSpec>) = action.execute(getOrBuildLegend())
-
-  override val chart = DotFileChartSpecImpl(objects, properties)
-
-  override val fileFormats = DotFileOutputFormatSpecImpl(objects)
-  override fun fileFormats(action: Action<DotFileOutputFormatSpec>) = action.execute(fileFormats)
-
-  private fun getOrBuildLegend() = legend ?: DotFileLegendSpecImpl(objects, properties).also { legend = it }
-
-  internal companion object {
-    internal const val NAME = "DotFileSpecImpl"
-  }
-}
-
-internal class DotFileLegendSpecImpl(objects: ObjectFactory, properties: ModularProperties) : DotFileLegendSpec {
-  override val cellBorder = objects.int(properties.cellBorder)
-  override val cellPadding = objects.int(properties.cellPadding)
-  override val cellSpacing = objects.int(properties.cellSpacing)
-  override val tableBorder = objects.int(properties.tableBorder)
-}
-
-internal class DotFileChartSpecImpl(objects: ObjectFactory, properties: ModularProperties) : DotFileChartSpec {
-  override fun arrowHead(type: ArrowType) = arrowHead(type.string)
-  override fun arrowHead(type: String) = arrowHead.set(type)
-  override fun arrowTail(type: ArrowType) = arrowTail(type.string)
-  override fun arrowTail(type: String) = arrowTail.set(type)
-  override fun dir(dir: Dir) = dir(dir.string)
-  override fun dir(dir: String) = this.dir.set(dir)
-  override fun layoutEngine(layoutEngine: LayoutEngine) = layoutEngine(layoutEngine.string)
-  override fun layoutEngine(layoutEngine: String) = this.layoutEngine.set(layoutEngine)
-  override fun rankDir(rankDir: RankDir) = rankDir(rankDir.string)
-  override fun rankDir(rankDir: String) = this.rankDir.set(rankDir)
-  override val arrowHead = objects.string(properties.arrowHead)
-  override val arrowTail = objects.string(properties.arrowTail)
-  override val dir = objects.string(properties.dir)
-  override val dpi = objects.int(properties.dpi)
-  override val fontSize = objects.int(properties.fontSize)
-  override val layoutEngine = objects.string(properties.layoutEngine)
-  override val rankDir = objects.string(properties.rankDir)
-  override val rankSep = objects.float(properties.rankSep)
-}
-
-internal class DotFileOutputFormatSpecImpl(objects: ObjectFactory) :
-  DotFileOutputFormatSpec,
-  SetProperty<String> by objects.setProperty(String::class.java)

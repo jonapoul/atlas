@@ -25,7 +25,7 @@ object DotFileLegendCustomConfig : Scenario by DotFileBasic {
         saveLegendsRelativeToRootModule("legend-dir")
       }
 
-      dotFile {
+      graphViz {
         legend {
           cellBorder = 2
           cellPadding = 3

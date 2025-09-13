@@ -81,11 +81,11 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     runTask("generateModulesDotFile").build()
 
     // then the file was generated
-    val dotFile = resolve("a/modules.dot")
-    assertThat(dotFile).exists()
+    val graphViz = resolve("a/modules.dot")
+    assertThat(graphViz).exists()
 
     // and contains expected contents, with modules in alphabetical order
-    assertThat(dotFile.readText()).contains(
+    assertThat(graphViz.readText()).contains(
       """
         digraph {
           edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
@@ -107,11 +107,11 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     runTask("generateModulesDotFile").build()
 
     // then the file was generated
-    val dotFile = resolve("a/modules.dot")
-    assertThat(dotFile).exists()
+    val graphViz = resolve("a/modules.dot")
+    assertThat(graphViz).exists()
 
     // and contains expected contents, with modules in alphabetical order
-    assertThat(dotFile.readText()).contains(
+    assertThat(graphViz.readText()).contains(
       """
         digraph {
           edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
@@ -133,11 +133,11 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     runTask("generateModulesDotFile").build()
 
     // then the file was generated
-    val dotFile = resolve("a/modules.dot")
-    assertThat(dotFile).exists()
+    val graphViz = resolve("a/modules.dot")
+    assertThat(graphViz).exists()
 
     // and contains expected contents, colons removed from module prefixes and "b" -> "B"
-    assertThat(dotFile.readText()).contains(
+    assertThat(graphViz.readText()).contains(
       """
         digraph {
           edge []

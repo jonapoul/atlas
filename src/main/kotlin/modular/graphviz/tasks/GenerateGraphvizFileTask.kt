@@ -2,15 +2,17 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.tasks
+package modular.graphviz.tasks
 
+import modular.graphviz.internal.doGraphVizPostProcessing
+import modular.graphviz.spec.GraphVizSpec
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
-import modular.internal.doGraphVizPostProcessing
 import modular.internal.outputFile
-import modular.spec.DotFileSpec
 import modular.spec.ExperimentalFlags
+import modular.tasks.ModularGenerationTask
+import modular.tasks.TaskWithOutputFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -29,7 +31,7 @@ import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
 abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val dotFile: RegularFileProperty
+  @get:[PathSensitive(RELATIVE) InputFile] abstract val graphViz: RegularFileProperty
   @get:Input abstract val outputFormat: Property<String>
   @get:[Input Optional] abstract val pathToDotCommand: Property<String>
   @get:[Input Optional] abstract val engine: Property<String>
@@ -45,7 +47,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
 
   @TaskAction
   fun execute() {
-    val dotFile = dotFile.get().asFile.absolutePath
+    val graphViz = graphViz.get().asFile.absolutePath
     val outputFile = outputFile.get().asFile
     val outputFormat = outputFormat.get()
     val engine = engine.orNull
@@ -55,7 +57,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
       add(dotCommand)
       if (engine != null) add("-K$engine")
       add("-T$outputFormat")
-      add(dotFile)
+      add(graphViz)
     }
 
     logger.info("Starting GraphViz: $command")
@@ -92,7 +94,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
     internal fun <T : TaskWithOutputFile> register(
       target: Project,
       extension: ModularExtensionImpl,
-      spec: DotFileSpec,
+      spec: GraphVizSpec,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
     ): List<TaskProvider<GenerateGraphvizFileTask>> = with(target) {
@@ -102,7 +104,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
         logger.info("Registering $taskName for output format $format")
 
         tasks.register(taskName, GenerateGraphvizFileTask::class.java) { task ->
-          task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
+          task.graphViz.convention(dotFileTask.map { it.outputFile.get() })
           task.pathToDotCommand.convention(spec.pathToDotCommand)
           task.engine.convention(spec.chart.layoutEngine)
           task.outputFormat.convention(format)

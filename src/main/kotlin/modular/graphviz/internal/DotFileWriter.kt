@@ -4,9 +4,19 @@
  */
 @file:Suppress("LongParameterList")
 
-package modular.internal
+package modular.graphviz.internal
 
-internal class DotFile(
+import modular.internal.ModuleLink
+import modular.internal.Replacement
+import modular.internal.TypedModule
+import modular.internal.appendIndented
+import modular.internal.appendIndentedLine
+
+/**
+ * Copyright © 2025 Jon Poulton
+ * SPDX-License-Identifier: Apache-2.0
+ */
+internal class DotFileWriter(
   private val typedModules: Set<TypedModule>,
   private val links: Set<ModuleLink>,
   private val replacements: Set<Replacement>,

@@ -2,17 +2,19 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.tasks
+package modular.graphviz.tasks
 
-import modular.gradle.ModularExtension
+import modular.graphviz.spec.GraphVizLegendSpec
+import modular.graphviz.spec.GraphVizSpec
 import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModularExtensionImpl
 import modular.internal.appendIndentedLine
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
-import modular.spec.DotFileLegendSpec
-import modular.spec.DotFileSpec
 import modular.spec.ModuleTypeModel
+import modular.tasks.ModularGenerationTask
+import modular.tasks.TaskWithOutputFile
+import modular.tasks.TaskWithSeparator
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -73,13 +75,13 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
 
     internal fun register(
       target: Project,
-      legendSpec: DotFileLegendSpec,
-      spec: DotFileSpec,
+      legendSpec: GraphVizLegendSpec,
+      spec: GraphVizSpec,
       extension: ModularExtensionImpl,
     ): TaskProvider<GenerateLegendDotFileTask> = with(target) {
       val outputFile = extension.outputs.legendOutputDirectory.map { dir ->
         val filename = extension.outputs.legendRootFilename.get()
-        val fileExtension = spec.extension.get()
+        val fileExtension = spec.fileExtension.get()
         dir.file("$filename.$fileExtension")
       }
 

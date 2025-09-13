@@ -21,7 +21,7 @@ object DotFileCustomDotExecutable : Scenario by DotFileBasic {
         java()
       }
 
-      dotFile {
+      graphViz {
         pathToDotCommand = file("path/to/custom/dot").absolutePath
         fileFormats.svg()
       }
