@@ -163,6 +163,7 @@ public final class modular/spec/DotFileSpec : modular/spec/Spec {
 	public synthetic fun getLegend ()Ljava/lang/Object;
 	public fun getLegend ()Lmodular/spec/DotFileLegendSpec;
 	public fun getName ()Ljava/lang/String;
+	public final fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
 	public synthetic fun legend ()Ljava/lang/Object;
 	public fun legend ()Lmodular/spec/DotFileLegendSpec;
 	public fun legend (Lorg/gradle/api/Action;)V
@@ -359,6 +360,7 @@ public abstract class modular/tasks/GenerateGraphvizFileTask : org/gradle/api/De
 	public abstract fun getExperimental ()Lmodular/spec/ExperimentalFlags;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
 }
 
 public final class modular/tasks/GenerateGraphvizFileTask$Companion {

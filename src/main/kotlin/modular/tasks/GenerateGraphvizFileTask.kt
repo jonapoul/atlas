@@ -31,6 +31,7 @@ import org.gradle.api.tasks.TaskProvider
 abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val dotFile: RegularFileProperty
   @get:Input abstract val outputFormat: Property<String>
+  @get:[Input Optional] abstract val pathToDotCommand: Property<String>
   @get:[Input Optional] abstract val engine: Property<String>
   @get:Nested abstract val experimental: ExperimentalFlags
   @get:OutputFile abstract override val outputFile: RegularFileProperty
@@ -48,9 +49,10 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
     val outputFile = outputFile.get().asFile
     val outputFormat = outputFormat.get()
     val engine = engine.orNull
+    val dotCommand = pathToDotCommand.getOrElse("dot")
 
     val command = buildList {
-      add("dot")
+      add(dotCommand)
       if (engine != null) add("-K$engine")
       add("-T$outputFormat")
       add(dotFile)
@@ -101,6 +103,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
 
         tasks.register(taskName, GenerateGraphvizFileTask::class.java) { task ->
           task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
+          task.pathToDotCommand.convention(spec.pathToDotCommand)
           task.engine.convention(spec.chart.layoutEngine)
           task.outputFormat.convention(format)
           task.outputFile.convention(outputFile)
