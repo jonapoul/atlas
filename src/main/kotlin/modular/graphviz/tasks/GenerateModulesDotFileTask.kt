@@ -10,6 +10,7 @@ import modular.internal.MODULAR_TASK_GROUP
 import modular.internal.ModuleLinks
 import modular.internal.Replacement
 import modular.internal.TypedModules
+import modular.spec.ModuleLinkSpec
 import modular.spec.ModulePathTransformSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.CollateModuleTypesTask
@@ -50,6 +51,7 @@ abstract class GenerateModulesDotFileTask :
   @get:Input abstract val thisPath: Property<String>
 
   // Dotfile config
+  @get:Input abstract val linkSpecs: SetProperty<ModuleLinkSpec>
   @get:[Input Optional] abstract val arrowHead: Property<String>
   @get:[Input Optional] abstract val arrowTail: Property<String>
   @get:[Input Optional] abstract val dir: Property<String>
@@ -72,6 +74,7 @@ abstract class GenerateModulesDotFileTask :
     val writer = DotFileWriter(
       typedModules = TypedModules.read(moduleTypesFile, separator),
       links = ModuleLinks.read(linksFile, separator),
+      linkSpecs = linkSpecs.get(),
       replacements = replacements.get(),
       thisPath = thisPath.get(),
       arrowHead = arrowHead.orNull,
@@ -102,17 +105,18 @@ abstract class GenerateModulesDotFileTask :
       outputFile: RegularFile,
       printOutput: Boolean,
     ): TaskProvider<GenerateModulesDotFileTask> = with(target) {
-      val collateModuleTypes = CollateModuleTypesTask.Companion.get(rootProject)
-      val calculateProjectTree = CalculateModuleTreeTask.Companion.get(target)
+      val collateModuleTypes = CollateModuleTypesTask.get(rootProject)
+      val calculateProjectTree = CalculateModuleTreeTask.get(target)
 
       tasks.register(name, GenerateModulesDotFileTask::class.java) { task ->
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.convention(outputFile)
 
-        task.replacements.convention(modulePathTransforms.get())
+        task.replacements.convention(modulePathTransforms.replacements)
         task.printOutput.convention(printOutput)
 
+        task.linkSpecs.convention(spec.links.links)
         task.arrowHead.convention(spec.arrowHead)
         task.arrowTail.convention(spec.arrowTail)
         task.dpi.convention(spec.dpi)

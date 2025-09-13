@@ -1,3 +1,6 @@
+public abstract interface annotation class modular/gradle/ExperimentalModularApi : java/lang/annotation/Annotation {
+}
+
 public abstract interface annotation class modular/gradle/ModularDsl : java/lang/annotation/Annotation {
 }
 
@@ -33,25 +36,64 @@ public final class modular/gradle/ModularTrunkPlugin : org/gradle/api/Plugin {
 	public fun apply (Lorg/gradle/api/Project;)V
 }
 
+public final class modular/graphviz/spec/ArrowType : java/lang/Enum, modular/graphviz/spec/StringEnum {
+	public static final field Box Lmodular/graphviz/spec/ArrowType;
+	public static final field Crow Lmodular/graphviz/spec/ArrowType;
+	public static final field Diamond Lmodular/graphviz/spec/ArrowType;
+	public static final field Dot Lmodular/graphviz/spec/ArrowType;
+	public static final field Ediamond Lmodular/graphviz/spec/ArrowType;
+	public static final field Empty Lmodular/graphviz/spec/ArrowType;
+	public static final field HalfOpen Lmodular/graphviz/spec/ArrowType;
+	public static final field Inv Lmodular/graphviz/spec/ArrowType;
+	public static final field InvEmpty Lmodular/graphviz/spec/ArrowType;
+	public static final field Invdot Lmodular/graphviz/spec/ArrowType;
+	public static final field Invodot Lmodular/graphviz/spec/ArrowType;
+	public static final field None Lmodular/graphviz/spec/ArrowType;
+	public static final field Normal Lmodular/graphviz/spec/ArrowType;
+	public static final field Obox Lmodular/graphviz/spec/ArrowType;
+	public static final field Odiamond Lmodular/graphviz/spec/ArrowType;
+	public static final field Odot Lmodular/graphviz/spec/ArrowType;
+	public static final field Open Lmodular/graphviz/spec/ArrowType;
+	public static final field Tee Lmodular/graphviz/spec/ArrowType;
+	public static final field Vee Lmodular/graphviz/spec/ArrowType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/spec/ArrowType;
+	public static fun values ()[Lmodular/graphviz/spec/ArrowType;
+}
+
+public final class modular/graphviz/spec/Dir : java/lang/Enum, modular/graphviz/spec/StringEnum {
+	public static final field Back Lmodular/graphviz/spec/Dir;
+	public static final field Both Lmodular/graphviz/spec/Dir;
+	public static final field Forward Lmodular/graphviz/spec/Dir;
+	public static final field None Lmodular/graphviz/spec/Dir;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/spec/Dir;
+	public static fun values ()[Lmodular/graphviz/spec/Dir;
+}
+
 public abstract interface class modular/graphviz/spec/GraphVizChartSpec {
 	public abstract fun arrowHead (Ljava/lang/String;)V
-	public abstract fun arrowHead (Lmodular/spec/ArrowType;)V
+	public abstract fun arrowHead (Lmodular/graphviz/spec/ArrowType;)V
 	public abstract fun arrowTail (Ljava/lang/String;)V
-	public abstract fun arrowTail (Lmodular/spec/ArrowType;)V
+	public abstract fun arrowTail (Lmodular/graphviz/spec/ArrowType;)V
 	public abstract fun dir (Ljava/lang/String;)V
-	public abstract fun dir (Lmodular/spec/Dir;)V
+	public abstract fun dir (Lmodular/graphviz/spec/Dir;)V
 	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
 	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
 	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
 	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
 	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinks ()Lmodular/graphviz/spec/GraphVizModuleLinksSpec;
 	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
 	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
 	public abstract fun layoutEngine (Ljava/lang/String;)V
-	public abstract fun layoutEngine (Lmodular/spec/LayoutEngine;)V
+	public abstract fun layoutEngine (Lmodular/graphviz/spec/LayoutEngine;)V
+	public abstract fun links (Lorg/gradle/api/Action;)V
 	public abstract fun rankDir (Ljava/lang/String;)V
-	public abstract fun rankDir (Lmodular/spec/RankDir;)V
+	public abstract fun rankDir (Lmodular/graphviz/spec/RankDir;)V
 }
 
 public abstract interface class modular/graphviz/spec/GraphVizFileFormatSpec : org/gradle/api/provider/SetProperty {
@@ -160,6 +202,29 @@ public abstract interface class modular/graphviz/spec/GraphVizLegendSpec {
 	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
 }
 
+public abstract interface class modular/graphviz/spec/GraphVizModuleLinksSpec : modular/spec/ModuleLinksSpec {
+	public fun add (Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public fun add (Lkotlin/text/Regex;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public static synthetic fun add$default (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Lkotlin/text/Regex;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public fun api (Ljava/lang/String;)V
+	public fun implementation (Ljava/lang/String;)V
+	public fun invoke (Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public static synthetic fun invoke$default (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+}
+
+public final class modular/graphviz/spec/GraphVizModuleLinksSpec$DefaultImpls {
+	public static fun add (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public static fun add (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public static fun add (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Lkotlin/text/Regex;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public static synthetic fun add$default (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Lkotlin/text/Regex;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static fun api (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Ljava/lang/String;)V
+	public static fun implementation (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Ljava/lang/String;)V
+	public static fun invoke (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public static synthetic fun invoke$default (Lmodular/graphviz/spec/GraphVizModuleLinksSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+}
+
 public abstract interface class modular/graphviz/spec/GraphVizSpec : modular/spec/Spec {
 	public abstract fun fileFormats (Lorg/gradle/api/Action;)V
 	public abstract fun getChart ()Lmodular/graphviz/spec/GraphVizChartSpec;
@@ -174,6 +239,46 @@ public abstract interface class modular/graphviz/spec/GraphVizSpec : modular/spe
 
 public final class modular/graphviz/spec/GraphVizSpec$DefaultImpls {
 	public static fun chart (Lmodular/graphviz/spec/GraphVizSpec;Lorg/gradle/api/Action;)V
+}
+
+public final class modular/graphviz/spec/LayoutEngine : java/lang/Enum, modular/graphviz/spec/StringEnum {
+	public static final field Circo Lmodular/graphviz/spec/LayoutEngine;
+	public static final field Dot Lmodular/graphviz/spec/LayoutEngine;
+	public static final field Fdp Lmodular/graphviz/spec/LayoutEngine;
+	public static final field Neato Lmodular/graphviz/spec/LayoutEngine;
+	public static final field Nop Lmodular/graphviz/spec/LayoutEngine;
+	public static final field Nop2 Lmodular/graphviz/spec/LayoutEngine;
+	public static final field Osage Lmodular/graphviz/spec/LayoutEngine;
+	public static final field Patchwork Lmodular/graphviz/spec/LayoutEngine;
+	public static final field Sfdp Lmodular/graphviz/spec/LayoutEngine;
+	public static final field TwoPi Lmodular/graphviz/spec/LayoutEngine;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/spec/LayoutEngine;
+	public static fun values ()[Lmodular/graphviz/spec/LayoutEngine;
+}
+
+public final class modular/graphviz/spec/LinkStyle : java/lang/Enum, modular/graphviz/spec/StringEnum {
+	public static final field Bold Lmodular/graphviz/spec/LinkStyle;
+	public static final field Dashed Lmodular/graphviz/spec/LinkStyle;
+	public static final field Dotted Lmodular/graphviz/spec/LinkStyle;
+	public static final field Invis Lmodular/graphviz/spec/LinkStyle;
+	public static final field Solid Lmodular/graphviz/spec/LinkStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/spec/LinkStyle;
+	public static fun values ()[Lmodular/graphviz/spec/LinkStyle;
+}
+
+public final class modular/graphviz/spec/RankDir : java/lang/Enum, modular/graphviz/spec/StringEnum {
+	public static final field BottomToTop Lmodular/graphviz/spec/RankDir;
+	public static final field LeftToRight Lmodular/graphviz/spec/RankDir;
+	public static final field RightToLeft Lmodular/graphviz/spec/RankDir;
+	public static final field TopToBottom Lmodular/graphviz/spec/RankDir;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/spec/RankDir;
+	public static fun values ()[Lmodular/graphviz/spec/RankDir;
 }
 
 public abstract class modular/graphviz/tasks/CheckDotFileTask : org/gradle/api/DefaultTask {
@@ -234,6 +339,7 @@ public abstract class modular/graphviz/tasks/GenerateModulesDotFileTask : org/gr
 	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
 	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
 	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinkSpecs ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
@@ -255,43 +361,6 @@ public final class modular/internal/Replacement : java/io/Serializable {
 	public final fun getReplacement ()Ljava/lang/String;
 }
 
-public final class modular/spec/ArrowType : java/lang/Enum, modular/spec/StringEnum {
-	public static final field Box Lmodular/spec/ArrowType;
-	public static final field Crow Lmodular/spec/ArrowType;
-	public static final field Diamond Lmodular/spec/ArrowType;
-	public static final field Dot Lmodular/spec/ArrowType;
-	public static final field Ediamond Lmodular/spec/ArrowType;
-	public static final field Empty Lmodular/spec/ArrowType;
-	public static final field HalfOpen Lmodular/spec/ArrowType;
-	public static final field Inv Lmodular/spec/ArrowType;
-	public static final field InvEmpty Lmodular/spec/ArrowType;
-	public static final field Invdot Lmodular/spec/ArrowType;
-	public static final field Invodot Lmodular/spec/ArrowType;
-	public static final field None Lmodular/spec/ArrowType;
-	public static final field Normal Lmodular/spec/ArrowType;
-	public static final field Obox Lmodular/spec/ArrowType;
-	public static final field Odiamond Lmodular/spec/ArrowType;
-	public static final field Odot Lmodular/spec/ArrowType;
-	public static final field Open Lmodular/spec/ArrowType;
-	public static final field Tee Lmodular/spec/ArrowType;
-	public static final field Vee Lmodular/spec/ArrowType;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public fun getString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/ArrowType;
-	public static fun values ()[Lmodular/spec/ArrowType;
-}
-
-public final class modular/spec/Dir : java/lang/Enum, modular/spec/StringEnum {
-	public static final field Back Lmodular/spec/Dir;
-	public static final field Both Lmodular/spec/Dir;
-	public static final field Forward Lmodular/spec/Dir;
-	public static final field None Lmodular/spec/Dir;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public fun getString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/Dir;
-	public static fun values ()[Lmodular/spec/Dir;
-}
-
 public abstract class modular/spec/ExperimentalFlags {
 	public fun <init> ()V
 	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
@@ -301,29 +370,47 @@ public abstract interface class modular/spec/ExperimentalSpec {
 	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/spec/LayoutEngine : java/lang/Enum, modular/spec/StringEnum {
-	public static final field Circo Lmodular/spec/LayoutEngine;
-	public static final field Dot Lmodular/spec/LayoutEngine;
-	public static final field Fdp Lmodular/spec/LayoutEngine;
-	public static final field Neato Lmodular/spec/LayoutEngine;
-	public static final field Nop Lmodular/spec/LayoutEngine;
-	public static final field Nop2 Lmodular/spec/LayoutEngine;
-	public static final field Osage Lmodular/spec/LayoutEngine;
-	public static final field Patchwork Lmodular/spec/LayoutEngine;
-	public static final field Sfdp Lmodular/spec/LayoutEngine;
-	public static final field TwoPi Lmodular/spec/LayoutEngine;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public fun getString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/LayoutEngine;
-	public static fun values ()[Lmodular/spec/LayoutEngine;
+public final class modular/spec/ModuleLinkSpec : java/io/Serializable {
+	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lkotlin/text/Regex;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;)Lmodular/spec/ModuleLinkSpec;
+	public static synthetic fun copy$default (Lmodular/spec/ModuleLinkSpec;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/spec/ModuleLinkSpec;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getConfiguration ()Lkotlin/text/Regex;
+	public final fun getStyle ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class modular/spec/ModulePathTransformSpec : org/gradle/api/provider/SetProperty {
-	public abstract fun add (Lmodular/internal/Replacement;)V
-	public abstract fun add (Lorg/gradle/api/provider/Provider;)V
-	public abstract fun addAll (Ljava/lang/Iterable;)V
-	public abstract fun addAll (Lorg/gradle/api/provider/Provider;)V
-	public abstract fun addAll ([Lmodular/internal/Replacement;)V
+public abstract interface class modular/spec/ModuleLinksSpec {
+	public fun add (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun add (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;)V
+	public static synthetic fun add$default (Lmodular/spec/ModuleLinksSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/spec/ModuleLinksSpec;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public abstract fun api (Ljava/lang/String;)V
+	public static synthetic fun api$default (Lmodular/spec/ModuleLinksSpec;Ljava/lang/String;ILjava/lang/Object;)V
+	public abstract fun getLinks ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun implementation (Ljava/lang/String;)V
+	public static synthetic fun implementation$default (Lmodular/spec/ModuleLinksSpec;Ljava/lang/String;ILjava/lang/Object;)V
+	public abstract fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public static synthetic fun invoke$default (Lmodular/spec/ModuleLinksSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+}
+
+public final class modular/spec/ModuleLinksSpec$DefaultImpls {
+	public static fun add (Lmodular/spec/ModuleLinksSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public static synthetic fun add$default (Lmodular/spec/ModuleLinksSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/spec/ModuleLinksSpec;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun api$default (Lmodular/spec/ModuleLinksSpec;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun implementation$default (Lmodular/spec/ModuleLinksSpec;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun invoke$default (Lmodular/spec/ModuleLinksSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+}
+
+public abstract interface class modular/spec/ModulePathTransformSpec {
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun remove (Ljava/lang/String;)V
 	public abstract fun remove (Lkotlin/text/Regex;)V
 	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
@@ -358,17 +445,6 @@ public abstract interface class modular/spec/OutputSpec {
 	public abstract fun saveChartsRelativeToSubmodule (Ljava/lang/String;)V
 	public abstract fun saveLegendsInRootDir ()V
 	public abstract fun saveLegendsRelativeToRootModule (Ljava/lang/String;)V
-}
-
-public final class modular/spec/RankDir : java/lang/Enum, modular/spec/StringEnum {
-	public static final field BottomToTop Lmodular/spec/RankDir;
-	public static final field LeftToRight Lmodular/spec/RankDir;
-	public static final field RightToLeft Lmodular/spec/RankDir;
-	public static final field TopToBottom Lmodular/spec/RankDir;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public fun getString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/RankDir;
-	public static fun values ()[Lmodular/spec/RankDir;
 }
 
 public abstract interface class modular/spec/Spec {

@@ -8,7 +8,6 @@ package modular.spec
 
 import modular.gradle.ModularDsl
 import modular.internal.Replacement
-import org.gradle.api.provider.Provider
 import org.gradle.api.provider.SetProperty
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 
@@ -30,12 +29,8 @@ import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
  *
  * Regex groups aren't supported, just standard matches.
  */
-interface ModulePathTransformSpec : SetProperty<Replacement> {
-  @ModularDsl override fun add(element: Replacement)
-  @ModularDsl override fun add(provider: Provider<out Replacement>)
-  @ModularDsl override fun addAll(elements: Iterable<Replacement>)
-  @ModularDsl override fun addAll(vararg elements: Replacement)
-  @ModularDsl override fun addAll(provider: Provider<out Iterable<Replacement>>)
+interface ModulePathTransformSpec {
+  val replacements: SetProperty<Replacement>
 
   @ModularDsl fun remove(@Language("RegExp") pattern: String)
   @ModularDsl fun remove(pattern: Regex)

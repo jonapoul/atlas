@@ -4,7 +4,7 @@
  */
 @file:Suppress("unused") // public API
 
-package modular.spec
+package modular.graphviz.spec
 
 internal interface StringEnum {
   val string: String
@@ -48,7 +48,7 @@ enum class ArrowType(override val string: String) : StringEnum {
 /**
  * https://graphviz.org/docs/layouts/
  *
- * Your machine might not have some of these, or it might have more! Use [modular.graphviz.spec.GraphVizChartSpec.layoutEngine]
+ * Your machine might not have some of these, or it might have more! Use [GraphVizChartSpec.layoutEngine]
  * with a string parameter to configure a custom layout engine. [Dot] is the implicit default.
  *
  * Run `dot -v` and check under "layout" to see what you have locally.
@@ -74,4 +74,15 @@ enum class Dir(override val string: String) : StringEnum {
   Back("back"),
   Both("both"),
   None("none"),
+}
+
+/**
+ * https://graphviz.org/docs/attr-types/style/
+ */
+enum class LinkStyle(override val string: String) : StringEnum {
+  Dashed("dashed"),
+  Dotted("dotted"),
+  Solid("solid"),
+  Invis("invis"),
+  Bold("bold"),
 }

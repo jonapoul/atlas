@@ -4,18 +4,21 @@
  */
 package modular.graphviz.internal
 
+import modular.gradle.ExperimentalModularApi
+import modular.graphviz.spec.ArrowType
+import modular.graphviz.spec.Dir
 import modular.graphviz.spec.GraphVizChartSpec
 import modular.graphviz.spec.GraphVizFileFormatSpec
 import modular.graphviz.spec.GraphVizLegendSpec
+import modular.graphviz.spec.GraphVizModuleLinksSpec
 import modular.graphviz.spec.GraphVizSpec
+import modular.graphviz.spec.LayoutEngine
+import modular.graphviz.spec.RankDir
 import modular.internal.GradleProperties
 import modular.internal.float
 import modular.internal.int
 import modular.internal.string
-import modular.spec.ArrowType
-import modular.spec.Dir
-import modular.spec.LayoutEngine
-import modular.spec.RankDir
+import modular.spec.ModuleLinkSpec
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
@@ -61,6 +64,7 @@ internal class GraphVizChartSpecImpl(objects: ObjectFactory, properties: GradleP
   override fun dir(dir: String) = this.dir.set(dir)
   override fun layoutEngine(layoutEngine: LayoutEngine) = layoutEngine(layoutEngine.string)
   override fun layoutEngine(layoutEngine: String) = this.layoutEngine.set(layoutEngine)
+  override fun links(action: Action<GraphVizModuleLinksSpec>) = action.execute(links)
   override fun rankDir(rankDir: RankDir) = rankDir(rankDir.string)
   override fun rankDir(rankDir: String) = this.rankDir.set(rankDir)
   override val arrowHead = objects.string(properties.arrowHead)
@@ -69,6 +73,7 @@ internal class GraphVizChartSpecImpl(objects: ObjectFactory, properties: GradleP
   override val dpi = objects.int(properties.dpi)
   override val fontSize = objects.int(properties.fontSize)
   override val layoutEngine = objects.string(properties.layoutEngine)
+  override val links = GraphVizModuleLinksSpecImpl(objects)
   override val rankDir = objects.string(properties.rankDir)
   override val rankSep = objects.float(properties.rankSep)
 }
@@ -76,3 +81,13 @@ internal class GraphVizChartSpecImpl(objects: ObjectFactory, properties: GradleP
 internal class GraphVizFileFormatSpecImpl(objects: ObjectFactory) :
   GraphVizFileFormatSpec,
   SetProperty<String> by objects.setProperty(String::class.java)
+
+internal class GraphVizModuleLinksSpecImpl(objects: ObjectFactory) : GraphVizModuleLinksSpec {
+  override val links = objects.setProperty(ModuleLinkSpec::class.java)
+
+  override fun add(configuration: Regex, style: String?, color: String?) =
+    links.add(ModuleLinkSpec(configuration, style, color))
+
+  @ExperimentalModularApi
+  override fun String.invoke(style: String?, color: String?) = add(this, style, color)
+}

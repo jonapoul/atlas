@@ -8,9 +8,9 @@ digraph {
   "Lib kotlin mp" ["fillcolor"="#9D8DF1","shape"="none"]
   "app android" ["fillcolor"="#09AD35","color"="black","penwidth"="3","shape"="box"]
   "Lib android" -> "Lib kotlin jvm" ["style"="dotted"]
-  "Lib kotlin mp" -> "Lib android"
-  "Lib kotlin mp" -> "Lib java" ["style"="dotted"]
-  "Lib kotlin mp" -> "Lib kotlin jvm"
+  "Lib kotlin mp" -> "Lib android" ["style"="solid","color"="blue"]
+  "Lib kotlin mp" -> "Lib java" ["style"="bold","color"="orange"]
+  "Lib kotlin mp" -> "Lib kotlin jvm" ["style"="solid","color"="blue"]
   "app android" -> "Lib android" ["style"="dotted"]
   "app android" -> "Lib kotlin mp" ["style"="dotted"]
 }

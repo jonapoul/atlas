@@ -1,6 +1,10 @@
-import modular.spec.ArrowType
-import modular.spec.LayoutEngine
-import modular.spec.RankDir
+@file:OptIn(ExperimentalModularApi::class)
+
+import modular.gradle.ExperimentalModularApi
+import modular.graphviz.spec.ArrowType
+import modular.graphviz.spec.LayoutEngine
+import modular.graphviz.spec.LinkStyle
+import modular.graphviz.spec.RankDir
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -52,6 +56,12 @@ modular {
       dpi = 100
       fontSize = 30
       rankSep = 1.5f
+
+      links {
+        "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
+        api(color = "blue")
+        implementation()
+      }
     }
 
     fileFormats {
