@@ -8,13 +8,19 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.containsMatch
 import assertk.assertions.exists
+import assertk.assertions.isEqualTo
 import modular.test.RequiresGraphviz
+import modular.test.RequiresLn
+import modular.test.RequiresWhereis
 import modular.test.ScenarioTest
+import modular.test.allSuccessful
+import modular.test.doesNotExist
 import modular.test.runTask
 import modular.test.scenarios.DotFileBasic
 import modular.test.scenarios.DotFileBasicWithThreeOutputFormats
 import modular.test.scenarios.DotFileBigGraph100DpiSvg
 import modular.test.scenarios.DotFileBigGraph100DpiSvgWithAdjustment
+import modular.test.scenarios.DotFileCustomDotExecutable
 import modular.test.scenarios.DotFileCustomLayoutEngine
 import modular.test.scenarios.DotFileInvalidLayoutEngine
 import kotlin.test.Test
@@ -137,5 +143,47 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
 
     // then the SVG file printed in the log exists. There's probably more I can be checking here but ¯\_(ツ)_/¯
     assertThat(result.output).containsMatch("^(.*?\\.svg)$".toRegex(MULTILINE))
+  }
+
+  @Test
+  @RequiresGraphviz
+  @RequiresLn
+  @RequiresWhereis
+  fun `Use custom path to dot command`() = runScenario(DotFileCustomDotExecutable) {
+    // Given we've made a symbolic link to a dot executable
+    val whereisProcess = ProcessBuilder("whereis", "dot").start()
+    val pathToDot = whereisProcess.inputReader().readLine().split(" ")[1]
+    assertThat(whereisProcess.waitFor()).isEqualTo(0)
+    val customDotFile = resolve("path/to/custom/dot")
+    customDotFile.parentFile.mkdirs()
+    val lnProcess = ProcessBuilder("ln", "-s", pathToDot, customDotFile.absolutePath).start()
+    assertThat(lnProcess.waitFor()).isEqualTo(0)
+    assertThat(customDotFile).exists()
+
+    // when
+    val result = runTask("generateModules").build()
+
+    // then it's all good
+    assertThat(result.tasks).allSuccessful()
+  }
+
+  @Test
+  @RequiresGraphviz
+  fun `Fail with nonexistent custom path to dot command`() = runScenario(DotFileCustomDotExecutable) {
+    // Given we've made a symbolic link to a dot executable which doesn't exist
+    val customDotFile = resolve("path/to/custom/dot")
+    assertThat(customDotFile).doesNotExist()
+
+    // when
+    val result = runTask("generateModules").buildAndFail()
+
+    // then it fails as expected
+    assertThat(result.output).containsMatch(
+      """
+        \* What went wrong:
+        Execution failed for task ':a:generateModulesSvg'.
+        > java.io.IOException: Cannot run program ".*?/path/to/custom/dot": error=2, No such file or directory
+      """.trimIndent().toRegex(),
+    )
   }
 }
