@@ -6,6 +6,7 @@ package modular.tasks
 
 import modular.gradle.ModularExtension
 import modular.internal.MODULAR_TASK_GROUP
+import modular.internal.ModularExtensionImpl
 import modular.internal.appendIndentedLine
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
@@ -70,11 +71,11 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
     fun get(target: Project): TaskProvider<GenerateLegendDotFileTask> =
       target.tasks.named(TASK_NAME, GenerateLegendDotFileTask::class.java)
 
-    fun register(
+    internal fun register(
       target: Project,
       legendSpec: DotFileLegendSpec,
       spec: DotFileSpec,
-      extension: ModularExtension,
+      extension: ModularExtensionImpl,
     ): TaskProvider<GenerateLegendDotFileTask> = with(target) {
       val outputFile = extension.outputs.legendOutputDirectory.map { dir ->
         val filename = extension.outputs.legendRootFilename.get()

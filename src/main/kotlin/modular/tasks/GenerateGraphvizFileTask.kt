@@ -4,9 +4,9 @@
  */
 package modular.tasks
 
-import modular.gradle.ModularExtension
-import modular.gradle.Variant
 import modular.internal.MODULAR_TASK_GROUP
+import modular.internal.ModularExtensionImpl
+import modular.internal.Variant
 import modular.internal.doGraphVizPostProcessing
 import modular.internal.outputFile
 import modular.spec.DotFileSpec
@@ -89,9 +89,9 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
     fun get(target: Project, name: String): TaskProvider<GenerateGraphvizFileTask> =
       target.tasks.named(name, GenerateGraphvizFileTask::class.java)
 
-    fun <T : TaskWithOutputFile> register(
+    internal fun <T : TaskWithOutputFile> register(
       target: Project,
-      extension: ModularExtension,
+      extension: ModularExtensionImpl,
       spec: DotFileSpec,
       variant: Variant,
       dotFileTask: TaskProvider<T>,

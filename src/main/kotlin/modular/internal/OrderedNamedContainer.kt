@@ -14,7 +14,7 @@ import java.util.function.IntFunction
 
 internal class ModuleTypeContainer(objects: ObjectFactory) : OrderedNamedContainer<ModuleType>(
   container = objects.domainObjectContainer(ModuleType::class.java) { name ->
-    objects.newInstance(ModuleType::class.java, name)
+    objects.newInstance(ModuleTypeImpl::class.java, name)
   },
 )
 

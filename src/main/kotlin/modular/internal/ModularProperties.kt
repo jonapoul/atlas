@@ -15,7 +15,6 @@ import org.gradle.api.provider.Provider
 internal class ModularProperties(private val project: Project) {
   // General settings
   val generateOnSync: Provider<Boolean> = bool(key = "modular.generateOnSync", default = false)
-  val generateReadme: Provider<Boolean> = bool(key = "modular.generateReadme", default = false)
   val separator: Provider<String> = string(key = "modular.separator", default = ",")
   val supportUpwardsTraversal: Provider<Boolean> = bool(key = "modular.supportUpwardsTraversal", default = false)
 

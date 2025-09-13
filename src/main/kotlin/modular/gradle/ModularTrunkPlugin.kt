@@ -7,6 +7,8 @@
 package modular.gradle
 
 import modular.internal.MODULAR_TASK_GROUP
+import modular.internal.ModularExtensionImpl
+import modular.internal.Variant
 import modular.internal.configureSeparators
 import modular.internal.failIfInvalidColors
 import modular.internal.orderedTypes
@@ -29,7 +31,12 @@ class ModularTrunkPlugin : Plugin<Project> {
       error("ModularTrunkPlugin should only be applied on the root project - you applied it to $path")
     }
 
-    val extension = extensions.create(ModularExtension.NAME, ModularExtension::class.java)
+    val extension = extensions.create(
+      ModularExtension::class.java,
+      ModularExtensionImpl.NAME,
+      ModularExtensionImpl::class.java,
+    ) as ModularExtensionImpl
+
     configureSeparators(extension)
     registerGenerationTaskOnSync(extension)
 
@@ -59,7 +66,7 @@ class ModularTrunkPlugin : Plugin<Project> {
   }
 
   private fun Project.registerDotFileTasks(
-    extension: ModularExtension,
+    extension: ModularExtensionImpl,
     spec: DotFileSpec,
   ): List<TaskProvider<GenerateGraphvizFileTask>> = spec.legend
     ?.let { legend ->

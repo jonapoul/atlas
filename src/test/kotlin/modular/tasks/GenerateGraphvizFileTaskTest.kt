@@ -165,6 +165,9 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
 
     // then it's all good
     assertThat(result.tasks).allSuccessful()
+
+    // if we don't add this we'll get a junit log warning
+    customDotFile.delete()
   }
 
   @Test

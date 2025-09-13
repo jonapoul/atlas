@@ -1,26 +1,24 @@
 public abstract interface annotation class modular/gradle/ModularDsl : java/lang/annotation/Annotation {
 }
 
-public class modular/gradle/ModularExtension {
-	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
-	public final fun dotFile (Lorg/gradle/api/Action;)V
-	public static synthetic fun dotFile$default (Lmodular/gradle/ModularExtension;Lorg/gradle/api/Action;ILjava/lang/Object;)V
-	public final fun experimental (Lorg/gradle/api/Action;)V
-	public final fun getExperimental ()Lmodular/spec/ExperimentalSpec;
-	public final fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
-	public final fun getGenerateReadme ()Lorg/gradle/api/provider/Property;
-	public final fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
-	public final fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
-	public final fun getModuleNames ()Lmodular/spec/ModuleNameSpec;
-	public final fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
-	public final fun getOutputs ()Lmodular/gradle/OutputSpec;
-	public final fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public final fun getSpecs ()Lorg/gradle/api/NamedDomainObjectContainer;
-	public final fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
-	public final fun moduleNames (Lorg/gradle/api/Action;)V
-	public final fun moduleTypes (Lorg/gradle/api/Action;)V
-	public final fun outputs (Lorg/gradle/api/Action;)V
-	public final fun specs (Lorg/gradle/api/Action;)V
+public abstract interface class modular/gradle/ModularExtension {
+	public abstract fun dotFile ()V
+	public abstract fun dotFile (Lorg/gradle/api/Action;)V
+	public abstract fun experimental (Lorg/gradle/api/Action;)V
+	public abstract fun getExperimental ()Lmodular/spec/ExperimentalSpec;
+	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
+	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getModuleNames ()Lmodular/spec/ModuleNameSpec;
+	public abstract fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public abstract fun getOutputs ()Lmodular/gradle/OutputSpec;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSpecs ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
+	public abstract fun moduleNames (Lorg/gradle/api/Action;)V
+	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
+	public abstract fun outputs (Lorg/gradle/api/Action;)V
+	public abstract fun specs (Lorg/gradle/api/Action;)V
 }
 
 public final class modular/gradle/ModularLeafPlugin : org/gradle/api/Plugin {
@@ -35,22 +33,13 @@ public final class modular/gradle/ModularTrunkPlugin : org/gradle/api/Plugin {
 	public fun apply (Lorg/gradle/api/Project;)V
 }
 
-public final class modular/gradle/OutputSpec {
-	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
-	public final fun getChartRootFilename ()Lorg/gradle/api/provider/Property;
-	public final fun getLegendRootFilename ()Lorg/gradle/api/provider/Property;
-	public final fun saveChartsInSubmoduleDir ()V
-	public final fun saveChartsRelativeToSubmodule (Ljava/lang/String;)V
-	public final fun saveLegendsInRootDir ()V
-	public final fun saveLegendsRelativeToRootModule (Ljava/lang/String;)V
-}
-
-public final class modular/gradle/Variant : java/lang/Enum {
-	public static final field Legend Lmodular/gradle/Variant;
-	public static final field Modules Lmodular/gradle/Variant;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lmodular/gradle/Variant;
-	public static fun values ()[Lmodular/gradle/Variant;
+public abstract interface class modular/gradle/OutputSpec {
+	public abstract fun getChartRootFilename ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLegendRootFilename ()Lorg/gradle/api/provider/Property;
+	public abstract fun saveChartsInSubmoduleDir ()V
+	public abstract fun saveChartsRelativeToSubmodule (Ljava/lang/String;)V
+	public abstract fun saveLegendsInRootDir ()V
+	public abstract fun saveLegendsRelativeToRootModule (Ljava/lang/String;)V
 }
 
 public final class modular/spec/ArrowType : java/lang/Enum, modular/spec/StringEnum {
@@ -79,96 +68,138 @@ public final class modular/spec/ArrowType : java/lang/Enum, modular/spec/StringE
 	public static fun values ()[Lmodular/spec/ArrowType;
 }
 
-public final class modular/spec/DotFileChartSpec {
-	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
-	public final fun arrowHead (Lmodular/spec/ArrowType;)V
-	public final fun arrowTail (Lmodular/spec/ArrowType;)V
-	public final fun getArrowHead ()Lorg/gradle/api/provider/Property;
-	public final fun getArrowTail ()Lorg/gradle/api/provider/Property;
-	public final fun getDpi ()Lorg/gradle/api/provider/Property;
-	public final fun getFontSize ()Lorg/gradle/api/provider/Property;
-	public final fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
-	public final fun getRankDir ()Lorg/gradle/api/provider/Property;
-	public final fun getRankSep ()Lorg/gradle/api/provider/Property;
-	public final fun getShowArrows ()Lorg/gradle/api/provider/Property;
-	public final fun layoutEngine (Ljava/lang/String;)V
-	public final fun layoutEngine (Lmodular/spec/LayoutEngine;)V
+public abstract interface class modular/spec/DotFileChartSpec {
+	public abstract fun arrowHead (Lmodular/spec/ArrowType;)V
+	public abstract fun arrowTail (Lmodular/spec/ArrowType;)V
+	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
+	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
+	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
+	public abstract fun getShowArrows ()Lorg/gradle/api/provider/Property;
+	public abstract fun layoutEngine (Ljava/lang/String;)V
+	public abstract fun layoutEngine (Lmodular/spec/LayoutEngine;)V
 }
 
-public final class modular/spec/DotFileLegendSpec {
-	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
-	public final fun getCellBorder ()Lorg/gradle/api/provider/Property;
-	public final fun getCellPadding ()Lorg/gradle/api/provider/Property;
-	public final fun getCellSpacing ()Lorg/gradle/api/provider/Property;
-	public final fun getTableBorder ()Lorg/gradle/api/provider/Property;
+public abstract interface class modular/spec/DotFileLegendSpec {
+	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/spec/DotFileOutputFormatSpec {
-	public fun <init> (Lorg/gradle/api/model/ObjectFactory;)V
-	public final fun add (Ljava/lang/String;)V
-	public final fun canon ()V
-	public final fun cmap ()V
-	public final fun cmapx ()V
-	public final fun cmapxNp ()V
-	public final fun dot ()V
-	public final fun dotJson ()V
-	public final fun eps ()V
-	public final fun fig ()V
-	public final fun gd ()V
-	public final fun gd2 ()V
-	public final fun gif ()V
-	public final fun gv ()V
-	public final fun imap ()V
-	public final fun imapNp ()V
-	public final fun ismap ()V
-	public final fun jpe ()V
-	public final fun jpeg ()V
-	public final fun jpg ()V
-	public final fun json ()V
-	public final fun json0 ()V
-	public final fun mp ()V
-	public final fun pdf ()V
-	public final fun pic ()V
-	public final fun plain ()V
-	public final fun plainExt ()V
-	public final fun png ()V
-	public final fun pov ()V
-	public final fun ps ()V
-	public final fun ps2 ()V
-	public final fun svg ()V
-	public final fun svgz ()V
-	public final fun tk ()V
-	public final fun vdx ()V
-	public final fun vml ()V
-	public final fun vmlz ()V
-	public final fun vrml ()V
-	public final fun wbmp ()V
-	public final fun webp ()V
-	public final fun x11 ()V
-	public final fun xdot ()V
-	public final fun xdot12 ()V
-	public final fun xdot14 ()V
-	public final fun xdotJson ()V
-	public final fun xlib ()V
+public abstract interface class modular/spec/DotFileOutputFormatSpec {
+	public abstract fun add (Ljava/lang/String;)V
+	public fun canon ()V
+	public fun cmap ()V
+	public fun cmapx ()V
+	public fun cmapxNp ()V
+	public fun dot ()V
+	public fun dotJson ()V
+	public fun eps ()V
+	public fun fig ()V
+	public fun gd ()V
+	public fun gd2 ()V
+	public abstract fun getOutputFormats ()Lorg/gradle/api/provider/SetProperty;
+	public fun gif ()V
+	public fun gv ()V
+	public fun imap ()V
+	public fun imapNp ()V
+	public fun ismap ()V
+	public fun jpe ()V
+	public fun jpeg ()V
+	public fun jpg ()V
+	public fun json ()V
+	public fun json0 ()V
+	public fun mp ()V
+	public fun pdf ()V
+	public fun pic ()V
+	public fun plain ()V
+	public fun plainExt ()V
+	public fun png ()V
+	public fun pov ()V
+	public fun ps ()V
+	public fun ps2 ()V
+	public fun svg ()V
+	public fun svgz ()V
+	public fun tk ()V
+	public fun vdx ()V
+	public fun vml ()V
+	public fun vmlz ()V
+	public fun vrml ()V
+	public fun wbmp ()V
+	public fun webp ()V
+	public fun x11 ()V
+	public fun xdot ()V
+	public fun xdot12 ()V
+	public fun xdot14 ()V
+	public fun xdotJson ()V
+	public fun xlib ()V
 }
 
-public final class modular/spec/DotFileSpec : modular/spec/Spec {
-	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
-	public fun chart (Lorg/gradle/api/Action;)V
-	public final fun fileFormats (Lorg/gradle/api/Action;)V
-	public synthetic fun getChart ()Ljava/lang/Object;
-	public fun getChart ()Lmodular/spec/DotFileChartSpec;
-	public fun getExtension ()Lorg/gradle/api/provider/Property;
-	public final fun getFileFormats ()Lmodular/spec/DotFileOutputFormatSpec;
-	public synthetic fun getLegend ()Ljava/lang/Object;
-	public fun getLegend ()Lmodular/spec/DotFileLegendSpec;
-	public fun getName ()Ljava/lang/String;
-	public final fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
-	public synthetic fun legend ()Ljava/lang/Object;
-	public fun legend ()Lmodular/spec/DotFileLegendSpec;
-	public fun legend (Lorg/gradle/api/Action;)V
-	public synthetic fun setLegend (Ljava/lang/Object;)V
-	public fun setLegend (Lmodular/spec/DotFileLegendSpec;)V
+public final class modular/spec/DotFileOutputFormatSpec$DefaultImpls {
+	public static fun canon (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun cmap (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun cmapx (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun cmapxNp (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun dot (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun dotJson (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun eps (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun fig (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun gd (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun gd2 (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun gif (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun gv (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun imap (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun imapNp (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun ismap (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun jpe (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun jpeg (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun jpg (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun json (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun json0 (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun mp (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun pdf (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun pic (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun plain (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun plainExt (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun png (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun pov (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun ps (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun ps2 (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun svg (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun svgz (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun tk (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun vdx (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun vml (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun vmlz (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun vrml (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun wbmp (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun webp (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun x11 (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun xdot (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun xdot12 (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun xdot14 (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun xdotJson (Lmodular/spec/DotFileOutputFormatSpec;)V
+	public static fun xlib (Lmodular/spec/DotFileOutputFormatSpec;)V
+}
+
+public abstract interface class modular/spec/DotFileSpec : modular/spec/Spec {
+	public abstract fun fileFormats (Lorg/gradle/api/Action;)V
+	public abstract fun getChart ()Lmodular/spec/DotFileChartSpec;
+	public abstract fun getExtension ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFileFormats ()Lmodular/spec/DotFileOutputFormatSpec;
+	public abstract fun getLegend ()Lmodular/spec/DotFileLegendSpec;
+	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
+	public abstract fun legend ()Lmodular/spec/DotFileLegendSpec;
+	public abstract fun legend (Lorg/gradle/api/Action;)V
+	public abstract fun setLegend (Lmodular/spec/DotFileLegendSpec;)V
+}
+
+public final class modular/spec/DotFileSpec$DefaultImpls {
+	public static fun chart (Lmodular/spec/DotFileSpec;Lorg/gradle/api/Action;)V
 }
 
 public abstract class modular/spec/ExperimentalFlags {
@@ -176,9 +207,8 @@ public abstract class modular/spec/ExperimentalFlags {
 	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/spec/ExperimentalSpec {
-	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/Project;)V
-	public final fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
+public abstract interface class modular/spec/ExperimentalSpec {
+	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
 }
 
 public final class modular/spec/LayoutEngine : java/lang/Enum, modular/spec/StringEnum {
@@ -198,19 +228,18 @@ public final class modular/spec/LayoutEngine : java/lang/Enum, modular/spec/Stri
 	public static fun values ()[Lmodular/spec/LayoutEngine;
 }
 
-public final class modular/spec/ModuleNameSpec {
-	public final fun getReplacements ()Lorg/gradle/api/provider/ListProperty;
-	public final fun remove (Ljava/lang/String;)V
-	public final fun remove (Lkotlin/text/Regex;)V
-	public final fun replace (Ljava/lang/String;Ljava/lang/String;)V
-	public final fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
+public abstract interface class modular/spec/ModuleNameSpec {
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/ListProperty;
+	public abstract fun remove (Ljava/lang/String;)V
+	public abstract fun remove (Lkotlin/text/Regex;)V
+	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
 }
 
-public abstract class modular/spec/ModuleType {
-	public fun <init> (Ljava/lang/String;)V
+public abstract interface class modular/spec/ModuleType {
 	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
 	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
-	public final fun getName ()Ljava/lang/String;
+	public abstract fun getName ()Ljava/lang/String;
 	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
 }
@@ -365,7 +394,6 @@ public abstract class modular/tasks/GenerateGraphvizFileTask : org/gradle/api/De
 
 public final class modular/tasks/GenerateGraphvizFileTask$Companion {
 	public final fun get (Lorg/gradle/api/Project;Ljava/lang/String;)Lorg/gradle/api/tasks/TaskProvider;
-	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;Lmodular/spec/DotFileSpec;Lmodular/gradle/Variant;Lorg/gradle/api/tasks/TaskProvider;)Ljava/util/List;
 }
 
 public abstract class modular/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
@@ -384,7 +412,6 @@ public abstract class modular/tasks/GenerateLegendDotFileTask : org/gradle/api/D
 
 public final class modular/tasks/GenerateLegendDotFileTask$Companion {
 	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-	public final fun register (Lorg/gradle/api/Project;Lmodular/spec/DotFileLegendSpec;Lmodular/spec/DotFileSpec;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {

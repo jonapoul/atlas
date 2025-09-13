@@ -7,33 +7,19 @@
 package modular.spec
 
 import modular.gradle.ModularDsl
-import modular.internal.string
 import org.gradle.api.Action
-import org.gradle.api.Project
-import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 
-class DotFileSpec(
-  private val objects: ObjectFactory,
-  private val project: Project,
-) : Spec<DotFileLegendSpec, DotFileChartSpec> {
-  override val name = NAME
-  override val extension: Property<String> = objects.string(convention = "dot")
+interface DotFileSpec : Spec<DotFileLegendSpec, DotFileChartSpec> {
+  override val extension: Property<String>
+  val pathToDotCommand: Property<String>
 
-  override var legend: DotFileLegendSpec? = null
-  override fun legend() = getOrBuildLegend()
-  @ModularDsl override fun legend(action: Action<DotFileLegendSpec>) = action.execute(getOrBuildLegend())
+  override var legend: DotFileLegendSpec?
+  override fun legend(): DotFileLegendSpec
+  @ModularDsl override fun legend(action: Action<DotFileLegendSpec>)
 
-  override val chart = DotFileChartSpec(objects, project)
+  override val chart: DotFileChartSpec
 
-  val fileFormats = DotFileOutputFormatSpec(objects)
-  @ModularDsl fun fileFormats(action: Action<DotFileOutputFormatSpec>) = action.execute(fileFormats)
-
-  val pathToDotCommand: Property<String> = objects.property(String::class.java).unsetConvention()
-
-  private fun getOrBuildLegend() = legend ?: DotFileLegendSpec(objects, project).also { legend = it }
-
-  internal companion object {
-    internal const val NAME = "DotFileSpec"
-  }
+  val fileFormats: DotFileOutputFormatSpec
+  @ModularDsl fun fileFormats(action: Action<DotFileOutputFormatSpec>)
 }

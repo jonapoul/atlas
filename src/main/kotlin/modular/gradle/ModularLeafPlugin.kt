@@ -7,6 +7,8 @@
 package modular.gradle
 
 import modular.internal.MODULAR_TASK_GROUP
+import modular.internal.ModularExtensionImpl
+import modular.internal.Variant
 import modular.internal.configureSeparators
 import modular.internal.outputFile
 import modular.internal.registerGenerationTaskOnSync
@@ -26,7 +28,8 @@ class ModularLeafPlugin : Plugin<Project> {
       error("ModularLeafPlugin is only meant to be applied on a non-root project!")
     }
 
-    val extension = rootProject.extensions.getByType(ModularExtension::class.java)
+    val extension = rootProject.extensions.getByType(ModularExtension::class.java) as ModularExtensionImpl
+
     configureSeparators(extension)
     registerGenerationTaskOnSync(extension)
 
@@ -40,20 +43,9 @@ class ModularLeafPlugin : Plugin<Project> {
         is DotFileSpec -> registerDotFileTasks(extension, spec, file)
       }
     }
-
-    //    GeneratePngFileTask.registerModules(project, generateModulesDotFileTask)
-    //    WriteReadmeTask.register(project)
-    //
-    //    val checkDotFiles = CheckDotFileTask.register(project, generateTempDotFileTask, realDotFile)
-    //
-    //    afterEvaluate {
-    //      tasks.named("check").configure { check ->
-    //        check.dependsOn(checkDotFiles)
-    //      }
-    //    }
   }
 
-  private fun Project.registerDotFileTasks(extension: ModularExtension, spec: DotFileSpec, file: RegularFile) {
+  private fun Project.registerDotFileTasks(extension: ModularExtensionImpl, spec: DotFileSpec, file: RegularFile) {
     val dotFileTask = GenerateModulesDotFileTask.register(
       target = this,
       name = GenerateModulesDotFileTask.TASK_NAME,
@@ -62,15 +54,6 @@ class ModularLeafPlugin : Plugin<Project> {
       outputFile = file,
       printOutput = true,
     )
-
-    //    val generateTempDotFileTask = GenerateModulesDotFileTask.register(
-    //      target = this,
-    //      name = "generateTempDotFile",
-    //      moduleNames = extension.moduleNames,
-    //      chartSpec = spec.chart,
-    //      dotFile = modularBuildDirectory.map { it.file("modules-temp.dot") },
-    //      printOutput = false,
-    //    )
 
     val outputTasks = GenerateGraphvizFileTask.register(
       target = this,
