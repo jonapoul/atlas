@@ -23,7 +23,6 @@ import modular.test.scenarios.GraphVizBigGraph100DpiSvgWithAdjustment
 import modular.test.scenarios.GraphVizCustomDotExecutable
 import modular.test.scenarios.GraphVizCustomLayoutEngine
 import modular.test.scenarios.GraphVizInvalidLayoutEngine
-import org.gradle.testkit.runner.TaskOutcome
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import kotlin.test.Test
 import kotlin.text.RegexOption.MULTILINE
