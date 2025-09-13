@@ -28,7 +28,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Generate dotfiles from basic config`() = runScenario(DotFileBasic) {
+  fun `Generate dotfiles from basic config`() = runScenario(GraphVizBasic) {
     // when
     runTask("generateModulesDotFile").build()
 
@@ -76,7 +76,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Customise dotfile from build script`() = runScenario(DotFileChartCustomConfig) {
+  fun `Customise dotfile from build script`() = runScenario(GraphVizChartCustomConfig) {
     // when
     runTask("generateModulesDotFile").build()
 
@@ -102,7 +102,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Customise dotfile from gradle properties`() = runScenario(DotFileChartWithProperties) {
+  fun `Customise dotfile from gradle properties`() = runScenario(GraphVizChartWithProperties) {
     // when
     runTask("generateModulesDotFile").build()
 
@@ -128,7 +128,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Replace module names`() = runScenario(DotFileChartWithReplacements) {
+  fun `Replace module names`() = runScenario(GraphVizChartWithReplacements) {
     // when
     runTask("generateModulesDotFile").build()
 

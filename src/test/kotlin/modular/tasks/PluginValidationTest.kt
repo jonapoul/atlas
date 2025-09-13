@@ -56,7 +56,7 @@ class PluginValidationTest : ScenarioTest() {
   }
 
   @Test
-  fun `Warn if custom DPI and SVG configured together`() = runScenario(DotFileBigGraph100DpiSvg) {
+  fun `Warn if custom DPI and SVG configured together`() = runScenario(GraphVizBigGraph100DpiSvg) {
     // when an irrelevant task is run (AKA gradle is initialised)
     val result = buildRunner()
       .withArguments("help")
@@ -76,7 +76,7 @@ class PluginValidationTest : ScenarioTest() {
   }
 
   @Test
-  fun `Warn if GraphViz config has no file outputs configured`() = runScenario(DotFileBasic) {
+  fun `Warn if GraphViz config has no file outputs configured`() = runScenario(GraphVizBasic) {
     // when an irrelevant task is run (AKA gradle is initialised)
     val result = buildRunner()
       .withArguments("help")

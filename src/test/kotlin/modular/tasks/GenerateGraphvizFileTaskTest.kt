@@ -28,7 +28,7 @@ import kotlin.text.RegexOption.MULTILINE
 
 class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @Test
-  fun `Wrapper task has no dependents if no file formats have been declared`() = runScenario(DotFileBasic) {
+  fun `Wrapper task has no dependents if no file formats have been declared`() = runScenario(GraphVizBasic) {
     // when
     val result = runTask("generateModules", extras = listOf("--dry-run")).build()
 
@@ -49,7 +49,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Generate png, svg and eps files`() = runScenario(DotFileBasicWithThreeOutputFormats) {
+  fun `Generate png, svg and eps files`() = runScenario(GraphVizBasicWithThreeOutputFormats) {
     // when
     val result = runTask("generateModules").build()
 
@@ -79,7 +79,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @Test
   @RequiresGraphviz
   fun `SVG viewBox scales with nondefault DPI with flag enabled`() =
-    runScenario(DotFileBigGraph100DpiSvgWithAdjustment) {
+    runScenario(GraphVizBigGraph100DpiSvgWithAdjustment) {
       // when
       runTask(":app:generateModulesSvg").build()
 
@@ -101,7 +101,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `SVG doesn't scale viewBox if experimental flag is unset`() = runScenario(DotFileBigGraph100DpiSvg) {
+  fun `SVG doesn't scale viewBox if experimental flag is unset`() = runScenario(GraphVizBigGraph100DpiSvg) {
     // when
     runTask(":app:generateModulesSvg").build()
 
@@ -123,7 +123,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Fail with useful message for invalid layout engine`() = runScenario(DotFileInvalidLayoutEngine) {
+  fun `Fail with useful message for invalid layout engine`() = runScenario(GraphVizInvalidLayoutEngine) {
     // when
     val result = runTask(":app:generateModulesSvg").buildAndFail()
 
@@ -137,7 +137,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Choose custom layout engine`() = runScenario(DotFileCustomLayoutEngine) {
+  fun `Choose custom layout engine`() = runScenario(GraphVizCustomLayoutEngine) {
     // when we specify the "neato" layout engine
     val result = runTask(":app:generateModulesSvg").build()
 
@@ -149,7 +149,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @RequiresGraphviz
   @RequiresLn
   @RequiresWhereis
-  fun `Use custom path to dot command`() = runScenario(DotFileCustomDotExecutable) {
+  fun `Use custom path to dot command`() = runScenario(GraphVizCustomDotExecutable) {
     // Given we've made a symbolic link to a dot executable
     val whereisProcess = ProcessBuilder("whereis", "dot").start()
     val pathToDot = whereisProcess.inputReader().readLine().split(" ")[1]
@@ -172,7 +172,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Fail with nonexistent custom path to dot command`() = runScenario(DotFileCustomDotExecutable) {
+  fun `Fail with nonexistent custom path to dot command`() = runScenario(GraphVizCustomDotExecutable) {
     // Given we've made a symbolic link to a dot executable which doesn't exist
     val customDotFile = resolve("path/to/custom/dot")
     assertThat(customDotFile).doesNotExist()
