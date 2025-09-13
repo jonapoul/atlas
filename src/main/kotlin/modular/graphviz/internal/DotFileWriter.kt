@@ -11,7 +11,7 @@ import modular.internal.Replacement
 import modular.internal.TypedModule
 import modular.internal.appendIndented
 import modular.internal.appendIndentedLine
-import modular.spec.ModuleLinkSpec
+import modular.spec.LinkType
 
 /**
  * Copyright © 2025 Jon Poulton
@@ -20,7 +20,7 @@ import modular.spec.ModuleLinkSpec
 internal class DotFileWriter(
   private val typedModules: Set<TypedModule>,
   private val links: Set<ModuleLink>,
-  private val linkSpecs: Set<ModuleLinkSpec>,
+  private val linkTypes: Set<LinkType>,
   private val replacements: Set<Replacement>,
   private val thisPath: String,
   private val arrowHead: String?,
@@ -85,11 +85,11 @@ internal class DotFileWriter(
   }
 
   private fun linkAttrs(configuration: String): String {
-    val spec = linkSpecs
+    val type = linkTypes
       .firstOrNull { s -> s.configuration.matches(configuration) }
       ?: return ""
 
-    val attrs = mapOf("style" to spec.style, "color" to spec.color)
+    val attrs = mapOf("style" to type.style, "color" to type.color)
       .mapNotNull { (k, v) -> if (v == null) null else "\"$k\"=\"$v\"" }
       .joinToString(separator = ",")
 

@@ -34,6 +34,15 @@ import org.gradle.api.provider.Property
  *       png()
  *       svg()
  *     }
+ *
+ *     chart {
+ *       ...
+ *     }
+ *
+ *     linkTypes {
+ *       api(style = LinkStyle.Bold)
+ *       implementation(color = "red")
+ *     }
  *   }
  * }
  * ```
@@ -54,16 +63,8 @@ interface GraphVizSpec : Spec<GraphVizLegendSpec, GraphVizChartSpec> {
    * legend generation. Defaults to null.
    */
   override var legend: GraphVizLegendSpec?
-
-  /**
-   * Call this to enable legend generation with default settings.
-   */
   override fun legend(): GraphVizLegendSpec
-
-  /**
-   * Call this to enable legend generation and customise the [GraphVizLegendSpec] settings.
-   */
-  @ModularDsl override fun legend(action: Action<GraphVizLegendSpec>)
+  override fun legend(action: Action<GraphVizLegendSpec>)
 
   /**
    * Call this to configure the chart contents, orientation, font size, arrows, etc. Example:
@@ -85,12 +86,17 @@ interface GraphVizSpec : Spec<GraphVizLegendSpec, GraphVizChartSpec> {
   /**
    * Manually interact with output formats from GraphViz. Defaults to an empty set, meaning the only output will
    * be a `.dot` file.
+   *
+   * See [GraphVizFileFormatSpec] for some default options, but bear in mind your machine may not have them all
+   * available (depending on installedGraphViz version).
    */
   val fileFormats: GraphVizFileFormatSpec
+  @ModularDsl fun fileFormats(action: Action<GraphVizFileFormatSpec>)
 
   /**
-   * DSL to configure output formats. See [GraphVizFileFormatSpec] for some default options, but bear in mind your
-   * machine may not have them all available (depending on GraphViz version).
+   * Use to configure link styles between each module in the diagram. Empty by default, so all links will have a solid
+   * black line.
    */
-  @ModularDsl fun fileFormats(action: Action<GraphVizFileFormatSpec>)
+  val linkTypes: GraphVizLinkTypesSpec
+  @ModularDsl fun linkTypes(action: Action<GraphVizLinkTypesSpec>)
 }

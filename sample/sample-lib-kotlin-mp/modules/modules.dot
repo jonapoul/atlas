@@ -7,7 +7,7 @@ digraph {
   "Lib kotlin jvm" ["fillcolor"="#CA66FF","shape"="none"]
   "Lib kotlin mp" ["fillcolor"="#9D8DF1","color"="black","penwidth"="3","shape"="box"]
   "Lib android" -> "Lib kotlin jvm" ["style"="dotted"]
-  "Lib kotlin mp" -> "Lib android" ["style"="solid","color"="blue"]
+  "Lib kotlin mp" -> "Lib android" ["style"="solid"]
   "Lib kotlin mp" -> "Lib java" ["style"="bold","color"="orange"]
-  "Lib kotlin mp" -> "Lib kotlin jvm" ["style"="solid","color"="blue"]
+  "Lib kotlin mp" -> "Lib kotlin jvm" ["style"="solid"]
 }

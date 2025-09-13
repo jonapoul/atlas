@@ -56,12 +56,12 @@ modular {
       dpi = 100
       fontSize = 30
       rankSep = 1.5f
+    }
 
-      links {
-        "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
-        api(color = "blue")
-        implementation()
-      }
+    linkTypes {
+      "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
+      api(LinkStyle.Solid)
+      implementation(LinkStyle.Dotted)
     }
 
     fileFormats {

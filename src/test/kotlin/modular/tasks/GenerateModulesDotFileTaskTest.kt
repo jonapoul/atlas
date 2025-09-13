@@ -12,6 +12,7 @@ import modular.test.ScenarioTest
 import modular.test.runTask
 import modular.test.scenarios.GraphVizBasic
 import modular.test.scenarios.GraphVizChartCustomConfig
+import modular.test.scenarios.GraphVizChartWithCustomLinkTypes
 import modular.test.scenarios.GraphVizChartWithProperties
 import modular.test.scenarios.GraphVizChartWithReplacements
 import modular.test.scenarios.OneKotlinJvmModule
@@ -81,11 +82,11 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     runTask("generateModulesDotFile").build()
 
     // then the file was generated
-    val graphViz = resolve("a/modules.dot")
-    assertThat(graphViz).exists()
+    val dotFile = resolve("a/modules.dot")
+    assertThat(dotFile).exists()
 
     // and contains expected contents, with modules in alphabetical order
-    assertThat(graphViz.readText()).contains(
+    assertThat(dotFile.readText()).contains(
       """
         digraph {
           edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
@@ -107,11 +108,11 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     runTask("generateModulesDotFile").build()
 
     // then the file was generated
-    val graphViz = resolve("a/modules.dot")
-    assertThat(graphViz).exists()
+    val dotFile = resolve("a/modules.dot")
+    assertThat(dotFile).exists()
 
     // and contains expected contents, with modules in alphabetical order
-    assertThat(graphViz.readText()).contains(
+    assertThat(dotFile.readText()).contains(
       """
         digraph {
           edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
@@ -133,11 +134,11 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     runTask("generateModulesDotFile").build()
 
     // then the file was generated
-    val graphViz = resolve("a/modules.dot")
-    assertThat(graphViz).exists()
+    val dotFile = resolve("a/modules.dot")
+    assertThat(dotFile).exists()
 
     // and contains expected contents, colons removed from module prefixes and "b" -> "B"
-    assertThat(graphViz.readText()).contains(
+    assertThat(dotFile.readText()).contains(
       """
         digraph {
           edge []
@@ -148,6 +149,34 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
           "c" ["fillcolor"="#FF8800","shape"="none"]
           "a" -> "B"
           "a" -> "c"
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Handle custom link types`() = runScenario(GraphVizChartWithCustomLinkTypes) {
+    // when
+    runTask("generateModulesDotFile").build()
+
+    // then the file was generated
+    val dotFile = resolve("a/modules.dot")
+    assertThat(dotFile).exists()
+
+    // and contains expected link styles
+    assertThat(dotFile.readText()).contains(
+      """
+        digraph {
+          edge []
+          graph []
+          node ["style"="filled"]
+          ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          ":b" ["fillcolor"="#CA66FF","shape"="none"]
+          ":c" ["fillcolor"="#FF8800","shape"="none"]
+          ":d" ["fillcolor"="#FF8800","shape"="none"]
+          ":a" -> ":b" ["style"="bold"]
+          ":a" -> ":c" ["color"="blue"]
+          ":a" -> ":d" ["style"="dotted","color"="#FF55FF"]
         }
       """.trimIndent(),
     )

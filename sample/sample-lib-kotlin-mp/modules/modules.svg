@@ -42,8 +42,8 @@
 <!-- Lib kotlin mp&#45;&gt;Lib android -->
 <g id="edge2" class="edge">
 <title>Lib kotlin mp&#45;&gt;Lib android</title>
-<path fill="none" stroke="blue" d="M140.46,-287.87C122.34,-263.14 88.73,-217.24 67.68,-188.51"/>
-<polygon fill="blue" stroke="blue" points="70.32,-186.19 61.59,-180.19 64.67,-190.33 70.32,-186.19"/>
+<path fill="none" stroke="black" d="M140.46,-287.87C122.34,-263.14 88.73,-217.24 67.68,-188.51"/>
+<polygon fill="black" stroke="black" points="70.32,-186.19 61.59,-180.19 64.67,-190.33 70.32,-186.19"/>
 </g>
 <!-- Lib kotlin mp&#45;&gt;Lib java -->
 <g id="edge3" class="edge">
@@ -54,8 +54,8 @@
 <!-- Lib kotlin mp&#45;&gt;Lib kotlin jvm -->
 <g id="edge4" class="edge">
 <title>Lib kotlin mp&#45;&gt;Lib kotlin jvm</title>
-<path fill="none" stroke="blue" d="M164.07,-287.72C181.5,-258.35 212.07,-196.76 199,-144 189.8,-106.87 167.34,-68.62 151.17,-44.37"/>
-<polygon fill="blue" stroke="blue" points="154.06,-42.4 145.54,-36.1 148.28,-46.34 154.06,-42.4"/>
+<path fill="none" stroke="black" d="M164.07,-287.72C181.5,-258.35 212.07,-196.76 199,-144 189.8,-106.87 167.34,-68.62 151.17,-44.37"/>
+<polygon fill="black" stroke="black" points="154.06,-42.4 145.54,-36.1 148.28,-46.34 154.06,-42.4"/>
 </g>
 </g>
 </svg>

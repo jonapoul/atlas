@@ -5,7 +5,6 @@
 package modular.graphviz.spec
 
 import modular.gradle.ModularDsl
-import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
 /**
@@ -22,13 +21,6 @@ import org.gradle.api.provider.Property
  * ```
  */
 interface GraphVizChartSpec {
-  /**
-   * Use to configure link styles between each module in the diagram. Empty by default, so all links will have a solid
-   * black line.
-   */
-  val links: GraphVizModuleLinksSpec
-  @ModularDsl fun links(action: Action<GraphVizModuleLinksSpec>)
-
   /**
    * Configure the arrow type from a module pointing to its dependency. Defaults to unset, so GraphViz will fall back
    * to [ArrowType.Normal]. Default arrows are specified in the [ArrowType] enum, but if you have any extras available
