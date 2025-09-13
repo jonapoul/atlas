@@ -14,6 +14,6 @@ object DotFileChartWithProperties : Scenario by DotFileBasic {
     modular.dotfile.chart.fontSize=20
     modular.dotfile.chart.rankDir=LR
     modular.dotfile.chart.rankSep=2.5
-    modular.dotfile.chart.showArrows=false
+    modular.dotfile.chart.dir=none
   """.trimIndent()
 }
