@@ -65,3 +65,13 @@ enum class LayoutEngine(override val string: String) : StringEnum {
   Osage("osage"),
   Patchwork("patchwork"),
 }
+
+/**
+ * https://graphviz.org/docs/attrs/dir/
+ */
+enum class Dir(override val string: String) : StringEnum {
+  Forward("forward"),
+  Back("back"),
+  Both("both"),
+  None("none"),
+}

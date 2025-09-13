@@ -81,7 +81,8 @@ fun NamedDomainObjectContainer<ModuleType>.other(
   pathMatches = ".*?".toRegex(),
 )
 
-@ModularDsl fun NamedDomainObjectContainer<ModuleType>.builtIns() {
+@ModularDsl
+fun NamedDomainObjectContainer<ModuleType>.builtIns() {
   // Highest priority ↓↓
   androidApp()
   kotlinMultiplatform()
@@ -92,7 +93,8 @@ fun NamedDomainObjectContainer<ModuleType>.other(
   // Lowest priority ↑↑
 }
 
-@ModularDsl fun NamedDomainObjectContainer<ModuleType>.registerByPluginId(
+@ModularDsl
+fun NamedDomainObjectContainer<ModuleType>.registerByPluginId(
   name: String,
   color: String,
   pluginId: String,
@@ -101,7 +103,8 @@ fun NamedDomainObjectContainer<ModuleType>.other(
   type.hasPluginId.convention(pluginId)
 }
 
-@ModularDsl fun NamedDomainObjectContainer<ModuleType>.registerByPathMatches(
+@ModularDsl
+fun NamedDomainObjectContainer<ModuleType>.registerByPathMatches(
   name: String,
   color: String,
   pathMatches: Regex,
@@ -110,7 +113,8 @@ fun NamedDomainObjectContainer<ModuleType>.other(
   type.pathMatches.convention(pathMatches)
 }
 
-@ModularDsl fun NamedDomainObjectContainer<ModuleType>.registerByPathContains(
+@ModularDsl
+fun NamedDomainObjectContainer<ModuleType>.registerByPathContains(
   name: String,
   color: String,
   pathContains: String,

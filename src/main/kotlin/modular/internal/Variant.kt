@@ -4,4 +4,7 @@
  */
 package modular.internal
 
-internal enum class Variant { Modules, Legend }
+internal enum class Variant {
+  Modules,
+  Legend,
+}

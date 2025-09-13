@@ -5,8 +5,8 @@
 package modular.internal
 
 import modular.gradle.ModularExtension
-import modular.gradle.OutputSpec
 import modular.spec.ArrowType
+import modular.spec.Dir
 import modular.spec.DotFileChartSpec
 import modular.spec.DotFileLegendSpec
 import modular.spec.DotFileOutputFormatSpec
@@ -15,7 +15,8 @@ import modular.spec.ExperimentalSpec
 import modular.spec.LayoutEngine
 import modular.spec.ModuleNameSpec
 import modular.spec.ModuleType
-import modular.spec.Replacement
+import modular.spec.OutputSpec
+import modular.spec.RankDir
 import modular.spec.Spec
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
@@ -109,18 +110,18 @@ internal class OutputSpecImpl(objects: ObjectFactory, project: Project) : Output
   override val legendRootFilename = objects.string(convention = "legend")
 
   // All chart files will be placed in each submodule's root folder
-  override fun saveChartsInSubmoduleDir() = saveChartsRelativeToSubmodule(relativeToSubmodule = null)
+  override fun saveChartsInSubmoduleDir() = saveChartsRelativeToSubmodule("")
 
   // All chart files will be placed in the specified relative path to each submodule's root folder
-  override fun saveChartsRelativeToSubmodule(relativeToSubmodule: String?) =
-    chartOutputDirectory.set(relativeToSubmodule?.let(projectDir::dir) ?: projectDir)
+  override fun saveChartsRelativeToSubmodule(relativeToSubmodule: String) =
+    chartOutputDirectory.set(projectDir.dir(relativeToSubmodule))
 
   // All legend files will be placed in the root project's root folder
-  override fun saveLegendsInRootDir() = saveLegendsRelativeToRootModule(relativeToRoot = null)
+  override fun saveLegendsInRootDir() = saveLegendsRelativeToRootModule("")
 
   // All legend files will be placed in the specified path relative to the root module's root folder
-  override fun saveLegendsRelativeToRootModule(relativeToRoot: String?) =
-    legendOutputDirectory.set(relativeToRoot?.let(projectDir::dir) ?: projectDir)
+  override fun saveLegendsRelativeToRootModule(relativeToRoot: String) =
+    legendOutputDirectory.set(projectDir.dir(relativeToRoot))
 }
 
 internal class DotFileSpecImpl(
@@ -155,21 +156,26 @@ internal class DotFileLegendSpecImpl(objects: ObjectFactory, properties: Modular
 }
 
 internal class DotFileChartSpecImpl(objects: ObjectFactory, properties: ModularProperties) : DotFileChartSpec {
-  override val arrowHead = objects.string(properties.arrowHead)
-  override val arrowTail = objects.string(properties.arrowTail)
-  override val dpi = objects.int(properties.dpi)
-  override val layoutEngine = objects.string(properties.layoutEngine)
-  override val fontSize = objects.int(properties.fontSize)
-  override val rankDir = objects.enum(properties.rankDir)
-  override val rankSep = objects.float(properties.rankSep)
-  override val showArrows = objects.bool(properties.showArrows)
-  override fun arrowHead(type: ArrowType) = arrowHead.set(type.string)
-  override fun arrowTail(type: ArrowType) = arrowTail.set(type.string)
+  override fun arrowHead(type: ArrowType) = arrowHead(type.string)
+  override fun arrowHead(type: String) = arrowHead.set(type)
+  override fun arrowTail(type: ArrowType) = arrowTail(type.string)
+  override fun arrowTail(type: String) = arrowTail.set(type)
+  override fun dir(dir: Dir) = dir(dir.string)
+  override fun dir(dir: String) = this.dir.set(dir)
   override fun layoutEngine(layoutEngine: LayoutEngine) = layoutEngine(layoutEngine.string)
   override fun layoutEngine(layoutEngine: String) = this.layoutEngine.set(layoutEngine)
+  override fun rankDir(rankDir: RankDir) = rankDir(rankDir.string)
+  override fun rankDir(rankDir: String) = this.rankDir.set(rankDir)
+  override val arrowHead = objects.string(properties.arrowHead)
+  override val arrowTail = objects.string(properties.arrowTail)
+  override val dir = objects.string(properties.dir)
+  override val dpi = objects.int(properties.dpi)
+  override val fontSize = objects.int(properties.fontSize)
+  override val layoutEngine = objects.string(properties.layoutEngine)
+  override val rankDir = objects.string(properties.rankDir)
+  override val rankSep = objects.float(properties.rankSep)
 }
 
-internal class DotFileOutputFormatSpecImpl(objects: ObjectFactory) : DotFileOutputFormatSpec {
-  override val outputFormats: SetProperty<String> = objects.setProperty(String::class.java)
-  override fun add(value: String) = outputFormats.add(value)
-}
+internal class DotFileOutputFormatSpecImpl(objects: ObjectFactory) :
+  DotFileOutputFormatSpec,
+  SetProperty<String> by objects.setProperty(String::class.java)

@@ -10,16 +10,86 @@ import modular.gradle.ModularDsl
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
+/**
+ * Used to configure GraphViz output from Modular. For barebones output to a `.dot` file, you can just call:
+ *
+ * ```kotlin
+ * modular {
+ *   dotFile()
+ * }
+ * ```
+ *
+ * Or a more fleshed-out config:
+ *
+ * ```kotlin
+ * modular {
+ *   dotFile {
+ *     extension = "dot"
+ *     pathToDotCommand = "/custom/path/to/dot"
+ *
+ *     legend()
+ *
+ *     fileFormats {
+ *       png()
+ *       svg()
+ *     }
+ *   }
+ * }
+ * ```
+ */
 interface DotFileSpec : Spec<DotFileLegendSpec, DotFileChartSpec> {
+  /**
+   * To configure the file extension of generated dotfiles. Defaults to "dot".
+   */
   override val extension: Property<String>
+
+  /**
+   * Use this if you want to specify a "dot" command which isn't on the system path. This should be an absolute path.
+   */
   val pathToDotCommand: Property<String>
 
+  /**
+   * Use this to manually configure the [DotFileLegendSpec], or set it to null if you want to explicitly disable
+   * legend generation. Defaults to null.
+   */
   override var legend: DotFileLegendSpec?
+
+  /**
+   * Call this to enable legend generation with default settings.
+   */
   override fun legend(): DotFileLegendSpec
+
+  /**
+   * Call this to enable legend generation and customise the [DotFileLegendSpec] settings.
+   */
   @ModularDsl override fun legend(action: Action<DotFileLegendSpec>)
 
+  /**
+   * Call this to configure the chart contents, orientation, font size, arrows, etc. Example:
+   * ```kotlin
+   * modular {
+   *   chart {
+   *     arrowHead = "diamond"
+   *     dpi = 150
+   *     fontSize = 25
+   *     rankSep = 4.0
+   *   }
+   * }
+   * ```
+   *
+   * Not required - the chart will be generated with default settings without calling this.
+   */
   override val chart: DotFileChartSpec
 
+  /**
+   * Manually interact with output formats from GraphViz. Defaults to an empty set, meaning the only output will
+   * be a `.dot` file.
+   */
   val fileFormats: DotFileOutputFormatSpec
+
+  /**
+   * DSL to configure output formats. See [DotFileOutputFormatSpec] for some default options, but bear in mind your
+   * machine may not have them all available (depending on GraphViz version).
+   */
   @ModularDsl fun fileFormats(action: Action<DotFileOutputFormatSpec>)
 }

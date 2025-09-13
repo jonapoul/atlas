@@ -5,9 +5,9 @@
 package modular.internal
 
 import modular.gradle.ModularExtension
-import modular.gradle.OutputSpec
 import modular.spec.ModuleType
 import modular.spec.ModuleTypeModel
+import modular.spec.OutputSpec
 import modular.tasks.ModularGenerationTask
 import modular.tasks.TaskWithSeparator
 import org.gradle.api.Project

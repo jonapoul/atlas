@@ -96,7 +96,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
       variant: Variant,
       dotFileTask: TaskProvider<T>,
     ): List<TaskProvider<GenerateGraphvizFileTask>> = with(target) {
-      spec.fileFormats.outputFormats.get().map { format ->
+      spec.fileFormats.get().map { format ->
         val outputFile = outputFile(extension.outputs, variant, fileExtension = format)
         val taskName = taskName(variant, format)
         logger.info("Registering $taskName for output format $format")

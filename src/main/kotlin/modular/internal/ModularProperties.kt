@@ -4,8 +4,6 @@
  */
 package modular.internal
 
-import modular.spec.RankDir
-import modular.spec.StringEnum
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
 
@@ -30,12 +28,12 @@ internal class ModularProperties(private val project: Project) {
   // Dotfile chart
   val arrowHead: Provider<String> = string(key = "modular.dotfile.chart.arrowHead", default = null)
   val arrowTail: Provider<String> = string(key = "modular.dotfile.chart.arrowTail", default = null)
+  val dir: Provider<String> = string(key = "modular.dotfile.chart.dir", default = null)
   val dpi: Provider<Int> = int(key = "modular.dotfile.chart.dpi", default = null)
-  val layoutEngine: Provider<String> = string(key = "modular.dotfile.chart.layoutEngine", default = null)
   val fontSize: Provider<Int> = int(key = "modular.dotfile.chart.fontSize", default = null)
-  val rankDir: Provider<RankDir> = enum(key = "modular.dotfile.chart.rankDir", default = RankDir.TopToBottom)
+  val layoutEngine: Provider<String> = string(key = "modular.dotfile.chart.layoutEngine", default = null)
+  val rankDir: Provider<String> = string(key = "modular.dotfile.chart.rankDir", default = null)
   val rankSep: Provider<Float> = float(key = "modular.dotfile.chart.rankSep", default = null)
-  val showArrows: Provider<Boolean> = bool(key = "modular.dotfile.chart.showArrows", default = true)
 
   // Suppressions
   val suppressSvgViewBoxWarning: Provider<Boolean> = bool(key = "modular.suppress.adjustSvgViewBox", default = false)
@@ -44,9 +42,6 @@ internal class ModularProperties(private val project: Project) {
   private fun float(key: String, default: Float? = null) = prop(key, default, mapper = String::toFloat)
   private fun int(key: String, default: Int? = null) = prop(key, default, mapper = String::toInt)
   private fun string(key: String, default: String? = null) = prop(key, default, mapper = { it })
-
-  private inline fun <reified E> enum(key: String, default: E? = null) where E : Enum<E>, E : StringEnum =
-    prop(key, default) { value -> enumValues<E>().firstOrNull { it.string == value } ?: default }
 
   private inline fun <reified T : Any> prop(key: String, default: T?, noinline mapper: (String) -> T?) =
     project.providers

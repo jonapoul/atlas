@@ -6,6 +6,11 @@ package modular.spec
 
 import org.gradle.api.provider.Property
 
+/**
+ * Configures the layout and spacing of the generated legend, which will contain all configured module types with
+ * their allocated names and colours. They will be listed in the order you declare them, which is descending priority
+ * order.
+ */
 interface DotFileLegendSpec {
   val cellBorder: Property<Int>
   val cellPadding: Property<Int>

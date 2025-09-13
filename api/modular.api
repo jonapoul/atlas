@@ -11,7 +11,7 @@ public abstract interface class modular/gradle/ModularExtension {
 	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getModuleNames ()Lmodular/spec/ModuleNameSpec;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
-	public abstract fun getOutputs ()Lmodular/gradle/OutputSpec;
+	public abstract fun getOutputs ()Lmodular/spec/OutputSpec;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getSpecs ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
@@ -33,13 +33,10 @@ public final class modular/gradle/ModularTrunkPlugin : org/gradle/api/Plugin {
 	public fun apply (Lorg/gradle/api/Project;)V
 }
 
-public abstract interface class modular/gradle/OutputSpec {
-	public abstract fun getChartRootFilename ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLegendRootFilename ()Lorg/gradle/api/provider/Property;
-	public abstract fun saveChartsInSubmoduleDir ()V
-	public abstract fun saveChartsRelativeToSubmodule (Ljava/lang/String;)V
-	public abstract fun saveLegendsInRootDir ()V
-	public abstract fun saveLegendsRelativeToRootModule (Ljava/lang/String;)V
+public final class modular/internal/Replacement : java/io/Serializable {
+	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
+	public final fun getPattern ()Lkotlin/text/Regex;
+	public final fun getReplacement ()Ljava/lang/String;
 }
 
 public final class modular/spec/ArrowType : java/lang/Enum, modular/spec/StringEnum {
@@ -68,19 +65,36 @@ public final class modular/spec/ArrowType : java/lang/Enum, modular/spec/StringE
 	public static fun values ()[Lmodular/spec/ArrowType;
 }
 
+public final class modular/spec/Dir : java/lang/Enum, modular/spec/StringEnum {
+	public static final field Back Lmodular/spec/Dir;
+	public static final field Both Lmodular/spec/Dir;
+	public static final field Forward Lmodular/spec/Dir;
+	public static final field None Lmodular/spec/Dir;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/Dir;
+	public static fun values ()[Lmodular/spec/Dir;
+}
+
 public abstract interface class modular/spec/DotFileChartSpec {
+	public abstract fun arrowHead (Ljava/lang/String;)V
 	public abstract fun arrowHead (Lmodular/spec/ArrowType;)V
+	public abstract fun arrowTail (Ljava/lang/String;)V
 	public abstract fun arrowTail (Lmodular/spec/ArrowType;)V
+	public abstract fun dir (Ljava/lang/String;)V
+	public abstract fun dir (Lmodular/spec/Dir;)V
 	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
 	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
 	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
 	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
 	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
 	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
-	public abstract fun getShowArrows ()Lorg/gradle/api/provider/Property;
 	public abstract fun layoutEngine (Ljava/lang/String;)V
 	public abstract fun layoutEngine (Lmodular/spec/LayoutEngine;)V
+	public abstract fun rankDir (Ljava/lang/String;)V
+	public abstract fun rankDir (Lmodular/spec/RankDir;)V
 }
 
 public abstract interface class modular/spec/DotFileLegendSpec {
@@ -90,8 +104,12 @@ public abstract interface class modular/spec/DotFileLegendSpec {
 	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract interface class modular/spec/DotFileOutputFormatSpec {
+public abstract interface class modular/spec/DotFileOutputFormatSpec : org/gradle/api/provider/SetProperty {
 	public abstract fun add (Ljava/lang/String;)V
+	public abstract fun add (Lorg/gradle/api/provider/Provider;)V
+	public abstract fun addAll (Ljava/lang/Iterable;)V
+	public abstract fun addAll (Lorg/gradle/api/provider/Provider;)V
+	public abstract fun addAll ([Ljava/lang/String;)V
 	public fun canon ()V
 	public fun cmap ()V
 	public fun cmapx ()V
@@ -102,7 +120,6 @@ public abstract interface class modular/spec/DotFileOutputFormatSpec {
 	public fun fig ()V
 	public fun gd ()V
 	public fun gd2 ()V
-	public abstract fun getOutputFormats ()Lorg/gradle/api/provider/SetProperty;
 	public fun gif ()V
 	public fun gv ()V
 	public fun imap ()V
@@ -257,6 +274,15 @@ public final class modular/spec/ModuleTypeModel : java/io/Serializable {
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract interface class modular/spec/OutputSpec {
+	public abstract fun getChartRootFilename ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLegendRootFilename ()Lorg/gradle/api/provider/Property;
+	public abstract fun saveChartsInSubmoduleDir ()V
+	public abstract fun saveChartsRelativeToSubmodule (Ljava/lang/String;)V
+	public abstract fun saveLegendsInRootDir ()V
+	public abstract fun saveLegendsRelativeToRootModule (Ljava/lang/String;)V
+}
+
 public final class modular/spec/RankDir : java/lang/Enum, modular/spec/StringEnum {
 	public static final field BottomToTop Lmodular/spec/RankDir;
 	public static final field LeftToRight Lmodular/spec/RankDir;
@@ -266,12 +292,6 @@ public final class modular/spec/RankDir : java/lang/Enum, modular/spec/StringEnu
 	public fun getString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/spec/RankDir;
 	public static fun values ()[Lmodular/spec/RankDir;
-}
-
-public final class modular/spec/Replacement : java/io/Serializable {
-	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
-	public final fun getPattern ()Lkotlin/text/Regex;
-	public final fun getReplacement ()Ljava/lang/String;
 }
 
 public abstract interface class modular/spec/Spec {
@@ -421,6 +441,7 @@ public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/
 	public final fun execute ()V
 	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
 	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
 	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
 	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
@@ -431,7 +452,6 @@ public abstract class modular/tasks/GenerateModulesDotFileTask : org/gradle/api/
 	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public abstract fun getShowArrows ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 
