@@ -40,4 +40,4 @@ jobs:
           add-job-summary: on-failure
 
       - name: Build
-        run: ./gradlew assemble
+        run: ./gradlew build

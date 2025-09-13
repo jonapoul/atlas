@@ -42,8 +42,6 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     assertThat(dotFileA.readText()).contains(
       """
         digraph {
-          edge []
-          graph []
           node ["style"="filled"]
           ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
           ":b" ["fillcolor"="#FF8800","shape"="none"]
@@ -57,8 +55,6 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     assertThat(dotFileB.readText()).contains(
       """
         digraph {
-          edge []
-          graph []
           node ["style"="filled"]
           ":b" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
         }
@@ -67,8 +63,6 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     assertThat(dotFileC.readText()).contains(
       """
         digraph {
-          edge []
-          graph []
           node ["style"="filled"]
           ":c" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
         }
@@ -141,8 +135,6 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     assertThat(dotFile.readText()).contains(
       """
         digraph {
-          edge []
-          graph []
           node ["style"="filled"]
           "B" ["fillcolor"="#FF8800","shape"="none"]
           "a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
@@ -167,8 +159,6 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
     assertThat(dotFile.readText()).contains(
       """
         digraph {
-          edge []
-          graph []
           node ["style"="filled"]
           ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
           ":b" ["fillcolor"="#CA66FF","shape"="none"]

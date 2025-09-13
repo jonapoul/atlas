@@ -7,11 +7,13 @@
 package modular.gradle
 
 import modular.graphviz.spec.GraphVizSpec
+import modular.graphviz.tasks.CheckDotFileTask
 import modular.graphviz.tasks.GenerateGraphvizFileTask
 import modular.graphviz.tasks.GenerateModulesDotFileTask
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
 import modular.internal.configureSeparators
+import modular.internal.modularBuildDirectory
 import modular.internal.outputFile
 import modular.internal.registerGenerationTaskOnSync
 import modular.tasks.CalculateModuleTreeTask
@@ -56,6 +58,24 @@ class ModularLeafPlugin : Plugin<Project> {
       printOutput = true,
     )
 
+    val tempDotFileTask = GenerateModulesDotFileTask.register(
+      target = this,
+      name = GenerateModulesDotFileTask.TASK_NAME_FOR_CHECKING,
+      modulePathTransforms = extension.modulePathTransforms,
+      spec = spec,
+      outputFile = modularBuildDirectory.get().file("modules-temp.dot"),
+      printOutput = false,
+    )
+
+    val checkTask = CheckDotFileTask.register(
+      target = this,
+      name = CheckDotFileTask.NAME_MODULES,
+      generateDotFile = tempDotFileTask,
+      realDotFile = file,
+    )
+
+    tasks.maybeCreate("check").dependsOn(checkTask)
+
     val outputTasks = GenerateGraphvizFileTask.register(
       target = this,
       extension = extension,
@@ -64,12 +84,11 @@ class ModularLeafPlugin : Plugin<Project> {
       dotFileTask = dotFileTask,
     )
 
-    if (outputTasks.isNotEmpty()) {
-      tasks.register("generateModules") { t ->
-        t.group = MODULAR_TASK_GROUP
-        t.description = "Wrapper task for the other 'generateModulesX' tasks"
-        t.dependsOn(outputTasks)
-      }
+    tasks.register("generateModules") { t ->
+      t.group = MODULAR_TASK_GROUP
+      t.description = "Wrapper task for the other 'generateModulesX' tasks"
+      t.dependsOn(dotFileTask)
+      t.dependsOn(outputTasks)
     }
   }
 }

@@ -1,6 +1,6 @@
 digraph {
   edge ["arrowhead"="normal","arrowtail"="none"]
-  graph ["dpi"="100","fontsize"="30","ranksep"="1.5","rankdir"="TB"]
+  graph ["dpi"="100","fontsize"="30","layout"="dot","ranksep"="1.5","rankdir"="TB"]
   node ["style"="filled"]
   "Lib java" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
 }

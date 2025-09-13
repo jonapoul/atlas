@@ -11,7 +11,6 @@ import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
 import modular.spec.ModuleType
 import modular.spec.ModuleTypeModel
-import modular.tasks.MODULAR_TASK_GROUP
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException
