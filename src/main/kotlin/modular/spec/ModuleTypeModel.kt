@@ -4,10 +4,11 @@
  */
 package modular.spec
 
-import org.gradle.internal.impldep.kotlinx.serialization.Serializable
+import java.io.Serializable as JSerializable
+import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 
-@Serializable
+@KSerializable
 data class ModuleTypeModel(
   val name: String,
   val color: String,
-) : java.io.Serializable
+) : JSerializable
