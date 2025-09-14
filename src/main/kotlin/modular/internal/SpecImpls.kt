@@ -7,7 +7,7 @@ package modular.internal
 import modular.gradle.ModularExtension
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.spec.GraphVizSpec
-import modular.spec.ExperimentalSpec
+import modular.spec.GeneralSpec
 import modular.spec.ModulePathTransformSpec
 import modular.spec.ModuleType
 import modular.spec.OutputSpec
@@ -27,8 +27,8 @@ internal open class ModularExtensionImpl @Inject constructor(
 ) : ModularExtension {
   internal val properties = GradleProperties(project)
 
-  override val experimental = ExperimentalSpecImpl(objects, properties)
-  override fun experimental(action: Action<ExperimentalSpec>) = action.execute(experimental)
+  override val general = GeneralSpecImpl(objects, properties)
+  override fun general(action: Action<GeneralSpec>) = action.execute(general)
 
   override val modulePathTransforms = ModulePathTransformSpecImpl(objects)
   override fun modulePathTransforms(action: Action<ModulePathTransformSpec>) = action.execute(modulePathTransforms)
@@ -42,11 +42,11 @@ internal open class ModularExtensionImpl @Inject constructor(
   override val specs: NamedDomainObjectContainer<Spec<*, *>> = objects.domainObjectContainer(Spec::class.java)
   override fun specs(action: Action<NamedDomainObjectContainer<Spec<*, *>>>) = action.execute(specs)
 
-  override val generateOnSync = objects.bool(properties.generateOnSync)
-  override val ignoredConfigs = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
-  override val ignoredModules = objects.set(convention = emptySet<Regex>())
-  override val separator = objects.string(properties.separator)
-  override val supportUpwardsTraversal = objects.bool(properties.supportUpwardsTraversal)
+  override val graphViz: GraphVizSpec
+    get() {
+      graphViz()
+      return specs.getByName(GraphVizSpecImpl.NAME) as GraphVizSpec
+    }
 
   override fun graphViz() = graphViz { /* No-op */ }
   override fun graphViz(action: Action<GraphVizSpec>) {
@@ -62,8 +62,13 @@ internal open class ModularExtensionImpl @Inject constructor(
   }
 }
 
-internal class ExperimentalSpecImpl(objects: ObjectFactory, properties: GradleProperties) : ExperimentalSpec {
+internal class GeneralSpecImpl(objects: ObjectFactory, properties: GradleProperties) : GeneralSpec {
   override val adjustSvgViewBox = objects.bool(convention = properties.adjustSvgViewBox)
+  override val generateOnSync = objects.bool(properties.generateOnSync)
+  override val ignoredConfigs = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
+  override val ignoredModules = objects.set(convention = emptySet<Regex>())
+  override val separator = objects.string(properties.separator)
+  override val supportUpwardsTraversal = objects.bool(properties.supportUpwardsTraversal)
 }
 
 internal class ModulePathTransformSpecImpl(objects: ObjectFactory) : ModulePathTransformSpec {

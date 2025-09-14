@@ -4,13 +4,13 @@
  */
 package modular.graphviz.internal
 
-import modular.spec.ExperimentalFlags
+import modular.spec.GeneralFlags
 import java.io.File
 
-internal fun doGraphVizPostProcessing(experimental: ExperimentalFlags, outputFile: File, outputFormat: String) {
+internal fun doGraphVizPostProcessing(general: GeneralFlags, outputFile: File, outputFormat: String) {
   val format = outputFormat.lowercase()
   when {
-    format == "svg" && experimental.adjustSvgViewBox.get() ->
+    format == "svg" && general.adjustSvgViewBox.get() ->
       editSvgViewBoxToMatchSize(outputFile)
   }
 }

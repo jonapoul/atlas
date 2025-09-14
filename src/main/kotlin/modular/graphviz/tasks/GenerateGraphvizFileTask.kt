@@ -9,7 +9,7 @@ import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
 import modular.internal.outputFile
-import modular.spec.ExperimentalFlags
+import modular.spec.GeneralFlags
 import modular.tasks.MODULAR_TASK_GROUP
 import modular.tasks.ModularGenerationTask
 import modular.tasks.TaskWithOutputFile
@@ -35,7 +35,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
   @get:Input abstract val outputFormat: Property<String>
   @get:[Input Optional] abstract val pathToDotCommand: Property<String>
   @get:[Input Optional] abstract val engine: Property<String>
-  @get:Nested abstract val experimental: ExperimentalFlags
+  @get:Nested abstract val general: GeneralFlags
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -74,7 +74,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
       logger.lifecycle(outputFile.absolutePath)
     }
 
-    doGraphVizPostProcessing(experimental, outputFile, outputFormat)
+    doGraphVizPostProcessing(general, outputFile, outputFormat)
   }
 
   companion object {
@@ -109,7 +109,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
           task.engine.convention(spec.chart.layoutEngine)
           task.outputFormat.convention(format)
           task.outputFile.convention(outputFile)
-          task.experimental.adjustSvgViewBox.convention(extension.experimental.adjustSvgViewBox)
+          task.general.inject(extension.general)
         }
       }
     }
