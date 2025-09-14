@@ -4,8 +4,8 @@
  */
 package modular.spec
 
-import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 import java.io.Serializable as JSerializable
+import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
 data class ModuleTypeModel(

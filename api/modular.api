@@ -324,6 +324,7 @@ public abstract class modular/graphviz/tasks/GenerateLegendDotFileTask : org/gra
 	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
 	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
 	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
