@@ -21,8 +21,9 @@ abstract class ScenarioTest {
       resolve("settings.gradle.kts").writeText(settingsFile)
       resolve("build.gradle.kts").writeText(scenario.rootBuildFile)
       resolve("gradle.properties").writeText(scenario.gradlePropertiesFile)
+
       scenario.submoduleBuildFiles.forEach { (path, contents) ->
-        resolve(path)
+        resolve(modulePathToFilePath(path))
           .also { it.mkdirs() }
           .resolve("build.gradle.kts")
           .writeText(contents)
@@ -30,4 +31,9 @@ abstract class ScenarioTest {
       test()
     }
   }
+
+  private fun modulePathToFilePath(modulePath: String): String = modulePath
+    .split(":")
+    .filter { it.isNotEmpty() }
+    .joinToString(separator = File.separator)
 }

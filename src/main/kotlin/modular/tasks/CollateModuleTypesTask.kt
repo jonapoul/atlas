@@ -37,13 +37,14 @@ abstract class CollateModuleTypesTask : DefaultTask(), TaskWithSeparator, TaskWi
     val outputFile = outputFile.get().asFile
     val separator = separator.get()
     val modulesWithType = projectTypeFiles
+      .filter { it.exists() }
       .map { file -> TypedModule(file.readText(), separator) }
       .toSortedSet()
     TypedModules.write(modulesWithType, outputFile, separator)
 
     logger.info("CollateModuleTypesTask: ${modulesWithType.size} modules")
     modulesWithType.forEach { (projectPath, type, _) ->
-      logger.info("CollateModuleTypesTask:     path=$projectPath, type=${type.name}")
+      logger.info("CollateModuleTypesTask:     path=$projectPath, type=${type?.name}")
     }
   }
 
@@ -67,6 +68,7 @@ abstract class CollateModuleTypesTask : DefaultTask(), TaskWithSeparator, TaskWi
 
           t.dependsOn(dumpTasks)
 
+          @Suppress("UnstableApiUsage")
           t.projectTypeFiles.convention(
             dumpTasks.map { taskProvider ->
               taskProvider.map { it.outputFile.get() }

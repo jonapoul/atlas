@@ -9,14 +9,9 @@ package modular.graphviz.internal
 import modular.internal.ModuleLink
 import modular.internal.Replacement
 import modular.internal.TypedModule
-import modular.internal.appendIndented
 import modular.internal.appendIndentedLine
 import modular.spec.LinkType
 
-/**
- * Copyright © 2025 Jon Poulton
- * SPDX-License-Identifier: Apache-2.0
- */
 internal class DotFileWriter(
   private val typedModules: Set<TypedModule>,
   private val links: Set<ModuleLink>,
@@ -66,15 +61,10 @@ internal class DotFileWriter(
   }
 
   private fun StringBuilder.appendHeaderGroup(name: String, items: Map<String, Any?>) {
-    val itemStrings = items
-      .toList()
-      .mapNotNull { (k, v) -> if (v == null) null else "\"$k\"=\"$v\"" }
-    if (itemStrings.isEmpty()) return
-
-    appendIndented("$name [")
-    append(itemStrings.joinToString(separator = ","))
-    append("]")
-    appendLine()
+    val attrs = Attrs()
+    items.forEach { (k, v) -> attrs[k] = v }
+    if (!attrs.hasAnyValues()) return
+    appendIndentedLine("$name$attrs")
   }
 
   private fun StringBuilder.appendLinks() {
@@ -87,16 +77,15 @@ internal class DotFileWriter(
       }
   }
 
-  private fun linkAttrs(configuration: String): String {
+  private fun linkAttrs(configuration: String): Attrs {
     val type = linkTypes
       .firstOrNull { s -> s.configuration.matches(configuration) }
-      ?: return ""
+      ?: return Attrs()
 
-    val attrs = mapOf("style" to type.style, "color" to type.color)
-      .mapNotNull { (k, v) -> if (v == null) null else "\"$k\"=\"$v\"" }
-      .joinToString(separator = ",")
-
-    return " [$attrs]"
+    val attrs = Attrs()
+    attrs["style"] = type.style
+    attrs["color"] = type.color
+    return attrs
   }
 
   private fun StringBuilder.appendNodes() {
@@ -108,21 +97,29 @@ internal class DotFileWriter(
 
     if (links.isEmpty()) {
       // Single-module case - we still want this module to be shown along with its type
-      val typedModule = typedModules
+      typedModules
         .firstOrNull { it.projectPath == thisPath }
-        ?: error("No type found for $thisPath")
-      appendNode(typedModule)
+        ?.let { typedModule -> appendNode(typedModule) }
     }
   }
 
   private fun StringBuilder.appendNode(module: TypedModule) {
-    val path = module.projectPath.cleaned()
-    val attrs = if (thisPath.cleaned() == path) {
-      "\"color\"=\"black\",\"penwidth\"=\"3\",\"shape\"=\"box\""
-    } else {
-      "\"shape\"=\"none\""
+    val nodePath = module.projectPath.cleaned()
+    val attrs = Attrs()
+
+    if (module.type != null) {
+      attrs["fillcolor"] = module.type.color
     }
-    appendIndentedLine("\"$path\" [\"fillcolor\"=\"${module.type.color}\",$attrs]")
+
+    // Make "target" nodes more prominent with a thick black border
+    if (thisPath.cleaned() == nodePath) {
+      attrs["penwidth"] = "3"
+      attrs["shape"] = "box"
+    } else {
+      attrs["shape"] = "none"
+    }
+
+    appendIndentedLine("\"$nodePath\"$attrs")
   }
 
   private fun String.cleaned(): String {
@@ -133,4 +130,14 @@ internal class DotFileWriter(
 
   private operator fun Set<ModuleLink>.contains(module: TypedModule): Boolean =
     any { (from, to, _) -> from == module.projectPath || to == module.projectPath }
+
+  private class Attrs : MutableMap<String, Any?> by mutableMapOf() {
+    override fun toString(): String {
+      if (isEmpty()) return ""
+      val csv = mapNotNull { (k, v) -> if (v == null) null else "\"$k\"=\"$v\"" }.joinToString(separator = ",")
+      return " [$csv]"
+    }
+
+    fun hasAnyValues() = values.any { it != null }
+  }
 }

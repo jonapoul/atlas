@@ -38,5 +38,5 @@ internal fun Assert<File>.contentEquals(expected: String) = given { file ->
 // https://github.com/assertk-org/assertk/blob/main/assertk/src/jvmMain/kotlin/assertk/assertions/file.kt
 internal fun Assert<File>.doesNotExist() = given { actual ->
   if (!actual.exists()) return
-  expected("not to exist")
+  expected("$actual not to exist")
 }

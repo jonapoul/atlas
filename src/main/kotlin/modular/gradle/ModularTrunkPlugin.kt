@@ -19,7 +19,6 @@ import modular.internal.outputFile
 import modular.internal.registerGenerationTaskOnSync
 import modular.internal.warnIfModuleTypesSpecifyNothing
 import modular.internal.warnIfNoGraphVizOutputs
-import modular.internal.warnIfNoModuleTypes
 import modular.internal.warnIfSvgSelectedWithCustomDpi
 import modular.tasks.CollateModuleLinksTask
 import modular.tasks.CollateModuleTypesTask
@@ -64,7 +63,6 @@ class ModularTrunkPlugin : Plugin<Project> {
       warnIfNoGraphVizOutputs(extension)
 
       val types = extension.orderedTypes()
-      warnIfNoModuleTypes(types)
       warnIfModuleTypesSpecifyNothing(types)
     }
   }
