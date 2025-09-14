@@ -24,6 +24,16 @@ internal fun typedModule(
   separator = ",",
 )
 
+internal fun typedModule(
+  path: String,
+  type: String,
+  color: String,
+) = TypedModule(
+  projectPath = path,
+  type = ModuleTypeModel(type, color),
+  separator = ",",
+)
+
 internal fun moduleLink(
   fromPath: String,
   toPath: String,

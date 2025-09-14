@@ -17,10 +17,13 @@ internal data class Subgraph(
   val name = path.last()
 }
 
-internal fun buildGraphElements(typedModules: Set<TypedModule>): List<GraphElement> = buildHierarchy(
-  nodeData = typedModules.map { module ->
-    module to module.projectPath.split(":").filter { it.isNotEmpty() }
-  },
+internal fun buildGraphElements(
+  typedModules: Set<TypedModule>,
+  links: Set<ModuleLink>
+): List<GraphElement> = buildHierarchy(
+  nodeData = typedModules
+    .filter { module -> module in links }
+    .map { module -> module to module.projectPath.split(":").filter { it.isNotEmpty() } },
 )
 
 internal fun buildHierarchy(nodeData: List<Pair<TypedModule, List<String>>>): List<GraphElement> {

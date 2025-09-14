@@ -37,7 +37,7 @@ class GraphHierarchyTest {
       ),
     )
 
-    val elements = buildGraphElements(OneLevelOfSubmodules.modules)
+    val elements = buildGraphElements(OneLevelOfSubmodules.modules, OneLevelOfSubmodules.links)
     assertThat(elements).isEqualTo(
       listOf(
         node(path = ":app"),
@@ -80,7 +80,7 @@ class GraphHierarchyTest {
       ),
     )
 
-    val elements = buildGraphElements(TwoLevelsOfSubmodules.modules)
+    val elements = buildGraphElements(TwoLevelsOfSubmodules.modules, TwoLevelsOfSubmodules.links)
     assertThat(elements).isEqualTo(
       listOf(
         node(path = ":app"),

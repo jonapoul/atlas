@@ -78,6 +78,9 @@ internal data class ModuleLink(
   fun string(separator: String): String = "$fromPath$separator$toPath$separator$configuration"
 }
 
+internal operator fun Set<ModuleLink>.contains(module: TypedModule): Boolean =
+  any { (from, to, _) -> from == module.projectPath || to == module.projectPath }
+
 private fun ModuleLink(line: String, separator: String): ModuleLink {
   val (fromPath, toPath, configuration) = line.split(separator)
   return ModuleLink(fromPath, toPath, configuration, separator)

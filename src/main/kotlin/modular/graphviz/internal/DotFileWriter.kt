@@ -14,9 +14,10 @@ import modular.internal.Subgraph
 import modular.internal.TypedModule
 import modular.internal.buildGraphElements
 import modular.internal.buildIndentedString
+import modular.internal.contains
 import modular.spec.LinkType
 
-internal class DotFileWriter(
+internal data class DotFileWriter(
   private val typedModules: Set<TypedModule>,
   private val links: Set<ModuleLink>,
   private val linkTypes: Set<LinkType>,
@@ -90,7 +91,7 @@ internal class DotFileWriter(
 
   private fun IndentedStringBuilder.appendNodes() {
     if (groupModules) {
-      val elements = buildGraphElements(typedModules)
+      val elements = buildGraphElements(typedModules, links)
       for (element in elements) {
         appendGraphNode(element)
       }
@@ -107,7 +108,8 @@ internal class DotFileWriter(
   }
 
   private fun IndentedStringBuilder.appendSubgraph(graph: Subgraph) {
-    appendLine("subgraph cluster_${graph.name} {")
+    val cleanedName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
+    appendLine("subgraph cluster_$cleanedName {")
     indent {
       appendLine("label = \":${graph.name}\"")
       for (element in graph.elements) {
@@ -157,9 +159,6 @@ internal class DotFileWriter(
     return string
   }
 
-  private operator fun Set<ModuleLink>.contains(module: TypedModule): Boolean =
-    any { (from, to, _) -> from == module.projectPath || to == module.projectPath }
-
   @Suppress("SpreadOperator")
   private class Attrs(private val delegate: MutableMap<String, Any?>) : MutableMap<String, Any?> by delegate {
     constructor(vararg entries: Pair<String, Any?>) : this(mutableMapOf(*entries))
@@ -171,5 +170,9 @@ internal class DotFileWriter(
     }
 
     fun hasAnyValues() = values.any { it != null }
+  }
+
+  private companion object {
+    val SUPPORTED_CHAR_REGEX = "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()
   }
 }
