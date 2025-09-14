@@ -2,78 +2,79 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("LongParameterList")
-
 package modular.graphviz.internal
 
+import modular.graphviz.spec.DotFileConfig
+import modular.internal.GraphElement
+import modular.internal.IndentedStringBuilder
 import modular.internal.ModuleLink
+import modular.internal.Node
 import modular.internal.Replacement
+import modular.internal.Subgraph
 import modular.internal.TypedModule
-import modular.internal.appendIndentedLine
+import modular.internal.buildGraphElements
+import modular.internal.buildIndentedString
+import modular.internal.contains
 import modular.spec.LinkType
 
-internal class DotFileWriter(
+internal data class DotFileWriter(
   private val typedModules: Set<TypedModule>,
   private val links: Set<ModuleLink>,
   private val linkTypes: Set<LinkType>,
   private val replacements: Set<Replacement>,
   private val thisPath: String,
-  private val arrowHead: String?,
-  private val arrowTail: String?,
-  private val dir: String?,
-  private val dpi: Int?,
-  private val fontSize: Int?,
-  private val layoutEngine: String?,
-  private val rankDir: String?,
-  private val rankSep: Float?,
+  private val groupModules: Boolean,
+  private val config: DotFileConfig,
 ) {
-  operator fun invoke(): String = buildString {
+  operator fun invoke(): String = buildIndentedString(size = 2) {
     appendLine("digraph {")
-    appendHeader()
-    appendNodes()
-    appendLinks()
+    indent {
+      appendHeader()
+      appendNodes()
+      appendLinks()
+    }
     appendLine("}")
   }
 
-  private fun StringBuilder.appendHeader() {
+  private fun IndentedStringBuilder.appendHeader() {
     appendHeaderGroup(
       name = "edge",
-      items = mapOf(
-        "dir" to dir,
-        "arrowhead" to arrowHead,
-        "arrowtail" to arrowTail,
+      attrs = Attrs(
+        "dir" to config.dir,
+        "arrowhead" to config.arrowHead,
+        "arrowtail" to config.arrowTail,
       ),
     )
     appendHeaderGroup(
       name = "graph",
-      items = mapOf(
-        "dpi" to dpi,
-        "fontsize" to fontSize,
-        "layout" to layoutEngine,
-        "ranksep" to rankSep,
-        "rankdir" to rankDir,
+      attrs = Attrs(
+        "dpi" to config.dpi,
+        "fontsize" to config.fontSize,
+        "layout" to config.layoutEngine,
+        "ranksep" to config.rankSep,
+        "rankdir" to config.rankDir,
       ),
     )
     appendHeaderGroup(
       name = "node",
-      items = mapOf("style" to "filled"),
+      attrs = Attrs(
+        "style" to "filled",
+      ),
     )
   }
 
-  private fun StringBuilder.appendHeaderGroup(name: String, items: Map<String, Any?>) {
-    val attrs = Attrs()
-    items.forEach { (k, v) -> attrs[k] = v }
+  private fun IndentedStringBuilder.appendHeaderGroup(name: String, attrs: Attrs) {
     if (!attrs.hasAnyValues()) return
-    appendIndentedLine("$name$attrs")
+    appendLine("$name$attrs")
   }
 
-  private fun StringBuilder.appendLinks() {
+  private fun IndentedStringBuilder.appendLinks() {
     links
       .map { link -> link.copy(fromPath = link.fromPath.cleaned(), toPath = link.toPath.cleaned()) }
       .sortedWith(compareBy({ it.fromPath }, { it.toPath }))
       .forEach { (fromPath, toPath, configuration) ->
         val attrs = linkAttrs(configuration)
-        appendIndentedLine("\"$fromPath\" -> \"$toPath\"$attrs")
+        appendLine("\"$fromPath\" -> \"$toPath\"$attrs")
       }
   }
 
@@ -88,7 +89,37 @@ internal class DotFileWriter(
     return attrs
   }
 
-  private fun StringBuilder.appendNodes() {
+  private fun IndentedStringBuilder.appendNodes() {
+    if (groupModules) {
+      val elements = buildGraphElements(typedModules, links)
+      for (element in elements) {
+        appendGraphNode(element)
+      }
+    } else {
+      appendUngroupedNodes()
+    }
+  }
+
+  private fun IndentedStringBuilder.appendGraphNode(element: GraphElement) {
+    when (element) {
+      is Node -> appendNode(element.typedModule)
+      is Subgraph -> appendSubgraph(element)
+    }
+  }
+
+  private fun IndentedStringBuilder.appendSubgraph(graph: Subgraph) {
+    val cleanedName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
+    appendLine("subgraph cluster_$cleanedName {")
+    indent {
+      appendLine("label = \":${graph.name}\"")
+      for (element in graph.elements) {
+        appendGraphNode(element)
+      }
+    }
+    appendLine("}")
+  }
+
+  private fun IndentedStringBuilder.appendUngroupedNodes() {
     typedModules
       .filter { module -> module in links }
       .map { it.copy(projectPath = it.projectPath.cleaned()) }
@@ -103,7 +134,7 @@ internal class DotFileWriter(
     }
   }
 
-  private fun StringBuilder.appendNode(module: TypedModule) {
+  private fun IndentedStringBuilder.appendNode(module: TypedModule) {
     val nodePath = module.projectPath.cleaned()
     val attrs = Attrs()
 
@@ -119,7 +150,7 @@ internal class DotFileWriter(
       attrs["shape"] = "none"
     }
 
-    appendIndentedLine("\"$nodePath\"$attrs")
+    appendLine("\"$nodePath\"$attrs")
   }
 
   private fun String.cleaned(): String {
@@ -128,10 +159,10 @@ internal class DotFileWriter(
     return string
   }
 
-  private operator fun Set<ModuleLink>.contains(module: TypedModule): Boolean =
-    any { (from, to, _) -> from == module.projectPath || to == module.projectPath }
+  @Suppress("SpreadOperator")
+  private class Attrs(private val delegate: MutableMap<String, Any?>) : MutableMap<String, Any?> by delegate {
+    constructor(vararg entries: Pair<String, Any?>) : this(mutableMapOf(*entries))
 
-  private class Attrs : MutableMap<String, Any?> by mutableMapOf() {
     override fun toString(): String {
       if (isEmpty()) return ""
       val csv = mapNotNull { (k, v) -> if (v == null) null else "\"$k\"=\"$v\"" }.joinToString(separator = ",")
@@ -139,5 +170,9 @@ internal class DotFileWriter(
     }
 
     fun hasAnyValues() = values.any { it != null }
+  }
+
+  private companion object {
+    val SUPPORTED_CHAR_REGEX = "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()
   }
 }

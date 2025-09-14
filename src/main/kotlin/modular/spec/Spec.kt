@@ -14,7 +14,7 @@ interface Spec<LegendSpec : Any, ChartSpec : Any> {
   val fileExtension: Property<String>
 
   var legend: LegendSpec?
-  @ModularDsl fun legend(): LegendSpec
+  @ModularDsl fun legend()
   @ModularDsl fun legend(action: Action<LegendSpec>)
 
   val chart: ChartSpec

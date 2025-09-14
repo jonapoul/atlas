@@ -4,7 +4,6 @@
  */
 package modular.spec
 
-import modular.gradle.ExperimentalModularApi
 import modular.gradle.ModularDsl
 import org.gradle.api.provider.SetProperty
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
@@ -50,7 +49,6 @@ interface LinkTypesSpec {
     color: String? = null,
   ) = add(configuration.toRegex(), style, color)
 
-  @ExperimentalModularApi
   @ModularDsl
   operator fun String.invoke(
     style: String? = null,

@@ -61,7 +61,7 @@ abstract class DumpModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithO
     ): TaskProvider<DumpModuleLinksTask> = with(target) {
       tasks.register(NAME, DumpModuleLinksTask::class.java) { task ->
         task.thisPath.convention(target.path)
-        task.moduleLinks.convention(ModuleLinks.of(target, extension.ignoredConfigs.get()))
+        task.moduleLinks.convention(ModuleLinks.of(target, extension.general.ignoredConfigs.get()))
         task.outputFile.convention(fileInBuildDirectory("module-links"))
       }
     }

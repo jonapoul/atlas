@@ -28,7 +28,7 @@ object GraphVizBigGraph100DpiSvgWithAdjustment : Scenario by GraphVizBigGraph {
         }
       }
 
-      experimental {
+      general {
         adjustSvgViewBox = true
       }
     }

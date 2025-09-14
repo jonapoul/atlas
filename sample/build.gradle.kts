@@ -1,6 +1,3 @@
-@file:OptIn(ExperimentalModularApi::class)
-
-import modular.gradle.ExperimentalModularApi
 import modular.graphviz.spec.ArrowType
 import modular.graphviz.spec.LayoutEngine
 import modular.graphviz.spec.LinkStyle
@@ -16,10 +13,13 @@ plugins {
 }
 
 modular {
-  generateOnSync = true
-  ignoredConfigs = setOf("debug", "kover", "ksp", "test")
-  ignoredModules = emptySet()
-  supportUpwardsTraversal = false
+  general {
+    adjustSvgViewBox = true
+    generateOnSync = true
+    ignoredConfigs = setOf("debug", "kover", "ksp", "test")
+    ignoredModules = emptySet()
+    supportUpwardsTraversal = false
+  }
 
   moduleTypes {
     builtIns()
@@ -68,10 +68,6 @@ modular {
       eps()
       png()
       svg()
-    }
-
-    experimental {
-      adjustSvgViewBox = true
     }
   }
 }

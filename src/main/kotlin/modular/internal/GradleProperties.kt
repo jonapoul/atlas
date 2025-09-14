@@ -11,13 +11,12 @@ import org.gradle.api.provider.Provider
  * Just to keep all gradle property references together - easier to document
  */
 internal class GradleProperties(private val project: Project) {
-  // General settings
-  val generateOnSync: Provider<Boolean> = bool(key = "modular.generateOnSync", default = false)
-  val separator: Provider<String> = string(key = "modular.separator", default = ",")
-  val supportUpwardsTraversal: Provider<Boolean> = bool(key = "modular.supportUpwardsTraversal", default = false)
-
-  // Experimental
-  val adjustSvgViewBox: Provider<Boolean> = bool(key = "modular.experimental.adjustSvgViewBox", default = false)
+  // General
+  val adjustSvgViewBox: Provider<Boolean> = bool(key = "modular.general.adjustSvgViewBox", default = false)
+  val generateOnSync: Provider<Boolean> = bool(key = "modular.general.generateOnSync", default = false)
+  val groupModules: Provider<Boolean> = bool(key = "modular.general.groupModules", default = false)
+  val separator: Provider<String> = string(key = "modular.general.separator", default = ",")
+  val supportUpwardsTraversal: Provider<Boolean> = bool("modular.general.supportUpwardsTraversal", default = false)
 
   // GraphViz legend
   val cellBorder: Provider<Int> = int(key = "modular.graphViz.legend.cellBorder", default = 1)

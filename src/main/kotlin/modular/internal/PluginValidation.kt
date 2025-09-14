@@ -46,7 +46,7 @@ internal fun Project.warnIfNoGraphVizOutputs(extension: ModularExtensionImpl) {
 }
 
 internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionImpl) {
-  val adjustSvgViewBox = extension.experimental.adjustSvgViewBox.get()
+  val adjustSvgViewBox = extension.general.adjustSvgViewBox.get()
   val graphVizSpec = extension.specs.filterIsInstance<GraphVizSpec>().firstOrNull()
   val warningIsSuppressed = extension.properties.suppressSvgViewBoxWarning.get()
   val dpiIsConfigured = graphVizSpec?.chart?.dpi?.isPresent == true

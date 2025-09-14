@@ -63,7 +63,7 @@ interface GraphVizSpec : Spec<GraphVizLegendSpec, GraphVizChartSpec> {
    * legend generation. Defaults to null.
    */
   override var legend: GraphVizLegendSpec?
-  override fun legend(): GraphVizLegendSpec
+  override fun legend()
   override fun legend(action: Action<GraphVizLegendSpec>)
 
   /**

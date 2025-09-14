@@ -58,12 +58,9 @@ internal inline fun <reified T : Any> ObjectFactory.set(convention: Set<T>): Set
 internal fun ObjectFactory.directory(convention: Directory): DirectoryProperty =
   directoryProperty().convention(convention)
 
-internal inline fun <reified E : Enum<E>> ObjectFactory.enum(convention: Provider<E>): Property<E> =
-  property(E::class.java).convention(convention)
-
 internal fun Project.configureSeparators(extension: ModularExtension) {
   tasks.withType(TaskWithSeparator::class.java).configureEach { t ->
-    t.separator.convention(extension.separator)
+    t.separator.convention(extension.general.separator)
   }
 }
 
@@ -71,7 +68,7 @@ internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
   afterEvaluate {
     val isGradleSync = System.getProperty("idea.sync.active") == "true"
 
-    if (extension.generateOnSync.get() && isGradleSync) {
+    if (extension.general.generateOnSync.get() && isGradleSync) {
       val modularGenerationTasks = tasks.withType(ModularGenerationTask::class.java)
       tasks.maybeCreate("prepareKotlinIdeaImport").dependsOn(modularGenerationTasks)
     }

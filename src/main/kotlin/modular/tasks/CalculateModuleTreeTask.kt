@@ -95,7 +95,7 @@ abstract class CalculateModuleTreeTask : DefaultTask(), TaskWithSeparator, TaskW
     ): TaskProvider<CalculateModuleTreeTask> = with(target) {
       val calculateTree = tasks.register(NAME, CalculateModuleTreeTask::class.java) { task ->
         task.thisPath.convention(target.path)
-        task.supportUpwardsTraversal.convention(extension.supportUpwardsTraversal)
+        task.supportUpwardsTraversal.convention(extension.general.supportUpwardsTraversal)
         task.outputFile.convention(fileInBuildDirectory("module-tree"))
       }
 
