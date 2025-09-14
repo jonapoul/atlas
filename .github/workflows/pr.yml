@@ -58,7 +58,7 @@ jobs:
         run: ./gradlew check
 
       - name: Run generate on sample
-        run: ./gradlew -p sample modularGenerate check
+        run: ./gradlew -p sample check
 
       - name: Check for local diffs
         working-directory: ./sample
