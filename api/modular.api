@@ -534,7 +534,6 @@ public abstract class modular/tasks/DumpModuleTypeTask : org/gradle/api/DefaultT
 	public static final field NAME Ljava/lang/String;
 	public fun <init> ()V
 	public final fun execute ()V
-	public abstract fun getAllModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getModuleType ()Lorg/gradle/api/provider/Property;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
