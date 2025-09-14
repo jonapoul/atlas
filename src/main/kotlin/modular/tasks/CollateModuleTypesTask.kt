@@ -43,7 +43,7 @@ abstract class CollateModuleTypesTask : DefaultTask(), TaskWithSeparator, TaskWi
     TypedModules.write(modulesWithType, outputFile, separator)
 
     logger.info("CollateModuleTypesTask: ${modulesWithType.size} modules")
-    modulesWithType.forEach { (projectPath, type, _) ->
+    modulesWithType.forEach { (projectPath, type) ->
       logger.info("CollateModuleTypesTask:     path=$projectPath, type=${type?.name}")
     }
   }

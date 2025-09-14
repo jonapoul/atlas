@@ -10,7 +10,6 @@ import modular.internal.ModuleLink
 import modular.internal.Node
 import modular.internal.Replacement
 import modular.internal.TypedModule
-import modular.spec.LinkType
 import modular.spec.ModuleTypeModel
 
 internal fun node(path: String) = Node(typedModule(path))
@@ -21,34 +20,25 @@ internal fun typedModule(
 ) = TypedModule(
   projectPath = path,
   type = type,
-  separator = ",",
-)
-
-internal fun typedModule(
-  path: String,
-  type: String,
-  color: String,
-) = TypedModule(
-  projectPath = path,
-  type = ModuleTypeModel(type, color),
-  separator = ",",
 )
 
 internal fun moduleLink(
   fromPath: String,
   toPath: String,
   configuration: String = "implementation",
+  style: String? = null,
+  color: String? = null,
 ) = ModuleLink(
   fromPath,
   toPath,
   configuration,
-  separator = ",",
+  style,
+  color,
 )
 
 internal fun dotFileWriter(
   typedModules: Set<TypedModule> = emptySet(),
   links: Set<ModuleLink> = emptySet(),
-  linkTypes: Set<LinkType> = emptySet(),
   replacements: Set<Replacement> = emptySet(),
   thisPath: String = ":app",
   groupModules: Boolean = false,
@@ -56,7 +46,6 @@ internal fun dotFileWriter(
 ) = DotFileWriter(
   typedModules = typedModules,
   links = links,
-  linkTypes = linkTypes,
   replacements = replacements,
   thisPath = thisPath,
   groupModules = groupModules,

@@ -11,7 +11,6 @@ import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModuleLinks
 import modular.internal.Replacement
 import modular.internal.TypedModules
-import modular.spec.LinkType
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.CollateModuleTypesTask
 import modular.tasks.MODULAR_TASK_GROUP
@@ -47,7 +46,6 @@ abstract class GenerateModulesDotFileTask :
   // General
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val groupModules: Property<Boolean>
-  @get:Input abstract val linkTypes: SetProperty<LinkType>
   @get:Input abstract val printOutput: Property<Boolean>
   @get:Input abstract val replacements: SetProperty<Replacement>
   @get:Input abstract val thisPath: Property<String>
@@ -69,7 +67,6 @@ abstract class GenerateModulesDotFileTask :
     val writer = DotFileWriter(
       typedModules = TypedModules.read(moduleTypesFile, separator),
       links = ModuleLinks.read(linksFile, separator),
-      linkTypes = linkTypes.get(),
       replacements = replacements.get(),
       thisPath = thisPath.get(),
       groupModules = groupModules.get(),
@@ -105,7 +102,6 @@ abstract class GenerateModulesDotFileTask :
         task.outputFile.convention(outputFile)
 
         task.groupModules.convention(extension.general.groupModules)
-        task.linkTypes.convention(spec.linkTypes.linkTypes)
         task.printOutput.convention(printOutput)
         task.replacements.convention(extension.modulePathTransforms.replacements)
         task.thisPath.convention(target.path)

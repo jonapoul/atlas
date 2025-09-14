@@ -7,12 +7,14 @@ package modular.tasks
 import modular.gradle.ModularExtension
 import modular.internal.ModuleLinks
 import modular.internal.fileInBuildDirectory
+import modular.spec.LinkType
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
@@ -22,6 +24,7 @@ import org.gradle.api.tasks.TaskProvider
 @CacheableTask
 abstract class DumpModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract val moduleLinks: MapProperty<String, List<String>>
+  @get:Input abstract val linkTypes: SetProperty<LinkType>
   @get:Input abstract val thisPath: Property<String>
   @get:Input abstract override val separator: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
@@ -37,6 +40,7 @@ abstract class DumpModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithO
       outputFile = outputFile.get().asFile,
       fromPath = thisPath.get(),
       moduleLinks = moduleLinks.get(),
+      linkTypes = linkTypes.get(),
       separator = separator.get(),
     )
 
@@ -62,6 +66,12 @@ abstract class DumpModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithO
       tasks.register(NAME, DumpModuleLinksTask::class.java) { task ->
         task.thisPath.convention(target.path)
         task.moduleLinks.convention(ModuleLinks.of(target, extension.general.ignoredConfigs.get()))
+        task.linkTypes.convention(
+          provider {
+            extension.graphViz.linkTypes.linkTypes
+              .get()
+          },
+        )
         task.outputFile.convention(fileInBuildDirectory("module-links"))
       }
     }

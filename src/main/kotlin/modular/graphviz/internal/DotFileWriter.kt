@@ -15,12 +15,10 @@ import modular.internal.TypedModule
 import modular.internal.buildGraphElements
 import modular.internal.buildIndentedString
 import modular.internal.contains
-import modular.spec.LinkType
 
 internal data class DotFileWriter(
   private val typedModules: Set<TypedModule>,
   private val links: Set<ModuleLink>,
-  private val linkTypes: Set<LinkType>,
   private val replacements: Set<Replacement>,
   private val thisPath: String,
   private val groupModules: Boolean,
@@ -72,21 +70,13 @@ internal data class DotFileWriter(
     links
       .map { link -> link.copy(fromPath = link.fromPath.cleaned(), toPath = link.toPath.cleaned()) }
       .sortedWith(compareBy({ it.fromPath }, { it.toPath }))
-      .forEach { (fromPath, toPath, configuration) ->
-        val attrs = linkAttrs(configuration)
+      .forEach { (fromPath, toPath, _, style, color) ->
+        val attrs = Attrs(
+          "style" to style,
+          "color" to color,
+        )
         appendLine("\"$fromPath\" -> \"$toPath\"$attrs")
       }
-  }
-
-  private fun linkAttrs(configuration: String): Attrs {
-    val type = linkTypes
-      .firstOrNull { s -> s.configuration.matches(configuration) }
-      ?: return Attrs()
-
-    val attrs = Attrs()
-    attrs["style"] = type.style
-    attrs["color"] = type.color
-    return attrs
   }
 
   private fun IndentedStringBuilder.appendNodes() {
@@ -164,7 +154,7 @@ internal data class DotFileWriter(
     constructor(vararg entries: Pair<String, Any?>) : this(mutableMapOf(*entries))
 
     override fun toString(): String {
-      if (isEmpty()) return ""
+      if (isEmpty() || values.all { it == null }) return ""
       val csv = mapNotNull { (k, v) -> if (v == null) null else "\"$k\"=\"$v\"" }.joinToString(separator = ",")
       return " [$csv]"
     }

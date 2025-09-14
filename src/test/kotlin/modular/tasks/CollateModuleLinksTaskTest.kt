@@ -57,10 +57,10 @@ class CollateModuleLinksTaskTest : ScenarioTest() {
     // and the links file contains the expected, in a-z order
     assertThat(moduleLinks).isEqualTo(
       listOf(
-        ":mid-a,:bottom,api",
-        ":mid-b,:bottom,implementation",
-        ":top,:mid-a,api",
-        ":top,:mid-b,implementation",
+        ":mid-a,:bottom,api,,",
+        ":mid-b,:bottom,implementation,,",
+        ":top,:mid-a,api,,",
+        ":top,:mid-b,implementation,,",
       ),
     )
   }
@@ -76,12 +76,12 @@ class CollateModuleLinksTaskTest : ScenarioTest() {
     // and the triangle links were detected, in a-z order
     assertThat(moduleLinks).isEqualTo(
       listOf(
-        ":a,:b1,implementation",
-        ":a,:b2,implementation",
-        ":b1,:c1,implementation",
-        ":b1,:c2,implementation",
-        ":b2,:c2,implementation",
-        ":b2,:c3,implementation",
+        ":a,:b1,implementation,,",
+        ":a,:b2,implementation,,",
+        ":b1,:c1,implementation,,",
+        ":b1,:c2,implementation,,",
+        ":b2,:c2,implementation,,",
+        ":b2,:c3,implementation,,",
       ),
     )
   }
@@ -102,10 +102,10 @@ class CollateModuleLinksTaskTest : ScenarioTest() {
     // and it contains the same from the diamond test a bit up from here
     assertThat(customModuleLinksFileContents).isEqualTo(
       listOf(
-        ":mid-a,:bottom,api",
-        ":mid-b,:bottom,implementation",
-        ":top,:mid-a,api",
-        ":top,:mid-b,implementation",
+        ":mid-a,:bottom,api,,",
+        ":mid-b,:bottom,implementation,,",
+        ":top,:mid-a,api,,",
+        ":top,:mid-b,implementation,,",
       ),
     )
   }

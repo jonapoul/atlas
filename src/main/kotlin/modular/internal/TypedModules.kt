@@ -26,7 +26,6 @@ internal object TypedModules {
 internal data class TypedModule(
   val projectPath: String,
   val type: ModuleTypeModel?,
-  val separator: String,
 ) : Comparable<TypedModule> {
   fun string(separator: String): String = listOfNotNull(
     projectPath,
@@ -41,8 +40,8 @@ internal data class TypedModule(
 internal fun TypedModule(string: String, separator: String): TypedModule {
   val split = string.split(separator)
   return when (split.size) {
-    1 -> TypedModule(projectPath = split[0], type = null, separator)
-    3 -> TypedModule(projectPath = split[0], ModuleTypeModel(name = split[1], color = split[2]), separator)
+    1 -> TypedModule(projectPath = split[0], type = null)
+    3 -> TypedModule(projectPath = split[0], ModuleTypeModel(name = split[1], color = split[2]))
     else -> error("Malformed typed module line: '$string'")
   }
 }

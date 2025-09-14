@@ -51,8 +51,8 @@ abstract class CalculateModuleTreeTask : DefaultTask(), TaskWithSeparator, TaskW
     ModuleLinks.write(tree, outputFile, separator)
 
     logger.info("CalculateModuleTreeTask: written ${tree.size} links from ${allLinks.size} across the project")
-    tree.forEach { (from, to, config) ->
-      logger.info("CalculateModuleTreeTask:     from=$from, to=$to, config=$config")
+    tree.forEach { link ->
+      logger.info("CalculateModuleTreeTask:     link = $link")
     }
   }
 
