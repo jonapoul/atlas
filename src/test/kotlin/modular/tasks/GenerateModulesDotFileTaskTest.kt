@@ -8,10 +8,7 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import assertk.assertions.exists
-import assertk.assertions.isEmpty
-import assertk.assertions.isEqualTo
 import modular.test.ScenarioTest
-import modular.test.allSuccessful
 import modular.test.runTask
 import modular.test.scenarios.GraphVizBasic
 import modular.test.scenarios.GraphVizChartCustomConfig
@@ -19,6 +16,7 @@ import modular.test.scenarios.GraphVizChartWithCustomLinkTypes
 import modular.test.scenarios.GraphVizChartWithProperties
 import modular.test.scenarios.GraphVizChartWithReplacements
 import modular.test.scenarios.NestedModules
+import modular.test.scenarios.NestedModulesNoModuleTypes
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
@@ -30,6 +28,39 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
 
     // then the task didn't exist
     assertThat(result.output).doesNotContain("generateModulesDotFile")
+  }
+
+  @Test
+  fun `Run if no module types are declared`() = runScenario(NestedModulesNoModuleTypes) {
+    // when
+    runTask("generateModulesDotFile").build()
+
+    // then
+    assertThat(resolve("app/modules.dot").readText()).contains(
+      """
+        digraph {
+          node ["style"="filled"]
+          ":app" ["penwidth"="3","shape"="box"]
+          ":data:a" ["shape"="none"]
+          ":data:b" ["shape"="none"]
+          ":domain:a" ["shape"="none"]
+          ":domain:b" ["shape"="none"]
+          ":ui:a" ["shape"="none"]
+          ":ui:b" ["shape"="none"]
+          ":ui:c" ["shape"="none"]
+          ":app" -> ":ui:a"
+          ":app" -> ":ui:b"
+          ":app" -> ":ui:c"
+          ":domain:a" -> ":data:a"
+          ":domain:b" -> ":data:a"
+          ":domain:b" -> ":data:b"
+          ":ui:a" -> ":domain:a"
+          ":ui:b" -> ":domain:b"
+          ":ui:c" -> ":domain:a"
+          ":ui:c" -> ":domain:b"
+        }
+      """.trimIndent(),
+    )
   }
 
   @Test
@@ -47,7 +78,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
           ":b" ["fillcolor"="#FF8800","shape"="none"]
           ":c" ["fillcolor"="#FF8800","shape"="none"]
           ":a" -> ":b"
@@ -60,7 +91,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          ":b" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
+          ":b" ["fillcolor"="#FF8800","penwidth"="3","shape"="box"]
         }
       """.trimIndent(),
     )
@@ -68,7 +99,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          ":c" ["fillcolor"="#FF8800","color"="black","penwidth"="3","shape"="box"]
+          ":c" ["fillcolor"="#FF8800","penwidth"="3","shape"="box"]
         }
       """.trimIndent(),
     )
@@ -90,7 +121,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
           edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
           graph ["dpi"="150","fontsize"="20","ranksep"="2.5","rankdir"="LR"]
           node ["style"="filled"]
-          ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
           ":b" ["fillcolor"="#FF8800","shape"="none"]
           ":c" ["fillcolor"="#FF8800","shape"="none"]
           ":a" -> ":b"
@@ -116,7 +147,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
           edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
           graph ["dpi"="150","fontsize"="20","ranksep"="2.5","rankdir"="LR"]
           node ["style"="filled"]
-          ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
           ":b" ["fillcolor"="#FF8800","shape"="none"]
           ":c" ["fillcolor"="#FF8800","shape"="none"]
           ":a" -> ":b"
@@ -141,7 +172,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
         digraph {
           node ["style"="filled"]
           "B" ["fillcolor"="#FF8800","shape"="none"]
-          "a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          "a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
           "c" ["fillcolor"="#FF8800","shape"="none"]
           "a" -> "B"
           "a" -> "c"
@@ -164,7 +195,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
           ":b" ["fillcolor"="#CA66FF","shape"="none"]
           ":c" ["fillcolor"="#FF8800","shape"="none"]
           ":d" ["fillcolor"="#FF8800","shape"="none"]
@@ -190,7 +221,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          ":app" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          ":app" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
           ":data:a" ["fillcolor"="#CA66FF","shape"="none"]
           ":data:b" ["fillcolor"="#CA66FF","shape"="none"]
           ":domain:a" ["fillcolor"="#CA66FF","shape"="none"]

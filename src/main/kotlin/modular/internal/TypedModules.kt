@@ -25,14 +25,24 @@ internal object TypedModules {
 
 internal data class TypedModule(
   val projectPath: String,
-  val type: ModuleTypeModel,
+  val type: ModuleTypeModel?,
   val separator: String,
 ) : Comparable<TypedModule> {
-  fun string(separator: String): String = listOf(projectPath, type.name, type.color).joinToString(separator)
+  fun string(separator: String): String = listOfNotNull(
+    projectPath,
+    type?.name,
+    type?.color,
+  ).joinToString(separator)
+
   override fun compareTo(other: TypedModule): Int = projectPath.compareTo(other.projectPath)
 }
 
+@Suppress("MagicNumber")
 internal fun TypedModule(string: String, separator: String): TypedModule {
-  val (path, name, color) = string.split(separator)
-  return TypedModule(path, ModuleTypeModel(name, color), separator)
+  val split = string.split(separator)
+  return when (split.size) {
+    1 -> TypedModule(projectPath = split[0], type = null, separator)
+    3 -> TypedModule(projectPath = split[0], ModuleTypeModel(name = split[1], color = split[2]), separator)
+    else -> error("Malformed typed module line: '$string'")
+  }
 }

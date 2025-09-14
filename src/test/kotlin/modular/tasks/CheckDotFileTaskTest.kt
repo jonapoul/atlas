@@ -42,7 +42,7 @@ class CheckDotFileTaskTest : ScenarioTest() {
       |      digraph {
       |  +++   graph ["layout"="circo"]
       |        node ["style"="filled"]
-      |        ":a" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+      |        ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
       |        ":b" ["fillcolor"="#FF8800","shape"="none"]
       |        ":c" ["fillcolor"="#FF8800","shape"="none"]
       |        ":a" -> ":b"

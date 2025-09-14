@@ -8,12 +8,6 @@ import modular.graphviz.spec.GraphVizSpec
 import modular.spec.ModuleType
 import org.gradle.api.Project
 
-internal fun Project.warnIfNoModuleTypes(types: List<ModuleType>) {
-  if (types.isEmpty()) {
-    logger.warn("Warning: No module types have been registered!")
-  }
-}
-
 internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
   types.forEach { type ->
     if (!type.pathContains.isPresent && !type.pathMatches.isPresent && !type.hasPluginId.isPresent) {

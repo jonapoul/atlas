@@ -15,7 +15,6 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
@@ -29,7 +28,6 @@ abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOu
   @get:Input abstract val projectPath: Property<String>
   @get:[Input Optional] abstract val moduleType: Property<ModuleTypeModel>
   @get:Input abstract override val separator: Property<String>
-  @get:Input abstract val allModuleTypes: ListProperty<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -43,11 +41,6 @@ abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOu
     val moduleType = moduleType.orNull
     val separator = separator.get()
     val outputFile = outputFile.get().asFile
-
-    if (moduleType == null) {
-      val allModuleTypes = allModuleTypes.get()
-      error("No module type matching $projectPath. All types = [${allModuleTypes.joinToString { '"' + it + '"' }}]")
-    }
 
     val typedModule = TypedModule(projectPath, moduleType, separator)
     outputFile.writeText(typedModule.string(separator))
@@ -73,11 +66,11 @@ abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOu
 
       afterEvaluate {
         val types = extension.orderedTypes()
-        val type = types.firstOrNull { t -> t.matches(target) }
-        val matching = type?.let(::moduleTypeModel)
+        val matching = types
+          .firstOrNull { t -> t.matches(target) }
+          ?.let(::moduleTypeModel)
         dumpModule.configure { t ->
           t.moduleType.convention(matching)
-          t.allModuleTypes.convention(types.map { it.name })
         }
       }
 
