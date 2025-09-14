@@ -6,6 +6,7 @@ package modular.gradle
 
 import modular.graphviz.spec.GraphVizSpec
 import modular.spec.GeneralSpec
+import modular.spec.LinkTypesSpec
 import modular.spec.ModulePathTransformSpec
 import modular.spec.ModuleType
 import modular.spec.OutputSpec
@@ -25,6 +26,9 @@ interface ModularExtension {
 
   val moduleTypes: NamedDomainObjectContainer<ModuleType>
   @ModularDsl fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleType>>)
+
+  val linkTypes: LinkTypesSpec
+  @ModularDsl fun linkTypes(action: Action<LinkTypesSpec>)
 
   val outputs: OutputSpec
   @ModularDsl fun outputs(action: Action<OutputSpec>)

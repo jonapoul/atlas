@@ -38,11 +38,6 @@ import org.gradle.api.provider.Property
  *     chart {
  *       ...
  *     }
- *
- *     linkTypes {
- *       api(style = LinkStyle.Bold)
- *       implementation(color = "red")
- *     }
  *   }
  * }
  * ```
@@ -92,11 +87,4 @@ interface GraphVizSpec : Spec<GraphVizLegendSpec, GraphVizChartSpec> {
    */
   val fileFormats: GraphVizFileFormatSpec
   @ModularDsl fun fileFormats(action: Action<GraphVizFileFormatSpec>)
-
-  /**
-   * Use to configure link styles between each module in the diagram. Empty by default, so all links will have a solid
-   * black line.
-   */
-  val linkTypes: GraphVizLinkTypesSpec
-  @ModularDsl fun linkTypes(action: Action<GraphVizLinkTypesSpec>)
 }
