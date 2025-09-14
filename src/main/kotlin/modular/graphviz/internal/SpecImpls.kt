@@ -32,7 +32,7 @@ internal class GraphVizSpecImpl(
   override val pathToDotCommand: Property<String> = objects.property(String::class.java).unsetConvention()
 
   override var legend: GraphVizLegendSpec? = null
-  override fun legend() = getOrBuildLegend()
+  override fun legend() = legend { /* no-op */ }
   override fun legend(action: Action<GraphVizLegendSpec>) = action.execute(getOrBuildLegend())
 
   override val chart = GraphVizChartSpecImpl(objects, properties)
