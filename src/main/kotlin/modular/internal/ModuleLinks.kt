@@ -4,12 +4,14 @@
  */
 package modular.internal
 
+import modular.spec.LinkType
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.provider.Provider
 import java.io.File
 import java.util.SortedMap
+import kotlin.reflect.typeOf
 
 internal object ModuleLinks {
   fun of(
@@ -48,6 +50,7 @@ internal object ModuleLinks {
     outputFile: File,
     fromPath: String,
     moduleLinks: Map<String, List<String>>,
+    linkTypes: Set<LinkType>,
     separator: String,
   ): SortedMap<String, List<String>> {
     val links = moduleLinks.toSortedMap()
@@ -56,7 +59,11 @@ internal object ModuleLinks {
         links.forEach { (toPath, configurations) ->
           configurations
             .sorted()
-            .forEach { config -> appendLine(listOf(fromPath, toPath, config).joinToString(separator)) }
+            .forEach { config ->
+              val type = linkTypes.firstOrNull { it.configuration.matches(config) }
+              val link = ModuleLink(fromPath, toPath, config, type?.style, type?.color)
+              appendLine(link.string(separator))
+            }
         }
       },
     )
@@ -68,22 +75,30 @@ internal data class ModuleLink(
   val fromPath: String,
   val toPath: String,
   val configuration: String,
-  val separator: String,
+  val style: String?,
+  val color: String?,
 ) : Comparable<ModuleLink> {
   override fun compareTo(other: ModuleLink): Int =
     fromPath.compareTo(other.fromPath).takeIf { it != 0 }
       ?: toPath.compareTo(other.toPath).takeIf { it != 0 }
       ?: configuration.compareTo(other.configuration)
 
-  fun string(separator: String): String = "$fromPath$separator$toPath$separator$configuration"
+  fun string(separator: String): String = listOf(fromPath, toPath, configuration, style, color)
+    .joinToString(separator) { it.orEmpty() }
 }
 
 internal operator fun Set<ModuleLink>.contains(module: TypedModule): Boolean =
   any { (from, to, _) -> from == module.projectPath || to == module.projectPath }
 
 private fun ModuleLink(line: String, separator: String): ModuleLink {
-  val (fromPath, toPath, configuration) = line.split(separator)
-  return ModuleLink(fromPath, toPath, configuration, separator)
+  val (fromPath, toPath, configuration, style, color) = line.split(separator)
+  return ModuleLink(
+    fromPath = fromPath,
+    toPath = toPath,
+    configuration = configuration,
+    style = style.ifEmpty { null },
+    color = color.ifEmpty { null },
+  )
 }
 
 private fun ConfigurationContainer.filterUseful(ignoredConfigs: Collection<String>) = filter { c ->

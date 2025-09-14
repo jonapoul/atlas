@@ -61,11 +61,11 @@ class DumpModuleLinksTaskTest : ScenarioTest() {
 
     // and the links file is empty
     assertThat(moduleLinks(module = "top"))
-      .isEqualTo(listOf(":top,:mid-a,api", ":top,:mid-b,implementation"))
+      .isEqualTo(listOf(":top,:mid-a,api,,", ":top,:mid-b,implementation,,"))
     assertThat(moduleLinks(module = "mid-a"))
-      .isEqualTo(listOf(":mid-a,:bottom,api"))
+      .isEqualTo(listOf(":mid-a,:bottom,api,,"))
     assertThat(moduleLinks(module = "mid-b"))
-      .isEqualTo(listOf(":mid-b,:bottom,implementation"))
+      .isEqualTo(listOf(":mid-b,:bottom,implementation,,"))
     assertThat(moduleLinks(module = "bottom"))
       .isEqualTo(emptyList())
   }
@@ -79,9 +79,9 @@ class DumpModuleLinksTaskTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
 
     // and the triangle links were detected as expected
-    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b1,implementation", ":a,:b2,implementation"))
-    assertThat(moduleLinks(module = "b1")).isEqualTo(listOf(":b1,:c1,implementation", ":b1,:c2,implementation"))
-    assertThat(moduleLinks(module = "b2")).isEqualTo(listOf(":b2,:c2,implementation", ":b2,:c3,implementation"))
+    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b1,implementation,,", ":a,:b2,implementation,,"))
+    assertThat(moduleLinks(module = "b1")).isEqualTo(listOf(":b1,:c1,implementation,,", ":b1,:c2,implementation,,"))
+    assertThat(moduleLinks(module = "b2")).isEqualTo(listOf(":b2,:c2,implementation,,", ":b2,:c3,implementation,,"))
     assertThat(moduleLinks(module = "c1")).isEmpty()
     assertThat(moduleLinks(module = "c2")).isEmpty()
     assertThat(moduleLinks(module = "c3")).isEmpty()
@@ -96,7 +96,7 @@ class DumpModuleLinksTaskTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
 
     // and the two custom configs were detected as links
-    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b,abc", ":a,:b,xyz"))
+    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b,abc,,", ":a,:b,xyz,,"))
     assertThat(moduleLinks(module = "b")).isEmpty()
   }
 
@@ -109,7 +109,7 @@ class DumpModuleLinksTaskTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
 
     // and the two custom configs were detected as links, but the xyz config was excluded
-    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b,abc"))
+    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b,abc,,"))
     assertThat(moduleLinks(module = "b")).isEmpty()
   }
 

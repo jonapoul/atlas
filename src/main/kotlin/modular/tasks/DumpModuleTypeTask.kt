@@ -42,7 +42,7 @@ abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOu
     val separator = separator.get()
     val outputFile = outputFile.get().asFile
 
-    val typedModule = TypedModule(projectPath, moduleType, separator)
+    val typedModule = TypedModule(projectPath, moduleType)
     outputFile.writeText(typedModule.string(separator))
   }
 

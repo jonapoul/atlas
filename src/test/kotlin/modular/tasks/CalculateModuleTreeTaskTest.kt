@@ -56,16 +56,16 @@ class CalculateModuleTreeTaskTest : ScenarioTest() {
     // and the top module sees everything below it
     assertThat(moduleTree("top")).isEqualTo(
       listOf(
-        ":mid-a,:bottom,api",
-        ":mid-b,:bottom,implementation",
-        ":top,:mid-a,api",
-        ":top,:mid-b,implementation",
+        ":mid-a,:bottom,api,,",
+        ":mid-b,:bottom,implementation,,",
+        ":top,:mid-a,api,,",
+        ":top,:mid-b,implementation,,",
       ),
     )
 
     // and the mid only sees itself and bottom
-    assertThat(moduleTree("mid-a")).isEqualTo(listOf(":mid-a,:bottom,api"))
-    assertThat(moduleTree("mid-b")).isEqualTo(listOf(":mid-b,:bottom,implementation"))
+    assertThat(moduleTree("mid-a")).isEqualTo(listOf(":mid-a,:bottom,api,,"))
+    assertThat(moduleTree("mid-b")).isEqualTo(listOf(":mid-b,:bottom,implementation,,"))
 
     // and the bottom sees nothing
     assertThat(moduleTree("bottom")).isEmpty()
@@ -82,35 +82,35 @@ class CalculateModuleTreeTaskTest : ScenarioTest() {
     // and the top module sees everything below it
     assertThat(moduleTree("top")).isEqualTo(
       listOf(
-        ":mid-a,:bottom,api",
-        ":mid-b,:bottom,implementation",
-        ":top,:mid-a,api",
-        ":top,:mid-b,implementation",
+        ":mid-a,:bottom,api,,",
+        ":mid-b,:bottom,implementation,,",
+        ":top,:mid-a,api,,",
+        ":top,:mid-b,implementation,,",
       ),
     )
 
     // and the mid sees itself, top and bottom
     assertThat(moduleTree("mid-a")).isEqualTo(
       listOf(
-        ":mid-a,:bottom,api",
-        ":top,:mid-a,api",
+        ":mid-a,:bottom,api,,",
+        ":top,:mid-a,api,,",
       ),
     )
 
     assertThat(moduleTree("mid-b")).isEqualTo(
       listOf(
-        ":mid-b,:bottom,implementation",
-        ":top,:mid-b,implementation",
+        ":mid-b,:bottom,implementation,,",
+        ":top,:mid-b,implementation,,",
       ),
     )
 
     // and the bottom sees everything above it
     assertThat(moduleTree("bottom")).isEqualTo(
       listOf(
-        ":mid-a,:bottom,api",
-        ":mid-b,:bottom,implementation",
-        ":top,:mid-a,api",
-        ":top,:mid-b,implementation",
+        ":mid-a,:bottom,api,,",
+        ":mid-b,:bottom,implementation,,",
+        ":top,:mid-a,api,,",
+        ":top,:mid-b,implementation,,",
       ),
     )
   }
@@ -126,24 +126,24 @@ class CalculateModuleTreeTaskTest : ScenarioTest() {
     // and the triangle links were detected, in a-z order
     assertThat(moduleTree("a")).isEqualTo(
       listOf(
-        ":a,:b1,implementation",
-        ":a,:b2,implementation",
-        ":b1,:c1,implementation",
-        ":b1,:c2,implementation",
-        ":b2,:c2,implementation",
-        ":b2,:c3,implementation",
+        ":a,:b1,implementation,,",
+        ":a,:b2,implementation,,",
+        ":b1,:c1,implementation,,",
+        ":b1,:c2,implementation,,",
+        ":b2,:c2,implementation,,",
+        ":b2,:c3,implementation,,",
       ),
     )
     assertThat(moduleTree("b1")).isEqualTo(
       listOf(
-        ":b1,:c1,implementation",
-        ":b1,:c2,implementation",
+        ":b1,:c1,implementation,,",
+        ":b1,:c2,implementation,,",
       ),
     )
     assertThat(moduleTree("b2")).isEqualTo(
       listOf(
-        ":b2,:c2,implementation",
-        ":b2,:c3,implementation",
+        ":b2,:c2,implementation,,",
+        ":b2,:c3,implementation,,",
       ),
     )
     assertThat(moduleTree("c1")).isEmpty()
@@ -162,46 +162,46 @@ class CalculateModuleTreeTaskTest : ScenarioTest() {
     // and the triangle links were detected, in a-z order
     assertThat(moduleTree("a")).isEqualTo(
       listOf(
-        ":a,:b1,implementation",
-        ":a,:b2,implementation",
-        ":b1,:c1,implementation",
-        ":b1,:c2,implementation",
-        ":b2,:c2,implementation",
-        ":b2,:c3,implementation",
+        ":a,:b1,implementation,,",
+        ":a,:b2,implementation,,",
+        ":b1,:c1,implementation,,",
+        ":b1,:c2,implementation,,",
+        ":b2,:c2,implementation,,",
+        ":b2,:c3,implementation,,",
       ),
     )
     assertThat(moduleTree("b1")).isEqualTo(
       listOf(
-        ":a,:b1,implementation",
-        ":b1,:c1,implementation",
-        ":b1,:c2,implementation",
+        ":a,:b1,implementation,,",
+        ":b1,:c1,implementation,,",
+        ":b1,:c2,implementation,,",
       ),
     )
     assertThat(moduleTree("b2")).isEqualTo(
       listOf(
-        ":a,:b2,implementation",
-        ":b2,:c2,implementation",
-        ":b2,:c3,implementation",
+        ":a,:b2,implementation,,",
+        ":b2,:c2,implementation,,",
+        ":b2,:c3,implementation,,",
       ),
     )
     assertThat(moduleTree("c1")).isEqualTo(
       listOf(
-        ":a,:b1,implementation",
-        ":b1,:c1,implementation",
+        ":a,:b1,implementation,,",
+        ":b1,:c1,implementation,,",
       ),
     )
     assertThat(moduleTree("c2")).isEqualTo(
       listOf(
-        ":a,:b1,implementation",
-        ":a,:b2,implementation",
-        ":b1,:c2,implementation",
-        ":b2,:c2,implementation",
+        ":a,:b1,implementation,,",
+        ":a,:b2,implementation,,",
+        ":b1,:c2,implementation,,",
+        ":b2,:c2,implementation,,",
       ),
     )
     assertThat(moduleTree("c3")).isEqualTo(
       listOf(
-        ":a,:b2,implementation",
-        ":b2,:c3,implementation",
+        ":a,:b2,implementation,,",
+        ":b2,:c3,implementation,,",
       ),
     )
   }

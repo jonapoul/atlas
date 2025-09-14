@@ -10,5 +10,7 @@ complexity:
     thresholdInInterfaces: 20
 
 style:
+  DestructuringDeclarationWithTooManyEntries:
+    maxDestructuringEntries: 5
   MaxLineLength:
     maxLineLength: 120
