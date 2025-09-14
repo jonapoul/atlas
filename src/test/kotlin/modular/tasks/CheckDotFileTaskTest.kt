@@ -80,9 +80,9 @@ class CheckDotFileTaskTest : ScenarioTest() {
         |        table1 [label=<
         |  ---   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
         |  +++   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
-        |        <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
-        |        <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
-        |        <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
+        |          <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
+        |          <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
+        |          <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
         |        </TABLE>
         |        >];
         |      }
