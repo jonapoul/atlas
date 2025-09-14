@@ -4,8 +4,8 @@
  */
 package modular.graphviz.spec
 
-import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 import java.io.Serializable as JSerializable
+import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
 data class DotFileConfig(
@@ -27,5 +27,5 @@ internal fun DotFileConfig(spec: GraphVizChartSpec): DotFileConfig = DotFileConf
   fontSize = spec.fontSize.orNull,
   layoutEngine = spec.layoutEngine.orNull,
   rankDir = spec.rankDir.orNull,
-  rankSep = spec.rankSep.orNull
+  rankSep = spec.rankSep.orNull,
 )

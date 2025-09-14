@@ -58,9 +58,6 @@ internal inline fun <reified T : Any> ObjectFactory.set(convention: Set<T>): Set
 internal fun ObjectFactory.directory(convention: Directory): DirectoryProperty =
   directoryProperty().convention(convention)
 
-internal inline fun <reified E : Enum<E>> ObjectFactory.enum(convention: Provider<E>): Property<E> =
-  property(E::class.java).convention(convention)
-
 internal fun Project.configureSeparators(extension: ModularExtension) {
   tasks.withType(TaskWithSeparator::class.java).configureEach { t ->
     t.separator.convention(extension.general.separator)

@@ -66,6 +66,33 @@ public final class modular/graphviz/spec/Dir : java/lang/Enum, modular/graphviz/
 	public static fun values ()[Lmodular/graphviz/spec/Dir;
 }
 
+public final class modular/graphviz/spec/DotFileConfig : java/io/Serializable {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Float;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Float;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/Integer;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/Float;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Float;)Lmodular/graphviz/spec/DotFileConfig;
+	public static synthetic fun copy$default (Lmodular/graphviz/spec/DotFileConfig;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Float;ILjava/lang/Object;)Lmodular/graphviz/spec/DotFileConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getArrowHead ()Ljava/lang/String;
+	public final fun getArrowTail ()Ljava/lang/String;
+	public final fun getDir ()Ljava/lang/String;
+	public final fun getDpi ()Ljava/lang/Integer;
+	public final fun getFontSize ()Ljava/lang/Integer;
+	public final fun getLayoutEngine ()Ljava/lang/String;
+	public final fun getRankDir ()Ljava/lang/String;
+	public final fun getRankSep ()Ljava/lang/Float;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract interface class modular/graphviz/spec/GraphVizChartSpec {
 	public abstract fun arrowHead (Ljava/lang/String;)V
 	public abstract fun arrowHead (Lmodular/graphviz/spec/ArrowType;)V
@@ -230,7 +257,7 @@ public abstract interface class modular/graphviz/spec/GraphVizSpec : modular/spe
 	public abstract fun getLegend ()Lmodular/graphviz/spec/GraphVizLegendSpec;
 	public abstract fun getLinkTypes ()Lmodular/graphviz/spec/GraphVizLinkTypesSpec;
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
-	public abstract fun legend ()Lmodular/graphviz/spec/GraphVizLegendSpec;
+	public abstract fun legend ()V
 	public abstract fun legend (Lorg/gradle/api/Action;)V
 	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
 	public abstract fun setLegend (Lmodular/graphviz/spec/GraphVizLegendSpec;)V
@@ -327,26 +354,20 @@ public abstract class modular/graphviz/tasks/GenerateModulesDotFileTask : org/gr
 	public static final field Companion Lmodular/graphviz/tasks/GenerateModulesDotFileTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
-	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
-	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
-	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
-	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
-	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getPrintOutput ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 
 public final class modular/graphviz/tasks/GenerateModulesDotFileTask$Companion {
-	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/spec/ModulePathTransformSpec;Lmodular/graphviz/spec/GraphVizSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
+	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/gradle/ModularExtension;Lmodular/graphviz/spec/GraphVizSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public final class modular/internal/Replacement : java/io/Serializable {
@@ -369,6 +390,7 @@ public abstract class modular/spec/GeneralFlags {
 public abstract interface class modular/spec/GeneralSpec {
 	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
 	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
 	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
@@ -460,7 +482,7 @@ public abstract interface class modular/spec/Spec {
 	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLegend ()Ljava/lang/Object;
 	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun legend ()Ljava/lang/Object;
+	public abstract fun legend ()V
 	public abstract fun legend (Lorg/gradle/api/Action;)V
 	public abstract fun setLegend (Ljava/lang/Object;)V
 }
