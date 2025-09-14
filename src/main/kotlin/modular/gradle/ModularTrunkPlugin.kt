@@ -17,6 +17,7 @@ import modular.internal.modularBuildDirectory
 import modular.internal.orderedTypes
 import modular.internal.outputFile
 import modular.internal.registerGenerationTaskOnSync
+import modular.internal.registerModularGenerateTask
 import modular.internal.warnIfModuleTypesSpecifyNothing
 import modular.internal.warnIfNoGraphVizOutputs
 import modular.internal.warnIfSvgSelectedWithCustomDpi
@@ -42,6 +43,7 @@ class ModularTrunkPlugin : Plugin<Project> {
 
     configureSeparators(extension)
     registerGenerationTaskOnSync(extension)
+    registerModularGenerateTask()
 
     CollateModuleTypesTask.register(project)
     CollateModuleLinksTask.register(project, extension)

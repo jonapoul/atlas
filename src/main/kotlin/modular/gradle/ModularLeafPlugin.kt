@@ -16,6 +16,7 @@ import modular.internal.configureSeparators
 import modular.internal.modularBuildDirectory
 import modular.internal.outputFile
 import modular.internal.registerGenerationTaskOnSync
+import modular.internal.registerModularGenerateTask
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.DumpModuleLinksTask
 import modular.tasks.DumpModuleTypeTask
@@ -34,6 +35,7 @@ class ModularLeafPlugin : Plugin<Project> {
 
     configureSeparators(extension)
     registerGenerationTaskOnSync(extension)
+    registerModularGenerateTask()
 
     DumpModuleTypeTask.register(project, extension)
     DumpModuleLinksTask.register(project, extension)

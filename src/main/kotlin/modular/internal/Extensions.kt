@@ -9,6 +9,7 @@ import modular.graphviz.spec.GraphVizSpec
 import modular.spec.ModuleType
 import modular.spec.ModuleTypeModel
 import modular.spec.OutputSpec
+import modular.tasks.MODULAR_TASK_GROUP
 import modular.tasks.ModularGenerationTask
 import modular.tasks.TaskWithSeparator
 import org.gradle.api.Project
@@ -72,6 +73,14 @@ internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
       val modularGenerationTasks = tasks.withType(ModularGenerationTask::class.java)
       tasks.maybeCreate("prepareKotlinIdeaImport").dependsOn(modularGenerationTasks)
     }
+  }
+}
+
+internal fun Project.registerModularGenerateTask() {
+  tasks.register("modularGenerate") { t ->
+    t.group = MODULAR_TASK_GROUP
+    t.description = "Aggregates all Modular generation tasks"
+    t.dependsOn(tasks.withType(ModularGenerationTask::class.java))
   }
 }
 

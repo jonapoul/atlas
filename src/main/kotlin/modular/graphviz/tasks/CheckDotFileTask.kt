@@ -98,11 +98,11 @@ abstract class CheckDotFileTask : DefaultTask() {
     return sb.toString()
   }
 
-  companion object {
+  internal companion object {
     internal const val NAME_MODULES = "checkModulesDotFile"
     internal const val NAME_LEGEND = "checkLegendDotFile"
 
-    fun <T : TaskWithOutputFile> register(
+    internal fun <T : TaskWithOutputFile> register(
       target: Project,
       name: String,
       generateDotFile: TaskProvider<T>,
