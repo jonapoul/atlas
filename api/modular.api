@@ -1,6 +1,3 @@
-public abstract interface annotation class modular/gradle/ExperimentalModularApi : java/lang/annotation/Annotation {
-}
-
 public abstract interface annotation class modular/gradle/ModularDsl : java/lang/annotation/Annotation {
 }
 

@@ -4,7 +4,6 @@
  */
 package modular.graphviz.internal
 
-import modular.gradle.ExperimentalModularApi
 import modular.graphviz.spec.ArrowType
 import modular.graphviz.spec.Dir
 import modular.graphviz.spec.GraphVizChartSpec
@@ -89,6 +88,5 @@ internal class GraphVizLinkTypesSpecImpl(objects: ObjectFactory) : GraphVizLinkT
   override fun add(configuration: Regex, style: String?, color: String?) =
     linkTypes.add(LinkType(configuration, style, color))
 
-  @ExperimentalModularApi
   override fun String.invoke(style: String?, color: String?) = add(this, style, color)
 }

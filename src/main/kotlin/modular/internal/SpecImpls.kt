@@ -4,7 +4,6 @@
  */
 package modular.internal
 
-import modular.gradle.ExperimentalModularApi
 import modular.gradle.ModularExtension
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.spec.GraphVizSpec
@@ -63,7 +62,6 @@ internal open class ModularExtensionImpl @Inject constructor(
   }
 }
 
-@OptIn(ExperimentalModularApi::class)
 internal class ExperimentalSpecImpl(objects: ObjectFactory, properties: GradleProperties) : ExperimentalSpec {
   override val adjustSvgViewBox = objects.bool(convention = properties.adjustSvgViewBox)
 }

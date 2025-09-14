@@ -1,6 +1,3 @@
-@file:OptIn(ExperimentalModularApi::class)
-
-import modular.gradle.ExperimentalModularApi
 import modular.graphviz.spec.ArrowType
 import modular.graphviz.spec.LayoutEngine
 import modular.graphviz.spec.LinkStyle

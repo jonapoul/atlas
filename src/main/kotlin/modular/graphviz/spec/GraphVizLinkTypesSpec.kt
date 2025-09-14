@@ -6,7 +6,6 @@
 
 package modular.graphviz.spec
 
-import modular.gradle.ExperimentalModularApi
 import modular.gradle.ModularDsl
 import modular.spec.LinkTypesSpec
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
@@ -18,7 +17,6 @@ import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
  * that exact string. Use something like `.*?api` if you want to catch `iosMainApi` as well as `api`, for example.
  */
 interface GraphVizLinkTypesSpec : LinkTypesSpec {
-  @ExperimentalModularApi
   @ModularDsl
   operator fun String.invoke(
     style: LinkStyle?,

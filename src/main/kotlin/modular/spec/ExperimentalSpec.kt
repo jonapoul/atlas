@@ -4,7 +4,6 @@
  */
 package modular.spec
 
-import modular.gradle.ExperimentalModularApi
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import javax.inject.Inject
@@ -38,7 +37,6 @@ interface ExperimentalSpec {
    * modular.suppress.adjustSvgViewBox=true
    * ```
    */
-  @ExperimentalModularApi
   val adjustSvgViewBox: Property<Boolean>
 }
 
