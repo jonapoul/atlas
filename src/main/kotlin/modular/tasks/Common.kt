@@ -12,11 +12,11 @@ import org.gradle.api.tasks.OutputFile
 
 internal const val MODULAR_TASK_GROUP = "modular"
 
-interface TaskWithSeparator : Task {
+internal interface TaskWithSeparator : Task {
   @get:Input val separator: Property<String>
 }
 
-interface TaskWithOutputFile : Task {
+internal interface TaskWithOutputFile : Task {
   @get:OutputFile val outputFile: RegularFileProperty
 }
 
@@ -24,4 +24,4 @@ interface TaskWithOutputFile : Task {
  * Just so we can easily grab all instances of the top-level tasks from this plugin. See
  * [modular.internal.registerGenerationTaskOnSync]
  */
-interface ModularGenerationTask : Task
+internal interface ModularGenerationTask : Task
