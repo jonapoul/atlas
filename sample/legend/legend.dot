@@ -1,13 +1,22 @@
 digraph {
   node [shape=plaintext]
-  table1 [label=<
+  modules [label=<
   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-  <TR><TD>Android App</TD><TD BGCOLOR="#09AD35">module-name</TD></TR>
-  <TR><TD>Kotlin Multiplatform</TD><TD BGCOLOR="#9D8DF1">module-name</TD></TR>
-  <TR><TD>Android Library</TD><TD BGCOLOR="#55FF55">module-name</TD></TR>
-  <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
-  <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
-  <TR><TD>Other</TD><TD BGCOLOR="#808080">module-name</TD></TR>
+    <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
+    <TR><TD>Android App</TD><TD BGCOLOR="#09AD35">&lt;module-name&gt;</TD></TR>
+    <TR><TD>Kotlin Multiplatform</TD><TD BGCOLOR="#9D8DF1">&lt;module-name&gt;</TD></TR>
+    <TR><TD>Android Library</TD><TD BGCOLOR="#55FF55">&lt;module-name&gt;</TD></TR>
+    <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
+    <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
+    <TR><TD>Other</TD><TD BGCOLOR="#808080">&lt;module-name&gt;</TD></TR>
+  </TABLE>
+  >];
+  links [label=<
+  <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Link Types</B></TD></TR>
+    <TR><TD>jvmMainImplementation</TD><TD BGCOLOR="orange">bold</TD></TR>
+    <TR><TD>.*?api</TD><TD>solid</TD></TR>
+    <TR><TD>.*?implementation</TD><TD>dotted</TD></TR>
   </TABLE>
   >];
 }

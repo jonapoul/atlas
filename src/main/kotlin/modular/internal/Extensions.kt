@@ -5,6 +5,7 @@
 package modular.internal
 
 import modular.gradle.ModularExtension
+import modular.graphviz.spec.GraphVizSpec
 import modular.spec.ModuleType
 import modular.spec.ModuleTypeModel
 import modular.spec.OutputSpec
@@ -21,6 +22,12 @@ import org.gradle.api.provider.SetProperty
 
 internal fun ModularExtension.orderedTypes(): List<ModuleType> =
   (moduleTypes as OrderedNamedContainer<ModuleType>).getInOrder()
+
+internal fun ModularExtensionImpl.graphVizSpec(): GraphVizSpec =
+  specs
+    .filterIsInstance<GraphVizSpec>()
+    .firstOrNull()
+    ?: error("No graphViz spec found")
 
 internal fun moduleTypeModel(type: ModuleType) = ModuleTypeModel(
   name = type.name,

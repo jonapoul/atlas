@@ -9,12 +9,14 @@ import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import assertk.assertions.exists
 import modular.test.ScenarioTest
+import modular.test.contentEquals
 import modular.test.doesNotExist
 import modular.test.runTask
 import modular.test.scenarios.GraphVizBasic
 import modular.test.scenarios.GraphVizBasicWithBasicLegend
 import modular.test.scenarios.GraphVizLegendCustomConfig
 import modular.test.scenarios.GraphVizLegendWithProperties
+import modular.test.scenarios.GraphVizWithLegendAndLinkTypes
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
@@ -55,11 +57,12 @@ class GenerateLegendDotFileTaskTest : ScenarioTest() {
       """
         digraph {
           node [shape=plaintext]
-          table1 [label=<
+          modules [label=<
           <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-          <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
-          <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
-          <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
+            <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
+            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
           </TABLE>
           >];
         }
@@ -81,11 +84,12 @@ class GenerateLegendDotFileTaskTest : ScenarioTest() {
       """
         digraph {
           node [shape=plaintext]
-          table1 [label=<
+          modules [label=<
           <TABLE BORDER="5" CELLBORDER="2" CELLSPACING="4" CELLPADDING="3">
-          <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
-          <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
-          <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
+            <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
+            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
           </TABLE>
           >];
         }
@@ -107,14 +111,50 @@ class GenerateLegendDotFileTaskTest : ScenarioTest() {
       """
         digraph {
           node [shape=plaintext]
-          table1 [label=<
+          modules [label=<
           <TABLE BORDER="10" CELLBORDER="20" CELLSPACING="30" CELLPADDING="40">
-          <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">module-name</TD></TR>
-          <TR><TD>Java</TD><TD BGCOLOR="#FF8800">module-name</TD></TR>
-          <TR><TD>Custom</TD><TD BGCOLOR="#123456">module-name</TD></TR>
+            <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
+            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
           </TABLE>
           >];
         }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Show modules and links next to each other`() = runScenario(GraphVizWithLegendAndLinkTypes) {
+    // when
+    runTask("generateLegendDotFile").build()
+
+    // then the file was generated
+    val legendFile = resolve("legend.dot")
+    assertThat(legendFile).exists()
+
+    // and contains expected contents, overriding build script
+    assertThat(legendFile).contentEquals(
+      """
+        digraph {
+          node [shape=plaintext]
+          modules [label=<
+          <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+            <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
+            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
+          </TABLE>
+          >];
+          links [label=<
+          <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+            <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Link Types</B></TD></TR>
+            <TR><TD>jvmMainImplementation</TD><TD BGCOLOR="orange">bold</TD></TR>
+            <TR><TD>.*?api</TD><TD>&lt;style&gt;</TD></TR>
+            <TR><TD>.*?implementation</TD><TD>dotted</TD></TR>
+          </TABLE>
+          >];
+        }
+
       """.trimIndent(),
     )
   }
