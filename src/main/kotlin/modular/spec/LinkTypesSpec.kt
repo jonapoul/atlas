@@ -5,6 +5,7 @@
 package modular.spec
 
 import modular.gradle.ModularDsl
+import modular.graphviz.spec.LinkStyle
 import org.gradle.api.provider.SetProperty
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 import kotlin.text.RegexOption.IGNORE_CASE
@@ -17,12 +18,10 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
  *
  * ```kotlin
  * modular {
- *   graphViz {
- *     linkTypes {
- *       api(color = "green")
- *       implementation(color = "#5555FF")
- *       "compileOnly"(style = "dotted")
- *     }
+ *   linkTypes {
+ *     api(color = "green")
+ *     implementation(color = "#5555FF")
+ *     "compileOnly"(style = "dotted")
  *   }
  * }
  * ```
@@ -50,30 +49,54 @@ interface LinkTypesSpec {
   ) = add(configuration.toRegex(), style, color)
 
   @ModularDsl
+  fun add(
+    configuration: Regex,
+    style: LinkStyle,
+    color: String? = null,
+  ) = add(configuration, style.string, color)
+
+  @ModularDsl
+  fun add(
+    @Language("RegExp") configuration: String,
+    style: LinkStyle,
+    color: String? = null,
+  ) = add(configuration, style.string, color)
+
+  @ModularDsl
   operator fun String.invoke(
     style: String? = null,
     color: String? = null,
   )
 
   @ModularDsl
+  operator fun String.invoke(
+    style: LinkStyle?,
+    color: String? = null,
+  ) = invoke(style?.string, color)
+
+  @ModularDsl
   fun api(
     style: String? = null,
     color: String? = null,
-  ) = add(
-    configuration = ".*?api".toRegex(IGNORE_CASE),
-    style = style,
-    color = color,
-  )
+  ) = add(configuration = ".*?api".toRegex(IGNORE_CASE), style = style, color = color)
+
+  @ModularDsl
+  fun api(
+    style: LinkStyle,
+    color: String? = null,
+  ) = api(style = style.string, color = color)
 
   @ModularDsl
   fun implementation(
     style: String? = null,
     color: String? = null,
-  ) = add(
-    configuration = ".*?implementation".toRegex(IGNORE_CASE),
-    style = style,
-    color = color,
-  )
+  ) = add(configuration = ".*?implementation".toRegex(IGNORE_CASE), style = style, color = color)
+
+  @ModularDsl
+  fun implementation(
+    style: LinkStyle,
+    color: String? = null,
+  ) = implementation(style = style.string, color = color)
 }
 
 @KSerializable

@@ -23,12 +23,12 @@ object GraphVizWithLegendAndLinkTypes : Scenario by GraphVizBasic {
 
       graphViz {
         legend()
+      }
 
-        linkTypes {
-          "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
-          api()
-          implementation(LinkStyle.Dotted)
-        }
+      linkTypes {
+        "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
+        api()
+        implementation(LinkStyle.Dotted)
       }
     }
   """.trimIndent()

@@ -9,7 +9,6 @@ import modular.graphviz.spec.Dir
 import modular.graphviz.spec.GraphVizChartSpec
 import modular.graphviz.spec.GraphVizFileFormatSpec
 import modular.graphviz.spec.GraphVizLegendSpec
-import modular.graphviz.spec.GraphVizLinkTypesSpec
 import modular.graphviz.spec.GraphVizSpec
 import modular.graphviz.spec.LayoutEngine
 import modular.graphviz.spec.RankDir
@@ -17,7 +16,6 @@ import modular.internal.GradleProperties
 import modular.internal.float
 import modular.internal.int
 import modular.internal.string
-import modular.spec.LinkType
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
@@ -39,9 +37,6 @@ internal class GraphVizSpecImpl(
 
   override val fileFormats = GraphVizFileFormatSpecImpl(objects)
   override fun fileFormats(action: Action<GraphVizFileFormatSpec>) = action.execute(fileFormats)
-
-  override val linkTypes = GraphVizLinkTypesSpecImpl(objects)
-  override fun linkTypes(action: Action<GraphVizLinkTypesSpec>) = action.execute(linkTypes)
 
   private fun getOrBuildLegend() = legend ?: GraphVizLegendSpecImpl(objects, properties).also { legend = it }
 
@@ -81,12 +76,3 @@ internal class GraphVizChartSpecImpl(objects: ObjectFactory, properties: GradleP
 internal class GraphVizFileFormatSpecImpl(objects: ObjectFactory) :
   GraphVizFileFormatSpec,
   SetProperty<String> by objects.setProperty(String::class.java)
-
-internal class GraphVizLinkTypesSpecImpl(objects: ObjectFactory) : GraphVizLinkTypesSpec {
-  override val linkTypes: SetProperty<LinkType> = objects.setProperty(LinkType::class.java)
-
-  override fun add(configuration: Regex, style: String?, color: String?) =
-    linkTypes.add(LinkType(configuration, style, color))
-
-  override fun String.invoke(style: String?, color: String?) = add(this, style, color)
-}

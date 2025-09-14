@@ -25,6 +25,12 @@ modular {
     builtIns()
   }
 
+  linkTypes {
+    "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
+    api(LinkStyle.Solid)
+    implementation(LinkStyle.Dotted)
+  }
+
   modulePathTransforms {
     remove(pattern = "^:sample-")
     replace(pattern = "lib", replacement = "Lib")
@@ -56,12 +62,6 @@ modular {
       dpi = 100
       fontSize = 30
       rankSep = 1.5f
-    }
-
-    linkTypes {
-      "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
-      api(LinkStyle.Solid)
-      implementation(LinkStyle.Dotted)
     }
 
     fileFormats {

@@ -8,6 +8,8 @@ import modular.gradle.ModularExtension
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.spec.GraphVizSpec
 import modular.spec.GeneralSpec
+import modular.spec.LinkType
+import modular.spec.LinkTypesSpec
 import modular.spec.ModulePathTransformSpec
 import modular.spec.ModuleType
 import modular.spec.OutputSpec
@@ -35,6 +37,9 @@ internal open class ModularExtensionImpl @Inject constructor(
 
   override val moduleTypes = ModuleTypeContainer(objects)
   override fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleType>>) = action.execute(moduleTypes)
+
+  override val linkTypes = LinkTypesSpecImpl(objects)
+  override fun linkTypes(action: Action<LinkTypesSpec>) = action.execute(linkTypes)
 
   override val outputs = OutputSpecImpl(objects, project)
   override fun outputs(action: Action<OutputSpec>) = action.execute(outputs)
@@ -121,4 +126,13 @@ internal class OutputSpecImpl(objects: ObjectFactory, project: Project) : Output
   // All legend files will be placed in the specified path relative to the root module's root folder
   override fun saveLegendsRelativeToRootModule(relativeToRoot: String) =
     legendOutputDirectory.set(projectDir.dir(relativeToRoot))
+}
+
+internal class LinkTypesSpecImpl(objects: ObjectFactory) : LinkTypesSpec {
+  override val linkTypes: SetProperty<LinkType> = objects.setProperty(LinkType::class.java)
+
+  override fun add(configuration: Regex, style: String?, color: String?) =
+    linkTypes.add(LinkType(configuration, style, color))
+
+  override fun String.invoke(style: String?, color: String?) = add(this, style, color)
 }

@@ -25,12 +25,12 @@ object GraphVizChartWithCustomLinkTypes : Scenario {
         java()
       }
 
-      graphViz {
-        linkTypes {
-          api(style = LinkStyle.Bold)
-          implementation(color = "blue")
-          "compileOnly"(color = "#FF55FF", style = "dotted")
-        }
+      graphViz()
+
+      linkTypes {
+        api(style = LinkStyle.Bold)
+        implementation(color = "blue")
+        "compileOnly"(color = "#FF55FF", style = "dotted")
       }
     }
   """.trimIndent()

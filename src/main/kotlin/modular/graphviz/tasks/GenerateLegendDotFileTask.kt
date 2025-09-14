@@ -8,7 +8,6 @@ import modular.graphviz.spec.GraphVizLegendSpec
 import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModularExtensionImpl
 import modular.internal.appendIndentedLine
-import modular.internal.graphVizSpec
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
 import modular.spec.LinkType
@@ -117,7 +116,7 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
         task.cellPadding.convention(legendSpec.cellPadding)
         task.outputFile.convention(outputFile)
         task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
-        task.linkTypes.convention(extension.graphVizSpec().linkTypes.linkTypes)
+        task.linkTypes.convention(extension.linkTypes.linkTypes)
       }
     }
 
