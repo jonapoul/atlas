@@ -19,7 +19,7 @@ internal data class Subgraph(
 
 internal fun buildGraphElements(
   typedModules: Set<TypedModule>,
-  links: Set<ModuleLink>
+  links: Set<ModuleLink>,
 ): List<GraphElement> = buildHierarchy(
   nodeData = typedModules
     .filter { module -> module in links }
