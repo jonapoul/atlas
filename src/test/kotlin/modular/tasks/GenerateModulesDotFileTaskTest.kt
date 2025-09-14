@@ -8,13 +8,17 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import assertk.assertions.exists
+import assertk.assertions.isEmpty
+import assertk.assertions.isEqualTo
 import modular.test.ScenarioTest
+import modular.test.allSuccessful
 import modular.test.runTask
 import modular.test.scenarios.GraphVizBasic
 import modular.test.scenarios.GraphVizChartCustomConfig
 import modular.test.scenarios.GraphVizChartWithCustomLinkTypes
 import modular.test.scenarios.GraphVizChartWithProperties
 import modular.test.scenarios.GraphVizChartWithReplacements
+import modular.test.scenarios.NestedModules
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
@@ -167,6 +171,43 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
           ":a" -> ":b" ["style"="bold"]
           ":a" -> ":c" ["color"="blue"]
           ":a" -> ":d" ["style"="dotted","color"="#FF55FF"]
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Handle nested modules`() = runScenario(NestedModules) {
+    // when
+    runTask("generateModulesDotFile").build()
+
+    // then the file was generated
+    val dotFile = resolve("app/modules.dot")
+    assertThat(dotFile).exists()
+
+    // and contains expected link styles
+    assertThat(dotFile.readText()).contains(
+      """
+        digraph {
+          node ["style"="filled"]
+          ":app" ["fillcolor"="#CA66FF","color"="black","penwidth"="3","shape"="box"]
+          ":data:a" ["fillcolor"="#CA66FF","shape"="none"]
+          ":data:b" ["fillcolor"="#CA66FF","shape"="none"]
+          ":domain:a" ["fillcolor"="#CA66FF","shape"="none"]
+          ":domain:b" ["fillcolor"="#CA66FF","shape"="none"]
+          ":ui:a" ["fillcolor"="#CA66FF","shape"="none"]
+          ":ui:b" ["fillcolor"="#CA66FF","shape"="none"]
+          ":ui:c" ["fillcolor"="#CA66FF","shape"="none"]
+          ":app" -> ":ui:a"
+          ":app" -> ":ui:b"
+          ":app" -> ":ui:c"
+          ":domain:a" -> ":data:a"
+          ":domain:b" -> ":data:a"
+          ":domain:b" -> ":data:b"
+          ":ui:a" -> ":domain:a"
+          ":ui:b" -> ":domain:b"
+          ":ui:c" -> ":domain:a"
+          ":ui:c" -> ":domain:b"
         }
       """.trimIndent(),
     )
