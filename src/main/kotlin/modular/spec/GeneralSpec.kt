@@ -17,6 +17,13 @@ interface GeneralSpec {
   val generateOnSync: Property<Boolean>
 
   /**
+   * Set to true if you want module charts to gather together groups of modules into bordered containers. E.g. a graph
+   * with ":a", ":b" and ":c" won't be grouped at all because they don't share any path segments, but ":a:b" and "a:c"
+   * will be grouped together.
+   */
+  val groupModules: Property<Boolean>
+
+  /**
    * Use this to configure Gradle [org.gradle.api.artifacts.Configuration]s to block from consideration when collating
    * module diagrams. Defaults to ["debug", "kover", "ksp", "test"].
    */

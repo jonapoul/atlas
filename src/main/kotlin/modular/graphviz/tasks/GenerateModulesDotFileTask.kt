@@ -4,13 +4,14 @@
  */
 package modular.graphviz.tasks
 
+import modular.gradle.ModularExtension
 import modular.graphviz.internal.DotFileWriter
+import modular.graphviz.spec.DotFileConfig
 import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModuleLinks
 import modular.internal.Replacement
 import modular.internal.TypedModules
 import modular.spec.LinkType
-import modular.spec.ModulePathTransformSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.CollateModuleTypesTask
 import modular.tasks.MODULAR_TASK_GROUP
@@ -26,7 +27,6 @@ import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
-import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
@@ -46,20 +46,14 @@ abstract class GenerateModulesDotFileTask :
 
   // General
   @get:Input abstract override val separator: Property<String>
+  @get:Input abstract val groupModules: Property<Boolean>
+  @get:Input abstract val linkTypes: SetProperty<LinkType>
   @get:Input abstract val printOutput: Property<Boolean>
   @get:Input abstract val replacements: SetProperty<Replacement>
   @get:Input abstract val thisPath: Property<String>
 
   // Dotfile config
-  @get:Input abstract val linkTypes: SetProperty<LinkType>
-  @get:[Input Optional] abstract val arrowHead: Property<String>
-  @get:[Input Optional] abstract val arrowTail: Property<String>
-  @get:[Input Optional] abstract val dir: Property<String>
-  @get:[Input Optional] abstract val dpi: Property<Int>
-  @get:[Input Optional] abstract val fontSize: Property<Int>
-  @get:[Input Optional] abstract val layoutEngine: Property<String>
-  @get:[Input Optional] abstract val rankDir: Property<String>
-  @get:[Input Optional] abstract val rankSep: Property<Float>
+  @get:Input abstract val config: Property<DotFileConfig>
 
   init {
     group = MODULAR_TASK_GROUP
@@ -78,14 +72,8 @@ abstract class GenerateModulesDotFileTask :
       linkTypes = linkTypes.get(),
       replacements = replacements.get(),
       thisPath = thisPath.get(),
-      arrowHead = arrowHead.orNull,
-      arrowTail = arrowTail.orNull,
-      dir = dir.orNull,
-      dpi = dpi.orNull,
-      fontSize = fontSize.orNull,
-      layoutEngine = layoutEngine.orNull,
-      rankDir = rankDir.orNull,
-      rankSep = rankSep.orNull,
+      groupModules = groupModules.get(),
+      config = config.get(),
     )
 
     val outputFile = outputFile.get().asFile
@@ -103,7 +91,7 @@ abstract class GenerateModulesDotFileTask :
     fun register(
       target: Project,
       name: String,
-      modulePathTransforms: ModulePathTransformSpec,
+      extension: ModularExtension,
       spec: GraphVizSpec,
       outputFile: RegularFile,
       printOutput: Boolean,
@@ -116,19 +104,13 @@ abstract class GenerateModulesDotFileTask :
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.convention(outputFile)
 
-        task.replacements.convention(modulePathTransforms.replacements)
-        task.printOutput.convention(printOutput)
-
+        task.groupModules.convention(extension.general.groupModules)
         task.linkTypes.convention(spec.linkTypes.linkTypes)
-        task.arrowHead.convention(spec.chart.arrowHead)
-        task.arrowTail.convention(spec.chart.arrowTail)
-        task.dpi.convention(spec.chart.dpi)
-        task.fontSize.convention(spec.chart.fontSize)
-        task.layoutEngine.convention(spec.chart.layoutEngine)
-        task.rankDir.convention(spec.chart.rankDir)
-        task.rankSep.convention(spec.chart.rankSep)
-        task.dir.convention(spec.chart.dir)
+        task.printOutput.convention(printOutput)
+        task.replacements.convention(extension.modulePathTransforms.replacements)
         task.thisPath.convention(target.path)
+
+        task.config.convention(provider { DotFileConfig(spec.chart) })
       }
     }
   }

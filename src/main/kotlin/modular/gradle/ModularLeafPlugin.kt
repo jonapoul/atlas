@@ -54,7 +54,7 @@ class ModularLeafPlugin : Plugin<Project> {
     val dotFileTask = GenerateModulesDotFileTask.register(
       target = this,
       name = GenerateModulesDotFileTask.TASK_NAME,
-      modulePathTransforms = extension.modulePathTransforms,
+      extension = extension,
       spec = spec,
       outputFile = file,
       printOutput = true,
@@ -63,7 +63,7 @@ class ModularLeafPlugin : Plugin<Project> {
     val tempDotFileTask = GenerateModulesDotFileTask.register(
       target = this,
       name = GenerateModulesDotFileTask.TASK_NAME_FOR_CHECKING,
-      modulePathTransforms = extension.modulePathTransforms,
+      extension = extension,
       spec = spec,
       outputFile = modularBuildDirectory.get().file("modules-temp.dot"),
       printOutput = false,

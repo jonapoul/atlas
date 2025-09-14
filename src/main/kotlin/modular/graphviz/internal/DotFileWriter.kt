@@ -2,10 +2,9 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("LongParameterList")
-
 package modular.graphviz.internal
 
+import modular.graphviz.spec.DotFileConfig
 import modular.internal.ModuleLink
 import modular.internal.Replacement
 import modular.internal.TypedModule
@@ -18,14 +17,8 @@ internal class DotFileWriter(
   private val linkTypes: Set<LinkType>,
   private val replacements: Set<Replacement>,
   private val thisPath: String,
-  private val arrowHead: String?,
-  private val arrowTail: String?,
-  private val dir: String?,
-  private val dpi: Int?,
-  private val fontSize: Int?,
-  private val layoutEngine: String?,
-  private val rankDir: String?,
-  private val rankSep: Float?,
+  private val groupModules: Boolean,
+  private val config: DotFileConfig,
 ) {
   operator fun invoke(): String = buildString {
     appendLine("digraph {")
@@ -39,19 +32,19 @@ internal class DotFileWriter(
     appendHeaderGroup(
       name = "edge",
       items = mapOf(
-        "dir" to dir,
-        "arrowhead" to arrowHead,
-        "arrowtail" to arrowTail,
+        "dir" to config.dir,
+        "arrowhead" to config.arrowHead,
+        "arrowtail" to config.arrowTail,
       ),
     )
     appendHeaderGroup(
       name = "graph",
       items = mapOf(
-        "dpi" to dpi,
-        "fontsize" to fontSize,
-        "layout" to layoutEngine,
-        "ranksep" to rankSep,
-        "rankdir" to rankDir,
+        "dpi" to config.dpi,
+        "fontsize" to config.fontSize,
+        "layout" to config.layoutEngine,
+        "ranksep" to config.rankSep,
+        "rankdir" to config.rankDir,
       ),
     )
     appendHeaderGroup(
