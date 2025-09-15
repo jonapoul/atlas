@@ -70,4 +70,16 @@ modular {
       svg()
     }
   }
+
+  mermaid {
+    fileExtension = "mmd"
+
+    legend {
+      // TBC
+    }
+
+    chart {
+      // TBC
+    }
+  }
 }
