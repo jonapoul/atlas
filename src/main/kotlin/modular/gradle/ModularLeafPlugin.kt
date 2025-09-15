@@ -18,13 +18,14 @@ import modular.mermaid.spec.MermaidSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.DumpModuleLinksTask
 import modular.tasks.DumpModuleTypeTask
+import modular.tasks.MODULAR_TASK_GROUP
 import modular.tasks.registerGenerationTaskOnSync
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class ModularLeafPlugin : Plugin<Project> {
   override fun apply(target: Project): Unit = with(target) {
-    if (target == rootProject) {
+    require(target != rootProject) {
       error("ModularLeafPlugin is only meant to be applied on a non-root project!")
     }
 
@@ -38,11 +39,16 @@ class ModularLeafPlugin : Plugin<Project> {
     DumpModuleLinksTask.register(project, extension)
     CalculateModuleTreeTask.register(project, extension)
 
+    val generateModules = tasks.register("generateModules") { t ->
+      t.group = MODULAR_TASK_GROUP
+      t.description = "Wrapper task for the other 'generateModulesX' tasks"
+    }
+
     extension.specs.configureEach { spec ->
       val file = outputFile(extension.outputs, Variant.Modules, fileExtension = spec.fileExtension.get())
       when (spec) {
-        is GraphVizSpec -> registerGraphVizLeafTasks(extension, spec, file)
-        is MermaidSpec -> registerMermaidLeafTasks(extension, spec, file)
+        is GraphVizSpec -> registerGraphVizLeafTasks(extension, spec, file, generateModules)
+        is MermaidSpec -> registerMermaidLeafTasks(extension, spec, file, generateModules)
         else -> logger.warn("Not sure how to handle spec: ${spec.javaClass.canonicalName}")
       }
     }

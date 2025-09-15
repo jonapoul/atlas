@@ -5,7 +5,6 @@
 package modular.graphviz.tasks
 
 import modular.graphviz.spec.GraphVizLegendSpec
-import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModularExtensionImpl
 import modular.internal.buildIndentedString
 import modular.internal.moduleTypeModel
@@ -122,15 +121,6 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
         task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
         task.linkTypes.convention(extension.linkTypes.linkTypes)
       }
-    }
-
-    internal fun defaultOutputFile(
-      extension: ModularExtensionImpl,
-      spec: GraphVizSpec,
-    ): Provider<RegularFile> = extension.outputs.legendOutputDirectory.map { dir ->
-      val filename = extension.outputs.legendRootFilename.get()
-      val fileExtension = spec.fileExtension.get()
-      dir.file("$filename.$fileExtension")
     }
   }
 }
