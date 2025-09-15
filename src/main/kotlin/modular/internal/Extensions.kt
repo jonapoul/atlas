@@ -7,7 +7,6 @@
 package modular.internal
 
 import modular.gradle.ModularExtension
-import modular.graphviz.spec.GraphVizSpec
 import modular.spec.ModuleType
 import modular.spec.ModuleTypeModel
 import modular.spec.OutputSpec
@@ -25,12 +24,6 @@ import org.gradle.api.provider.SetProperty
 
 internal fun ModularExtension.orderedTypes(): List<ModuleType> =
   (moduleTypes as OrderedNamedContainer<ModuleType>).getInOrder()
-
-internal fun ModularExtensionImpl.graphVizSpec(): GraphVizSpec =
-  specs
-    .filterIsInstance<GraphVizSpec>()
-    .firstOrNull()
-    ?: error("No graphViz spec found")
 
 internal fun moduleTypeModel(type: ModuleType) = ModuleTypeModel(
   name = type.name,
@@ -88,13 +81,6 @@ internal val Project.modularBuildDirectory: Provider<Directory>
 
 internal fun Project.fileInBuildDirectory(path: String): Provider<RegularFile> =
   modularBuildDirectory.map { it.file(path) }
-
-internal fun StringBuilder.appendIndented(value: Any) = append("  $value")
-
-internal fun StringBuilder.appendIndentedLine(value: Any) {
-  appendIndented(value)
-  appendLine()
-}
 
 internal fun Project.outputFile(
   output: OutputSpecImpl,
