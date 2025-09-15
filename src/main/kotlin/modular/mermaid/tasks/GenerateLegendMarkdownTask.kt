@@ -111,7 +111,8 @@ abstract class GenerateLegendMarkdownTask :
     internal fun register(
       target: Project,
       name: String,
-      legendSpec: MermaidLegendSpec,
+      // TODO: https://github.com/jonapoul/modular/issues/124
+      @Suppress("unused") legendSpec: MermaidLegendSpec,
       extension: ModularExtensionImpl,
       outputFile: Provider<RegularFile>,
     ): TaskProvider<GenerateLegendMarkdownTask> = with(target) {

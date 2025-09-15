@@ -16,6 +16,7 @@ import modular.mermaid.spec.MermaidSpec
 import modular.mermaid.spec.NodePlacementStrategy
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.Property
 
 internal class MermaidSpecImpl(
   objects: ObjectFactory,
@@ -59,7 +60,7 @@ internal class MermaidChartSpecImpl(
 }
 
 internal open class MermaidLayoutSpecImpl(objects: ObjectFactory) : MermaidLayoutSpec {
-  override val name = objects
+  override val name: Property<String> = objects
     .property(String::class.java)
     .unsetConvention()
 

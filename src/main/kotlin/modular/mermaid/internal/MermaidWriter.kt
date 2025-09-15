@@ -9,15 +9,16 @@ import modular.internal.ModuleLink
 import modular.internal.Replacement
 import modular.internal.TypedModule
 import modular.internal.buildIndentedString
-import modular.mermaid.spec.MermaidConfig
 import modular.internal.contains
+import modular.mermaid.spec.MermaidConfig
 
 internal class MermaidWriter(
   private val typedModules: Set<TypedModule>,
   private val links: Set<ModuleLink>,
   private val replacements: Set<Replacement>,
   private val thisPath: String,
-  private val groupModules: Boolean,
+  // TODO https://github.com/jonapoul/modular/issues/123
+  @Suppress("unused", "UnusedPrivateProperty") private val groupModules: Boolean,
   private val config: MermaidConfig,
 ) {
   operator fun invoke(): String = buildIndentedString(size = 2) {
@@ -31,15 +32,15 @@ internal class MermaidWriter(
   }
 
   private fun IndentedStringBuilder.appendConfig() {
-    val layout = config.layout ?: return
-    val properties = config.layoutProperties ?: emptyMap()
+    val layout = config.layout
+    val properties = config.layoutProperties.orEmpty()
     appendLine("---")
     appendLine("config:")
     indent {
-      appendLine("layout: $layout")
+      layout?.let { appendLine("layout: $it") }
       config.look?.let { appendLine("look: $it") }
       config.theme?.let { appendLine("theme: $it") }
-      if (properties.isNotEmpty()) {
+      if (layout != null && properties.isNotEmpty()) {
         appendLine("$layout:")
         indent {
           for ((key, value) in properties) {
