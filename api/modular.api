@@ -255,7 +255,7 @@ public final class modular/graphviz/spec/LayoutEngine : java/lang/Enum, modular/
 	public static fun values ()[Lmodular/graphviz/spec/LayoutEngine;
 }
 
-public final class modular/graphviz/spec/LinkStyle : java/lang/Enum, modular/graphviz/spec/StringEnum {
+public final class modular/graphviz/spec/LinkStyle : java/lang/Enum, modular/spec/Style {
 	public static final field Bold Lmodular/graphviz/spec/LinkStyle;
 	public static final field Dashed Lmodular/graphviz/spec/LinkStyle;
 	public static final field Dotted Lmodular/graphviz/spec/LinkStyle;
@@ -276,6 +276,10 @@ public final class modular/graphviz/spec/RankDir : java/lang/Enum, modular/graph
 	public fun getString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/spec/RankDir;
 	public static fun values ()[Lmodular/graphviz/spec/RankDir;
+}
+
+public abstract interface class modular/graphviz/spec/StringEnum {
+	public abstract fun getString ()Ljava/lang/String;
 }
 
 public abstract class modular/graphviz/tasks/CheckDotFileTask : org/gradle/api/DefaultTask {
@@ -385,47 +389,47 @@ public final class modular/spec/LinkType : java/io/Serializable {
 
 public abstract interface class modular/spec/LinkTypesSpec {
 	public fun add (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun add (Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public fun add (Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;)V
 	public abstract fun add (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;)V
-	public fun add (Lkotlin/text/Regex;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public fun add (Lkotlin/text/Regex;Lmodular/spec/Style;Ljava/lang/String;)V
 	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
 	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
 	public fun api (Ljava/lang/String;Ljava/lang/String;)V
-	public fun api (Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public fun api (Lmodular/spec/Style;Ljava/lang/String;)V
 	public static synthetic fun api$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun api$default (Lmodular/spec/LinkTypesSpec;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun api$default (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
 	public fun implementation (Ljava/lang/String;Ljava/lang/String;)V
-	public fun implementation (Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public fun implementation (Lmodular/spec/Style;Ljava/lang/String;)V
 	public static synthetic fun implementation$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun implementation$default (Lmodular/spec/LinkTypesSpec;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun implementation$default (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
 	public abstract fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun invoke (Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public fun invoke (Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;)V
 	public static synthetic fun invoke$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun invoke$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun invoke$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
 }
 
 public final class modular/spec/LinkTypesSpec$DefaultImpls {
 	public static fun add (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public static fun add (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
-	public static fun add (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public static fun add (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;)V
+	public static fun add (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/spec/Style;Ljava/lang/String;)V
 	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
 	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
 	public static fun api (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;)V
-	public static fun api (Lmodular/spec/LinkTypesSpec;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public static fun api (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;)V
 	public static synthetic fun api$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun api$default (Lmodular/spec/LinkTypesSpec;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun api$default (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
 	public static fun implementation (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;)V
-	public static fun implementation (Lmodular/spec/LinkTypesSpec;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public static fun implementation (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;)V
 	public static synthetic fun implementation$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun implementation$default (Lmodular/spec/LinkTypesSpec;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
-	public static fun invoke (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;)V
+	public static synthetic fun implementation$default (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+	public static fun invoke (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;)V
 	public static synthetic fun invoke$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun invoke$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/graphviz/spec/LinkStyle;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun invoke$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
 }
 
 public abstract interface class modular/spec/ModulePathTransformSpec {
@@ -479,6 +483,9 @@ public abstract interface class modular/spec/Spec {
 
 public final class modular/spec/Spec$DefaultImpls {
 	public static fun chart (Lmodular/spec/Spec;Lorg/gradle/api/Action;)V
+}
+
+public abstract interface class modular/spec/Style : modular/graphviz/spec/StringEnum {
 }
 
 public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {

@@ -6,7 +6,9 @@
 
 package modular.graphviz.spec
 
-internal interface StringEnum {
+import modular.spec.Style
+
+interface StringEnum {
   val string: String
 }
 
@@ -79,7 +81,7 @@ enum class Dir(override val string: String) : StringEnum {
 /**
  * https://graphviz.org/docs/attr-types/style/
  */
-enum class LinkStyle(override val string: String) : StringEnum {
+enum class LinkStyle(override val string: String) : Style {
   Dashed("dashed"),
   Dotted("dotted"),
   Solid("solid"),
