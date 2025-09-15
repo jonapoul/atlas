@@ -11,7 +11,6 @@ import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModularExtensionImpl
 import modular.internal.configureSeparators
 import modular.internal.orderedTypes
-import modular.internal.registerGenerationTaskOnSync
 import modular.internal.registerModularGenerateTask
 import modular.internal.warnIfModuleTypesSpecifyNothing
 import modular.internal.warnIfNoGraphVizOutputs
@@ -21,6 +20,7 @@ import modular.mermaid.spec.MermaidSpec
 import modular.tasks.CollateModuleLinksTask
 import modular.tasks.CollateModuleTypesTask
 import modular.tasks.MODULAR_TASK_GROUP
+import modular.tasks.registerGenerationTaskOnSync
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

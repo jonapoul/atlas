@@ -12,13 +12,13 @@ import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
 import modular.internal.configureSeparators
 import modular.internal.outputFile
-import modular.internal.registerGenerationTaskOnSync
 import modular.internal.registerModularGenerateTask
 import modular.mermaid.internal.registerMermaidLeafTasks
 import modular.mermaid.spec.MermaidSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.DumpModuleLinksTask
 import modular.tasks.DumpModuleTypeTask
+import modular.tasks.registerGenerationTaskOnSync
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

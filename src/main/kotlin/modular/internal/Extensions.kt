@@ -2,8 +2,6 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("TooManyFunctions")
-
 package modular.internal
 
 import modular.gradle.ModularExtension
@@ -54,17 +52,6 @@ internal fun ObjectFactory.directory(convention: Directory): DirectoryProperty =
 internal fun Project.configureSeparators(extension: ModularExtension) {
   tasks.withType(TaskWithSeparator::class.java).configureEach { t ->
     t.separator.convention(extension.general.separator)
-  }
-}
-
-internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
-  afterEvaluate {
-    val isGradleSync = System.getProperty("idea.sync.active") == "true"
-
-    if (extension.general.generateOnSync.get() && isGradleSync) {
-      val modularGenerationTasks = tasks.withType(ModularGenerationTask::class.java)
-      tasks.maybeCreate("prepareKotlinIdeaImport").dependsOn(modularGenerationTasks)
-    }
   }
 }
 
