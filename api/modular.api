@@ -6,6 +6,7 @@ public abstract interface class modular/gradle/ModularExtension {
 	public abstract fun getGeneral ()Lmodular/spec/GeneralSpec;
 	public abstract fun getGraphViz ()Lmodular/graphviz/spec/GraphVizSpec;
 	public abstract fun getLinkTypes ()Lmodular/spec/LinkTypesSpec;
+	public abstract fun getMermaid ()Lmodular/mermaid/spec/MermaidSpec;
 	public abstract fun getModulePathTransforms ()Lmodular/spec/ModulePathTransformSpec;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public abstract fun getOutputs ()Lmodular/spec/OutputSpec;
@@ -13,6 +14,8 @@ public abstract interface class modular/gradle/ModularExtension {
 	public abstract fun graphViz ()V
 	public abstract fun graphViz (Lorg/gradle/api/Action;)V
 	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
+	public abstract fun mermaid ()V
+	public abstract fun mermaid (Lorg/gradle/api/Action;)V
 	public abstract fun modulePathTransforms (Lorg/gradle/api/Action;)V
 	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
 	public abstract fun outputs (Lorg/gradle/api/Action;)V
@@ -282,14 +285,6 @@ public abstract interface class modular/graphviz/spec/StringEnum {
 	public abstract fun getString ()Ljava/lang/String;
 }
 
-public abstract class modular/graphviz/tasks/CheckDotFileTask : org/gradle/api/DefaultTask {
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getActualDotFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getExpectedDotFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
-}
-
 public abstract class modular/graphviz/tasks/GenerateGraphvizFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile {
 	public static final field Companion Lmodular/graphviz/tasks/GenerateGraphvizFileTask$Companion;
 	public fun <init> ()V
@@ -348,6 +343,170 @@ public final class modular/internal/Replacement : java/io/Serializable {
 	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
 	public final fun getPattern ()Lkotlin/text/Regex;
 	public final fun getReplacement ()Ljava/lang/String;
+}
+
+public final class modular/mermaid/spec/ConsiderModelOrder : java/lang/Enum, modular/graphviz/spec/StringEnum {
+	public static final field NodesAndEdges Lmodular/mermaid/spec/ConsiderModelOrder;
+	public static final field None Lmodular/mermaid/spec/ConsiderModelOrder;
+	public static final field PreferEdges Lmodular/mermaid/spec/ConsiderModelOrder;
+	public static final field PreferNodes Lmodular/mermaid/spec/ConsiderModelOrder;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/spec/ConsiderModelOrder;
+	public static fun values ()[Lmodular/mermaid/spec/ConsiderModelOrder;
+}
+
+public final class modular/mermaid/spec/CycleBreakingStrategy : java/lang/Enum, modular/graphviz/spec/StringEnum {
+	public static final field DepthFirst Lmodular/mermaid/spec/CycleBreakingStrategy;
+	public static final field Greedy Lmodular/mermaid/spec/CycleBreakingStrategy;
+	public static final field GreedyModelOrder Lmodular/mermaid/spec/CycleBreakingStrategy;
+	public static final field Interactive Lmodular/mermaid/spec/CycleBreakingStrategy;
+	public static final field ModelOrder Lmodular/mermaid/spec/CycleBreakingStrategy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/spec/CycleBreakingStrategy;
+	public static fun values ()[Lmodular/mermaid/spec/CycleBreakingStrategy;
+}
+
+public abstract interface class modular/mermaid/spec/ElkLayoutSpec : modular/mermaid/spec/MermaidLayoutSpec {
+	public abstract fun considerModelOrder (Lmodular/mermaid/spec/ConsiderModelOrder;)V
+	public abstract fun cycleBreakingStrategy (Lmodular/mermaid/spec/CycleBreakingStrategy;)V
+	public abstract fun forceNodeModelOrder (Z)V
+	public static synthetic fun forceNodeModelOrder$default (Lmodular/mermaid/spec/ElkLayoutSpec;ZILjava/lang/Object;)V
+	public abstract fun mergeEdges (Z)V
+	public static synthetic fun mergeEdges$default (Lmodular/mermaid/spec/ElkLayoutSpec;ZILjava/lang/Object;)V
+	public abstract fun nodePlacementStrategy (Lmodular/mermaid/spec/NodePlacementStrategy;)V
+}
+
+public final class modular/mermaid/spec/ElkLayoutSpec$DefaultImpls {
+	public static synthetic fun forceNodeModelOrder$default (Lmodular/mermaid/spec/ElkLayoutSpec;ZILjava/lang/Object;)V
+	public static synthetic fun mergeEdges$default (Lmodular/mermaid/spec/ElkLayoutSpec;ZILjava/lang/Object;)V
+	public static fun put (Lmodular/mermaid/spec/ElkLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class modular/mermaid/spec/Look : java/lang/Enum, modular/graphviz/spec/StringEnum {
+	public static final field Classic Lmodular/mermaid/spec/Look;
+	public static final field HandDrawn Lmodular/mermaid/spec/Look;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/spec/Look;
+	public static fun values ()[Lmodular/mermaid/spec/Look;
+}
+
+public abstract interface class modular/mermaid/spec/MermaidChartSpec {
+	public abstract fun elk (Lorg/gradle/api/Action;)V
+	public static synthetic fun elk$default (Lmodular/mermaid/spec/MermaidChartSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public abstract fun getLayout ()Lmodular/mermaid/spec/MermaidLayoutSpec;
+	public abstract fun getLook ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTheme ()Lorg/gradle/api/provider/Property;
+	public abstract fun layout (Lorg/gradle/api/Action;)V
+	public fun look (Lmodular/mermaid/spec/Look;)V
+	public fun theme (Lmodular/mermaid/spec/Theme;)V
+}
+
+public final class modular/mermaid/spec/MermaidChartSpec$DefaultImpls {
+	public static synthetic fun elk$default (Lmodular/mermaid/spec/MermaidChartSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public static fun look (Lmodular/mermaid/spec/MermaidChartSpec;Lmodular/mermaid/spec/Look;)V
+	public static fun theme (Lmodular/mermaid/spec/MermaidChartSpec;Lmodular/mermaid/spec/Theme;)V
+}
+
+public final class modular/mermaid/spec/MermaidConfig : java/io/Serializable {
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Ljava/lang/String;)Lmodular/mermaid/spec/MermaidConfig;
+	public static synthetic fun copy$default (Lmodular/mermaid/spec/MermaidConfig;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/mermaid/spec/MermaidConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLayout ()Ljava/lang/String;
+	public final fun getLayoutProperties ()Ljava/util/Map;
+	public final fun getLook ()Ljava/lang/String;
+	public final fun getTheme ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class modular/mermaid/spec/MermaidLayoutSpec {
+	public abstract fun getName ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProperties ()Lorg/gradle/api/provider/MapProperty;
+	public fun put (Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class modular/mermaid/spec/MermaidLayoutSpec$DefaultImpls {
+	public static fun put (Lmodular/mermaid/spec/MermaidLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class modular/mermaid/spec/MermaidLegendSpec {
+}
+
+public abstract interface class modular/mermaid/spec/MermaidSpec : modular/spec/Spec {
+	public abstract fun getChart ()Lmodular/mermaid/spec/MermaidChartSpec;
+	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLegend ()Lmodular/mermaid/spec/MermaidLegendSpec;
+	public abstract fun legend ()V
+	public abstract fun legend (Lorg/gradle/api/Action;)V
+	public abstract fun setLegend (Lmodular/mermaid/spec/MermaidLegendSpec;)V
+}
+
+public final class modular/mermaid/spec/MermaidSpec$DefaultImpls {
+	public static fun chart (Lmodular/mermaid/spec/MermaidSpec;Lorg/gradle/api/Action;)V
+}
+
+public final class modular/mermaid/spec/NodePlacementStrategy : java/lang/Enum, modular/graphviz/spec/StringEnum {
+	public static final field BrandesKoepf Lmodular/mermaid/spec/NodePlacementStrategy;
+	public static final field LinearSegments Lmodular/mermaid/spec/NodePlacementStrategy;
+	public static final field NetworkSimplex Lmodular/mermaid/spec/NodePlacementStrategy;
+	public static final field Simple Lmodular/mermaid/spec/NodePlacementStrategy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/spec/NodePlacementStrategy;
+	public static fun values ()[Lmodular/mermaid/spec/NodePlacementStrategy;
+}
+
+public final class modular/mermaid/spec/Theme : java/lang/Enum, modular/graphviz/spec/StringEnum {
+	public static final field Base Lmodular/mermaid/spec/Theme;
+	public static final field Dark Lmodular/mermaid/spec/Theme;
+	public static final field Default Lmodular/mermaid/spec/Theme;
+	public static final field Forest Lmodular/mermaid/spec/Theme;
+	public static final field Neutral Lmodular/mermaid/spec/Theme;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/spec/Theme;
+	public static fun values ()[Lmodular/mermaid/spec/Theme;
+}
+
+public abstract class modular/mermaid/tasks/GenerateLegendMarkdownTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
+	public static final field Companion Lmodular/mermaid/tasks/GenerateLegendMarkdownTask$Companion;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/mermaid/tasks/GenerateLegendMarkdownTask$Companion {
+	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/mermaid/tasks/GenerateModulesMermaidTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
+	public static final field Companion Lmodular/mermaid/tasks/GenerateModulesMermaidTask$Companion;
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getPrintOutput ()Lorg/gradle/api/provider/Property;
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/mermaid/tasks/GenerateModulesMermaidTask$Companion {
+	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/gradle/ModularExtension;Lmodular/mermaid/spec/MermaidSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract class modular/spec/GeneralFlags {
@@ -502,6 +661,14 @@ public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/Def
 public final class modular/tasks/CalculateModuleTreeTask$Companion {
 	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
 	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
+}
+
+public abstract class modular/tasks/CheckFileDiffTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getActualFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getExpectedFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
 }
 
 public abstract class modular/tasks/CollateModuleLinksTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {

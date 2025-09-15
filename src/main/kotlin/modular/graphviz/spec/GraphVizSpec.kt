@@ -2,8 +2,6 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("unused") // public API
-
 package modular.graphviz.spec
 
 import modular.gradle.ModularDsl
@@ -58,8 +56,8 @@ interface GraphVizSpec : Spec<GraphVizLegendSpec, GraphVizChartSpec> {
    * legend generation. Defaults to null.
    */
   override var legend: GraphVizLegendSpec?
-  override fun legend()
-  override fun legend(action: Action<GraphVizLegendSpec>)
+  @ModularDsl override fun legend()
+  @ModularDsl override fun legend(action: Action<GraphVizLegendSpec>)
 
   /**
    * Call this to configure the chart contents, orientation, font size, arrows, etc. Example:

@@ -2,15 +2,15 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.graphviz.tasks
+package modular.mermaid.tasks
 
 import modular.gradle.ModularExtension
-import modular.graphviz.internal.DotFileWriter
-import modular.graphviz.spec.DotFileConfig
-import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModuleLinks
 import modular.internal.Replacement
 import modular.internal.TypedModules
+import modular.mermaid.internal.MermaidWriter
+import modular.mermaid.spec.MermaidConfig
+import modular.mermaid.spec.MermaidSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.CollateModuleTypesTask
 import modular.tasks.MODULAR_TASK_GROUP
@@ -33,7 +33,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateModulesDotFileTask :
+abstract class GenerateModulesMermaidTask :
   DefaultTask(),
   TaskWithSeparator,
   ModularGenerationTask,
@@ -50,12 +50,12 @@ abstract class GenerateModulesDotFileTask :
   @get:Input abstract val replacements: SetProperty<Replacement>
   @get:Input abstract val thisPath: Property<String>
 
-  // Dotfile config
-  @get:Input abstract val config: Property<DotFileConfig>
+  // Mermaid config
+  @get:Input abstract val config: Property<MermaidConfig>
 
   init {
     group = MODULAR_TASK_GROUP
-    description = "Generates a project dependency graph in dotfile format"
+    description = "Generates a project dependency graph in mermaid format"
   }
 
   @TaskAction
@@ -64,7 +64,7 @@ abstract class GenerateModulesDotFileTask :
     val moduleTypesFile = moduleTypesFile.get().asFile
     val separator = separator.get()
 
-    val writer = DotFileWriter(
+    val writer = MermaidWriter(
       typedModules = TypedModules.read(moduleTypesFile, separator),
       links = ModuleLinks.read(linksFile, separator),
       replacements = replacements.get(),
@@ -82,21 +82,21 @@ abstract class GenerateModulesDotFileTask :
   }
 
   companion object {
-    internal const val TASK_NAME = "generateModulesDotFile"
-    internal const val TASK_NAME_FOR_CHECKING = "generateModulesDotFileForChecking"
+    internal const val TASK_NAME = "generateModulesMermaid"
+    internal const val TASK_NAME_FOR_CHECKING = "generateModulesMermaidForChecking"
 
     fun register(
       target: Project,
       name: String,
       extension: ModularExtension,
-      spec: GraphVizSpec,
+      spec: MermaidSpec,
       outputFile: RegularFile,
       printOutput: Boolean,
-    ): TaskProvider<GenerateModulesDotFileTask> = with(target) {
+    ): TaskProvider<GenerateModulesMermaidTask> = with(target) {
       val collateModuleTypes = CollateModuleTypesTask.get(rootProject)
       val calculateProjectTree = CalculateModuleTreeTask.get(target)
 
-      tasks.register(name, GenerateModulesDotFileTask::class.java) { task ->
+      tasks.register(name, GenerateModulesMermaidTask::class.java) { task ->
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.convention(outputFile)
@@ -106,7 +106,7 @@ abstract class GenerateModulesDotFileTask :
         task.replacements.convention(extension.modulePathTransforms.replacements)
         task.thisPath.convention(target.path)
 
-        task.config.convention(provider { DotFileConfig(spec.chart) })
+        task.config.convention(provider { MermaidConfig(spec.chart) })
       }
     }
   }

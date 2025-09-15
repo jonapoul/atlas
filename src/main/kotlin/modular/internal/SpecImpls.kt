@@ -7,6 +7,8 @@ package modular.internal
 import modular.gradle.ModularExtension
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.spec.GraphVizSpec
+import modular.mermaid.internal.MermaidSpecImpl
+import modular.mermaid.spec.MermaidSpec
 import modular.spec.GeneralSpec
 import modular.spec.LinkType
 import modular.spec.LinkTypesSpec
@@ -54,10 +56,27 @@ internal open class ModularExtensionImpl @Inject constructor(
     }
 
   override fun graphViz() = graphViz { /* No-op */ }
+
   override fun graphViz(action: Action<GraphVizSpec>) {
     val spec = specs.findByName(GraphVizSpecImpl.NAME)
       as? GraphVizSpec
       ?: GraphVizSpecImpl(objects, properties)
+    action.execute(spec)
+    specs.add(spec)
+  }
+
+  override val mermaid: MermaidSpec
+    get() {
+      mermaid()
+      return specs.getByName(MermaidSpecImpl.NAME) as MermaidSpec
+    }
+
+  override fun mermaid() = mermaid { /* No-op */ }
+
+  override fun mermaid(action: Action<MermaidSpec>) {
+    val spec = specs.findByName(MermaidSpecImpl.NAME)
+      as? MermaidSpec
+      ?: MermaidSpecImpl(objects, properties)
     action.execute(spec)
     specs.add(spec)
   }

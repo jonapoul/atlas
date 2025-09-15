@@ -5,6 +5,7 @@
 package modular.gradle
 
 import modular.graphviz.spec.GraphVizSpec
+import modular.mermaid.spec.MermaidSpec
 import modular.spec.GeneralSpec
 import modular.spec.LinkTypesSpec
 import modular.spec.ModulePathTransformSpec
@@ -39,4 +40,8 @@ interface ModularExtension {
   val graphViz: GraphVizSpec
   @ModularDsl fun graphViz()
   @ModularDsl fun graphViz(action: Action<GraphVizSpec>)
+
+  val mermaid: MermaidSpec
+  @ModularDsl fun mermaid()
+  @ModularDsl fun mermaid(action: Action<MermaidSpec>)
 }

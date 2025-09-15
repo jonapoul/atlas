@@ -12,5 +12,7 @@ complexity:
 style:
   DestructuringDeclarationWithTooManyEntries:
     maxDestructuringEntries: 5
+  ForbiddenComment:
+    allowedPatterns: 'TODO.? https://github\.com/jonapoul/modular/issues/\d+'
   MaxLineLength:
     maxLineLength: 120

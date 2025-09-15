@@ -15,7 +15,7 @@ import org.gradle.testkit.runner.TaskOutcome.FAILED
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import kotlin.test.Test
 
-class CheckDotFileTaskTest : ScenarioTest() {
+class CheckFileDiffTaskTest : ScenarioTest() {
   @Test
   fun `Verify modules of a basic project`() = runScenario(GraphVizBasicWithThreeOutputFormats) {
     // given initial dotfile is generated

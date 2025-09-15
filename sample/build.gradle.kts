@@ -2,6 +2,11 @@ import modular.graphviz.spec.ArrowType
 import modular.graphviz.spec.LayoutEngine
 import modular.graphviz.spec.LinkStyle
 import modular.graphviz.spec.RankDir
+import modular.mermaid.spec.ConsiderModelOrder
+import modular.mermaid.spec.CycleBreakingStrategy
+import modular.mermaid.spec.Look
+import modular.mermaid.spec.NodePlacementStrategy
+import modular.mermaid.spec.Theme
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -68,6 +73,26 @@ modular {
       eps()
       png()
       svg()
+    }
+  }
+
+  mermaid {
+    fileExtension = "mmd"
+
+    legend {
+      // TBC
+    }
+
+    chart {
+      look(Look.HandDrawn)
+      theme(Theme.Forest)
+      elk {
+        mergeEdges(true)
+        forceNodeModelOrder(true)
+        nodePlacementStrategy(NodePlacementStrategy.LinearSegments)
+        cycleBreakingStrategy(CycleBreakingStrategy.Interactive)
+        considerModelOrder(ConsiderModelOrder.PreferEdges)
+      }
     }
   }
 }

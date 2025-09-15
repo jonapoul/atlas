@@ -5,9 +5,8 @@
 package modular.graphviz.tasks
 
 import modular.graphviz.spec.GraphVizLegendSpec
-import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModularExtensionImpl
-import modular.internal.appendIndentedLine
+import modular.internal.buildIndentedString
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
 import modular.spec.LinkType
@@ -59,32 +58,36 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
     val hasModuleTypes = moduleTypes.isNotEmpty()
     val hasLinkTypes = linkTypes.isNotEmpty()
 
-    val dotFileContents = buildString {
+    val dotFileContents = buildIndentedString {
       appendLine("digraph {")
-      appendIndentedLine("node [shape=plaintext]")
+      indent {
+        appendLine("node [shape=plaintext]")
 
-      if (hasModuleTypes) {
-        appendIndentedLine("modules [label=<")
-        appendIndentedLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
-        appendIndentedLine("  <TR><TD COLSPAN=\"2\" BGCOLOR=\"#DDDDDD\"><B>Module Types</B></TD></TR>")
-        moduleTypes.forEach { type ->
-          appendIndentedLine("  <TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">&lt;module-name&gt;</TD></TR>")
+        if (hasModuleTypes) {
+          appendLine("modules [label=<")
+          appendLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
+          appendLine("  <TR><TD COLSPAN=\"2\" BGCOLOR=\"#DDDDDD\"><B>Module Types</B></TD></TR>")
+          indent {
+            moduleTypes.forEach { type ->
+              appendLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">&lt;module-name&gt;</TD></TR>")
+            }
+          }
+          appendLine("</TABLE>")
+          appendLine(">];")
         }
-        appendIndentedLine("</TABLE>")
-        appendIndentedLine(">];")
-      }
 
-      if (hasLinkTypes) {
-        appendIndentedLine("links [label=<")
-        appendIndentedLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
-        appendIndentedLine("  <TR><TD COLSPAN=\"2\" BGCOLOR=\"#DDDDDD\"><B>Link Types</B></TD></TR>")
-        linkTypes.forEach { type ->
-          val bgColor = if (type.color == null) "" else " BGCOLOR=\"${type.color}\""
-          val style = type.style ?: "&lt;style&gt;"
-          appendIndentedLine("  <TR><TD>${type.configuration}</TD><TD$bgColor>$style</TD></TR>")
+        if (hasLinkTypes) {
+          appendLine("links [label=<")
+          appendLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
+          appendLine("  <TR><TD COLSPAN=\"2\" BGCOLOR=\"#DDDDDD\"><B>Link Types</B></TD></TR>")
+          linkTypes.forEach { type ->
+            val bgColor = if (type.color == null) "" else " BGCOLOR=\"${type.color}\""
+            val style = type.style ?: "&lt;style&gt;"
+            appendLine("  <TR><TD>${type.configuration}</TD><TD$bgColor>$style</TD></TR>")
+          }
+          appendLine("</TABLE>")
+          appendLine(">];")
         }
-        appendIndentedLine("</TABLE>")
-        appendIndentedLine(">];")
       }
 
       appendLine("}")
@@ -118,15 +121,6 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
         task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
         task.linkTypes.convention(extension.linkTypes.linkTypes)
       }
-    }
-
-    internal fun defaultOutputFile(
-      extension: ModularExtensionImpl,
-      spec: GraphVizSpec,
-    ): Provider<RegularFile> = extension.outputs.legendOutputDirectory.map { dir ->
-      val filename = extension.outputs.legendRootFilename.get()
-      val fileExtension = spec.fileExtension.get()
-      dir.file("$filename.$fileExtension")
     }
   }
 }

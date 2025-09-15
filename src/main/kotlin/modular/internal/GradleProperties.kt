@@ -34,6 +34,10 @@ internal class GradleProperties(private val project: Project) {
   val rankDir: Provider<String> = string(key = "modular.graphViz.chart.rankDir", default = null)
   val rankSep: Provider<Float> = float(key = "modular.graphViz.chart.rankSep", default = null)
 
+  // Mermaid chart
+  val mermaidLook: Provider<String> = string(key = "modular.mermaid.chart.look", default = null)
+  val mermaidTheme: Provider<String> = string(key = "modular.mermaid.chart.theme", default = null)
+
   // Suppressions
   val suppressSvgViewBoxWarning: Provider<Boolean> = bool(key = "modular.suppress.adjustSvgViewBox", default = false)
   val suppressNoGraphVizOutputs: Provider<Boolean> = bool(key = "modular.suppress.noGraphVizOutputs", default = false)

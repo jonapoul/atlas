@@ -2,12 +2,9 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("TooManyFunctions")
-
 package modular.internal
 
 import modular.gradle.ModularExtension
-import modular.graphviz.spec.GraphVizSpec
 import modular.spec.ModuleType
 import modular.spec.ModuleTypeModel
 import modular.spec.OutputSpec
@@ -25,12 +22,6 @@ import org.gradle.api.provider.SetProperty
 
 internal fun ModularExtension.orderedTypes(): List<ModuleType> =
   (moduleTypes as OrderedNamedContainer<ModuleType>).getInOrder()
-
-internal fun ModularExtensionImpl.graphVizSpec(): GraphVizSpec =
-  specs
-    .filterIsInstance<GraphVizSpec>()
-    .firstOrNull()
-    ?: error("No graphViz spec found")
 
 internal fun moduleTypeModel(type: ModuleType) = ModuleTypeModel(
   name = type.name,
@@ -64,17 +55,6 @@ internal fun Project.configureSeparators(extension: ModularExtension) {
   }
 }
 
-internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
-  afterEvaluate {
-    val isGradleSync = System.getProperty("idea.sync.active") == "true"
-
-    if (extension.general.generateOnSync.get() && isGradleSync) {
-      val modularGenerationTasks = tasks.withType(ModularGenerationTask::class.java)
-      tasks.maybeCreate("prepareKotlinIdeaImport").dependsOn(modularGenerationTasks)
-    }
-  }
-}
-
 internal fun Project.registerModularGenerateTask() {
   tasks.register("modularGenerate") { t ->
     t.group = MODULAR_TASK_GROUP
@@ -88,13 +68,6 @@ internal val Project.modularBuildDirectory: Provider<Directory>
 
 internal fun Project.fileInBuildDirectory(path: String): Provider<RegularFile> =
   modularBuildDirectory.map { it.file(path) }
-
-internal fun StringBuilder.appendIndented(value: Any) = append("  $value")
-
-internal fun StringBuilder.appendIndentedLine(value: Any) {
-  appendIndented(value)
-  appendLine()
-}
 
 internal fun Project.outputFile(
   output: OutputSpecImpl,
