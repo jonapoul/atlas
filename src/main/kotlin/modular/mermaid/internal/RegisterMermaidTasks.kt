@@ -52,7 +52,7 @@ internal fun Project.registerMermaidTrunkTasks(
       target = this,
       name = CheckFileDiffTask.NAME_LEGEND_BASE + "Mermaid",
       generateTask = tempTask,
-      realFile = outputFile(extension.outputs, Variant.Legend, fileExtension = spec.fileExtension.get()),
+      realFile = outputFile(extension.outputs, Variant.Legend, fileExtension = "md"),
     )
 
     tasks.maybeCreate("check").dependsOn(checkTask)
