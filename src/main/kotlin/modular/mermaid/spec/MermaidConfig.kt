@@ -9,9 +9,9 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 
 @KSerializable
 data class MermaidConfig(
-  // TBC
+  val tbc: String,
 ) : JSerializable
 
 internal fun MermaidConfig(spec: MermaidChartSpec): MermaidConfig = MermaidConfig(
-  // TBC
+  tbc = "TBC",
 )

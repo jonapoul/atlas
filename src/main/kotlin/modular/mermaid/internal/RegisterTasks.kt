@@ -9,7 +9,7 @@ import modular.internal.Variant
 import modular.internal.modularBuildDirectory
 import modular.internal.outputFile
 import modular.mermaid.spec.MermaidSpec
-import modular.mermaid.tasks.GenerateLegendMermaidTask
+import modular.mermaid.tasks.GenerateLegendMarkdownTask
 import modular.mermaid.tasks.GenerateModulesMermaidTask
 import modular.tasks.CheckFileDiffTask
 import modular.tasks.defaultOutputFile
@@ -26,21 +26,26 @@ internal fun Project.registerMermaidTrunkTasks(
   val legend = spec.legend
   if (legend != null) {
     // Only create a legend if one of the legend functions was explicitly called
-    val mermaidTask = GenerateLegendMermaidTask.register(
+    val mermaidTask = GenerateLegendMarkdownTask.register(
       target = this,
-      name = GenerateLegendMermaidTask.TASK_NAME,
+      name = GenerateLegendMarkdownTask.TASK_NAME,
       legendSpec = legend,
       extension = extension,
-      outputFile = defaultOutputFile(extension, spec),
+      outputFile = defaultOutputFile(extension, spec).map { f ->
+        // just to change the extension! right faff
+        val file = f.asFile
+        val siblingFile = file.resolveSibling("${file.nameWithoutExtension}.md")
+        layout.projectDirectory.file(siblingFile.relativeTo(projectDir).path)
+      }
     )
 
     // Also validate the legend's dotfile when we call gradle check
-    val tempTask = GenerateLegendMermaidTask.register(
+    val tempTask = GenerateLegendMarkdownTask.register(
       target = this,
-      name = GenerateLegendMermaidTask.TASK_NAME_FOR_CHECKING,
+      name = GenerateLegendMarkdownTask.TASK_NAME_FOR_CHECKING,
       legendSpec = legend,
       extension = extension,
-      outputFile = modularBuildDirectory.map { it.file("legend-temp.mmd") },
+      outputFile = modularBuildDirectory.map { it.file("legend-temp.md") },
     )
 
     val checkTask = CheckFileDiffTask.register(

@@ -4,14 +4,10 @@
  */
 package modular.mermaid.tasks
 
-import modular.graphviz.spec.GraphVizLegendSpec
-import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModularExtensionImpl
-import modular.internal.buildIndentedString
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
 import modular.mermaid.spec.MermaidLegendSpec
-import modular.mermaid.spec.MermaidSpec
 import modular.spec.LinkType
 import modular.spec.ModuleTypeModel
 import modular.tasks.MODULAR_TASK_GROUP
@@ -33,7 +29,11 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateLegendMermaidTask : DefaultTask(), TaskWithSeparator, ModularGenerationTask, TaskWithOutputFile {
+abstract class GenerateLegendMarkdownTask :
+  DefaultTask(),
+  TaskWithSeparator,
+  ModularGenerationTask,
+  TaskWithOutputFile {
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
   @get:Input abstract val linkTypes: SetProperty<LinkType>
@@ -53,21 +53,60 @@ abstract class GenerateLegendMermaidTask : DefaultTask(), TaskWithSeparator, Mod
     val hasModuleTypes = moduleTypes.isNotEmpty()
     val hasLinkTypes = linkTypes.isNotEmpty()
 
-    val mermaidContents = buildIndentedString {
-      appendLine("TBC")
+    val contents = buildString {
+      if (hasModuleTypes) {
+        appendModuleTypesTable(moduleTypes)
+        appendLine()
+      }
+
+      if (hasLinkTypes) {
+        appendLinkTypesTable(linkTypes)
+        appendLine()
+      }
     }
 
-    outputFile.writeText(mermaidContents)
+    outputFile.writeText(contents)
 
-    logger.lifecycle("Written ${mermaidContents.length} chars to $outputFile")
+    logger.lifecycle("Written ${contents.length} chars to $outputFile")
+  }
+
+  private fun StringBuilder.appendModuleTypesTable(moduleTypes: List<ModuleTypeModel>) {
+    appendLine("| Module Types | Color |")
+    appendLine("|:--:|:--:|")
+
+    for (type in moduleTypes) {
+      val url = "https://img.shields.io/badge/-%20-${colorToHex(type.color)}?style=flat-square"
+      val img = "<img src=\"$url\" height=\"30\" width=\"100\">"
+      appendLine("| ${type.name} | $img |")
+    }
+  }
+
+  private fun StringBuilder.appendLinkTypesTable(linkTypes: Set<LinkType>) {
+    appendLine("| Link Types | Style |")
+    appendLine("|:--:|:--:|")
+
+    for (type in linkTypes) {
+      // TODO https://github.com/jonapoul/modular/issues/119
+      val style = listOfNotNull(type.color, type.style).joinToString(separator = " ")
+      appendLine("| ${type.configuration} | $style |")
+    }
+  }
+
+  private fun colorToHex(color: String): String {
+    if (color.matches("#[0-9A-Fa-f]{6}".toRegex())) {
+      return color.removePrefix("#")
+    }
+
+    // TODO https://github.com/jonapoul/modular/issues/118
+    error("Don't currently support non-hex colors, received '$color'")
   }
 
   companion object {
-    internal const val TASK_NAME: String = "generateLegendMermaid"
-    internal const val TASK_NAME_FOR_CHECKING: String = "generateLegendMermaidForChecking"
+    internal const val TASK_NAME: String = "generateLegendMarkdown"
+    internal const val TASK_NAME_FOR_CHECKING: String = "generateLegendMarkdownForChecking"
 
-    fun get(target: Project): TaskProvider<GenerateLegendMermaidTask> =
-      target.tasks.named(TASK_NAME, GenerateLegendMermaidTask::class.java)
+    fun get(target: Project): TaskProvider<GenerateLegendMarkdownTask> =
+      target.tasks.named(TASK_NAME, GenerateLegendMarkdownTask::class.java)
 
     internal fun register(
       target: Project,
@@ -75,8 +114,8 @@ abstract class GenerateLegendMermaidTask : DefaultTask(), TaskWithSeparator, Mod
       legendSpec: MermaidLegendSpec,
       extension: ModularExtensionImpl,
       outputFile: Provider<RegularFile>,
-    ): TaskProvider<GenerateLegendMermaidTask> = with(target) {
-      tasks.register(name, GenerateLegendMermaidTask::class.java) { task ->
+    ): TaskProvider<GenerateLegendMarkdownTask> = with(target) {
+      tasks.register(name, GenerateLegendMarkdownTask::class.java) { task ->
         task.outputFile.convention(outputFile)
         task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
         task.linkTypes.convention(extension.linkTypes.linkTypes)
