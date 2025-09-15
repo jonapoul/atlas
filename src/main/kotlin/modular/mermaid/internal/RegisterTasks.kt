@@ -36,7 +36,7 @@ internal fun Project.registerMermaidTrunkTasks(
         val file = f.asFile
         val siblingFile = file.resolveSibling("${file.nameWithoutExtension}.md")
         layout.projectDirectory.file(siblingFile.relativeTo(projectDir).path)
-      }
+      },
     )
 
     // Also validate the legend's dotfile when we call gradle check

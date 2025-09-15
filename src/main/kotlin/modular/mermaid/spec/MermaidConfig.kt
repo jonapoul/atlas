@@ -9,9 +9,15 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 
 @KSerializable
 data class MermaidConfig(
-  val tbc: String,
+  val layout: String?,
+  val layoutProperties: Map<String, String>?,
+  val look: String?,
+  val theme: String?,
 ) : JSerializable
 
 internal fun MermaidConfig(spec: MermaidChartSpec): MermaidConfig = MermaidConfig(
-  tbc = "TBC",
+  layout = spec.layout.name.orNull,
+  layoutProperties = spec.layout.properties.orNull,
+  look = spec.look.orNull,
+  theme = spec.theme.orNull,
 )

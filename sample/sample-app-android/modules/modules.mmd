@@ -1,0 +1,29 @@
+---
+config:
+  layout: elk
+  look: handDrawn
+  theme: forest
+  elk:
+    mergeEdges: true
+    forceNodeModelOrder: true
+    nodePlacementStrategy: LINEAR_SEGMENTS
+    cycleBreakingStrategy: INTERACTIVE
+    considerModelOrder: PREFER_EDGES
+---
+graph TD
+  _sample_app_android["app android"]
+  _sample_lib_android["Lib android"]
+  _sample_lib_java["Lib java"]
+  _sample_lib_kotlin_jvm["Lib kotlin jvm"]
+  _sample_lib_kotlin_mp["Lib kotlin mp"]
+  style _sample_app_android fill:#09AD35,color:black,font-weight:bold,stroke:black,stroke-width:2px
+  style _sample_lib_android fill:#55FF55,color:black
+  style _sample_lib_java fill:#FF8800,color:black
+  style _sample_lib_kotlin_jvm fill:#CA66FF,color:black
+  style _sample_lib_kotlin_mp fill:#9D8DF1,color:black
+  _sample_app_android -.-> _sample_lib_android
+  _sample_app_android -.-> _sample_lib_kotlin_mp
+  _sample_lib_android -.-> _sample_lib_kotlin_jvm
+  _sample_lib_kotlin_mp --> _sample_lib_android
+  _sample_lib_kotlin_mp ==> _sample_lib_java
+  _sample_lib_kotlin_mp --> _sample_lib_kotlin_jvm
