@@ -5,7 +5,7 @@
 package modular.spec
 
 import modular.gradle.ModularDsl
-import modular.graphviz.spec.LinkStyle
+import modular.graphviz.spec.StringEnum
 import org.gradle.api.provider.SetProperty
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 import kotlin.text.RegexOption.IGNORE_CASE
@@ -51,14 +51,14 @@ interface LinkTypesSpec {
   @ModularDsl
   fun add(
     configuration: Regex,
-    style: LinkStyle,
+    style: Style,
     color: String? = null,
   ) = add(configuration, style.string, color)
 
   @ModularDsl
   fun add(
     @Language("RegExp") configuration: String,
-    style: LinkStyle,
+    style: Style,
     color: String? = null,
   ) = add(configuration, style.string, color)
 
@@ -70,7 +70,7 @@ interface LinkTypesSpec {
 
   @ModularDsl
   operator fun String.invoke(
-    style: LinkStyle?,
+    style: Style?,
     color: String? = null,
   ) = invoke(style?.string, color)
 
@@ -82,7 +82,7 @@ interface LinkTypesSpec {
 
   @ModularDsl
   fun api(
-    style: LinkStyle,
+    style: Style,
     color: String? = null,
   ) = api(style = style.string, color = color)
 
@@ -94,10 +94,12 @@ interface LinkTypesSpec {
 
   @ModularDsl
   fun implementation(
-    style: LinkStyle,
+    style: Style,
     color: String? = null,
   ) = implementation(style = style.string, color = color)
 }
+
+interface Style : StringEnum
 
 @KSerializable
 data class LinkType(
