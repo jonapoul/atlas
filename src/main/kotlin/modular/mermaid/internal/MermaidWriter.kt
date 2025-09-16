@@ -80,7 +80,9 @@ internal class MermaidWriter(
 
   // See https://mermaid.js.org/syntax/flowchart.html#links-between-nodes
   private fun IndentedStringBuilder.appendLinks() {
-    for (link in links) {
+    links.forEachIndexed { i, link ->
+      val arrowPrefix = if (config.animateLinks) "link$i@" else ""
+
       // TODO https://github.com/jonapoul/modular/issues/121
       val arrow = when (link.style?.lowercase()) {
         "bold" -> "==>"
@@ -90,7 +92,13 @@ internal class MermaidWriter(
         "solid" -> "-->"
         else -> "-->"
       }
-      appendLine("${link.fromPath.label} $arrow ${link.toPath.label}")
+      appendLine("${link.fromPath.label} $arrowPrefix$arrow ${link.toPath.label}")
+    }
+
+    if (config.animateLinks) {
+      for (i in links.indices) {
+        appendLine("link$i@{ animate: true }")
+      }
     }
   }
 
