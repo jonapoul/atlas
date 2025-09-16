@@ -77,7 +77,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
     doGraphVizPostProcessing(general, outputFile, outputFormat)
   }
 
-  companion object {
+  internal companion object {
     // E.g. format=xdot_json and variant=Legend => "generateLegendXdotJson"
     private fun taskName(variant: Variant, format: String): String {
       val cleanedFormat = format
@@ -88,7 +88,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
       return "generate" + variant.name + cleanedFormat
     }
 
-    fun get(target: Project, name: String): TaskProvider<GenerateGraphvizFileTask> =
+    internal fun get(target: Project, name: String): TaskProvider<GenerateGraphvizFileTask> =
       target.tasks.named(name, GenerateGraphvizFileTask::class.java)
 
     internal fun <T : TaskWithOutputFile> register(

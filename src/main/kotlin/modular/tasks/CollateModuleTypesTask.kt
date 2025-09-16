@@ -48,13 +48,13 @@ abstract class CollateModuleTypesTask : DefaultTask(), TaskWithSeparator, TaskWi
     }
   }
 
-  companion object {
+  internal companion object {
     private const val NAME = "collateModuleTypes"
 
-    fun get(target: Project): TaskProvider<CollateModuleTypesTask> =
+    internal fun get(target: Project): TaskProvider<CollateModuleTypesTask> =
       target.tasks.named(NAME, CollateModuleTypesTask::class.java)
 
-    fun register(target: Project): TaskProvider<CollateModuleTypesTask> = with(target) {
+    internal fun register(target: Project): TaskProvider<CollateModuleTypesTask> = with(target) {
       val collateTypes = tasks.register(NAME, CollateModuleTypesTask::class.java) { task ->
         task.outputFile.convention(fileInBuildDirectory("module-types"))
       }

@@ -83,13 +83,13 @@ abstract class CalculateModuleTreeTask : DefaultTask(), TaskWithSeparator, TaskW
     }
   }
 
-  companion object {
+  internal companion object {
     private const val NAME = "calculateModuleTree"
 
-    fun get(target: Project): TaskProvider<CalculateModuleTreeTask> =
+    internal fun get(target: Project): TaskProvider<CalculateModuleTreeTask> =
       target.tasks.named(NAME, CalculateModuleTreeTask::class.java)
 
-    fun register(
+    internal fun register(
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<CalculateModuleTreeTask> = with(target) {

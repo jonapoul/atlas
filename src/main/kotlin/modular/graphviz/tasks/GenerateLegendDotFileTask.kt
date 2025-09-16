@@ -98,11 +98,11 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
     logger.lifecycle("Written ${dotFileContents.length} chars to $outputFile")
   }
 
-  companion object {
+  internal companion object {
     internal const val TASK_NAME: String = "generateLegendDotFile"
     internal const val TASK_NAME_FOR_CHECKING: String = "generateLegendDotFileForChecking"
 
-    fun get(target: Project): TaskProvider<GenerateLegendDotFileTask> =
+    internal fun get(target: Project): TaskProvider<GenerateLegendDotFileTask> =
       target.tasks.named(TASK_NAME, GenerateLegendDotFileTask::class.java)
 
     internal fun register(
