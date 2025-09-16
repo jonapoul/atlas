@@ -37,6 +37,7 @@ internal class GradleProperties(private val project: Project) {
   // Mermaid chart
   val mermaidLook: Provider<String> = string(key = "modular.mermaid.chart.look", default = null)
   val mermaidTheme: Provider<String> = string(key = "modular.mermaid.chart.theme", default = null)
+  val mermaidAnimateLinks: Provider<Boolean> = bool(key = "modular.mermaid.chart.animateLinks", default = false)
 
   // Suppressions
   val suppressSvgViewBoxWarning: Provider<Boolean> = bool(key = "modular.suppress.adjustSvgViewBox", default = false)

@@ -84,6 +84,7 @@ modular {
     }
 
     chart {
+      animateLinks = false
       look(Look.HandDrawn)
       theme(Theme.Forest)
       elk {

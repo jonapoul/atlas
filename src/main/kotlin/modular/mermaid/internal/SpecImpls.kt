@@ -5,6 +5,7 @@
 package modular.mermaid.internal
 
 import modular.internal.GradleProperties
+import modular.internal.bool
 import modular.internal.string
 import modular.mermaid.spec.ConsiderModelOrder
 import modular.mermaid.spec.CycleBreakingStrategy
@@ -55,6 +56,7 @@ internal class MermaidChartSpecImpl(
     mutableLayout = ElkLayoutSpecImpl(objects).also { action?.execute(it) }
   }
 
+  override val animateLinks = objects.bool(properties.mermaidAnimateLinks)
   override val look = objects.string(properties.mermaidLook)
   override val theme = objects.string(properties.mermaidTheme)
 }
