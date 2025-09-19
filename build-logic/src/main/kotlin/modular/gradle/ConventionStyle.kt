@@ -24,7 +24,7 @@ class ConventionStyle : Plugin<Project> {
     plugins { id("io.gitlab.arturbosch.detekt") }
 
     extensions.configure<DetektExtension> {
-      config.setFrom(file("config/detekt.yml"))
+      config.setFrom(rootProject.file("config/detekt.yml"))
       buildUponDefaultConfig = true
     }
 
