@@ -46,8 +46,8 @@ internal open class ModularExtensionImpl @Inject constructor(
   override val outputs = OutputSpecImpl(objects, project)
   override fun outputs(action: Action<OutputSpec>) = action.execute(outputs)
 
-  override val specs: NamedDomainObjectContainer<Spec<*>> = objects.domainObjectContainer(Spec::class.java)
-  override fun specs(action: Action<NamedDomainObjectContainer<Spec<*>>>) = action.execute(specs)
+  override val specs: NamedDomainObjectContainer<Spec> = objects.domainObjectContainer(Spec::class.java)
+  override fun specs(action: Action<NamedDomainObjectContainer<Spec>>) = action.execute(specs)
 
   override val graphViz: GraphVizSpec
     get() {

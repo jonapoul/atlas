@@ -19,7 +19,7 @@ data class DotFileConfig(
   val rankSep: Float? = null,
 ) : JSerializable
 
-internal fun DotFileConfig(spec: GraphVizChartSpec): DotFileConfig = DotFileConfig(
+internal fun DotFileConfig(spec: GraphVizSpec): DotFileConfig = DotFileConfig(
   arrowHead = spec.arrowHead.orNull,
   arrowTail = spec.arrowTail.orNull,
   dir = spec.dir.orNull,

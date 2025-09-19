@@ -20,7 +20,7 @@ import org.gradle.api.tasks.TaskProvider
 
 internal fun Project.registerMermaidTrunkTasks(
   extension: ModularExtensionImpl,
-  spec: MermaidSpec,
+  spec: MermaidSpecImpl,
   generateLegend: TaskProvider<Task>,
 ) {
   val legendTask = GenerateLegendMarkdownTask.register(

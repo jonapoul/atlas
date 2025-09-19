@@ -52,15 +52,13 @@ modular {
   graphViz {
     fileExtension = "dot"
 
-    chart {
-      arrowHead(ArrowType.Normal)
-      arrowTail(ArrowType.None)
-      layoutEngine(LayoutEngine.Dot)
-      rankDir(RankDir.TopToBottom)
-      dpi = 100
-      fontSize = 30
-      rankSep = 1.5f
-    }
+    arrowHead(ArrowType.Normal)
+    arrowTail(ArrowType.None)
+    layoutEngine(LayoutEngine.Dot)
+    rankDir(RankDir.TopToBottom)
+    dpi = 100
+    fontSize = 30
+    rankSep = 1.5f
 
     fileFormats {
       eps()
@@ -72,17 +70,16 @@ modular {
   mermaid {
     fileExtension = "mmd"
 
-    chart {
-      animateLinks = false
-      look(Look.HandDrawn)
-      theme(Theme.Forest)
-      elk {
-        mergeEdges(true)
-        forceNodeModelOrder(true)
-        nodePlacementStrategy(NodePlacementStrategy.LinearSegments)
-        cycleBreakingStrategy(CycleBreakingStrategy.Interactive)
-        considerModelOrder(ConsiderModelOrder.PreferEdges)
-      }
+    animateLinks = false
+    look(Look.HandDrawn)
+    theme(Theme.Forest)
+
+    elk {
+      mergeEdges(true)
+      forceNodeModelOrder(true)
+      nodePlacementStrategy(NodePlacementStrategy.LinearSegments)
+      cycleBreakingStrategy(CycleBreakingStrategy.Interactive)
+      considerModelOrder(ConsiderModelOrder.PreferEdges)
     }
   }
 }

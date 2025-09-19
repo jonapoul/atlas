@@ -4,8 +4,8 @@
  */
 package modular.graphviz.tasks
 
+import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.internal.doGraphVizPostProcessing
-import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
 import modular.internal.outputFile
@@ -94,11 +94,11 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
     internal fun <T : TaskWithOutputFile> register(
       target: Project,
       extension: ModularExtensionImpl,
-      spec: GraphVizSpec,
+      spec: GraphVizSpecImpl,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
     ): List<TaskProvider<GenerateGraphvizFileTask>> = with(target) {
-      spec.fileFormats.get().map { format ->
+      spec.fileFormats.formats.get().map { format ->
         val outputFile = outputFile(extension.outputs, variant, fileExtension = format)
         val taskName = taskName(variant, format)
         logger.info("Registering $taskName for output format $format")
@@ -106,7 +106,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
         tasks.register(taskName, GenerateGraphvizFileTask::class.java) { task ->
           task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
           task.pathToDotCommand.convention(spec.pathToDotCommand)
-          task.engine.convention(spec.chart.layoutEngine)
+          task.engine.convention(spec.layoutEngine)
           task.outputFormat.convention(format)
           task.outputFile.convention(outputFile)
           task.general.inject(extension.general)

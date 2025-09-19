@@ -106,7 +106,7 @@ abstract class GenerateModulesDotFileTask :
         task.replacements.convention(extension.modulePathTransforms.replacements)
         task.thisPath.convention(target.path)
 
-        task.config.convention(provider { DotFileConfig(spec.chart) })
+        task.config.convention(provider { DotFileConfig(spec) })
       }
     }
   }

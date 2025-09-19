@@ -8,18 +8,17 @@ package modular.graphviz.spec
 
 import modular.gradle.ModularDsl
 import org.gradle.api.provider.Provider
-import org.gradle.api.provider.SetProperty
 
 /**
  * The formats supported on your machine will depend on the version of GraphViz you use.
  * See https://graphviz.org/docs/outputs/
  */
-interface GraphVizFileFormatSpec : SetProperty<String> {
-  @ModularDsl override fun add(provider: Provider<out String>)
-  @ModularDsl override fun add(element: String)
-  @ModularDsl override fun addAll(elements: Iterable<String>)
-  @ModularDsl override fun addAll(vararg elements: String)
-  @ModularDsl override fun addAll(provider: Provider<out Iterable<String>>)
+interface GraphVizFileFormatSpec {
+  @ModularDsl fun add(provider: Provider<out String>)
+  @ModularDsl fun add(element: String)
+  @ModularDsl fun addAll(elements: Iterable<String>)
+  @ModularDsl fun addAll(vararg elements: String)
+  @ModularDsl fun addAll(provider: Provider<out Iterable<String>>)
 
   @ModularDsl fun canon() = add("canon")
   @ModularDsl fun cmap() = add("cmap")

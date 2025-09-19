@@ -106,7 +106,7 @@ abstract class GenerateModulesMermaidTask :
         task.replacements.convention(extension.modulePathTransforms.replacements)
         task.thisPath.convention(target.path)
 
-        task.config.convention(provider { MermaidConfig(spec.chart) })
+        task.config.convention(provider { MermaidConfig(spec) })
       }
     }
   }

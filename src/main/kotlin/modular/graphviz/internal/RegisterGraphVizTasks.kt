@@ -21,7 +21,7 @@ import org.gradle.api.tasks.TaskProvider
 
 internal fun Project.registerGraphVizTrunkTasks(
   extension: ModularExtensionImpl,
-  spec: GraphVizSpec,
+  spec: GraphVizSpecImpl,
   generateLegend: TaskProvider<Task>,
 ) {
   val legendTask = GenerateLegendDotFileTask.register(
@@ -56,7 +56,7 @@ internal fun Project.registerGraphVizTrunkTasks(
 
 internal fun Project.registerGraphVizLeafTasks(
   extension: ModularExtensionImpl,
-  spec: GraphVizSpec,
+  spec: GraphVizSpecImpl,
   file: RegularFile,
   generateModules: TaskProvider<Task>,
 ) {

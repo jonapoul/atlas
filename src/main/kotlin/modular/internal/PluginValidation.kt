@@ -4,6 +4,7 @@
  */
 package modular.internal
 
+import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.spec.GraphVizSpec
 import modular.spec.ModuleType
 import org.gradle.api.Project
@@ -20,8 +21,8 @@ internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
 }
 
 internal fun Project.warnIfNoGraphVizOutputs(extension: ModularExtensionImpl) {
-  val spec = extension.specs.filterIsInstance<GraphVizSpec>().firstOrNull() ?: return
-  val fileFormats = spec.fileFormats.orNull
+  val spec = extension.specs.filterIsInstance<GraphVizSpecImpl>().firstOrNull() ?: return
+  val fileFormats = spec.fileFormats.formats.orNull
   val isSuppressed = extension.properties.suppressNoGraphVizOutputs.get()
 
   if (fileFormats != null && fileFormats.isEmpty() && !isSuppressed) {
@@ -49,7 +50,7 @@ internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionI
   val adjustSvgViewBox = extension.general.adjustSvgViewBox.get()
   val graphVizSpec = extension.specs.filterIsInstance<GraphVizSpec>().firstOrNull()
   val warningIsSuppressed = extension.properties.suppressSvgViewBoxWarning.get()
-  val dpiIsConfigured = graphVizSpec?.chart?.dpi?.isPresent == true
+  val dpiIsConfigured = graphVizSpec?.dpi?.isPresent == true
   if (!adjustSvgViewBox && dpiIsConfigured && !warningIsSuppressed) {
     val msg = "Configuring a custom DPI on a dotfile's with SVG output enabled will likely cause a misaligned " +
       "viewBox. Try adding the following property to your build file to automatically attempt a fix:"

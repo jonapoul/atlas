@@ -4,15 +4,10 @@
  */
 package modular.spec
 
-import modular.gradle.ModularDsl
-import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
-interface Spec<ChartSpec : Any> {
+interface Spec {
   // allows us store to store Spec in a NamedDomainObjectContainer
   val name: String
   val fileExtension: Property<String>
-
-  val chart: ChartSpec
-  @ModularDsl fun chart(action: Action<ChartSpec>) = action.execute(chart)
 }
