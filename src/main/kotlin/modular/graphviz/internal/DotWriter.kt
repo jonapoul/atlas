@@ -14,15 +14,15 @@ import modular.core.internal.TypedModule
 import modular.core.internal.buildGraphElements
 import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
-import modular.graphviz.spec.DotFileConfig
+import modular.graphviz.spec.DotConfig
 
-internal data class DotFileWriter(
+internal data class DotWriter(
   private val typedModules: Set<TypedModule>,
   private val links: Set<ModuleLink>,
   private val replacements: Set<Replacement>,
   private val thisPath: String,
   private val groupModules: Boolean,
-  private val config: DotFileConfig,
+  private val config: DotConfig,
 ) {
   operator fun invoke(): String = buildIndentedString(size = 2) {
     appendLine("digraph {")

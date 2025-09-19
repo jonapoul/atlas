@@ -24,7 +24,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class WriteModuleType : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract val projectPath: Property<String>
   @get:[Input Optional] abstract val moduleType: Property<ModuleTypeModel>
   @get:Input abstract override val separator: Property<String>
@@ -47,10 +47,10 @@ abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOu
   }
 
   internal companion object {
-    internal const val NAME = "dumpModuleType"
+    internal const val NAME = "writeModuleType"
 
-    internal fun get(target: Project): TaskProvider<DumpModuleTypeTask>? = try {
-      target.tasks.named(NAME, DumpModuleTypeTask::class.java)
+    internal fun get(target: Project): TaskProvider<WriteModuleType>? = try {
+      target.tasks.named(NAME, WriteModuleType::class.java)
     } catch (_: UnknownTaskException) {
       null
     }
@@ -58,8 +58,8 @@ abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOu
     internal fun register(
       target: Project,
       extension: ModularExtension,
-    ): TaskProvider<DumpModuleTypeTask> = with(target) {
-      val dumpModule = tasks.register(NAME, DumpModuleTypeTask::class.java) { task ->
+    ): TaskProvider<WriteModuleType> = with(target) {
+      val writeModule = tasks.register(NAME, WriteModuleType::class.java) { task ->
         task.projectPath.convention(target.path)
         task.outputFile.convention(fileInBuildDirectory("module-type"))
       }
@@ -69,12 +69,12 @@ abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOu
         val matching = types
           .firstOrNull { t -> t.matches(target) }
           ?.let(::moduleTypeModel)
-        dumpModule.configure { t ->
+        writeModule.configure { t ->
           t.moduleType.convention(matching)
         }
       }
 
-      dumpModule
+      writeModule
     }
 
     private fun ModuleType.matches(project: Project): Boolean = with(project) {

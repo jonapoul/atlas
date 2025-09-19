@@ -6,13 +6,13 @@ package modular.graphviz.internal
 
 import assertk.assertThat
 import assertk.assertions.contains
-import modular.test.dotFileWriter
+import modular.test.dotWriter
 import kotlin.test.Test
 
-class DotFileWriterTest {
+class DotWriterTest {
   @Test
   fun `Base config with no module types`() {
-    val writer = dotFileWriter(
+    val writer = dotWriter(
       typedModules = OneLevelOfSubmodules.modules,
       links = OneLevelOfSubmodules.links,
     )
@@ -46,7 +46,7 @@ class DotFileWriterTest {
 
   @Test
   fun `Grouping modules`() {
-    val writer = dotFileWriter(
+    val writer = dotWriter(
       typedModules = OneLevelOfSubmodules.modules,
       links = OneLevelOfSubmodules.links,
       groupModules = true,
@@ -90,7 +90,7 @@ class DotFileWriterTest {
 
   @Test
   fun `Grouping modules with sub-subgraphs`() {
-    val writer = dotFileWriter(
+    val writer = dotWriter(
       typedModules = TwoLevelsOfSubmodules.modules,
       links = TwoLevelsOfSubmodules.links,
       groupModules = true,

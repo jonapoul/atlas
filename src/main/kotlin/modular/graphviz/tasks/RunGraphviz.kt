@@ -30,7 +30,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
+abstract class RunGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val dotFile: RegularFileProperty
   @get:Input abstract val outputFormat: Property<String>
   @get:[Input Optional] abstract val pathToDotCommand: Property<String>
@@ -43,7 +43,7 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
   }
 
   // Not using kotlin setter because this pulls a property value
-  override fun getDescription() = "Uses GraphViz to convert a dotfile into a ${outputFormat.get()} file"
+  override fun getDescription() = "Uses Graphviz to convert a dotfile into a ${outputFormat.get()} file"
 
   @TaskAction
   fun execute() {
@@ -78,18 +78,18 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
   }
 
   internal companion object {
-    // E.g. format=xdot_json and variant=Legend => "generateLegendXdotJson"
+    // E.g. format=xdot_json and variant=Legend => "writeXdotJsonLegend"
     private fun taskName(variant: Variant, format: String): String {
       val cleanedFormat = format
         .split('-', '_', '.')
         .mapIndexed { i, str -> if (i == 0) str.lowercase() else str.lowercase().replaceFirstChar { it.uppercase() } }
         .joinToString(separator = "")
         .replaceFirstChar { it.uppercase() }
-      return "generate" + variant.name + cleanedFormat
+      return "write" + cleanedFormat + variant.name
     }
 
-    internal fun get(target: Project, name: String): TaskProvider<GenerateGraphvizFileTask> =
-      target.tasks.named(name, GenerateGraphvizFileTask::class.java)
+    internal fun get(target: Project, name: String): TaskProvider<RunGraphviz> =
+      target.tasks.named(name, RunGraphviz::class.java)
 
     internal fun <T : TaskWithOutputFile> register(
       target: Project,
@@ -97,13 +97,13 @@ abstract class GenerateGraphvizFileTask : DefaultTask(), ModularGenerationTask, 
       spec: GraphVizSpecImpl,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
-    ): List<TaskProvider<GenerateGraphvizFileTask>> = with(target) {
+    ): List<TaskProvider<RunGraphviz>> = with(target) {
       spec.fileFormats.formats.get().map { format ->
         val outputFile = outputFile(extension.outputs, variant, fileExtension = format)
         val taskName = taskName(variant, format)
         logger.info("Registering $taskName for output format $format")
 
-        tasks.register(taskName, GenerateGraphvizFileTask::class.java) { task ->
+        tasks.register(taskName, RunGraphviz::class.java) { task ->
           task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
           task.pathToDotCommand.convention(spec.pathToDotCommand)
           task.engine.convention(spec.layoutEngine)

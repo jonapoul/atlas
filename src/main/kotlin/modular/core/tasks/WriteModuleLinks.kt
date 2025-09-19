@@ -22,7 +22,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class DumpModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class WriteModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract val moduleLinks: MapProperty<String, List<String>>
   @get:Input abstract val linkTypes: SetProperty<LinkType>
   @get:Input abstract val thisPath: Property<String>
@@ -44,17 +44,17 @@ abstract class DumpModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithO
       separator = separator.get(),
     )
 
-    logger.info("DumpModuleLinksTask: ${links.size} links")
+    logger.info("DumpModuleLinks: ${links.size} links")
     links.forEach { (child, configurations) ->
-      logger.info("DumpModuleLinksTask:     child=$child, configurations=[${configurations.joinToString()}]")
+      logger.info("DumpModuleLinks:     child=$child, configurations=[${configurations.joinToString()}]")
     }
   }
 
   internal companion object {
-    private const val NAME = "dumpModuleLinks"
+    private const val NAME = "writeModuleLinks"
 
-    internal fun get(target: Project): TaskProvider<DumpModuleLinksTask>? = try {
-      target.tasks.named(NAME, DumpModuleLinksTask::class.java)
+    internal fun get(target: Project): TaskProvider<WriteModuleLinks>? = try {
+      target.tasks.named(NAME, WriteModuleLinks::class.java)
     } catch (_: UnknownTaskException) {
       null
     }
@@ -62,8 +62,8 @@ abstract class DumpModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithO
     internal fun register(
       target: Project,
       extension: ModularExtension,
-    ): TaskProvider<DumpModuleLinksTask> = with(target) {
-      tasks.register(NAME, DumpModuleLinksTask::class.java) { task ->
+    ): TaskProvider<WriteModuleLinks> = with(target) {
+      tasks.register(NAME, WriteModuleLinks::class.java) { task ->
         task.thisPath.convention(target.path)
         task.moduleLinks.convention(ModuleLinks.of(target, extension.general.ignoredConfigs.get()))
         task.linkTypes.convention(extension.linkTypes.linkTypes)

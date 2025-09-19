@@ -29,7 +29,11 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, ModularGenerationTask, TaskWithOutputFile {
+abstract class WriteGraphvizLegend :
+  DefaultTask(),
+  TaskWithSeparator,
+  ModularGenerationTask,
+  TaskWithOutputFile {
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
   @get:Input abstract val linkTypes: SetProperty<LinkType>
@@ -90,19 +94,19 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
   }
 
   internal companion object {
-    internal const val TASK_NAME: String = "generateLegendDotFile"
-    internal const val TASK_NAME_FOR_CHECKING: String = "generateLegendDotFileForChecking"
+    internal const val TASK_NAME: String = "writeGraphvizLegend"
+    internal const val TASK_NAME_FOR_CHECKING: String = "writeGraphvizLegendForChecking"
 
-    internal fun get(target: Project): TaskProvider<GenerateLegendDotFileTask> =
-      target.tasks.named(TASK_NAME, GenerateLegendDotFileTask::class.java)
+    internal fun get(target: Project): TaskProvider<WriteGraphvizLegend> =
+      target.tasks.named(TASK_NAME, WriteGraphvizLegend::class.java)
 
     internal fun register(
       target: Project,
       name: String,
       extension: ModularExtensionImpl,
       outputFile: Provider<RegularFile>,
-    ): TaskProvider<GenerateLegendDotFileTask> = with(target) {
-      tasks.register(name, GenerateLegendDotFileTask::class.java) { task ->
+    ): TaskProvider<WriteGraphvizLegend> = with(target) {
+      tasks.register(name, WriteGraphvizLegend::class.java) { task ->
         task.outputFile.convention(outputFile)
         task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
         task.linkTypes.convention(extension.linkTypes.linkTypes)

@@ -20,20 +20,20 @@ import modular.test.scenarios.NestedModulesNoModuleTypes
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
-class GenerateModulesDotFileTaskTest : ScenarioTest() {
+class WriteDotChartTest : ScenarioTest() {
   @Test
   fun `Don't register task if no outputs configured`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("tasks").build()
 
     // then the task didn't exist
-    assertThat(result.output).doesNotContain("generateChartDotFile")
+    assertThat(result.output).doesNotContain("writeGraphvizChart")
   }
 
   @Test
   fun `Run if no module types are declared`() = runScenario(NestedModulesNoModuleTypes) {
     // when
-    runTask("generateChartDotFile").build()
+    runTask("writeGraphvizChart").build()
 
     // then
     assertThat(resolve("app/modules.dot").readText()).contains(
@@ -66,7 +66,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   @Test
   fun `Generate dotfiles from basic config`() = runScenario(GraphVizBasic) {
     // when
-    runTask("generateChartDotFile").build()
+    runTask("writeGraphvizChart").build()
 
     // then the files were generated
     val dotFileA = resolve("a/modules.dot")
@@ -108,7 +108,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   @Test
   fun `Customise dotfile from build script`() = runScenario(GraphVizChartCustomConfig) {
     // when
-    runTask("generateChartDotFile").build()
+    runTask("writeGraphvizChart").build()
 
     // then the file was generated
     val dotFile = resolve("a/modules.dot")
@@ -134,7 +134,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   @Test
   fun `Customise dotfile from gradle properties`() = runScenario(GraphVizChartWithProperties) {
     // when
-    runTask("generateChartDotFile").build()
+    runTask("writeGraphvizChart").build()
 
     // then the file was generated
     val dotFile = resolve("a/modules.dot")
@@ -160,7 +160,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   @Test
   fun `Replace module names`() = runScenario(GraphVizChartWithReplacements) {
     // when
-    runTask("generateChartDotFile").build()
+    runTask("writeGraphvizChart").build()
 
     // then the file was generated
     val dotFile = resolve("a/modules.dot")
@@ -184,7 +184,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   @Test
   fun `Handle custom link types`() = runScenario(GraphVizChartWithCustomLinkTypes) {
     // when
-    runTask("generateChartDotFile").build()
+    runTask("writeGraphvizChart").build()
 
     // then the file was generated
     val dotFile = resolve("a/modules.dot")
@@ -210,7 +210,7 @@ class GenerateModulesDotFileTaskTest : ScenarioTest() {
   @Test
   fun `Handle nested modules`() = runScenario(NestedModules) {
     // when
-    runTask("generateChartDotFile").build()
+    runTask("writeGraphvizChart").build()
 
     // then the file was generated
     val dotFile = resolve("app/modules.dot")

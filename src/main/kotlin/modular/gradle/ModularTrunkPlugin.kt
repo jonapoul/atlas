@@ -13,8 +13,8 @@ import modular.core.internal.registerModularGenerateTask
 import modular.core.internal.warnIfModuleTypesSpecifyNothing
 import modular.core.internal.warnIfNoGraphVizOutputs
 import modular.core.internal.warnIfSvgSelectedWithCustomDpi
-import modular.core.tasks.CollateModuleLinksTask
-import modular.core.tasks.CollateModuleTypesTask
+import modular.core.tasks.CollateModuleLinks
+import modular.core.tasks.CollateModuleTypes
 import modular.core.tasks.registerGenerationTaskOnSync
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.internal.registerGraphVizTrunkTasks
@@ -39,8 +39,8 @@ class ModularTrunkPlugin : Plugin<Project> {
     registerGenerationTaskOnSync(extension)
     registerModularGenerateTask()
 
-    CollateModuleTypesTask.register(project)
-    CollateModuleLinksTask.register(project, extension)
+    CollateModuleTypes.register(project)
+    CollateModuleLinks.register(project, extension)
 
     extension.specs.configureEach { spec ->
       when (spec) {

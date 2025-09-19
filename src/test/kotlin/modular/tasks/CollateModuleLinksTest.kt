@@ -20,14 +20,14 @@ import modular.test.taskWasSuccessful
 import java.io.File
 import kotlin.test.Test
 
-class CollateModuleLinksTaskTest : ScenarioTest() {
+class CollateModuleLinksTest : ScenarioTest() {
   @Test
   fun `Empty file for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("collateModuleLinks").build()
 
     // then the task was run
-    assertThat(result).taskWasSuccessful(":test-jvm:dumpModuleLinks")
+    assertThat(result).taskWasSuccessful(":test-jvm:writeModuleLinks")
     assertThat(result).taskWasSuccessful(":collateModuleLinks")
 
     // and the links file is empty
