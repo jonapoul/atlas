@@ -7,7 +7,6 @@ import java.util.Properties
 
 plugins {
   alias(libs.plugins.binaryCompatibility)
-  alias(libs.plugins.dependencyVersions)
   alias(libs.plugins.detekt)
   alias(libs.plugins.dokka)
   alias(libs.plugins.kotlin.jvm)
@@ -105,13 +104,6 @@ tasks.test {
     displayGranularity = 2
   }
 }
-
-tasks.dependencyUpdates {
-  rejectVersionIf { !candidate.version.isStable() && currentVersion.isStable() }
-}
-
-private fun String.isStable(): Boolean =
-  listOf("alpha", "beta", "rc").none { contains(it, ignoreCase = true) }
 
 detekt {
   config.setFrom(file("config/detekt.yml"))
