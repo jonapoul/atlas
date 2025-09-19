@@ -2,7 +2,7 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.tasks
+package modular.core.tasks
 
 import modular.graphviz.tasks.GenerateModulesDotFileTask
 import modular.internal.diff

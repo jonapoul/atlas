@@ -2,7 +2,7 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.internal
+package modular.core.internal
 
 import modular.gradle.ModularExtension
 import modular.graphviz.internal.GraphVizSpecImpl

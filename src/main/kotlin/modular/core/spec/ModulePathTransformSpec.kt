@@ -4,7 +4,7 @@
  */
 @file:Suppress("ktlint:standard:parameter-list-wrapping")
 
-package modular.spec
+package modular.core.spec
 
 import modular.gradle.ModularDsl
 import modular.internal.Replacement
