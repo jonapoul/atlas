@@ -2,10 +2,10 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.tasks
+package modular.core.tasks
 
+import modular.core.internal.diff
 import modular.graphviz.tasks.GenerateModulesDotFileTask
-import modular.internal.diff
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile

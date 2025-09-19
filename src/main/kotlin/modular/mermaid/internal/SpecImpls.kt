@@ -4,9 +4,9 @@
  */
 package modular.mermaid.internal
 
-import modular.internal.GradleProperties
-import modular.internal.bool
-import modular.internal.string
+import modular.core.internal.GradleProperties
+import modular.core.internal.bool
+import modular.core.internal.string
 import modular.mermaid.spec.ConsiderModelOrder
 import modular.mermaid.spec.CycleBreakingStrategy
 import modular.mermaid.spec.ElkLayoutSpec

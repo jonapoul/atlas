@@ -2,20 +2,20 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.internal
+package modular.core.internal
 
+import modular.core.spec.GeneralSpec
+import modular.core.spec.LinkType
+import modular.core.spec.LinkTypesSpec
+import modular.core.spec.ModulePathTransformSpec
+import modular.core.spec.ModuleType
+import modular.core.spec.OutputSpec
+import modular.core.spec.Spec
 import modular.gradle.ModularExtension
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.spec.GraphVizSpec
 import modular.mermaid.internal.MermaidSpecImpl
 import modular.mermaid.spec.MermaidSpec
-import modular.spec.GeneralSpec
-import modular.spec.LinkType
-import modular.spec.LinkTypesSpec
-import modular.spec.ModulePathTransformSpec
-import modular.spec.ModuleType
-import modular.spec.OutputSpec
-import modular.spec.Spec
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project

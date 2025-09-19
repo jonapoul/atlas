@@ -6,20 +6,20 @@
 
 package modular.gradle
 
+import modular.core.internal.ModularExtensionImpl
+import modular.core.internal.configureSeparators
+import modular.core.internal.orderedTypes
+import modular.core.internal.registerModularGenerateTask
+import modular.core.internal.warnIfModuleTypesSpecifyNothing
+import modular.core.internal.warnIfNoGraphVizOutputs
+import modular.core.internal.warnIfSvgSelectedWithCustomDpi
+import modular.core.tasks.CollateModuleLinksTask
+import modular.core.tasks.CollateModuleTypesTask
+import modular.core.tasks.registerGenerationTaskOnSync
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.internal.registerGraphVizTrunkTasks
-import modular.internal.ModularExtensionImpl
-import modular.internal.configureSeparators
-import modular.internal.orderedTypes
-import modular.internal.registerModularGenerateTask
-import modular.internal.warnIfModuleTypesSpecifyNothing
-import modular.internal.warnIfNoGraphVizOutputs
-import modular.internal.warnIfSvgSelectedWithCustomDpi
 import modular.mermaid.internal.MermaidSpecImpl
 import modular.mermaid.internal.registerMermaidTrunkTasks
-import modular.tasks.CollateModuleLinksTask
-import modular.tasks.CollateModuleTypesTask
-import modular.tasks.registerGenerationTaskOnSync
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

@@ -2,11 +2,11 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.tasks
+package modular.core.tasks
 
-import modular.internal.TypedModule
-import modular.internal.TypedModules
-import modular.internal.fileInBuildDirectory
+import modular.core.internal.TypedModule
+import modular.core.internal.TypedModules
+import modular.core.internal.fileInBuildDirectory
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection

@@ -1,15 +1,211 @@
+public final class modular/core/internal/Replacement : java/io/Serializable {
+	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
+	public final fun getPattern ()Lkotlin/text/Regex;
+	public final fun getReplacement ()Ljava/lang/String;
+}
+
+public abstract class modular/core/spec/GeneralFlags {
+	public fun <init> ()V
+	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
+	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
+	public final fun inject (Lmodular/core/spec/GeneralSpec;)V
+}
+
+public abstract interface class modular/core/spec/GeneralSpec {
+	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
+	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/core/spec/LinkType : java/io/Serializable {
+	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lkotlin/text/Regex;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;)Lmodular/core/spec/LinkType;
+	public static synthetic fun copy$default (Lmodular/core/spec/LinkType;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/core/spec/LinkType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getConfiguration ()Lkotlin/text/Regex;
+	public final fun getStyle ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class modular/core/spec/LinkTypesSpec {
+	public fun add (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun add (Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;)V
+	public abstract fun add (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;)V
+	public fun add (Lkotlin/text/Regex;Lmodular/core/spec/Style;Ljava/lang/String;)V
+	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/core/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+	public fun api (Ljava/lang/String;Ljava/lang/String;)V
+	public fun api (Lmodular/core/spec/Style;Ljava/lang/String;)V
+	public static synthetic fun api$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun api$default (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
+	public fun implementation (Ljava/lang/String;Ljava/lang/String;)V
+	public fun implementation (Lmodular/core/spec/Style;Ljava/lang/String;)V
+	public static synthetic fun implementation$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun implementation$default (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+	public abstract fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun invoke (Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;)V
+	public static synthetic fun invoke$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun invoke$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+}
+
+public final class modular/core/spec/LinkTypesSpec$DefaultImpls {
+	public static fun add (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public static fun add (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;)V
+	public static fun add (Lmodular/core/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/core/spec/Style;Ljava/lang/String;)V
+	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/core/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+	public static fun api (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;)V
+	public static fun api (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;)V
+	public static synthetic fun api$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun api$default (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+	public static fun implementation (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;)V
+	public static fun implementation (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;)V
+	public static synthetic fun implementation$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun implementation$default (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+	public static fun invoke (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;)V
+	public static synthetic fun invoke$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun invoke$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
+}
+
+public abstract interface class modular/core/spec/ModulePathTransformSpec {
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun remove (Ljava/lang/String;)V
+	public abstract fun remove (Lkotlin/text/Regex;)V
+	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
+}
+
+public abstract interface class modular/core/spec/ModuleType {
+	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/core/spec/ModuleTypeModel : java/io/Serializable {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lmodular/core/spec/ModuleTypeModel;
+	public static synthetic fun copy$default (Lmodular/core/spec/ModuleTypeModel;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/core/spec/ModuleTypeModel;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class modular/core/spec/OutputSpec {
+	public abstract fun getChartRootFilename ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLegendRootFilename ()Lorg/gradle/api/provider/Property;
+	public abstract fun saveChartsInSubmoduleDir ()V
+	public abstract fun saveChartsRelativeToSubmodule (Ljava/lang/String;)V
+	public abstract fun saveLegendsInRootDir ()V
+	public abstract fun saveLegendsRelativeToRootModule (Ljava/lang/String;)V
+}
+
+public abstract interface class modular/core/spec/Spec {
+	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
+	public abstract fun getName ()Ljava/lang/String;
+}
+
+public abstract interface class modular/core/spec/Style : modular/graphviz/spec/StringEnum {
+}
+
+public abstract class modular/core/tasks/CalculateModuleTreeTask : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getCollatedLinks ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/CheckFileDiffTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getActualFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getExpectedFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/CollateModuleLinksTask : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getModuleLinkFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/CollateModuleTypesTask : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectTypeFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/DumpModuleLinksTask : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getModuleLinks ()Lorg/gradle/api/provider/MapProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/DumpModuleTypeTask : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getModuleType ()Lorg/gradle/api/provider/Property;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/WriteReadmeTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getLegendPngRelativePath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getReadmeFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
 public abstract interface annotation class modular/gradle/ModularDsl : java/lang/annotation/Annotation {
 }
 
 public abstract interface class modular/gradle/ModularExtension {
 	public abstract fun general (Lorg/gradle/api/Action;)V
-	public abstract fun getGeneral ()Lmodular/spec/GeneralSpec;
+	public abstract fun getGeneral ()Lmodular/core/spec/GeneralSpec;
 	public abstract fun getGraphViz ()Lmodular/graphviz/spec/GraphVizSpec;
-	public abstract fun getLinkTypes ()Lmodular/spec/LinkTypesSpec;
+	public abstract fun getLinkTypes ()Lmodular/core/spec/LinkTypesSpec;
 	public abstract fun getMermaid ()Lmodular/mermaid/spec/MermaidSpec;
-	public abstract fun getModulePathTransforms ()Lmodular/spec/ModulePathTransformSpec;
+	public abstract fun getModulePathTransforms ()Lmodular/core/spec/ModulePathTransformSpec;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
-	public abstract fun getOutputs ()Lmodular/spec/OutputSpec;
+	public abstract fun getOutputs ()Lmodular/core/spec/OutputSpec;
 	public abstract fun getSpecs ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public abstract fun graphViz ()V
 	public abstract fun graphViz (Lorg/gradle/api/Action;)V
@@ -197,7 +393,7 @@ public final class modular/graphviz/spec/GraphVizFileFormatSpec$DefaultImpls {
 	public static fun xlib (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
 }
 
-public abstract interface class modular/graphviz/spec/GraphVizSpec : modular/spec/Spec {
+public abstract interface class modular/graphviz/spec/GraphVizSpec : modular/core/spec/Spec {
 	public abstract fun arrowHead (Ljava/lang/String;)V
 	public abstract fun arrowHead (Lmodular/graphviz/spec/ArrowType;)V
 	public abstract fun arrowTail (Ljava/lang/String;)V
@@ -238,7 +434,7 @@ public final class modular/graphviz/spec/LayoutEngine : java/lang/Enum, modular/
 	public static fun values ()[Lmodular/graphviz/spec/LayoutEngine;
 }
 
-public final class modular/graphviz/spec/LinkStyle : java/lang/Enum, modular/spec/Style {
+public final class modular/graphviz/spec/LinkStyle : java/lang/Enum, modular/core/spec/Style {
 	public static final field Bold Lmodular/graphviz/spec/LinkStyle;
 	public static final field Dashed Lmodular/graphviz/spec/LinkStyle;
 	public static final field Dotted Lmodular/graphviz/spec/LinkStyle;
@@ -265,19 +461,19 @@ public abstract interface class modular/graphviz/spec/StringEnum {
 	public abstract fun getString ()Ljava/lang/String;
 }
 
-public abstract class modular/graphviz/tasks/GenerateGraphvizFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile {
+public abstract class modular/graphviz/tasks/GenerateGraphvizFileTask : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
 	public fun getDescription ()Ljava/lang/String;
 	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getEngine ()Lorg/gradle/api/provider/Property;
-	public abstract fun getGeneral ()Lmodular/spec/GeneralFlags;
+	public abstract fun getGeneral ()Lmodular/core/spec/GeneralFlags;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/graphviz/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
+public abstract class modular/graphviz/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
@@ -286,7 +482,7 @@ public abstract class modular/graphviz/tasks/GenerateLegendDotFileTask : org/gra
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/graphviz/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
+public abstract class modular/graphviz/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
@@ -298,12 +494,6 @@ public abstract class modular/graphviz/tasks/GenerateModulesDotFileTask : org/gr
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/internal/Replacement : java/io/Serializable {
-	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
-	public final fun getPattern ()Lkotlin/text/Regex;
-	public final fun getReplacement ()Ljava/lang/String;
 }
 
 public final class modular/mermaid/spec/ConsiderModelOrder : java/lang/Enum, modular/graphviz/spec/StringEnum {
@@ -373,7 +563,7 @@ public final class modular/mermaid/spec/MermaidLayoutSpec$DefaultImpls {
 	public static fun put (Lmodular/mermaid/spec/MermaidLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
-public abstract interface class modular/mermaid/spec/MermaidSpec : modular/spec/Spec {
+public abstract interface class modular/mermaid/spec/MermaidSpec : modular/core/spec/Spec {
 	public abstract fun elk (Lorg/gradle/api/Action;)V
 	public static synthetic fun elk$default (Lmodular/mermaid/spec/MermaidSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
 	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;
@@ -414,7 +604,7 @@ public final class modular/mermaid/spec/Theme : java/lang/Enum, modular/graphviz
 	public static fun values ()[Lmodular/mermaid/spec/Theme;
 }
 
-public abstract class modular/mermaid/tasks/GenerateLegendMarkdownTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
+public abstract class modular/mermaid/tasks/GenerateLegendMarkdownTask : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
@@ -423,7 +613,7 @@ public abstract class modular/mermaid/tasks/GenerateLegendMarkdownTask : org/gra
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/mermaid/tasks/GenerateModulesMermaidTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
+public abstract class modular/mermaid/tasks/GenerateModulesMermaidTask : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
@@ -435,196 +625,6 @@ public abstract class modular/mermaid/tasks/GenerateModulesMermaidTask : org/gra
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-}
-
-public abstract class modular/spec/GeneralFlags {
-	public fun <init> ()V
-	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
-	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
-	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
-	public final fun inject (Lmodular/spec/GeneralSpec;)V
-}
-
-public abstract interface class modular/spec/GeneralSpec {
-	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
-	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
-	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
-	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/spec/LinkType : java/io/Serializable {
-	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Lkotlin/text/Regex;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;)Lmodular/spec/LinkType;
-	public static synthetic fun copy$default (Lmodular/spec/LinkType;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/spec/LinkType;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getColor ()Ljava/lang/String;
-	public final fun getConfiguration ()Lkotlin/text/Regex;
-	public final fun getStyle ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract interface class modular/spec/LinkTypesSpec {
-	public fun add (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun add (Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;)V
-	public abstract fun add (Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;)V
-	public fun add (Lkotlin/text/Regex;Lmodular/spec/Style;Ljava/lang/String;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
-	public fun api (Ljava/lang/String;Ljava/lang/String;)V
-	public fun api (Lmodular/spec/Style;Ljava/lang/String;)V
-	public static synthetic fun api$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun api$default (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
-	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
-	public fun implementation (Ljava/lang/String;Ljava/lang/String;)V
-	public fun implementation (Lmodular/spec/Style;Ljava/lang/String;)V
-	public static synthetic fun implementation$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun implementation$default (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
-	public abstract fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun invoke (Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;)V
-	public static synthetic fun invoke$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun invoke$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
-}
-
-public final class modular/spec/LinkTypesSpec$DefaultImpls {
-	public static fun add (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public static fun add (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;)V
-	public static fun add (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/spec/Style;Ljava/lang/String;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/spec/LinkTypesSpec;Lkotlin/text/Regex;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
-	public static fun api (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;)V
-	public static fun api (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;)V
-	public static synthetic fun api$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun api$default (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
-	public static fun implementation (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;)V
-	public static fun implementation (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;)V
-	public static synthetic fun implementation$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun implementation$default (Lmodular/spec/LinkTypesSpec;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
-	public static fun invoke (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;)V
-	public static synthetic fun invoke$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun invoke$default (Lmodular/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/spec/Style;Ljava/lang/String;ILjava/lang/Object;)V
-}
-
-public abstract interface class modular/spec/ModulePathTransformSpec {
-	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun remove (Ljava/lang/String;)V
-	public abstract fun remove (Lkotlin/text/Regex;)V
-	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
-	public abstract fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
-}
-
-public abstract interface class modular/spec/ModuleType {
-	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
-	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
-	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
-	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/spec/ModuleTypeModel : java/io/Serializable {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lmodular/spec/ModuleTypeModel;
-	public static synthetic fun copy$default (Lmodular/spec/ModuleTypeModel;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/spec/ModuleTypeModel;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getColor ()Ljava/lang/String;
-	public final fun getName ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract interface class modular/spec/OutputSpec {
-	public abstract fun getChartRootFilename ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLegendRootFilename ()Lorg/gradle/api/provider/Property;
-	public abstract fun saveChartsInSubmoduleDir ()V
-	public abstract fun saveChartsRelativeToSubmodule (Ljava/lang/String;)V
-	public abstract fun saveLegendsInRootDir ()V
-	public abstract fun saveLegendsRelativeToRootModule (Ljava/lang/String;)V
-}
-
-public abstract interface class modular/spec/Spec {
-	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
-	public abstract fun getName ()Ljava/lang/String;
-}
-
-public abstract interface class modular/spec/Style : modular/graphviz/spec/StringEnum {
-}
-
-public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getCollatedLinks ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
-	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-}
-
-public abstract class modular/tasks/CheckFileDiffTask : org/gradle/api/DefaultTask {
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getActualFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getExpectedFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
-}
-
-public abstract class modular/tasks/CollateModuleLinksTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getModuleLinkFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
-	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-}
-
-public abstract class modular/tasks/CollateModuleTypesTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getProjectTypeFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-}
-
-public abstract class modular/tasks/DumpModuleLinksTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getModuleLinks ()Lorg/gradle/api/provider/MapProperty;
-	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-}
-
-public abstract class modular/tasks/DumpModuleTypeTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getModuleType ()Lorg/gradle/api/provider/Property;
-	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-}
-
-public abstract class modular/tasks/WriteReadmeTask : org/gradle/api/DefaultTask {
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getLegendPngRelativePath ()Lorg/gradle/api/provider/Property;
-	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
-	public abstract fun getReadmeFile ()Lorg/gradle/api/file/RegularFileProperty;
 }
 
 public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {

@@ -4,12 +4,12 @@
  */
 package modular.mermaid.internal
 
-import modular.internal.IndentedStringBuilder
-import modular.internal.ModuleLink
-import modular.internal.Replacement
-import modular.internal.TypedModule
-import modular.internal.buildIndentedString
-import modular.internal.contains
+import modular.core.internal.IndentedStringBuilder
+import modular.core.internal.ModuleLink
+import modular.core.internal.Replacement
+import modular.core.internal.TypedModule
+import modular.core.internal.buildIndentedString
+import modular.core.internal.contains
 import modular.mermaid.spec.MermaidConfig
 
 internal class MermaidWriter(

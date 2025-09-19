@@ -4,19 +4,19 @@
  */
 package modular.mermaid.tasks
 
+import modular.core.internal.ModuleLinks
+import modular.core.internal.Replacement
+import modular.core.internal.TypedModules
+import modular.core.tasks.CalculateModuleTreeTask
+import modular.core.tasks.CollateModuleTypesTask
+import modular.core.tasks.MODULAR_TASK_GROUP
+import modular.core.tasks.ModularGenerationTask
+import modular.core.tasks.TaskWithOutputFile
+import modular.core.tasks.TaskWithSeparator
 import modular.gradle.ModularExtension
-import modular.internal.ModuleLinks
-import modular.internal.Replacement
-import modular.internal.TypedModules
 import modular.mermaid.internal.MermaidWriter
 import modular.mermaid.spec.MermaidConfig
 import modular.mermaid.spec.MermaidSpec
-import modular.tasks.CalculateModuleTreeTask
-import modular.tasks.CollateModuleTypesTask
-import modular.tasks.MODULAR_TASK_GROUP
-import modular.tasks.ModularGenerationTask
-import modular.tasks.TaskWithOutputFile
-import modular.tasks.TaskWithSeparator
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile

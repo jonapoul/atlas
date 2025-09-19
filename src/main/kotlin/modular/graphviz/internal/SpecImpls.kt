@@ -4,17 +4,17 @@
  */
 package modular.graphviz.internal
 
+import modular.core.internal.GradleProperties
+import modular.core.internal.float
+import modular.core.internal.int
+import modular.core.internal.set
+import modular.core.internal.string
 import modular.graphviz.spec.ArrowType
 import modular.graphviz.spec.Dir
 import modular.graphviz.spec.GraphVizFileFormatSpec
 import modular.graphviz.spec.GraphVizSpec
 import modular.graphviz.spec.LayoutEngine
 import modular.graphviz.spec.RankDir
-import modular.internal.GradleProperties
-import modular.internal.float
-import modular.internal.int
-import modular.internal.set
-import modular.internal.string
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property

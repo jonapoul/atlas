@@ -2,12 +2,12 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.tasks
+package modular.core.tasks
 
+import modular.core.internal.ModuleLink
+import modular.core.internal.ModuleLinks
+import modular.core.internal.fileInBuildDirectory
 import modular.gradle.ModularExtension
-import modular.internal.ModuleLink
-import modular.internal.ModuleLinks
-import modular.internal.fileInBuildDirectory
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty

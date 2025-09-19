@@ -6,8 +6,8 @@ package modular.graphviz.internal
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import modular.internal.Subgraph
-import modular.internal.buildGraphElements
+import modular.core.internal.Subgraph
+import modular.core.internal.buildGraphElements
 import modular.test.node
 import kotlin.test.Test
 

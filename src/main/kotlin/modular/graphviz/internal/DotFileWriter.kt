@@ -4,17 +4,17 @@
  */
 package modular.graphviz.internal
 
+import modular.core.internal.GraphElement
+import modular.core.internal.IndentedStringBuilder
+import modular.core.internal.ModuleLink
+import modular.core.internal.Node
+import modular.core.internal.Replacement
+import modular.core.internal.Subgraph
+import modular.core.internal.TypedModule
+import modular.core.internal.buildGraphElements
+import modular.core.internal.buildIndentedString
+import modular.core.internal.contains
 import modular.graphviz.spec.DotFileConfig
-import modular.internal.GraphElement
-import modular.internal.IndentedStringBuilder
-import modular.internal.ModuleLink
-import modular.internal.Node
-import modular.internal.Replacement
-import modular.internal.Subgraph
-import modular.internal.TypedModule
-import modular.internal.buildGraphElements
-import modular.internal.buildIndentedString
-import modular.internal.contains
 
 internal data class DotFileWriter(
   private val typedModules: Set<TypedModule>,

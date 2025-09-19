@@ -2,11 +2,11 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.internal
+package modular.core.internal
 
+import modular.core.spec.ModuleType
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.spec.GraphVizSpec
-import modular.spec.ModuleType
 import org.gradle.api.Project
 
 internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {

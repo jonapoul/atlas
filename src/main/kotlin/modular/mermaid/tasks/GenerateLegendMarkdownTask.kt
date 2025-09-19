@@ -4,15 +4,15 @@
  */
 package modular.mermaid.tasks
 
-import modular.internal.ModularExtensionImpl
-import modular.internal.moduleTypeModel
-import modular.internal.orderedTypes
-import modular.spec.LinkType
-import modular.spec.ModuleTypeModel
-import modular.tasks.MODULAR_TASK_GROUP
-import modular.tasks.ModularGenerationTask
-import modular.tasks.TaskWithOutputFile
-import modular.tasks.TaskWithSeparator
+import modular.core.internal.ModularExtensionImpl
+import modular.core.internal.moduleTypeModel
+import modular.core.internal.orderedTypes
+import modular.core.spec.LinkType
+import modular.core.spec.ModuleTypeModel
+import modular.core.tasks.MODULAR_TASK_GROUP
+import modular.core.tasks.ModularGenerationTask
+import modular.core.tasks.TaskWithOutputFile
+import modular.core.tasks.TaskWithSeparator
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile

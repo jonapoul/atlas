@@ -4,8 +4,8 @@
  */
 package modular.graphviz.spec
 
+import modular.core.spec.Spec
 import modular.gradle.ModularDsl
-import modular.spec.Spec
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 

@@ -2,15 +2,15 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.internal
+package modular.core.internal
 
+import modular.core.spec.ModuleType
+import modular.core.spec.ModuleTypeModel
+import modular.core.spec.OutputSpec
+import modular.core.tasks.MODULAR_TASK_GROUP
+import modular.core.tasks.ModularGenerationTask
+import modular.core.tasks.TaskWithSeparator
 import modular.gradle.ModularExtension
-import modular.spec.ModuleType
-import modular.spec.ModuleTypeModel
-import modular.spec.OutputSpec
-import modular.tasks.MODULAR_TASK_GROUP
-import modular.tasks.ModularGenerationTask
-import modular.tasks.TaskWithSeparator
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
 import org.gradle.api.file.DirectoryProperty
