@@ -14,14 +14,11 @@ import modular.mermaid.tasks.GenerateModulesMermaidTask
 import modular.tasks.CheckFileDiffTask
 import modular.tasks.defaultOutputFile
 import org.gradle.api.Project
-import org.gradle.api.Task
 import org.gradle.api.file.RegularFile
-import org.gradle.api.tasks.TaskProvider
 
 internal fun Project.registerMermaidTrunkTasks(
   extension: ModularExtensionImpl,
   spec: MermaidSpecImpl,
-  generateLegend: TaskProvider<Task>,
 ) {
   val legendTask = GenerateLegendMarkdownTask.register(
     target = this,
@@ -51,19 +48,14 @@ internal fun Project.registerMermaidTrunkTasks(
   )
 
   tasks.maybeCreate("check").dependsOn(checkTask)
-
-  generateLegend.configure { t ->
-    t.dependsOn(legendTask)
-  }
 }
 
 internal fun Project.registerMermaidLeafTasks(
   extension: ModularExtensionImpl,
   spec: MermaidSpec,
   file: RegularFile,
-  generateModules: TaskProvider<Task>,
 ) {
-  val mermaidTask = GenerateModulesMermaidTask.register(
+  GenerateModulesMermaidTask.register(
     target = this,
     name = GenerateModulesMermaidTask.TASK_NAME,
     extension = extension,
@@ -89,8 +81,4 @@ internal fun Project.registerMermaidLeafTasks(
   )
 
   tasks.maybeCreate("check").dependsOn(checkTask)
-
-  generateModules.configure { t ->
-    t.dependsOn(mermaidTask)
-  }
 }
