@@ -21,9 +21,7 @@ object GraphVizCustomLayoutEngine : Scenario by GraphVizBigGraph {
       }
 
       graphViz {
-        chart {
-          layoutEngine(Neato)
-        }
+        layoutEngine(Neato)
 
         fileFormats {
           svg()

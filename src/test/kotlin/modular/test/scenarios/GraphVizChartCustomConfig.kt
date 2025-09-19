@@ -25,15 +25,13 @@ object GraphVizChartCustomConfig : Scenario by GraphVizBasic {
       }
 
       graphViz {
-        chart {
-          arrowHead = "halfopen"
-          arrowTail(ArrowType.Open)
-          dpi = 150
-          fontSize = 20
-          rankDir(RankDir.LeftToRight)
-          rankSep = 2.5f
-          dir(Dir.None)
-        }
+        arrowHead = "halfopen"
+        arrowTail(ArrowType.Open)
+        dpi = 150
+        fontSize = 20
+        rankDir(RankDir.LeftToRight)
+        rankSep = 2.5f
+        dir(Dir.None)
       }
     }
   """.trimIndent()

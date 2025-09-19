@@ -19,9 +19,7 @@ object GraphVizBigGraph100DpiSvgWithAdjustment : Scenario by GraphVizBigGraph {
       }
 
       graphViz {
-        chart {
-          dpi = 100
-        }
+        dpi = 100
 
         fileFormats {
           svg()

@@ -19,9 +19,7 @@ object GraphVizInvalidLayoutEngine : Scenario by GraphVizBigGraph {
       }
 
       graphViz {
-        chart {
-          layoutEngine = "abc123"
-        }
+        layoutEngine = "abc123"
 
         fileFormats {
           svg()
