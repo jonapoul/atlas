@@ -5,6 +5,6 @@
 package modular.internal
 
 internal enum class Variant {
-  Modules,
+  Chart,
   Legend,
 }

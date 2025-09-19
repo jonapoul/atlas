@@ -85,11 +85,11 @@ internal fun Project.outputFile(
 }
 
 private fun baseName(output: OutputSpec, variant: Variant) = when (variant) {
-  Variant.Modules -> output.chartRootFilename
+  Variant.Chart -> output.chartRootFilename
   Variant.Legend -> output.legendRootFilename
 }
 
 private fun configuredOutputDir(output: OutputSpecImpl, variant: Variant) = when (variant) {
-  Variant.Modules -> output.chartOutputDirectory
+  Variant.Chart -> output.chartOutputDirectory
   Variant.Legend -> output.legendOutputDirectory
 }

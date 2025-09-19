@@ -45,7 +45,7 @@ class ModularLeafPlugin : Plugin<Project> {
     }
 
     extension.specs.configureEach { spec ->
-      val file = outputFile(extension.outputs, Variant.Modules, fileExtension = spec.fileExtension.get())
+      val file = outputFile(extension.outputs, Variant.Chart, fileExtension = spec.fileExtension.get())
       when (spec) {
         is GraphVizSpec -> registerGraphVizLeafTasks(extension, spec, file, generateModules)
         is MermaidSpec -> registerMermaidLeafTasks(extension, spec, file, generateModules)

@@ -97,7 +97,7 @@ internal fun Project.registerGraphVizLeafTasks(
     target = this,
     extension = extension,
     spec = spec,
-    variant = Variant.Modules,
+    variant = Variant.Chart,
     dotFileTask = dotFileTask,
   )
 
