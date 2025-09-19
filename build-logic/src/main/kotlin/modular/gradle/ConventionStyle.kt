@@ -66,7 +66,7 @@ class ConventionStyle : Plugin<Project> {
       }
 
       format("licenseKotlin") {
-        licenseHeaderFile("config/spotless.kt", "(package|@file:)")
+        licenseHeaderFile(rootProject.file("config/spotless.kt"), "(package|@file:)")
         target("src/**/*.kt")
       }
     }
