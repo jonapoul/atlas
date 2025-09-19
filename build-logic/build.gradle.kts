@@ -29,8 +29,14 @@ kotlin {
 dependencies {
   compileOnly(libs.kotlin.gradle)
 
-  compileOnly(libs.plugins.agp.app.toDependency())
-  compileOnly(libs.plugins.agp.lib.toDependency())
+  compileOnly(
+    libs.plugins.agp.app
+      .toDependency(),
+  )
+  compileOnly(
+    libs.plugins.agp.lib
+      .toDependency(),
+  )
   compileOnly(libs.plugins.binaryCompatibility.toDependency())
   compileOnly(libs.plugins.detekt.toDependency())
   compileOnly(libs.plugins.dokka.toDependency())
@@ -59,7 +65,6 @@ fun NamedDomainObjectContainer<PluginDeclaration>.create(
   this.id = id
   implementationClass = impl
 }
-
 
 fun Provider<PluginDependency>.toDependency(): String = with(get()) {
   "$pluginId:$pluginId.gradle.plugin:$version"
