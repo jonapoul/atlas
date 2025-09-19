@@ -46,16 +46,16 @@ abstract class DumpModuleTypeTask : DefaultTask(), TaskWithSeparator, TaskWithOu
     outputFile.writeText(typedModule.string(separator))
   }
 
-  companion object {
-    const val NAME = "dumpModuleType"
+  internal companion object {
+    internal const val NAME = "dumpModuleType"
 
-    fun get(target: Project): TaskProvider<DumpModuleTypeTask>? = try {
+    internal fun get(target: Project): TaskProvider<DumpModuleTypeTask>? = try {
       target.tasks.named(NAME, DumpModuleTypeTask::class.java)
     } catch (_: UnknownTaskException) {
       null
     }
 
-    fun register(
+    internal fun register(
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<DumpModuleTypeTask> = with(target) {

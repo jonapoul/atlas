@@ -26,8 +26,6 @@ import org.gradle.api.provider.Property
  *     fileExtension = "dot"
  *     pathToDotCommand = "/custom/path/to/dot"
  *
- *     legend()
- *
  *     fileFormats {
  *       png()
  *       svg()
@@ -40,7 +38,7 @@ import org.gradle.api.provider.Property
  * }
  * ```
  */
-interface GraphVizSpec : Spec<GraphVizLegendSpec, GraphVizChartSpec> {
+interface GraphVizSpec : Spec<GraphVizChartSpec> {
   /**
    * To configure the file extension of generated dotfiles. Defaults to "dot".
    */
@@ -50,14 +48,6 @@ interface GraphVizSpec : Spec<GraphVizLegendSpec, GraphVizChartSpec> {
    * Use this if you want to specify a "dot" command which isn't on the system path. This should be an absolute path.
    */
   val pathToDotCommand: Property<String>
-
-  /**
-   * Use this to manually configure the [GraphVizLegendSpec], or set it to null if you want to explicitly disable
-   * legend generation. Defaults to null.
-   */
-  override var legend: GraphVizLegendSpec?
-  @ModularDsl override fun legend()
-  @ModularDsl override fun legend(action: Action<GraphVizLegendSpec>)
 
   /**
    * Call this to configure the chart contents, orientation, font size, arrows, etc. Example:

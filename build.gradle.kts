@@ -73,6 +73,7 @@ dependencies {
   testImplementation(libs.assertk)
   testImplementation(libs.junit.api)
   testRuntimeOnly(libs.junit.launcher)
+  testPluginClasspath(libs.agp)
   testPluginClasspath(libs.kotlin.gradle)
 }
 

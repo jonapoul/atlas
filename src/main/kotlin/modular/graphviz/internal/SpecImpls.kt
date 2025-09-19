@@ -8,7 +8,6 @@ import modular.graphviz.spec.ArrowType
 import modular.graphviz.spec.Dir
 import modular.graphviz.spec.GraphVizChartSpec
 import modular.graphviz.spec.GraphVizFileFormatSpec
-import modular.graphviz.spec.GraphVizLegendSpec
 import modular.graphviz.spec.GraphVizSpec
 import modular.graphviz.spec.LayoutEngine
 import modular.graphviz.spec.RankDir
@@ -22,34 +21,21 @@ import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
 
 internal class GraphVizSpecImpl(
-  private val objects: ObjectFactory,
-  private val properties: GradleProperties,
+  objects: ObjectFactory,
+  properties: GradleProperties,
 ) : GraphVizSpec {
   override val name = NAME
   override val fileExtension = objects.string(convention = "dot")
   override val pathToDotCommand: Property<String> = objects.property(String::class.java).unsetConvention()
-
-  override var legend: GraphVizLegendSpec? = null
-  override fun legend() = legend { /* no-op */ }
-  override fun legend(action: Action<GraphVizLegendSpec>) = action.execute(getOrBuildLegend())
 
   override val chart = GraphVizChartSpecImpl(objects, properties)
 
   override val fileFormats = GraphVizFileFormatSpecImpl(objects)
   override fun fileFormats(action: Action<GraphVizFileFormatSpec>) = action.execute(fileFormats)
 
-  private fun getOrBuildLegend() = legend ?: GraphVizLegendSpecImpl(objects, properties).also { legend = it }
-
   internal companion object {
     internal const val NAME = "GraphVizSpecImpl"
   }
-}
-
-internal class GraphVizLegendSpecImpl(objects: ObjectFactory, properties: GradleProperties) : GraphVizLegendSpec {
-  override val cellBorder = objects.int(properties.cellBorder)
-  override val cellPadding = objects.int(properties.cellPadding)
-  override val cellSpacing = objects.int(properties.cellSpacing)
-  override val tableBorder = objects.int(properties.tableBorder)
 }
 
 internal class GraphVizChartSpecImpl(objects: ObjectFactory, properties: GradleProperties) : GraphVizChartSpec {

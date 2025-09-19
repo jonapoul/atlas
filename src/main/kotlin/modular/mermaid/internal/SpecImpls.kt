@@ -12,7 +12,6 @@ import modular.mermaid.spec.CycleBreakingStrategy
 import modular.mermaid.spec.ElkLayoutSpec
 import modular.mermaid.spec.MermaidChartSpec
 import modular.mermaid.spec.MermaidLayoutSpec
-import modular.mermaid.spec.MermaidLegendSpec
 import modular.mermaid.spec.MermaidSpec
 import modular.mermaid.spec.NodePlacementStrategy
 import org.gradle.api.Action
@@ -26,21 +25,11 @@ internal class MermaidSpecImpl(
   override val name = NAME
   override val fileExtension = objects.string(convention = "mmd")
 
-  override var legend: MermaidLegendSpec? = null
-  override fun legend() = legend { /* no-op */ }
-  override fun legend(action: Action<MermaidLegendSpec>) = action.execute(getOrBuildLegend())
-
   override val chart = MermaidChartSpecImpl(objects, properties)
-
-  private fun getOrBuildLegend() = legend ?: MermaidLegendSpecImpl().also { legend = it }
 
   internal companion object {
     internal const val NAME = "MermaidSpecImpl"
   }
-}
-
-internal class MermaidLegendSpecImpl : MermaidLegendSpec {
-  // TBC
 }
 
 internal class MermaidChartSpecImpl(

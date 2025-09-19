@@ -218,23 +218,12 @@ public final class modular/graphviz/spec/GraphVizFileFormatSpec$DefaultImpls {
 	public static fun xlib (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
 }
 
-public abstract interface class modular/graphviz/spec/GraphVizLegendSpec {
-	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
-	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
-}
-
 public abstract interface class modular/graphviz/spec/GraphVizSpec : modular/spec/Spec {
 	public abstract fun fileFormats (Lorg/gradle/api/Action;)V
 	public abstract fun getChart ()Lmodular/graphviz/spec/GraphVizChartSpec;
 	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
 	public abstract fun getFileFormats ()Lmodular/graphviz/spec/GraphVizFileFormatSpec;
-	public abstract fun getLegend ()Lmodular/graphviz/spec/GraphVizLegendSpec;
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
-	public abstract fun legend ()V
-	public abstract fun legend (Lorg/gradle/api/Action;)V
-	public abstract fun setLegend (Lmodular/graphviz/spec/GraphVizLegendSpec;)V
 }
 
 public final class modular/graphviz/spec/GraphVizSpec$DefaultImpls {
@@ -286,7 +275,6 @@ public abstract interface class modular/graphviz/spec/StringEnum {
 }
 
 public abstract class modular/graphviz/tasks/GenerateGraphvizFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile {
-	public static final field Companion Lmodular/graphviz/tasks/GenerateGraphvizFileTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
 	public fun getDescription ()Ljava/lang/String;
@@ -298,30 +286,16 @@ public abstract class modular/graphviz/tasks/GenerateGraphvizFileTask : org/grad
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/graphviz/tasks/GenerateGraphvizFileTask$Companion {
-	public final fun get (Lorg/gradle/api/Project;Ljava/lang/String;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
 public abstract class modular/graphviz/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/graphviz/tasks/GenerateLegendDotFileTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
-	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/graphviz/tasks/GenerateLegendDotFileTask$Companion {
-	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract class modular/graphviz/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/graphviz/tasks/GenerateModulesDotFileTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
@@ -333,10 +307,6 @@ public abstract class modular/graphviz/tasks/GenerateModulesDotFileTask : org/gr
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/graphviz/tasks/GenerateModulesDotFileTask$Companion {
-	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/gradle/ModularExtension;Lmodular/graphviz/spec/GraphVizSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public final class modular/internal/Replacement : java/io/Serializable {
@@ -430,16 +400,9 @@ public final class modular/mermaid/spec/MermaidLayoutSpec$DefaultImpls {
 	public static fun put (Lmodular/mermaid/spec/MermaidLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
-public abstract interface class modular/mermaid/spec/MermaidLegendSpec {
-}
-
 public abstract interface class modular/mermaid/spec/MermaidSpec : modular/spec/Spec {
 	public abstract fun getChart ()Lmodular/mermaid/spec/MermaidChartSpec;
 	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLegend ()Lmodular/mermaid/spec/MermaidLegendSpec;
-	public abstract fun legend ()V
-	public abstract fun legend (Lorg/gradle/api/Action;)V
-	public abstract fun setLegend (Lmodular/mermaid/spec/MermaidLegendSpec;)V
 }
 
 public final class modular/mermaid/spec/MermaidSpec$DefaultImpls {
@@ -470,7 +433,6 @@ public final class modular/mermaid/spec/Theme : java/lang/Enum, modular/graphviz
 }
 
 public abstract class modular/mermaid/tasks/GenerateLegendMarkdownTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/mermaid/tasks/GenerateLegendMarkdownTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
@@ -479,12 +441,7 @@ public abstract class modular/mermaid/tasks/GenerateLegendMarkdownTask : org/gra
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/mermaid/tasks/GenerateLegendMarkdownTask$Companion {
-	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
 public abstract class modular/mermaid/tasks/GenerateModulesMermaidTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/mermaid/tasks/GenerateModulesMermaidTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
@@ -496,10 +453,6 @@ public abstract class modular/mermaid/tasks/GenerateModulesMermaidTask : org/gra
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/mermaid/tasks/GenerateModulesMermaidTask$Companion {
-	public final fun register (Lorg/gradle/api/Project;Ljava/lang/String;Lmodular/gradle/ModularExtension;Lmodular/mermaid/spec/MermaidSpec;Lorg/gradle/api/file/RegularFile;Z)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract class modular/spec/GeneralFlags {
@@ -626,11 +579,7 @@ public abstract interface class modular/spec/Spec {
 	public fun chart (Lorg/gradle/api/Action;)V
 	public abstract fun getChart ()Ljava/lang/Object;
 	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLegend ()Ljava/lang/Object;
 	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun legend ()V
-	public abstract fun legend (Lorg/gradle/api/Action;)V
-	public abstract fun setLegend (Ljava/lang/Object;)V
 }
 
 public final class modular/spec/Spec$DefaultImpls {
@@ -641,7 +590,6 @@ public abstract interface class modular/spec/Style : modular/graphviz/spec/Strin
 }
 
 public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/tasks/CalculateModuleTreeTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getCollatedLinks ()Lorg/gradle/api/file/RegularFileProperty;
@@ -649,11 +597,6 @@ public abstract class modular/tasks/CalculateModuleTreeTask : org/gradle/api/Def
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getSupportUpwardsTraversal ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/tasks/CalculateModuleTreeTask$Companion {
-	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public abstract class modular/tasks/CheckFileDiffTask : org/gradle/api/DefaultTask {
@@ -665,7 +608,6 @@ public abstract class modular/tasks/CheckFileDiffTask : org/gradle/api/DefaultTa
 }
 
 public abstract class modular/tasks/CollateModuleLinksTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/tasks/CollateModuleLinksTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
@@ -674,13 +616,7 @@ public abstract class modular/tasks/CollateModuleLinksTask : org/gradle/api/Defa
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/tasks/CollateModuleLinksTask$Companion {
-	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
 public abstract class modular/tasks/CollateModuleTypesTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/tasks/CollateModuleTypesTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
@@ -688,13 +624,7 @@ public abstract class modular/tasks/CollateModuleTypesTask : org/gradle/api/Defa
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/tasks/CollateModuleTypesTask$Companion {
-	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-	public final fun register (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
 public abstract class modular/tasks/DumpModuleLinksTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/tasks/DumpModuleLinksTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
@@ -704,14 +634,7 @@ public abstract class modular/tasks/DumpModuleLinksTask : org/gradle/api/Default
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/tasks/DumpModuleLinksTask$Companion {
-	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
 public abstract class modular/tasks/DumpModuleTypeTask : org/gradle/api/DefaultTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
-	public static final field Companion Lmodular/tasks/DumpModuleTypeTask$Companion;
-	public static final field NAME Ljava/lang/String;
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getModuleType ()Lorg/gradle/api/provider/Property;
@@ -720,22 +643,12 @@ public abstract class modular/tasks/DumpModuleTypeTask : org/gradle/api/DefaultT
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 
-public final class modular/tasks/DumpModuleTypeTask$Companion {
-	public final fun get (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
-	public final fun register (Lorg/gradle/api/Project;Lmodular/gradle/ModularExtension;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
 public abstract class modular/tasks/WriteReadmeTask : org/gradle/api/DefaultTask {
-	public static final field Companion Lmodular/tasks/WriteReadmeTask$Companion;
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getLegendPngRelativePath ()Lorg/gradle/api/provider/Property;
 	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
 	public abstract fun getReadmeFile ()Lorg/gradle/api/file/RegularFileProperty;
-}
-
-public final class modular/tasks/WriteReadmeTask$Companion {
-	public final fun register (Lorg/gradle/api/Project;)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {

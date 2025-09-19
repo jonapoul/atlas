@@ -65,13 +65,13 @@ abstract class CollateModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWi
     }
   }
 
-  companion object {
+  internal companion object {
     private const val NAME = "collateModuleLinks"
 
-    fun get(target: Project): TaskProvider<CollateModuleLinksTask> =
+    internal fun get(target: Project): TaskProvider<CollateModuleLinksTask> =
       target.tasks.named(NAME, CollateModuleLinksTask::class.java)
 
-    fun register(
+    internal fun register(
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<CollateModuleLinksTask> = with(target) {

@@ -24,39 +24,33 @@ internal fun Project.registerGraphVizTrunkTasks(
   spec: GraphVizSpec,
   generateLegend: TaskProvider<Task>,
 ) {
-  val legend = spec.legend
-  if (legend != null) {
-    // Only create a legend if one of the legend functions was explicitly called
-    val dotFileTask = GenerateLegendDotFileTask.register(
-      target = this,
-      name = GenerateLegendDotFileTask.TASK_NAME,
-      legendSpec = legend,
-      extension = extension,
-      outputFile = defaultOutputFile(extension, spec),
-    )
-    val graphVizTasks = GenerateGraphvizFileTask.register(this, extension, spec, Variant.Legend, dotFileTask)
+  val legendTask = GenerateLegendDotFileTask.register(
+    target = this,
+    name = GenerateLegendDotFileTask.TASK_NAME,
+    extension = extension,
+    outputFile = defaultOutputFile(extension, spec),
+  )
+  val graphVizTasks = GenerateGraphvizFileTask.register(this, extension, spec, Variant.Legend, legendTask)
 
-    // Also validate the legend's dotfile when we call gradle check
-    val tempTask = GenerateLegendDotFileTask.register(
-      target = this,
-      name = GenerateLegendDotFileTask.TASK_NAME_FOR_CHECKING,
-      legendSpec = legend,
-      extension = extension,
-      outputFile = modularBuildDirectory.map { it.file("legend-temp.dot") },
-    )
+  // Also validate the legend's dotfile when we call gradle check
+  val tempTask = GenerateLegendDotFileTask.register(
+    target = this,
+    name = GenerateLegendDotFileTask.TASK_NAME_FOR_CHECKING,
+    extension = extension,
+    outputFile = modularBuildDirectory.map { it.file("legend-temp.dot") },
+  )
 
-    val checkTask = CheckFileDiffTask.register(
-      target = this,
-      name = CheckFileDiffTask.NAME_LEGEND_BASE + "DotFile",
-      generateTask = tempTask,
-      realFile = outputFile(extension.outputs, Variant.Legend, fileExtension = spec.fileExtension.get()),
-    )
+  val checkTask = CheckFileDiffTask.register(
+    target = this,
+    name = CheckFileDiffTask.NAME_LEGEND_BASE + "DotFile",
+    generateTask = tempTask,
+    realFile = outputFile(extension.outputs, Variant.Legend, fileExtension = spec.fileExtension.get()),
+  )
 
-    tasks.maybeCreate("check").dependsOn(checkTask)
+  tasks.maybeCreate("check").dependsOn(checkTask)
 
-    generateLegend.configure { t ->
-      t.dependsOn(graphVizTasks)
-    }
+  generateLegend.configure { t ->
+    t.dependsOn(graphVizTasks)
   }
 }
 
@@ -97,7 +91,7 @@ internal fun Project.registerGraphVizLeafTasks(
     target = this,
     extension = extension,
     spec = spec,
-    variant = Variant.Modules,
+    variant = Variant.Chart,
     dotFileTask = dotFileTask,
   )
 

@@ -50,16 +50,16 @@ abstract class DumpModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithO
     }
   }
 
-  companion object {
+  internal companion object {
     private const val NAME = "dumpModuleLinks"
 
-    fun get(target: Project): TaskProvider<DumpModuleLinksTask>? = try {
+    internal fun get(target: Project): TaskProvider<DumpModuleLinksTask>? = try {
       target.tasks.named(NAME, DumpModuleLinksTask::class.java)
     } catch (_: UnknownTaskException) {
       null
     }
 
-    fun register(
+    internal fun register(
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<DumpModuleLinksTask> = with(target) {

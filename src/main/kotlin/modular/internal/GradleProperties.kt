@@ -18,13 +18,7 @@ internal class GradleProperties(private val project: Project) {
   val separator: Provider<String> = string(key = "modular.general.separator", default = ",")
   val supportUpwardsTraversal: Provider<Boolean> = bool("modular.general.supportUpwardsTraversal", default = false)
 
-  // GraphViz legend
-  val cellBorder: Provider<Int> = int(key = "modular.graphViz.legend.cellBorder", default = 1)
-  val cellPadding: Provider<Int> = int(key = "modular.graphViz.legend.cellPadding", default = 4)
-  val cellSpacing: Provider<Int> = int(key = "modular.graphViz.legend.cellSpacing", default = 0)
-  val tableBorder: Provider<Int> = int(key = "modular.graphViz.legend.tableBorder", default = 0)
-
-  // GraphViz chart
+  // GraphViz
   val arrowHead: Provider<String> = string(key = "modular.graphViz.chart.arrowHead", default = null)
   val arrowTail: Provider<String> = string(key = "modular.graphViz.chart.arrowTail", default = null)
   val dir: Provider<String> = string(key = "modular.graphViz.chart.dir", default = null)

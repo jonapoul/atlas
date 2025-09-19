@@ -23,43 +23,37 @@ internal fun Project.registerMermaidTrunkTasks(
   spec: MermaidSpec,
   generateLegend: TaskProvider<Task>,
 ) {
-  val legend = spec.legend
-  if (legend != null) {
-    // Only create a legend if one of the legend functions was explicitly called
-    val mermaidTask = GenerateLegendMarkdownTask.register(
-      target = this,
-      name = GenerateLegendMarkdownTask.TASK_NAME,
-      legendSpec = legend,
-      extension = extension,
-      outputFile = defaultOutputFile(extension, spec).map { f ->
-        // just to change the extension! right faff
-        val file = f.asFile
-        val siblingFile = file.resolveSibling("${file.nameWithoutExtension}.md")
-        layout.projectDirectory.file(siblingFile.relativeTo(projectDir).path)
-      },
-    )
+  val legendTask = GenerateLegendMarkdownTask.register(
+    target = this,
+    name = GenerateLegendMarkdownTask.TASK_NAME,
+    extension = extension,
+    outputFile = defaultOutputFile(extension, spec).map { f ->
+      // just to change the extension! right faff
+      val file = f.asFile
+      val siblingFile = file.resolveSibling("${file.nameWithoutExtension}.md")
+      layout.projectDirectory.file(siblingFile.relativeTo(projectDir).path)
+    },
+  )
 
-    // Also validate the legend's dotfile when we call gradle check
-    val tempTask = GenerateLegendMarkdownTask.register(
-      target = this,
-      name = GenerateLegendMarkdownTask.TASK_NAME_FOR_CHECKING,
-      legendSpec = legend,
-      extension = extension,
-      outputFile = modularBuildDirectory.map { it.file("legend-temp.md") },
-    )
+  // Also validate the legend's dotfile when we call gradle check
+  val tempTask = GenerateLegendMarkdownTask.register(
+    target = this,
+    name = GenerateLegendMarkdownTask.TASK_NAME_FOR_CHECKING,
+    extension = extension,
+    outputFile = modularBuildDirectory.map { it.file("legend-temp.md") },
+  )
 
-    val checkTask = CheckFileDiffTask.register(
-      target = this,
-      name = CheckFileDiffTask.NAME_LEGEND_BASE + "Mermaid",
-      generateTask = tempTask,
-      realFile = outputFile(extension.outputs, Variant.Legend, fileExtension = "md"),
-    )
+  val checkTask = CheckFileDiffTask.register(
+    target = this,
+    name = CheckFileDiffTask.NAME_LEGEND_BASE + "Mermaid",
+    generateTask = tempTask,
+    realFile = outputFile(extension.outputs, Variant.Legend, fileExtension = "md"),
+  )
 
-    tasks.maybeCreate("check").dependsOn(checkTask)
+  tasks.maybeCreate("check").dependsOn(checkTask)
 
-    generateLegend.configure { t ->
-      t.dependsOn(mermaidTask)
-    }
+  generateLegend.configure { t ->
+    t.dependsOn(legendTask)
   }
 }
 

@@ -45,13 +45,13 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
         :c:dumpModuleLinks SKIPPED
         :collateModuleLinks SKIPPED
         :a:calculateModuleTree SKIPPED
-        :a:generateModulesDotFile SKIPPED
+        :a:generateChartDotFile SKIPPED
         :a:generateModules SKIPPED
         :b:calculateModuleTree SKIPPED
-        :b:generateModulesDotFile SKIPPED
+        :b:generateChartDotFile SKIPPED
         :b:generateModules SKIPPED
         :c:calculateModuleTree SKIPPED
-        :c:generateModulesDotFile SKIPPED
+        :c:generateChartDotFile SKIPPED
         :c:generateModules SKIPPED
 
         BUILD SUCCESSFUL
@@ -67,15 +67,15 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
 
     // then PNG, SVG and EPS tasks were run for each submodule
     listOf(
-      ":a:generateModulesPng",
-      ":a:generateModulesSvg",
-      ":a:generateModulesEps",
-      ":b:generateModulesPng",
-      ":b:generateModulesSvg",
-      ":b:generateModulesEps",
-      ":c:generateModulesPng",
-      ":c:generateModulesSvg",
-      ":c:generateModulesEps",
+      ":a:generateChartPng",
+      ":a:generateChartSvg",
+      ":a:generateChartEps",
+      ":b:generateChartPng",
+      ":b:generateChartSvg",
+      ":b:generateChartEps",
+      ":c:generateChartPng",
+      ":c:generateChartSvg",
+      ":c:generateChartEps",
     ).forEach { t ->
       assertThat(result.task(t)?.outcome).isEqualTo(SUCCESS)
     }
@@ -93,7 +93,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   fun `SVG viewBox scales with nondefault DPI with flag enabled`() =
     runScenario(GraphVizBigGraph100DpiSvgWithAdjustment) {
       // when
-      runTask(":app:generateModulesSvg").build()
+      runTask(":app:generateChartSvg").build()
 
       // then the app graph was generated as an svg
       val contents = resolve("app/modules.svg").readText()
@@ -115,7 +115,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @RequiresGraphviz
   fun `SVG doesn't scale viewBox if experimental flag is unset`() = runScenario(GraphVizBigGraph100DpiSvg) {
     // when
-    runTask(":app:generateModulesSvg").build()
+    runTask(":app:generateChartSvg").build()
 
     // then the app graph was generated as an svg
     val contents = resolve("app/modules.svg").readText()
@@ -137,7 +137,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Fail with useful message for invalid layout engine`() = runScenario(GraphVizInvalidLayoutEngine) {
     // when
-    val result = runTask(":app:generateModulesSvg").buildAndFail()
+    val result = runTask(":app:generateChartSvg").buildAndFail()
 
     // then the error log contains a useful message from graphviz
     assertThat(result.output).contains("There is no layout engine support for \"abc123\"")
@@ -151,7 +151,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Choose custom layout engine`() = runScenario(GraphVizCustomLayoutEngine) {
     // when we specify the "neato" layout engine
-    val result = runTask(":app:generateModulesSvg").build()
+    val result = runTask(":app:generateChartSvg").build()
 
     // then the SVG file printed in the log exists. There's probably more I can be checking here but ¯\_(ツ)_/¯
     assertThat(result.output).containsMatch("^(.*?\\.svg)$".toRegex(MULTILINE))
@@ -195,7 +195,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
     // then it fails as expected
     assertThat(result.output).containsMatch(
       """
-        Execution failed for task ':a:generateModulesSvg'.
+        Execution failed for task ':a:generateChartSvg'.
         > java.io.IOException: Cannot run program ".*?/path/to/custom/dot": error=2, No such file or directory
       """.trimIndent().toRegex(),
     )
