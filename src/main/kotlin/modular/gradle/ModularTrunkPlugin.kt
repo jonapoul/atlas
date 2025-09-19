@@ -19,7 +19,6 @@ import modular.mermaid.internal.MermaidSpecImpl
 import modular.mermaid.internal.registerMermaidTrunkTasks
 import modular.tasks.CollateModuleLinksTask
 import modular.tasks.CollateModuleTypesTask
-import modular.tasks.MODULAR_TASK_GROUP
 import modular.tasks.registerGenerationTaskOnSync
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -43,15 +42,10 @@ class ModularTrunkPlugin : Plugin<Project> {
     CollateModuleTypesTask.register(project)
     CollateModuleLinksTask.register(project, extension)
 
-    val generateLegend = tasks.register("generateLegend") { t ->
-      t.group = MODULAR_TASK_GROUP
-      t.description = "Wrapper task for the other 'generateLegendX' tasks"
-    }
-
     extension.specs.configureEach { spec ->
       when (spec) {
-        is GraphVizSpecImpl -> registerGraphVizTrunkTasks(extension, spec, generateLegend)
-        is MermaidSpecImpl -> registerMermaidTrunkTasks(extension, spec, generateLegend)
+        is GraphVizSpecImpl -> registerGraphVizTrunkTasks(extension, spec)
+        is MermaidSpecImpl -> registerMermaidTrunkTasks(extension, spec)
         else -> logger.warn("Not sure how to handle spec: ${spec.javaClass.canonicalName}")
       }
     }

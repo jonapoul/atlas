@@ -29,13 +29,16 @@ import kotlin.text.RegexOption.MULTILINE
 
 class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @Test
-  fun `Wrapper task fails if no file formats have been declared`() = runScenario(GraphVizBasic) {
+  fun `No extras are generated if no file formats have been declared`() = runScenario(GraphVizBasic) {
     // when
-    val result = runTask("generateModules", extras = listOf("--dry-run")).build()
+    val result = runTask("modularGenerate", extras = listOf("--dry-run")).build()
 
     // then no PNGs, SVGs, or anything else were generated besides the dotfile
     assertThat(result.output).contains(
       """
+        :generateLegendDotFile SKIPPED
+        :generateLegendDotFileForChecking SKIPPED
+        :modularGenerate SKIPPED
         :a:dumpModuleType SKIPPED
         :b:dumpModuleType SKIPPED
         :c:dumpModuleType SKIPPED
@@ -46,13 +49,16 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
         :collateModuleLinks SKIPPED
         :a:calculateModuleTree SKIPPED
         :a:generateChartDotFile SKIPPED
-        :a:generateModules SKIPPED
+        :a:generateChartDotFileForChecking SKIPPED
+        :a:modularGenerate SKIPPED
         :b:calculateModuleTree SKIPPED
         :b:generateChartDotFile SKIPPED
-        :b:generateModules SKIPPED
+        :b:generateChartDotFileForChecking SKIPPED
+        :b:modularGenerate SKIPPED
         :c:calculateModuleTree SKIPPED
         :c:generateChartDotFile SKIPPED
-        :c:generateModules SKIPPED
+        :c:generateChartDotFileForChecking SKIPPED
+        :c:modularGenerate SKIPPED
 
         BUILD SUCCESSFUL
       """.trimIndent(),
@@ -63,7 +69,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Generate png, svg and eps files`() = runScenario(GraphVizBasicWithThreeOutputFormats) {
     // when
-    val result = runTask("generateModules").build()
+    val result = runTask("modularGenerate").build()
 
     // then PNG, SVG and EPS tasks were run for each submodule
     listOf(
@@ -173,7 +179,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
     assertThat(customDotFile).exists()
 
     // when
-    val result = runTask("generateModules").build()
+    val result = runTask("modularGenerate").build()
 
     // then it's all good
     assertThat(result.tasks).allSuccessful()
@@ -190,12 +196,11 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
     assertThat(customDotFile).doesNotExist()
 
     // when
-    val result = runTask("generateModules").buildAndFail()
+    val result = runTask("modularGenerate").buildAndFail()
 
     // then it fails as expected
     assertThat(result.output).containsMatch(
       """
-        Execution failed for task ':a:generateChartSvg'.
         > java.io.IOException: Cannot run program ".*?/path/to/custom/dot": error=2, No such file or directory
       """.trimIndent().toRegex(),
     )

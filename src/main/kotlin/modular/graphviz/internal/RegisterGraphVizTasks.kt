@@ -4,7 +4,6 @@
  */
 package modular.graphviz.internal
 
-import modular.graphviz.spec.GraphVizSpec
 import modular.graphviz.tasks.GenerateGraphvizFileTask
 import modular.graphviz.tasks.GenerateLegendDotFileTask
 import modular.graphviz.tasks.GenerateModulesDotFileTask
@@ -15,14 +14,11 @@ import modular.internal.outputFile
 import modular.tasks.CheckFileDiffTask
 import modular.tasks.defaultOutputFile
 import org.gradle.api.Project
-import org.gradle.api.Task
 import org.gradle.api.file.RegularFile
-import org.gradle.api.tasks.TaskProvider
 
 internal fun Project.registerGraphVizTrunkTasks(
   extension: ModularExtensionImpl,
   spec: GraphVizSpecImpl,
-  generateLegend: TaskProvider<Task>,
 ) {
   val legendTask = GenerateLegendDotFileTask.register(
     target = this,
@@ -30,7 +26,14 @@ internal fun Project.registerGraphVizTrunkTasks(
     extension = extension,
     outputFile = defaultOutputFile(extension, spec),
   )
-  val graphVizTasks = GenerateGraphvizFileTask.register(this, extension, spec, Variant.Legend, legendTask)
+
+  GenerateGraphvizFileTask.register(
+    target = this,
+    extension = extension,
+    spec = spec,
+    variant = Variant.Legend,
+    dotFileTask = legendTask,
+  )
 
   // Also validate the legend's dotfile when we call gradle check
   val tempTask = GenerateLegendDotFileTask.register(
@@ -48,17 +51,12 @@ internal fun Project.registerGraphVizTrunkTasks(
   )
 
   tasks.maybeCreate("check").dependsOn(checkTask)
-
-  generateLegend.configure { t ->
-    t.dependsOn(graphVizTasks)
-  }
 }
 
 internal fun Project.registerGraphVizLeafTasks(
   extension: ModularExtensionImpl,
   spec: GraphVizSpecImpl,
   file: RegularFile,
-  generateModules: TaskProvider<Task>,
 ) {
   val dotFileTask = GenerateModulesDotFileTask.register(
     target = this,
@@ -87,16 +85,11 @@ internal fun Project.registerGraphVizLeafTasks(
 
   tasks.maybeCreate("check").dependsOn(checkTask)
 
-  val outputTasks = GenerateGraphvizFileTask.register(
+  GenerateGraphvizFileTask.register(
     target = this,
     extension = extension,
     spec = spec,
     variant = Variant.Chart,
     dotFileTask = dotFileTask,
   )
-
-  generateModules.configure { t ->
-    t.dependsOn(dotFileTask)
-    t.dependsOn(outputTasks)
-  }
 }

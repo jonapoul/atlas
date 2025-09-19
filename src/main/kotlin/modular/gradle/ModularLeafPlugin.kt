@@ -39,16 +39,11 @@ class ModularLeafPlugin : Plugin<Project> {
     DumpModuleLinksTask.register(project, extension)
     CalculateModuleTreeTask.register(project, extension)
 
-    val generateModules = tasks.register("generateModules") { t ->
-      t.group = MODULAR_TASK_GROUP
-      t.description = "Wrapper task for the other 'generateModulesX' tasks"
-    }
-
     extension.specs.configureEach { spec ->
       val file = outputFile(extension.outputs, Variant.Chart, fileExtension = spec.fileExtension.get())
       when (spec) {
-        is GraphVizSpecImpl -> registerGraphVizLeafTasks(extension, spec, file, generateModules)
-        is MermaidSpecImpl -> registerMermaidLeafTasks(extension, spec, file, generateModules)
+        is GraphVizSpecImpl -> registerGraphVizLeafTasks(extension, spec, file)
+        is MermaidSpecImpl -> registerMermaidLeafTasks(extension, spec, file)
         else -> logger.warn("Not sure how to handle spec: ${spec.javaClass.canonicalName}")
       }
     }
