@@ -11,10 +11,9 @@ import modular.core.internal.Variant
 import modular.core.internal.configureSeparators
 import modular.core.internal.outputFile
 import modular.core.internal.registerModularGenerateTask
-import modular.core.tasks.CalculateModuleTreeTask
-import modular.core.tasks.DumpModuleLinksTask
-import modular.core.tasks.DumpModuleTypeTask
-import modular.core.tasks.MODULAR_TASK_GROUP
+import modular.core.tasks.WriteModuleLinks
+import modular.core.tasks.WriteModuleTree
+import modular.core.tasks.WriteModuleType
 import modular.core.tasks.registerGenerationTaskOnSync
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.internal.registerGraphVizLeafTasks
@@ -35,9 +34,9 @@ class ModularLeafPlugin : Plugin<Project> {
     registerGenerationTaskOnSync(extension)
     registerModularGenerateTask()
 
-    DumpModuleTypeTask.register(project, extension)
-    DumpModuleLinksTask.register(project, extension)
-    CalculateModuleTreeTask.register(project, extension)
+    WriteModuleType.register(project, extension)
+    WriteModuleLinks.register(project, extension)
+    WriteModuleTree.register(project, extension)
 
     extension.specs.configureEach { spec ->
       val file = outputFile(extension.outputs, Variant.Chart, fileExtension = spec.fileExtension.get())

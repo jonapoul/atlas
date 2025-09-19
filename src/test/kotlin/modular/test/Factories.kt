@@ -9,8 +9,8 @@ import modular.core.internal.Node
 import modular.core.internal.Replacement
 import modular.core.internal.TypedModule
 import modular.core.spec.ModuleTypeModel
-import modular.graphviz.internal.DotFileWriter
-import modular.graphviz.spec.DotFileConfig
+import modular.graphviz.internal.DotWriter
+import modular.graphviz.spec.DotConfig
 
 internal fun node(path: String) = Node(typedModule(path))
 
@@ -36,14 +36,14 @@ internal fun moduleLink(
   color,
 )
 
-internal fun dotFileWriter(
+internal fun dotWriter(
   typedModules: Set<TypedModule> = emptySet(),
   links: Set<ModuleLink> = emptySet(),
   replacements: Set<Replacement> = emptySet(),
   thisPath: String = ":app",
   groupModules: Boolean = false,
-  config: DotFileConfig = dotFileConfig(),
-) = DotFileWriter(
+  config: DotConfig = dotConfig(),
+) = DotWriter(
   typedModules = typedModules,
   links = links,
   replacements = replacements,
@@ -52,7 +52,7 @@ internal fun dotFileWriter(
   config = config,
 )
 
-internal fun dotFileConfig(
+internal fun dotConfig(
   arrowHead: String? = null,
   arrowTail: String? = null,
   dir: String? = null,
@@ -61,7 +61,7 @@ internal fun dotFileConfig(
   layoutEngine: String? = null,
   rankDir: String? = null,
   rankSep: Float? = null,
-) = DotFileConfig(
+) = DotConfig(
   arrowHead = arrowHead,
   arrowTail = arrowTail,
   dir = dir,

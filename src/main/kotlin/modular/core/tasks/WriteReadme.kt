@@ -4,7 +4,7 @@
  */
 package modular.core.tasks
 
-import modular.graphviz.tasks.GenerateLegendDotFileTask
+import modular.graphviz.tasks.WriteGraphvizLegend
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -16,7 +16,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class WriteReadmeTask : DefaultTask() {
+abstract class WriteReadme : DefaultTask() {
   @get:Input abstract val projectPath: Property<String>
   @get:Input abstract val legendPngRelativePath: Property<String>
   @get:OutputFile abstract val readmeFile: RegularFileProperty
@@ -36,16 +36,16 @@ abstract class WriteReadmeTask : DefaultTask() {
   }
 
   internal companion object {
-    internal fun register(target: Project): TaskProvider<WriteReadmeTask> = with(target) {
+    internal fun register(target: Project): TaskProvider<WriteReadme> = with(target) {
 //      val modifiedPath = providers
 //        .gradleProperty(REMOVE_MODULE_PREFIX)
 //        .map { path.removePrefix(it) }
 
 //      val legendPng = rootProject.file(GenerateLegendDotFileTask.PNG_PATH)
 //      val projectDir = layout.projectDirectory.asFile
-      val legendTask = GenerateLegendDotFileTask.get(rootProject)
+      val legendTask = WriteGraphvizLegend.get(rootProject)
 
-      tasks.register("writeReadme", WriteReadmeTask::class.java) { task ->
+      tasks.register("writeReadme", WriteReadme::class.java) { task ->
         task.group = "reporting"
         task.readmeFile.convention(layout.projectDirectory.file("README.md"))
         task.projectPath.convention(path) // TBC: CLEAN PATH

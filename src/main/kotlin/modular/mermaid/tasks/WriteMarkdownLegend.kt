@@ -28,7 +28,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class GenerateLegendMarkdownTask :
+abstract class WriteMarkdownLegend :
   DefaultTask(),
   TaskWithSeparator,
   ModularGenerationTask,
@@ -104,16 +104,16 @@ abstract class GenerateLegendMarkdownTask :
     internal const val TASK_NAME: String = "generateLegendMarkdown"
     internal const val TASK_NAME_FOR_CHECKING: String = "generateLegendMarkdownForChecking"
 
-    internal fun get(target: Project): TaskProvider<GenerateLegendMarkdownTask> =
-      target.tasks.named(TASK_NAME, GenerateLegendMarkdownTask::class.java)
+    internal fun get(target: Project): TaskProvider<WriteMarkdownLegend> =
+      target.tasks.named(TASK_NAME, WriteMarkdownLegend::class.java)
 
     internal fun register(
       target: Project,
       name: String,
       extension: ModularExtensionImpl,
       outputFile: Provider<RegularFile>,
-    ): TaskProvider<GenerateLegendMarkdownTask> = with(target) {
-      tasks.register(name, GenerateLegendMarkdownTask::class.java) { task ->
+    ): TaskProvider<WriteMarkdownLegend> = with(target) {
+      tasks.register(name, WriteMarkdownLegend::class.java) { task ->
         task.outputFile.convention(outputFile)
         task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
         task.linkTypes.convention(extension.linkTypes.linkTypes)

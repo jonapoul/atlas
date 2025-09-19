@@ -25,54 +25,54 @@ import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
 import java.io.File
 import kotlin.test.Test
 
-class DumpModuleTypeTaskTest : ScenarioTest() {
+class WriteModuleTypeTest : ScenarioTest() {
   @Test
   fun `No module types declared`() = runScenario(NoModuleTypesDeclared) {
     // when
-    val result = runTask("dumpModuleType").build()
+    val result = runTask("writeModuleType").build()
 
     // then
-    assertThat(result).taskHadResult(":test-jvm:dumpModuleType", SUCCESS)
+    assertThat(result).taskHadResult(":test-jvm:writeModuleType", SUCCESS)
     assertThat(moduleTypeFile("test-jvm")).contentEquals(":test-jvm")
   }
 
   @Test
   fun `Module types declared but none match`() = runScenario(ModuleTypesDeclaredButNoneMatch) {
     // when
-    val result = runTask("dumpModuleType").build()
+    val result = runTask("writeModuleType").build()
 
     // then
-    assertThat(result).taskHadResult(":test-jvm:dumpModuleType", SUCCESS)
+    assertThat(result).taskHadResult(":test-jvm:writeModuleType", SUCCESS)
     assertThat(moduleTypeFile("test-jvm")).contentEquals(":test-jvm")
   }
 
   @Test
   fun `Write file if built-in type matches`() = runScenario(OneKotlinJvmModule) {
     // when
-    val result = runTask("dumpModuleType").build()
+    val result = runTask("writeModuleType").build()
 
     // then
-    assertThat(result).taskWasSuccessful(":test-jvm:dumpModuleType")
+    assertThat(result).taskWasSuccessful(":test-jvm:writeModuleType")
     val moduleTypeFile = moduleTypeFile("test-jvm")
     assertThat(moduleTypeFile).exists()
     assertThat(moduleTypeFile.readText()).isEqualTo(":test-jvm,Kotlin JVM,#CA66FF")
 
     // when running again, then it's cached
-    val result2 = runTask("dumpModuleType").build()
-    assertThat(result2).taskHadResult(":test-jvm:dumpModuleType", UP_TO_DATE)
+    val result2 = runTask("writeModuleType").build()
+    assertThat(result2).taskHadResult(":test-jvm:writeModuleType", UP_TO_DATE)
   }
 
   @Test
   fun `Write files if custom types match`() = runScenario(ThreeModulesWithCustomTypes) {
     // when
     val result = buildRunner(androidHomeOrSkip())
-      .runTask("dumpModuleType")
+      .runTask("writeModuleType")
       .build()
 
     // then
-    assertThat(result).taskWasSuccessful(":test-data:dumpModuleType")
-    assertThat(result).taskWasSuccessful(":test-domain:dumpModuleType")
-    assertThat(result).taskWasSuccessful(":test-ui:dumpModuleType")
+    assertThat(result).taskWasSuccessful(":test-data:writeModuleType")
+    assertThat(result).taskWasSuccessful(":test-domain:writeModuleType")
+    assertThat(result).taskWasSuccessful(":test-ui:writeModuleType")
 
     assertThat(moduleTypeFileContents("test-data")).isEqualTo(":test-data,Data,#ABC123")
     assertThat(moduleTypeFileContents("test-domain")).isEqualTo(":test-domain,Domain,#123ABC")
@@ -82,7 +82,7 @@ class DumpModuleTypeTaskTest : ScenarioTest() {
   @Test
   fun `Fall back to other if no types match`() = runScenario(ThreeModulesOnlyMatchingOther) {
     // when
-    runTask("dumpModuleType", androidHomeOrSkip()).build()
+    runTask("writeModuleType", androidHomeOrSkip()).build()
 
     // then
     assertThat(moduleTypeFileContents("a")).isEqualTo(":a,Other,#808080")
@@ -93,10 +93,10 @@ class DumpModuleTypeTaskTest : ScenarioTest() {
   @Test
   fun `No types match`() = runScenario(ThreeModulesNoMatchingType) {
     // when
-    val result = runTask("a:dumpModuleType", androidHomeOrSkip()).build()
+    val result = runTask("a:writeModuleType", androidHomeOrSkip()).build()
 
     // then
-    assertThat(result).taskHadResult(":a:dumpModuleType", SUCCESS)
+    assertThat(result).taskHadResult(":a:writeModuleType", SUCCESS)
     assertThat(moduleTypeFile("a")).contentEquals(":a")
   }
 

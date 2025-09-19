@@ -15,26 +15,26 @@ import org.gradle.testkit.runner.TaskOutcome.FAILED
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import kotlin.test.Test
 
-class CheckFileDiffTaskTest : ScenarioTest() {
+class CheckFileDiffTest : ScenarioTest() {
   @Test
   fun `Verify modules of a basic project`() = runScenario(GraphVizBasicWithThreeOutputFormats) {
     // given initial dotfile is generated
-    runTask(":a:generateChartDotFile").build()
+    runTask(":a:writeGraphvizChart").build()
 
     // when we check it with no changes
-    val check1 = runTask(":a:checkModulesDotFile").build()
+    val check1 = runTask(":a:checkGraphvizChart").build()
 
     // then the check was successful
-    assertThat(check1.task(":a:checkModulesDotFile")?.outcome).isEqualTo(SUCCESS)
+    assertThat(check1.task(":a:checkGraphvizChart")?.outcome).isEqualTo(SUCCESS)
 
     // given we set a custom property set to adjust the output
     resolve("gradle.properties").writeText("modular.graphViz.chart.layoutEngine=circo")
 
     // when we run a check again
-    val check2 = runTask(":a:checkModulesDotFile").buildAndFail()
+    val check2 = runTask(":a:checkGraphvizChart").buildAndFail()
 
     // then it fails
-    assertThat(check2.task(":a:checkModulesDotFile")?.outcome).isEqualTo(FAILED)
+    assertThat(check2.task(":a:checkGraphvizChart")?.outcome).isEqualTo(FAILED)
 
     // and spits out expected diff
     assertThat(check2.output).contains(
@@ -55,13 +55,13 @@ class CheckFileDiffTaskTest : ScenarioTest() {
   @Test
   fun `Verify legend of a basic project`() = runScenario(GraphVizBasic) {
     // given initial dotfile is generated
-    runTask("generateLegendDotFile").build()
+    runTask("writeGraphvizLegend").build()
 
     // when we check it with no changes
-    val check1 = runTask("checkLegendDotFile").build()
+    val check1 = runTask("checkGraphvizLegend").build()
 
     // then the check was successful
-    assertThat(check1.task(":checkLegendDotFile")?.outcome).isEqualTo(SUCCESS)
+    assertThat(check1.task(":checkGraphvizLegend")?.outcome).isEqualTo(SUCCESS)
 
     // given we manually adjust the generated file
     val legendFile = resolve("legend.dot")
@@ -71,10 +71,10 @@ class CheckFileDiffTaskTest : ScenarioTest() {
     legendFile.writeText(editedLegend)
 
     // when we run a check again
-    val check2 = runTask("checkLegendDotFile").buildAndFail()
+    val check2 = runTask("checkGraphvizLegend").buildAndFail()
 
     // then it fails
-    assertThat(check2.task(":checkLegendDotFile")?.outcome).isEqualTo(FAILED)
+    assertThat(check2.task(":checkGraphvizLegend")?.outcome).isEqualTo(FAILED)
 
     // and spits out expected diff
     assertThat(check2.output).contains(

@@ -16,20 +16,20 @@ import modular.test.scenarios.GraphVizWithLinkTypes
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
-class GenerateLegendDotFileTaskTest : ScenarioTest() {
+class WriteGraphvizChartTest : ScenarioTest() {
   @Test
   fun `Don't register legend task if no outputs are configured`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("tasks").build()
 
     // then the task didn't exist
-    assertThat(result.output).doesNotContain("generateLegendDotFile")
+    assertThat(result.output).doesNotContain("writeGraphvizLegend")
   }
 
   @Test
   fun `Generate dotfile legend from basic config`() = runScenario(GraphVizBasic) {
     // when
-    runTask("generateLegendDotFile").build()
+    runTask("writeGraphvizLegend").build()
 
     // then the file was generated
     val legendFile = resolve("legend.dot")
@@ -56,7 +56,7 @@ class GenerateLegendDotFileTaskTest : ScenarioTest() {
   @Test
   fun `Show modules and links next to each other`() = runScenario(GraphVizWithLinkTypes) {
     // when
-    runTask("generateLegendDotFile").build()
+    runTask("writeGraphvizLegend").build()
 
     // then the file was generated
     val legendFile = resolve("legend.dot")

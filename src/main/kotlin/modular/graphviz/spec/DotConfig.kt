@@ -8,7 +8,7 @@ import java.io.Serializable as JSerializable
 import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
-data class DotFileConfig(
+data class DotConfig(
   val arrowHead: String? = null,
   val arrowTail: String? = null,
   val dir: String? = null,
@@ -19,7 +19,7 @@ data class DotFileConfig(
   val rankSep: Float? = null,
 ) : JSerializable
 
-internal fun DotFileConfig(spec: GraphVizSpec): DotFileConfig = DotFileConfig(
+internal fun DotConfig(spec: GraphVizSpec): DotConfig = DotConfig(
   arrowHead = spec.arrowHead.orNull,
   arrowTail = spec.arrowTail.orNull,
   dir = spec.dir.orNull,

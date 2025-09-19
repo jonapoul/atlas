@@ -22,7 +22,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CalculateModuleTreeTask : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class WriteModuleTree : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val collatedLinks: RegularFileProperty
   @get:Input abstract val supportUpwardsTraversal: Property<Boolean>
   @get:Input abstract val thisPath: Property<String>
@@ -50,9 +50,9 @@ abstract class CalculateModuleTreeTask : DefaultTask(), TaskWithSeparator, TaskW
     val outputFile = outputFile.get().asFile
     ModuleLinks.write(tree, outputFile, separator)
 
-    logger.info("CalculateModuleTreeTask: written ${tree.size} links from ${allLinks.size} across the project")
+    logger.info("CalculateModuleTree: written ${tree.size} links from ${allLinks.size} across the project")
     tree.forEach { link ->
-      logger.info("CalculateModuleTreeTask:     link = $link")
+      logger.info("CalculateModuleTree:     link = $link")
     }
   }
 
@@ -86,21 +86,21 @@ abstract class CalculateModuleTreeTask : DefaultTask(), TaskWithSeparator, TaskW
   internal companion object {
     private const val NAME = "calculateModuleTree"
 
-    internal fun get(target: Project): TaskProvider<CalculateModuleTreeTask> =
-      target.tasks.named(NAME, CalculateModuleTreeTask::class.java)
+    internal fun get(target: Project): TaskProvider<WriteModuleTree> =
+      target.tasks.named(NAME, WriteModuleTree::class.java)
 
     internal fun register(
       target: Project,
       extension: ModularExtension,
-    ): TaskProvider<CalculateModuleTreeTask> = with(target) {
-      val calculateTree = tasks.register(NAME, CalculateModuleTreeTask::class.java) { task ->
+    ): TaskProvider<WriteModuleTree> = with(target) {
+      val calculateTree = tasks.register(NAME, WriteModuleTree::class.java) { task ->
         task.thisPath.convention(target.path)
         task.supportUpwardsTraversal.convention(extension.general.supportUpwardsTraversal)
         task.outputFile.convention(fileInBuildDirectory("module-tree"))
       }
 
       gradle.projectsEvaluated {
-        val collateProjectLinks = CollateModuleLinksTask.get(rootProject)
+        val collateProjectLinks = CollateModuleLinks.get(rootProject)
         calculateTree.configure { t ->
           t.collatedLinks.convention(collateProjectLinks.map { it.outputFile.get() })
           t.dependsOn(collateProjectLinks)

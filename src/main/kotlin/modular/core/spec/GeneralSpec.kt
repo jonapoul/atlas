@@ -77,7 +77,7 @@ interface GeneralSpec {
 }
 
 /**
- * Injected in [modular.graphviz.tasks.GenerateGraphvizFileTask]
+ * Injected in [modular.graphviz.tasks.RunGraphviz]
  */
 @Suppress("UnnecessaryAbstractClass")
 abstract class GeneralFlags @Inject constructor() {

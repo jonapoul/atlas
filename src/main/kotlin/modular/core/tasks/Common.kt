@@ -33,9 +33,8 @@ internal interface ModularGenerationTask : Task
 
 internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
   afterEvaluate {
-    val isGradleSync = System.getProperty("idea.sync.active") == "true"
-
-    if (extension.general.generateOnSync.get() && isGradleSync) {
+    val isIntellijSyncing = System.getProperty("idea.sync.active") == "true"
+    if (extension.general.generateOnSync.get() && isIntellijSyncing) {
       val modularGenerationTasks = tasks.withType(ModularGenerationTask::class.java)
       tasks.maybeCreate("prepareKotlinIdeaImport").dependsOn(modularGenerationTasks)
     }

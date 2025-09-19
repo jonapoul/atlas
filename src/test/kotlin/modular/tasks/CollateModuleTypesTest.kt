@@ -16,16 +16,16 @@ import modular.test.taskWasSuccessful
 import java.io.File
 import kotlin.test.Test
 
-class CollateModuleTypesTaskTest : ScenarioTest() {
+class CollateModuleTypesTest : ScenarioTest() {
   @Test
   fun `Collate three custom types`() = runScenario(ThreeModulesWithCustomTypes) {
     // when
     val result = runTask("collateModuleTypes").build()
 
     // then three dependent tasks were run
-    assertThat(result).taskWasSuccessful(":test-data:dumpModuleType")
-    assertThat(result).taskWasSuccessful(":test-domain:dumpModuleType")
-    assertThat(result).taskWasSuccessful(":test-ui:dumpModuleType")
+    assertThat(result).taskWasSuccessful(":test-data:writeModuleType")
+    assertThat(result).taskWasSuccessful(":test-domain:writeModuleType")
+    assertThat(result).taskWasSuccessful(":test-ui:writeModuleType")
 
     // and this one
     assertThat(result).taskWasSuccessful(":collateModuleTypes")
@@ -47,9 +47,9 @@ class CollateModuleTypesTaskTest : ScenarioTest() {
     val result = runTask("collateModuleTypes").build()
 
     // then three dependent tasks were run
-    assertThat(result).taskWasSuccessful(":test-data:dumpModuleType")
-    assertThat(result).taskWasSuccessful(":test-domain:dumpModuleType")
-    assertThat(result).taskWasSuccessful(":test-ui:dumpModuleType")
+    assertThat(result).taskWasSuccessful(":test-data:writeModuleType")
+    assertThat(result).taskWasSuccessful(":test-domain:writeModuleType")
+    assertThat(result).taskWasSuccessful(":test-ui:writeModuleType")
 
     // and this one
     assertThat(result).taskWasSuccessful(":collateModuleTypes")
@@ -70,7 +70,7 @@ class CollateModuleTypesTaskTest : ScenarioTest() {
     // when
     val result = runTask("collateModuleTypes").build()
 
-    // then no dump tasks were run
+    // then no write tasks were run
     val taskPaths = result.tasks.map { it.path }
     assertThat(taskPaths).isEqualTo(listOf(":collateModuleTypes"))
 

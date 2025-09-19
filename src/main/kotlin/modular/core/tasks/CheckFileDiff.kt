@@ -5,7 +5,7 @@
 package modular.core.tasks
 
 import modular.core.internal.diff
-import modular.graphviz.tasks.GenerateModulesDotFileTask
+import modular.graphviz.tasks.WriteGraphvizChart
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile
@@ -20,7 +20,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CheckFileDiffTask : DefaultTask() {
+abstract class CheckFileDiff : DefaultTask() {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val expectedFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] abstract val actualFile: RegularFileProperty
   @get:Input abstract val taskPath: Property<String>
@@ -49,17 +49,17 @@ abstract class CheckFileDiffTask : DefaultTask() {
   }
 
   internal companion object {
-    internal const val NAME_MODULES_BASE = "checkModules"
-    internal const val NAME_LEGEND_BASE = "checkLegend"
+    internal fun chartName(flavor: String): String = "check${flavor}Chart"
+    internal fun legendName(flavor: String): String = "check${flavor}Legend"
 
     internal fun <T : TaskWithOutputFile> register(
       target: Project,
       name: String,
       generateTask: TaskProvider<T>,
       realFile: RegularFile,
-    ): TaskProvider<CheckFileDiffTask> = with(target) {
-      tasks.register(name, CheckFileDiffTask::class.java) { task ->
-        task.taskPath.convention("$path:${GenerateModulesDotFileTask.TASK_NAME}")
+    ): TaskProvider<CheckFileDiff> = with(target) {
+      tasks.register(name, CheckFileDiff::class.java) { task ->
+        task.taskPath.convention("$path:${WriteGraphvizChart.TASK_NAME}")
         task.expectedFile.convention(generateTask.map { it.outputFile.get() })
         task.actualFile.convention(realFile)
       }

@@ -22,7 +22,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CollateModuleTypesTask : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class CollateModuleTypes : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:[PathSensitive(ABSOLUTE) InputFiles] abstract val projectTypeFiles: ConfigurableFileCollection
   @get:Input abstract override val separator: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
@@ -42,35 +42,35 @@ abstract class CollateModuleTypesTask : DefaultTask(), TaskWithSeparator, TaskWi
       .toSortedSet()
     TypedModules.write(modulesWithType, outputFile, separator)
 
-    logger.info("CollateModuleTypesTask: ${modulesWithType.size} modules")
+    logger.info("CollateModuleTypes: ${modulesWithType.size} modules")
     modulesWithType.forEach { (projectPath, type) ->
-      logger.info("CollateModuleTypesTask:     path=$projectPath, type=${type?.name}")
+      logger.info("CollateModuleTypes:     path=$projectPath, type=${type?.name}")
     }
   }
 
   internal companion object {
     private const val NAME = "collateModuleTypes"
 
-    internal fun get(target: Project): TaskProvider<CollateModuleTypesTask> =
-      target.tasks.named(NAME, CollateModuleTypesTask::class.java)
+    internal fun get(target: Project): TaskProvider<CollateModuleTypes> =
+      target.tasks.named(NAME, CollateModuleTypes::class.java)
 
-    internal fun register(target: Project): TaskProvider<CollateModuleTypesTask> = with(target) {
-      val collateTypes = tasks.register(NAME, CollateModuleTypesTask::class.java) { task ->
+    internal fun register(target: Project): TaskProvider<CollateModuleTypes> = with(target) {
+      val collateTypes = tasks.register(NAME, CollateModuleTypes::class.java) { task ->
         task.outputFile.convention(fileInBuildDirectory("module-types"))
       }
 
       gradle.projectsEvaluated {
         collateTypes.configure { t ->
-          val dumpTasks = rootProject
+          val writeTasks = rootProject
             .subprojects
             .toList()
-            .mapNotNull(DumpModuleTypeTask::get)
+            .mapNotNull(WriteModuleType::get)
 
-          t.dependsOn(dumpTasks)
+          t.dependsOn(writeTasks)
 
           @Suppress("UnstableApiUsage")
           t.projectTypeFiles.convention(
-            dumpTasks.map { taskProvider ->
+            writeTasks.map { taskProvider ->
               taskProvider.map { it.outputFile.get() }
             },
           )

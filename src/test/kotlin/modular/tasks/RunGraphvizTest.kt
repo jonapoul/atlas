@@ -27,7 +27,7 @@ import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import kotlin.test.Test
 import kotlin.text.RegexOption.MULTILINE
 
-class GenerateGraphvizFileTaskTest : ScenarioTest() {
+class RunGraphvizTest : ScenarioTest() {
   @Test
   fun `No extras are generated if no file formats have been declared`() = runScenario(GraphVizBasic) {
     // when
@@ -36,28 +36,28 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
     // then no PNGs, SVGs, or anything else were generated besides the dotfile
     assertThat(result.output).contains(
       """
-        :generateLegendDotFile SKIPPED
-        :generateLegendDotFileForChecking SKIPPED
+        :writeGraphvizLegend SKIPPED
+        :writeGraphvizLegendForChecking SKIPPED
         :modularGenerate SKIPPED
-        :a:dumpModuleType SKIPPED
-        :b:dumpModuleType SKIPPED
-        :c:dumpModuleType SKIPPED
+        :a:writeModuleType SKIPPED
+        :b:writeModuleType SKIPPED
+        :c:writeModuleType SKIPPED
         :collateModuleTypes SKIPPED
-        :a:dumpModuleLinks SKIPPED
-        :b:dumpModuleLinks SKIPPED
-        :c:dumpModuleLinks SKIPPED
+        :a:writeModuleLinks SKIPPED
+        :b:writeModuleLinks SKIPPED
+        :c:writeModuleLinks SKIPPED
         :collateModuleLinks SKIPPED
         :a:calculateModuleTree SKIPPED
-        :a:generateChartDotFile SKIPPED
-        :a:generateChartDotFileForChecking SKIPPED
+        :a:writeGraphvizChart SKIPPED
+        :a:writeGraphvizChartForChecking SKIPPED
         :a:modularGenerate SKIPPED
         :b:calculateModuleTree SKIPPED
-        :b:generateChartDotFile SKIPPED
-        :b:generateChartDotFileForChecking SKIPPED
+        :b:writeGraphvizChart SKIPPED
+        :b:writeGraphvizChartForChecking SKIPPED
         :b:modularGenerate SKIPPED
         :c:calculateModuleTree SKIPPED
-        :c:generateChartDotFile SKIPPED
-        :c:generateChartDotFileForChecking SKIPPED
+        :c:writeGraphvizChart SKIPPED
+        :c:writeGraphvizChartForChecking SKIPPED
         :c:modularGenerate SKIPPED
 
         BUILD SUCCESSFUL
@@ -73,15 +73,15 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
 
     // then PNG, SVG and EPS tasks were run for each submodule
     listOf(
-      ":a:generateChartPng",
-      ":a:generateChartSvg",
-      ":a:generateChartEps",
-      ":b:generateChartPng",
-      ":b:generateChartSvg",
-      ":b:generateChartEps",
-      ":c:generateChartPng",
-      ":c:generateChartSvg",
-      ":c:generateChartEps",
+      ":a:writePngChart",
+      ":a:writeSvgChart",
+      ":a:writeEpsChart",
+      ":b:writePngChart",
+      ":b:writeSvgChart",
+      ":b:writeEpsChart",
+      ":c:writePngChart",
+      ":c:writeSvgChart",
+      ":c:writeEpsChart",
     ).forEach { t ->
       assertThat(result.task(t)?.outcome).isEqualTo(SUCCESS)
     }
@@ -99,7 +99,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   fun `SVG viewBox scales with nondefault DPI with flag enabled`() =
     runScenario(GraphVizBigGraph100DpiSvgWithAdjustment) {
       // when
-      runTask(":app:generateChartSvg").build()
+      runTask(":app:writeSvgChart").build()
 
       // then the app graph was generated as an svg
       val contents = resolve("app/modules.svg").readText()
@@ -121,7 +121,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @RequiresGraphviz
   fun `SVG doesn't scale viewBox if experimental flag is unset`() = runScenario(GraphVizBigGraph100DpiSvg) {
     // when
-    runTask(":app:generateChartSvg").build()
+    runTask(":app:writeSvgChart").build()
 
     // then the app graph was generated as an svg
     val contents = resolve("app/modules.svg").readText()
@@ -143,7 +143,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Fail with useful message for invalid layout engine`() = runScenario(GraphVizInvalidLayoutEngine) {
     // when
-    val result = runTask(":app:generateChartSvg").buildAndFail()
+    val result = runTask(":app:writeSvgChart").buildAndFail()
 
     // then the error log contains a useful message from graphviz
     assertThat(result.output).contains("There is no layout engine support for \"abc123\"")
@@ -157,7 +157,7 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Choose custom layout engine`() = runScenario(GraphVizCustomLayoutEngine) {
     // when we specify the "neato" layout engine
-    val result = runTask(":app:generateChartSvg").build()
+    val result = runTask(":app:writeSvgChart").build()
 
     // then the SVG file printed in the log exists. There's probably more I can be checking here but ¯\_(ツ)_/¯
     assertThat(result.output).containsMatch("^(.*?\\.svg)$".toRegex(MULTILINE))

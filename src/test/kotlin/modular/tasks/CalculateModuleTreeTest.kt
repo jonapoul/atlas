@@ -18,7 +18,7 @@ import modular.test.scenarios.TriangleGraph
 import modular.test.scenarios.TriangleGraphWithUpwardsTraversal
 import kotlin.test.Test
 
-class CalculateModuleTreeTaskTest : ScenarioTest() {
+class CalculateModuleTreeTest : ScenarioTest() {
   @Test
   fun `Empty files for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when

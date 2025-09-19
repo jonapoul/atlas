@@ -24,7 +24,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CollateModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class CollateModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFiles] abstract val moduleLinkFiles: ConfigurableFileCollection
   @get:Input abstract val ignoredModules: SetProperty<Regex>
   @get:Input abstract override val separator: Property<String>
@@ -53,9 +53,9 @@ abstract class CollateModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWi
 
     ModuleLinks.write(links, outputFile, separator)
 
-    logger.info("CollateModuleLinksTask: ${links.size} links")
+    logger.info("CollateModuleLinks: ${links.size} links")
     links.forEach { link ->
-      logger.info("CollateModuleLinksTask:     from=${link.fromPath}, to=${link.toPath}, config=${link.configuration}")
+      logger.info("CollateModuleLinks:     from=${link.fromPath}, to=${link.toPath}, config=${link.configuration}")
     }
   }
 
@@ -68,27 +68,27 @@ abstract class CollateModuleLinksTask : DefaultTask(), TaskWithSeparator, TaskWi
   internal companion object {
     private const val NAME = "collateModuleLinks"
 
-    internal fun get(target: Project): TaskProvider<CollateModuleLinksTask> =
-      target.tasks.named(NAME, CollateModuleLinksTask::class.java)
+    internal fun get(target: Project): TaskProvider<CollateModuleLinks> =
+      target.tasks.named(NAME, CollateModuleLinks::class.java)
 
     internal fun register(
       target: Project,
       extension: ModularExtension,
-    ): TaskProvider<CollateModuleLinksTask> = with(target) {
-      val collateLinks = tasks.register(NAME, CollateModuleLinksTask::class.java) { task ->
+    ): TaskProvider<CollateModuleLinks> = with(target) {
+      val collateLinks = tasks.register(NAME, CollateModuleLinks::class.java) { task ->
         task.outputFile.convention(fileInBuildDirectory("module-links"))
         task.ignoredModules.convention(extension.general.ignoredModules)
       }
 
       gradle.projectsEvaluated {
         collateLinks.configure { t ->
-          val dumpTasks = rootProject
+          val writeTasks = rootProject
             .subprojects
             .toList()
-            .mapNotNull(DumpModuleLinksTask::get)
-          t.dependsOn(dumpTasks)
+            .mapNotNull(WriteModuleLinks::get)
+          t.dependsOn(writeTasks)
 
-          val linkFiles = dumpTasks.map { provider -> provider.map { it.outputFile.get() } }
+          val linkFiles = writeTasks.map { provider -> provider.map { it.outputFile.get() } }
           t.moduleLinkFiles.from(linkFiles)
         }
       }

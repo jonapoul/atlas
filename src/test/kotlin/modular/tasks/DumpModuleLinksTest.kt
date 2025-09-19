@@ -19,14 +19,14 @@ import modular.test.scenarios.TriangleGraph
 import modular.test.taskWasSuccessful
 import kotlin.test.Test
 
-class DumpModuleLinksTaskTest : ScenarioTest() {
+class DumpModuleLinksTest : ScenarioTest() {
   @Test
   fun `Empty file for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when
-    val result = runTask("dumpModuleLinks").build()
+    val result = runTask("writeModuleLinks").build()
 
     // then the task was run
-    assertThat(result).taskWasSuccessful(":test-jvm:dumpModuleLinks")
+    assertThat(result).taskWasSuccessful(":test-jvm:writeModuleLinks")
 
     // and the links file is empty
     assertThat(moduleLinks(module = "test-jvm")).isEqualTo(emptyList())
@@ -35,12 +35,12 @@ class DumpModuleLinksTaskTest : ScenarioTest() {
   @Test
   fun `Empty files for three modules with no dependencies`() = runScenario(ThreeModulesWithBuiltInTypes) {
     // when
-    val result = runTask("dumpModuleLinks").build()
+    val result = runTask("writeModuleLinks").build()
 
     // then the task was run
-    assertThat(result).taskWasSuccessful(":test-data:dumpModuleLinks")
-    assertThat(result).taskWasSuccessful(":test-domain:dumpModuleLinks")
-    assertThat(result).taskWasSuccessful(":test-ui:dumpModuleLinks")
+    assertThat(result).taskWasSuccessful(":test-data:writeModuleLinks")
+    assertThat(result).taskWasSuccessful(":test-domain:writeModuleLinks")
+    assertThat(result).taskWasSuccessful(":test-ui:writeModuleLinks")
 
     // and the links file is empty
     assertThat(moduleLinks(module = "test-data")).isEmpty()
@@ -51,13 +51,13 @@ class DumpModuleLinksTaskTest : ScenarioTest() {
   @Test
   fun `Single links for diamond`() = runScenario(DiamondGraph) {
     // when
-    val result = runTask("dumpModuleLinks").build()
+    val result = runTask("writeModuleLinks").build()
 
     // then the task was run
-    assertThat(result).taskWasSuccessful(":top:dumpModuleLinks")
-    assertThat(result).taskWasSuccessful(":mid-a:dumpModuleLinks")
-    assertThat(result).taskWasSuccessful(":mid-b:dumpModuleLinks")
-    assertThat(result).taskWasSuccessful(":bottom:dumpModuleLinks")
+    assertThat(result).taskWasSuccessful(":top:writeModuleLinks")
+    assertThat(result).taskWasSuccessful(":mid-a:writeModuleLinks")
+    assertThat(result).taskWasSuccessful(":mid-b:writeModuleLinks")
+    assertThat(result).taskWasSuccessful(":bottom:writeModuleLinks")
 
     // and the links file is empty
     assertThat(moduleLinks(module = "top"))
@@ -73,7 +73,7 @@ class DumpModuleLinksTaskTest : ScenarioTest() {
   @Test
   fun `Multiple links for triangle`() = runScenario(TriangleGraph) {
     // when
-    val result = runTask("dumpModuleLinks").build()
+    val result = runTask("writeModuleLinks").build()
 
     // then the task was run
     assertThat(result.tasks).allSuccessful()
@@ -90,7 +90,7 @@ class DumpModuleLinksTaskTest : ScenarioTest() {
   @Test
   fun `Custom configuration is picked up if we dont exclude it`() = runScenario(CustomConfigurations) {
     // when
-    val result = runTask("dumpModuleLinks").build()
+    val result = runTask("writeModuleLinks").build()
 
     // then the task was run
     assertThat(result.tasks).allSuccessful()
@@ -103,7 +103,7 @@ class DumpModuleLinksTaskTest : ScenarioTest() {
   @Test
   fun `Custom configuration is excluded`() = runScenario(CustomConfigurationExcluded) {
     // when
-    val result = runTask("dumpModuleLinks").build()
+    val result = runTask("writeModuleLinks").build()
 
     // then the task was run
     assertThat(result.tasks).allSuccessful()
