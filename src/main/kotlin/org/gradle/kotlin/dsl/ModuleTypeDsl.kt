@@ -6,8 +6,8 @@
 
 package org.gradle.kotlin.dsl
 
+import modular.core.spec.ModuleType
 import modular.gradle.ModularDsl
-import modular.spec.ModuleType
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 

@@ -4,9 +4,9 @@
  */
 package modular.core.tasks
 
+import modular.core.internal.ModularExtensionImpl
+import modular.core.spec.Spec
 import modular.gradle.ModularExtension
-import modular.internal.ModularExtensionImpl
-import modular.spec.Spec
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.file.RegularFile

@@ -4,7 +4,7 @@
  */
 package modular.core.internal
 
-import modular.spec.ModuleTypeModel
+import modular.core.spec.ModuleTypeModel
 import java.io.File
 
 internal object TypedModules {

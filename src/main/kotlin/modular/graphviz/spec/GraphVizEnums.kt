@@ -6,7 +6,7 @@
 
 package modular.graphviz.spec
 
-import modular.spec.Style
+import modular.core.spec.Style
 
 interface StringEnum {
   val string: String

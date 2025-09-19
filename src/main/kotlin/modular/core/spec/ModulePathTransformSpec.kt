@@ -6,8 +6,8 @@
 
 package modular.core.spec
 
+import modular.core.internal.Replacement
 import modular.gradle.ModularDsl
-import modular.internal.Replacement
 import org.gradle.api.provider.SetProperty
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 

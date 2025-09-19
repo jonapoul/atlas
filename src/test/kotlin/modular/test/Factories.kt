@@ -4,13 +4,13 @@
  */
 package modular.test
 
+import modular.core.internal.ModuleLink
+import modular.core.internal.Node
+import modular.core.internal.Replacement
+import modular.core.internal.TypedModule
+import modular.core.spec.ModuleTypeModel
 import modular.graphviz.internal.DotFileWriter
 import modular.graphviz.spec.DotFileConfig
-import modular.internal.ModuleLink
-import modular.internal.Node
-import modular.internal.Replacement
-import modular.internal.TypedModule
-import modular.spec.ModuleTypeModel
 
 internal fun node(path: String) = Node(typedModule(path))
 

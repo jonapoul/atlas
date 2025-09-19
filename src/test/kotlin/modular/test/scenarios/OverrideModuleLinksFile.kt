@@ -8,7 +8,7 @@ import modular.test.Scenario
 
 object OverrideModuleLinksFile : Scenario by DiamondGraph {
   override val rootBuildFile = """
-      import modular.tasks.CollateModuleLinksTask
+      import modular.core.tasks.CollateModuleLinksTask
 
       ${DiamondGraph.rootBuildFile}
 

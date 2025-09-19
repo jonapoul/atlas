@@ -4,15 +4,15 @@
  */
 package modular.graphviz.tasks
 
+import modular.core.internal.ModularExtensionImpl
+import modular.core.internal.Variant
+import modular.core.internal.outputFile
+import modular.core.spec.GeneralFlags
+import modular.core.tasks.MODULAR_TASK_GROUP
+import modular.core.tasks.ModularGenerationTask
+import modular.core.tasks.TaskWithOutputFile
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.internal.doGraphVizPostProcessing
-import modular.internal.ModularExtensionImpl
-import modular.internal.Variant
-import modular.internal.outputFile
-import modular.spec.GeneralFlags
-import modular.tasks.MODULAR_TASK_GROUP
-import modular.tasks.ModularGenerationTask
-import modular.tasks.TaskWithOutputFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project

@@ -6,20 +6,20 @@
 
 package modular.gradle
 
+import modular.core.internal.ModularExtensionImpl
+import modular.core.internal.Variant
+import modular.core.internal.configureSeparators
+import modular.core.internal.outputFile
+import modular.core.internal.registerModularGenerateTask
+import modular.core.tasks.CalculateModuleTreeTask
+import modular.core.tasks.DumpModuleLinksTask
+import modular.core.tasks.DumpModuleTypeTask
+import modular.core.tasks.MODULAR_TASK_GROUP
+import modular.core.tasks.registerGenerationTaskOnSync
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.internal.registerGraphVizLeafTasks
-import modular.internal.ModularExtensionImpl
-import modular.internal.Variant
-import modular.internal.configureSeparators
-import modular.internal.outputFile
-import modular.internal.registerModularGenerateTask
 import modular.mermaid.internal.MermaidSpecImpl
 import modular.mermaid.internal.registerMermaidLeafTasks
-import modular.tasks.CalculateModuleTreeTask
-import modular.tasks.DumpModuleLinksTask
-import modular.tasks.DumpModuleTypeTask
-import modular.tasks.MODULAR_TASK_GROUP
-import modular.tasks.registerGenerationTaskOnSync
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

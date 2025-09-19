@@ -4,15 +4,15 @@
  */
 package modular.graphviz.internal
 
+import modular.core.internal.ModularExtensionImpl
+import modular.core.internal.Variant
+import modular.core.internal.modularBuildDirectory
+import modular.core.internal.outputFile
+import modular.core.tasks.CheckFileDiffTask
+import modular.core.tasks.defaultOutputFile
 import modular.graphviz.tasks.GenerateGraphvizFileTask
 import modular.graphviz.tasks.GenerateLegendDotFileTask
 import modular.graphviz.tasks.GenerateModulesDotFileTask
-import modular.internal.ModularExtensionImpl
-import modular.internal.Variant
-import modular.internal.modularBuildDirectory
-import modular.internal.outputFile
-import modular.tasks.CheckFileDiffTask
-import modular.tasks.defaultOutputFile
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile
 

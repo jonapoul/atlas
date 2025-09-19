@@ -4,7 +4,7 @@
  */
 package modular.core.internal
 
-import modular.spec.LinkType
+import modular.core.spec.LinkType
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.ProjectDependency

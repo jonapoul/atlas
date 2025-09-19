@@ -4,10 +4,10 @@
  */
 package modular.core.tasks
 
+import modular.core.internal.ModuleLinks
+import modular.core.internal.fileInBuildDirectory
+import modular.core.spec.LinkType
 import modular.gradle.ModularExtension
-import modular.internal.ModuleLinks
-import modular.internal.fileInBuildDirectory
-import modular.spec.LinkType
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException

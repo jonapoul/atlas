@@ -5,7 +5,7 @@
 package modular.core.internal
 
 import groovy.lang.Closure
-import modular.spec.ModuleType
+import modular.core.spec.ModuleType
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider

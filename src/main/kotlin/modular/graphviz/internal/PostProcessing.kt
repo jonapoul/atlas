@@ -4,7 +4,7 @@
  */
 package modular.graphviz.internal
 
-import modular.spec.GeneralFlags
+import modular.core.spec.GeneralFlags
 import java.io.File
 
 internal fun doGraphVizPostProcessing(general: GeneralFlags, outputFile: File, outputFormat: String) {
