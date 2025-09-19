@@ -20,7 +20,7 @@ internal fun Project.registerMermaidTrunkTasks(
   extension: ModularExtensionImpl,
   spec: MermaidSpecImpl,
 ) {
-  val legendTask = GenerateLegendMarkdownTask.register(
+  GenerateLegendMarkdownTask.register(
     target = this,
     name = GenerateLegendMarkdownTask.TASK_NAME,
     extension = extension,
