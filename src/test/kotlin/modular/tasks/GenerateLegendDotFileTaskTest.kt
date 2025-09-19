@@ -10,13 +10,9 @@ import assertk.assertions.doesNotContain
 import assertk.assertions.exists
 import modular.test.ScenarioTest
 import modular.test.contentEquals
-import modular.test.doesNotExist
 import modular.test.runTask
 import modular.test.scenarios.GraphVizBasic
-import modular.test.scenarios.GraphVizBasicWithBasicLegend
-import modular.test.scenarios.GraphVizLegendCustomConfig
-import modular.test.scenarios.GraphVizLegendWithProperties
-import modular.test.scenarios.GraphVizWithLegendAndLinkTypes
+import modular.test.scenarios.GraphVizWithLinkTypes
 import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
@@ -31,20 +27,7 @@ class GenerateLegendDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Don't register legend task if legend wasnt configured`() = runScenario(GraphVizBasic) {
-    // when
-    val result = runTask("generateLegendDotFile").buildAndFail()
-
-    // then the task wasn't run because it wasnt registered
-    assertThat(result.output).contains("Task 'generateLegendDotFile' not found in root project")
-
-    // and the legend file wasn't generated
-    val legendFile = resolve("legend.dot")
-    assertThat(legendFile).doesNotExist()
-  }
-
-  @Test
-  fun `Generate dotfile legend from basic config`() = runScenario(GraphVizBasicWithBasicLegend) {
+  fun `Generate dotfile legend from basic config`() = runScenario(GraphVizBasic) {
     // when
     runTask("generateLegendDotFile").build()
 
@@ -71,61 +54,7 @@ class GenerateLegendDotFileTaskTest : ScenarioTest() {
   }
 
   @Test
-  fun `Customise dotfile legend from build script`() = runScenario(GraphVizLegendCustomConfig) {
-    // when
-    runTask("generateLegendDotFile").build()
-
-    // then the file was generated
-    val legendFile = resolve("legend-dir/legend-filename.dot")
-    assertThat(legendFile).exists()
-
-    // and contains expected contents, with modules in declaration order
-    assertThat(legendFile.readText()).contains(
-      """
-        digraph {
-          node [shape=plaintext]
-          modules [label=<
-          <TABLE BORDER="5" CELLBORDER="2" CELLSPACING="4" CELLPADDING="3">
-            <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
-            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
-          </TABLE>
-          >];
-        }
-      """.trimIndent(),
-    )
-  }
-
-  @Test
-  fun `Customise dotfile legend from gradle properties`() = runScenario(GraphVizLegendWithProperties) {
-    // when
-    runTask("generateLegendDotFile").build()
-
-    // then the file was generated
-    val legendFile = resolve("legend.dot")
-    assertThat(legendFile).exists()
-
-    // and contains expected contents, overriding build script
-    assertThat(legendFile.readText()).contains(
-      """
-        digraph {
-          node [shape=plaintext]
-          modules [label=<
-          <TABLE BORDER="10" CELLBORDER="20" CELLSPACING="30" CELLPADDING="40">
-            <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
-            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
-          </TABLE>
-          >];
-        }
-      """.trimIndent(),
-    )
-  }
-
-  @Test
-  fun `Show modules and links next to each other`() = runScenario(GraphVizWithLegendAndLinkTypes) {
+  fun `Show modules and links next to each other`() = runScenario(GraphVizWithLinkTypes) {
     // when
     runTask("generateLegendDotFile").build()
 

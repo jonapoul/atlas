@@ -52,13 +52,6 @@ modular {
   graphViz {
     fileExtension = "dot"
 
-    legend {
-      cellBorder = 1
-      cellPadding = 4
-      cellSpacing = 0
-      tableBorder = 0
-    }
-
     chart {
       arrowHead(ArrowType.Normal)
       arrowTail(ArrowType.None)
@@ -78,10 +71,6 @@ modular {
 
   mermaid {
     fileExtension = "mmd"
-
-    legend {
-      // TBC
-    }
 
     chart {
       animateLinks = false

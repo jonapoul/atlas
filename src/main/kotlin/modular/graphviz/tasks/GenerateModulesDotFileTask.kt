@@ -82,8 +82,8 @@ abstract class GenerateModulesDotFileTask :
   }
 
   internal companion object {
-    internal const val TASK_NAME = "generateModulesDotFile"
-    internal const val TASK_NAME_FOR_CHECKING = "generateModulesDotFileForChecking"
+    internal const val TASK_NAME = "generateChartDotFile"
+    internal const val TASK_NAME_FOR_CHECKING = "generateChartDotFileForChecking"
 
     internal fun register(
       target: Project,

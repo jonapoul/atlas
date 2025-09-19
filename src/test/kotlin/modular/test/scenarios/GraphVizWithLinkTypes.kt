@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object GraphVizWithLegendAndLinkTypes : Scenario by GraphVizBasic {
+object GraphVizWithLinkTypes : Scenario by GraphVizBasic {
   override val rootBuildFile = """
     import modular.graphviz.spec.LinkStyle
 
@@ -21,9 +21,7 @@ object GraphVizWithLegendAndLinkTypes : Scenario by GraphVizBasic {
         java()
       }
 
-      graphViz {
-        legend()
-      }
+      graphViz()
 
       linkTypes {
         "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")

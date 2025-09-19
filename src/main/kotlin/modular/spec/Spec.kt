@@ -8,14 +8,10 @@ import modular.gradle.ModularDsl
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
-interface Spec<LegendSpec : Any, ChartSpec : Any> {
+interface Spec<ChartSpec : Any> {
   // allows us store to store Spec in a NamedDomainObjectContainer
   val name: String
   val fileExtension: Property<String>
-
-  var legend: LegendSpec?
-  @ModularDsl fun legend()
-  @ModularDsl fun legend(action: Action<LegendSpec>)
 
   val chart: ChartSpec
   @ModularDsl fun chart(action: Action<ChartSpec>) = action.execute(chart)

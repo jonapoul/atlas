@@ -44,7 +44,7 @@ internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
 
 internal fun defaultOutputFile(
   extension: ModularExtensionImpl,
-  spec: Spec<*, *>,
+  spec: Spec<*>,
 ): Provider<RegularFile> = extension.outputs.legendOutputDirectory.map { dir ->
   val filename = extension.outputs.legendRootFilename.get()
   val fileExtension = spec.fileExtension.get()

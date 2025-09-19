@@ -35,8 +35,8 @@ abstract class WriteReadmeTask : DefaultTask() {
     readmeFile.asFile.get().writeText(contents)
   }
 
-  companion object {
-    fun register(target: Project): TaskProvider<WriteReadmeTask> = with(target) {
+  internal companion object {
+    internal fun register(target: Project): TaskProvider<WriteReadmeTask> = with(target) {
 //      val modifiedPath = providers
 //        .gradleProperty(REMOVE_MODULE_PREFIX)
 //        .map { path.removePrefix(it) }

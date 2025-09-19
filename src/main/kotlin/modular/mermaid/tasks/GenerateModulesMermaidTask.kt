@@ -82,8 +82,8 @@ abstract class GenerateModulesMermaidTask :
   }
 
   internal companion object {
-    internal const val TASK_NAME = "generateModulesMermaid"
-    internal const val TASK_NAME_FOR_CHECKING = "generateModulesMermaidForChecking"
+    internal const val TASK_NAME = "generateChartMermaid"
+    internal const val TASK_NAME_FOR_CHECKING = "generateChartMermaidForChecking"
 
     internal fun register(
       target: Project,

@@ -218,23 +218,12 @@ public final class modular/graphviz/spec/GraphVizFileFormatSpec$DefaultImpls {
 	public static fun xlib (Lmodular/graphviz/spec/GraphVizFileFormatSpec;)V
 }
 
-public abstract interface class modular/graphviz/spec/GraphVizLegendSpec {
-	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
-	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
-}
-
 public abstract interface class modular/graphviz/spec/GraphVizSpec : modular/spec/Spec {
 	public abstract fun fileFormats (Lorg/gradle/api/Action;)V
 	public abstract fun getChart ()Lmodular/graphviz/spec/GraphVizChartSpec;
 	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
 	public abstract fun getFileFormats ()Lmodular/graphviz/spec/GraphVizFileFormatSpec;
-	public abstract fun getLegend ()Lmodular/graphviz/spec/GraphVizLegendSpec;
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
-	public abstract fun legend ()V
-	public abstract fun legend (Lorg/gradle/api/Action;)V
-	public abstract fun setLegend (Lmodular/graphviz/spec/GraphVizLegendSpec;)V
 }
 
 public final class modular/graphviz/spec/GraphVizSpec$DefaultImpls {
@@ -300,14 +289,10 @@ public abstract class modular/graphviz/tasks/GenerateGraphvizFileTask : org/grad
 public abstract class modular/graphviz/tasks/GenerateLegendDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
 	public fun <init> ()V
 	public final fun execute ()V
-	public abstract fun getCellBorder ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellPadding ()Lorg/gradle/api/provider/Property;
-	public abstract fun getCellSpacing ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public abstract fun getTableBorder ()Lorg/gradle/api/provider/Property;
 }
 
 public abstract class modular/graphviz/tasks/GenerateModulesDotFileTask : org/gradle/api/DefaultTask, modular/tasks/ModularGenerationTask, modular/tasks/TaskWithOutputFile, modular/tasks/TaskWithSeparator {
@@ -415,16 +400,9 @@ public final class modular/mermaid/spec/MermaidLayoutSpec$DefaultImpls {
 	public static fun put (Lmodular/mermaid/spec/MermaidLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
-public abstract interface class modular/mermaid/spec/MermaidLegendSpec {
-}
-
 public abstract interface class modular/mermaid/spec/MermaidSpec : modular/spec/Spec {
 	public abstract fun getChart ()Lmodular/mermaid/spec/MermaidChartSpec;
 	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLegend ()Lmodular/mermaid/spec/MermaidLegendSpec;
-	public abstract fun legend ()V
-	public abstract fun legend (Lorg/gradle/api/Action;)V
-	public abstract fun setLegend (Lmodular/mermaid/spec/MermaidLegendSpec;)V
 }
 
 public final class modular/mermaid/spec/MermaidSpec$DefaultImpls {
@@ -601,11 +579,7 @@ public abstract interface class modular/spec/Spec {
 	public fun chart (Lorg/gradle/api/Action;)V
 	public abstract fun getChart ()Ljava/lang/Object;
 	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLegend ()Ljava/lang/Object;
 	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun legend ()V
-	public abstract fun legend (Lorg/gradle/api/Action;)V
-	public abstract fun setLegend (Ljava/lang/Object;)V
 }
 
 public final class modular/spec/Spec$DefaultImpls {
@@ -675,7 +649,6 @@ public abstract class modular/tasks/WriteReadmeTask : org/gradle/api/DefaultTask
 	public abstract fun getLegendPngRelativePath ()Lorg/gradle/api/provider/Property;
 	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
 	public abstract fun getReadmeFile ()Lorg/gradle/api/file/RegularFileProperty;
-}
 }
 
 public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {

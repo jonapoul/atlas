@@ -7,7 +7,6 @@ package modular.mermaid.tasks
 import modular.internal.ModularExtensionImpl
 import modular.internal.moduleTypeModel
 import modular.internal.orderedTypes
-import modular.mermaid.spec.MermaidLegendSpec
 import modular.spec.LinkType
 import modular.spec.ModuleTypeModel
 import modular.tasks.MODULAR_TASK_GROUP
@@ -111,8 +110,6 @@ abstract class GenerateLegendMarkdownTask :
     internal fun register(
       target: Project,
       name: String,
-      // TODO: https://github.com/jonapoul/modular/issues/124
-      @Suppress("unused") legendSpec: MermaidLegendSpec,
       extension: ModularExtensionImpl,
       outputFile: Provider<RegularFile>,
     ): TaskProvider<GenerateLegendMarkdownTask> = with(target) {

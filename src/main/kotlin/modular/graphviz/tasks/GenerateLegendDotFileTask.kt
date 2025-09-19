@@ -4,7 +4,6 @@
  */
 package modular.graphviz.tasks
 
-import modular.graphviz.spec.GraphVizLegendSpec
 import modular.internal.ModularExtensionImpl
 import modular.internal.buildIndentedString
 import modular.internal.moduleTypeModel
@@ -31,10 +30,6 @@ import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
 abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, ModularGenerationTask, TaskWithOutputFile {
-  @get:Input abstract val tableBorder: Property<Int>
-  @get:Input abstract val cellBorder: Property<Int>
-  @get:Input abstract val cellSpacing: Property<Int>
-  @get:Input abstract val cellPadding: Property<Int>
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
   @get:Input abstract val linkTypes: SetProperty<LinkType>
@@ -47,10 +42,6 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
 
   @TaskAction
   fun execute() {
-    val tb = tableBorder.get()
-    val cb = cellBorder.get()
-    val cs = cellSpacing.get()
-    val cp = cellPadding.get()
     val moduleTypes = moduleTypes.get()
     val linkTypes = linkTypes.get()
     val outputFile = outputFile.get().asFile
@@ -65,7 +56,7 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
 
         if (hasModuleTypes) {
           appendLine("modules [label=<")
-          appendLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
+          appendLine("<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">")
           appendLine("  <TR><TD COLSPAN=\"2\" BGCOLOR=\"#DDDDDD\"><B>Module Types</B></TD></TR>")
           indent {
             moduleTypes.forEach { type ->
@@ -78,7 +69,7 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
 
         if (hasLinkTypes) {
           appendLine("links [label=<")
-          appendLine("<TABLE BORDER=\"$tb\" CELLBORDER=\"$cb\" CELLSPACING=\"$cs\" CELLPADDING=\"$cp\">")
+          appendLine("<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">")
           appendLine("  <TR><TD COLSPAN=\"2\" BGCOLOR=\"#DDDDDD\"><B>Link Types</B></TD></TR>")
           linkTypes.forEach { type ->
             val bgColor = if (type.color == null) "" else " BGCOLOR=\"${type.color}\""
@@ -108,15 +99,10 @@ abstract class GenerateLegendDotFileTask : DefaultTask(), TaskWithSeparator, Mod
     internal fun register(
       target: Project,
       name: String,
-      legendSpec: GraphVizLegendSpec,
       extension: ModularExtensionImpl,
       outputFile: Provider<RegularFile>,
     ): TaskProvider<GenerateLegendDotFileTask> = with(target) {
       tasks.register(name, GenerateLegendDotFileTask::class.java) { task ->
-        task.tableBorder.convention(legendSpec.tableBorder)
-        task.cellBorder.convention(legendSpec.cellBorder)
-        task.cellSpacing.convention(legendSpec.cellSpacing)
-        task.cellPadding.convention(legendSpec.cellPadding)
         task.outputFile.convention(outputFile)
         task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
         task.linkTypes.convention(extension.linkTypes.linkTypes)
