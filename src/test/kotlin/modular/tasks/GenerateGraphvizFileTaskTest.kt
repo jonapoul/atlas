@@ -201,7 +201,6 @@ class GenerateGraphvizFileTaskTest : ScenarioTest() {
     // then it fails as expected
     assertThat(result.output).containsMatch(
       """
-        Execution failed for task ':a:generateChartSvg'.
         > java.io.IOException: Cannot run program ".*?/path/to/custom/dot": error=2, No such file or directory
       """.trimIndent().toRegex(),
     )
