@@ -34,8 +34,8 @@ interface ModularExtension {
   val outputs: OutputSpec
   @ModularDsl fun outputs(action: Action<OutputSpec>)
 
-  val specs: NamedDomainObjectContainer<Spec<*>>
-  @ModularDsl fun specs(action: Action<NamedDomainObjectContainer<Spec<*>>>)
+  val specs: NamedDomainObjectContainer<Spec>
+  @ModularDsl fun specs(action: Action<NamedDomainObjectContainer<Spec>>)
 
   val graphViz: GraphVizSpec
   @ModularDsl fun graphViz()

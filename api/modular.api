@@ -98,28 +98,7 @@ public final class modular/graphviz/spec/DotFileConfig : java/io/Serializable {
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class modular/graphviz/spec/GraphVizChartSpec {
-	public abstract fun arrowHead (Ljava/lang/String;)V
-	public abstract fun arrowHead (Lmodular/graphviz/spec/ArrowType;)V
-	public abstract fun arrowTail (Ljava/lang/String;)V
-	public abstract fun arrowTail (Lmodular/graphviz/spec/ArrowType;)V
-	public abstract fun dir (Ljava/lang/String;)V
-	public abstract fun dir (Lmodular/graphviz/spec/Dir;)V
-	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
-	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
-	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
-	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
-	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
-	public abstract fun layoutEngine (Ljava/lang/String;)V
-	public abstract fun layoutEngine (Lmodular/graphviz/spec/LayoutEngine;)V
-	public abstract fun rankDir (Ljava/lang/String;)V
-	public abstract fun rankDir (Lmodular/graphviz/spec/RankDir;)V
-}
-
-public abstract interface class modular/graphviz/spec/GraphVizFileFormatSpec : org/gradle/api/provider/SetProperty {
+public abstract interface class modular/graphviz/spec/GraphVizFileFormatSpec {
 	public abstract fun add (Ljava/lang/String;)V
 	public abstract fun add (Lorg/gradle/api/provider/Provider;)V
 	public abstract fun addAll (Ljava/lang/Iterable;)V
@@ -219,15 +198,27 @@ public final class modular/graphviz/spec/GraphVizFileFormatSpec$DefaultImpls {
 }
 
 public abstract interface class modular/graphviz/spec/GraphVizSpec : modular/spec/Spec {
+	public abstract fun arrowHead (Ljava/lang/String;)V
+	public abstract fun arrowHead (Lmodular/graphviz/spec/ArrowType;)V
+	public abstract fun arrowTail (Ljava/lang/String;)V
+	public abstract fun arrowTail (Lmodular/graphviz/spec/ArrowType;)V
+	public abstract fun dir (Ljava/lang/String;)V
+	public abstract fun dir (Lmodular/graphviz/spec/Dir;)V
 	public abstract fun fileFormats (Lorg/gradle/api/Action;)V
-	public abstract fun getChart ()Lmodular/graphviz/spec/GraphVizChartSpec;
-	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
+	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
+	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
 	public abstract fun getFileFormats ()Lmodular/graphviz/spec/GraphVizFileFormatSpec;
+	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/graphviz/spec/GraphVizSpec$DefaultImpls {
-	public static fun chart (Lmodular/graphviz/spec/GraphVizSpec;Lorg/gradle/api/Action;)V
+	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
+	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
+	public abstract fun layoutEngine (Ljava/lang/String;)V
+	public abstract fun layoutEngine (Lmodular/graphviz/spec/LayoutEngine;)V
+	public abstract fun rankDir (Ljava/lang/String;)V
+	public abstract fun rankDir (Lmodular/graphviz/spec/RankDir;)V
 }
 
 public final class modular/graphviz/spec/LayoutEngine : java/lang/Enum, modular/graphviz/spec/StringEnum {
@@ -363,24 +354,6 @@ public final class modular/mermaid/spec/Look : java/lang/Enum, modular/graphviz/
 	public static fun values ()[Lmodular/mermaid/spec/Look;
 }
 
-public abstract interface class modular/mermaid/spec/MermaidChartSpec {
-	public abstract fun elk (Lorg/gradle/api/Action;)V
-	public static synthetic fun elk$default (Lmodular/mermaid/spec/MermaidChartSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
-	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLayout ()Lmodular/mermaid/spec/MermaidLayoutSpec;
-	public abstract fun getLook ()Lorg/gradle/api/provider/Property;
-	public abstract fun getTheme ()Lorg/gradle/api/provider/Property;
-	public abstract fun layout (Lorg/gradle/api/Action;)V
-	public fun look (Lmodular/mermaid/spec/Look;)V
-	public fun theme (Lmodular/mermaid/spec/Theme;)V
-}
-
-public final class modular/mermaid/spec/MermaidChartSpec$DefaultImpls {
-	public static synthetic fun elk$default (Lmodular/mermaid/spec/MermaidChartSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
-	public static fun look (Lmodular/mermaid/spec/MermaidChartSpec;Lmodular/mermaid/spec/Look;)V
-	public static fun theme (Lmodular/mermaid/spec/MermaidChartSpec;Lmodular/mermaid/spec/Theme;)V
-}
-
 public final class modular/mermaid/spec/MermaidConfig : java/io/Serializable {
 	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Ljava/lang/String;Z)V
 	public final fun getAnimateLinks ()Z
@@ -401,12 +374,21 @@ public final class modular/mermaid/spec/MermaidLayoutSpec$DefaultImpls {
 }
 
 public abstract interface class modular/mermaid/spec/MermaidSpec : modular/spec/Spec {
-	public abstract fun getChart ()Lmodular/mermaid/spec/MermaidChartSpec;
-	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
+	public abstract fun elk (Lorg/gradle/api/Action;)V
+	public static synthetic fun elk$default (Lmodular/mermaid/spec/MermaidSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLayout ()Lmodular/mermaid/spec/MermaidLayoutSpec;
+	public abstract fun getLook ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTheme ()Lorg/gradle/api/provider/Property;
+	public abstract fun layout (Lorg/gradle/api/Action;)V
+	public fun look (Lmodular/mermaid/spec/Look;)V
+	public fun theme (Lmodular/mermaid/spec/Theme;)V
 }
 
 public final class modular/mermaid/spec/MermaidSpec$DefaultImpls {
-	public static fun chart (Lmodular/mermaid/spec/MermaidSpec;Lorg/gradle/api/Action;)V
+	public static synthetic fun elk$default (Lmodular/mermaid/spec/MermaidSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public static fun look (Lmodular/mermaid/spec/MermaidSpec;Lmodular/mermaid/spec/Look;)V
+	public static fun theme (Lmodular/mermaid/spec/MermaidSpec;Lmodular/mermaid/spec/Theme;)V
 }
 
 public final class modular/mermaid/spec/NodePlacementStrategy : java/lang/Enum, modular/graphviz/spec/StringEnum {
@@ -576,14 +558,8 @@ public abstract interface class modular/spec/OutputSpec {
 }
 
 public abstract interface class modular/spec/Spec {
-	public fun chart (Lorg/gradle/api/Action;)V
-	public abstract fun getChart ()Ljava/lang/Object;
 	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
 	public abstract fun getName ()Ljava/lang/String;
-}
-
-public final class modular/spec/Spec$DefaultImpls {
-	public static fun chart (Lmodular/spec/Spec;Lorg/gradle/api/Action;)V
 }
 
 public abstract interface class modular/spec/Style : modular/graphviz/spec/StringEnum {

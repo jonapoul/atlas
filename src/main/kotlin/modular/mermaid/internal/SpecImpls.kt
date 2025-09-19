@@ -10,7 +10,6 @@ import modular.internal.string
 import modular.mermaid.spec.ConsiderModelOrder
 import modular.mermaid.spec.CycleBreakingStrategy
 import modular.mermaid.spec.ElkLayoutSpec
-import modular.mermaid.spec.MermaidChartSpec
 import modular.mermaid.spec.MermaidLayoutSpec
 import modular.mermaid.spec.MermaidSpec
 import modular.mermaid.spec.NodePlacementStrategy
@@ -19,24 +18,13 @@ import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 
 internal class MermaidSpecImpl(
-  objects: ObjectFactory,
-  properties: GradleProperties,
-) : MermaidSpec {
-  override val name = NAME
-  override val fileExtension = objects.string(convention = "mmd")
-
-  override val chart = MermaidChartSpecImpl(objects, properties)
-
-  internal companion object {
-    internal const val NAME = "MermaidSpecImpl"
-  }
-}
-
-internal class MermaidChartSpecImpl(
   private val objects: ObjectFactory,
   properties: GradleProperties,
-) : MermaidChartSpec {
+) : MermaidSpec {
   private var mutableLayout = MermaidLayoutSpecImpl(objects)
+
+  override val name = NAME
+  override val fileExtension = objects.string(convention = "mmd")
 
   override val layout get() = mutableLayout
   override fun layout(action: Action<MermaidLayoutSpec>) = action.execute(layout)
@@ -48,6 +36,10 @@ internal class MermaidChartSpecImpl(
   override val animateLinks = objects.bool(properties.mermaidAnimateLinks)
   override val look = objects.string(properties.mermaidLook)
   override val theme = objects.string(properties.mermaidTheme)
+
+  internal companion object {
+    internal const val NAME = "MermaidSpecImpl"
+  }
 }
 
 internal open class MermaidLayoutSpecImpl(objects: ObjectFactory) : MermaidLayoutSpec {

@@ -6,15 +6,15 @@
 
 package modular.gradle
 
+import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.internal.registerGraphVizLeafTasks
-import modular.graphviz.spec.GraphVizSpec
 import modular.internal.ModularExtensionImpl
 import modular.internal.Variant
 import modular.internal.configureSeparators
 import modular.internal.outputFile
 import modular.internal.registerModularGenerateTask
+import modular.mermaid.internal.MermaidSpecImpl
 import modular.mermaid.internal.registerMermaidLeafTasks
-import modular.mermaid.spec.MermaidSpec
 import modular.tasks.CalculateModuleTreeTask
 import modular.tasks.DumpModuleLinksTask
 import modular.tasks.DumpModuleTypeTask
@@ -47,8 +47,8 @@ class ModularLeafPlugin : Plugin<Project> {
     extension.specs.configureEach { spec ->
       val file = outputFile(extension.outputs, Variant.Chart, fileExtension = spec.fileExtension.get())
       when (spec) {
-        is GraphVizSpec -> registerGraphVizLeafTasks(extension, spec, file, generateModules)
-        is MermaidSpec -> registerMermaidLeafTasks(extension, spec, file, generateModules)
+        is GraphVizSpecImpl -> registerGraphVizLeafTasks(extension, spec, file, generateModules)
+        is MermaidSpecImpl -> registerMermaidLeafTasks(extension, spec, file, generateModules)
         else -> logger.warn("Not sure how to handle spec: ${spec.javaClass.canonicalName}")
       }
     }
