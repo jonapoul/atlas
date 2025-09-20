@@ -21,10 +21,7 @@ object GraphVizBigGraph100DpiSvgWithAdjustment : Scenario by GraphVizBigGraph {
       graphViz {
         adjustSvgViewBox = true
         dpi = 100
-
-        fileFormats {
-          svg()
-        }
+        fileFormat = "svg"
       }
     }
   """.trimIndent()

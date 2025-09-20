@@ -31,9 +31,7 @@ internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionI
         $msg
 
           modular {
-            experimental {
-              adjustSvgViewBox = true
-            }
+            adjustSvgViewBox = true
           }
 
         or add "modular.suppress.adjustSvgViewBox=true" to your gradle.properties file to suppress this warning.

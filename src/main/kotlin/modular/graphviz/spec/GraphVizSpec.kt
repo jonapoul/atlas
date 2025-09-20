@@ -23,11 +23,7 @@ import org.gradle.api.provider.Property
  * modular {
  *   graphViz {
  *     pathToDotCommand = "/custom/path/to/dot"
- *
- *     fileFormats {
- *       png()
- *       svg()
- *     }
+ *     fileFormat = "svg"
  *
  *     ...
  *   }

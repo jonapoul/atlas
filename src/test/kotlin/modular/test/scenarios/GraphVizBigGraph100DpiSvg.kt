@@ -20,10 +20,7 @@ object GraphVizBigGraph100DpiSvg : Scenario by GraphVizBigGraph {
 
       graphViz {
         dpi = 100
-
-        fileFormats {
-          svg()
-        }
+        fileFormat = "svg"
       }
     }
   """.trimIndent()
