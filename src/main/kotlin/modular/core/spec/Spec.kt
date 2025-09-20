@@ -10,4 +10,5 @@ interface Spec {
   // allows us store to store Spec in a NamedDomainObjectContainer
   val name: String
   val fileExtension: Property<String>
+  val writeReadme: Property<Boolean>
 }

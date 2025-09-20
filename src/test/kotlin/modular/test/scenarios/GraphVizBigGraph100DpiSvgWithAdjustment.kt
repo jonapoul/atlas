@@ -19,15 +19,9 @@ object GraphVizBigGraph100DpiSvgWithAdjustment : Scenario by GraphVizBigGraph {
       }
 
       graphViz {
-        dpi = 100
-
-        fileFormats {
-          svg()
-        }
-      }
-
-      general {
         adjustSvgViewBox = true
+        dpi = 100
+        fileFormat = "svg"
       }
     }
   """.trimIndent()

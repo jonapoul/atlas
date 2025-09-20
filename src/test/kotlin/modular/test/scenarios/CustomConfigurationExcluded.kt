@@ -13,7 +13,7 @@ object CustomConfigurationExcluded : Scenario by CustomConfigurations {
       ${CustomConfigurations.rootBuildFile}
 
       modular {
-        general.ignoredConfigs.add("xyz")
+        ignoredConfigs.add("xyz")
       }
     """.trimIndent()
 

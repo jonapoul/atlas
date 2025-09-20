@@ -37,6 +37,7 @@ class RunGraphvizTest : ScenarioTest() {
     assertThat(result.output).contains(
       """
         :writeGraphvizLegend SKIPPED
+        :generateGraphvizLegend SKIPPED
         :writeGraphvizLegendForChecking SKIPPED
         :modularGenerate SKIPPED
         :a:writeModuleType SKIPPED
@@ -49,15 +50,21 @@ class RunGraphvizTest : ScenarioTest() {
         :collateModuleLinks SKIPPED
         :a:calculateModuleTree SKIPPED
         :a:writeGraphvizChart SKIPPED
+        :a:generateGraphvizChart SKIPPED
         :a:writeGraphvizChartForChecking SKIPPED
+        :a:writeGraphvizReadme SKIPPED
         :a:modularGenerate SKIPPED
         :b:calculateModuleTree SKIPPED
         :b:writeGraphvizChart SKIPPED
+        :b:generateGraphvizChart SKIPPED
         :b:writeGraphvizChartForChecking SKIPPED
+        :b:writeGraphvizReadme SKIPPED
         :b:modularGenerate SKIPPED
         :c:calculateModuleTree SKIPPED
         :c:writeGraphvizChart SKIPPED
+        :c:generateGraphvizChart SKIPPED
         :c:writeGraphvizChartForChecking SKIPPED
+        :c:writeGraphvizReadme SKIPPED
         :c:modularGenerate SKIPPED
 
         BUILD SUCCESSFUL
@@ -73,15 +80,9 @@ class RunGraphvizTest : ScenarioTest() {
 
     // then PNG, SVG and EPS tasks were run for each submodule
     listOf(
-      ":a:writePngChart",
-      ":a:writeSvgChart",
-      ":a:writeEpsChart",
-      ":b:writePngChart",
-      ":b:writeSvgChart",
-      ":b:writeEpsChart",
-      ":c:writePngChart",
-      ":c:writeSvgChart",
-      ":c:writeEpsChart",
+      ":a:generateGraphvizChart",
+      ":b:generateGraphvizChart",
+      ":c:generateGraphvizChart",
     ).forEach { t ->
       assertThat(result.task(t)?.outcome).isEqualTo(SUCCESS)
     }
@@ -89,8 +90,6 @@ class RunGraphvizTest : ScenarioTest() {
     // and the relevant files exist
     for (submodule in listOf("a", "b", "c")) {
       assertThat(resolve("$submodule/modules.png")).exists()
-      assertThat(resolve("$submodule/modules.svg")).exists()
-      assertThat(resolve("$submodule/modules.eps")).exists()
     }
   }
 
@@ -99,7 +98,7 @@ class RunGraphvizTest : ScenarioTest() {
   fun `SVG viewBox scales with nondefault DPI with flag enabled`() =
     runScenario(GraphVizBigGraph100DpiSvgWithAdjustment) {
       // when
-      runTask(":app:writeSvgChart").build()
+      runTask(":app:generateGraphvizChart").build()
 
       // then the app graph was generated as an svg
       val contents = resolve("app/modules.svg").readText()
@@ -121,7 +120,7 @@ class RunGraphvizTest : ScenarioTest() {
   @RequiresGraphviz
   fun `SVG doesn't scale viewBox if experimental flag is unset`() = runScenario(GraphVizBigGraph100DpiSvg) {
     // when
-    runTask(":app:writeSvgChart").build()
+    runTask(":app:generateGraphvizChart").build()
 
     // then the app graph was generated as an svg
     val contents = resolve("app/modules.svg").readText()
@@ -143,7 +142,7 @@ class RunGraphvizTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Fail with useful message for invalid layout engine`() = runScenario(GraphVizInvalidLayoutEngine) {
     // when
-    val result = runTask(":app:writeSvgChart").buildAndFail()
+    val result = runTask(":app:generateGraphvizChart").buildAndFail()
 
     // then the error log contains a useful message from graphviz
     assertThat(result.output).contains("There is no layout engine support for \"abc123\"")
@@ -157,10 +156,10 @@ class RunGraphvizTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Choose custom layout engine`() = runScenario(GraphVizCustomLayoutEngine) {
     // when we specify the "neato" layout engine
-    val result = runTask(":app:writeSvgChart").build()
+    val result = runTask(":app:generateGraphvizChart").build()
 
-    // then the SVG file printed in the log exists. There's probably more I can be checking here but ¯\_(ツ)_/¯
-    assertThat(result.output).containsMatch("^(.*?\\.svg)$".toRegex(MULTILINE))
+    // There's probably more I can be checking here but ¯\_(ツ)_/¯
+    assertThat(result.tasks).allSuccessful()
   }
 
   @Test

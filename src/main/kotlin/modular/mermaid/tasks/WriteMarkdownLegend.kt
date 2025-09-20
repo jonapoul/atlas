@@ -65,8 +65,7 @@ abstract class WriteMarkdownLegend :
     }
 
     outputFile.writeText(contents)
-
-    logger.lifecycle("Written ${contents.length} chars to $outputFile")
+    logIfConfigured(outputFile)
   }
 
   private fun StringBuilder.appendModuleTypesTable(moduleTypes: List<ModuleTypeModel>) {

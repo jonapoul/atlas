@@ -20,11 +20,7 @@ object GraphVizBasicWithThreeOutputFormats : Scenario by GraphVizBasic {
       }
 
       graphViz {
-        fileFormats {
-          svg()
-          png()
-          eps()
-        }
+        fileFormat = "png"
       }
     }
   """.trimIndent()

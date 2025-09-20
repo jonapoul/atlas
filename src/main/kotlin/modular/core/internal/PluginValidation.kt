@@ -6,7 +6,6 @@ package modular.core.internal
 
 import modular.core.spec.ModuleType
 import modular.graphviz.internal.GraphVizSpecImpl
-import modular.graphviz.spec.GraphVizSpec
 import org.gradle.api.Project
 
 internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
@@ -20,38 +19,11 @@ internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
   }
 }
 
-internal fun Project.warnIfNoGraphVizOutputs(extension: ModularExtensionImpl) {
-  val spec = extension.specs.filterIsInstance<GraphVizSpecImpl>().firstOrNull() ?: return
-  val fileFormats = spec.fileFormats.formats.orNull
-  val isSuppressed = extension.properties.suppressNoGraphVizOutputs.get()
-
-  if (fileFormats != null && fileFormats.isEmpty() && !isSuppressed) {
-    logger.warn(
-      """
-        No file formats have been registered as GraphViz outputs! Configure them from your build script like:
-
-          modular {
-            graphViz {
-             fileFormats {
-               png()
-               svg()
-               // etc.
-             }
-            }
-          }
-
-        You can suppress this warning by adding the Gradle property "modular.suppress.noGraphVizOutputs=true".
-      """.trimIndent(),
-    )
-  }
-}
-
 internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionImpl) {
-  val adjustSvgViewBox = extension.general.adjustSvgViewBox.get()
-  val graphVizSpec = extension.specs.filterIsInstance<GraphVizSpec>().firstOrNull()
+  val graphVizSpec = extension.specs.filterIsInstance<GraphVizSpecImpl>().firstOrNull() ?: return
+  val adjustSvgViewBox = graphVizSpec.adjustSvgViewBox.get()
   val warningIsSuppressed = extension.properties.suppressSvgViewBoxWarning.get()
-  val dpiIsConfigured = graphVizSpec?.dpi?.isPresent == true
-  if (!adjustSvgViewBox && dpiIsConfigured && !warningIsSuppressed) {
+  if (!adjustSvgViewBox && graphVizSpec.dpi.isPresent && !warningIsSuppressed) {
     val msg = "Configuring a custom DPI on a dotfile's with SVG output enabled will likely cause a misaligned " +
       "viewBox. Try adding the following property to your build file to automatically attempt a fix:"
     logger.warn(
@@ -59,9 +31,7 @@ internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionI
         $msg
 
           modular {
-            experimental {
-              adjustSvgViewBox = true
-            }
+            adjustSvgViewBox = true
           }
 
         or add "modular.suppress.adjustSvgViewBox=true" to your gradle.properties file to suppress this warning.

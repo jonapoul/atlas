@@ -23,7 +23,8 @@ object GraphVizCustomDotExecutable : Scenario by GraphVizBasic {
 
       graphViz {
         pathToDotCommand = file("path/to/custom/dot").absolutePath
-        fileFormats.svg()
+        fileFormat = "svg"
+        writeReadme = true
       }
     }
   """.trimIndent()

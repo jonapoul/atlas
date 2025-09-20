@@ -7,7 +7,6 @@ package modular.graphviz.tasks
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant
 import modular.core.internal.outputFile
-import modular.core.spec.GeneralFlags
 import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
@@ -21,7 +20,6 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
-import org.gradle.api.tasks.Nested
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
@@ -35,11 +33,12 @@ abstract class RunGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutpu
   @get:Input abstract val outputFormat: Property<String>
   @get:[Input Optional] abstract val pathToDotCommand: Property<String>
   @get:[Input Optional] abstract val engine: Property<String>
-  @get:Nested abstract val general: GeneralFlags
+  @get:Input abstract val adjustSvgViewBox: Property<Boolean>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP
+    adjustSvgViewBox.convention(false)
   }
 
   // Not using kotlin setter because this pulls a property value
@@ -71,46 +70,34 @@ abstract class RunGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutpu
       val error = dotProcess.errorReader().readText()
       throw GradleException("GraphViz error code $result running '$fullCommand': $error")
     } else {
-      logger.lifecycle(outputFile.absolutePath)
+      logIfConfigured(outputFile)
     }
 
-    doGraphVizPostProcessing(general, outputFile, outputFormat)
+    doGraphVizPostProcessing(outputFile, outputFormat, adjustSvgViewBox.get())
   }
 
   internal companion object {
-    // E.g. format=xdot_json and variant=Legend => "writeXdotJsonLegend"
-    private fun taskName(variant: Variant, format: String): String {
-      val cleanedFormat = format
-        .split('-', '_', '.')
-        .mapIndexed { i, str -> if (i == 0) str.lowercase() else str.lowercase().replaceFirstChar { it.uppercase() } }
-        .joinToString(separator = "")
-        .replaceFirstChar { it.uppercase() }
-      return "write" + cleanedFormat + variant.name
-    }
-
     internal fun get(target: Project, name: String): TaskProvider<RunGraphviz> =
       target.tasks.named(name, RunGraphviz::class.java)
 
     internal fun <T : TaskWithOutputFile> register(
       target: Project,
+      name: String,
       extension: ModularExtensionImpl,
       spec: GraphVizSpecImpl,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
-    ): List<TaskProvider<RunGraphviz>> = with(target) {
-      spec.fileFormats.formats.get().map { format ->
-        val outputFile = outputFile(extension.outputs, variant, fileExtension = format)
-        val taskName = taskName(variant, format)
-        logger.info("Registering $taskName for output format $format")
+    ): TaskProvider<RunGraphviz> = with(target) {
+      val format = spec.fileFormat.get()
+      val outputFile = outputFile(extension.outputs, variant, fileExtension = format)
 
-        tasks.register(taskName, RunGraphviz::class.java) { task ->
-          task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
-          task.pathToDotCommand.convention(spec.pathToDotCommand)
-          task.engine.convention(spec.layoutEngine)
-          task.outputFormat.convention(format)
-          task.outputFile.convention(outputFile)
-          task.general.inject(extension.general)
-        }
+      tasks.register(name, RunGraphviz::class.java) { task ->
+        task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
+        task.pathToDotCommand.convention(spec.pathToDotCommand)
+        task.engine.convention(spec.layoutEngine)
+        task.outputFormat.convention(format)
+        task.outputFile.convention(outputFile)
+        task.adjustSvgViewBox.convention(spec.adjustSvgViewBox)
       }
     }
   }

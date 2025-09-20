@@ -22,10 +22,7 @@ object GraphVizCustomLayoutEngine : Scenario by GraphVizBigGraph {
 
       graphViz {
         layoutEngine(Neato)
-
-        fileFormats {
-          svg()
-        }
+        fileFormat = "svg"
       }
     }
   """.trimIndent()

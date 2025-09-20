@@ -1,12 +1,16 @@
-import modular.graphviz.spec.ArrowType
-import modular.graphviz.spec.LayoutEngine
-import modular.graphviz.spec.LinkStyle
-import modular.graphviz.spec.RankDir
-import modular.mermaid.spec.ConsiderModelOrder
-import modular.mermaid.spec.CycleBreakingStrategy
-import modular.mermaid.spec.Look
-import modular.mermaid.spec.NodePlacementStrategy
-import modular.mermaid.spec.Theme
+import modular.graphviz.spec.ArrowType.None
+import modular.graphviz.spec.ArrowType.Normal
+import modular.graphviz.spec.FileFormat.Svg
+import modular.graphviz.spec.LayoutEngine.Dot
+import modular.graphviz.spec.LinkStyle.Bold
+import modular.graphviz.spec.LinkStyle.Dotted
+import modular.graphviz.spec.LinkStyle.Solid
+import modular.graphviz.spec.RankDir.TopToBottom
+import modular.mermaid.spec.ConsiderModelOrder.PreferEdges
+import modular.mermaid.spec.CycleBreakingStrategy.Interactive
+import modular.mermaid.spec.Look.HandDrawn
+import modular.mermaid.spec.NodePlacementStrategy.LinearSegments
+import modular.mermaid.spec.Theme.Forest
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -18,22 +22,20 @@ plugins {
 }
 
 modular {
-  general {
-    adjustSvgViewBox = true
-    generateOnSync = true
-    ignoredConfigs = setOf("debug", "kover", "ksp", "test")
-    ignoredModules = emptySet()
-    supportUpwardsTraversal = false
-  }
+  alsoTraverseUpwards = false
+  generateOnSync = true
+  ignoredConfigs = setOf("debug", "kover", "ksp", "test")
+  ignoredModules = emptySet()
+  printFilesToConsole = false
 
   moduleTypes {
     builtIns()
   }
 
   linkTypes {
-    "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
-    api(LinkStyle.Solid)
-    implementation(LinkStyle.Dotted)
+    "jvmMainImplementation"(style = Bold, color = "orange")
+    api(Solid)
+    implementation(Dotted)
   }
 
   modulePathTransforms {
@@ -50,36 +52,34 @@ modular {
   }
 
   graphViz {
-    fileExtension = "dot"
-
-    arrowHead(ArrowType.Normal)
-    arrowTail(ArrowType.None)
-    layoutEngine(LayoutEngine.Dot)
-    rankDir(RankDir.TopToBottom)
+    adjustSvgViewBox = true
     dpi = 100
+    fileExtension = "dot"
     fontSize = 30
     rankSep = 1.5f
+    writeReadme = true
 
-    fileFormats {
-      eps()
-      png()
-      svg()
-    }
+    arrowHead(Normal)
+    arrowTail(None)
+    fileFormat(Svg)
+    layoutEngine(Dot)
+    rankDir(TopToBottom)
   }
 
   mermaid {
     fileExtension = "mmd"
-
     animateLinks = false
-    look(Look.HandDrawn)
-    theme(Theme.Forest)
+    writeReadme = false
+
+    look(HandDrawn)
+    theme(Forest)
 
     elk {
       mergeEdges(true)
       forceNodeModelOrder(true)
-      nodePlacementStrategy(NodePlacementStrategy.LinearSegments)
-      cycleBreakingStrategy(CycleBreakingStrategy.Interactive)
-      considerModelOrder(ConsiderModelOrder.PreferEdges)
+      nodePlacementStrategy(LinearSegments)
+      cycleBreakingStrategy(Interactive)
+      considerModelOrder(PreferEdges)
     }
   }
 }

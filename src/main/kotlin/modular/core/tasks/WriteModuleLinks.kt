@@ -65,7 +65,7 @@ abstract class WriteModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOutp
     ): TaskProvider<WriteModuleLinks> = with(target) {
       tasks.register(NAME, WriteModuleLinks::class.java) { task ->
         task.thisPath.convention(target.path)
-        task.moduleLinks.convention(ModuleLinks.of(target, extension.general.ignoredConfigs.get()))
+        task.moduleLinks.convention(ModuleLinks.of(target, extension.ignoredConfigs.get()))
         task.linkTypes.convention(extension.linkTypes.linkTypes)
         task.outputFile.convention(fileInBuildDirectory("module-links"))
       }

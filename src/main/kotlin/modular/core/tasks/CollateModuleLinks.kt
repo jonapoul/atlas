@@ -77,7 +77,7 @@ abstract class CollateModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOu
     ): TaskProvider<CollateModuleLinks> = with(target) {
       val collateLinks = tasks.register(NAME, CollateModuleLinks::class.java) { task ->
         task.outputFile.convention(fileInBuildDirectory("module-links"))
-        task.ignoredModules.convention(extension.general.ignoredModules)
+        task.ignoredModules.convention(extension.ignoredModules)
       }
 
       gradle.projectsEvaluated {

@@ -20,10 +20,7 @@ object GraphVizInvalidLayoutEngine : Scenario by GraphVizBigGraph {
 
       graphViz {
         layoutEngine = "abc123"
-
-        fileFormats {
-          svg()
-        }
+        fileFormat = "svg"
       }
     }
   """.trimIndent()

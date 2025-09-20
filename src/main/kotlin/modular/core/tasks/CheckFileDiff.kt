@@ -18,6 +18,7 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
+import org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
 
 @CacheableTask
 abstract class CheckFileDiff : DefaultTask() {
@@ -26,7 +27,7 @@ abstract class CheckFileDiff : DefaultTask() {
   @get:Input abstract val taskPath: Property<String>
 
   init {
-    group = MODULAR_TASK_GROUP
+    group = VERIFICATION_GROUP
     description = "Checks whether two files are equivalent"
   }
 

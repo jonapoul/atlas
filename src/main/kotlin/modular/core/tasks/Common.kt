@@ -15,6 +15,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
+import java.io.File
 
 internal const val MODULAR_TASK_GROUP = "modular"
 
@@ -29,12 +30,20 @@ internal interface TaskWithOutputFile : Task {
 /**
  * Just so we can easily grab all instances of the top-level tasks from this plugin. See [registerGenerationTaskOnSync]
  */
-internal interface ModularGenerationTask : Task
+internal interface ModularGenerationTask : Task {
+  @get:Input val printFilesToConsole: Property<Boolean>
+
+  fun logIfConfigured(file: File) {
+    if (printFilesToConsole.get()) {
+      logger.lifecycle(file.absolutePath)
+    }
+  }
+}
 
 internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
   afterEvaluate {
     val isIntellijSyncing = System.getProperty("idea.sync.active") == "true"
-    if (extension.general.generateOnSync.get() && isIntellijSyncing) {
+    if (extension.generateOnSync.get() && isIntellijSyncing) {
       val modularGenerationTasks = tasks.withType(ModularGenerationTask::class.java)
       tasks.maybeCreate("prepareKotlinIdeaImport").dependsOn(modularGenerationTasks)
     }
