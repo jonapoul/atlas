@@ -19,7 +19,8 @@ import modular.graphviz.spec.RankDir
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
-import org.gradle.api.provider.Provider
+import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
+import java.io.Serializable as JSerializable
 
 internal class GraphVizSpecImpl(
   objects: ObjectFactory,
@@ -57,11 +58,14 @@ internal class GraphVizSpecImpl(
 }
 
 internal class GraphVizFileFormatSpecImpl(objects: ObjectFactory) : GraphVizFileFormatSpec {
-  val formats = objects.set<String>(convention = emptySet())
+  val formats = objects.set<GraphvizFileFormat>(convention = emptySet())
 
-  override fun add(provider: Provider<out String>) = formats.add(provider)
-  override fun add(element: String) = formats.add(element)
-  override fun addAll(elements: Iterable<String>) = formats.addAll(elements)
-  override fun addAll(vararg elements: String) = formats.addAll(*elements)
-  override fun addAll(provider: Provider<out Iterable<String>>) = formats.addAll(provider)
+  override fun add(element: String, includeInReadme: Boolean) =
+    formats.add(GraphvizFileFormat(element, includeInReadme))
 }
+
+@KSerializable
+class GraphvizFileFormat(
+  val name: String,
+  val includeInReadme: Boolean,
+) : JSerializable

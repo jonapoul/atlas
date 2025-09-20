@@ -98,15 +98,15 @@ abstract class RunGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutpu
       dotFileTask: TaskProvider<T>,
     ): List<TaskProvider<RunGraphviz>> = with(target) {
       spec.fileFormats.formats.get().map { format ->
-        val outputFile = outputFile(extension.outputs, variant, fileExtension = format)
-        val taskName = taskName(variant, format)
+        val outputFile = outputFile(extension.outputs, variant, fileExtension = format.name)
+        val taskName = taskName(variant, format.name)
         logger.info("Registering $taskName for output format $format")
 
         tasks.register(taskName, RunGraphviz::class.java) { task ->
           task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
           task.pathToDotCommand.convention(spec.pathToDotCommand)
           task.engine.convention(spec.layoutEngine)
-          task.outputFormat.convention(format)
+          task.outputFormat.convention(format.name)
           task.outputFile.convention(outputFile)
           task.adjustSvgViewBox.convention(spec.adjustSvgViewBox)
         }
