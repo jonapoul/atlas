@@ -6,6 +6,7 @@
 
 package modular.gradle
 
+import modular.core.internal.GradleProperties
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.configurePrintFilesToConsole
 import modular.core.internal.configureSeparators
@@ -34,6 +35,13 @@ class ModularTrunkPlugin : Plugin<Project> {
       ModularExtensionImpl.NAME,
       ModularExtensionImpl::class.java,
     ) as ModularExtensionImpl
+
+    val properties = GradleProperties(target)
+    if (properties.autoApplyToChildren.get()) {
+      subprojects { child ->
+        child.pluginManager.apply(ModularLeafPlugin::class.java)
+      }
+    }
 
     configureSeparators(extension)
     configurePrintFilesToConsole(extension)
