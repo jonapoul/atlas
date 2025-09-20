@@ -24,7 +24,7 @@ import org.gradle.api.tasks.TaskProvider
 @CacheableTask
 abstract class WriteModuleTree : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val collatedLinks: RegularFileProperty
-  @get:Input abstract val supportUpwardsTraversal: Property<Boolean>
+  @get:Input abstract val alsoTraverseUpwards: Property<Boolean>
   @get:Input abstract val thisPath: Property<String>
   @get:Input abstract override val separator: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
@@ -42,7 +42,7 @@ abstract class WriteModuleTree : DefaultTask(), TaskWithSeparator, TaskWithOutpu
     val allLinks = ModuleLinks.read(collatedLinks.get().asFile, separator)
     val tree = mutableSetOf<ModuleLink>()
 
-    if (supportUpwardsTraversal.get()) {
+    if (alsoTraverseUpwards.get()) {
       calculate(thisPath, Direction.Up, allLinks, tree)
     }
     calculate(thisPath, Direction.Down, allLinks, tree)
@@ -95,7 +95,7 @@ abstract class WriteModuleTree : DefaultTask(), TaskWithSeparator, TaskWithOutpu
     ): TaskProvider<WriteModuleTree> = with(target) {
       val calculateTree = tasks.register(NAME, WriteModuleTree::class.java) { task ->
         task.thisPath.convention(target.path)
-        task.supportUpwardsTraversal.convention(extension.general.supportUpwardsTraversal)
+        task.alsoTraverseUpwards.convention(extension.general.alsoTraverseUpwards)
         task.outputFile.convention(fileInBuildDirectory("module-tree"))
       }
 

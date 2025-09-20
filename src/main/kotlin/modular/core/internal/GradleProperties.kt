@@ -12,13 +12,13 @@ import org.gradle.api.provider.Provider
  */
 internal class GradleProperties(private val project: Project) {
   // General
-  val adjustSvgViewBox: Provider<Boolean> = bool(key = "modular.general.adjustSvgViewBox", default = false)
+  val alsoTraverseUpwards: Provider<Boolean> = bool("modular.general.alsoTraverseUpwards", default = false)
   val generateOnSync: Provider<Boolean> = bool(key = "modular.general.generateOnSync", default = false)
   val groupModules: Provider<Boolean> = bool(key = "modular.general.groupModules", default = false)
   val separator: Provider<String> = string(key = "modular.general.separator", default = ",")
-  val supportUpwardsTraversal: Provider<Boolean> = bool("modular.general.supportUpwardsTraversal", default = false)
 
   // GraphViz
+  val adjustSvgViewBox: Provider<Boolean> = bool(key = "modular.graphviz.adjustSvgViewBox", default = false)
   val arrowHead: Provider<String> = string(key = "modular.graphViz.chart.arrowHead", default = null)
   val arrowTail: Provider<String> = string(key = "modular.graphViz.chart.arrowTail", default = null)
   val dir: Provider<String> = string(key = "modular.graphViz.chart.dir", default = null)

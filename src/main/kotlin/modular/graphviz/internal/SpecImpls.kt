@@ -5,6 +5,7 @@
 package modular.graphviz.internal
 
 import modular.core.internal.GradleProperties
+import modular.core.internal.bool
 import modular.core.internal.float
 import modular.core.internal.int
 import modular.core.internal.set
@@ -27,6 +28,7 @@ internal class GraphVizSpecImpl(
   override val name = NAME
   override val fileExtension = objects.string(convention = "dot")
   override val pathToDotCommand: Property<String> = objects.property(String::class.java).unsetConvention()
+  override val adjustSvgViewBox = objects.bool(convention = properties.adjustSvgViewBox)
 
   override fun arrowHead(type: ArrowType) = arrowHead(type.string)
   override fun arrowHead(type: String) = arrowHead.set(type)

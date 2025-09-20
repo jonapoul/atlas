@@ -23,7 +23,7 @@ modular {
     generateOnSync = true
     ignoredConfigs = setOf("debug", "kover", "ksp", "test")
     ignoredModules = emptySet()
-    supportUpwardsTraversal = false
+    alsoTraverseUpwards = false
   }
 
   moduleTypes {

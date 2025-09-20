@@ -7,7 +7,6 @@ package modular.graphviz.tasks
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant
 import modular.core.internal.outputFile
-import modular.core.spec.GeneralFlags
 import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
@@ -21,7 +20,6 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
-import org.gradle.api.tasks.Nested
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
@@ -35,11 +33,12 @@ abstract class RunGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutpu
   @get:Input abstract val outputFormat: Property<String>
   @get:[Input Optional] abstract val pathToDotCommand: Property<String>
   @get:[Input Optional] abstract val engine: Property<String>
-  @get:Nested abstract val general: GeneralFlags
+  @get:Input abstract val adjustSvgViewBox: Property<Boolean>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP
+    adjustSvgViewBox.convention(false)
   }
 
   // Not using kotlin setter because this pulls a property value
@@ -74,7 +73,7 @@ abstract class RunGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutpu
       logger.lifecycle(outputFile.absolutePath)
     }
 
-    doGraphVizPostProcessing(general, outputFile, outputFormat)
+    doGraphVizPostProcessing(outputFile, outputFormat, adjustSvgViewBox.get())
   }
 
   internal companion object {
@@ -109,7 +108,7 @@ abstract class RunGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutpu
           task.engine.convention(spec.layoutEngine)
           task.outputFormat.convention(format)
           task.outputFile.convention(outputFile)
-          task.general.inject(extension.general)
+          task.adjustSvgViewBox.convention(spec.adjustSvgViewBox)
         }
       }
     }

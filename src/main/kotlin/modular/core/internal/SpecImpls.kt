@@ -87,13 +87,12 @@ internal open class ModularExtensionImpl @Inject constructor(
 }
 
 internal class GeneralSpecImpl(objects: ObjectFactory, properties: GradleProperties) : GeneralSpec {
-  override val adjustSvgViewBox = objects.bool(convention = properties.adjustSvgViewBox)
   override val generateOnSync = objects.bool(properties.generateOnSync)
   override val groupModules = objects.bool(properties.groupModules)
   override val ignoredConfigs = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
   override val ignoredModules = objects.set(convention = emptySet<Regex>())
   override val separator = objects.string(properties.separator)
-  override val supportUpwardsTraversal = objects.bool(properties.supportUpwardsTraversal)
+  override val alsoTraverseUpwards = objects.bool(properties.alsoTraverseUpwards)
 }
 
 internal class ModulePathTransformSpecImpl(objects: ObjectFactory) : ModulePathTransformSpec {
