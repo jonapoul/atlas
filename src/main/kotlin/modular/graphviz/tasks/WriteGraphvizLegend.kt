@@ -89,14 +89,9 @@ abstract class WriteGraphvizLegend :
     }
 
     outputFile.writeText(dotFileContents)
-
-    logger.lifecycle("Written ${dotFileContents.length} chars to $outputFile")
   }
 
   internal companion object {
-    internal const val TASK_NAME: String = "writeGraphvizLegend"
-    internal const val TASK_NAME_FOR_CHECKING: String = "writeGraphvizLegendForChecking"
-
     internal fun get(target: Project): TaskProvider<WriteGraphvizLegend> =
       target.tasks.named(TASK_NAME, WriteGraphvizLegend::class.java)
 

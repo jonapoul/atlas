@@ -9,6 +9,7 @@ import modular.core.internal.Variant
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
+import modular.core.tasks.WriteReadme
 import modular.core.tasks.defaultOutputFile
 import modular.graphviz.tasks.RunGraphviz
 import modular.graphviz.tasks.WriteGraphvizChart
@@ -22,13 +23,14 @@ internal fun Project.registerGraphVizTrunkTasks(
 ) {
   val legendTask = WriteGraphvizLegend.register(
     target = this,
-    name = WriteGraphvizLegend.TASK_NAME,
+    name = "writeGraphvizLegend",
     extension = extension,
     outputFile = defaultOutputFile(extension, spec),
   )
 
   RunGraphviz.register(
     target = this,
+    name = "generateGraphvizLegend",
     extension = extension,
     spec = spec,
     variant = Variant.Legend,
@@ -38,7 +40,7 @@ internal fun Project.registerGraphVizTrunkTasks(
   // Also validate the legend's dotfile when we call gradle check
   val tempTask = WriteGraphvizLegend.register(
     target = this,
-    name = WriteGraphvizLegend.TASK_NAME_FOR_CHECKING,
+    name = "writeGraphvizLegendForChecking",
     extension = extension,
     outputFile = modularBuildDirectory.map { it.file("legend-temp.dot") },
   )
@@ -85,11 +87,20 @@ internal fun Project.registerGraphVizLeafTasks(
 
   tasks.maybeCreate("check").dependsOn(checkTask)
 
-  RunGraphviz.register(
+  val graphvizTask = RunGraphviz.register(
     target = this,
+    name = "generateGraphvizChart",
     extension = extension,
     spec = spec,
     variant = Variant.Chart,
     dotFileTask = dotFileTask,
+  )
+
+  WriteReadme.register(
+    target = this,
+    enabled = spec.writeReadme,
+    flavor = "Graphviz",
+    chartFile = graphvizTask.map { it.outputFile.get() },
+    legendTask = rootProject.tasks.named("generateGraphvizLegend", RunGraphviz::class.java),
   )
 }

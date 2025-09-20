@@ -25,6 +25,7 @@ internal class MermaidSpecImpl(
 
   override val name = NAME
   override val fileExtension = objects.string(convention = "mmd")
+  override val writeReadme = objects.bool(convention = properties.mermaidWriteReadme)
 
   override val layout get() = mutableLayout
   override fun layout(action: Action<MermaidLayoutSpec>) = action.execute(layout)

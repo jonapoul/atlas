@@ -14,9 +14,7 @@ object TriangleGraphWithUpwardsTraversal : Scenario by TriangleGraph {
     }
 
     modular {
-      general {
-        alsoTraverseUpwards = true
-      }
+      alsoTraverseUpwards = true
 
       moduleTypes {
         kotlinJvm()

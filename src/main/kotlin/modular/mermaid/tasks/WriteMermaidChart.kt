@@ -46,7 +46,6 @@ abstract class WriteMermaidChart :
   // General
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val groupModules: Property<Boolean>
-  @get:Input abstract val printOutput: Property<Boolean>
   @get:Input abstract val replacements: SetProperty<Replacement>
   @get:Input abstract val thisPath: Property<String>
 
@@ -76,9 +75,7 @@ abstract class WriteMermaidChart :
     val outputFile = outputFile.get().asFile
     outputFile.writeText(writer())
 
-    if (printOutput.get()) {
-      logger.lifecycle(outputFile.absolutePath)
-    }
+    logIfConfigured(outputFile)
   }
 
   internal companion object {
@@ -91,7 +88,6 @@ abstract class WriteMermaidChart :
       extension: ModularExtension,
       spec: MermaidSpec,
       outputFile: RegularFile,
-      printOutput: Boolean,
     ): TaskProvider<WriteMermaidChart> = with(target) {
       val collateModuleTypes = CollateModuleTypes.get(rootProject)
       val calculateProjectTree = WriteModuleTree.get(target)
@@ -101,8 +97,7 @@ abstract class WriteMermaidChart :
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.convention(outputFile)
 
-        task.groupModules.convention(extension.general.groupModules)
-        task.printOutput.convention(printOutput)
+        task.groupModules.convention(extension.groupModules)
         task.replacements.convention(extension.modulePathTransforms.replacements)
         task.thisPath.convention(target.path)
 

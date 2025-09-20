@@ -51,7 +51,12 @@ internal fun ObjectFactory.directory(convention: Directory): DirectoryProperty =
 
 internal fun Project.configureSeparators(extension: ModularExtension) {
   tasks.withType(TaskWithSeparator::class.java).configureEach { t ->
-    t.separator.convention(extension.general.separator)
+    t.separator.convention(extension.separator)
+  }
+}
+internal fun Project.configurePrintFilesToConsole(extension: ModularExtension) {
+  tasks.withType(ModularGenerationTask::class.java).configureEach { t ->
+    t.printFilesToConsole.convention(extension.printFilesToConsole)
   }
 }
 

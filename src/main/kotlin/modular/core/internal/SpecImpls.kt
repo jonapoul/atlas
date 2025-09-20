@@ -4,7 +4,6 @@
  */
 package modular.core.internal
 
-import modular.core.spec.GeneralSpec
 import modular.core.spec.LinkType
 import modular.core.spec.LinkTypesSpec
 import modular.core.spec.ModulePathTransformSpec
@@ -31,8 +30,13 @@ internal open class ModularExtensionImpl @Inject constructor(
 ) : ModularExtension {
   internal val properties = GradleProperties(project)
 
-  override val general = GeneralSpecImpl(objects, properties)
-  override fun general(action: Action<GeneralSpec>) = action.execute(general)
+  override val generateOnSync = objects.bool(properties.generateOnSync)
+  override val groupModules = objects.bool(properties.groupModules)
+  override val ignoredConfigs = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
+  override val ignoredModules = objects.set(convention = emptySet<Regex>())
+  override val separator = objects.string(properties.separator)
+  override val alsoTraverseUpwards = objects.bool(properties.alsoTraverseUpwards)
+  override val printFilesToConsole = objects.bool(properties.printFilesToConsole)
 
   override val modulePathTransforms = ModulePathTransformSpecImpl(objects)
   override fun modulePathTransforms(action: Action<ModulePathTransformSpec>) = action.execute(modulePathTransforms)
@@ -84,15 +88,6 @@ internal open class ModularExtensionImpl @Inject constructor(
   internal companion object {
     internal const val NAME = "modular"
   }
-}
-
-internal class GeneralSpecImpl(objects: ObjectFactory, properties: GradleProperties) : GeneralSpec {
-  override val generateOnSync = objects.bool(properties.generateOnSync)
-  override val groupModules = objects.bool(properties.groupModules)
-  override val ignoredConfigs = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
-  override val ignoredModules = objects.set(convention = emptySet<Regex>())
-  override val separator = objects.string(properties.separator)
-  override val alsoTraverseUpwards = objects.bool(properties.alsoTraverseUpwards)
 }
 
 internal class ModulePathTransformSpecImpl(objects: ObjectFactory) : ModulePathTransformSpec {

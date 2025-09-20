@@ -7,11 +7,11 @@
 package modular.gradle
 
 import modular.core.internal.ModularExtensionImpl
+import modular.core.internal.configurePrintFilesToConsole
 import modular.core.internal.configureSeparators
 import modular.core.internal.orderedTypes
 import modular.core.internal.registerModularGenerateTask
 import modular.core.internal.warnIfModuleTypesSpecifyNothing
-import modular.core.internal.warnIfNoGraphVizOutputs
 import modular.core.internal.warnIfSvgSelectedWithCustomDpi
 import modular.core.tasks.CollateModuleLinks
 import modular.core.tasks.CollateModuleTypes
@@ -36,6 +36,7 @@ class ModularTrunkPlugin : Plugin<Project> {
     ) as ModularExtensionImpl
 
     configureSeparators(extension)
+    configurePrintFilesToConsole(extension)
     registerGenerationTaskOnSync(extension)
     registerModularGenerateTask()
 
@@ -52,7 +53,6 @@ class ModularTrunkPlugin : Plugin<Project> {
 
     afterEvaluate {
       warnIfSvgSelectedWithCustomDpi(extension)
-      warnIfNoGraphVizOutputs(extension)
 
       val types = extension.orderedTypes()
       warnIfModuleTypesSpecifyNothing(types)

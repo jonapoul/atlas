@@ -8,6 +8,7 @@ package modular.gradle
 
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant
+import modular.core.internal.configurePrintFilesToConsole
 import modular.core.internal.configureSeparators
 import modular.core.internal.outputFile
 import modular.core.internal.registerModularGenerateTask
@@ -31,6 +32,7 @@ class ModularLeafPlugin : Plugin<Project> {
     val extension = rootProject.extensions.getByType(ModularExtension::class.java) as ModularExtensionImpl
 
     configureSeparators(extension)
+    configurePrintFilesToConsole(extension)
     registerGenerationTaskOnSync(extension)
     registerModularGenerateTask()
 

@@ -19,32 +19,6 @@ internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
   }
 }
 
-internal fun Project.warnIfNoGraphVizOutputs(extension: ModularExtensionImpl) {
-  val spec = extension.specs.filterIsInstance<GraphVizSpecImpl>().firstOrNull() ?: return
-  val fileFormats = spec.fileFormats.formats.orNull
-  val isSuppressed = extension.properties.suppressNoGraphVizOutputs.get()
-
-  if (fileFormats != null && fileFormats.isEmpty() && !isSuppressed) {
-    logger.warn(
-      """
-        No file formats have been registered as GraphViz outputs! Configure them from your build script like:
-
-          modular {
-            graphViz {
-             fileFormats {
-               png()
-               svg()
-               // etc.
-             }
-            }
-          }
-
-        You can suppress this warning by adding the Gradle property "modular.suppress.noGraphVizOutputs=true".
-      """.trimIndent(),
-    )
-  }
-}
-
 internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionImpl) {
   val graphVizSpec = extension.specs.filterIsInstance<GraphVizSpecImpl>().firstOrNull() ?: return
   val adjustSvgViewBox = graphVizSpec.adjustSvgViewBox.get()

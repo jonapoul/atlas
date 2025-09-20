@@ -70,46 +70,34 @@ abstract class RunGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutpu
       val error = dotProcess.errorReader().readText()
       throw GradleException("GraphViz error code $result running '$fullCommand': $error")
     } else {
-      logger.lifecycle(outputFile.absolutePath)
+      logIfConfigured(outputFile)
     }
 
     doGraphVizPostProcessing(outputFile, outputFormat, adjustSvgViewBox.get())
   }
 
   internal companion object {
-    // E.g. format=xdot_json and variant=Legend => "writeXdotJsonLegend"
-    private fun taskName(variant: Variant, format: String): String {
-      val cleanedFormat = format
-        .split('-', '_', '.')
-        .mapIndexed { i, str -> if (i == 0) str.lowercase() else str.lowercase().replaceFirstChar { it.uppercase() } }
-        .joinToString(separator = "")
-        .replaceFirstChar { it.uppercase() }
-      return "write" + cleanedFormat + variant.name
-    }
-
     internal fun get(target: Project, name: String): TaskProvider<RunGraphviz> =
       target.tasks.named(name, RunGraphviz::class.java)
 
     internal fun <T : TaskWithOutputFile> register(
       target: Project,
+      name: String,
       extension: ModularExtensionImpl,
       spec: GraphVizSpecImpl,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
-    ): List<TaskProvider<RunGraphviz>> = with(target) {
-      spec.fileFormats.formats.get().map { format ->
-        val outputFile = outputFile(extension.outputs, variant, fileExtension = format.name)
-        val taskName = taskName(variant, format.name)
-        logger.info("Registering $taskName for output format $format")
+    ): TaskProvider<RunGraphviz> = with(target) {
+      val format = spec.fileFormat.get()
+      val outputFile = outputFile(extension.outputs, variant, fileExtension = format)
 
-        tasks.register(taskName, RunGraphviz::class.java) { task ->
-          task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
-          task.pathToDotCommand.convention(spec.pathToDotCommand)
-          task.engine.convention(spec.layoutEngine)
-          task.outputFormat.convention(format.name)
-          task.outputFile.convention(outputFile)
-          task.adjustSvgViewBox.convention(spec.adjustSvgViewBox)
-        }
+      tasks.register(name, RunGraphviz::class.java) { task ->
+        task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
+        task.pathToDotCommand.convention(spec.pathToDotCommand)
+        task.engine.convention(spec.layoutEngine)
+        task.outputFormat.convention(format)
+        task.outputFile.convention(outputFile)
+        task.adjustSvgViewBox.convention(spec.adjustSvgViewBox)
       }
     }
   }

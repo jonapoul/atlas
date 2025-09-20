@@ -9,6 +9,7 @@ import modular.core.internal.Variant
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
+import modular.core.tasks.WriteReadme
 import modular.core.tasks.defaultOutputFile
 import modular.mermaid.spec.MermaidSpec
 import modular.mermaid.tasks.WriteMarkdownLegend
@@ -55,13 +56,12 @@ internal fun Project.registerMermaidLeafTasks(
   spec: MermaidSpec,
   file: RegularFile,
 ) {
-  WriteMermaidChart.register(
+  val chartTask = WriteMermaidChart.register(
     target = this,
     name = WriteMermaidChart.TASK_NAME,
     extension = extension,
     spec = spec,
     outputFile = file,
-    printOutput = true,
   )
 
   val tempMermaidTask = WriteMermaidChart.register(
@@ -70,7 +70,6 @@ internal fun Project.registerMermaidLeafTasks(
     extension = extension,
     spec = spec,
     outputFile = modularBuildDirectory.get().file("modules-temp.mmd"),
-    printOutput = false,
   )
 
   val checkTask = CheckFileDiff.register(
@@ -81,4 +80,12 @@ internal fun Project.registerMermaidLeafTasks(
   )
 
   tasks.maybeCreate("check").dependsOn(checkTask)
+
+  WriteReadme.register(
+    target = this,
+    enabled = spec.writeReadme,
+    flavor = "Mermaid",
+    chartFile = chartTask.map { it.outputFile.get() },
+    legendTask = WriteMarkdownLegend.get(rootProject),
+  )
 }

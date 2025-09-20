@@ -14,7 +14,7 @@ object DiamondGraphWithUpwardsTraversal : Scenario by DiamondGraph {
     }
 
     modular {
-      general.alsoTraverseUpwards = true
+      alsoTraverseUpwards = true
       moduleTypes {
         kotlinJvm()
       }

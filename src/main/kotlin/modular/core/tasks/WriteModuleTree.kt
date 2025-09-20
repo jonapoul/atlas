@@ -95,7 +95,7 @@ abstract class WriteModuleTree : DefaultTask(), TaskWithSeparator, TaskWithOutpu
     ): TaskProvider<WriteModuleTree> = with(target) {
       val calculateTree = tasks.register(NAME, WriteModuleTree::class.java) { task ->
         task.thisPath.convention(target.path)
-        task.alsoTraverseUpwards.convention(extension.general.alsoTraverseUpwards)
+        task.alsoTraverseUpwards.convention(extension.alsoTraverseUpwards)
         task.outputFile.convention(fileInBuildDirectory("module-tree"))
       }
 

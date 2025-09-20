@@ -76,9 +76,7 @@ abstract class WriteGraphvizChart :
     val outputFile = outputFile.get().asFile
     outputFile.writeText(writer())
 
-    if (printOutput.get()) {
-      logger.lifecycle(outputFile.absolutePath)
-    }
+    logIfConfigured(outputFile)
   }
 
   internal companion object {
@@ -101,7 +99,7 @@ abstract class WriteGraphvizChart :
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.convention(outputFile)
 
-        task.groupModules.convention(extension.general.groupModules)
+        task.groupModules.convention(extension.groupModules)
         task.printOutput.convention(printOutput)
         task.replacements.convention(extension.modulePathTransforms.replacements)
         task.thisPath.convention(target.path)
