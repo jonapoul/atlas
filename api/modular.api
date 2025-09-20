@@ -174,7 +174,6 @@ public abstract class modular/core/tasks/WriteReadme : org/gradle/api/DefaultTas
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
 	public abstract fun getReadmeFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public fun logIfConfigured (Ljava/io/File;)V
 }
 
 public abstract interface annotation class modular/gradle/ModularDsl : java/lang/annotation/Annotation {
@@ -413,7 +412,6 @@ public abstract class modular/graphviz/tasks/RunGraphviz : org/gradle/api/Defaul
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
-	public fun logIfConfigured (Ljava/io/File;)V
 }
 
 public abstract class modular/graphviz/tasks/WriteGraphvizChart : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
@@ -428,7 +426,6 @@ public abstract class modular/graphviz/tasks/WriteGraphvizChart : org/gradle/api
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-	public fun logIfConfigured (Ljava/io/File;)V
 }
 
 public abstract class modular/graphviz/tasks/WriteGraphvizLegend : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
@@ -438,7 +435,6 @@ public abstract class modular/graphviz/tasks/WriteGraphvizLegend : org/gradle/ap
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public fun logIfConfigured (Ljava/io/File;)V
 }
 
 public final class modular/mermaid/spec/ConsiderModelOrder : java/lang/Enum, modular/graphviz/spec/StringEnum {
@@ -556,7 +552,6 @@ public abstract class modular/mermaid/tasks/WriteMarkdownLegend : org/gradle/api
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-	public fun logIfConfigured (Ljava/io/File;)V
 }
 
 public abstract class modular/mermaid/tasks/WriteMermaidChart : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
@@ -570,7 +565,6 @@ public abstract class modular/mermaid/tasks/WriteMermaidChart : org/gradle/api/D
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
-	public fun logIfConfigured (Ljava/io/File;)V
 }
 
 public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {

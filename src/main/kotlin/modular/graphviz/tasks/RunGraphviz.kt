@@ -10,6 +10,7 @@ import modular.core.internal.outputFile
 import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
+import modular.core.tasks.logIfConfigured
 import modular.graphviz.internal.GraphVizSpecImpl
 import modular.graphviz.internal.doGraphVizPostProcessing
 import org.gradle.api.DefaultTask

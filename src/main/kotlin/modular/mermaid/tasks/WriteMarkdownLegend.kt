@@ -13,6 +13,7 @@ import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
 import modular.core.tasks.TaskWithSeparator
+import modular.core.tasks.logIfConfigured
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile
