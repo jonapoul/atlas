@@ -13,6 +13,7 @@ import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
 import modular.core.tasks.TaskWithSeparator
 import modular.core.tasks.WriteModuleTree
+import modular.core.tasks.logIfConfigured
 import modular.gradle.ModularExtension
 import modular.mermaid.internal.MermaidWriter
 import modular.mermaid.spec.MermaidConfig

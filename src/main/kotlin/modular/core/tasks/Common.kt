@@ -32,11 +32,11 @@ internal interface TaskWithOutputFile : Task {
  */
 internal interface ModularGenerationTask : Task {
   @get:Input val printFilesToConsole: Property<Boolean>
+}
 
-  fun logIfConfigured(file: File) {
-    if (printFilesToConsole.get()) {
-      logger.lifecycle(file.absolutePath)
-    }
+internal fun ModularGenerationTask.logIfConfigured(file: File) {
+  if (printFilesToConsole.get()) {
+    logger.lifecycle(file.absolutePath)
   }
 }
 

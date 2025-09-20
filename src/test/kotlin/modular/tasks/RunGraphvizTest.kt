@@ -25,7 +25,6 @@ import modular.test.scenarios.GraphVizCustomLayoutEngine
 import modular.test.scenarios.GraphVizInvalidLayoutEngine
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import kotlin.test.Test
-import kotlin.text.RegexOption.MULTILINE
 
 class RunGraphvizTest : ScenarioTest() {
   @Test

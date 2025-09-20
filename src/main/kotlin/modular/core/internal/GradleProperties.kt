@@ -13,6 +13,7 @@ import org.gradle.api.provider.Provider
 internal class GradleProperties(private val project: Project) {
   // General
   val alsoTraverseUpwards: Provider<Boolean> = bool("modular.alsoTraverseUpwards", default = false)
+  val autoApplyToChildren: Provider<Boolean> = bool("modular.autoApplyToChildren", default = false)
   val generateOnSync: Provider<Boolean> = bool(key = "modular.generateOnSync", default = false)
   val groupModules: Provider<Boolean> = bool(key = "modular.groupModules", default = false)
   val separator: Provider<String> = string(key = "modular.separator", default = ",")
