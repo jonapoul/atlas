@@ -58,3 +58,11 @@ internal fun defaultOutputFile(
   val fileExtension = spec.fileExtension.get()
   dir.file("$filename.$fileExtension")
 }
+
+internal fun interface TaskRegistrar<S : Spec> {
+  operator fun invoke(
+    target: Project,
+    extension: ModularExtensionImpl,
+    spec: S,
+  )
+}

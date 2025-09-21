@@ -39,7 +39,7 @@ internal class MermaidSpecImpl(
   override val theme = objects.string(properties.mermaidTheme)
 
   internal companion object {
-    internal const val NAME = "MermaidSpecImpl"
+    internal const val NAME = "Mermaid"
   }
 }
 

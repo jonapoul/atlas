@@ -51,6 +51,6 @@ internal class GraphVizSpecImpl(
   override val rankSep = objects.float(properties.rankSep)
 
   internal companion object {
-    internal const val NAME = "GraphVizSpecImpl"
+    internal const val NAME = "Graphviz"
   }
 }

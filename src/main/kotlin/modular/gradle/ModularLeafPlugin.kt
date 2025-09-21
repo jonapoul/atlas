@@ -17,6 +17,7 @@ import modular.core.tasks.WriteModuleTree
 import modular.core.tasks.WriteModuleType
 import modular.core.tasks.registerGenerationTaskOnSync
 import modular.graphviz.internal.GraphVizSpecImpl
+import modular.graphviz.internal.GraphvizLeafTaskRegistrar
 import modular.graphviz.internal.registerGraphVizLeafTasks
 import modular.mermaid.internal.MermaidSpecImpl
 import modular.mermaid.internal.registerMermaidLeafTasks
@@ -43,7 +44,7 @@ class ModularLeafPlugin : Plugin<Project> {
     extension.specs.configureEach { spec ->
       val file = outputFile(extension.outputs, Variant.Chart, fileExtension = spec.fileExtension.get())
       when (spec) {
-        is GraphVizSpecImpl -> registerGraphVizLeafTasks(extension, spec, file)
+        is GraphVizSpecImpl -> GraphvizLeafTaskRegistrar(target, extension, spec, file)
         is MermaidSpecImpl -> registerMermaidLeafTasks(extension, spec, file)
         else -> logger.warn("Not sure how to handle spec: ${spec.javaClass.canonicalName}")
       }

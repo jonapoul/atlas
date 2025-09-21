@@ -5,15 +5,18 @@
 package modular.graphviz.tasks
 
 import modular.core.internal.ModularExtensionImpl
+import modular.core.internal.Variant
 import modular.core.internal.buildIndentedString
 import modular.core.internal.moduleTypeModel
 import modular.core.internal.orderedTypes
 import modular.core.spec.LinkType
 import modular.core.spec.ModuleTypeModel
+import modular.core.spec.Spec
 import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
 import modular.core.tasks.TaskWithSeparator
+import modular.core.tasks.logIfConfigured
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile
@@ -27,13 +30,29 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
+import org.gradle.internal.extensions.stdlib.capitalized
 
 @CacheableTask
-abstract class WriteGraphvizLegend :
-  DefaultTask(),
-  TaskWithSeparator,
-  ModularGenerationTask,
-  TaskWithOutputFile {
+abstract class WriteGraphvizLegend : WriteGraphvizLegendBase(), ModularGenerationTask {
+  override fun getDescription() = "Generates the legend for a project dependency graph"
+
+  @TaskAction
+  override fun execute() {
+    super.execute()
+    logIfConfigured(outputFile.get().asFile)
+  }
+}
+
+@CacheableTask
+abstract class WriteDummyGraphvizLegend : WriteGraphvizLegendBase() {
+  override fun getDescription() = "Generates a dummy legend for comparison against the golden"
+
+  @TaskAction
+  override fun execute() = super.execute()
+}
+
+@CacheableTask
+sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
   @get:Input abstract val linkTypes: SetProperty<LinkType>
@@ -41,11 +60,12 @@ abstract class WriteGraphvizLegend :
 
   init {
     group = MODULAR_TASK_GROUP
-    description = "Generates the legend for a project dependency graph"
   }
 
+  abstract override fun getDescription(): String
+
   @TaskAction
-  fun execute() {
+  open fun execute() {
     val moduleTypes = moduleTypes.get()
     val linkTypes = linkTypes.get()
     val outputFile = outputFile.get().asFile
@@ -95,13 +115,22 @@ abstract class WriteGraphvizLegend :
     internal fun get(target: Project): TaskProvider<WriteGraphvizLegend> =
       target.tasks.named(TASK_NAME, WriteGraphvizLegend::class.java)
 
-    internal fun register(
+    internal inline fun <reified T : WriteGraphvizLegendBase> register(
       target: Project,
-      name: String,
+      variant: Variant,
+      spec: Spec,
       extension: ModularExtensionImpl,
       outputFile: Provider<RegularFile>,
-    ): TaskProvider<WriteGraphvizLegend> = with(target) {
-      tasks.register(name, WriteGraphvizLegend::class.java) { task ->
+    ): TaskProvider<T> = with(target) {
+      val qualifier = when (T::class) {
+        WriteDummyGraphvizLegend::class -> "Dummy"
+        else -> ""
+      }
+      val name = "write$qualifier${spec.name.capitalized()}$variant"
+
+      logger.lifecycle("Registering $name as ${T::class.java.canonicalName}")
+
+      tasks.register(name, T::class.java) { task ->
         task.outputFile.convention(outputFile)
         task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
         task.linkTypes.convention(extension.linkTypes.linkTypes)

@@ -18,9 +18,9 @@ import modular.core.tasks.CollateModuleLinks
 import modular.core.tasks.CollateModuleTypes
 import modular.core.tasks.registerGenerationTaskOnSync
 import modular.graphviz.internal.GraphVizSpecImpl
-import modular.graphviz.internal.registerGraphVizTrunkTasks
+import modular.graphviz.internal.GraphvizTrunkTaskRegistrar
 import modular.mermaid.internal.MermaidSpecImpl
-import modular.mermaid.internal.registerMermaidTrunkTasks
+import modular.mermaid.internal.MermaidTrunkTaskRegistrar
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -53,8 +53,8 @@ class ModularTrunkPlugin : Plugin<Project> {
 
     extension.specs.configureEach { spec ->
       when (spec) {
-        is GraphVizSpecImpl -> registerGraphVizTrunkTasks(extension, spec)
-        is MermaidSpecImpl -> registerMermaidTrunkTasks(extension, spec)
+        is GraphVizSpecImpl -> GraphvizTrunkTaskRegistrar(target, extension, spec)
+        is MermaidSpecImpl -> MermaidTrunkTaskRegistrar(target, extension, spec)
         else -> logger.warn("Not sure how to handle spec: ${spec.javaClass.canonicalName}")
       }
     }

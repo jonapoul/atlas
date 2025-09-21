@@ -4,11 +4,11 @@
  */
 package modular.core.tasks
 
+import modular.core.internal.Variant
 import modular.core.internal.diff
-import modular.graphviz.tasks.WriteGraphvizChart
+import modular.core.spec.Spec
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
-import org.gradle.api.file.RegularFile
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
@@ -18,6 +18,7 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
+import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
 
 @CacheableTask
@@ -50,19 +51,20 @@ abstract class CheckFileDiff : DefaultTask() {
   }
 
   internal companion object {
-    internal fun chartName(flavor: String): String = "check${flavor}Chart"
-    internal fun legendName(flavor: String): String = "check${flavor}Legend"
-
-    internal fun <T : TaskWithOutputFile> register(
+    internal fun <T1 : TaskWithOutputFile, T2 : TaskWithOutputFile> register(
       target: Project,
-      name: String,
-      generateTask: TaskProvider<T>,
-      realFile: RegularFile,
+      spec: Spec,
+      variant: Variant,
+      realTask: TaskProvider<T1>,
+      dummyTask: TaskProvider<T2>,
     ): TaskProvider<CheckFileDiff> = with(target) {
+      val name = "check${spec.name.capitalized()}$variant"
       tasks.register(name, CheckFileDiff::class.java) { task ->
-        task.taskPath.convention("$path:${WriteGraphvizChart.TASK_NAME}")
-        task.expectedFile.convention(generateTask.map { it.outputFile.get() })
-        task.actualFile.convention(realFile)
+        task.taskPath.convention(realTask.map { it.path })
+        task.actualFile.convention(dummyTask.map { it.outputFile.get() })
+
+        // intentionally doubling the provider here to remove automatic task link between check and write tasks
+        task.expectedFile.convention(provider { realTask.map { it.outputFile.get() }.get() })
       }
     }
   }

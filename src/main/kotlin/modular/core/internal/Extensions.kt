@@ -74,6 +74,7 @@ internal val Project.modularBuildDirectory: Provider<Directory>
 internal fun Project.fileInBuildDirectory(path: String): Provider<RegularFile> =
   modularBuildDirectory.map { it.file(path) }
 
+// TODO: remove
 internal fun Project.outputFile(
   output: OutputSpecImpl,
   variant: Variant,
