@@ -5,7 +5,7 @@
 package modular.core.internal
 
 import modular.core.spec.ModuleType
-import modular.graphviz.internal.GraphVizSpecImpl
+import modular.graphviz.internal.GraphvizSpecImpl
 import org.gradle.api.Project
 
 internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
@@ -20,7 +20,7 @@ internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
 }
 
 internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionImpl) {
-  val graphVizSpec = extension.specs.filterIsInstance<GraphVizSpecImpl>().firstOrNull() ?: return
+  val graphVizSpec = extension.specs.filterIsInstance<GraphvizSpecImpl>().firstOrNull() ?: return
   val adjustSvgViewBox = graphVizSpec.adjustSvgViewBox.get()
   val warningIsSuppressed = extension.properties.suppressSvgViewBoxWarning.get()
   if (!adjustSvgViewBox && graphVizSpec.dpi.isPresent && !warningIsSuppressed) {

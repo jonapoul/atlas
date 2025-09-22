@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object GraphVizBasicWithThreeOutputFormats : Scenario by GraphVizBasic {
+object GraphVizBasicWithPngOutput : Scenario by GraphVizBasic {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") apply false

@@ -50,7 +50,7 @@ enum class ArrowType(override val string: String) : StringEnum {
 /**
  * https://graphviz.org/docs/layouts/
  *
- * Your machine might not have some of these, or it might have more! Use [GraphVizChartSpec.layoutEngine]
+ * Your machine might not have some of these, or it might have more! Use [GraphvizSpec.layoutEngine]
  * with a string parameter to configure a custom layout engine. [Dot] is the implicit default.
  *
  * Run `dot -v` and check under "layout" to see what you have locally.
@@ -90,7 +90,7 @@ enum class LinkStyle(override val string: String) : Style {
 }
 
 /**
- * The formats supported on your machine will depend on the version of GraphViz you use.
+ * The formats supported on your machine will depend on the version of Graphviz you use.
  * See https://graphviz.org/docs/outputs/
  */
 enum class FileFormat(override val string: String) : StringEnum {

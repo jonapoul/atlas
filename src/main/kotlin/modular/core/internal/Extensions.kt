@@ -6,7 +6,6 @@ package modular.core.internal
 
 import modular.core.spec.ModuleType
 import modular.core.spec.ModuleTypeModel
-import modular.core.spec.OutputSpec
 import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithSeparator
@@ -19,6 +18,7 @@ import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.provider.SetProperty
+import java.io.File
 
 internal fun ModularExtension.orderedTypes(): List<ModuleType> =
   (moduleTypes as OrderedNamedContainer<ModuleType>).getInOrder()
@@ -54,6 +54,7 @@ internal fun Project.configureSeparators(extension: ModularExtension) {
     t.separator.convention(extension.separator)
   }
 }
+
 internal fun Project.configurePrintFilesToConsole(extension: ModularExtension) {
   tasks.withType(ModularGenerationTask::class.java).configureEach { t ->
     t.printFilesToConsole.convention(extension.printFilesToConsole)
@@ -74,28 +75,22 @@ internal val Project.modularBuildDirectory: Provider<Directory>
 internal fun Project.fileInBuildDirectory(path: String): Provider<RegularFile> =
   modularBuildDirectory.map { it.file(path) }
 
-// TODO: remove
-internal fun Project.outputFile(
-  output: OutputSpecImpl,
-  variant: Variant,
-  fileExtension: String,
-): RegularFile {
-  val baseName = baseName(output, variant).get()
-  val relativeToRoot = configuredOutputDir(output, variant).file("$baseName.$fileExtension")
-  val relativeToSubmodule = relativeToRoot
-    .get()
-    .asFile
-    .relativeTo(rootProject.projectDir)
-    .path
-  return layout.projectDirectory.file(relativeToSubmodule)
+internal fun Project.outputFile(extension: ModularExtensionImpl, variant: Variant, fileExtension: String): File {
+  val rootName = when (variant) {
+    Variant.Chart -> extension.outputs.chartRootFilename
+    Variant.Legend -> extension.outputs.legendRootFilename
+  }
+  val root = when (variant) {
+    Variant.Chart -> project.rootDir()
+    Variant.Legend -> rootProject.rootDir()
+  }
+  val hackyDir = when (variant) {
+    Variant.Legend -> extension.outputs.legendDir
+    Variant.Chart -> extension.outputs.chartDir
+  }
+  val relative = hackyDir.get().asFile.relativeTo(rootProject.rootDir())
+  val actualDir = root.resolve(relative).absoluteFile
+  return actualDir.resolve("${rootName.get()}.$fileExtension")
 }
 
-private fun baseName(output: OutputSpec, variant: Variant) = when (variant) {
-  Variant.Chart -> output.chartRootFilename
-  Variant.Legend -> output.legendRootFilename
-}
-
-private fun configuredOutputDir(output: OutputSpecImpl, variant: Variant) = when (variant) {
-  Variant.Chart -> output.chartOutputDirectory
-  Variant.Legend -> output.legendOutputDirectory
-}
+private fun Project.rootDir() = layout.projectDirectory.asFile

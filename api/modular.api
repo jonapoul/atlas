@@ -116,7 +116,9 @@ public abstract class modular/core/tasks/CheckFileDiff : org/gradle/api/DefaultT
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getActualFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getExpectedFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getExpectedDirectory ()Lorg/gradle/api/provider/Property;
+	public abstract fun getExpectedFilename ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProblems ()Lorg/gradle/api/problems/Problems;
 	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
 }
 
@@ -182,7 +184,7 @@ public abstract interface annotation class modular/gradle/ModularDsl : java/lang
 public abstract interface class modular/gradle/ModularExtension {
 	public abstract fun getAlsoTraverseUpwards ()Lorg/gradle/api/provider/Property;
 	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
-	public abstract fun getGraphViz ()Lmodular/graphviz/spec/GraphVizSpec;
+	public abstract fun getGraphViz ()Lmodular/graphviz/spec/GraphvizSpec;
 	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
 	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
@@ -332,7 +334,7 @@ public final class modular/graphviz/spec/FileFormat : java/lang/Enum, modular/gr
 	public static fun values ()[Lmodular/graphviz/spec/FileFormat;
 }
 
-public abstract interface class modular/graphviz/spec/GraphVizSpec : modular/core/spec/Spec {
+public abstract interface class modular/graphviz/spec/GraphvizSpec : modular/core/spec/Spec {
 	public abstract fun arrowHead (Ljava/lang/String;)V
 	public abstract fun arrowHead (Lmodular/graphviz/spec/ArrowType;)V
 	public abstract fun arrowTail (Ljava/lang/String;)V
@@ -402,21 +404,40 @@ public abstract interface class modular/graphviz/spec/StringEnum {
 	public abstract fun getString ()Ljava/lang/String;
 }
 
-public abstract class modular/graphviz/tasks/RunGraphviz : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
+public abstract class modular/graphviz/tasks/ExecGraphviz : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
 	public fun getDescription ()Ljava/lang/String;
 	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/graphviz/tasks/WriteGraphvizChart : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/graphviz/tasks/WriteDummyGraphvizChart : modular/graphviz/tasks/WriteGraphvizChartBase {
 	public fun <init> ()V
-	public final fun execute ()V
+	public fun execute ()V
+	public fun getDescription ()Ljava/lang/String;
+}
+
+public abstract class modular/graphviz/tasks/WriteDummyGraphvizLegend : modular/graphviz/tasks/WriteGraphvizLegendBase {
+	public fun <init> ()V
+	public fun execute ()V
+	public fun getDescription ()Ljava/lang/String;
+}
+
+public abstract class modular/graphviz/tasks/WriteGraphvizChart : modular/graphviz/tasks/WriteGraphvizChartBase, modular/core/tasks/ModularGenerationTask {
+	public fun <init> ()V
+	public fun execute ()V
+	public fun getDescription ()Ljava/lang/String;
+}
+
+public abstract class modular/graphviz/tasks/WriteGraphvizChartBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
 	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
@@ -428,9 +449,15 @@ public abstract class modular/graphviz/tasks/WriteGraphvizChart : org/gradle/api
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/graphviz/tasks/WriteGraphvizLegend : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/graphviz/tasks/WriteGraphvizLegend : modular/graphviz/tasks/WriteGraphvizLegendBase, modular/core/tasks/ModularGenerationTask {
 	public fun <init> ()V
-	public final fun execute ()V
+	public fun execute ()V
+	public fun getDescription ()Ljava/lang/String;
+}
+
+public abstract class modular/graphviz/tasks/WriteGraphvizLegendBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun execute ()V
+	public abstract fun getDescription ()Ljava/lang/String;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
@@ -545,9 +572,20 @@ public final class modular/mermaid/spec/Theme : java/lang/Enum, modular/graphviz
 	public static fun values ()[Lmodular/mermaid/spec/Theme;
 }
 
-public abstract class modular/mermaid/tasks/WriteMarkdownLegend : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/mermaid/tasks/WriteDummyMarkdownLegend : modular/mermaid/tasks/WriteMarkdownLegendBase {
 	public fun <init> ()V
-	public final fun execute ()V
+	public fun execute ()V
+	public fun getDescription ()Ljava/lang/String;
+}
+
+public abstract class modular/mermaid/tasks/WriteMarkdownLegend : modular/mermaid/tasks/WriteMarkdownLegendBase, modular/core/tasks/ModularGenerationTask {
+	public fun <init> ()V
+	public fun execute ()V
+	public fun getDescription ()Ljava/lang/String;
+}
+
+public abstract class modular/mermaid/tasks/WriteMarkdownLegendBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun execute ()V
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;

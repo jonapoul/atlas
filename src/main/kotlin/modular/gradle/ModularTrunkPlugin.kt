@@ -17,10 +17,10 @@ import modular.core.internal.warnIfSvgSelectedWithCustomDpi
 import modular.core.tasks.CollateModuleLinks
 import modular.core.tasks.CollateModuleTypes
 import modular.core.tasks.registerGenerationTaskOnSync
-import modular.graphviz.internal.GraphVizSpecImpl
-import modular.graphviz.internal.GraphvizTrunkTaskRegistrar
+import modular.graphviz.internal.GraphvizSpecImpl
+import modular.graphviz.internal.registerGraphvizTrunkTasks
 import modular.mermaid.internal.MermaidSpecImpl
-import modular.mermaid.internal.MermaidTrunkTaskRegistrar
+import modular.mermaid.internal.registerMermaidTrunkTasks
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -53,8 +53,8 @@ class ModularTrunkPlugin : Plugin<Project> {
 
     extension.specs.configureEach { spec ->
       when (spec) {
-        is GraphVizSpecImpl -> GraphvizTrunkTaskRegistrar(target, extension, spec)
-        is MermaidSpecImpl -> MermaidTrunkTaskRegistrar(target, extension, spec)
+        is GraphvizSpecImpl -> registerGraphvizTrunkTasks(extension, spec)
+        is MermaidSpecImpl -> registerMermaidTrunkTasks(extension, spec)
         else -> logger.warn("Not sure how to handle spec: ${spec.javaClass.canonicalName}")
       }
     }

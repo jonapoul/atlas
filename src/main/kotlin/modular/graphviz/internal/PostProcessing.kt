@@ -6,7 +6,7 @@ package modular.graphviz.internal
 
 import java.io.File
 
-internal fun doGraphVizPostProcessing(outputFile: File, outputFormat: String, adjustSvgViewBox: Boolean) {
+internal fun doGraphvizPostProcessing(outputFile: File, outputFormat: String, adjustSvgViewBox: Boolean) {
   val format = outputFormat.lowercase()
   when {
     format == "svg" && adjustSvgViewBox -> editSvgViewBoxToMatchSize(outputFile)

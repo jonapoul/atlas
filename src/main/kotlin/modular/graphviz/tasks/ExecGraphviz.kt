@@ -4,15 +4,13 @@
  */
 package modular.graphviz.tasks
 
-import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant
-import modular.core.internal.outputFile
 import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
 import modular.core.tasks.logIfConfigured
-import modular.graphviz.internal.GraphVizSpecImpl
-import modular.graphviz.internal.doGraphVizPostProcessing
+import modular.graphviz.internal.GraphvizSpecImpl
+import modular.graphviz.internal.doGraphvizPostProcessing
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -58,7 +56,7 @@ abstract class ExecGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutp
     val outputFile = outputFile.get().asFile
     val outputFormat = outputFormat.get()
     logIfConfigured(outputFile)
-    doGraphVizPostProcessing(outputFile, outputFormat, adjustSvgViewBox.get())
+    doGraphvizPostProcessing(outputFile, outputFormat, adjustSvgViewBox.get())
   }
 
   private fun configureExec(spec: ExecSpec) {
@@ -75,7 +73,7 @@ abstract class ExecGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutp
       add(dotFile)
     }
 
-    logger.info("Starting GraphViz: $command")
+    logger.info("Starting Graphviz: $command")
 
     spec.commandLine(command)
     spec.standardOutput = outputFile.outputStream()
@@ -87,16 +85,21 @@ abstract class ExecGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutp
 
     internal fun <T : TaskWithOutputFile> register(
       target: Project,
-      extension: ModularExtensionImpl,
-      spec: GraphVizSpecImpl,
+      spec: GraphvizSpecImpl,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
     ): TaskProvider<ExecGraphviz> = with(target) {
       val format = spec.fileFormat.get()
-      val outputFile = outputFile(extension.outputs, variant, fileExtension = format)
+      val dotFile = dotFileTask.map { it.outputFile.get() }
+
+      val outputFile = dotFile.map { f ->
+        val newFile = f.asFile.resolveSibling("${f.asFile.nameWithoutExtension}.$format")
+        project.layout.projectDirectory.file(newFile.relativeTo(projectDir).path)
+      }
+
       val name = "exec${spec.name.capitalized()}$variant"
       tasks.register(name, ExecGraphviz::class.java) { task ->
-        task.dotFile.convention(dotFileTask.map { it.outputFile.get() })
+        task.dotFile.convention(dotFile)
         task.pathToDotCommand.convention(spec.pathToDotCommand)
         task.engine.convention(spec.layoutEngine)
         task.outputFormat.convention(format)

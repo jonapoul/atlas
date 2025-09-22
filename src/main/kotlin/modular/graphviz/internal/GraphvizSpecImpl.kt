@@ -12,16 +12,16 @@ import modular.core.internal.string
 import modular.graphviz.spec.ArrowType
 import modular.graphviz.spec.Dir
 import modular.graphviz.spec.FileFormat
-import modular.graphviz.spec.GraphVizSpec
+import modular.graphviz.spec.GraphvizSpec
 import modular.graphviz.spec.LayoutEngine
 import modular.graphviz.spec.RankDir
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 
-internal class GraphVizSpecImpl(
+internal class GraphvizSpecImpl(
   objects: ObjectFactory,
   properties: GradleProperties,
-) : GraphVizSpec {
+) : GraphvizSpec {
   override val name = NAME
   override val fileExtension = objects.string(convention = "dot")
   override val pathToDotCommand: Property<String> = objects.property(String::class.java).unsetConvention()

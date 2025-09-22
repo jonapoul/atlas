@@ -19,11 +19,9 @@ import modular.core.tasks.TaskWithSeparator
 import modular.core.tasks.logIfConfigured
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
-import org.gradle.api.file.RegularFile
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
-import org.gradle.api.provider.Provider
 import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
@@ -31,6 +29,8 @@ import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.internal.extensions.stdlib.capitalized
+import org.gradle.work.DisableCachingByDefault
+import java.io.File
 
 @CacheableTask
 abstract class WriteGraphvizLegend : WriteGraphvizLegendBase(), ModularGenerationTask {
@@ -43,7 +43,7 @@ abstract class WriteGraphvizLegend : WriteGraphvizLegendBase(), ModularGeneratio
   }
 }
 
-@CacheableTask
+@DisableCachingByDefault
 abstract class WriteDummyGraphvizLegend : WriteGraphvizLegendBase() {
   override fun getDescription() = "Generates a dummy legend for comparison against the golden"
 
@@ -120,18 +120,15 @@ sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
       variant: Variant,
       spec: Spec,
       extension: ModularExtensionImpl,
-      outputFile: Provider<RegularFile>,
+      outputFile: File,
     ): TaskProvider<T> = with(target) {
       val qualifier = when (T::class) {
         WriteDummyGraphvizLegend::class -> "Dummy"
         else -> ""
       }
       val name = "write$qualifier${spec.name.capitalized()}$variant"
-
-      logger.lifecycle("Registering $name as ${T::class.java.canonicalName}")
-
       tasks.register(name, T::class.java) { task ->
-        task.outputFile.convention(outputFile)
+        task.outputFile.set(outputFile)
         task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
         task.linkTypes.convention(extension.linkTypes.linkTypes)
       }

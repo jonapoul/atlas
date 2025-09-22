@@ -6,18 +6,53 @@ package modular.tasks
 
 import assertk.assertThat
 import assertk.assertions.contains
+import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
 import modular.test.ScenarioTest
 import modular.test.runTask
 import modular.test.scenarios.GraphVizBasic
-import modular.test.scenarios.GraphVizBasicWithThreeOutputFormats
+import modular.test.scenarios.GraphVizBasicWithPngOutput
 import org.gradle.testkit.runner.TaskOutcome.FAILED
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import kotlin.test.Test
 
 class CheckFileDiffTest : ScenarioTest() {
   @Test
-  fun `Verify modules of a basic project`() = runScenario(GraphVizBasicWithThreeOutputFormats) {
+  fun `Write doesn't run as a dependency of check`() = runScenario(GraphVizBasic) {
+    // when
+    val result = runTask(":a:checkGraphvizChart", extras = listOf("--dry-run")).build()
+
+    // then the chart wasn't written
+    assertThat(result.output).doesNotContain(":a:writeGraphvizChart")
+
+    // but the dummy and check tasks were run
+    assertThat(result.output).contains(":a:writeDummyGraphvizChart")
+    assertThat(result.output).contains(":a:checkGraphvizChart")
+  }
+
+  @Test
+  fun `Fail if the expected file hasn't been generated yet`() = runScenario(GraphVizBasic) {
+    // when
+    val result = runTask(":a:checkGraphvizChart").buildAndFail()
+
+    // then
+    assertThat(result.output).contains(
+      """
+        * What went wrong:
+        Execution failed for task ':a:checkGraphvizChart'.
+        > java.io.FileNotFoundException
+      """.trimIndent(),
+    )
+    assertThat(result.output).contains(
+      """
+        * Try:
+        > Run `gradle :a:writeGraphvizChart` to generate the file.
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Verify modules of a basic project`() = runScenario(GraphVizBasicWithPngOutput) {
     // given initial dotfile is generated
     runTask(":a:writeGraphvizChart").build()
 
@@ -39,15 +74,15 @@ class CheckFileDiffTest : ScenarioTest() {
     // and spits out expected diff
     assertThat(check2.output).contains(
       """
-      |      digraph {
-      |  +++   graph ["layout"="circo"]
-      |        node ["style"="filled"]
-      |        ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
-      |        ":b" ["fillcolor"="#FF8800","shape"="none"]
-      |        ":c" ["fillcolor"="#FF8800","shape"="none"]
-      |        ":a" -> ":b"
-      |        ":a" -> ":c"
-      |      }
+      |          digraph {
+      |      ---   graph ["layout"="circo"]
+      |            node ["style"="filled"]
+      |            ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
+      |            ":b" ["fillcolor"="#FF8800","shape"="none"]
+      |            ":c" ["fillcolor"="#FF8800","shape"="none"]
+      |            ":a" -> ":b"
+      |            ":a" -> ":c"
+      |          }
       """.trimMargin(),
     )
   }
@@ -79,18 +114,18 @@ class CheckFileDiffTest : ScenarioTest() {
     // and spits out expected diff
     assertThat(check2.output).contains(
       """
-        |      digraph {
-        |        node [shape=plaintext]
-        |        modules [label=<
-        |  ---   <TABLE BORDER="0" CELLBORDER="100" CELLSPACING="0" CELLPADDING="4">
-        |  +++   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-        |          <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
-        |          <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
-        |          <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
-        |          <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
-        |        </TABLE>
-        |        >];
-        |      }
+        |          digraph {
+        |            node [shape=plaintext]
+        |            modules [label=<
+        |      ---   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        |      +++   <TABLE BORDER="0" CELLBORDER="100" CELLSPACING="0" CELLPADDING="4">
+        |              <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
+        |              <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
+        |              <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
+        |              <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
+        |            </TABLE>
+        |            >];
+        |          }
       """.trimMargin(),
     )
   }

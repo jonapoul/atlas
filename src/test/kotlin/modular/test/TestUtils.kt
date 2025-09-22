@@ -33,6 +33,7 @@ internal fun GradleRunner.runTask(task: String, extras: List<String> = emptyList
     task,
     "--configuration-cache",
     // "--info",
+    // "--stacktrace",
     "-Pandroid.useAndroidX=true", // needed for android builds to work, unused otherwise
   ) + extras,
 )
