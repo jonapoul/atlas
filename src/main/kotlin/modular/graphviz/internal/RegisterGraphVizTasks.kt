@@ -5,102 +5,100 @@
 package modular.graphviz.internal
 
 import modular.core.internal.ModularExtensionImpl
-import modular.core.internal.Variant
+import modular.core.internal.Variant.Chart
+import modular.core.internal.Variant.Legend
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
 import modular.core.tasks.WriteReadme
-import modular.core.tasks.defaultOutputFile
-import modular.graphviz.tasks.RunGraphviz
+import modular.graphviz.tasks.ExecGraphviz
+import modular.graphviz.tasks.WriteDummyGraphvizChart
+import modular.graphviz.tasks.WriteDummyGraphvizLegend
 import modular.graphviz.tasks.WriteGraphvizChart
+import modular.graphviz.tasks.WriteGraphvizChartBase
 import modular.graphviz.tasks.WriteGraphvizLegend
+import modular.graphviz.tasks.WriteGraphvizLegendBase
 import org.gradle.api.Project
-import org.gradle.api.file.RegularFile
 
-internal fun Project.registerGraphVizTrunkTasks(
+internal fun Project.registerGraphvizTrunkTasks(
   extension: ModularExtensionImpl,
-  spec: GraphVizSpecImpl,
+  spec: GraphvizSpecImpl,
 ) {
-  val legendTask = WriteGraphvizLegend.register(
-    target = this,
-    name = "writeGraphvizLegend",
+  val realTask = WriteGraphvizLegendBase.register<WriteGraphvizLegend>(
+    target = project,
+    variant = Legend,
+    spec = spec,
     extension = extension,
-    outputFile = defaultOutputFile(extension, spec),
+    outputFile = outputFile(extension, Legend, spec.fileExtension.get()),
   )
 
-  RunGraphviz.register(
-    target = this,
-    name = "generateGraphvizLegend",
-    extension = extension,
+  ExecGraphviz.register(
+    target = project,
     spec = spec,
-    variant = Variant.Legend,
-    dotFileTask = legendTask,
+    variant = Legend,
+    dotFileTask = realTask,
   )
 
   // Also validate the legend's dotfile when we call gradle check
-  val tempTask = WriteGraphvizLegend.register(
-    target = this,
-    name = "writeGraphvizLegendForChecking",
+  val dummyTask = WriteGraphvizLegendBase.register<WriteDummyGraphvizLegend>(
+    target = project,
+    variant = Legend,
+    spec = spec,
     extension = extension,
-    outputFile = modularBuildDirectory.map { it.file("legend-temp.dot") },
+    outputFile = modularBuildDirectory.get().file("legend-temp.dot").asFile,
   )
 
-  val checkTask = CheckFileDiff.register(
-    target = this,
-    name = CheckFileDiff.legendName(flavor = "Graphviz"),
-    generateTask = tempTask,
-    realFile = outputFile(extension.outputs, Variant.Legend, fileExtension = spec.fileExtension.get()),
+  CheckFileDiff.register(
+    target = project,
+    spec = spec,
+    variant = Legend,
+    realTask = realTask,
+    dummyTask = dummyTask,
   )
-
-  tasks.maybeCreate("check").dependsOn(checkTask)
 }
 
-internal fun Project.registerGraphVizLeafTasks(
+internal fun Project.registerGraphvizLeafTasks(
   extension: ModularExtensionImpl,
-  spec: GraphVizSpecImpl,
-  file: RegularFile,
+  spec: GraphvizSpecImpl,
 ) {
-  val dotFileTask = WriteGraphvizChart.register(
-    target = this,
-    name = WriteGraphvizChart.TASK_NAME,
+  val dotTask = WriteGraphvizChartBase.register<WriteGraphvizChart>(
+    target = project,
     extension = extension,
     spec = spec,
-    outputFile = file,
+    variant = Chart,
+    outputFile = outputFile(extension, Chart, spec.fileExtension.get()),
     printOutput = true,
   )
 
-  val tempDotFileTask = WriteGraphvizChart.register(
-    target = this,
-    name = WriteGraphvizChart.TASK_NAME_FOR_CHECKING,
+  val dummyDotTask = WriteGraphvizChartBase.register<WriteDummyGraphvizChart>(
+    target = project,
     extension = extension,
     spec = spec,
-    outputFile = modularBuildDirectory.get().file("modules-temp.dot"),
+    variant = Chart,
+    outputFile = modularBuildDirectory.get().file("modules-temp.dot").asFile,
     printOutput = false,
   )
 
-  val checkTask = CheckFileDiff.register(
-    target = this,
-    name = CheckFileDiff.chartName(flavor = "Graphviz"),
-    generateTask = tempDotFileTask,
-    realFile = file,
+  CheckFileDiff.register(
+    target = project,
+    spec = spec,
+    variant = Chart,
+    realTask = dotTask,
+    dummyTask = dummyDotTask,
   )
 
-  tasks.maybeCreate("check").dependsOn(checkTask)
-
-  val graphvizTask = RunGraphviz.register(
-    target = this,
-    name = "generateGraphvizChart",
-    extension = extension,
+  val graphvizTask = ExecGraphviz.register(
+    target = project,
     spec = spec,
-    variant = Variant.Chart,
-    dotFileTask = dotFileTask,
+    variant = Chart,
+    dotFileTask = dotTask,
   )
 
   WriteReadme.register(
-    target = this,
+    target = project,
     enabled = spec.writeReadme,
     flavor = "Graphviz",
     chartFile = graphvizTask.map { it.outputFile.get() },
-    legendTask = rootProject.tasks.named("generateGraphvizLegend", RunGraphviz::class.java),
+    legendTask = rootProject.tasks.named("execGraphvizLegend", ExecGraphviz::class.java),
   )
 }

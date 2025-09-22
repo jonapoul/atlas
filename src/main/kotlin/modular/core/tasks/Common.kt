@@ -4,15 +4,11 @@
  */
 package modular.core.tasks
 
-import modular.core.internal.ModularExtensionImpl
-import modular.core.spec.Spec
 import modular.gradle.ModularExtension
 import org.gradle.api.Project
 import org.gradle.api.Task
-import org.gradle.api.file.RegularFile
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
-import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import java.io.File
@@ -48,13 +44,4 @@ internal fun Project.registerGenerationTaskOnSync(extension: ModularExtension) {
       tasks.maybeCreate("prepareKotlinIdeaImport").dependsOn(modularGenerationTasks)
     }
   }
-}
-
-internal fun defaultOutputFile(
-  extension: ModularExtensionImpl,
-  spec: Spec,
-): Provider<RegularFile> = extension.outputs.legendOutputDirectory.map { dir ->
-  val filename = extension.outputs.legendRootFilename.get()
-  val fileExtension = spec.fileExtension.get()
-  dir.file("$filename.$fileExtension")
 }

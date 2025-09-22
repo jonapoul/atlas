@@ -17,7 +17,7 @@ import modular.test.allSuccessful
 import modular.test.doesNotExist
 import modular.test.runTask
 import modular.test.scenarios.GraphVizBasic
-import modular.test.scenarios.GraphVizBasicWithThreeOutputFormats
+import modular.test.scenarios.GraphVizBasicWithPngOutput
 import modular.test.scenarios.GraphVizBigGraph100DpiSvg
 import modular.test.scenarios.GraphVizBigGraph100DpiSvgWithAdjustment
 import modular.test.scenarios.GraphVizCustomDotExecutable
@@ -26,7 +26,7 @@ import modular.test.scenarios.GraphVizInvalidLayoutEngine
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import kotlin.test.Test
 
-class RunGraphvizTest : ScenarioTest() {
+class ExecGraphvizTest : ScenarioTest() {
   @Test
   fun `No extras are generated if no file formats have been declared`() = runScenario(GraphVizBasic) {
     // when
@@ -36,8 +36,7 @@ class RunGraphvizTest : ScenarioTest() {
     assertThat(result.output).contains(
       """
         :writeGraphvizLegend SKIPPED
-        :generateGraphvizLegend SKIPPED
-        :writeGraphvizLegendForChecking SKIPPED
+        :execGraphvizLegend SKIPPED
         :modularGenerate SKIPPED
         :a:writeModuleType SKIPPED
         :b:writeModuleType SKIPPED
@@ -49,20 +48,17 @@ class RunGraphvizTest : ScenarioTest() {
         :collateModuleLinks SKIPPED
         :a:calculateModuleTree SKIPPED
         :a:writeGraphvizChart SKIPPED
-        :a:generateGraphvizChart SKIPPED
-        :a:writeGraphvizChartForChecking SKIPPED
+        :a:execGraphvizChart SKIPPED
         :a:writeGraphvizReadme SKIPPED
         :a:modularGenerate SKIPPED
         :b:calculateModuleTree SKIPPED
         :b:writeGraphvizChart SKIPPED
-        :b:generateGraphvizChart SKIPPED
-        :b:writeGraphvizChartForChecking SKIPPED
+        :b:execGraphvizChart SKIPPED
         :b:writeGraphvizReadme SKIPPED
         :b:modularGenerate SKIPPED
         :c:calculateModuleTree SKIPPED
         :c:writeGraphvizChart SKIPPED
-        :c:generateGraphvizChart SKIPPED
-        :c:writeGraphvizChartForChecking SKIPPED
+        :c:execGraphvizChart SKIPPED
         :c:writeGraphvizReadme SKIPPED
         :c:modularGenerate SKIPPED
 
@@ -73,22 +69,22 @@ class RunGraphvizTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Generate png, svg and eps files`() = runScenario(GraphVizBasicWithThreeOutputFormats) {
+  fun `Generate png, svg and eps files`() = runScenario(GraphVizBasicWithPngOutput) {
     // when
     val result = runTask("modularGenerate").build()
 
     // then PNG, SVG and EPS tasks were run for each submodule
     listOf(
-      ":a:generateGraphvizChart",
-      ":b:generateGraphvizChart",
-      ":c:generateGraphvizChart",
+      ":a:execGraphvizChart",
+      ":b:execGraphvizChart",
+      ":c:execGraphvizChart",
     ).forEach { t ->
       assertThat(result.task(t)?.outcome).isEqualTo(SUCCESS)
     }
 
     // and the relevant files exist
     for (submodule in listOf("a", "b", "c")) {
-      assertThat(resolve("$submodule/modules.png")).exists()
+      assertThat(resolve("$submodule/chart.png")).exists()
     }
   }
 
@@ -97,10 +93,10 @@ class RunGraphvizTest : ScenarioTest() {
   fun `SVG viewBox scales with nondefault DPI with flag enabled`() =
     runScenario(GraphVizBigGraph100DpiSvgWithAdjustment) {
       // when
-      runTask(":app:generateGraphvizChart").build()
+      runTask(":app:execGraphvizChart").build()
 
       // then the app graph was generated as an svg
-      val contents = resolve("app/modules.svg").readText()
+      val contents = resolve("app/chart.svg").readText()
 
       // and the viewBox matches the width/height
       assertThat(contents).contains(
@@ -119,10 +115,10 @@ class RunGraphvizTest : ScenarioTest() {
   @RequiresGraphviz
   fun `SVG doesn't scale viewBox if experimental flag is unset`() = runScenario(GraphVizBigGraph100DpiSvg) {
     // when
-    runTask(":app:generateGraphvizChart").build()
+    runTask(":app:execGraphvizChart").build()
 
     // then the app graph was generated as an svg
-    val contents = resolve("app/modules.svg").readText()
+    val contents = resolve("app/chart.svg").readText()
 
     // and the viewBox doesn't match the width/height
     assertThat(contents).contains(
@@ -141,7 +137,7 @@ class RunGraphvizTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Fail with useful message for invalid layout engine`() = runScenario(GraphVizInvalidLayoutEngine) {
     // when
-    val result = runTask(":app:generateGraphvizChart").buildAndFail()
+    val result = runTask(":app:execGraphvizChart").buildAndFail()
 
     // then the error log contains a useful message from graphviz
     assertThat(result.output).contains("There is no layout engine support for \"abc123\"")
@@ -155,7 +151,7 @@ class RunGraphvizTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Choose custom layout engine`() = runScenario(GraphVizCustomLayoutEngine) {
     // when we specify the "neato" layout engine
-    val result = runTask(":app:generateGraphvizChart").build()
+    val result = runTask(":app:execGraphvizChart").build()
 
     // There's probably more I can be checking here but ¯\_(ツ)_/¯
     assertThat(result.tasks).allSuccessful()
@@ -199,7 +195,7 @@ class RunGraphvizTest : ScenarioTest() {
     // then it fails as expected
     assertThat(result.output).containsMatch(
       """
-        > java.io.IOException: Cannot run program ".*?/path/to/custom/dot": error=2, No such file or directory
+        > A problem occurred starting process 'command '.*?/path/to/custom/dot''
       """.trimIndent().toRegex(),
     )
   }

@@ -17,7 +17,7 @@ import org.gradle.api.provider.Property
  */
 interface OutputSpec {
   /**
-   * Output filename of generated module chart files. Defaults to "modules"
+   * Output filename of generated module chart files. Defaults to "chart"
    */
   val chartRootFilename: Property<String>
 

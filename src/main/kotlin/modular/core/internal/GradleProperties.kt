@@ -19,7 +19,7 @@ internal class GradleProperties(private val project: Project) {
   val separator: Provider<String> = string(key = "modular.separator", default = ",")
   val printFilesToConsole: Provider<Boolean> = bool(key = "modular.printFilesToConsole", default = false)
 
-  // GraphViz
+  // Graphviz
   val adjustSvgViewBox: Provider<Boolean> = bool(key = "modular.graphviz.adjustSvgViewBox", default = false)
   val gvWriteReadme: Provider<Boolean> = bool(key = "modular.graphviz.writeReadme", default = false)
   val arrowHead: Provider<String> = string(key = "modular.graphViz.chart.arrowHead", default = null)
@@ -40,7 +40,6 @@ internal class GradleProperties(private val project: Project) {
 
   // Suppressions
   val suppressSvgViewBoxWarning: Provider<Boolean> = bool(key = "modular.suppress.adjustSvgViewBox", default = false)
-  val suppressNoGraphVizOutputs: Provider<Boolean> = bool(key = "modular.suppress.noGraphVizOutputs", default = false)
 
   private fun bool(key: String, default: Boolean? = null) = prop(key, default, mapper = String::toBooleanStrict)
   private fun float(key: String, default: Float? = null) = prop(key, default, mapper = String::toFloat)

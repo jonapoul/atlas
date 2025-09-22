@@ -36,7 +36,7 @@ class WriteDotChartTest : ScenarioTest() {
     runTask("writeGraphvizChart").build()
 
     // then
-    assertThat(resolve("app/modules.dot").readText()).contains(
+    assertThat(resolve("app/chart.dot").readText()).contains(
       """
         digraph {
           node ["style"="filled"]
@@ -69,9 +69,9 @@ class WriteDotChartTest : ScenarioTest() {
     runTask("writeGraphvizChart").build()
 
     // then the files were generated
-    val dotFileA = resolve("a/modules.dot")
-    val dotFileB = resolve("b/modules.dot")
-    val dotFileC = resolve("c/modules.dot")
+    val dotFileA = resolve("a/chart.dot")
+    val dotFileB = resolve("b/chart.dot")
+    val dotFileC = resolve("c/chart.dot")
 
     // and contain expected contents, with modules in declaration order
     assertThat(dotFileA.readText()).contains(
@@ -111,7 +111,7 @@ class WriteDotChartTest : ScenarioTest() {
     runTask("writeGraphvizChart").build()
 
     // then the file was generated
-    val dotFile = resolve("a/modules.dot")
+    val dotFile = resolve("a/chart.dot")
     assertThat(dotFile).exists()
 
     // and contains expected contents, with modules in alphabetical order
@@ -137,7 +137,7 @@ class WriteDotChartTest : ScenarioTest() {
     runTask("writeGraphvizChart").build()
 
     // then the file was generated
-    val dotFile = resolve("a/modules.dot")
+    val dotFile = resolve("a/chart.dot")
     assertThat(dotFile).exists()
 
     // and contains expected contents, with modules in alphabetical order
@@ -163,7 +163,7 @@ class WriteDotChartTest : ScenarioTest() {
     runTask("writeGraphvizChart").build()
 
     // then the file was generated
-    val dotFile = resolve("a/modules.dot")
+    val dotFile = resolve("a/chart.dot")
     assertThat(dotFile).exists()
 
     // and contains expected contents, colons removed from module prefixes and "b" -> "B"
@@ -187,7 +187,7 @@ class WriteDotChartTest : ScenarioTest() {
     runTask("writeGraphvizChart").build()
 
     // then the file was generated
-    val dotFile = resolve("a/modules.dot")
+    val dotFile = resolve("a/chart.dot")
     assertThat(dotFile).exists()
 
     // and contains expected link styles
@@ -213,7 +213,7 @@ class WriteDotChartTest : ScenarioTest() {
     runTask("writeGraphvizChart").build()
 
     // then the file was generated
-    val dotFile = resolve("app/modules.dot")
+    val dotFile = resolve("app/chart.dot")
     assertThat(dotFile).exists()
 
     // and contains expected link styles

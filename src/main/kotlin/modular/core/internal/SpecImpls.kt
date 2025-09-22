@@ -11,8 +11,8 @@ import modular.core.spec.ModuleType
 import modular.core.spec.OutputSpec
 import modular.core.spec.Spec
 import modular.gradle.ModularExtension
-import modular.graphviz.internal.GraphVizSpecImpl
-import modular.graphviz.spec.GraphVizSpec
+import modular.graphviz.internal.GraphvizSpecImpl
+import modular.graphviz.spec.GraphvizSpec
 import modular.mermaid.internal.MermaidSpecImpl
 import modular.mermaid.spec.MermaidSpec
 import org.gradle.api.Action
@@ -53,18 +53,18 @@ internal open class ModularExtensionImpl @Inject constructor(
   override val specs: NamedDomainObjectContainer<Spec> = objects.domainObjectContainer(Spec::class.java)
   override fun specs(action: Action<NamedDomainObjectContainer<Spec>>) = action.execute(specs)
 
-  override val graphViz: GraphVizSpec
+  override val graphViz: GraphvizSpec
     get() {
       graphViz()
-      return specs.getByName(GraphVizSpecImpl.NAME) as GraphVizSpec
+      return specs.getByName(GraphvizSpecImpl.NAME) as GraphvizSpec
     }
 
   override fun graphViz() = graphViz { /* No-op */ }
 
-  override fun graphViz(action: Action<GraphVizSpec>) {
-    val spec = specs.findByName(GraphVizSpecImpl.NAME)
-      as? GraphVizSpec
-      ?: GraphVizSpecImpl(objects, properties)
+  override fun graphViz(action: Action<GraphvizSpec>) {
+    val spec = specs.findByName(GraphvizSpecImpl.NAME)
+      as? GraphvizSpec
+      ?: GraphvizSpecImpl(objects, properties)
     action.execute(spec)
     specs.add(spec)
   }
@@ -120,10 +120,10 @@ internal class OutputSpecImpl(objects: ObjectFactory, project: Project) : Output
   // Just a workaround to avoid the awkwardness of configuring something relative to each submodule's directory,
   // without breaking config cache restrictions. This rewiring doesn't happen for legendOutputDirectory, since that's
   // always relative to root project.
-  internal val chartOutputDirectory = objects.directory(convention = projectDir)
-  internal val legendOutputDirectory = objects.directory(convention = projectDir)
+  internal val chartDir = objects.directory(convention = projectDir)
+  internal val legendDir = objects.directory(convention = projectDir)
 
-  override val chartRootFilename = objects.string(convention = "modules")
+  override val chartRootFilename = objects.string(convention = "chart")
   override val legendRootFilename = objects.string(convention = "legend")
 
   // All chart files will be placed in each submodule's root folder
@@ -131,14 +131,14 @@ internal class OutputSpecImpl(objects: ObjectFactory, project: Project) : Output
 
   // All chart files will be placed in the specified relative path to each submodule's root folder
   override fun saveChartsRelativeToSubmodule(relativeToSubmodule: String) =
-    chartOutputDirectory.set(projectDir.dir(relativeToSubmodule))
+    chartDir.set(projectDir.dir(relativeToSubmodule))
 
   // All legend files will be placed in the root project's root folder
   override fun saveLegendsInRootDir() = saveLegendsRelativeToRootModule("")
 
   // All legend files will be placed in the specified path relative to the root module's root folder
   override fun saveLegendsRelativeToRootModule(relativeToRoot: String) =
-    legendOutputDirectory.set(projectDir.dir(relativeToRoot))
+    legendDir.set(projectDir.dir(relativeToRoot))
 }
 
 internal class LinkTypesSpecImpl(objects: ObjectFactory) : LinkTypesSpec {

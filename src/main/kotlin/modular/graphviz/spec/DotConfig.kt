@@ -19,7 +19,7 @@ data class DotConfig(
   val rankSep: Float? = null,
 ) : JSerializable
 
-internal fun DotConfig(spec: GraphVizSpec): DotConfig = DotConfig(
+internal fun DotConfig(spec: GraphvizSpec): DotConfig = DotConfig(
   arrowHead = spec.arrowHead.orNull,
   arrowTail = spec.arrowTail.orNull,
   dir = spec.dir.orNull,

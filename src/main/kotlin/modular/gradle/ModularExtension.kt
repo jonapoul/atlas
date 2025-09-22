@@ -9,7 +9,7 @@ import modular.core.spec.ModulePathTransformSpec
 import modular.core.spec.ModuleType
 import modular.core.spec.OutputSpec
 import modular.core.spec.Spec
-import modular.graphviz.spec.GraphVizSpec
+import modular.graphviz.spec.GraphvizSpec
 import modular.mermaid.spec.MermaidSpec
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
@@ -78,9 +78,9 @@ interface ModularExtension {
   val specs: NamedDomainObjectContainer<Spec>
   @ModularDsl fun specs(action: Action<NamedDomainObjectContainer<Spec>>)
 
-  val graphViz: GraphVizSpec
+  val graphViz: GraphvizSpec
   @ModularDsl fun graphViz()
-  @ModularDsl fun graphViz(action: Action<GraphVizSpec>)
+  @ModularDsl fun graphViz(action: Action<GraphvizSpec>)
 
   val mermaid: MermaidSpec
   @ModularDsl fun mermaid()

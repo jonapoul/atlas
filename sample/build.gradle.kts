@@ -45,16 +45,15 @@ modular {
   }
 
   outputs {
-    chartRootFilename = "modules"
+    chartRootFilename = "charts"
     legendRootFilename = "legend"
-    saveChartsRelativeToSubmodule("modules")
+    saveChartsRelativeToSubmodule("charts")
     saveLegendsRelativeToRootModule("legend")
   }
 
   graphViz {
     adjustSvgViewBox = true
     dpi = 100
-    fileExtension = "dot"
     fontSize = 30
     rankSep = 1.5f
     writeReadme = true
@@ -67,7 +66,6 @@ modular {
   }
 
   mermaid {
-    fileExtension = "mmd"
     animateLinks = false
     writeReadme = false
 

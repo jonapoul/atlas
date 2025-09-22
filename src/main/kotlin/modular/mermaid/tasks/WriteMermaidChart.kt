@@ -32,6 +32,7 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
+import java.io.File
 
 @CacheableTask
 abstract class WriteMermaidChart :
@@ -88,7 +89,7 @@ abstract class WriteMermaidChart :
       name: String,
       extension: ModularExtension,
       spec: MermaidSpec,
-      outputFile: RegularFile,
+      outputFile: File,
     ): TaskProvider<WriteMermaidChart> = with(target) {
       val collateModuleTypes = CollateModuleTypes.get(rootProject)
       val calculateProjectTree = WriteModuleTree.get(target)
@@ -96,7 +97,7 @@ abstract class WriteMermaidChart :
       tasks.register(name, WriteMermaidChart::class.java) { task ->
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
-        task.outputFile.convention(outputFile)
+        task.outputFile.set(outputFile)
 
         task.groupModules.convention(extension.groupModules)
         task.replacements.convention(extension.modulePathTransforms.replacements)

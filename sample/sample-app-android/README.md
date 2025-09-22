@@ -2,7 +2,7 @@
 
 <!--region chart-->
 
-![chart](modules/modules.svg)
+![chart](charts/charts.svg)
 
 ![legend](../legend/legend.svg)
 

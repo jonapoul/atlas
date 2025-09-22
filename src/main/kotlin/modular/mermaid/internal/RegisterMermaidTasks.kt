@@ -5,87 +5,81 @@
 package modular.mermaid.internal
 
 import modular.core.internal.ModularExtensionImpl
-import modular.core.internal.Variant
+import modular.core.internal.Variant.Chart
+import modular.core.internal.Variant.Legend
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
 import modular.core.tasks.WriteReadme
-import modular.core.tasks.defaultOutputFile
 import modular.mermaid.spec.MermaidSpec
+import modular.mermaid.tasks.WriteDummyMarkdownLegend
 import modular.mermaid.tasks.WriteMarkdownLegend
+import modular.mermaid.tasks.WriteMarkdownLegendBase
 import modular.mermaid.tasks.WriteMermaidChart
 import org.gradle.api.Project
-import org.gradle.api.file.RegularFile
 
 internal fun Project.registerMermaidTrunkTasks(
   extension: ModularExtensionImpl,
   spec: MermaidSpecImpl,
 ) {
-  WriteMarkdownLegend.register(
-    target = this,
-    name = WriteMarkdownLegend.TASK_NAME,
+  val realTask = WriteMarkdownLegendBase.register<WriteMarkdownLegend>(
+    target = project,
+    spec = spec,
+    variant = Legend,
     extension = extension,
-    outputFile = defaultOutputFile(extension, spec).map { f ->
-      // just to change the extension! right faff
-      val file = f.asFile
-      val siblingFile = file.resolveSibling("${file.nameWithoutExtension}.md")
-      layout.projectDirectory.file(siblingFile.relativeTo(projectDir).path)
-    },
+    outputFile = outputFile(extension, Legend, fileExtension = "md"),
   )
 
-  // Also validate the legend's dotfile when we call gradle check
-  val tempTask = WriteMarkdownLegend.register(
-    target = this,
-    name = WriteMarkdownLegend.TASK_NAME_FOR_CHECKING,
+  val dummyTask = WriteMarkdownLegendBase.register<WriteDummyMarkdownLegend>(
+    target = project,
+    spec = spec,
+    variant = Legend,
     extension = extension,
-    outputFile = modularBuildDirectory.map { it.file("legend-temp.md") },
+    outputFile = modularBuildDirectory.get().file("legend-temp.md").asFile,
   )
 
-  val checkTask = CheckFileDiff.register(
-    target = this,
-    name = CheckFileDiff.legendName(flavor = "Mermaid"),
-    generateTask = tempTask,
-    realFile = outputFile(extension.outputs, Variant.Legend, fileExtension = "md"),
+  CheckFileDiff.register(
+    target = project,
+    variant = Legend,
+    spec = spec,
+    realTask = realTask,
+    dummyTask = dummyTask,
   )
-
-  tasks.maybeCreate("check").dependsOn(checkTask)
 }
 
 internal fun Project.registerMermaidLeafTasks(
   extension: ModularExtensionImpl,
   spec: MermaidSpec,
-  file: RegularFile,
 ) {
   val chartTask = WriteMermaidChart.register(
-    target = this,
+    target = project,
     name = WriteMermaidChart.TASK_NAME,
     extension = extension,
     spec = spec,
-    outputFile = file,
+    outputFile = outputFile(extension, Chart, spec.fileExtension.get()),
   )
 
-  val tempMermaidTask = WriteMermaidChart.register(
-    target = this,
+  val dummyChartTask = WriteMermaidChart.register(
+    target = project,
     name = WriteMermaidChart.TASK_NAME_FOR_CHECKING,
     extension = extension,
     spec = spec,
-    outputFile = modularBuildDirectory.get().file("modules-temp.mmd"),
+    outputFile = modularBuildDirectory.get().file("chart-temp.mmd").asFile,
   )
 
-  val checkTask = CheckFileDiff.register(
-    target = this,
-    name = CheckFileDiff.chartName(flavor = "Mermaid"),
-    generateTask = tempMermaidTask,
-    realFile = file,
+  CheckFileDiff.register(
+    target = project,
+    spec = spec,
+    variant = Chart,
+    realTask = chartTask,
+    dummyTask = dummyChartTask,
   )
-
-  tasks.maybeCreate("check").dependsOn(checkTask)
 
   WriteReadme.register(
-    target = this,
+    target = project,
     enabled = spec.writeReadme,
     flavor = "Mermaid",
     chartFile = chartTask.map { it.outputFile.get() },
-    legendTask = WriteMarkdownLegend.get(rootProject),
+    legendTask = rootProject.tasks.named("writeMermaidLegend", WriteMarkdownLegend::class.java),
   )
 }
