@@ -98,7 +98,7 @@ sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
           linkTypes.forEach { type ->
             val bgColor = if (type.color == null) "" else " BGCOLOR=\"${type.color}\""
             val style = type.style ?: "&lt;style&gt;"
-            appendLine("  <TR><TD>${type.configuration}</TD><TD$bgColor>$style</TD></TR>")
+            appendLine("  <TR><TD>${type.displayName}</TD><TD$bgColor>${style.capitalized()}</TD></TR>")
           }
           appendLine("</TABLE>")
           appendLine(">];")
