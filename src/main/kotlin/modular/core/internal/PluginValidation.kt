@@ -22,7 +22,8 @@ internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
 internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionImpl) {
   val graphVizSpec = extension.specs.filterIsInstance<GraphvizSpecImpl>().firstOrNull() ?: return
   val adjustSvgViewBox = graphVizSpec.adjustSvgViewBox.get()
-  val warningIsSuppressed = extension.properties.suppressSvgViewBoxWarning.get()
+  val warningIsSuppressed = extension.properties.graphviz.suppressSvgViewBoxWarning
+    .get()
   if (!adjustSvgViewBox && graphVizSpec.dpi.isPresent && !warningIsSuppressed) {
     val msg = "Configuring a custom DPI on a dotfile's with SVG output enabled will likely cause a misaligned " +
       "viewBox. Try adding the following property to your build file to automatically attempt a fix:"
@@ -31,10 +32,12 @@ internal fun Project.warnIfSvgSelectedWithCustomDpi(extension: ModularExtensionI
         $msg
 
           modular {
-            adjustSvgViewBox = true
+            graphviz {
+              adjustSvgViewBox = true
+            }
           }
 
-        or add "modular.suppress.adjustSvgViewBox=true" to your gradle.properties file to suppress this warning.
+        or add "modular.graphviz.suppressAdjustSvgViewBox=true" to your gradle.properties file to suppress this warning.
       """.trimIndent(),
     )
   }

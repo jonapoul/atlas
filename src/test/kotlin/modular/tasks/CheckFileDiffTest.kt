@@ -63,7 +63,7 @@ class CheckFileDiffTest : ScenarioTest() {
     assertThat(check1.task(":a:checkGraphvizChart")?.outcome).isEqualTo(SUCCESS)
 
     // given we set a custom property set to adjust the output
-    resolve("gradle.properties").writeText("modular.graphViz.chart.layoutEngine=circo")
+    resolve("gradle.properties").writeText("modular.graphviz.chart.layoutEngine=circo")
 
     // when we run a check again
     val check2 = runTask(":a:checkGraphvizChart").buildAndFail()

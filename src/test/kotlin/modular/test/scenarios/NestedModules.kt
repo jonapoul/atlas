@@ -20,10 +20,6 @@ object NestedModules : Scenario {
     }
   """.trimIndent()
 
-  override val gradlePropertiesFile = """
-    modular.suppress.noGraphVizOutputs=true
-  """.trimIndent()
-
   override val submoduleBuildFiles = mapOf(
     "app" to BASIC_JVM_BUILD_SCRIPT + """
       dependencies {

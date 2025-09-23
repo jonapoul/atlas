@@ -37,7 +37,7 @@ class ModularTrunkPlugin : Plugin<Project> {
     ) as ModularExtensionImpl
 
     val properties = GradleProperties(target)
-    if (properties.autoApplyToChildren.get()) {
+    if (properties.general.autoApplyToChildren.get()) {
       subprojects { child ->
         child.pluginManager.apply(ModularLeafPlugin::class.java)
       }

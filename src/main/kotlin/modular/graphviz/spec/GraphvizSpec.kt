@@ -53,7 +53,7 @@ interface GraphvizSpec : Spec {
    * `gradle.properties`:
    *
    * ```properties
-   * modular.suppress.adjustSvgViewBox=true
+   * modular.graphviz.suppressAdjustSvgViewBox=true
    * ```
    */
   val adjustSvgViewBox: Property<Boolean>
