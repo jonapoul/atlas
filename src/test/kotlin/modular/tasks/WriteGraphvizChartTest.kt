@@ -77,9 +77,9 @@ class WriteGraphvizChartTest : ScenarioTest() {
           links [label=<
           <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
             <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Link Types</B></TD></TR>
-            <TR><TD>jvmMainImplementation</TD><TD BGCOLOR="orange">bold</TD></TR>
-            <TR><TD>.*?api</TD><TD>&lt;style&gt;</TD></TR>
-            <TR><TD>.*?implementation</TD><TD>dotted</TD></TR>
+            <TR><TD>jvmMainImplementation</TD><TD BGCOLOR="orange">Bold</TD></TR>
+            <TR><TD>api</TD><TD>Solid</TD></TR>
+            <TR><TD>implementation</TD><TD>Dotted</TD></TR>
           </TABLE>
           >];
         }
