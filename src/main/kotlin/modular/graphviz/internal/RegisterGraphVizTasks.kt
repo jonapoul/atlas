@@ -50,6 +50,7 @@ internal fun Project.registerGraphvizTrunkTasks(
 
   CheckFileDiff.register(
     target = project,
+    extension = extension,
     spec = spec,
     variant = Legend,
     realTask = realTask,
@@ -81,6 +82,7 @@ internal fun Project.registerGraphvizLeafTasks(
 
   CheckFileDiff.register(
     target = project,
+    extension = extension,
     spec = spec,
     variant = Chart,
     realTask = dotTask,

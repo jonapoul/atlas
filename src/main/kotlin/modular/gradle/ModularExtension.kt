@@ -63,6 +63,12 @@ interface ModularExtension {
    */
   val printFilesToConsole: Property<Boolean>
 
+  /**
+   * Set to true to attach a diffing task to `gradle check` - which will verify that your generated charts match the
+   * current state of the project layout. Defaults to true.
+   */
+  val checkOutputs: Property<Boolean>
+
   val modulePathTransforms: ModulePathTransformSpec
   @ModularDsl fun modulePathTransforms(action: Action<ModulePathTransformSpec>)
 

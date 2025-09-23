@@ -37,6 +37,7 @@ internal open class ModularExtensionImpl @Inject constructor(
   override val separator = objects.string(properties.general.separator)
   override val alsoTraverseUpwards = objects.bool(properties.general.alsoTraverseUpwards)
   override val printFilesToConsole = objects.bool(properties.general.printFilesToConsole)
+  override val checkOutputs = objects.bool(properties.general.checkOutputs)
 
   override val modulePathTransforms = ModulePathTransformSpecImpl(objects)
   override fun modulePathTransforms(action: Action<ModulePathTransformSpec>) = action.execute(modulePathTransforms)

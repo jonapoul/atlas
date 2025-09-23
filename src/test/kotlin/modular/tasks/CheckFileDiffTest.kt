@@ -6,10 +6,13 @@ package modular.tasks
 
 import assertk.assertThat
 import assertk.assertions.contains
+import assertk.assertions.containsAtLeast
 import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
 import modular.test.ScenarioTest
 import modular.test.runTask
+import modular.test.scenarios.CheckExplicitlyDisabled
+import modular.test.scenarios.CheckExplicitlyEnabled
 import modular.test.scenarios.GraphVizBasic
 import modular.test.scenarios.GraphVizBasicWithPngOutput
 import org.gradle.testkit.runner.TaskOutcome.FAILED
@@ -127,6 +130,36 @@ class CheckFileDiffTest : ScenarioTest() {
         |            >];
         |          }
       """.trimMargin(),
+    )
+  }
+
+  @Test
+  fun `Register check tasks when checkOutputs is true`() = runScenario(CheckExplicitlyEnabled) {
+    // when
+    val result = runTask("check", extras = listOf("--dry-run")).build()
+    val output = result.output.lines()
+
+    // then
+    assertThat(output).containsAtLeast(
+      ":check SKIPPED",
+      ":checkGraphvizLegend SKIPPED",
+      ":a:checkGraphvizChart SKIPPED",
+      ":b:checkGraphvizChart SKIPPED",
+      ":c:checkGraphvizChart SKIPPED",
+    )
+  }
+
+  @Test
+  fun `Don't register check tasks when checkOutputs is false`() = runScenario(CheckExplicitlyDisabled) {
+    // when
+    val result = runTask("check", extras = listOf("--dry-run")).build()
+
+    // then
+    assertThat(result.output).doesNotContain(
+      ":checkGraphvizLegend",
+      ":a:checkGraphvizChart",
+      ":b:checkGraphvizChart",
+      ":c:checkGraphvizChart",
     )
   }
 }

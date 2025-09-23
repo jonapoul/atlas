@@ -16,6 +16,7 @@ internal class GradleProperties(project: Project) {
 internal class GeneralGradleProperties(override val project: Project) : IGradleProperties {
   val alsoTraverseUpwards: Provider<Boolean> = bool("modular.alsoTraverseUpwards", default = false)
   val autoApplyToChildren: Provider<Boolean> = bool("modular.autoApplyToChildren", default = false)
+  val checkOutputs: Provider<Boolean> = bool(key = "modular.checkOutputs", default = true)
   val generateOnSync: Provider<Boolean> = bool(key = "modular.generateOnSync", default = false)
   val groupModules: Provider<Boolean> = bool(key = "modular.groupModules", default = false)
   val printFilesToConsole: Provider<Boolean> = bool(key = "modular.printFilesToConsole", default = false)

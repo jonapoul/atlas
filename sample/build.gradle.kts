@@ -57,6 +57,7 @@ modular {
     fontSize = 30
     rankSep = 1.5f
     writeReadme = true
+    checkOutputs = true
 
     arrowHead(Normal)
     arrowTail(None)
