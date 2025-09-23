@@ -10,6 +10,7 @@ import modular.core.internal.Variant
 import modular.core.internal.diff
 import modular.core.internal.problemId
 import modular.core.spec.Spec
+import modular.gradle.ModularExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -29,7 +30,6 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
 import java.io.File
 import java.io.FileNotFoundException
 import javax.inject.Inject
-import kotlin.math.exp
 
 @CacheableTask
 abstract class CheckFileDiff : DefaultTask() {
@@ -91,15 +91,14 @@ abstract class CheckFileDiff : DefaultTask() {
 
     internal inline fun <reified T1 : TaskWithOutputFile, T2 : TaskWithOutputFile> register(
       target: Project,
+      extension: ModularExtension,
       spec: Spec,
       variant: Variant,
       realTask: TaskProvider<T1>,
       dummyTask: TaskProvider<T2>,
     ): TaskProvider<CheckFileDiff> = with(target) {
       val name = "check${spec.name.capitalized()}$variant"
-      val check = tasks.maybeCreate("check")
       val checkDiff = tasks.register(name, CheckFileDiff::class.java) { task ->
-        check.dependsOn(task)
         task.taskPath.convention(target.path + ":" + realTask.name)
         task.actualFile.convention(dummyTask.map { it.outputFile.get() })
       }
@@ -113,6 +112,11 @@ abstract class CheckFileDiff : DefaultTask() {
           .asFile
         task.expectedDirectory.set(expectedFile.parentFile.absolutePath)
         task.expectedFilename.set(expectedFile.name)
+      }
+
+      if (extension.checkOutputs.get()) {
+        logger.lifecycle("CHECKDIFF $checkDiff")
+        tasks.maybeCreate("check").dependsOn(checkDiff)
       }
 
       checkDiff

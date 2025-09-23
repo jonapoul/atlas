@@ -25,7 +25,7 @@ internal class MermaidSpecImpl(
 
   override val name = NAME
   override val fileExtension = objects.string(convention = "mmd")
-  override val writeReadme = objects.bool(convention = properties.mermaidWriteReadme)
+  override val writeReadme = objects.bool(convention = properties.mermaid.writeReadme)
 
   override val layout get() = mutableLayout
   override fun layout(action: Action<MermaidLayoutSpec>) = action.execute(layout)
@@ -34,9 +34,9 @@ internal class MermaidSpecImpl(
     mutableLayout = ElkLayoutSpecImpl(objects).also { action?.execute(it) }
   }
 
-  override val animateLinks = objects.bool(properties.mermaidAnimateLinks)
-  override val look = objects.string(properties.mermaidLook)
-  override val theme = objects.string(properties.mermaidTheme)
+  override val animateLinks = objects.bool(properties.mermaid.animateLinks)
+  override val look = objects.string(properties.mermaid.look)
+  override val theme = objects.string(properties.mermaid.theme)
 
   internal companion object {
     internal const val NAME = "Mermaid"

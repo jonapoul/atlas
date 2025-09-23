@@ -25,8 +25,8 @@ internal class GraphvizSpecImpl(
   override val name = NAME
   override val fileExtension = objects.string(convention = "dot")
   override val pathToDotCommand: Property<String> = objects.property(String::class.java).unsetConvention()
-  override val adjustSvgViewBox = objects.bool(convention = properties.adjustSvgViewBox)
-  override val writeReadme = objects.bool(convention = properties.gvWriteReadme)
+  override val adjustSvgViewBox = objects.bool(convention = properties.graphviz.adjustSvgViewBox)
+  override val writeReadme = objects.bool(convention = properties.graphviz.writeReadme)
 
   override fun arrowHead(value: ArrowType) = arrowHead(value.string)
   override fun arrowHead(value: String) = arrowHead.set(value)
@@ -40,15 +40,15 @@ internal class GraphvizSpecImpl(
   override fun layoutEngine(value: String) = layoutEngine.set(value)
   override fun rankDir(value: RankDir) = rankDir(value.string)
   override fun rankDir(value: String) = rankDir.set(value)
-  override val arrowHead = objects.string(properties.arrowHead)
-  override val arrowTail = objects.string(properties.arrowTail)
-  override val dir = objects.string(properties.dir)
-  override val dpi = objects.int(properties.dpi)
-  override val fileFormat = objects.string(properties.fileFormat)
-  override val fontSize = objects.int(properties.fontSize)
-  override val layoutEngine = objects.string(properties.layoutEngine)
-  override val rankDir = objects.string(properties.rankDir)
-  override val rankSep = objects.float(properties.rankSep)
+  override val arrowHead = objects.string(properties.graphviz.arrowHead)
+  override val arrowTail = objects.string(properties.graphviz.arrowTail)
+  override val dir = objects.string(properties.graphviz.dir)
+  override val dpi = objects.int(properties.graphviz.dpi)
+  override val fileFormat = objects.string(properties.graphviz.fileFormat)
+  override val fontSize = objects.int(properties.graphviz.fontSize)
+  override val layoutEngine = objects.string(properties.graphviz.layoutEngine)
+  override val rankDir = objects.string(properties.graphviz.rankDir)
+  override val rankSep = objects.float(properties.graphviz.rankSep)
 
   internal companion object {
     internal const val NAME = "Graphviz"

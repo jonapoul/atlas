@@ -30,13 +30,14 @@ internal open class ModularExtensionImpl @Inject constructor(
 ) : ModularExtension {
   internal val properties = GradleProperties(project)
 
-  override val generateOnSync = objects.bool(properties.generateOnSync)
-  override val groupModules = objects.bool(properties.groupModules)
+  override val generateOnSync = objects.bool(properties.general.generateOnSync)
+  override val groupModules = objects.bool(properties.general.groupModules)
   override val ignoredConfigs = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
   override val ignoredModules = objects.set(convention = emptySet<Regex>())
-  override val separator = objects.string(properties.separator)
-  override val alsoTraverseUpwards = objects.bool(properties.alsoTraverseUpwards)
-  override val printFilesToConsole = objects.bool(properties.printFilesToConsole)
+  override val separator = objects.string(properties.general.separator)
+  override val alsoTraverseUpwards = objects.bool(properties.general.alsoTraverseUpwards)
+  override val printFilesToConsole = objects.bool(properties.general.printFilesToConsole)
+  override val checkOutputs = objects.bool(properties.general.checkOutputs)
 
   override val modulePathTransforms = ModulePathTransformSpecImpl(objects)
   override fun modulePathTransforms(action: Action<ModulePathTransformSpec>) = action.execute(modulePathTransforms)

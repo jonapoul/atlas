@@ -41,7 +41,7 @@ class PluginValidationTest : ScenarioTest() {
 
     // when we run again with the suppress property enabled
     val suppressedResult = buildRunner()
-      .withArguments("help", "-Pmodular.suppress.adjustSvgViewBox=true")
+      .withArguments("help", "-Pmodular.graphviz.suppressAdjustSvgViewBox=true")
       .build()
 
     // Then the warning wasn't printed

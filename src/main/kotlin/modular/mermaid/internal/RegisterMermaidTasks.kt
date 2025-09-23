@@ -40,6 +40,7 @@ internal fun Project.registerMermaidTrunkTasks(
 
   CheckFileDiff.register(
     target = project,
+    extension = extension,
     variant = Legend,
     spec = spec,
     realTask = realTask,
@@ -69,6 +70,7 @@ internal fun Project.registerMermaidLeafTasks(
 
   CheckFileDiff.register(
     target = project,
+    extension = extension,
     spec = spec,
     variant = Chart,
     realTask = chartTask,
