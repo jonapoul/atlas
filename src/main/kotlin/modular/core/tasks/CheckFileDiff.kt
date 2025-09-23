@@ -115,7 +115,6 @@ abstract class CheckFileDiff : DefaultTask() {
       }
 
       if (extension.checkOutputs.get()) {
-        logger.lifecycle("CHECKDIFF $checkDiff")
         tasks.maybeCreate("check").dependsOn(checkDiff)
       }
 

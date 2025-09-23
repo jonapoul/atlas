@@ -5,16 +5,16 @@
 package modular.core.internal
 
 import groovy.lang.Closure
-import modular.core.spec.ModuleType
+import modular.core.spec.ModuleTypeSpec
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.model.ObjectFactory
 import java.util.function.IntFunction
 
-internal class ModuleTypeContainer(objects: ObjectFactory) : OrderedNamedContainer<ModuleType>(
-  container = objects.domainObjectContainer(ModuleType::class.java) { name ->
-    objects.newInstance(ModuleTypeImpl::class.java, name)
+internal class ModuleTypeContainer(objects: ObjectFactory) : OrderedNamedContainer<ModuleTypeSpec>(
+  container = objects.domainObjectContainer(ModuleTypeSpec::class.java) { name ->
+    objects.newInstance(ModuleTypeSpecImpl::class.java, name)
   },
 )
 

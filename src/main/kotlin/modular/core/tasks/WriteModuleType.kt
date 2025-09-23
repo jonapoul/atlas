@@ -9,7 +9,7 @@ import modular.core.internal.fileInBuildDirectory
 import modular.core.internal.moduleTypeModel
 import modular.core.internal.orderedTypes
 import modular.core.spec.ModuleType
-import modular.core.spec.ModuleTypeModel
+import modular.core.spec.ModuleTypeSpec
 import modular.gradle.ModularExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -26,7 +26,7 @@ import org.gradle.api.tasks.TaskProvider
 @CacheableTask
 abstract class WriteModuleType : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract val projectPath: Property<String>
-  @get:[Input Optional] abstract val moduleType: Property<ModuleTypeModel>
+  @get:[Input Optional] abstract val moduleType: Property<ModuleType>
   @get:Input abstract override val separator: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
@@ -77,7 +77,7 @@ abstract class WriteModuleType : DefaultTask(), TaskWithSeparator, TaskWithOutpu
       writeModule
     }
 
-    private fun ModuleType.matches(project: Project): Boolean = with(project) {
+    private fun ModuleTypeSpec.matches(project: Project): Boolean = with(project) {
       pathContains.map { path.contains(it) }.orNull
         ?: pathMatches.map { path.matches(it) }.orNull
         ?: hasPluginId.map { pluginManager.hasPlugin(it) }.orNull

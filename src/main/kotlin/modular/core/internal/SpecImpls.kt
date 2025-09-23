@@ -7,7 +7,7 @@ package modular.core.internal
 import modular.core.spec.LinkType
 import modular.core.spec.LinkTypesSpec
 import modular.core.spec.ModulePathTransformSpec
-import modular.core.spec.ModuleType
+import modular.core.spec.ModuleTypeSpec
 import modular.core.spec.OutputSpec
 import modular.core.spec.Spec
 import modular.gradle.ModularExtension
@@ -43,7 +43,7 @@ internal open class ModularExtensionImpl @Inject constructor(
   override fun modulePathTransforms(action: Action<ModulePathTransformSpec>) = action.execute(modulePathTransforms)
 
   override val moduleTypes = ModuleTypeContainer(objects)
-  override fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleType>>) = action.execute(moduleTypes)
+  override fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleTypeSpec>>) = action.execute(moduleTypes)
 
   override val linkTypes = LinkTypesSpecImpl(objects)
   override fun linkTypes(action: Action<LinkTypesSpec>) = action.execute(linkTypes)
@@ -99,7 +99,7 @@ internal class ModulePathTransformSpecImpl(objects: ObjectFactory) : ModulePathT
   override fun remove(pattern: String) = remove(pattern.toRegex())
 }
 
-internal abstract class ModuleTypeImpl @Inject constructor(override val name: String) : ModuleType {
+internal abstract class ModuleTypeSpecImpl @Inject constructor(override val name: String) : ModuleTypeSpec {
   @get:Input abstract override val color: Property<String>
   @get:Input abstract override val pathContains: Property<String>
   @get:Input abstract override val pathMatches: Property<Regex>
@@ -145,8 +145,9 @@ internal class OutputSpecImpl(objects: ObjectFactory, project: Project) : Output
 internal class LinkTypesSpecImpl(objects: ObjectFactory) : LinkTypesSpec {
   override val linkTypes: SetProperty<LinkType> = objects.setProperty(LinkType::class.java)
 
-  override fun add(configuration: Regex, style: String?, color: String?) =
-    linkTypes.add(LinkType(configuration, style, color))
+  override fun add(configuration: String, style: String?, color: String?, displayName: String) =
+    linkTypes.add(LinkType(configuration, style, color, displayName))
 
-  override fun String.invoke(style: String?, color: String?) = add(this, style, color)
+  override fun String.invoke(style: String?, color: String?, displayName: String) =
+    add(this, style, color, displayName)
 }

@@ -21,7 +21,7 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
  *   linkTypes {
  *     api(color = "green")
  *     implementation(color = "#5555FF")
- *     "compileOnly"(style = "dotted")
+ *     "compileOnly"(style = "dotted", displayName = "Compile Only")
  *   }
  * }
  * ```
@@ -36,74 +36,69 @@ interface LinkTypesSpec {
 
   @ModularDsl
   fun add(
-    configuration: Regex,
+    configuration: String,
     style: String? = null,
     color: String? = null,
+    displayName: String = configuration,
   )
 
   @ModularDsl
   fun add(
-    @Language("RegExp") configuration: String,
-    style: String? = null,
-    color: String? = null,
-  ) = add(configuration.toRegex(), style, color)
-
-  @ModularDsl
-  fun add(
-    configuration: Regex,
+    configuration: String,
     style: Style,
     color: String? = null,
-  ) = add(configuration, style.string, color)
-
-  @ModularDsl
-  fun add(
-    @Language("RegExp") configuration: String,
-    style: Style,
-    color: String? = null,
-  ) = add(configuration, style.string, color)
+    displayName: String = configuration,
+  ) = add(configuration, style.string, color, displayName)
 
   @ModularDsl
   operator fun String.invoke(
     style: String? = null,
     color: String? = null,
+    displayName: String = this,
   )
 
   @ModularDsl
   operator fun String.invoke(
     style: Style?,
     color: String? = null,
-  ) = invoke(style?.string, color)
+    displayName: String = this,
+  ) = invoke(style?.string, color, displayName)
 
   @ModularDsl
   fun api(
     style: String? = null,
     color: String? = null,
-  ) = add(configuration = ".*?api".toRegex(IGNORE_CASE), style = style, color = color)
+    displayName: String = "api",
+  ) = add(configuration = ".*?api", style, color, displayName)
 
   @ModularDsl
   fun api(
     style: Style,
     color: String? = null,
-  ) = api(style = style.string, color = color)
+    displayName: String = "api",
+  ) = api(style.string, color, displayName)
 
   @ModularDsl
   fun implementation(
     style: String? = null,
     color: String? = null,
-  ) = add(configuration = ".*?implementation".toRegex(IGNORE_CASE), style = style, color = color)
+    displayName: String = "implementation",
+  ) = add(configuration = ".*?implementation", style, color, displayName)
 
   @ModularDsl
   fun implementation(
     style: Style,
     color: String? = null,
-  ) = implementation(style = style.string, color = color)
+    displayName: String = "implementation",
+  ) = implementation(style.string, color, displayName)
 }
 
 interface Style : StringEnum
 
 @KSerializable
 data class LinkType(
-  val configuration: Regex,
+  val configuration: String,
   val style: String? = null,
   val color: String? = null,
+  val displayName: String = configuration,
 ) : JSerializable

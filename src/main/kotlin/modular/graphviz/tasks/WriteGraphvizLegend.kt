@@ -10,7 +10,7 @@ import modular.core.internal.buildIndentedString
 import modular.core.internal.moduleTypeModel
 import modular.core.internal.orderedTypes
 import modular.core.spec.LinkType
-import modular.core.spec.ModuleTypeModel
+import modular.core.spec.ModuleType
 import modular.core.spec.Spec
 import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
@@ -54,7 +54,7 @@ abstract class WriteDummyGraphvizLegend : WriteGraphvizLegendBase() {
 @CacheableTask
 sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract override val separator: Property<String>
-  @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
+  @get:Input abstract val moduleTypes: ListProperty<ModuleType>
   @get:Input abstract val linkTypes: SetProperty<LinkType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 

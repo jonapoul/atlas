@@ -9,7 +9,7 @@ import modular.core.internal.Variant
 import modular.core.internal.moduleTypeModel
 import modular.core.internal.orderedTypes
 import modular.core.spec.LinkType
-import modular.core.spec.ModuleTypeModel
+import modular.core.spec.ModuleType
 import modular.core.spec.Spec
 import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
@@ -53,7 +53,7 @@ abstract class WriteDummyMarkdownLegend : WriteMarkdownLegendBase() {
 @CacheableTask
 sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract override val separator: Property<String>
-  @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
+  @get:Input abstract val moduleTypes: ListProperty<ModuleType>
   @get:Input abstract val linkTypes: SetProperty<LinkType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
@@ -86,7 +86,7 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
     outputFile.writeText(contents)
   }
 
-  private fun StringBuilder.appendModuleTypesTable(moduleTypes: List<ModuleTypeModel>) {
+  private fun StringBuilder.appendModuleTypesTable(moduleTypes: List<ModuleType>) {
     appendLine("| Module Types | Color |")
     appendLine("|:--:|:--:|")
 
@@ -103,8 +103,8 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
 
     for (type in linkTypes) {
       // TODO https://github.com/jonapoul/modular/issues/119
-      val style = listOfNotNull(type.color, type.style).joinToString(separator = " ")
-      appendLine("| ${type.configuration} | $style |")
+      val style = listOfNotNull(type.color, type.style).joinToString(separator = " ") { it.capitalized() }
+      appendLine("| ${type.displayName} | $style |")
     }
   }
 

@@ -6,7 +6,7 @@ package modular.gradle
 
 import modular.core.spec.LinkTypesSpec
 import modular.core.spec.ModulePathTransformSpec
-import modular.core.spec.ModuleType
+import modular.core.spec.ModuleTypeSpec
 import modular.core.spec.OutputSpec
 import modular.core.spec.Spec
 import modular.graphviz.spec.GraphvizSpec
@@ -47,7 +47,7 @@ interface ModularExtension {
 
   /**
    * A separator character used internally when caching module types and links. You should only need to change this if
-   * any module paths or names in configured [ModuleType]s contain a semi-colon.
+   * any module paths or names in configured [ModuleTypeSpec]s contain a semi-colon.
    * Defaults to ";".
    */
   val separator: Property<String>
@@ -72,8 +72,8 @@ interface ModularExtension {
   val modulePathTransforms: ModulePathTransformSpec
   @ModularDsl fun modulePathTransforms(action: Action<ModulePathTransformSpec>)
 
-  val moduleTypes: NamedDomainObjectContainer<ModuleType>
-  @ModularDsl fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleType>>)
+  val moduleTypes: NamedDomainObjectContainer<ModuleTypeSpec>
+  @ModularDsl fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleTypeSpec>>)
 
   val linkTypes: LinkTypesSpec
   @ModularDsl fun linkTypes(action: Action<LinkTypesSpec>)

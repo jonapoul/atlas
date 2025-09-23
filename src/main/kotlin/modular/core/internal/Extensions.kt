@@ -5,7 +5,7 @@
 package modular.core.internal
 
 import modular.core.spec.ModuleType
-import modular.core.spec.ModuleTypeModel
+import modular.core.spec.ModuleTypeSpec
 import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithSeparator
@@ -20,10 +20,10 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.provider.SetProperty
 import java.io.File
 
-internal fun ModularExtension.orderedTypes(): List<ModuleType> =
-  (moduleTypes as OrderedNamedContainer<ModuleType>).getInOrder()
+internal fun ModularExtension.orderedTypes(): List<ModuleTypeSpec> =
+  (moduleTypes as OrderedNamedContainer<ModuleTypeSpec>).getInOrder()
 
-internal fun moduleTypeModel(type: ModuleType) = ModuleTypeModel(
+internal fun moduleTypeModel(type: ModuleTypeSpec) = ModuleType(
   name = type.name,
   color = type.color.get(),
 )

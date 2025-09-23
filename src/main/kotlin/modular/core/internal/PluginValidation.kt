@@ -4,11 +4,11 @@
  */
 package modular.core.internal
 
-import modular.core.spec.ModuleType
+import modular.core.spec.ModuleTypeSpec
 import modular.graphviz.internal.GraphvizSpecImpl
 import org.gradle.api.Project
 
-internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleType>) {
+internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleTypeSpec>) {
   types.forEach { type ->
     if (!type.pathContains.isPresent && !type.pathMatches.isPresent && !type.hasPluginId.isPresent) {
       logger.warn(

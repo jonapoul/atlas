@@ -73,25 +73,25 @@ public abstract interface class modular/core/spec/ModulePathTransformSpec {
 	public abstract fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
 }
 
-public abstract interface class modular/core/spec/ModuleType {
-	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
-	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
-	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
-	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
-}
-
-public final class modular/core/spec/ModuleTypeModel : java/io/Serializable {
+public final class modular/core/spec/ModuleType : java/io/Serializable {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lmodular/core/spec/ModuleTypeModel;
-	public static synthetic fun copy$default (Lmodular/core/spec/ModuleTypeModel;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/core/spec/ModuleTypeModel;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lmodular/core/spec/ModuleType;
+	public static synthetic fun copy$default (Lmodular/core/spec/ModuleType;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/core/spec/ModuleType;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColor ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class modular/core/spec/ModuleTypeSpec {
+	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
 }
 
 public abstract interface class modular/core/spec/OutputSpec {
