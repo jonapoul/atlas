@@ -183,6 +183,7 @@ public abstract interface annotation class modular/gradle/ModularDsl : java/lang
 
 public abstract interface class modular/gradle/ModularExtension {
 	public abstract fun getAlsoTraverseUpwards ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCheckOutputs ()Lorg/gradle/api/provider/Property;
 	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
 	public abstract fun getGraphViz ()Lmodular/graphviz/spec/GraphvizSpec;
 	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
