@@ -4,12 +4,11 @@
  */
 package modular.core.internal
 
-import modular.core.spec.ModuleTypeSpec
 import modular.graphviz.internal.GraphvizSpecImpl
 import org.gradle.api.Project
 
-internal fun Project.warnIfModuleTypesSpecifyNothing(types: List<ModuleTypeSpec>) {
-  types.forEach { type ->
+internal fun Project.warnIfModuleTypesSpecifyNothing(extension: ModularExtensionImpl) {
+  extension.orderedModuleTypes().forEach { type ->
     if (!type.pathContains.isPresent && !type.pathMatches.isPresent && !type.hasPluginId.isPresent) {
       logger.warn(
         "Warning: Module type '${type.name}' will be ignored - you need to set one of " +

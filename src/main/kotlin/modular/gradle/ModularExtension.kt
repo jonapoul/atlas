@@ -4,9 +4,10 @@
  */
 package modular.gradle
 
-import modular.core.spec.LinkTypesSpec
 import modular.core.spec.ModulePathTransformSpec
 import modular.core.spec.ModuleTypeSpec
+import modular.core.spec.NamedLinkTypeContainer
+import modular.core.spec.NamedModuleTypeContainer
 import modular.core.spec.OutputSpec
 import modular.core.spec.Spec
 import modular.graphviz.spec.GraphvizSpec
@@ -72,11 +73,11 @@ interface ModularExtension {
   val modulePathTransforms: ModulePathTransformSpec
   @ModularDsl fun modulePathTransforms(action: Action<ModulePathTransformSpec>)
 
-  val moduleTypes: NamedDomainObjectContainer<ModuleTypeSpec>
-  @ModularDsl fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleTypeSpec>>)
+  val moduleTypes: NamedModuleTypeContainer
+  @ModularDsl fun moduleTypes(action: Action<NamedModuleTypeContainer>)
 
-  val linkTypes: LinkTypesSpec
-  @ModularDsl fun linkTypes(action: Action<LinkTypesSpec>)
+  val linkTypes: NamedLinkTypeContainer
+  @ModularDsl fun linkTypes(action: Action<NamedLinkTypeContainer>)
 
   val outputs: OutputSpec
   @ModularDsl fun outputs(action: Action<OutputSpec>)

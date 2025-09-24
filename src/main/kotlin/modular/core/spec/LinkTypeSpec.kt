@@ -6,9 +6,12 @@ package modular.core.spec
 
 import modular.gradle.ModularDsl
 import modular.graphviz.spec.StringEnum
-import org.gradle.api.provider.SetProperty
-import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
-import kotlin.text.RegexOption.IGNORE_CASE
+import org.gradle.api.NamedDomainObjectContainer
+import org.gradle.api.NamedDomainObjectProvider
+import org.gradle.api.provider.Property
+import org.gradle.kotlin.dsl.api
+import org.gradle.kotlin.dsl.implementation
+import org.gradle.kotlin.dsl.register
 import java.io.Serializable as JSerializable
 import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 
@@ -22,75 +25,37 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
  *     api(color = "green")
  *     implementation(color = "#5555FF")
  *     "compileOnly"(style = "dotted", displayName = "Compile Only")
+ *     "^withRegex.*"(style = "dashed", displayName = "Supports case-insensitive regex patterns")
  *   }
  * }
  * ```
  * You can create new types with the string invoke operator as above (similar to one used in Gradle dependencies
- * sometimes), or just call [add].
+ * sometimes), or just call one of the [register] overloads.
  *
  * Added entries are checked in priority order, so a configuration of `apiImplementationCompileOnly` in the example
  * above would match `api` but not reach `implementation` or `compileOnly`.
  */
-interface LinkTypesSpec {
-  val linkTypes: SetProperty<LinkType>
-
-  @ModularDsl
-  fun add(
-    configuration: String,
-    style: String? = null,
-    color: String? = null,
-    displayName: String = configuration,
-  )
-
-  @ModularDsl
-  fun add(
-    configuration: String,
-    style: Style,
-    color: String? = null,
-    displayName: String = configuration,
-  ) = add(configuration, style.string, color, displayName)
-
+interface NamedLinkTypeContainer : NamedDomainObjectContainer<LinkTypeSpec> {
   @ModularDsl
   operator fun String.invoke(
     style: String? = null,
     color: String? = null,
     displayName: String = this,
-  )
+  ): NamedDomainObjectProvider<LinkTypeSpec> = register(this, style, color, displayName)
 
   @ModularDsl
   operator fun String.invoke(
     style: Style?,
     color: String? = null,
     displayName: String = this,
-  ) = invoke(style?.string, color, displayName)
+  ): NamedDomainObjectProvider<LinkTypeSpec> = register(this, style?.string, color, displayName)
+}
 
-  @ModularDsl
-  fun api(
-    style: String? = null,
-    color: String? = null,
-    displayName: String = "api",
-  ) = add(configuration = ".*?api", style, color, displayName)
-
-  @ModularDsl
-  fun api(
-    style: Style,
-    color: String? = null,
-    displayName: String = "api",
-  ) = api(style.string, color, displayName)
-
-  @ModularDsl
-  fun implementation(
-    style: String? = null,
-    color: String? = null,
-    displayName: String = "implementation",
-  ) = add(configuration = ".*?implementation", style, color, displayName)
-
-  @ModularDsl
-  fun implementation(
-    style: Style,
-    color: String? = null,
-    displayName: String = "implementation",
-  ) = implementation(style.string, color, displayName)
+interface LinkTypeSpec {
+  val name: String
+  val configuration: Property<String>
+  val style: Property<String>
+  val color: Property<String>
 }
 
 interface Style : StringEnum

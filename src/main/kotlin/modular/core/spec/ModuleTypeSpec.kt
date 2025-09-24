@@ -2,8 +2,13 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
+@file:Suppress("unused") // public API
+
 package modular.core.spec
 
+import modular.gradle.ModularDsl
+import org.gradle.api.NamedDomainObjectContainer
+import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.provider.Property
 
 /**
@@ -40,10 +45,43 @@ import org.gradle.api.provider.Property
  * Remember that priority is given in descending order, so in the example above the UI module type will be checked
  * before the data or domain types.
  *
- * Exactly one of [pathContains], [pathMatches] or [hasPluginId] must be set. If not, Gradle will:
+ * Exactly one of [ModuleTypeSpec.pathContains], [ModuleTypeSpec.pathMatches] or [ModuleTypeSpec.hasPluginId] must be
+ * set. If not, Gradle will:
  * - warn you during IDE sync, or
  * - fail when running any tasks which reference them.
  */
+interface NamedModuleTypeContainer : NamedDomainObjectContainer<ModuleTypeSpec> {
+  @ModularDsl
+  fun registerByPluginId(
+    name: String,
+    color: String,
+    pluginId: String,
+  ): NamedDomainObjectProvider<ModuleTypeSpec> = register(name) { type ->
+    type.color.convention(color)
+    type.hasPluginId.convention(pluginId)
+  }
+
+  @ModularDsl
+  fun registerByPathMatches(
+    name: String,
+    color: String,
+    pathMatches: Regex,
+  ): NamedDomainObjectProvider<ModuleTypeSpec> = register(name) { type ->
+    type.color.convention(color)
+    type.pathMatches.convention(pathMatches)
+  }
+
+  @ModularDsl
+  fun registerByPathContains(
+    name: String,
+    color: String,
+    pathContains: String,
+  ): NamedDomainObjectProvider<ModuleTypeSpec> = register(name) { type ->
+    type.color.convention(color)
+    type.pathContains.convention(pathContains)
+  }
+}
+
 interface ModuleTypeSpec {
   /**
    * Required - this will be shown on your generated legend files.
