@@ -11,7 +11,7 @@ import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.provider.Provider
 import java.io.File
 import java.util.SortedMap
-import kotlin.reflect.typeOf
+import kotlin.text.RegexOption.IGNORE_CASE
 
 internal object ModuleLinks {
   fun of(
@@ -60,7 +60,10 @@ internal object ModuleLinks {
           configurations
             .sorted()
             .forEach { config ->
-              val type = linkTypes.firstOrNull { it.configuration.matches(config) }
+              val type = linkTypes.firstOrNull { t ->
+                // treat the given string first as an exact match, then fall back to treating as regex
+                t.configuration == config || t.configuration.toRegex(IGNORE_CASE).matches(config)
+              }
               val link = ModuleLink(fromPath, toPath, config, type?.style, type?.color)
               appendLine(link.string(separator))
             }

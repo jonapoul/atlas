@@ -9,7 +9,7 @@
 
 | Link Types | Style |
 |:--:|:--:|
-| jvmMainImplementation | orange bold |
-| .*?api | solid |
-| .*?implementation | dotted |
+| jvmMainImplementation | Orange Bold |
+| api | Solid |
+| implementation | Dotted |
 

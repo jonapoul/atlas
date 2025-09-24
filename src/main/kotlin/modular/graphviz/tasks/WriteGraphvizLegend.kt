@@ -10,7 +10,7 @@ import modular.core.internal.buildIndentedString
 import modular.core.internal.moduleTypeModel
 import modular.core.internal.orderedTypes
 import modular.core.spec.LinkType
-import modular.core.spec.ModuleTypeModel
+import modular.core.spec.ModuleType
 import modular.core.spec.Spec
 import modular.core.tasks.MODULAR_TASK_GROUP
 import modular.core.tasks.ModularGenerationTask
@@ -54,7 +54,7 @@ abstract class WriteDummyGraphvizLegend : WriteGraphvizLegendBase() {
 @CacheableTask
 sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract override val separator: Property<String>
-  @get:Input abstract val moduleTypes: ListProperty<ModuleTypeModel>
+  @get:Input abstract val moduleTypes: ListProperty<ModuleType>
   @get:Input abstract val linkTypes: SetProperty<LinkType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
@@ -97,8 +97,8 @@ sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
           appendLine("  <TR><TD COLSPAN=\"2\" BGCOLOR=\"#DDDDDD\"><B>Link Types</B></TD></TR>")
           linkTypes.forEach { type ->
             val bgColor = if (type.color == null) "" else " BGCOLOR=\"${type.color}\""
-            val style = type.style ?: "&lt;style&gt;"
-            appendLine("  <TR><TD>${type.configuration}</TD><TD$bgColor>$style</TD></TR>")
+            val style = type.style ?: "Solid"
+            appendLine("  <TR><TD>${type.displayName}</TD><TD$bgColor>${style.capitalized()}</TD></TR>")
           }
           appendLine("</TABLE>")
           appendLine(">];")

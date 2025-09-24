@@ -8,7 +8,7 @@ import modular.core.internal.ModuleLink
 import modular.core.internal.Node
 import modular.core.internal.Replacement
 import modular.core.internal.TypedModule
-import modular.core.spec.ModuleTypeModel
+import modular.core.spec.ModuleType
 import modular.graphviz.internal.DotWriter
 import modular.graphviz.spec.DotConfig
 
@@ -16,7 +16,7 @@ internal fun node(path: String) = Node(typedModule(path))
 
 internal fun typedModule(
   path: String,
-  type: ModuleTypeModel? = null,
+  type: ModuleType? = null,
 ) = TypedModule(
   projectPath = path,
   type = type,

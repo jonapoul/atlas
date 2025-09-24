@@ -4,7 +4,7 @@
  */
 package modular.core.internal
 
-import modular.core.spec.ModuleTypeModel
+import modular.core.spec.ModuleType
 import java.io.File
 
 internal object TypedModules {
@@ -25,7 +25,7 @@ internal object TypedModules {
 
 internal data class TypedModule(
   val projectPath: String,
-  val type: ModuleTypeModel?,
+  val type: ModuleType?,
 ) : Comparable<TypedModule> {
   fun string(separator: String): String = listOfNotNull(
     projectPath,
@@ -41,7 +41,7 @@ internal fun TypedModule(string: String, separator: String): TypedModule {
   val split = string.split(separator)
   return when (split.size) {
     1 -> TypedModule(projectPath = split[0], type = null)
-    3 -> TypedModule(projectPath = split[0], ModuleTypeModel(name = split[1], color = split[2]))
+    3 -> TypedModule(projectPath = split[0], ModuleType(name = split[1], color = split[2]))
     else -> error("Malformed typed module line: '$string'")
   }
 }
