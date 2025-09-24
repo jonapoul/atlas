@@ -33,6 +33,7 @@ class WriteMarkdownLegendTest : ScenarioTest() {
       """.trimIndent(),
     )
   }
+
   @Test
   fun `Write markdown legend with no module types`() = runScenario(MermaidWithLinkTypes) {
     // when
