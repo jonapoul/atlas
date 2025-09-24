@@ -11,15 +11,11 @@ import modular.gradle.ModularDsl
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 
-/**
- * See https://coolors.co/09ad35-55ff55-ff8800-ca66ff-9d8df1 for the default colors
- */
-
 @ModularDsl
 @JvmOverloads
 fun NamedDomainObjectContainer<ModuleTypeSpec>.androidApp(
   name: String = "Android App",
-  color: String = "#09AD35", // darker green
+  color: String = "limegreen",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
   name = name,
   color = color,
@@ -30,7 +26,7 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.androidApp(
 @JvmOverloads
 fun NamedDomainObjectContainer<ModuleTypeSpec>.androidLibrary(
   name: String = "Android Library",
-  color: String = "#55FF55", // light green
+  color: String = "lightgreen",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
   name = name,
   color = color,
@@ -41,7 +37,7 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.androidLibrary(
 @JvmOverloads
 fun NamedDomainObjectContainer<ModuleTypeSpec>.java(
   name: String = "Java",
-  color: String = "#FF8800", // orange
+  color: String = "orange",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
   name = name,
   color = color,
@@ -52,7 +48,7 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.java(
 @JvmOverloads
 fun NamedDomainObjectContainer<ModuleTypeSpec>.kotlinJvm(
   name: String = "Kotlin JVM",
-  color: String = "#CA66FF", // lavender
+  color: String = "mediumorchid",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
   name = name,
   color = color,
@@ -63,7 +59,7 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.kotlinJvm(
 @JvmOverloads
 fun NamedDomainObjectContainer<ModuleTypeSpec>.kotlinMultiplatform(
   name: String = "Kotlin Multiplatform",
-  color: String = "#9D8DF1", // lilac
+  color: String = "mediumslateblue",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
   name = name,
   color = color,
@@ -74,11 +70,11 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.kotlinMultiplatform(
 @JvmOverloads
 fun NamedDomainObjectContainer<ModuleTypeSpec>.other(
   name: String = "Other",
-  color: String = "#808080", // grey
+  color: String = "gainsboro",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPathMatches(
   name = name,
   color = color,
-  pathMatches = ".*?".toRegex(),
+  pathMatches = ".*?".toRegex(), // match anything and everything - should always have this declared last
 )
 
 @ModularDsl

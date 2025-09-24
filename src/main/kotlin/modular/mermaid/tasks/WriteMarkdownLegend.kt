@@ -91,7 +91,7 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
     appendLine("|:--:|:--:|")
 
     for (type in moduleTypes) {
-      val url = "https://img.shields.io/badge/-%20-${colorToHex(type.color)}?style=flat-square"
+      val url = "https://img.shields.io/badge/-%20-${parseColor(type.color)}?style=flat-square"
       val img = "<img src=\"$url\" height=\"30\" width=\"100\">"
       appendLine("| ${type.name} | $img |")
     }
@@ -102,19 +102,17 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
     appendLine("|:--:|:--:|")
 
     for (type in linkTypes) {
-      // TODO https://github.com/jonapoul/modular/issues/119
       val style = listOfNotNull(type.color, type.style).joinToString(separator = " ") { it.capitalized() }
       appendLine("| ${type.displayName} | $style |")
     }
   }
 
-  private fun colorToHex(color: String): String {
-    if (color.matches("#[0-9A-Fa-f]{6}".toRegex())) {
-      return color.removePrefix("#")
-    }
-
-    // TODO https://github.com/jonapoul/modular/issues/118
-    error("Don't currently support non-hex colors, received '$color'")
+  private fun parseColor(color: String) = if (color.matches("#[0-9A-Fa-f]{6}".toRegex())) {
+    // hex color, e.g. "#ABC123" -> "ABC123"
+    color.removePrefix("#")
+  } else {
+    // assume it's a valid color name, e.g. "orange"
+    color
   }
 
   internal companion object {

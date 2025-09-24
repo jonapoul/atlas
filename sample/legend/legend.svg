@@ -17,32 +17,32 @@
 <text text-anchor="start" x="97.5" y="-163.3" font-family="Times,serif" font-weight="bold" font-size="14.00">Module Types</text>
 <polygon fill="none" stroke="black" points="8,-128.5 8,-153.5 165,-153.5 165,-128.5 8,-128.5"/>
 <text text-anchor="start" x="42" y="-137.3" font-family="Times,serif" font-size="14.00">Android App</text>
-<polygon fill="#09ad35" stroke="transparent" points="165,-128.5 165,-153.5 296,-153.5 296,-128.5 165,-128.5"/>
+<polygon fill="limegreen" stroke="transparent" points="165,-128.5 165,-153.5 296,-153.5 296,-128.5 165,-128.5"/>
 <polygon fill="none" stroke="black" points="165,-128.5 165,-153.5 296,-153.5 296,-128.5 165,-128.5"/>
 <text text-anchor="start" x="170" y="-137.3" font-family="Times,serif" font-size="14.00">&lt;module&#45;name&gt;</text>
 <polygon fill="none" stroke="black" points="8,-103.5 8,-128.5 165,-128.5 165,-103.5 8,-103.5"/>
 <text text-anchor="start" x="13" y="-112.3" font-family="Times,serif" font-size="14.00">Kotlin Multiplatform</text>
-<polygon fill="#9d8df1" stroke="transparent" points="165,-103.5 165,-128.5 296,-128.5 296,-103.5 165,-103.5"/>
+<polygon fill="mediumslateblue" stroke="transparent" points="165,-103.5 165,-128.5 296,-128.5 296,-103.5 165,-103.5"/>
 <polygon fill="none" stroke="black" points="165,-103.5 165,-128.5 296,-128.5 296,-103.5 165,-103.5"/>
 <text text-anchor="start" x="170" y="-112.3" font-family="Times,serif" font-size="14.00">&lt;module&#45;name&gt;</text>
 <polygon fill="none" stroke="black" points="8,-78.5 8,-103.5 165,-103.5 165,-78.5 8,-78.5"/>
 <text text-anchor="start" x="29.5" y="-87.3" font-family="Times,serif" font-size="14.00">Android Library</text>
-<polygon fill="#55ff55" stroke="transparent" points="165,-78.5 165,-103.5 296,-103.5 296,-78.5 165,-78.5"/>
+<polygon fill="lightgreen" stroke="transparent" points="165,-78.5 165,-103.5 296,-103.5 296,-78.5 165,-78.5"/>
 <polygon fill="none" stroke="black" points="165,-78.5 165,-103.5 296,-103.5 296,-78.5 165,-78.5"/>
 <text text-anchor="start" x="170" y="-87.3" font-family="Times,serif" font-size="14.00">&lt;module&#45;name&gt;</text>
 <polygon fill="none" stroke="black" points="8,-53.5 8,-78.5 165,-78.5 165,-53.5 8,-53.5"/>
 <text text-anchor="start" x="48.5" y="-62.3" font-family="Times,serif" font-size="14.00">Kotlin JVM</text>
-<polygon fill="#ca66ff" stroke="transparent" points="165,-53.5 165,-78.5 296,-78.5 296,-53.5 165,-53.5"/>
+<polygon fill="mediumorchid" stroke="transparent" points="165,-53.5 165,-78.5 296,-78.5 296,-53.5 165,-53.5"/>
 <polygon fill="none" stroke="black" points="165,-53.5 165,-78.5 296,-78.5 296,-53.5 165,-53.5"/>
 <text text-anchor="start" x="170" y="-62.3" font-family="Times,serif" font-size="14.00">&lt;module&#45;name&gt;</text>
 <polygon fill="none" stroke="black" points="8,-28.5 8,-53.5 165,-53.5 165,-28.5 8,-28.5"/>
 <text text-anchor="start" x="71" y="-37.3" font-family="Times,serif" font-size="14.00">Java</text>
-<polygon fill="#ff8800" stroke="transparent" points="165,-28.5 165,-53.5 296,-53.5 296,-28.5 165,-28.5"/>
+<polygon fill="orange" stroke="transparent" points="165,-28.5 165,-53.5 296,-53.5 296,-28.5 165,-28.5"/>
 <polygon fill="none" stroke="black" points="165,-28.5 165,-53.5 296,-53.5 296,-28.5 165,-28.5"/>
 <text text-anchor="start" x="170" y="-37.3" font-family="Times,serif" font-size="14.00">&lt;module&#45;name&gt;</text>
 <polygon fill="none" stroke="black" points="8,-3.5 8,-28.5 165,-28.5 165,-3.5 8,-3.5"/>
 <text text-anchor="start" x="65.5" y="-12.3" font-family="Times,serif" font-size="14.00">Other</text>
-<polygon fill="#808080" stroke="transparent" points="165,-3.5 165,-28.5 296,-28.5 296,-3.5 165,-3.5"/>
+<polygon fill="gainsboro" stroke="transparent" points="165,-3.5 165,-28.5 296,-28.5 296,-3.5 165,-3.5"/>
 <polygon fill="none" stroke="black" points="165,-3.5 165,-28.5 296,-28.5 296,-3.5 165,-3.5"/>
 <text text-anchor="start" x="170" y="-12.3" font-family="Times,serif" font-size="14.00">&lt;module&#45;name&gt;</text>
 </g>

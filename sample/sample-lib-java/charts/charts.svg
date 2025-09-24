@@ -12,7 +12,7 @@
 <!-- Lib java -->
 <g id="node1" class="node">
 <title>Lib java</title>
-<polygon fill="#ff8800" stroke="black" stroke-width="3" points="73,-36 0,-36 0,0 73,0 73,-36"/>
+<polygon fill="orange" stroke="black" stroke-width="3" points="73,-36 0,-36 0,0 73,0 73,-36"/>
 <text text-anchor="middle" x="36.5" y="-14.3" font-family="Times,serif" font-size="14.00">Lib java</text>
 </g>
 </g>

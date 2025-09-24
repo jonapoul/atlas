@@ -57,9 +57,9 @@ class CollateModuleTypesTest : ScenarioTest() {
     // and the types were aggregated in the root module's build dir
     assertThat(moduleTypesFile).contentEquals(
       expected = """
-        :test-data,Java,#FF8800
-        :test-domain,Kotlin JVM,#CA66FF
-        :test-ui,Android Library,#55FF55
+        :test-data,Java,orange
+        :test-domain,Kotlin JVM,mediumorchid
+        :test-ui,Android Library,lightgreen
 
       """.trimIndent(),
     )

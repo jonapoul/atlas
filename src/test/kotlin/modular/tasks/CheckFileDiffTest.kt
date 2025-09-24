@@ -80,9 +80,9 @@ class CheckFileDiffTest : ScenarioTest() {
       |          digraph {
       |      ---   graph ["layout"="circo"]
       |            node ["style"="filled"]
-      |            ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
-      |            ":b" ["fillcolor"="#FF8800","shape"="none"]
-      |            ":c" ["fillcolor"="#FF8800","shape"="none"]
+      |            ":a" ["fillcolor"="mediumorchid","penwidth"="3","shape"="box"]
+      |            ":b" ["fillcolor"="orange","shape"="none"]
+      |            ":c" ["fillcolor"="orange","shape"="none"]
       |            ":a" -> ":b"
       |            ":a" -> ":c"
       |          }
@@ -123,8 +123,8 @@ class CheckFileDiffTest : ScenarioTest() {
         |      ---   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
         |      +++   <TABLE BORDER="0" CELLBORDER="100" CELLSPACING="0" CELLPADDING="4">
         |              <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
-        |              <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
-        |              <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
+        |              <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
+        |              <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
         |              <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
         |            </TABLE>
         |            >];

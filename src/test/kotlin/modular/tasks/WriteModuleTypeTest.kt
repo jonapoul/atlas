@@ -55,7 +55,7 @@ class WriteModuleTypeTest : ScenarioTest() {
     assertThat(result).taskWasSuccessful(":test-jvm:writeModuleType")
     val moduleTypeFile = moduleTypeFile("test-jvm")
     assertThat(moduleTypeFile).exists()
-    assertThat(moduleTypeFile.readText()).isEqualTo(":test-jvm,Kotlin JVM,#CA66FF")
+    assertThat(moduleTypeFile.readText()).isEqualTo(":test-jvm,Kotlin JVM,mediumorchid")
 
     // when running again, then it's cached
     val result2 = runTask("writeModuleType").build()
@@ -85,9 +85,9 @@ class WriteModuleTypeTest : ScenarioTest() {
     runTask("writeModuleType", androidHomeOrSkip()).build()
 
     // then
-    assertThat(moduleTypeFileContents("a")).isEqualTo(":a,Other,#808080")
-    assertThat(moduleTypeFileContents("b")).isEqualTo(":b,Other,#808080")
-    assertThat(moduleTypeFileContents("c")).isEqualTo(":c,Other,#808080")
+    assertThat(moduleTypeFileContents("a")).isEqualTo(":a,Other,gainsboro")
+    assertThat(moduleTypeFileContents("b")).isEqualTo(":b,Other,gainsboro")
+    assertThat(moduleTypeFileContents("c")).isEqualTo(":c,Other,gainsboro")
   }
 
   @Test
