@@ -78,9 +78,9 @@ class WriteDotChartTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
-          ":b" ["fillcolor"="#FF8800","shape"="none"]
-          ":c" ["fillcolor"="#FF8800","shape"="none"]
+          ":a" ["fillcolor"="mediumorchid","penwidth"="3","shape"="box"]
+          ":b" ["fillcolor"="orange","shape"="none"]
+          ":c" ["fillcolor"="orange","shape"="none"]
           ":a" -> ":b"
           ":a" -> ":c"
         }
@@ -91,7 +91,7 @@ class WriteDotChartTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          ":b" ["fillcolor"="#FF8800","penwidth"="3","shape"="box"]
+          ":b" ["fillcolor"="orange","penwidth"="3","shape"="box"]
         }
       """.trimIndent(),
     )
@@ -99,7 +99,7 @@ class WriteDotChartTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          ":c" ["fillcolor"="#FF8800","penwidth"="3","shape"="box"]
+          ":c" ["fillcolor"="orange","penwidth"="3","shape"="box"]
         }
       """.trimIndent(),
     )
@@ -121,9 +121,9 @@ class WriteDotChartTest : ScenarioTest() {
           edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
           graph ["dpi"="150","fontsize"="20","ranksep"="2.5","rankdir"="LR"]
           node ["style"="filled"]
-          ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
-          ":b" ["fillcolor"="#FF8800","shape"="none"]
-          ":c" ["fillcolor"="#FF8800","shape"="none"]
+          ":a" ["fillcolor"="mediumorchid","penwidth"="3","shape"="box"]
+          ":b" ["fillcolor"="orange","shape"="none"]
+          ":c" ["fillcolor"="orange","shape"="none"]
           ":a" -> ":b"
           ":a" -> ":c"
         }
@@ -147,9 +147,9 @@ class WriteDotChartTest : ScenarioTest() {
           edge ["dir"="none","arrowhead"="halfopen","arrowtail"="open"]
           graph ["dpi"="150","fontsize"="20","ranksep"="2.5","rankdir"="LR"]
           node ["style"="filled"]
-          ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
-          ":b" ["fillcolor"="#FF8800","shape"="none"]
-          ":c" ["fillcolor"="#FF8800","shape"="none"]
+          ":a" ["fillcolor"="mediumorchid","penwidth"="3","shape"="box"]
+          ":b" ["fillcolor"="orange","shape"="none"]
+          ":c" ["fillcolor"="orange","shape"="none"]
           ":a" -> ":b"
           ":a" -> ":c"
         }
@@ -171,9 +171,9 @@ class WriteDotChartTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          "B" ["fillcolor"="#FF8800","shape"="none"]
-          "a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
-          "c" ["fillcolor"="#FF8800","shape"="none"]
+          "B" ["fillcolor"="orange","shape"="none"]
+          "a" ["fillcolor"="mediumorchid","penwidth"="3","shape"="box"]
+          "c" ["fillcolor"="orange","shape"="none"]
           "a" -> "B"
           "a" -> "c"
         }
@@ -195,10 +195,10 @@ class WriteDotChartTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          ":a" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
-          ":b" ["fillcolor"="#CA66FF","shape"="none"]
-          ":c" ["fillcolor"="#FF8800","shape"="none"]
-          ":d" ["fillcolor"="#FF8800","shape"="none"]
+          ":a" ["fillcolor"="mediumorchid","penwidth"="3","shape"="box"]
+          ":b" ["fillcolor"="mediumorchid","shape"="none"]
+          ":c" ["fillcolor"="orange","shape"="none"]
+          ":d" ["fillcolor"="orange","shape"="none"]
           ":a" -> ":b" ["style"="bold"]
           ":a" -> ":c" ["color"="blue"]
           ":a" -> ":d" ["style"="dotted","color"="#FF55FF"]
@@ -221,14 +221,14 @@ class WriteDotChartTest : ScenarioTest() {
       """
         digraph {
           node ["style"="filled"]
-          ":app" ["fillcolor"="#CA66FF","penwidth"="3","shape"="box"]
-          ":data:a" ["fillcolor"="#CA66FF","shape"="none"]
-          ":data:b" ["fillcolor"="#CA66FF","shape"="none"]
-          ":domain:a" ["fillcolor"="#CA66FF","shape"="none"]
-          ":domain:b" ["fillcolor"="#CA66FF","shape"="none"]
-          ":ui:a" ["fillcolor"="#CA66FF","shape"="none"]
-          ":ui:b" ["fillcolor"="#CA66FF","shape"="none"]
-          ":ui:c" ["fillcolor"="#CA66FF","shape"="none"]
+          ":app" ["fillcolor"="mediumorchid","penwidth"="3","shape"="box"]
+          ":data:a" ["fillcolor"="mediumorchid","shape"="none"]
+          ":data:b" ["fillcolor"="mediumorchid","shape"="none"]
+          ":domain:a" ["fillcolor"="mediumorchid","shape"="none"]
+          ":domain:b" ["fillcolor"="mediumorchid","shape"="none"]
+          ":ui:a" ["fillcolor"="mediumorchid","shape"="none"]
+          ":ui:b" ["fillcolor"="mediumorchid","shape"="none"]
+          ":ui:c" ["fillcolor"="mediumorchid","shape"="none"]
           ":app" -> ":ui:a"
           ":app" -> ":ui:b"
           ":app" -> ":ui:c"

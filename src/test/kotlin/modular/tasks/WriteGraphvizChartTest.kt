@@ -43,8 +43,8 @@ class WriteGraphvizChartTest : ScenarioTest() {
           modules [label=<
           <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
             <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
-            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
             <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
           </TABLE>
           >];
@@ -70,8 +70,8 @@ class WriteGraphvizChartTest : ScenarioTest() {
           modules [label=<
           <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
             <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
-            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="#CA66FF">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Java</TD><TD BGCOLOR="#FF8800">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
+            <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
           </TABLE>
           >];
           links [label=<

@@ -28,8 +28,8 @@ class WriteMarkdownLegendTest : ScenarioTest() {
       """
         | Module Types | Color |
         |:--:|:--:|
-        | Kotlin JVM | <img src="https://img.shields.io/badge/-%20-CA66FF?style=flat-square" height="30" width="100"> |
-        | Java | <img src="https://img.shields.io/badge/-%20-FF8800?style=flat-square" height="30" width="100"> |
+        | Kotlin JVM | <img src="https://img.shields.io/badge/-%20-mediumorchid?style=flat-square" height="30" width="100"> |
+        | Java | <img src="https://img.shields.io/badge/-%20-orange?style=flat-square" height="30" width="100"> |
       """.trimIndent(),
     )
   }
