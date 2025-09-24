@@ -12,13 +12,13 @@
 <!-- Lib android -->
 <g id="node1" class="node">
 <title>Lib android</title>
-<polygon fill="#55ff55" stroke="transparent" points="98,-180 0,-180 0,-144 98,-144 98,-180"/>
+<polygon fill="lightgreen" stroke="transparent" points="98,-180 0,-180 0,-144 98,-144 98,-180"/>
 <text text-anchor="middle" x="49" y="-158.3" font-family="Times,serif" font-size="14.00">Lib android</text>
 </g>
 <!-- Lib kotlin jvm -->
 <g id="node3" class="node">
 <title>Lib kotlin jvm</title>
-<polygon fill="#ca66ff" stroke="transparent" points="190.5,-36 75.5,-36 75.5,0 190.5,0 190.5,-36"/>
+<polygon fill="mediumorchid" stroke="transparent" points="190.5,-36 75.5,-36 75.5,0 190.5,0 190.5,-36"/>
 <text text-anchor="middle" x="133" y="-14.3" font-family="Times,serif" font-size="14.00">Lib kotlin jvm</text>
 </g>
 <!-- Lib android&#45;&gt;Lib kotlin jvm -->
@@ -30,13 +30,13 @@
 <!-- Lib java -->
 <g id="node2" class="node">
 <title>Lib java</title>
-<polygon fill="#ff8800" stroke="transparent" points="189.5,-180 116.5,-180 116.5,-144 189.5,-144 189.5,-180"/>
+<polygon fill="orange" stroke="transparent" points="189.5,-180 116.5,-180 116.5,-144 189.5,-144 189.5,-180"/>
 <text text-anchor="middle" x="153" y="-158.3" font-family="Times,serif" font-size="14.00">Lib java</text>
 </g>
 <!-- Lib kotlin mp -->
 <g id="node4" class="node">
 <title>Lib kotlin mp</title>
-<polygon fill="#9d8df1" stroke="transparent" points="203.5,-324 92.5,-324 92.5,-288 203.5,-288 203.5,-324"/>
+<polygon fill="mediumslateblue" stroke="transparent" points="203.5,-324 92.5,-324 92.5,-288 203.5,-288 203.5,-324"/>
 <text text-anchor="middle" x="148" y="-302.3" font-family="Times,serif" font-size="14.00">Lib kotlin mp</text>
 </g>
 <!-- Lib kotlin mp&#45;&gt;Lib android -->
@@ -60,7 +60,7 @@
 <!-- app android -->
 <g id="node5" class="node">
 <title>app android</title>
-<polygon fill="#09ad35" stroke="black" stroke-width="3" points="152,-468 50,-468 50,-432 152,-432 152,-468"/>
+<polygon fill="limegreen" stroke="black" stroke-width="3" points="152,-468 50,-468 50,-432 152,-432 152,-468"/>
 <text text-anchor="middle" x="101" y="-446.3" font-family="Times,serif" font-size="14.00">app android</text>
 </g>
 <!-- app android&#45;&gt;Lib android -->

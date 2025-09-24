@@ -12,13 +12,13 @@
 <!-- Lib android -->
 <g id="node1" class="node">
 <title>Lib android</title>
-<polygon fill="#55ff55" stroke="black" stroke-width="3" points="106.5,-180 8.5,-180 8.5,-144 106.5,-144 106.5,-180"/>
+<polygon fill="lightgreen" stroke="black" stroke-width="3" points="106.5,-180 8.5,-180 8.5,-144 106.5,-144 106.5,-180"/>
 <text text-anchor="middle" x="57.5" y="-158.3" font-family="Times,serif" font-size="14.00">Lib android</text>
 </g>
 <!-- Lib kotlin jvm -->
 <g id="node2" class="node">
 <title>Lib kotlin jvm</title>
-<polygon fill="#ca66ff" stroke="transparent" points="115,-36 0,-36 0,0 115,0 115,-36"/>
+<polygon fill="mediumorchid" stroke="transparent" points="115,-36 0,-36 0,0 115,0 115,-36"/>
 <text text-anchor="middle" x="57.5" y="-14.3" font-family="Times,serif" font-size="14.00">Lib kotlin jvm</text>
 </g>
 <!-- Lib android&#45;&gt;Lib kotlin jvm -->
