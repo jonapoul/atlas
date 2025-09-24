@@ -22,10 +22,10 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.provider.SetProperty
 import java.io.File
 
-internal fun ModularExtension.orderedModuleTypes(): List<ModuleTypeSpec> =
+internal fun ModularExtensionImpl.orderedModuleTypes(): List<ModuleTypeSpec> =
   (moduleTypes as OrderedNamedContainer<ModuleTypeSpec>).getInOrder()
 
-internal fun ModularExtension.orderedLinkTypes(): List<LinkTypeSpec> =
+internal fun ModularExtensionImpl.orderedLinkTypes(): List<LinkTypeSpec> =
   (linkTypes as OrderedNamedContainer<LinkTypeSpec>).getInOrder()
 
 internal fun moduleType(type: ModuleTypeSpec) = ModuleType(

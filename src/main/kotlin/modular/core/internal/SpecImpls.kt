@@ -7,6 +7,8 @@ package modular.core.internal
 import modular.core.spec.LinkTypeSpec
 import modular.core.spec.ModulePathTransformSpec
 import modular.core.spec.ModuleTypeSpec
+import modular.core.spec.NamedLinkTypeContainer
+import modular.core.spec.NamedModuleTypeContainer
 import modular.core.spec.OutputSpec
 import modular.core.spec.Spec
 import modular.gradle.ModularExtension
@@ -42,10 +44,10 @@ internal open class ModularExtensionImpl @Inject constructor(
   override fun modulePathTransforms(action: Action<ModulePathTransformSpec>) = action.execute(modulePathTransforms)
 
   override val moduleTypes = ModuleTypeContainer(objects)
-  override fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleTypeSpec>>) = action.execute(moduleTypes)
+  override fun moduleTypes(action: Action<NamedModuleTypeContainer>) = action.execute(moduleTypes)
 
   override val linkTypes = LinkTypeContainer(objects)
-  override fun linkTypes(action: Action<NamedDomainObjectContainer<LinkTypeSpec>>) = action.execute(linkTypes)
+  override fun linkTypes(action: Action<NamedLinkTypeContainer>) = action.execute(linkTypes)
 
   override val outputs = OutputSpecImpl(objects, project)
   override fun outputs(action: Action<OutputSpec>) = action.execute(outputs)

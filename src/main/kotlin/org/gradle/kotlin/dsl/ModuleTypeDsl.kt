@@ -7,13 +7,13 @@
 package org.gradle.kotlin.dsl
 
 import modular.core.spec.ModuleTypeSpec
+import modular.core.spec.NamedModuleTypeContainer
 import modular.gradle.ModularDsl
-import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 
 @ModularDsl
 @JvmOverloads
-fun NamedDomainObjectContainer<ModuleTypeSpec>.androidApp(
+fun NamedModuleTypeContainer.androidApp(
   name: String = "Android App",
   color: String = "limegreen",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
@@ -24,7 +24,7 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.androidApp(
 
 @ModularDsl
 @JvmOverloads
-fun NamedDomainObjectContainer<ModuleTypeSpec>.androidLibrary(
+fun NamedModuleTypeContainer.androidLibrary(
   name: String = "Android Library",
   color: String = "lightgreen",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
@@ -35,7 +35,7 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.androidLibrary(
 
 @ModularDsl
 @JvmOverloads
-fun NamedDomainObjectContainer<ModuleTypeSpec>.java(
+fun NamedModuleTypeContainer.java(
   name: String = "Java",
   color: String = "orange",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
@@ -46,7 +46,7 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.java(
 
 @ModularDsl
 @JvmOverloads
-fun NamedDomainObjectContainer<ModuleTypeSpec>.kotlinJvm(
+fun NamedModuleTypeContainer.kotlinJvm(
   name: String = "Kotlin JVM",
   color: String = "mediumorchid",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
@@ -57,7 +57,7 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.kotlinJvm(
 
 @ModularDsl
 @JvmOverloads
-fun NamedDomainObjectContainer<ModuleTypeSpec>.kotlinMultiplatform(
+fun NamedModuleTypeContainer.kotlinMultiplatform(
   name: String = "Kotlin Multiplatform",
   color: String = "mediumslateblue",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
@@ -68,7 +68,7 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.kotlinMultiplatform(
 
 @ModularDsl
 @JvmOverloads
-fun NamedDomainObjectContainer<ModuleTypeSpec>.other(
+fun NamedModuleTypeContainer.other(
   name: String = "Other",
   color: String = "gainsboro",
 ): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPathMatches(
@@ -78,7 +78,7 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.other(
 )
 
 @ModularDsl
-fun NamedDomainObjectContainer<ModuleTypeSpec>.builtIns() {
+fun NamedModuleTypeContainer.builtIns() {
   // Highest priority ↓↓
   androidApp()
   kotlinMultiplatform()
@@ -87,34 +87,4 @@ fun NamedDomainObjectContainer<ModuleTypeSpec>.builtIns() {
   java()
   other()
   // Lowest priority ↑↑
-}
-
-@ModularDsl
-fun NamedDomainObjectContainer<ModuleTypeSpec>.registerByPluginId(
-  name: String,
-  color: String,
-  pluginId: String,
-): NamedDomainObjectProvider<ModuleTypeSpec> = register(name) { type ->
-  type.color.convention(color)
-  type.hasPluginId.convention(pluginId)
-}
-
-@ModularDsl
-fun NamedDomainObjectContainer<ModuleTypeSpec>.registerByPathMatches(
-  name: String,
-  color: String,
-  pathMatches: Regex,
-): NamedDomainObjectProvider<ModuleTypeSpec> = register(name) { type ->
-  type.color.convention(color)
-  type.pathMatches.convention(pathMatches)
-}
-
-@ModularDsl
-fun NamedDomainObjectContainer<ModuleTypeSpec>.registerByPathContains(
-  name: String,
-  color: String,
-  pathContains: String,
-): NamedDomainObjectProvider<ModuleTypeSpec> = register(name) { type ->
-  type.color.convention(color)
-  type.pathContains.convention(pathContains)
 }

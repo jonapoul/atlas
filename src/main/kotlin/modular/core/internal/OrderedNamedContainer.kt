@@ -7,6 +7,8 @@ package modular.core.internal
 import groovy.lang.Closure
 import modular.core.spec.LinkTypeSpec
 import modular.core.spec.ModuleTypeSpec
+import modular.core.spec.NamedLinkTypeContainer
+import modular.core.spec.NamedModuleTypeContainer
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
@@ -17,13 +19,13 @@ internal class ModuleTypeContainer(objects: ObjectFactory) : OrderedNamedContain
   container = objects.domainObjectContainer(ModuleTypeSpec::class.java) { name ->
     objects.newInstance(ModuleTypeSpecImpl::class.java, name)
   },
-)
+), NamedModuleTypeContainer
 
 internal class LinkTypeContainer(objects: ObjectFactory) : OrderedNamedContainer<LinkTypeSpec>(
   container = objects.domainObjectContainer(LinkTypeSpec::class.java) { name ->
     objects.newInstance(LinkTypeSpecImpl::class.java, name)
   },
-)
+), NamedLinkTypeContainer
 
 internal open class OrderedNamedContainer<T : Any>(
   private val container: NamedDomainObjectContainer<T>,

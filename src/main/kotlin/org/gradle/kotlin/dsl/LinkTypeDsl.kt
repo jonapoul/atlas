@@ -7,14 +7,13 @@
 package org.gradle.kotlin.dsl
 
 import modular.core.spec.LinkTypeSpec
+import modular.core.spec.NamedLinkTypeContainer
 import modular.core.spec.Style
 import modular.gradle.ModularDsl
-import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 
-@JvmOverloads
 @ModularDsl
-fun NamedDomainObjectContainer<LinkTypeSpec>.register(
+fun NamedLinkTypeContainer.register(
   configuration: String,
   style: String? = null,
   color: String? = null,
@@ -27,7 +26,7 @@ fun NamedDomainObjectContainer<LinkTypeSpec>.register(
 
 @JvmOverloads
 @ModularDsl
-fun NamedDomainObjectContainer<LinkTypeSpec>.register(
+fun NamedLinkTypeContainer.register(
   configuration: String,
   style: Style,
   color: String? = null,
@@ -36,25 +35,7 @@ fun NamedDomainObjectContainer<LinkTypeSpec>.register(
 
 @JvmOverloads
 @ModularDsl
-context(container: NamedDomainObjectContainer<LinkTypeSpec>)
-operator fun String.invoke(
-  style: String? = null,
-  color: String? = null,
-  displayName: String = this,
-): NamedDomainObjectProvider<LinkTypeSpec> = container.register(configuration = this, style, color, displayName)
-
-@JvmOverloads
-@ModularDsl
-context(container: NamedDomainObjectContainer<LinkTypeSpec>)
-operator fun String.invoke(
-  style: Style?,
-  color: String? = null,
-  displayName: String = this,
-): NamedDomainObjectProvider<LinkTypeSpec> = container.register(configuration = this, style?.string, color, displayName)
-
-@JvmOverloads
-@ModularDsl
-fun NamedDomainObjectContainer<LinkTypeSpec>.api(
+fun NamedLinkTypeContainer.api(
   style: String? = null,
   color: String? = null,
   displayName: String = "api",
@@ -62,7 +43,7 @@ fun NamedDomainObjectContainer<LinkTypeSpec>.api(
 
 @JvmOverloads
 @ModularDsl
-fun NamedDomainObjectContainer<LinkTypeSpec>.api(
+fun NamedLinkTypeContainer.api(
   style: Style,
   color: String? = null,
   displayName: String = "api",
@@ -70,7 +51,7 @@ fun NamedDomainObjectContainer<LinkTypeSpec>.api(
 
 @JvmOverloads
 @ModularDsl
-fun NamedDomainObjectContainer<LinkTypeSpec>.implementation(
+fun NamedLinkTypeContainer.implementation(
   style: String? = null,
   color: String? = null,
   displayName: String = "implementation",
@@ -78,7 +59,7 @@ fun NamedDomainObjectContainer<LinkTypeSpec>.implementation(
 
 @JvmOverloads
 @ModularDsl
-fun NamedDomainObjectContainer<LinkTypeSpec>.implementation(
+fun NamedLinkTypeContainer.implementation(
   style: Style,
   color: String? = null,
   displayName: String = "implementation",

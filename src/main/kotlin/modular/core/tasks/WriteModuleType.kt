@@ -4,13 +4,13 @@
  */
 package modular.core.tasks
 
+import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.TypedModule
 import modular.core.internal.fileInBuildDirectory
 import modular.core.internal.moduleType
 import modular.core.internal.orderedModuleTypes
 import modular.core.spec.ModuleType
 import modular.core.spec.ModuleTypeSpec
-import modular.gradle.ModularExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException
@@ -57,7 +57,7 @@ abstract class WriteModuleType : DefaultTask(), TaskWithSeparator, TaskWithOutpu
 
     internal fun register(
       target: Project,
-      extension: ModularExtension,
+      extension: ModularExtensionImpl,
     ): TaskProvider<WriteModuleType> = with(target) {
       val writeModule = tasks.register(NAME, WriteModuleType::class.java) { task ->
         task.projectPath.convention(target.path)
