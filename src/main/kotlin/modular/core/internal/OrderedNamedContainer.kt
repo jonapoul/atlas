@@ -15,17 +15,21 @@ import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.model.ObjectFactory
 import java.util.function.IntFunction
 
-internal class ModuleTypeContainer(objects: ObjectFactory) : OrderedNamedContainer<ModuleTypeSpec>(
-  container = objects.domainObjectContainer(ModuleTypeSpec::class.java) { name ->
-    objects.newInstance(ModuleTypeSpecImpl::class.java, name)
-  },
-), NamedModuleTypeContainer
+internal class ModuleTypeContainer(objects: ObjectFactory) :
+  OrderedNamedContainer<ModuleTypeSpec>(
+    container = objects.domainObjectContainer(ModuleTypeSpec::class.java) { name ->
+      objects.newInstance(ModuleTypeSpecImpl::class.java, name)
+    },
+  ),
+  NamedModuleTypeContainer
 
-internal class LinkTypeContainer(objects: ObjectFactory) : OrderedNamedContainer<LinkTypeSpec>(
-  container = objects.domainObjectContainer(LinkTypeSpec::class.java) { name ->
-    objects.newInstance(LinkTypeSpecImpl::class.java, name)
-  },
-), NamedLinkTypeContainer
+internal class LinkTypeContainer(objects: ObjectFactory) :
+  OrderedNamedContainer<LinkTypeSpec>(
+    container = objects.domainObjectContainer(LinkTypeSpec::class.java) { name ->
+      objects.newInstance(LinkTypeSpecImpl::class.java, name)
+    },
+  ),
+  NamedLinkTypeContainer
 
 internal open class OrderedNamedContainer<T : Any>(
   private val container: NamedDomainObjectContainer<T>,
