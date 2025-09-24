@@ -6,8 +6,8 @@ package modular.core.tasks
 
 import modular.core.internal.TypedModule
 import modular.core.internal.fileInBuildDirectory
-import modular.core.internal.moduleTypeModel
-import modular.core.internal.orderedTypes
+import modular.core.internal.moduleType
+import modular.core.internal.orderedModuleTypes
 import modular.core.spec.ModuleType
 import modular.core.spec.ModuleTypeSpec
 import modular.gradle.ModularExtension
@@ -65,10 +65,10 @@ abstract class WriteModuleType : DefaultTask(), TaskWithSeparator, TaskWithOutpu
       }
 
       afterEvaluate {
-        val types = extension.orderedTypes()
-        val matching = types
+        val matching = extension
+          .orderedModuleTypes()
           .firstOrNull { t -> t.matches(target) }
-          ?.let(::moduleTypeModel)
+          ?.let(::moduleType)
         writeModule.configure { t ->
           t.moduleType.convention(matching)
         }

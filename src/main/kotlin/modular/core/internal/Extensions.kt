@@ -4,6 +4,8 @@
  */
 package modular.core.internal
 
+import modular.core.spec.LinkType
+import modular.core.spec.LinkTypeSpec
 import modular.core.spec.ModuleType
 import modular.core.spec.ModuleTypeSpec
 import modular.core.tasks.MODULAR_TASK_GROUP
@@ -20,12 +22,22 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.provider.SetProperty
 import java.io.File
 
-internal fun ModularExtension.orderedTypes(): List<ModuleTypeSpec> =
+internal fun ModularExtension.orderedModuleTypes(): List<ModuleTypeSpec> =
   (moduleTypes as OrderedNamedContainer<ModuleTypeSpec>).getInOrder()
 
-internal fun moduleTypeModel(type: ModuleTypeSpec) = ModuleType(
+internal fun ModularExtension.orderedLinkTypes(): List<LinkTypeSpec> =
+  (linkTypes as OrderedNamedContainer<LinkTypeSpec>).getInOrder()
+
+internal fun moduleType(type: ModuleTypeSpec) = ModuleType(
   name = type.name,
   color = type.color.get(),
+)
+
+internal fun linkType(type: LinkTypeSpec) = LinkType(
+  configuration = type.configuration.get(),
+  style = type.style.orNull,
+  color = type.color.orNull,
+  displayName = type.name,
 )
 
 internal fun ObjectFactory.bool(convention: Provider<Boolean>): Property<Boolean> =

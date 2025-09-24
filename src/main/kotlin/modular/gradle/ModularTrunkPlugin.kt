@@ -10,7 +10,6 @@ import modular.core.internal.GradleProperties
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.configurePrintFilesToConsole
 import modular.core.internal.configureSeparators
-import modular.core.internal.orderedTypes
 import modular.core.internal.registerModularGenerateTask
 import modular.core.internal.warnIfModuleTypesSpecifyNothing
 import modular.core.internal.warnIfSvgSelectedWithCustomDpi
@@ -61,9 +60,7 @@ class ModularTrunkPlugin : Plugin<Project> {
 
     afterEvaluate {
       warnIfSvgSelectedWithCustomDpi(extension)
-
-      val types = extension.orderedTypes()
-      warnIfModuleTypesSpecifyNothing(types)
+      warnIfModuleTypesSpecifyNothing(extension)
     }
   }
 }

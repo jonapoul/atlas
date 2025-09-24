@@ -6,6 +6,8 @@ package modular.core.tasks
 
 import modular.core.internal.ModuleLinks
 import modular.core.internal.fileInBuildDirectory
+import modular.core.internal.linkType
+import modular.core.internal.orderedLinkTypes
 import modular.core.spec.LinkType
 import modular.gradle.ModularExtension
 import org.gradle.api.DefaultTask
@@ -66,7 +68,7 @@ abstract class WriteModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOutp
       tasks.register(NAME, WriteModuleLinks::class.java) { task ->
         task.thisPath.convention(target.path)
         task.moduleLinks.convention(ModuleLinks.of(target, extension.ignoredConfigs.get()))
-        task.linkTypes.convention(extension.linkTypes.linkTypes)
+        task.linkTypes.convention(extension.orderedLinkTypes().map(::linkType))
         task.outputFile.convention(fileInBuildDirectory("module-links"))
       }
     }

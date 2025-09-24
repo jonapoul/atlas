@@ -22,41 +22,11 @@ public final class modular/core/spec/LinkType : java/io/Serializable {
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class modular/core/spec/LinkTypesSpec {
-	public abstract fun add (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun add (Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)V
-	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public fun api (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun api (Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)V
-	public static synthetic fun api$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun api$default (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
-	public fun implementation (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun implementation (Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)V
-	public static synthetic fun implementation$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun implementation$default (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public abstract fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun invoke (Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)V
-	public static synthetic fun invoke$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun invoke$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-}
-
-public final class modular/core/spec/LinkTypesSpec$DefaultImpls {
-	public static fun add (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)V
-	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun add$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static fun api (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public static fun api (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)V
-	public static synthetic fun api$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun api$default (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static fun implementation (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public static fun implementation (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)V
-	public static synthetic fun implementation$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun implementation$default (Lmodular/core/spec/LinkTypesSpec;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static fun invoke (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)V
-	public static synthetic fun invoke$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
-	public static synthetic fun invoke$default (Lmodular/core/spec/LinkTypesSpec;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+public abstract interface class modular/core/spec/LinkTypeSpec {
+	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getConfiguration ()Lorg/gradle/api/provider/Property;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getStyle ()Lorg/gradle/api/provider/Property;
 }
 
 public abstract interface class modular/core/spec/ModulePathTransformSpec {
@@ -183,7 +153,7 @@ public abstract interface class modular/gradle/ModularExtension {
 	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
 	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getLinkTypes ()Lmodular/core/spec/LinkTypesSpec;
+	public abstract fun getLinkTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
 	public abstract fun getMermaid ()Lmodular/mermaid/spec/MermaidSpec;
 	public abstract fun getModulePathTransforms ()Lmodular/core/spec/ModulePathTransformSpec;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/NamedDomainObjectContainer;
@@ -453,7 +423,7 @@ public abstract class modular/graphviz/tasks/WriteGraphvizLegend : modular/graph
 public abstract class modular/graphviz/tasks/WriteGraphvizLegendBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
 	public fun execute ()V
 	public abstract fun getDescription ()Ljava/lang/String;
-	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
@@ -598,6 +568,45 @@ public abstract class modular/mermaid/tasks/WriteMermaidChart : org/gradle/api/D
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public final class org/gradle/kotlin/dsl/LinkTypeDslKt {
+	public static final fun api (Lorg/gradle/api/NamedDomainObjectContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lorg/gradle/api/NamedDomainObjectContainer;Lmodular/core/spec/Style;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lorg/gradle/api/NamedDomainObjectContainer;Lmodular/core/spec/Style;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lorg/gradle/api/NamedDomainObjectContainer;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun api$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun api$default (Lorg/gradle/api/NamedDomainObjectContainer;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lorg/gradle/api/NamedDomainObjectContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lorg/gradle/api/NamedDomainObjectContainer;Lmodular/core/spec/Style;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lorg/gradle/api/NamedDomainObjectContainer;Lmodular/core/spec/Style;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lorg/gradle/api/NamedDomainObjectContainer;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun implementation$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun implementation$default (Lorg/gradle/api/NamedDomainObjectContainer;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun invoke (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun invoke (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun invoke (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun invoke (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun invoke (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Lmodular/core/spec/Style;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun invoke (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun invoke (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Lmodular/core/spec/Style;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun register$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun register$default (Lorg/gradle/api/NamedDomainObjectContainer;Ljava/lang/String;Lmodular/core/spec/Style;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {

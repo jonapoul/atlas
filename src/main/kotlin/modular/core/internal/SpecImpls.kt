@@ -4,8 +4,7 @@
  */
 package modular.core.internal
 
-import modular.core.spec.LinkType
-import modular.core.spec.LinkTypesSpec
+import modular.core.spec.LinkTypeSpec
 import modular.core.spec.ModulePathTransformSpec
 import modular.core.spec.ModuleTypeSpec
 import modular.core.spec.OutputSpec
@@ -45,8 +44,8 @@ internal open class ModularExtensionImpl @Inject constructor(
   override val moduleTypes = ModuleTypeContainer(objects)
   override fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleTypeSpec>>) = action.execute(moduleTypes)
 
-  override val linkTypes = LinkTypesSpecImpl(objects)
-  override fun linkTypes(action: Action<LinkTypesSpec>) = action.execute(linkTypes)
+  override val linkTypes = LinkTypeContainer(objects)
+  override fun linkTypes(action: Action<NamedDomainObjectContainer<LinkTypeSpec>>) = action.execute(linkTypes)
 
   override val outputs = OutputSpecImpl(objects, project)
   override fun outputs(action: Action<OutputSpec>) = action.execute(outputs)
@@ -60,7 +59,7 @@ internal open class ModularExtensionImpl @Inject constructor(
       return specs.getByName(GraphvizSpecImpl.NAME) as GraphvizSpec
     }
 
-  override fun graphViz() = graphViz { /* No-op */ }
+  override fun graphViz() = graphViz {}
 
   override fun graphViz(action: Action<GraphvizSpec>) {
     val spec = specs.findByName(GraphvizSpecImpl.NAME)
@@ -76,7 +75,7 @@ internal open class ModularExtensionImpl @Inject constructor(
       return specs.getByName(MermaidSpecImpl.NAME) as MermaidSpec
     }
 
-  override fun mermaid() = mermaid { /* No-op */ }
+  override fun mermaid() = mermaid {}
 
   override fun mermaid(action: Action<MermaidSpec>) {
     val spec = specs.findByName(MermaidSpecImpl.NAME)
@@ -142,12 +141,14 @@ internal class OutputSpecImpl(objects: ObjectFactory, project: Project) : Output
     legendDir.set(projectDir.dir(relativeToRoot))
 }
 
-internal class LinkTypesSpecImpl(objects: ObjectFactory) : LinkTypesSpec {
-  override val linkTypes: SetProperty<LinkType> = objects.setProperty(LinkType::class.java)
+internal abstract class LinkTypeSpecImpl @Inject constructor(override val name: String) : LinkTypeSpec {
+  @get:Input abstract override val configuration: Property<String>
+  @get:Input abstract override val style: Property<String>
+  @get:Input abstract override val color: Property<String>
 
-  override fun add(configuration: String, style: String?, color: String?, displayName: String) =
-    linkTypes.add(LinkType(configuration, style, color, displayName))
-
-  override fun String.invoke(style: String?, color: String?, displayName: String) =
-    add(this, style, color, displayName)
+  init {
+    configuration.convention(name)
+    style.unsetConvention()
+    color.unsetConvention()
+  }
 }

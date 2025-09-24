@@ -4,7 +4,7 @@
  */
 package modular.gradle
 
-import modular.core.spec.LinkTypesSpec
+import modular.core.spec.LinkTypeSpec
 import modular.core.spec.ModulePathTransformSpec
 import modular.core.spec.ModuleTypeSpec
 import modular.core.spec.OutputSpec
@@ -75,8 +75,8 @@ interface ModularExtension {
   val moduleTypes: NamedDomainObjectContainer<ModuleTypeSpec>
   @ModularDsl fun moduleTypes(action: Action<NamedDomainObjectContainer<ModuleTypeSpec>>)
 
-  val linkTypes: LinkTypesSpec
-  @ModularDsl fun linkTypes(action: Action<LinkTypesSpec>)
+  val linkTypes: NamedDomainObjectContainer<LinkTypeSpec>
+  @ModularDsl fun linkTypes(action: Action<NamedDomainObjectContainer<LinkTypeSpec>>)
 
   val outputs: OutputSpec
   @ModularDsl fun outputs(action: Action<OutputSpec>)

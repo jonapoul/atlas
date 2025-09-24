@@ -6,8 +6,10 @@ package modular.mermaid.tasks
 
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant
-import modular.core.internal.moduleTypeModel
-import modular.core.internal.orderedTypes
+import modular.core.internal.linkType
+import modular.core.internal.moduleType
+import modular.core.internal.orderedLinkTypes
+import modular.core.internal.orderedModuleTypes
 import modular.core.spec.LinkType
 import modular.core.spec.ModuleType
 import modular.core.spec.Spec
@@ -133,8 +135,8 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
       val name = "write$qualifier${spec.name.capitalized()}$variant"
       tasks.register(name, T::class.java) { task ->
         task.outputFile.set(outputFile)
-        task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
-        task.linkTypes.convention(extension.linkTypes.linkTypes)
+        task.moduleTypes.convention(extension.orderedModuleTypes().map(::moduleType))
+        task.linkTypes.convention(extension.orderedLinkTypes().map(::linkType))
       }
     }
   }

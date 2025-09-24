@@ -53,7 +53,10 @@ gradlePlugin {
 kotlin {
   compilerOptions {
     allWarningsAsErrors = true
-    freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+    freeCompilerArgs.addAll(
+      "-opt-in=kotlin.RequiresOptIn",
+      "-Xcontext-parameters",
+    )
     jvmTarget = JvmTarget.JVM_21
   }
 }

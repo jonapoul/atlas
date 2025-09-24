@@ -7,8 +7,10 @@ package modular.graphviz.tasks
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant
 import modular.core.internal.buildIndentedString
-import modular.core.internal.moduleTypeModel
-import modular.core.internal.orderedTypes
+import modular.core.internal.linkType
+import modular.core.internal.moduleType
+import modular.core.internal.orderedLinkTypes
+import modular.core.internal.orderedModuleTypes
 import modular.core.spec.LinkType
 import modular.core.spec.ModuleType
 import modular.core.spec.Spec
@@ -22,7 +24,6 @@ import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
-import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
@@ -55,7 +56,7 @@ abstract class WriteDummyGraphvizLegend : WriteGraphvizLegendBase() {
 sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   @get:Input abstract override val separator: Property<String>
   @get:Input abstract val moduleTypes: ListProperty<ModuleType>
-  @get:Input abstract val linkTypes: SetProperty<LinkType>
+  @get:Input abstract val linkTypes: ListProperty<LinkType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -129,8 +130,8 @@ sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
       val name = "write$qualifier${spec.name.capitalized()}$variant"
       tasks.register(name, T::class.java) { task ->
         task.outputFile.set(outputFile)
-        task.moduleTypes.convention(extension.orderedTypes().map(::moduleTypeModel))
-        task.linkTypes.convention(extension.linkTypes.linkTypes)
+        task.moduleTypes.convention(extension.orderedModuleTypes().map(::moduleType))
+        task.linkTypes.convention(extension.orderedLinkTypes().map(::linkType))
       }
     }
   }
