@@ -1,0 +1,15 @@
+digraph {
+  edge ["arrowhead"="normal","arrowtail"="none"]
+  graph ["dpi"="100","fontsize"="30","layout"="dot","ranksep"="1.5","rankdir"="TB"]
+  node ["style"="filled"]
+  ":sample-app-android" ["fillcolor"="limegreen","shape"="none"]
+  ":sample-lib-android" ["fillcolor"="lightgreen","shape"="none"]
+  ":sample-lib-java" ["fillcolor"="orange","shape"="none"]
+  ":sample-lib-kotlin-jvm" ["fillcolor"="mediumorchid","shape"="none"]
+  ":sample-lib-kotlin-mp" ["fillcolor"="mediumslateblue","penwidth"="3","shape"="box"]
+  ":sample-app-android" -> ":sample-lib-kotlin-mp" ["style"="dotted"]
+  ":sample-lib-android" -> ":sample-lib-kotlin-jvm" ["style"="dotted"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-android" ["style"="solid"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-java" ["style"="bold","color"="orange"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-kotlin-jvm" ["style"="solid"]
+}

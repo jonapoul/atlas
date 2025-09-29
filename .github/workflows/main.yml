@@ -39,5 +39,8 @@ jobs:
         with:
           add-job-summary: on-failure
 
+      - name: Install Graphviz
+        run: sudo apt-get install -y graphviz
+
       - name: Build
         run: ./gradlew build

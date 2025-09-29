@@ -1,0 +1,32 @@
+/**
+ * Copyright © 2025 Jon Poulton
+ * SPDX-License-Identifier: Apache-2.0
+ */
+package modular.test.scenarios
+
+import modular.test.Scenario
+import kotlin.text.trimIndent
+
+object GraphVizWithLinkTypes : Scenario by GraphVizBasic {
+  override val rootBuildFile = """
+    import modular.graphviz.LinkStyle
+
+    plugins {
+      kotlin("jvm") apply false
+      id("$pluginId")
+    }
+
+    modular {
+      moduleTypes {
+        kotlinJvm()
+        java()
+      }
+
+      linkTypes {
+        "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
+        api()
+        implementation(LinkStyle.Dotted)
+      }
+    }
+  """.trimIndent()
+}
