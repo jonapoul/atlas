@@ -103,7 +103,7 @@ internal class ModulePathTransformSpecImpl(objects: ObjectFactory) : ModulePathT
 internal abstract class ModuleTypeSpecImpl @Inject constructor(override val name: String) : ModuleTypeSpec {
   @get:Input abstract override val color: Property<String>
   @get:Input abstract override val pathContains: Property<String>
-  @get:Input abstract override val pathMatches: Property<Regex>
+  @get:Input abstract override val pathMatches: Property<String>
   @get:Input abstract override val hasPluginId: Property<String>
 
   init {

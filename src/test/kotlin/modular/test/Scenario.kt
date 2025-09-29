@@ -8,4 +8,5 @@ interface Scenario {
   val rootBuildFile: String
   val submoduleBuildFiles: Map<String, String> get() = emptyMap()
   val gradlePropertiesFile: String get() = ""
+  val isGroovy: Boolean get() = false
 }

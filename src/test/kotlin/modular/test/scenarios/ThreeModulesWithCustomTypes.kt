@@ -24,7 +24,7 @@ object ThreeModulesWithCustomTypes : Scenario {
         }
         create("Domain") {
           color = "#123ABC"
-          pathMatches = ".*-domain".toRegex()
+          pathMatches = ".*-domain"
         }
         create("Android") {
           color = "#A1B2C3"

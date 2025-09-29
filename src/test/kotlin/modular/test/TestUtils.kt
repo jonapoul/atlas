@@ -87,7 +87,24 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositories {
+    google()
+    mavenCentral()
+  }
+}
+"""
+
+@Language("groovy")
+internal const val REPOSITORIES_GRADLE_GROOVY = """
+pluginManagement {
+  repositories {
+    mavenCentral()
+    google()
+    gradlePluginPortal()
+  }
+}
+
+dependencyResolutionManagement {
   repositories {
     google()
     mavenCentral()

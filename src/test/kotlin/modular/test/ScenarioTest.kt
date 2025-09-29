@@ -13,19 +13,19 @@ abstract class ScenarioTest {
 
   protected fun <T> runScenario(scenario: Scenario, test: File.() -> T) {
     val settingsFile = """
-      $REPOSITORIES_GRADLE_KTS
-      ${scenario.submoduleBuildFiles.keys.joinToString(separator = "\n") { name -> "include(\":$name\")" }}
+      ${if (scenario.isGroovy) REPOSITORIES_GRADLE_GROOVY else REPOSITORIES_GRADLE_KTS}
+      ${scenario.includeStatements()}
     """.trimIndent()
 
     with(projectRoot) {
-      resolve("settings.gradle.kts").writeText(settingsFile)
-      resolve("build.gradle.kts").writeText(scenario.rootBuildFile)
+      resolve(scenario.settingsFileName).writeText(settingsFile)
+      resolve(scenario.buildFileName).writeText(scenario.rootBuildFile)
       resolve("gradle.properties").writeText(scenario.gradlePropertiesFile)
 
       scenario.submoduleBuildFiles.forEach { (path, contents) ->
         resolve(modulePathToFilePath(path))
           .also { it.mkdirs() }
-          .resolve("build.gradle.kts")
+          .resolve(scenario.buildFileName)
           .writeText(contents)
       }
       test()
@@ -36,4 +36,16 @@ abstract class ScenarioTest {
     .split(":")
     .filter { it.isNotEmpty() }
     .joinToString(separator = File.separator)
+
+  private val Scenario.buildFileName get() = if (isGroovy) "build.gradle" else "build.gradle.kts"
+  private val Scenario.settingsFileName get() = if (isGroovy) "settings.gradle" else "settings.gradle.kts"
+
+  private fun Scenario.includeStatements() =
+    submoduleBuildFiles.keys.joinToString(separator = "\n") { name ->
+      if (isGroovy) {
+        "include(':$name')"
+      } else {
+        "include(\":$name\")"
+      }
+    }
 }
