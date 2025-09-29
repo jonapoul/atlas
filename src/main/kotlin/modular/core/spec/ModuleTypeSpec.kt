@@ -68,7 +68,7 @@ interface NamedModuleTypeContainer : NamedDomainObjectContainer<ModuleTypeSpec> 
     pathMatches: Regex,
   ): NamedDomainObjectProvider<ModuleTypeSpec> = register(name) { type ->
     type.color.convention(color)
-    type.pathMatches.convention(pathMatches)
+    type.pathMatches.convention(pathMatches.toString())
   }
 
   @ModularDsl
@@ -101,7 +101,7 @@ interface ModuleTypeSpec {
   /**
    * Similar to [pathContains] but more flexible with [Regex] pattern checking instead of straight string comparison.
    */
-  val pathMatches: Property<Regex>
+  val pathMatches: Property<String>
 
   /**
    * Checks whether the given plugin ID string has been applied to your module.

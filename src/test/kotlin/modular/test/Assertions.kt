@@ -15,7 +15,8 @@ import java.io.File
 internal fun Assert<List<BuildTask>>.allSuccessful() = given { tasks ->
   val nonSuccesses = tasks.filter { task -> task.outcome != TaskOutcome.SUCCESS }
   if (nonSuccesses.isEmpty()) return@given
-  fail("Failed allTasksSuccessful: [${nonSuccesses.joinToString()}]")
+  val successes = tasks.filter { t -> t.outcome == TaskOutcome.SUCCESS }
+  fail("Failed allTasksSuccessful: failures=$nonSuccesses, successes=$successes")
 }
 
 internal fun Assert<BuildResult>.taskWasSuccessful(name: String) = taskHadResult(name, expected = TaskOutcome.SUCCESS)

@@ -79,7 +79,7 @@ abstract class WriteModuleType : DefaultTask(), TaskWithSeparator, TaskWithOutpu
 
     private fun ModuleTypeSpec.matches(project: Project): Boolean = with(project) {
       pathContains.map { path.contains(it) }.orNull
-        ?: pathMatches.map { path.matches(it) }.orNull
+        ?: pathMatches.map { path.matches(it.toRegex()) }.orNull
         ?: hasPluginId.map { pluginManager.hasPlugin(it) }.orNull
         ?: false
     }

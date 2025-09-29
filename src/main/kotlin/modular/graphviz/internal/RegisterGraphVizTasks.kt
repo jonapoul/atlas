@@ -32,7 +32,7 @@ internal fun Project.registerGraphvizTrunkTasks(
     outputFile = outputFile(extension, Legend, spec.fileExtension.get()),
   )
 
-  ExecGraphviz.register(
+  val graphvizTask = ExecGraphviz.register(
     target = project,
     spec = spec,
     variant = Legend,
@@ -55,6 +55,14 @@ internal fun Project.registerGraphvizTrunkTasks(
     variant = Legend,
     realTask = realTask,
     dummyTask = dummyTask,
+  )
+
+  WriteReadme.register(
+    target = project,
+    enabled = spec.writeReadme,
+    flavor = "Graphviz",
+    chartFile = graphvizTask.map { it.outputFile.get() },
+    legendTask = rootProject.tasks.named("execGraphvizLegend", ExecGraphviz::class.java),
   )
 }
 
@@ -89,18 +97,10 @@ internal fun Project.registerGraphvizLeafTasks(
     dummyTask = dummyDotTask,
   )
 
-  val graphvizTask = ExecGraphviz.register(
+  ExecGraphviz.register(
     target = project,
     spec = spec,
     variant = Chart,
     dotFileTask = dotTask,
-  )
-
-  WriteReadme.register(
-    target = project,
-    enabled = spec.writeReadme,
-    flavor = "Graphviz",
-    chartFile = graphvizTask.map { it.outputFile.get() },
-    legendTask = rootProject.tasks.named("execGraphvizLegend", ExecGraphviz::class.java),
   )
 }

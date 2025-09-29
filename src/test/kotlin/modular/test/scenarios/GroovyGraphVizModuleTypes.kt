@@ -6,9 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object GroovyGraphVizBasic : Scenario by GroovyBasic {
-  override val isGroovy = true
-
+object GroovyGraphVizModuleTypes : Scenario by GroovyBasic {
   override val rootBuildFile = """
     plugins {
       id 'org.jetbrains.kotlin.jvm'
@@ -16,6 +14,18 @@ object GroovyGraphVizBasic : Scenario by GroovyBasic {
     }
 
     modular {
+      moduleTypes {
+        kotlinJvm {
+          color = "mediumorchid"
+          hasPluginId = "org.jetbrains.kotlin.jvm"
+        }
+
+        other {
+          color = "gainsboro"
+          pathMatches = ".*?"
+        }
+      }
+
       graphViz()
     }
   """.trimIndent()
