@@ -5,7 +5,7 @@ kotlin = "2.2.20"
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 assertk = { module = "com.willowtreeapps.assertk:assertk", version = "0.28.1" }
-junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version = "5.13.4" }
+junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version = "6.0.0" }
 junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
