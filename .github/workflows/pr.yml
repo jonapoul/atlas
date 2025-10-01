@@ -57,8 +57,11 @@ jobs:
       - name: Check
         run: ./gradlew check
 
-      - name: Check sample
-        run: ./gradlew -p sample check
+      - name: Check graphviz sample
+        run: ./gradlew check -p samples/sample-graphviz
+
+      - name: Check mermaid sample
+        run: ./gradlew check -p samples/sample-mermaid
 
       - name: Upload reports
         uses: actions/upload-artifact@v4

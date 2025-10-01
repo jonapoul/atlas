@@ -1,0 +1,35 @@
+---
+config:
+  layout: elk
+  look: handDrawn
+  theme: forest
+  elk:
+    mergeEdges: true
+    forceNodeModelOrder: true
+    nodePlacementStrategy: LINEAR_SEGMENTS
+    cycleBreakingStrategy: INTERACTIVE
+    considerModelOrder: PREFER_EDGES
+  themeVariables:
+    background: #FFF
+    fontFamily: arial
+    lineColor: #55FF55
+    primaryBorderColor: #FF5555
+    primaryColor: #ABC123
+    darkMode: true
+    fontSize: 30px
+    defaultLinkColor: #5555FF
+---
+graph TD
+  _sample_lib_android["lib android"]
+  _sample_lib_java["lib java"]
+  _sample_lib_kotlin_jvm["lib kotlin jvm"]
+  _sample_lib_kotlin_mp["lib kotlin mp"]
+  style _sample_lib_android fill:lightgreen,color:black
+  style _sample_lib_java fill:orange,color:black
+  style _sample_lib_kotlin_jvm fill:mediumorchid,color:black
+  style _sample_lib_kotlin_mp fill:mediumslateblue,color:black,font-weight:bold,stroke:black,stroke-width:2px
+  _sample_lib_android -.-> _sample_lib_kotlin_jvm
+  _sample_lib_kotlin_mp --> _sample_lib_android
+  _sample_lib_kotlin_mp ==> _sample_lib_java
+  linkStyle 2 stroke:orange
+  _sample_lib_kotlin_mp --> _sample_lib_kotlin_jvm

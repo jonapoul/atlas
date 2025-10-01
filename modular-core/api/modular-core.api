@@ -1,0 +1,272 @@
+public abstract interface annotation class modular/core/ModularDsl : java/lang/annotation/Annotation {
+}
+
+public abstract interface class modular/core/ModularExtension {
+	public abstract fun getAlsoTraverseUpwards ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCheckOutputs ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
+	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getLinkTypes ()Lmodular/core/spec/NamedLinkTypeContainer;
+	public abstract fun getModulePathTransforms ()Lmodular/core/spec/ModulePathTransformSpec;
+	public abstract fun getModuleTypes ()Lmodular/core/spec/NamedModuleTypeContainer;
+	public abstract fun getPrintFilesToConsole ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
+	public abstract fun modulePathTransforms (Lorg/gradle/api/Action;)V
+	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
+}
+
+public abstract class modular/core/ModularPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+	protected fun applyToChild (Lorg/gradle/api/Project;)V
+	protected fun applyToRoot (Lorg/gradle/api/Project;)V
+	protected abstract fun createExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
+	protected abstract fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
+	protected abstract fun registerChildTasks (Lorg/gradle/api/Project;)V
+	protected abstract fun registerRootTasks (Lorg/gradle/api/Project;)V
+}
+
+public abstract interface class modular/core/internal/StringEnum {
+	public abstract fun getString ()Ljava/lang/String;
+}
+
+public final class modular/core/spec/LinkStyle : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Bold Lmodular/core/spec/LinkStyle;
+	public static final field Dashed Lmodular/core/spec/LinkStyle;
+	public static final field Dotted Lmodular/core/spec/LinkStyle;
+	public static final field Invis Lmodular/core/spec/LinkStyle;
+	public static final field Solid Lmodular/core/spec/LinkStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/core/spec/LinkStyle;
+	public static fun values ()[Lmodular/core/spec/LinkStyle;
+}
+
+public final class modular/core/spec/LinkType : java/io/Serializable {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lmodular/core/spec/LinkType;
+	public static synthetic fun copy$default (Lmodular/core/spec/LinkType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/core/spec/LinkType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getConfiguration ()Ljava/lang/String;
+	public final fun getDisplayName ()Ljava/lang/String;
+	public final fun getStyle ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class modular/core/spec/LinkTypeSpec {
+	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getConfiguration ()Lorg/gradle/api/provider/Property;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getStyle ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract interface class modular/core/spec/ModularSpec {
+	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
+	public abstract fun getName ()Ljava/lang/String;
+}
+
+public abstract interface class modular/core/spec/ModulePathTransformSpec {
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun remove (Ljava/lang/String;)V
+	public abstract fun remove (Lkotlin/text/Regex;)V
+	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
+}
+
+public final class modular/core/spec/ModuleType : java/io/Serializable {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lmodular/core/spec/ModuleType;
+	public static synthetic fun copy$default (Lmodular/core/spec/ModuleType;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lmodular/core/spec/ModuleType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class modular/core/spec/ModuleTypeSpec {
+	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract interface class modular/core/spec/NamedLinkTypeContainer : org/gradle/api/NamedDomainObjectContainer {
+	public fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public fun invoke (Ljava/lang/String;Lmodular/core/internal/StringEnum;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Lmodular/core/internal/StringEnum;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public final class modular/core/spec/NamedLinkTypeContainer$DefaultImpls {
+	public static fun invoke (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun invoke (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Lmodular/core/internal/StringEnum;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Lmodular/core/internal/StringEnum;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public abstract interface class modular/core/spec/NamedModuleTypeContainer : org/gradle/api/NamedDomainObjectContainer {
+	public fun registerByPathContains (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public fun registerByPathMatches (Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public fun registerByPluginId (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public final class modular/core/spec/NamedModuleTypeContainer$DefaultImpls {
+	public static fun registerByPathContains (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPluginId (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public final class modular/core/spec/Replacement : java/io/Serializable {
+	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
+	public final fun getPattern ()Lkotlin/text/Regex;
+	public final fun getReplacement ()Ljava/lang/String;
+}
+
+public abstract class modular/core/tasks/CheckFileDiff : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getActualFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getExpectedDirectory ()Lorg/gradle/api/provider/Property;
+	public abstract fun getExpectedFilename ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProblems ()Lorg/gradle/api/problems/Problems;
+	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/CollateModuleLinks : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getModuleLinkFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/CollateModuleTypes : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectTypeFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract interface class modular/core/tasks/ModularGenerationTask : org/gradle/api/Task {
+	public abstract fun getPrintFilesToConsole ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract interface class modular/core/tasks/TaskWithOutputFile : org/gradle/api/Task {
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public abstract interface class modular/core/tasks/TaskWithSeparator : org/gradle/api/Task {
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/WriteModuleLinks : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getModuleLinks ()Lorg/gradle/api/provider/MapProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/WriteModuleTree : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getAlsoTraverseUpwards ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCollatedLinks ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/WriteModuleType : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getModuleType ()Lorg/gradle/api/provider/Property;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/core/tasks/WriteReadme : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getChartFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getLegendFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getReadmeFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public final class org/gradle/kotlin/dsl/LinkTypeDslKt {
+	public static final fun api (Lmodular/core/spec/NamedLinkTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/core/spec/NamedLinkTypeContainer;Lmodular/core/internal/StringEnum;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/core/spec/NamedLinkTypeContainer;Lmodular/core/internal/StringEnum;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/core/spec/NamedLinkTypeContainer;Lmodular/core/internal/StringEnum;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun api$default (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun api$default (Lmodular/core/spec/NamedLinkTypeContainer;Lmodular/core/internal/StringEnum;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/core/spec/NamedLinkTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/core/spec/NamedLinkTypeContainer;Lmodular/core/internal/StringEnum;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/core/spec/NamedLinkTypeContainer;Lmodular/core/internal/StringEnum;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/core/spec/NamedLinkTypeContainer;Lmodular/core/internal/StringEnum;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun implementation$default (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun implementation$default (Lmodular/core/spec/NamedLinkTypeContainer;Lmodular/core/internal/StringEnum;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Lmodular/core/internal/StringEnum;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Lmodular/core/internal/StringEnum;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Lmodular/core/internal/StringEnum;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun register$default (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun register$default (Lmodular/core/spec/NamedLinkTypeContainer;Ljava/lang/String;Lmodular/core/internal/StringEnum;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {
+	public static final fun androidApp (Lmodular/core/spec/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidApp (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidApp (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun androidApp$default (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Lmodular/core/spec/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun androidLibrary$default (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun builtIns (Lmodular/core/spec/NamedModuleTypeContainer;)V
+	public static final fun java (Lmodular/core/spec/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun java$default (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Lmodular/core/spec/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun kotlinJvm$default (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Lmodular/core/spec/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun kotlinMultiplatform$default (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Lmodular/core/spec/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun other$default (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+

@@ -1,8 +1,0 @@
-digraph {
-  edge ["arrowhead"="normal","arrowtail"="none"]
-  graph ["dpi"="100","fontsize"="30","layout"="dot","ranksep"="1.5","rankdir"="TB"]
-  node ["style"="filled"]
-  "Lib android" ["fillcolor"="lightgreen","penwidth"="3","shape"="box"]
-  "Lib kotlin jvm" ["fillcolor"="mediumorchid","shape"="none"]
-  "Lib android" -> "Lib kotlin jvm" ["style"="dotted"]
-}
