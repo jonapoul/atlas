@@ -19,6 +19,7 @@ plugins {
 modular {
   alsoTraverseUpwards = true
   generateOnSync = true
+  checkOutputs = true
 
   moduleTypes {
     builtIns()
@@ -36,7 +37,6 @@ modular {
     dpi = 100
     fontSize = 30
     rankSep = 1.5f
-    checkOutputs = true
 
     arrowHead(Normal)
     arrowTail(None)

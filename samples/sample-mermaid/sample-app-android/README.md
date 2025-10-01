@@ -40,7 +40,7 @@ graph TD
   _sample_lib_android -.-> _sample_lib_kotlin_jvm
   _sample_lib_kotlin_mp --> _sample_lib_android
   _sample_lib_kotlin_mp ==> _sample_lib_java
-  linkStyle 4 stroke:orange,fill:orange
+  linkStyle 4 stroke:orange
   _sample_lib_kotlin_mp --> _sample_lib_kotlin_jvm
 ```
 
