@@ -14,9 +14,18 @@ config:
     nodePlacementStrategy: LINEAR_SEGMENTS
     cycleBreakingStrategy: INTERACTIVE
     considerModelOrder: PREFER_EDGES
+  themeVariables:
+    background: #FFF
+    fontFamily: arial
+    lineColor: #55FF55
+    primaryBorderColor: #FF5555
+    primaryColor: #ABC123
+    darkMode: true
+    fontSize: 30px
+    defaultLinkColor: #5555FF
 ---
 graph TD
-  _sample_lib_kotlin_jvm["Lib kotlin jvm"]
+  _sample_lib_kotlin_jvm["lib kotlin jvm"]
   style _sample_lib_kotlin_jvm fill:mediumorchid,color:black,font-weight:bold,stroke:black,stroke-width:2px
 ```
 

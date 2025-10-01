@@ -13,6 +13,7 @@ import modular.mermaid.CycleBreakingStrategy
 import modular.mermaid.ElkLayoutSpec
 import modular.mermaid.MermaidLayoutSpec
 import modular.mermaid.MermaidSpec
+import modular.mermaid.MermaidThemeVariablesSpec
 import modular.mermaid.NodePlacementStrategy
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
@@ -29,7 +30,10 @@ class MermaidSpecImpl(
   override val fileExtension = objects.string(convention = "mmd")
 
   override val layout get() = mutableLayout
-  override fun layout(action: Action<MermaidLayoutSpec>) = action.execute(layout)
+  override fun layout(action: Action<MermaidLayoutSpec>) = action.execute(mutableLayout)
+
+  override val themeVariables = MermaidThemeVariablesSpecImpl(objects)
+  override fun themeVariables(action: Action<MermaidThemeVariablesSpec>) = action.execute(themeVariables)
 
   override fun elk(action: Action<ElkLayoutSpec>?) {
     mutableLayout = ElkLayoutSpecImpl(objects).also { action?.execute(it) }
@@ -63,4 +67,22 @@ class ElkLayoutSpecImpl(objects: ObjectFactory) : MermaidLayoutSpecImpl(objects)
   override fun forceNodeModelOrder(enabled: Boolean) = put("forceNodeModelOrder", enabled)
   override fun mergeEdges(enabled: Boolean) = put("mergeEdges", enabled)
   override fun nodePlacementStrategy(strategy: NodePlacementStrategy) = put("nodePlacementStrategy", strategy.string)
+}
+
+@InternalModularApi
+class MermaidThemeVariablesSpecImpl(objects: ObjectFactory) : MermaidThemeVariablesSpec {
+  override val properties = objects
+    .mapProperty(String::class.java, String::class.java)
+    .convention(null)
+
+  override fun background(value: String) = put("background", value)
+  override fun darkMode(value: Boolean) = put("darkMode", value)
+  override fun fontFamily(value: String) = put("fontFamily", value)
+  override fun fontSize(value: String) = put("fontSize", value)
+  override fun lineColor(value: String) = put("lineColor", value)
+  override fun primaryBorderColor(value: String) = put("primaryBorderColor", value)
+  override fun primaryColor(value: String) = put("primaryColor", value)
+  override fun primaryTextColor(value: String) = put("primaryTextColor", value)
+  override fun secondaryColor(value: String) = put("secondaryColor", value)
+  override fun tertiaryColor(value: String) = put("tertiaryColor", value)
 }

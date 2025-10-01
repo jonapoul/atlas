@@ -1,7 +1,6 @@
 plugins {
   alias(libs.plugins.agp.app)
   alias(libs.plugins.kotlin.android)
-  id("dev.jonpoulton.modular.leaf")
 }
 
 android {

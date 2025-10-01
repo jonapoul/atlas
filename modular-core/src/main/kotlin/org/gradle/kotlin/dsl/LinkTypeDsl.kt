@@ -6,13 +6,11 @@
 
 package org.gradle.kotlin.dsl
 
-import modular.core.ModularDsl
 import modular.core.internal.StringEnum
 import modular.core.spec.LinkTypeSpec
 import modular.core.spec.NamedLinkTypeContainer
 import org.gradle.api.NamedDomainObjectProvider
 
-@ModularDsl
 fun NamedLinkTypeContainer.register(
   configuration: String,
   style: String? = null,
@@ -25,7 +23,6 @@ fun NamedLinkTypeContainer.register(
 }
 
 @JvmOverloads
-@ModularDsl
 fun NamedLinkTypeContainer.register(
   configuration: String,
   style: StringEnum,
@@ -34,7 +31,6 @@ fun NamedLinkTypeContainer.register(
 ): NamedDomainObjectProvider<LinkTypeSpec> = register(configuration, style.string, color, displayName)
 
 @JvmOverloads
-@ModularDsl
 fun NamedLinkTypeContainer.api(
   style: String? = null,
   color: String? = null,
@@ -42,7 +38,6 @@ fun NamedLinkTypeContainer.api(
 ): NamedDomainObjectProvider<LinkTypeSpec> = register(configuration = ".*?api", style, color, displayName)
 
 @JvmOverloads
-@ModularDsl
 fun NamedLinkTypeContainer.api(
   style: StringEnum,
   color: String? = null,
@@ -50,7 +45,6 @@ fun NamedLinkTypeContainer.api(
 ): NamedDomainObjectProvider<LinkTypeSpec> = api(style.string, color, displayName)
 
 @JvmOverloads
-@ModularDsl
 fun NamedLinkTypeContainer.implementation(
   style: String? = null,
   color: String? = null,
@@ -58,7 +52,6 @@ fun NamedLinkTypeContainer.implementation(
 ): NamedDomainObjectProvider<LinkTypeSpec> = register(configuration = ".*?implementation", style, color, displayName)
 
 @JvmOverloads
-@ModularDsl
 fun NamedLinkTypeContainer.implementation(
   style: StringEnum,
   color: String? = null,

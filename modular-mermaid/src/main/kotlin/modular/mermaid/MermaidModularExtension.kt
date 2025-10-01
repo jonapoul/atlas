@@ -8,7 +8,8 @@ import modular.core.ModularDsl
 import modular.core.ModularExtension
 import org.gradle.api.Action
 
+@ModularDsl
 interface MermaidModularExtension : ModularExtension {
   val mermaid: MermaidSpec
-  @ModularDsl fun mermaid(action: Action<MermaidSpec>): MermaidSpec
+  fun mermaid(action: Action<MermaidSpec>): MermaidSpec
 }

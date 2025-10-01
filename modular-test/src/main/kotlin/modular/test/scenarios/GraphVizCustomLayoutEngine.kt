@@ -4,6 +4,7 @@
  */
 package modular.test.scenarios
 
+import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 import kotlin.text.trimIndent
 
@@ -12,7 +13,7 @@ object GraphVizCustomLayoutEngine : Scenario by GraphVizBigGraph {
     import modular.graphviz.LayoutEngine.Neato
 
     plugins {
-      kotlin("jvm") apply false
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
     }
 
@@ -21,7 +22,7 @@ object GraphVizCustomLayoutEngine : Scenario by GraphVizBigGraph {
         kotlinJvm()
       }
 
-      graphViz {
+      graphviz {
         layoutEngine(Neato)
         fileFormat = "svg"
       }

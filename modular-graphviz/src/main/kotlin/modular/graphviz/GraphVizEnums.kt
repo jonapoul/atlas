@@ -76,17 +76,6 @@ enum class Dir(override val string: String) : StringEnum {
 }
 
 /**
- * https://graphviz.org/docs/attr-types/style/
- */
-enum class LinkStyle(override val string: String) : StringEnum {
-  Dashed("dashed"),
-  Dotted("dotted"),
-  Solid("solid"),
-  Invis("invis"),
-  Bold("bold"),
-}
-
-/**
  * The formats supported on your machine will depend on the version of Graphviz you use.
  * See https://graphviz.org/docs/outputs/
  */

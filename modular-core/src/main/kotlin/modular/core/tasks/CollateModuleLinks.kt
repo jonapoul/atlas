@@ -7,8 +7,6 @@ package modular.core.tasks
 import modular.core.ModularExtension
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModuleLink
-import modular.core.internal.TaskWithOutputFile
-import modular.core.internal.TaskWithSeparator
 import modular.core.internal.fileInBuildDirectory
 import modular.core.internal.readModuleLinks
 import modular.core.internal.writeModuleLinks

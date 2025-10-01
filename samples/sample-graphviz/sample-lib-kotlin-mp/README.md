@@ -2,6 +2,6 @@
 
 <!--region chart-->
 
-![chart](charts/chart.svg)
-![legend](../legend/legend.svg)
+![chart](modular/chart.svg)
+![legend](../modular/legend.svg)
 <!--endregion-->

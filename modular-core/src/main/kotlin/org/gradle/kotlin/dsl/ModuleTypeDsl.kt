@@ -6,12 +6,10 @@
 
 package org.gradle.kotlin.dsl
 
-import modular.core.ModularDsl
 import modular.core.spec.ModuleTypeSpec
 import modular.core.spec.NamedModuleTypeContainer
 import org.gradle.api.NamedDomainObjectProvider
 
-@ModularDsl
 @JvmOverloads
 fun NamedModuleTypeContainer.androidApp(
   name: String = "Android App",
@@ -22,7 +20,6 @@ fun NamedModuleTypeContainer.androidApp(
   pluginId = "com.android.application",
 )
 
-@ModularDsl
 @JvmOverloads
 fun NamedModuleTypeContainer.androidLibrary(
   name: String = "Android Library",
@@ -33,7 +30,6 @@ fun NamedModuleTypeContainer.androidLibrary(
   pluginId = "com.android.library",
 )
 
-@ModularDsl
 @JvmOverloads
 fun NamedModuleTypeContainer.java(
   name: String = "Java",
@@ -44,7 +40,6 @@ fun NamedModuleTypeContainer.java(
   pluginId = "java",
 )
 
-@ModularDsl
 @JvmOverloads
 fun NamedModuleTypeContainer.kotlinJvm(
   name: String = "Kotlin JVM",
@@ -55,7 +50,6 @@ fun NamedModuleTypeContainer.kotlinJvm(
   pluginId = "org.jetbrains.kotlin.jvm",
 )
 
-@ModularDsl
 @JvmOverloads
 fun NamedModuleTypeContainer.kotlinMultiplatform(
   name: String = "Kotlin Multiplatform",
@@ -66,7 +60,6 @@ fun NamedModuleTypeContainer.kotlinMultiplatform(
   pluginId = "org.jetbrains.kotlin.multiplatform",
 )
 
-@ModularDsl
 @JvmOverloads
 fun NamedModuleTypeContainer.other(
   name: String = "Other",
@@ -77,7 +70,6 @@ fun NamedModuleTypeContainer.other(
   pathMatches = ".*?".toRegex(), // match anything and everything - should always have this declared last
 )
 
-@ModularDsl
 fun NamedModuleTypeContainer.builtIns() {
   // Highest priority ↓↓
   androidApp()

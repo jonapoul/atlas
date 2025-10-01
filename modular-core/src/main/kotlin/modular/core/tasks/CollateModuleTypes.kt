@@ -6,8 +6,6 @@ package modular.core.tasks
 
 import modular.core.InternalModularApi
 import modular.core.internal.MODULAR_TASK_GROUP
-import modular.core.internal.TaskWithOutputFile
-import modular.core.internal.TaskWithSeparator
 import modular.core.internal.TypedModule
 import modular.core.internal.TypedModules
 import modular.core.internal.fileInBuildDirectory

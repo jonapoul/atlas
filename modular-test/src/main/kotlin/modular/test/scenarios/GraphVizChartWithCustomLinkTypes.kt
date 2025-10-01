@@ -5,17 +5,18 @@
 package modular.test.scenarios
 
 import modular.test.GraphvizScenario
+import modular.test.KOTLIN_VERSION
 import modular.test.javaBuildScript
 import modular.test.kotlinJvmBuildScript
 
 object GraphVizChartWithCustomLinkTypes : GraphvizScenario {
   override val rootBuildFile = """
     import modular.graphviz.ArrowType
-    import modular.graphviz.LinkStyle
+    import modular.core.spec.LinkStyle
     import modular.graphviz.RankDir
 
     plugins {
-      kotlin("jvm") apply false
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
     }
 

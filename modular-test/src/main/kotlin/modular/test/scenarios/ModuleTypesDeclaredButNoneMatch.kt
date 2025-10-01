@@ -5,13 +5,13 @@
 package modular.test.scenarios
 
 import modular.test.GraphvizScenario
-import modular.test.Scenario
+import modular.test.KOTLIN_VERSION
 import modular.test.kotlinJvmBuildScript
 
 object ModuleTypesDeclaredButNoneMatch : GraphvizScenario {
   override val rootBuildFile = """
     plugins {
-      kotlin("jvm") apply false
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
     }
 

@@ -6,10 +6,11 @@ package modular.graphviz.tasks
 
 import modular.core.InternalModularApi
 import modular.core.internal.MODULAR_TASK_GROUP
-import modular.core.internal.ModularGenerationTask
-import modular.core.internal.TaskWithOutputFile
 import modular.core.internal.Variant
 import modular.core.internal.logIfConfigured
+import modular.core.internal.outputFile
+import modular.core.tasks.ModularGenerationTask
+import modular.core.tasks.TaskWithOutputFile
 import modular.graphviz.GraphvizSpec
 import modular.graphviz.internal.doGraphvizPostProcessing
 import org.gradle.api.DefaultTask
@@ -93,23 +94,25 @@ abstract class ExecGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutp
       variant: Variant,
       dotFileTask: TaskProvider<T>,
     ): TaskProvider<ExecGraphviz> = with(target) {
-      val format = spec.fileFormat.get()
-      val dotFile = dotFileTask.map { it.outputFile.get() }
-
-      val outputFile = dotFile.map { f ->
-        val newFile = f.asFile.resolveSibling("${f.asFile.nameWithoutExtension}.$format")
-        project.layout.projectDirectory.file(newFile.relativeTo(projectDir).path)
-      }
-
       val name = "exec${spec.name.capitalized()}$variant"
-      tasks.register(name, ExecGraphviz::class.java) { task ->
+      val execGraphviz = tasks.register(name, ExecGraphviz::class.java)
+
+      execGraphviz.configure { task ->
+        val dotFile = dotFileTask.map { it.outputFile.get() }
+        val outputFile = dotFile.map { f ->
+          val newFile = f.asFile.resolveSibling("${f.asFile.nameWithoutExtension}.${spec.fileFormat.get()}")
+          project.layout.projectDirectory.file(newFile.relativeTo(projectDir).path)
+        }
+
         task.dotFile.convention(dotFile)
         task.pathToDotCommand.convention(spec.pathToDotCommand)
         task.engine.convention(spec.layoutEngine)
-        task.outputFormat.convention(format)
+        task.outputFormat.convention(spec.fileFormat)
         task.outputFile.convention(outputFile)
         task.adjustSvgViewBox.convention(spec.adjustSvgViewBox)
       }
+
+      return execGraphviz
     }
   }
 }

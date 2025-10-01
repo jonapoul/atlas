@@ -12,7 +12,6 @@ import modular.test.containsDiffed
 import modular.test.doesNotExist
 import modular.test.runTask
 import modular.test.scenarios.MermaidBasic
-import modular.test.scenarios.MermaidWithCustomOutputs
 import modular.test.scenarios.MermaidWithLinkTypes
 import modular.test.taskHadResult
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
@@ -21,41 +20,6 @@ import kotlin.test.Test
 class WriteReadmeTest : ScenarioTest() {
   @Test
   fun `Mermaid readme links correctly with default outputs`() = runScenario(MermaidBasic) {
-    // when
-    val result = runTask("modularGenerate").build()
-    assertThat(result.tasks).allSuccessful()
-
-    // then
-    val readme = resolve("a/README.md")
-    assertThat(readme).exists()
-    assertThat(readme.readText()).containsDiffed(
-      """
-        # a
-
-        <!--region chart-->
-
-        ```mermaid
-        ---
-        config:
-        ---
-        graph TD
-          _a[":a"]
-          _b[":b"]
-          _c[":c"]
-          style _a color:black,font-weight:bold,stroke:black,stroke-width:2px
-          style _b color:black
-          style _c color:black
-          _a --> _b
-          _a --> _c
-        ```
-
-        <!--endregion-->
-      """.trimIndent(),
-    )
-  }
-
-  @Test
-  fun `Mermaid readme links correctly with custom outputs`() = runScenario(MermaidWithCustomOutputs) {
     // when
     val result = runTask("modularGenerate").build()
     assertThat(result.tasks).allSuccessful()
@@ -116,7 +80,9 @@ class WriteReadmeTest : ScenarioTest() {
           style _b color:black
           style _c color:black
           _a --> _b
+          linkStyle 0 stroke:green
           _a --> _c
+          linkStyle 1 stroke:#5555FF
         ```
 
         | Link Types | Style |
@@ -173,7 +139,9 @@ class WriteReadmeTest : ScenarioTest() {
         style _b color:black
         style _c color:black
         _a --> _b
+        linkStyle 0 stroke:green
         _a --> _c
+        linkStyle 1 stroke:#5555FF
       ```
 
       | Link Types | Style |

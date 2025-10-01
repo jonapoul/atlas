@@ -4,6 +4,7 @@
  */
 package modular.test.scenarios
 
+import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 import kotlin.text.trimIndent
 
@@ -12,7 +13,7 @@ object GraphVizCustomDotExecutable : Scenario by GraphVizBasic {
     import modular.graphviz.LayoutEngine.Neato
 
     plugins {
-      kotlin("jvm") apply false
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
     }
 
@@ -22,10 +23,9 @@ object GraphVizCustomDotExecutable : Scenario by GraphVizBasic {
         java()
       }
 
-      graphViz {
+      graphviz {
         pathToDotCommand = file("path/to/custom/dot").absolutePath
         fileFormat = "svg"
-        writeReadme = true
       }
     }
   """.trimIndent()

@@ -8,7 +8,6 @@ package modular.core.tasks
 
 import modular.core.InternalModularApi
 import modular.core.ModularExtension
-import modular.core.internal.TaskWithOutputFile
 import modular.core.internal.Variant
 import modular.core.internal.diff
 import modular.core.internal.problemId
@@ -118,8 +117,10 @@ abstract class CheckFileDiff : DefaultTask() {
         task.expectedFilename.set(expectedFile.name)
       }
 
-      if (extension.checkOutputs.get()) {
-        tasks.maybeCreate("check").dependsOn(checkDiff)
+      gradle.projectsEvaluated {
+        if (extension.checkOutputs.get()) {
+          tasks.maybeCreate("check").dependsOn(checkDiff)
+        }
       }
 
       checkDiff

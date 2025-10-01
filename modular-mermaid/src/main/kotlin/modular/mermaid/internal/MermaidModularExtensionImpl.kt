@@ -14,7 +14,7 @@ import org.gradle.api.model.ObjectFactory
 import javax.inject.Inject
 
 @InternalModularApi
-class MermaidModularExtensionImpl @Inject constructor(
+open class MermaidModularExtensionImpl @Inject constructor(
   objects: ObjectFactory,
   project: Project,
 ) : ModularExtensionImpl(objects, project), MermaidModularExtension {

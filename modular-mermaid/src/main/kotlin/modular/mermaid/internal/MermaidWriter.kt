@@ -32,24 +32,27 @@ internal class MermaidWriter(
   }
 
   private fun IndentedStringBuilder.appendConfig() {
-    val layout = config.layout
-    val properties = config.layoutProperties.orEmpty()
     appendLine("---")
     appendLine("config:")
     indent {
+      val layout = config.layout
       layout?.let { appendLine("layout: $it") }
       config.look?.let { appendLine("look: $it") }
       config.theme?.let { appendLine("theme: $it") }
-      if (layout != null && properties.isNotEmpty()) {
-        appendLine("$layout:")
-        indent {
-          for ((key, value) in properties) {
-            appendLine("$key: $value")
-          }
-        }
-      }
+      if (layout != null) appendProperties(name = layout, config.layoutProperties)
+      appendProperties(name = "themeVariables", config.themeVariables)
     }
     appendLine("---")
+  }
+
+  private fun IndentedStringBuilder.appendProperties(name: String, properties: Map<String, String>?) {
+    if (properties.isNullOrEmpty()) return
+    appendLine("$name:")
+    indent {
+      for ((key, value) in properties) {
+        appendLine("$key: $value")
+      }
+    }
   }
 
   private fun IndentedStringBuilder.appendModules() {
@@ -93,6 +96,7 @@ internal class MermaidWriter(
         else -> "-->"
       }
       appendLine("${link.fromPath.label} $arrowPrefix$arrow ${link.toPath.label}")
+      link.color?.let { color -> appendLine("linkStyle $i stroke:$color") }
     }
 
     if (config.animateLinks) {

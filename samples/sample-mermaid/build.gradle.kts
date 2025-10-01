@@ -1,6 +1,6 @@
-import modular.graphviz.LinkStyle.Bold
-import modular.graphviz.LinkStyle.Dotted
-import modular.graphviz.LinkStyle.Solid
+import modular.core.spec.LinkStyle.Bold
+import modular.core.spec.LinkStyle.Dotted
+import modular.core.spec.LinkStyle.Solid
 import modular.mermaid.ConsiderModelOrder.PreferEdges
 import modular.mermaid.CycleBreakingStrategy.Interactive
 import modular.mermaid.Look.HandDrawn
@@ -13,7 +13,7 @@ plugins {
   alias(libs.plugins.kotlin.android) apply false
   alias(libs.plugins.kotlin.jvm) apply false
   alias(libs.plugins.kotlin.multiplatform) apply false
-  id("dev.jonpoulton.modular.trunk")
+  id("dev.jonpoulton.modular.mermaid")
 }
 
 modular {
@@ -32,7 +32,6 @@ modular {
 
   modulePathTransforms {
     remove(pattern = "^:sample-")
-    replace(pattern = "lib", replacement = "Lib")
     replace(pattern = "-", replacement = " ")
   }
 
@@ -48,6 +47,18 @@ modular {
       nodePlacementStrategy(LinearSegments)
       cycleBreakingStrategy(Interactive)
       considerModelOrder(PreferEdges)
+    }
+
+    themeVariables {
+      background("#FFF")
+      fontFamily("arial")
+      lineColor("#55FF55")
+      primaryBorderColor("#FF5555")
+      primaryColor("#ABC123")
+      darkMode(true)
+      fontSize("30px")
+
+      put("defaultLinkColor", "#5555FF")
     }
   }
 }

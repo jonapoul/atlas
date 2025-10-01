@@ -4,6 +4,7 @@
  */
 package modular.test.scenarios
 
+import modular.test.KOTLIN_VERSION
 import modular.test.MermaidScenario
 import modular.test.javaBuildScript
 import modular.test.kotlinJvmBuildScript
@@ -11,12 +12,8 @@ import modular.test.kotlinJvmBuildScript
 object MermaidBasic : MermaidScenario {
   override val rootBuildFile = """
     plugins {
-      kotlin("jvm") apply false
-      id("dev.jonpoulton.modular")
-    }
-
-    modular {
-      mermaid()
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
+      id("$pluginId")
     }
   """.trimIndent()
 

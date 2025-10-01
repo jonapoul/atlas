@@ -6,33 +6,22 @@ package modular.graphviz.tasks
 
 import assertk.assertThat
 import assertk.assertions.contains
-import assertk.assertions.doesNotContain
 import assertk.assertions.exists
 import modular.test.ScenarioTest
 import modular.test.contentEquals
 import modular.test.runTask
 import modular.test.scenarios.GraphVizBasic
 import modular.test.scenarios.GraphVizWithLinkTypes
-import modular.test.scenarios.OneKotlinJvmModule
 import kotlin.test.Test
 
 class WriteGraphvizChartTest : ScenarioTest() {
-  @Test
-  fun `Don't register legend task if no outputs are configured`() = runScenario(OneKotlinJvmModule) {
-    // when
-    val result = runTask("tasks").build()
-
-    // then the task didn't exist
-    assertThat(result.output).doesNotContain("writeGraphvizLegend")
-  }
-
   @Test
   fun `Generate dotfile legend from basic config`() = runScenario(GraphVizBasic) {
     // when
     runTask("writeGraphvizLegend").build()
 
     // then the file was generated
-    val legendFile = resolve("legend.dot")
+    val legendFile = resolve("modular/legend.dot")
     assertThat(legendFile).exists()
 
     // and contains expected contents, with modules in declaration order
@@ -59,7 +48,7 @@ class WriteGraphvizChartTest : ScenarioTest() {
     runTask("writeGraphvizLegend").build()
 
     // then the file was generated
-    val legendFile = resolve("legend.dot")
+    val legendFile = resolve("modular/legend.dot")
     assertThat(legendFile).exists()
 
     // and contains expected contents, overriding build script

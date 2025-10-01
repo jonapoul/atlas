@@ -30,13 +30,14 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
  *
  * Regex groups aren't supported, just standard matches.
  */
+@ModularDsl
 interface ModulePathTransformSpec {
   val replacements: SetProperty<Replacement>
 
-  @ModularDsl fun remove(@Language("RegExp") pattern: String)
-  @ModularDsl fun remove(pattern: Regex)
-  @ModularDsl fun replace(@Language("RegExp") pattern: String, replacement: String)
-  @ModularDsl fun replace(pattern: Regex, replacement: String)
+  fun remove(@Language("RegExp") pattern: String)
+  fun remove(pattern: Regex)
+  fun replace(@Language("RegExp") pattern: String, replacement: String)
+  fun replace(pattern: Regex, replacement: String)
 }
 
 @KSerializable

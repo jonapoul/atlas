@@ -6,10 +6,6 @@ package modular.mermaid.tasks
 
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
-import modular.core.internal.ModularGenerationTask
-import modular.core.internal.TaskWithOutputFile
-import modular.core.internal.TaskWithSeparator
-import modular.core.internal.Variant
 import modular.core.internal.linkType
 import modular.core.internal.logIfConfigured
 import modular.core.internal.moduleType
@@ -18,6 +14,9 @@ import modular.core.internal.orderedModuleTypes
 import modular.core.spec.LinkType
 import modular.core.spec.ModularSpec
 import modular.core.spec.ModuleType
+import modular.core.tasks.ModularGenerationTask
+import modular.core.tasks.TaskWithOutputFile
+import modular.core.tasks.TaskWithSeparator
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -45,7 +44,7 @@ abstract class WriteMarkdownLegend : WriteMarkdownLegendBase(), ModularGeneratio
 }
 
 @DisableCachingByDefault
-abstract class WriteDummyMarkdownLegend : WriteMarkdownLegendBase() {
+internal abstract class WriteDummyMarkdownLegend : WriteMarkdownLegendBase() {
   override fun getDescription() = "Generates a dummy legend for comparison against the golden"
 
   @TaskAction
@@ -123,7 +122,6 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
 
     internal inline fun <reified T : WriteMarkdownLegendBase> register(
       target: Project,
-      variant: Variant,
       spec: ModularSpec,
       extension: ModularExtensionImpl,
       outputFile: File,
@@ -132,12 +130,17 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
         WriteDummyMarkdownLegend::class -> "Dummy"
         else -> ""
       }
-      val name = "write$qualifier${spec.name.capitalized()}$variant"
-      tasks.register(name, T::class.java) { task ->
+      val name = "write$qualifier${spec.name.capitalized()}Legend"
+      val writeLegend = tasks.register(name, T::class.java) { task ->
         task.outputFile.set(outputFile)
+      }
+
+      writeLegend.configure { task ->
         task.moduleTypes.convention(extension.orderedModuleTypes().map(::moduleType))
         task.linkTypes.convention(extension.orderedLinkTypes().map(::linkType))
       }
+
+      return writeLegend
     }
   }
 }

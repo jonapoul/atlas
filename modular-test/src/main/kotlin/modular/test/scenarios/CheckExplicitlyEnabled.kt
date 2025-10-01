@@ -4,12 +4,13 @@
  */
 package modular.test.scenarios
 
+import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 
 object CheckExplicitlyEnabled : Scenario by GraphVizBasic {
   override val rootBuildFile = """
     plugins {
-      kotlin("jvm") apply false
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
     }
 

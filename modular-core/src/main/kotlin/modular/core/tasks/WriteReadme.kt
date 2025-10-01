@@ -6,8 +6,6 @@ package modular.core.tasks
 
 import modular.core.InternalModularApi
 import modular.core.internal.MODULAR_TASK_GROUP
-import modular.core.internal.ModularGenerationTask
-import modular.core.internal.TaskWithOutputFile
 import modular.core.internal.logIfConfigured
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -125,7 +123,7 @@ abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutpu
       chartFile: Provider<RegularFile>,
       legendTask: Provider<T>,
     ): TaskProvider<WriteReadme> = with(target) {
-      tasks.register("write${flavor.capitalized()}Readme", WriteReadme::class.java) { task ->
+      return tasks.register("write${flavor.capitalized()}Readme", WriteReadme::class.java) { task ->
         task.projectPath.convention(target.path)
         task.legendFile.convention(legendTask.map { it.outputFile.get() })
         task.chartFile.convention(chartFile)

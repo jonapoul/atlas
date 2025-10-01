@@ -16,7 +16,7 @@ import org.gradle.api.provider.Property
  * modular {
  *   // other Modular config
  *
- *   graphViz {
+ *   graphviz {
  *     pathToDotCommand = "/custom/path/to/dot"
  *     fileFormat = "svg"
  *
@@ -25,6 +25,7 @@ import org.gradle.api.provider.Property
  * }
  * ```
  */
+@ModularDsl
 interface GraphvizSpec : ModularSpec {
   /**
    * When enabled, the generated Graphviz SVG file will have its `viewBox` parameter auto-adjusted to make sure all the
@@ -59,6 +60,12 @@ interface GraphvizSpec : ModularSpec {
   val pathToDotCommand: Property<String>
 
   /**
+   * Set the background color of the generated image. Set to `"transparent"` for no background.
+   * See https://graphviz.org/docs/attrs/bgcolor/
+   */
+  val backgroundColor: Property<String>
+
+  /**
    * Manually interact with output formats from Graphviz. Defaults to an empty set, meaning the only output will
    * be a `.dot` file.
    *
@@ -66,8 +73,8 @@ interface GraphvizSpec : ModularSpec {
    * available (depending on your installed Graphviz version).
    */
   val fileFormat: Property<String>
-  @ModularDsl fun fileFormat(value: String)
-  @ModularDsl fun fileFormat(value: FileFormat)
+  fun fileFormat(value: String)
+  fun fileFormat(value: FileFormat)
 
   /**
    * Configure the arrow type from a module pointing to its dependency. Defaults to unset, so Graphviz will fall back
@@ -76,8 +83,8 @@ interface GraphvizSpec : ModularSpec {
    * See https://graphviz.org/docs/attrs/arrowhead/
    */
   val arrowHead: Property<String>
-  @ModularDsl fun arrowHead(value: ArrowType)
-  @ModularDsl fun arrowHead(value: String)
+  fun arrowHead(value: ArrowType)
+  fun arrowHead(value: String)
 
   /**
    * Configure the arrow type from a dependency pointing to its dependent. Defaults to unset, so Graphviz will fall back
@@ -86,8 +93,8 @@ interface GraphvizSpec : ModularSpec {
    * See https://graphviz.org/docs/attrs/arrowtail/
    */
   val arrowTail: Property<String>
-  @ModularDsl fun arrowTail(value: ArrowType)
-  @ModularDsl fun arrowTail(value: String)
+  fun arrowTail(value: ArrowType)
+  fun arrowTail(value: String)
 
   /**
    * Customise the layout engine used to organise your module nodes in the chart. Defaults to [LayoutEngine.Dot].
@@ -96,8 +103,8 @@ interface GraphvizSpec : ModularSpec {
    * See https://graphviz.org/docs/layouts/
    */
   val layoutEngine: Property<String>
-  @ModularDsl fun layoutEngine(value: LayoutEngine)
-  @ModularDsl fun layoutEngine(value: String)
+  fun layoutEngine(value: LayoutEngine)
+  fun layoutEngine(value: String)
 
   /**
    * Specifies the expected number of pixels per inch on a display device. Defaults to unset, but Graphviz will fall
@@ -117,8 +124,8 @@ interface GraphvizSpec : ModularSpec {
    * See https://graphviz.org/docs/attrs/rankdir/
    */
   val rankDir: Property<String>
-  @ModularDsl fun rankDir(value: RankDir)
-  @ModularDsl fun rankDir(value: String)
+  fun rankDir(value: RankDir)
+  fun rankDir(value: String)
 
   /**
    * Specifies separation between ranks in the chart. Unset by default, Graphviz will use a different default value
@@ -132,6 +139,6 @@ interface GraphvizSpec : ModularSpec {
    * See https://graphviz.org/docs/attrs/dir/
    */
   val dir: Property<String>
-  @ModularDsl fun dir(value: Dir)
-  @ModularDsl fun dir(value: String)
+  fun dir(value: Dir)
+  fun dir(value: String)
 }

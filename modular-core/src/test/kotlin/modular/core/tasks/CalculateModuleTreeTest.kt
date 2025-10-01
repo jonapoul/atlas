@@ -22,7 +22,9 @@ class CalculateModuleTreeTest : ScenarioTest() {
   @Test
   fun `Empty files for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when
-    val result = runTask("calculateModuleTree").build()
+    val result = runTask("calculateModuleTree")
+      .withPluginClasspath()
+      .build()
 
     // then
     assertThat(result.tasks).allSuccessful()

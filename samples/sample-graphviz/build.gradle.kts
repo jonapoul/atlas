@@ -1,10 +1,10 @@
+import modular.core.spec.LinkStyle.Bold
+import modular.core.spec.LinkStyle.Dotted
+import modular.core.spec.LinkStyle.Solid
 import modular.graphviz.ArrowType.None
 import modular.graphviz.ArrowType.Normal
 import modular.graphviz.FileFormat.Svg
 import modular.graphviz.LayoutEngine.Dot
-import modular.graphviz.LinkStyle.Bold
-import modular.graphviz.LinkStyle.Dotted
-import modular.graphviz.LinkStyle.Solid
 import modular.graphviz.RankDir.TopToBottom
 
 plugins {
@@ -13,7 +13,7 @@ plugins {
   alias(libs.plugins.kotlin.android) apply false
   alias(libs.plugins.kotlin.jvm) apply false
   alias(libs.plugins.kotlin.multiplatform) apply false
-  id("dev.jonpoulton.modular.trunk")
+  id("dev.jonpoulton.modular.graphviz")
 }
 
 modular {
@@ -30,13 +30,9 @@ modular {
     implementation(Dotted)
   }
 
-  outputs {
-    saveChartsRelativeToSubmodule("charts")
-    saveLegendsRelativeToRootModule("legend")
-  }
-
-  graphViz {
+  graphviz {
     adjustSvgViewBox = true
+    backgroundColor = "transparent"
     dpi = 100
     fontSize = 30
     rankSep = 1.5f

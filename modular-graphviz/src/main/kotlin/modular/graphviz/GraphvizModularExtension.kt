@@ -8,7 +8,8 @@ import modular.core.ModularDsl
 import modular.core.ModularExtension
 import org.gradle.api.Action
 
+@ModularDsl
 interface GraphvizModularExtension : ModularExtension {
   val graphviz: GraphvizSpec
-  @ModularDsl fun graphviz(action: Action<GraphvizSpec>): GraphvizSpec
+  fun graphviz(action: Action<GraphvizSpec>): GraphvizSpec
 }

@@ -36,7 +36,7 @@ class PluginValidationTest : ScenarioTest() {
       .build()
 
     // then a warning was printed to enable the experimental property
-    val msg = "Configuring a custom DPI on a dotfile's with SVG output enabled will likely cause a misaligned viewBox"
+    val msg = "Configuring a custom DPI with SVG output enabled will likely cause a misaligned viewBox"
     assertThat(result.output).contains(msg)
 
     // when we run again with the suppress property enabled

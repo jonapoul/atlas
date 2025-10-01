@@ -37,7 +37,6 @@ class ExecGraphvizTest : ScenarioTest() {
       """
         :writeGraphvizLegend SKIPPED
         :execGraphvizLegend SKIPPED
-        :writeGraphvizReadme SKIPPED
         :modularGenerate SKIPPED
         :a:writeModuleType SKIPPED
         :b:writeModuleType SKIPPED
@@ -50,14 +49,17 @@ class ExecGraphvizTest : ScenarioTest() {
         :a:calculateModuleTree SKIPPED
         :a:writeGraphvizChart SKIPPED
         :a:execGraphvizChart SKIPPED
+        :a:writeGraphvizReadme SKIPPED
         :a:modularGenerate SKIPPED
         :b:calculateModuleTree SKIPPED
         :b:writeGraphvizChart SKIPPED
         :b:execGraphvizChart SKIPPED
+        :b:writeGraphvizReadme SKIPPED
         :b:modularGenerate SKIPPED
         :c:calculateModuleTree SKIPPED
         :c:writeGraphvizChart SKIPPED
         :c:execGraphvizChart SKIPPED
+        :c:writeGraphvizReadme SKIPPED
         :c:modularGenerate SKIPPED
 
         BUILD SUCCESSFUL
@@ -82,7 +84,7 @@ class ExecGraphvizTest : ScenarioTest() {
 
     // and the relevant files exist
     for (submodule in listOf("a", "b", "c")) {
-      assertThat(resolve("$submodule/chart.png")).exists()
+      assertThat(resolve("$submodule/modular/chart.png")).exists()
     }
   }
 
@@ -94,7 +96,7 @@ class ExecGraphvizTest : ScenarioTest() {
       runTask(":app:execGraphvizChart").build()
 
       // then the app graph was generated as an svg
-      val contents = resolve("app/chart.svg").readText()
+      val contents = resolve("app/modular/chart.svg").readText()
 
       // and the viewBox matches the width/height
       assertThat(contents).contains(
@@ -116,7 +118,7 @@ class ExecGraphvizTest : ScenarioTest() {
     runTask(":app:execGraphvizChart").build()
 
     // then the app graph was generated as an svg
-    val contents = resolve("app/chart.svg").readText()
+    val contents = resolve("app/modular/chart.svg").readText()
 
     // and the viewBox doesn't match the width/height
     assertThat(contents).contains(

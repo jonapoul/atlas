@@ -4,11 +4,9 @@
  */
 package modular.core
 
-import modular.core.ModularDsl
 import modular.core.spec.ModulePathTransformSpec
 import modular.core.spec.NamedLinkTypeContainer
 import modular.core.spec.NamedModuleTypeContainer
-import modular.core.spec.OutputSpec
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
@@ -16,6 +14,7 @@ import org.gradle.api.provider.SetProperty
 /**
  * Main entry point for configuring the plugin from your Gradle script.
  */
+@ModularDsl
 interface ModularExtension {
   /**
    * When set to true, syncing the IDE (IntelliJ or Android Studio) will automatically trigger regeneration of your
@@ -67,14 +66,11 @@ interface ModularExtension {
   val checkOutputs: Property<Boolean>
 
   val modulePathTransforms: ModulePathTransformSpec
-  @ModularDsl fun modulePathTransforms(action: Action<ModulePathTransformSpec>)
+  fun modulePathTransforms(action: Action<ModulePathTransformSpec>)
 
   val moduleTypes: NamedModuleTypeContainer
-  @ModularDsl fun moduleTypes(action: Action<NamedModuleTypeContainer>)
+  fun moduleTypes(action: Action<NamedModuleTypeContainer>)
 
   val linkTypes: NamedLinkTypeContainer
-  @ModularDsl fun linkTypes(action: Action<NamedLinkTypeContainer>)
-
-  val outputs: OutputSpec
-  @ModularDsl fun outputs(action: Action<OutputSpec>)
+  fun linkTypes(action: Action<NamedLinkTypeContainer>)
 }

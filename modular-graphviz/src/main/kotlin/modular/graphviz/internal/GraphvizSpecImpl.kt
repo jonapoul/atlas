@@ -27,6 +27,7 @@ class GraphvizSpecImpl(
   override val name = "Graphviz"
   override val fileExtension = objects.string(convention = "dot")
   override val pathToDotCommand: Property<String> = objects.property(String::class.java).unsetConvention()
+  override val backgroundColor: Property<String> = objects.property(String::class.java).unsetConvention()
   override val adjustSvgViewBox = objects.bool(convention = properties.graphviz.adjustSvgViewBox)
 
   override val arrowHead = objects.string(properties.graphviz.arrowHead)

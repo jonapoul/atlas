@@ -65,3 +65,15 @@ data class LinkType(
   val color: String? = null,
   val displayName: String = configuration,
 ) : JSerializable
+
+/**
+ * These come from graphviz, but also work with mermaid.
+ * See https://graphviz.org/docs/attr-types/style/
+ */
+enum class LinkStyle(override val string: String) : StringEnum {
+  Dashed("dashed"),
+  Dotted("dotted"),
+  Solid("solid"),
+  Invis("invis"),
+  Bold("bold"),
+}

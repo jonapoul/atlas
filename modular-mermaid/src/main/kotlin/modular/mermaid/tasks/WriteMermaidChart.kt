@@ -6,14 +6,14 @@ package modular.mermaid.tasks
 
 import modular.core.ModularExtension
 import modular.core.internal.MODULAR_TASK_GROUP
-import modular.core.internal.ModularGenerationTask
-import modular.core.internal.TaskWithOutputFile
-import modular.core.internal.TaskWithSeparator
 import modular.core.internal.TypedModules
 import modular.core.internal.logIfConfigured
 import modular.core.internal.readModuleLinks
 import modular.core.spec.Replacement
 import modular.core.tasks.CollateModuleTypes
+import modular.core.tasks.ModularGenerationTask
+import modular.core.tasks.TaskWithOutputFile
+import modular.core.tasks.TaskWithSeparator
 import modular.core.tasks.WriteModuleTree
 import modular.mermaid.MermaidConfig
 import modular.mermaid.MermaidSpec
@@ -31,14 +31,31 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
+import org.gradle.internal.extensions.stdlib.capitalized
+import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 @CacheableTask
-abstract class WriteMermaidChart :
-  DefaultTask(),
-  TaskWithSeparator,
-  ModularGenerationTask,
-  TaskWithOutputFile {
+abstract class WriteMermaidChart : WriteMermaidChartBase(), ModularGenerationTask {
+  override fun getDescription() = "Generates a project dependency graph in mermaid format"
+
+  @TaskAction
+  override fun execute() {
+    super.execute()
+    logIfConfigured(outputFile.get().asFile)
+  }
+}
+
+@DisableCachingByDefault
+internal abstract class WriteDummyMermaidChart : WriteMermaidChartBase() {
+  override fun getDescription() = "Generates a dummy mermaid chart for comparison against the golden"
+
+  @TaskAction
+  override fun execute() = super.execute()
+}
+
+@CacheableTask
+abstract class WriteMermaidChartBase : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
   // Files
   @get:[PathSensitive(RELATIVE) InputFile] abstract val linksFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] abstract val moduleTypesFile: RegularFileProperty
@@ -59,7 +76,7 @@ abstract class WriteMermaidChart :
   }
 
   @TaskAction
-  fun execute() {
+  open fun execute() {
     val linksFile = linksFile.get().asFile
     val moduleTypesFile = moduleTypesFile.get().asFile
     val separator = separator.get()
@@ -75,17 +92,11 @@ abstract class WriteMermaidChart :
 
     val outputFile = outputFile.get().asFile
     outputFile.writeText(writer())
-
-    logIfConfigured(outputFile)
   }
 
   internal companion object {
-    internal const val TASK_NAME = "writeMermaidChart"
-    internal const val TASK_NAME_FOR_CHECKING = "writeMermaidChartForChecking"
-
-    internal fun register(
+    internal inline fun <reified T : WriteMermaidChartBase> register(
       target: Project,
-      name: String,
       extension: ModularExtension,
       spec: MermaidSpec,
       outputFile: File,
@@ -93,7 +104,14 @@ abstract class WriteMermaidChart :
       val collateModuleTypes = CollateModuleTypes.get(rootProject)
       val calculateProjectTree = WriteModuleTree.get(target)
 
-      tasks.register(name, WriteMermaidChart::class.java) { task ->
+      val qualifier = when (T::class) {
+        WriteDummyMermaidChart::class -> "Dummy"
+        else -> ""
+      }
+      val name = "write$qualifier${spec.name.capitalized()}Chart"
+      val writeChart = tasks.register(name, WriteMermaidChart::class.java)
+
+      writeChart.configure { task ->
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.set(outputFile)
@@ -104,6 +122,8 @@ abstract class WriteMermaidChart :
 
         task.config.convention(provider { MermaidConfig(spec) })
       }
+
+      return writeChart
     }
   }
 }

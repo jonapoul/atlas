@@ -1,4 +1,5 @@
 plugins {
+  alias(libs.plugins.buildConfig) apply false
   alias(libs.plugins.detekt) apply false
   alias(libs.plugins.dokka) apply false
   alias(libs.plugins.kotlin.jvm) apply false

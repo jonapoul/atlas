@@ -6,8 +6,6 @@ package modular.core.tasks
 
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
-import modular.core.internal.TaskWithOutputFile
-import modular.core.internal.TaskWithSeparator
 import modular.core.internal.createModuleLinks
 import modular.core.internal.fileInBuildDirectory
 import modular.core.internal.linkType
@@ -69,12 +67,17 @@ abstract class WriteModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOutp
       target: Project,
       extension: ModularExtensionImpl,
     ): TaskProvider<WriteModuleLinks> = with(target) {
-      tasks.register(NAME, WriteModuleLinks::class.java) { task ->
+      val writeLinks = tasks.register(NAME, WriteModuleLinks::class.java) { task ->
         task.thisPath.convention(target.path)
-        task.moduleLinks.convention(createModuleLinks(target, extension.ignoredConfigs.get()))
-        task.linkTypes.convention(extension.orderedLinkTypes().map(::linkType))
         task.outputFile.convention(fileInBuildDirectory("module-links"))
       }
+
+      writeLinks.configure { task ->
+        task.moduleLinks.convention(createModuleLinks(target, extension.ignoredConfigs.get()))
+        task.linkTypes.convention(extension.orderedLinkTypes().map(::linkType))
+      }
+
+      return writeLinks
     }
   }
 }

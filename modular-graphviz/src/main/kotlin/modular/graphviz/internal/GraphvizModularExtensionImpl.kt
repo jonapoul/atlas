@@ -14,7 +14,7 @@ import org.gradle.api.model.ObjectFactory
 import javax.inject.Inject
 
 @InternalModularApi
-class GraphvizModularExtensionImpl @Inject constructor(
+open class GraphvizModularExtensionImpl @Inject constructor(
   objects: ObjectFactory,
   project: Project,
 ) : ModularExtensionImpl(objects, project), GraphvizModularExtension {

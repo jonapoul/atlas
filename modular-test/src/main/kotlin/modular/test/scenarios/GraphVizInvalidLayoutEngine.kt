@@ -4,13 +4,14 @@
  */
 package modular.test.scenarios
 
+import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 import kotlin.text.trimIndent
 
 object GraphVizInvalidLayoutEngine : Scenario by GraphVizBigGraph {
   override val rootBuildFile = """
     plugins {
-      kotlin("jvm") apply false
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
     }
 
@@ -19,7 +20,7 @@ object GraphVizInvalidLayoutEngine : Scenario by GraphVizBigGraph {
         kotlinJvm()
       }
 
-      graphViz {
+      graphviz {
         layoutEngine = "abc123"
         fileFormat = "svg"
       }

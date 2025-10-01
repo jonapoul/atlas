@@ -11,7 +11,6 @@ import modular.core.spec.ModulePathTransformSpec
 import modular.core.spec.ModuleTypeSpec
 import modular.core.spec.NamedLinkTypeContainer
 import modular.core.spec.NamedModuleTypeContainer
-import modular.core.spec.OutputSpec
 import modular.core.spec.Replacement
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -22,8 +21,9 @@ import org.gradle.api.tasks.Input
 import javax.inject.Inject
 
 @InternalModularApi
-open class ModularExtensionImpl(
-  internal val objects: ObjectFactory,
+@Suppress("UnnecessaryAbstractClass")
+abstract class ModularExtensionImpl(
+  objects: ObjectFactory,
   internal val project: Project,
 ) : ModularExtension {
   @InternalModularApi
@@ -47,11 +47,10 @@ open class ModularExtensionImpl(
   override val linkTypes = LinkTypeContainer(objects)
   override fun linkTypes(action: Action<NamedLinkTypeContainer>) = action.execute(linkTypes)
 
-  override val outputs = OutputSpecImpl(objects, project)
-  override fun outputs(action: Action<OutputSpec>) = action.execute(outputs)
-
-  internal companion object {
-    internal const val NAME = "modular"
+  @InternalModularApi
+  companion object {
+    @InternalModularApi
+    const val NAME = "modular"
   }
 }
 
@@ -77,36 +76,6 @@ abstract class ModuleTypeSpecImpl @Inject constructor(override val name: String)
     pathMatches.unsetConvention()
     hasPluginId.unsetConvention()
   }
-}
-
-@InternalModularApi
-class OutputSpecImpl(objects: ObjectFactory, project: Project) : OutputSpec {
-  private val projectDir = project.layout.projectDirectory
-
-  // chartOutputDirectory is a bit of a hack - when this gets configured it'll store the directory relative to the
-  // root project. But when we access it in the leaf tasks, we'll manually rewire it to be relative to the submodule.
-  // Just a workaround to avoid the awkwardness of configuring something relative to each submodule's directory,
-  // without breaking config cache restrictions. This rewiring doesn't happen for legendOutputDirectory, since that's
-  // always relative to root project.
-  internal val chartDir = objects.directory(convention = projectDir)
-  internal val legendDir = objects.directory(convention = projectDir)
-
-  override val chartRootFilename = objects.string(convention = "chart")
-  override val legendRootFilename = objects.string(convention = "legend")
-
-  // All chart files will be placed in each submodule's root folder
-  override fun saveChartsInSubmoduleDir() = saveChartsRelativeToSubmodule("")
-
-  // All chart files will be placed in the specified relative path to each submodule's root folder
-  override fun saveChartsRelativeToSubmodule(relativeToSubmodule: String) =
-    chartDir.set(projectDir.dir(relativeToSubmodule))
-
-  // All legend files will be placed in the root project's root folder
-  override fun saveLegendsInRootDir() = saveLegendsRelativeToRootModule("")
-
-  // All legend files will be placed in the specified path relative to the root module's root folder
-  override fun saveLegendsRelativeToRootModule(relativeToRoot: String) =
-    legendDir.set(projectDir.dir(relativeToRoot))
 }
 
 internal abstract class LinkTypeSpecImpl @Inject constructor(override val name: String) : LinkTypeSpec {

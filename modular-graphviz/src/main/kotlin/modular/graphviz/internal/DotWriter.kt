@@ -46,6 +46,7 @@ internal data class DotWriter(
     appendHeaderGroup(
       name = "graph",
       attrs = Attrs(
+        "bgcolor" to config.backgroundColor,
         "dpi" to config.dpi,
         "fontsize" to config.fontSize,
         "layout" to config.layoutEngine,
@@ -156,7 +157,7 @@ internal data class DotWriter(
 
     override fun toString(): String {
       if (isEmpty() || values.all { it == null }) return ""
-      val csv = mapNotNull { (k, v) -> if (v == null) null else "\"$k\"=\"$v\"" }.joinToString(separator = ",")
+      val csv = mapNotNull { (k, v) -> if (v == null) null else "$k=\"$v\"" }.joinToString(separator = ",")
       return " [$csv]"
     }
 

@@ -4,12 +4,13 @@
  */
 package modular.test.scenarios
 
+import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 
 object GraphVizBasicWithPngOutput : Scenario by GraphVizBasic {
   override val rootBuildFile = """
     plugins {
-      kotlin("jvm") apply false
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
     }
 
@@ -19,7 +20,7 @@ object GraphVizBasicWithPngOutput : Scenario by GraphVizBasic {
         java()
       }
 
-      graphViz {
+      graphviz {
         fileFormat = "png"
       }
     }

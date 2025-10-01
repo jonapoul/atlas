@@ -4,9 +4,6 @@
  */
 package modular.core.internal
 
-import modular.core.InternalModularApi
-
-@InternalModularApi
 interface StringEnum {
   val string: String
 }

@@ -4,6 +4,7 @@
  */
 package modular.test.scenarios
 
+import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 import kotlin.text.trimIndent
 
@@ -14,7 +15,7 @@ object GraphVizChartCustomConfig : Scenario by GraphVizBasic {
     import modular.graphviz.RankDir
 
     plugins {
-      kotlin("jvm") apply false
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
     }
 
@@ -25,7 +26,7 @@ object GraphVizChartCustomConfig : Scenario by GraphVizBasic {
         registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
 
-      graphViz {
+      graphviz {
         arrowHead = "halfopen"
         arrowTail(ArrowType.Open)
         dpi = 150

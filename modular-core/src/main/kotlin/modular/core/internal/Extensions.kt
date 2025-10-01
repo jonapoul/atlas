@@ -11,7 +11,6 @@ import modular.core.spec.ModuleType
 import modular.core.spec.ModuleTypeSpec
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
-import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFile
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
@@ -66,10 +65,6 @@ inline fun <reified T : Any> ObjectFactory.set(convention: Set<T>): SetProperty<
   setProperty(T::class.java).convention(convention)
 
 @InternalModularApi
-fun ObjectFactory.directory(convention: Directory): DirectoryProperty =
-  directoryProperty().convention(convention)
-
-@InternalModularApi
 val Project.modularBuildDirectory: Provider<Directory>
   get() = project.layout.buildDirectory.dir("modular")
 
@@ -77,23 +72,19 @@ val Project.modularBuildDirectory: Provider<Directory>
 fun Project.fileInBuildDirectory(path: String): Provider<RegularFile> =
   modularBuildDirectory.map { it.file(path) }
 
+private const val DIR_NAME = "modular"
+
 @InternalModularApi
-fun Project.outputFile(extension: ModularExtensionImpl, variant: Variant, fileExtension: String): File {
-  val rootName = when (variant) {
-    Variant.Chart -> extension.outputs.chartRootFilename
-    Variant.Legend -> extension.outputs.legendRootFilename
+fun Project.outputFile(variant: Variant, fileExtension: String): File {
+  val directory = when (variant) {
+    Variant.Chart -> project.rootDir().resolve(DIR_NAME)
+    Variant.Legend -> rootProject.rootDir().resolve(DIR_NAME)
   }
-  val root = when (variant) {
-    Variant.Chart -> project.rootDir()
-    Variant.Legend -> rootProject.rootDir()
+  val filename = when (variant) {
+    Variant.Chart -> "chart"
+    Variant.Legend -> "legend"
   }
-  val hackyDir = when (variant) {
-    Variant.Legend -> extension.outputs.legendDir
-    Variant.Chart -> extension.outputs.chartDir
-  }
-  val relative = hackyDir.get().asFile.relativeTo(rootProject.rootDir())
-  val actualDir = root.resolve(relative).absoluteFile
-  return actualDir.resolve("${rootName.get()}.$fileExtension")
+  return directory.resolve("$filename.$fileExtension")
 }
 
 private fun Project.rootDir() = layout.projectDirectory.asFile

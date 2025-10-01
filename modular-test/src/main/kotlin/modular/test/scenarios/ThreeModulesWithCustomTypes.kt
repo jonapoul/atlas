@@ -4,15 +4,18 @@
  */
 package modular.test.scenarios
 
+import modular.test.AGP_VERSION
 import modular.test.GraphvizScenario
+import modular.test.KOTLIN_VERSION
 import modular.test.androidBuildScript
 import modular.test.kotlinJvmBuildScript
 
 object ThreeModulesWithCustomTypes : GraphvizScenario {
   override val rootBuildFile = """
     plugins {
-      kotlin("jvm") apply false
-      kotlin("android") apply false
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
+      kotlin("android") version "$KOTLIN_VERSION" apply false
+      id("com.android.library") version "$AGP_VERSION" apply false
       id("$pluginId")
     }
 

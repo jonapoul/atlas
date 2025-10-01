@@ -4,15 +4,16 @@
  */
 package modular.test.scenarios
 
+import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 import kotlin.text.trimIndent
 
 object GraphVizWithLinkTypes : Scenario by GraphVizBasic {
   override val rootBuildFile = """
-    import modular.graphviz.LinkStyle
+    import modular.core.spec.LinkStyle
 
     plugins {
-      kotlin("jvm") apply false
+      kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
     }
 

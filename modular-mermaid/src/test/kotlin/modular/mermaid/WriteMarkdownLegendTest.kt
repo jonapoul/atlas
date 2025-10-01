@@ -22,7 +22,7 @@ class WriteMarkdownLegendTest : ScenarioTest() {
 
     // then
     assertThat(result.tasks).allSuccessful()
-    val legend = resolve("legend.md")
+    val legend = resolve("modular/legend.md")
     assertThat(legend).exists()
     assertThat(legend.readText()).contains(
       """
@@ -41,7 +41,7 @@ class WriteMarkdownLegendTest : ScenarioTest() {
 
     // then
     assertThat(result.tasks).allSuccessful()
-    val legend = resolve("legend.md")
+    val legend = resolve("modular/legend.md")
     assertThat(legend).exists()
     assertThat(legend.readText()).contains(
       """

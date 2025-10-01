@@ -4,9 +4,9 @@
  */
 package modular.test.scenarios
 
-import modular.test.Scenario
+import modular.test.GraphvizScenario
 
-object GroovyGraphVizFull : Scenario by GroovyBasic {
+object GroovyGraphVizFull : GraphvizScenario by GroovyBasic {
   override val isGroovy = true
 
   override val rootBuildFile = """
@@ -14,12 +14,11 @@ object GroovyGraphVizFull : Scenario by GroovyBasic {
 
     plugins {
       id 'org.jetbrains.kotlin.jvm'
-      id 'dev.jonpoulton.modular.trunk'
+      id 'dev.jonpoulton.modular.graphviz'
     }
 
     modular {
-      graphViz {
-        writeReadme = true
+      graphviz {
         adjustSvgViewBox = true
         fileFormat('svg')
         arrowHead('halfopen')

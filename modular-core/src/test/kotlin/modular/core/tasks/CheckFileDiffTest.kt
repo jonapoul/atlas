@@ -78,11 +78,11 @@ class CheckFileDiffTest : ScenarioTest() {
     assertThat(check2.output).contains(
       """
       |          digraph {
-      |      ---   graph ["layout"="circo"]
-      |            node ["style"="filled"]
-      |            ":a" ["fillcolor"="mediumorchid","penwidth"="3","shape"="box"]
-      |            ":b" ["fillcolor"="orange","shape"="none"]
-      |            ":c" ["fillcolor"="orange","shape"="none"]
+      |      ---   graph [layout="circo"]
+      |            node [style="filled"]
+      |            ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
+      |            ":b" [fillcolor="orange",shape="none"]
+      |            ":c" [fillcolor="orange",shape="none"]
       |            ":a" -> ":b"
       |            ":a" -> ":c"
       |          }
@@ -102,7 +102,7 @@ class CheckFileDiffTest : ScenarioTest() {
     assertThat(check1.task(":checkGraphvizLegend")?.outcome).isEqualTo(SUCCESS)
 
     // given we manually adjust the generated file
-    val legendFile = resolve("legend.dot")
+    val legendFile = resolve("modular/legend.dot")
     val editedLegend = legendFile
       .readText()
       .replace("CELLBORDER=\"1\"", "CELLBORDER=\"100\"")

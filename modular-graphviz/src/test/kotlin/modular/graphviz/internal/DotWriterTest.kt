@@ -20,15 +20,15 @@ class DotWriterTest {
     assertThat(writer()).contains(
       """
         digraph {
-          node ["style"="filled"]
-          ":app" ["penwidth"="3","shape"="box"]
-          ":data:a" ["shape"="none"]
-          ":data:b" ["shape"="none"]
-          ":domain:a" ["shape"="none"]
-          ":domain:b" ["shape"="none"]
-          ":ui:a" ["shape"="none"]
-          ":ui:b" ["shape"="none"]
-          ":ui:c" ["shape"="none"]
+          node [style="filled"]
+          ":app" [penwidth="3",shape="box"]
+          ":data:a" [shape="none"]
+          ":data:b" [shape="none"]
+          ":domain:a" [shape="none"]
+          ":domain:b" [shape="none"]
+          ":ui:a" [shape="none"]
+          ":ui:b" [shape="none"]
+          ":ui:c" [shape="none"]
           ":app" -> ":ui:a"
           ":app" -> ":ui:b"
           ":app" -> ":ui:c"
@@ -55,23 +55,23 @@ class DotWriterTest {
     assertThat(writer()).contains(
       """
         digraph {
-          node ["style"="filled"]
-          ":app" ["penwidth"="3","shape"="box"]
+          node [style="filled"]
+          ":app" [penwidth="3",shape="box"]
           subgraph cluster_data {
             label = ":data"
-            ":data:a" ["shape"="none"]
-            ":data:b" ["shape"="none"]
+            ":data:a" [shape="none"]
+            ":data:b" [shape="none"]
           }
           subgraph cluster_domain {
             label = ":domain"
-            ":domain:a" ["shape"="none"]
-            ":domain:b" ["shape"="none"]
+            ":domain:a" [shape="none"]
+            ":domain:b" [shape="none"]
           }
           subgraph cluster_ui {
             label = ":ui"
-            ":ui:a" ["shape"="none"]
-            ":ui:b" ["shape"="none"]
-            ":ui:c" ["shape"="none"]
+            ":ui:a" [shape="none"]
+            ":ui:b" [shape="none"]
+            ":ui:c" [shape="none"]
           }
           ":app" -> ":ui:a"
           ":app" -> ":ui:b"
@@ -99,28 +99,28 @@ class DotWriterTest {
     assertThat(writer()).contains(
       """
         digraph {
-          node ["style"="filled"]
-          ":app" ["penwidth"="3","shape"="box"]
+          node [style="filled"]
+          ":app" [penwidth="3",shape="box"]
           subgraph cluster_data {
             label = ":data"
-            ":data:a" ["shape"="none"]
-            ":data:b" ["shape"="none"]
+            ":data:a" [shape="none"]
+            ":data:b" [shape="none"]
             subgraph cluster_sub {
               label = ":sub"
-              ":data:sub:sub1" ["shape"="none"]
-              ":data:sub:sub2" ["shape"="none"]
+              ":data:sub:sub1" [shape="none"]
+              ":data:sub:sub2" [shape="none"]
             }
           }
           subgraph cluster_domain {
             label = ":domain"
-            ":domain:a" ["shape"="none"]
-            ":domain:b" ["shape"="none"]
+            ":domain:a" [shape="none"]
+            ":domain:b" [shape="none"]
           }
           subgraph cluster_ui {
             label = ":ui"
-            ":ui:a" ["shape"="none"]
-            ":ui:b" ["shape"="none"]
-            ":ui:c" ["shape"="none"]
+            ":ui:a" [shape="none"]
+            ":ui:b" [shape="none"]
+            ":ui:c" [shape="none"]
           }
           ":app" -> ":ui:a"
           ":app" -> ":ui:b"

@@ -11,6 +11,7 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 class MermaidConfig(
   val layout: String?,
   val layoutProperties: Map<String, String>?,
+  val themeVariables: Map<String, String>?,
   val look: String?,
   val theme: String?,
   val animateLinks: Boolean,
@@ -19,6 +20,7 @@ class MermaidConfig(
 internal fun MermaidConfig(spec: MermaidSpec): MermaidConfig = MermaidConfig(
   layout = spec.layout.name.orNull,
   layoutProperties = spec.layout.properties.orNull,
+  themeVariables = spec.themeVariables.properties.orNull,
   look = spec.look.orNull,
   theme = spec.theme.orNull,
   animateLinks = spec.animateLinks.get(),

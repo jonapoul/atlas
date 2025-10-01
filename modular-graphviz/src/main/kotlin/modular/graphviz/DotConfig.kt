@@ -12,6 +12,7 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 data class DotConfig(
   val arrowHead: String? = null,
   val arrowTail: String? = null,
+  val backgroundColor: String? = null,
   val dir: String? = null,
   val dpi: Int? = null,
   val fontSize: Int? = null,
@@ -24,6 +25,7 @@ data class DotConfig(
 fun DotConfig(spec: GraphvizSpec): DotConfig = DotConfig(
   arrowHead = spec.arrowHead.orNull,
   arrowTail = spec.arrowTail.orNull,
+  backgroundColor = spec.backgroundColor.orNull,
   dir = spec.dir.orNull,
   dpi = spec.dpi.orNull,
   fontSize = spec.fontSize.orNull,

@@ -2,6 +2,15 @@ import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 plugins {
   id("modular.convention.kotlin")
+  alias(libs.plugins.buildConfig)
+}
+
+buildConfig {
+  packageName = "modular.test"
+  generateAtSync = true
+  useKotlinOutput { topLevelConstants = true }
+  buildConfigField<String>("AGP_VERSION", libs.versions.agp.get())
+  buildConfigField<String>("KOTLIN_VERSION", libs.versions.kotlin.get())
 }
 
 dependencies {
