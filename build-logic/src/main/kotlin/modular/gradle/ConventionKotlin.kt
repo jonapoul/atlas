@@ -17,7 +17,6 @@ class ConventionKotlin : Plugin<Project> {
       apply(ConventionDetekt::class)
       apply(ConventionIdea::class)
       apply(ConventionLicensee::class)
-      apply(ConventionPublish::class)
       apply(ConventionSpotless::class)
     }
 
