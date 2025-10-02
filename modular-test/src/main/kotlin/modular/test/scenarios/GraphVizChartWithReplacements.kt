@@ -24,7 +24,7 @@ object GraphVizChartWithReplacements : Scenario by GraphVizBasic {
         java()
       }
 
-      modulePathTransforms {
+      pathTransforms {
         replace(pattern = "^:", replacement = "") // remove ":" prefix
         replace(pattern = "^b$", replacement = "B") // rename one module to uppercase
       }

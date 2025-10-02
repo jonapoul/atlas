@@ -117,7 +117,7 @@ abstract class WriteMermaidChartBase : DefaultTask(), TaskWithSeparator, TaskWit
         task.outputFile.set(outputFile)
 
         task.groupModules.convention(extension.groupModules)
-        task.replacements.convention(extension.modulePathTransforms.replacements)
+        task.replacements.convention(extension.pathTransforms.replacements)
         task.thisPath.convention(target.path)
 
         task.config.convention(provider { MermaidConfig(spec) })

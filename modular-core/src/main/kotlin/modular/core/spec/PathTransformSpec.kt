@@ -18,20 +18,18 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
  *
  * ```kotlin
  * modular {
- *   modulePathTransforms {
+ *   pathTransforms {
  *     remove("^:modules:")
  *     replace(":", " ")
  *   }
  * }
  * ```
  *
- * then a path of `":modules:path:to:module"` will be mapped to `"path to module"`. Remember the declarations inside
- * `modulePathTransforms` are called in descending order.
- *
- * Regex groups aren't supported, just standard matches.
+ * then a path of `":modules:path:to:module"` will be mapped to `"path to module"` for display in the charts.
+ * Remember the declarations inside `pathTransforms` are called in descending order.
  */
 @ModularDsl
-interface ModulePathTransformSpec {
+interface PathTransformSpec {
   val replacements: SetProperty<Replacement>
 
   fun remove(@Language("RegExp") pattern: String)

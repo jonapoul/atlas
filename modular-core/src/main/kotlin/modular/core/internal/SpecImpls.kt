@@ -7,10 +7,10 @@ package modular.core.internal
 import modular.core.InternalModularApi
 import modular.core.ModularExtension
 import modular.core.spec.LinkTypeSpec
-import modular.core.spec.ModulePathTransformSpec
 import modular.core.spec.ModuleTypeSpec
 import modular.core.spec.NamedLinkTypeContainer
 import modular.core.spec.NamedModuleTypeContainer
+import modular.core.spec.PathTransformSpec
 import modular.core.spec.Replacement
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -38,8 +38,8 @@ abstract class ModularExtensionImpl(
   override val printFilesToConsole = objects.bool(properties.general.printFilesToConsole)
   override val checkOutputs = objects.bool(properties.general.checkOutputs)
 
-  override val modulePathTransforms = ModulePathTransformSpecImpl(objects)
-  override fun modulePathTransforms(action: Action<ModulePathTransformSpec>) = action.execute(modulePathTransforms)
+  override val pathTransforms = PathTransformSpecImpl(objects)
+  override fun pathTransforms(action: Action<PathTransformSpec>) = action.execute(pathTransforms)
 
   override val moduleTypes = ModuleTypeContainer(objects)
   override fun moduleTypes(action: Action<NamedModuleTypeContainer>) = action.execute(moduleTypes)
@@ -55,7 +55,7 @@ abstract class ModularExtensionImpl(
 }
 
 @InternalModularApi
-class ModulePathTransformSpecImpl(objects: ObjectFactory) : ModulePathTransformSpec {
+class PathTransformSpecImpl(objects: ObjectFactory) : PathTransformSpec {
   override val replacements: SetProperty<Replacement> = objects.setProperty(Replacement::class.java)
   override fun replace(pattern: Regex, replacement: String) = replacements.add(Replacement(pattern, replacement))
   override fun replace(pattern: String, replacement: String) = replace(pattern.toRegex(), replacement)
