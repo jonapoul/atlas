@@ -4,31 +4,27 @@
  */
 package modular.graphviz.internal
 
-import modular.core.internal.GraphElement
+import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
-import modular.core.internal.Node
-import modular.core.internal.Subgraph
 import modular.core.internal.TypedModule
-import modular.core.internal.buildGraphElements
 import modular.core.internal.buildIndentedString
-import modular.core.internal.contains
 import modular.core.spec.Replacement
 import modular.graphviz.DotConfig
 
 internal data class DotWriter(
-  private val typedModules: Set<TypedModule>,
-  private val links: Set<ModuleLink>,
-  private val replacements: Set<Replacement>,
-  private val thisPath: String,
-  private val groupModules: Boolean,
+  override val typedModules: Set<TypedModule>,
+  override val links: Set<ModuleLink>,
+  override val replacements: Set<Replacement>,
+  override val thisPath: String,
+  override val groupModules: Boolean,
   private val config: DotConfig,
-) {
+) : ChartWriter() {
   operator fun invoke(): String = buildIndentedString(size = 2) {
     appendLine("digraph {")
     indent {
       appendHeader()
-      appendNodes()
+      appendModules()
       appendLinks()
     }
     appendLine("}")
@@ -80,52 +76,18 @@ internal data class DotWriter(
       }
   }
 
-  private fun IndentedStringBuilder.appendNodes() {
-    if (groupModules) {
-      val elements = buildGraphElements(typedModules, links)
-      for (element in elements) {
-        appendGraphNode(element)
-      }
-    } else {
-      appendUngroupedNodes()
-    }
-  }
-
-  private fun IndentedStringBuilder.appendGraphNode(element: GraphElement) {
-    when (element) {
-      is Node -> appendNode(element.typedModule)
-      is Subgraph -> appendSubgraph(element)
-    }
-  }
-
-  private fun IndentedStringBuilder.appendSubgraph(graph: Subgraph) {
-    val cleanedName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
-    appendLine("subgraph cluster_$cleanedName {")
+  override fun IndentedStringBuilder.appendSubgraphHeader(cleanedModuleName: String, displayName: String) {
+    appendLine("subgraph cluster_$cleanedModuleName {")
     indent {
-      appendLine("label = \":${graph.name}\"")
-      for (element in graph.elements) {
-        appendGraphNode(element)
-      }
+      appendLine("label = \":$displayName\"")
     }
+  }
+
+  override fun IndentedStringBuilder.appendSubgraphFooter() {
     appendLine("}")
   }
 
-  private fun IndentedStringBuilder.appendUngroupedNodes() {
-    typedModules
-      .filter { module -> module in links }
-      .map { it.copy(projectPath = it.projectPath.cleaned()) }
-      .sortedBy { module -> module.projectPath }
-      .forEach { appendNode(it) }
-
-    if (links.isEmpty()) {
-      // Single-module case - we still want this module to be shown along with its type
-      typedModules
-        .firstOrNull { it.projectPath == thisPath }
-        ?.let { typedModule -> appendNode(typedModule) }
-    }
-  }
-
-  private fun IndentedStringBuilder.appendNode(module: TypedModule) {
+  override fun IndentedStringBuilder.appendModule(module: TypedModule) {
     val nodePath = module.projectPath.cleaned()
     val attrs = Attrs()
 
