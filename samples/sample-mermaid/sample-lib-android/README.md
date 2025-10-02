@@ -25,8 +25,8 @@ config:
     defaultLinkColor: #5555FF
 ---
 graph TD
-  _sample_lib_android["lib android"]
-  _sample_lib_kotlin_jvm["lib kotlin jvm"]
+  lib_android["lib android"]
+  lib_kotlin_jvm["lib kotlin jvm"]
   style _sample_lib_android fill:lightgreen,color:black,font-weight:bold,stroke:black,stroke-width:2px
   style _sample_lib_kotlin_jvm fill:mediumorchid,color:black
   _sample_lib_android -.-> _sample_lib_kotlin_jvm
