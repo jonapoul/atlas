@@ -143,4 +143,3 @@ abstract class ChartWriter {
     private val SUPPORTED_CHAR_REGEX = "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()
   }
 }
-
