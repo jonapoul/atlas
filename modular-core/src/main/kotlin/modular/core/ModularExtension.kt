@@ -4,9 +4,9 @@
  */
 package modular.core
 
-import modular.core.spec.ModulePathTransformSpec
 import modular.core.spec.NamedLinkTypeContainer
 import modular.core.spec.NamedModuleTypeContainer
+import modular.core.spec.PathTransformSpec
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
@@ -65,8 +65,8 @@ interface ModularExtension {
    */
   val checkOutputs: Property<Boolean>
 
-  val modulePathTransforms: ModulePathTransformSpec
-  fun modulePathTransforms(action: Action<ModulePathTransformSpec>)
+  val pathTransforms: PathTransformSpec
+  fun pathTransforms(action: Action<PathTransformSpec>)
 
   val moduleTypes: NamedModuleTypeContainer
   fun moduleTypes(action: Action<NamedModuleTypeContainer>)

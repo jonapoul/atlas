@@ -118,7 +118,7 @@ abstract class WriteGraphvizChartBase : DefaultTask(), TaskWithSeparator, TaskWi
 
       writeChart.configure { task ->
         task.groupModules.convention(extension.groupModules)
-        task.replacements.convention(extension.modulePathTransforms.replacements)
+        task.replacements.convention(extension.pathTransforms.replacements)
         task.config.convention(DotConfig(spec))
       }
 

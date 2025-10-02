@@ -9,13 +9,13 @@ public abstract interface class modular/core/ModularExtension {
 	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getLinkTypes ()Lmodular/core/spec/NamedLinkTypeContainer;
-	public abstract fun getModulePathTransforms ()Lmodular/core/spec/ModulePathTransformSpec;
 	public abstract fun getModuleTypes ()Lmodular/core/spec/NamedModuleTypeContainer;
+	public abstract fun getPathTransforms ()Lmodular/core/spec/PathTransformSpec;
 	public abstract fun getPrintFilesToConsole ()Lorg/gradle/api/provider/Property;
 	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
-	public abstract fun modulePathTransforms (Lorg/gradle/api/Action;)V
 	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
+	public abstract fun pathTransforms (Lorg/gradle/api/Action;)V
 }
 
 public abstract class modular/core/ModularPlugin : org/gradle/api/Plugin {
@@ -76,14 +76,6 @@ public abstract interface class modular/core/spec/ModularSpec {
 	public abstract fun getName ()Ljava/lang/String;
 }
 
-public abstract interface class modular/core/spec/ModulePathTransformSpec {
-	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun remove (Ljava/lang/String;)V
-	public abstract fun remove (Lkotlin/text/Regex;)V
-	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
-	public abstract fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
-}
-
 public final class modular/core/spec/ModuleType : java/io/Serializable {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -129,6 +121,14 @@ public final class modular/core/spec/NamedModuleTypeContainer$DefaultImpls {
 	public static fun registerByPathContains (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static fun registerByPathMatches (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static fun registerByPluginId (Lmodular/core/spec/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public abstract interface class modular/core/spec/PathTransformSpec {
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun remove (Ljava/lang/String;)V
+	public abstract fun remove (Lkotlin/text/Regex;)V
+	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
 }
 
 public final class modular/core/spec/Replacement : java/io/Serializable {

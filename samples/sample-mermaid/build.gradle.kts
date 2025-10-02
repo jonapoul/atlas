@@ -30,7 +30,7 @@ modular {
     implementation(Dotted)
   }
 
-  modulePathTransforms {
+  pathTransforms {
     remove(pattern = "^:sample-")
     replace(pattern = "-", replacement = " ")
   }
