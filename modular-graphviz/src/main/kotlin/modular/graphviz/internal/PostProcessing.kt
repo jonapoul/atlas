@@ -29,6 +29,7 @@ internal fun doGraphvizPostProcessing(outputFile: File, outputFormat: String, ad
  *
  * See DotFileBigGraph100DpiSvg in the tests.
  */
+@Suppress("ImplicitDefaultLocale")
 private fun editSvgViewBoxToMatchSize(svgFile: File) {
   val svgContents = svgFile.readText()
 

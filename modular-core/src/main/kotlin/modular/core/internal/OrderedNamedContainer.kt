@@ -74,6 +74,6 @@ open class OrderedNamedContainer<T : Any>(
 
   // No idea what this is for but if I don't have it I get a linting warning on the interface delegation at the top
   @Suppress("OVERRIDE_DEPRECATION", "RedundantOverride", "DEPRECATION")
-  override fun <T : Any?> toArray(generator: IntFunction<Array<out T?>?>): Array<out T?>? =
+  override fun <T : Any> toArray(generator: IntFunction<Array<out T>>): Array<out T> =
     super.toArray(generator)
 }
