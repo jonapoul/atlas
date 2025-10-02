@@ -4,6 +4,7 @@
  */
 package modular.mermaid.internal
 
+import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
@@ -13,14 +14,13 @@ import modular.core.spec.Replacement
 import modular.mermaid.MermaidConfig
 
 internal class MermaidWriter(
-  private val typedModules: Set<TypedModule>,
-  private val links: Set<ModuleLink>,
-  private val replacements: Set<Replacement>,
-  private val thisPath: String,
-  // TODO https://github.com/jonapoul/modular/issues/123
-  @Suppress("unused", "UnusedPrivateProperty") private val groupModules: Boolean,
+  override val typedModules: Set<TypedModule>,
+  override val links: Set<ModuleLink>,
+  override val replacements: Set<Replacement>,
+  override val thisPath: String,
+  override val groupModules: Boolean,
   private val config: MermaidConfig,
-) {
+) : ChartWriter() {
   operator fun invoke(): String = buildIndentedString(size = 2) {
     appendConfig()
     appendLine("graph TD")
@@ -55,12 +55,16 @@ internal class MermaidWriter(
     }
   }
 
-  private fun IndentedStringBuilder.appendModules() {
-    for (module in typedModules) {
-      if (module !in links && module.projectPath != thisPath) continue
+  override fun IndentedStringBuilder.appendSubgraphHeader(cleanedModuleName: String, displayName: String) {
+    appendLine("subgraph $cleanedModuleName[\"$displayName\"]")
+  }
 
-      appendLine("${module.label}[\"${module.projectPath.cleaned()}\"]")
-    }
+  override fun IndentedStringBuilder.appendSubgraphFooter() {
+    appendLine("end")
+  }
+
+  override fun IndentedStringBuilder.appendModule(module: TypedModule) {
+    appendLine("${module.label}[\"${module.projectPath.cleaned()}\"]")
   }
 
   private fun IndentedStringBuilder.appendTypes() {
@@ -85,8 +89,6 @@ internal class MermaidWriter(
   private fun IndentedStringBuilder.appendLinks() {
     links.forEachIndexed { i, link ->
       val arrowPrefix = if (config.animateLinks) "link$i@" else ""
-
-      // TODO https://github.com/jonapoul/modular/issues/121
       val arrow = when (link.style?.lowercase()) {
         "bold" -> "==>"
         "dashed" -> "-.->"
