@@ -21,7 +21,7 @@ import org.gradle.api.tasks.Input
 import javax.inject.Inject
 
 @InternalModularApi
-@Suppress("UnnecessaryAbstractClass")
+@Suppress("AbstractClassCanBeConcreteClass")
 abstract class ModularExtensionImpl(
   objects: ObjectFactory,
   internal val project: Project,

@@ -1,8 +1,8 @@
 package modular.gradle
 
-import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.DetektPlugin
-import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import dev.detekt.gradle.Detekt
+import dev.detekt.gradle.extensions.DetektExtension
+import dev.detekt.gradle.plugin.DetektPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -19,8 +19,8 @@ class ConventionDetekt : Plugin<Project> {
     }
 
     extensions.configure<DetektExtension> {
-      config.setFrom(rootProject.file("config/detekt.yml"))
-      buildUponDefaultConfig = true
+      config.from(rootProject.file("config/detekt.yml"))
+      buildUponDefaultConfig.set(true)
     }
 
     val detektTasks = tasks.withType<Detekt>()

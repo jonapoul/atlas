@@ -7,7 +7,7 @@ package modular.test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
 
-@Suppress("UnnecessaryAbstractClass")
+@Suppress("AbstractClassCanBeConcreteClass")
 abstract class ScenarioTest {
   @TempDir lateinit var projectRoot: File
 

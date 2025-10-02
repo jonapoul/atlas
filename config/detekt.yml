@@ -1,13 +1,13 @@
 ---
 complexity:
   LongParameterList:
-    constructorThreshold: 8
-    functionThreshold: 8
+    allowedConstructorParameters: 8
+    allowedFunctionParameters: 8
     ignoreDefaultParameters: true
   TooManyFunctions:
-    thresholdInClasses: 20
-    thresholdInFiles: 20
-    thresholdInInterfaces: 20
+    allowedFunctionsPerClass: 20
+    allowedFunctionsPerFile: 20
+    allowedFunctionsPerInterface: 20
 
 style:
   DestructuringDeclarationWithTooManyEntries:
