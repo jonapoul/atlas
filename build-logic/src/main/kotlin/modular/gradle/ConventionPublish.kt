@@ -5,6 +5,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
+import org.jetbrains.dokka.gradle.DokkaExtension
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.abi.AbiValidationExtension
@@ -27,6 +28,16 @@ class ConventionPublish : Plugin<Project> {
             annotatedWith.add("modular.core.InternalModularApi")
           }
         }
+      }
+    }
+
+    extensions.configure<DokkaExtension> {
+      dokkaPublications.configureEach {
+        failOnWarning.set(true)
+      }
+
+      dokkaSourceSets.configureEach {
+        suppressGeneratedFiles.set(true)
       }
     }
   }
