@@ -5,7 +5,6 @@
 package modular.mermaid.internal
 
 import modular.core.InternalModularApi
-import modular.core.internal.GradleProperties
 import modular.core.internal.bool
 import modular.core.internal.string
 import modular.mermaid.ConsiderModelOrder
@@ -16,14 +15,16 @@ import modular.mermaid.MermaidSpec
 import modular.mermaid.MermaidThemeVariablesSpec
 import modular.mermaid.NodePlacementStrategy
 import org.gradle.api.Action
+import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 
 @InternalModularApi
 class MermaidSpecImpl(
   private val objects: ObjectFactory,
-  properties: GradleProperties,
+  project: Project,
 ) : MermaidSpec {
+  private val properties = MermaidGradleProperties(project)
   private var mutableLayout = MermaidLayoutSpecImpl(objects)
 
   override val name = "Mermaid"
@@ -39,9 +40,9 @@ class MermaidSpecImpl(
     mutableLayout = ElkLayoutSpecImpl(objects).also { action?.execute(it) }
   }
 
-  override val animateLinks = objects.bool(properties.mermaid.animateLinks)
-  override val look = objects.string(properties.mermaid.look)
-  override val theme = objects.string(properties.mermaid.theme)
+  override val animateLinks = objects.bool(properties.animateLinks)
+  override val look = objects.string(properties.look)
+  override val theme = objects.string(properties.theme)
 }
 
 @InternalModularApi

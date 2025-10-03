@@ -133,7 +133,7 @@ abstract class ChartWriter {
     }
   }
 
-  private fun String.cleaned(): String {
+  protected fun String.cleaned(): String {
     var string = this
     replacements.forEach { r -> string = string.replace(r.pattern, r.replacement) }
     return string

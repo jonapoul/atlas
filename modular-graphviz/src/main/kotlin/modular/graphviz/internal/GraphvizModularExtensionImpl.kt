@@ -18,6 +18,6 @@ open class GraphvizModularExtensionImpl @Inject constructor(
   objects: ObjectFactory,
   project: Project,
 ) : ModularExtensionImpl(objects, project), GraphvizModularExtension {
-  override val graphviz = GraphvizSpecImpl(objects, properties)
+  override val graphviz = GraphvizSpecImpl(objects, project)
   override fun graphviz(action: Action<GraphvizSpec>): GraphvizSpec = graphviz.also { action.execute(it) }
 }

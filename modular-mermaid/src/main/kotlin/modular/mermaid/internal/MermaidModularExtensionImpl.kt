@@ -18,6 +18,6 @@ open class MermaidModularExtensionImpl @Inject constructor(
   objects: ObjectFactory,
   project: Project,
 ) : ModularExtensionImpl(objects, project), MermaidModularExtension {
-  override val mermaid = MermaidSpecImpl(objects, properties)
+  override val mermaid = MermaidSpecImpl(objects, project)
   override fun mermaid(action: Action<MermaidSpec>): MermaidSpec = mermaid.also { action.execute(it) }
 }
