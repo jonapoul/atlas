@@ -2,7 +2,7 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.core.tasks
+package modular.core
 
 import assertk.assertThat
 import assertk.assertions.contains
