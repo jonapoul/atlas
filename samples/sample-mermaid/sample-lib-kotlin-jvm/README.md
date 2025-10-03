@@ -25,7 +25,7 @@ config:
     defaultLinkColor: #5555FF
 ---
 graph TD
-  _sample_lib_kotlin_jvm["lib kotlin jvm"]
+  lib_kotlin_jvm["lib kotlin jvm"]
   style _sample_lib_kotlin_jvm fill:mediumorchid,color:black,font-weight:bold,stroke:black,stroke-width:2px
 ```
 

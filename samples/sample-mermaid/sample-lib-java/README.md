@@ -25,7 +25,7 @@ config:
     defaultLinkColor: #5555FF
 ---
 graph TD
-  _sample_lib_java["lib java"]
+  lib_java["lib java"]
   style _sample_lib_java fill:orange,color:black,font-weight:bold,stroke:black,stroke-width:2px
 ```
 
