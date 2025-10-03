@@ -17,6 +17,6 @@ buildConfig {
 dependencies {
   testImplementation(kotlin("stdlib"))
   testImplementation(project(":modular-core"))
-  testImplementation(project(":modular-graphviz"))
-  testImplementation(project(":modular-mermaid"))
+  testPluginClasspath(project(":modular-graphviz"))
+  testPluginClasspath(project(":modular-mermaid"))
 }

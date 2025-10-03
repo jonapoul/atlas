@@ -10,9 +10,9 @@ import modular.graphviz.RankDir.TopToBottom
 plugins {
   alias(libs.plugins.agp.app) apply false
   alias(libs.plugins.agp.lib) apply false
-  alias(libs.plugins.kotlin.android) apply false
-  alias(libs.plugins.kotlin.jvm) apply false
-  alias(libs.plugins.kotlin.multiplatform) apply false
+  alias(libs.plugins.kotlinAndroid) apply false
+  alias(libs.plugins.kotlinJvm) apply false
+  alias(libs.plugins.kotlinMultiplatform) apply false
   id("dev.jonpoulton.modular.graphviz")
 }
 

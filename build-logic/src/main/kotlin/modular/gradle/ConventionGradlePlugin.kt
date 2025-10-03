@@ -38,9 +38,6 @@ class ConventionGradlePlugin : Plugin<Project> {
 
     dependencies {
       "compileOnly"(libs("kotlin.gradle"))
-      "testImplementation"(gradleTestKit())
-      "testImplementation"(project(":modular-graphviz"))
-      "testImplementation"(project(":modular-mermaid"))
       testPluginClasspath(libs("agp"))
       testPluginClasspath(libs("kotlin.gradle"))
     }
