@@ -1,0 +1,41 @@
+public final class modular/d2/D2Config : java/io/Serializable {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/util/Map;)Lmodular/d2/D2Config;
+	public static synthetic fun copy$default (Lmodular/d2/D2Config;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lmodular/d2/D2Config;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContainerLabelPosition ()Ljava/lang/String;
+	public final fun getStyle ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class modular/d2/D2ModularExtension : modular/core/ModularExtension {
+	public abstract fun d2 (Lorg/gradle/api/Action;)Lmodular/d2/D2Spec;
+	public abstract fun getD2 ()Lmodular/d2/D2Spec;
+}
+
+public final class modular/d2/D2ModularPlugin : modular/core/ModularPlugin {
+	public fun <init> ()V
+	public synthetic fun createExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
+	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
+}
+
+public abstract interface class modular/d2/D2Spec : modular/core/spec/ModularSpec {
+	public abstract fun getContainerLabelPosition ()Lorg/gradle/api/provider/Property;
+	public abstract fun getStyle ()Lmodular/d2/D2StyleSpec;
+	public abstract fun style (Lorg/gradle/api/Action;)V
+}
+
+public abstract interface class modular/d2/D2StyleSpec {
+	public abstract fun getProperties ()Lorg/gradle/api/provider/MapProperty;
+	public fun put (Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class modular/d2/D2StyleSpec$DefaultImpls {
+	public static fun put (Lmodular/d2/D2StyleSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+

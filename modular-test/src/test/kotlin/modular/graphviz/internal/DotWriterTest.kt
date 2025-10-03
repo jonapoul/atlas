@@ -7,6 +7,9 @@ package modular.graphviz.internal
 import assertk.assertThat
 import assertk.assertions.contains
 import modular.graphviz.dotWriter
+import modular.test.ModuleWithNoLinks
+import modular.test.OneLevelOfSubmodules
+import modular.test.TwoLevelsOfSubmodules
 import kotlin.test.Test
 
 class DotWriterTest {
@@ -134,6 +137,23 @@ class DotWriterTest {
           ":ui:b" -> ":domain:b"
           ":ui:c" -> ":domain:a"
           ":ui:c" -> ":domain:b"
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Single module with no links`() {
+    val writer = dotWriter(
+      typedModules = ModuleWithNoLinks.modules,
+      links = ModuleWithNoLinks.links,
+    )
+
+    assertThat(writer()).contains(
+      """
+        digraph {
+          node [style="filled"]
+          ":app" [penwidth="3",shape="box"]
         }
       """.trimIndent(),
     )

@@ -40,7 +40,10 @@ jobs:
           add-job-summary: on-failure
 
       - name: Install Graphviz
-        run: sudo apt-get install -y graphviz
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: graphviz
+          version: 1.0
 
       - name: Build
         run: ./gradlew build

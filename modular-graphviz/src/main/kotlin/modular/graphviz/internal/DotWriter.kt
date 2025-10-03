@@ -109,12 +109,6 @@ data class DotWriter(
     appendLine("\"$nodePath\"$attrs")
   }
 
-  private fun String.cleaned(): String {
-    var string = this
-    replacements.forEach { r -> string = string.replace(r.pattern, r.replacement) }
-    return string
-  }
-
   @Suppress("SpreadOperator")
   private class Attrs(private val delegate: MutableMap<String, Any?>) : MutableMap<String, Any?> by delegate {
     constructor(vararg entries: Pair<String, Any?>) : this(mutableMapOf(*entries))
@@ -126,9 +120,5 @@ data class DotWriter(
     }
 
     fun hasAnyValues() = values.any { it != null }
-  }
-
-  private companion object {
-    val SUPPORTED_CHAR_REGEX = "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()
   }
 }

@@ -118,26 +118,28 @@ abstract class ChartWriter {
     appendSubgraphFooter()
   }
 
-  private fun IndentedStringBuilder.appendUngroupedNodes() {
+  protected fun IndentedStringBuilder.appendUngroupedNodes() {
     typedModules
-      .filter { module -> module in links }
-      .map { it.copy(projectPath = it.projectPath.cleaned()) }
-      .sortedBy { module -> module.projectPath }
+      .filter { it in links }
+      .map { it.cleaned() }
+      .sortedBy { it.projectPath }
       .forEach { appendModule(it) }
 
     if (links.isEmpty()) {
       // Single-module case - we still want this module to be shown along with its type
       typedModules
         .firstOrNull { it.projectPath == thisPath }
-        ?.let { typedModule -> appendModule(typedModule) }
+        ?.let { appendModule(it.cleaned()) }
     }
   }
 
-  private fun String.cleaned(): String {
+  protected fun String.cleaned(): String {
     var string = this
     replacements.forEach { r -> string = string.replace(r.pattern, r.replacement) }
     return string
   }
+
+  protected fun TypedModule.cleaned() = copy(projectPath = projectPath.cleaned())
 
   private companion object {
     private val SUPPORTED_CHAR_REGEX = "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()

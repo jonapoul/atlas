@@ -8,6 +8,8 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import modular.core.internal.Subgraph
 import modular.core.internal.buildGraphElements
+import modular.test.OneLevelOfSubmodules
+import modular.test.TwoLevelsOfSubmodules
 import modular.test.node
 import kotlin.test.Test
 

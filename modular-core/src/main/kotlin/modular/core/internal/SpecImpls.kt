@@ -26,17 +26,16 @@ abstract class ModularExtensionImpl(
   objects: ObjectFactory,
   internal val project: Project,
 ) : ModularExtension {
-  @InternalModularApi
-  val properties = GradleProperties(project)
+  private val coreProperties = CoreGradleProperties(project)
 
-  override val generateOnSync = objects.bool(properties.general.generateOnSync)
-  override val groupModules = objects.bool(properties.general.groupModules)
+  override val generateOnSync = objects.bool(coreProperties.generateOnSync)
+  override val groupModules = objects.bool(coreProperties.groupModules)
   override val ignoredConfigs = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
   override val ignoredModules = objects.set(convention = emptySet<Regex>())
-  override val separator = objects.string(properties.general.separator)
-  override val alsoTraverseUpwards = objects.bool(properties.general.alsoTraverseUpwards)
-  override val printFilesToConsole = objects.bool(properties.general.printFilesToConsole)
-  override val checkOutputs = objects.bool(properties.general.checkOutputs)
+  override val separator = objects.string(coreProperties.separator)
+  override val alsoTraverseUpwards = objects.bool(coreProperties.alsoTraverseUpwards)
+  override val printFilesToConsole = objects.bool(coreProperties.printFilesToConsole)
+  override val checkOutputs = objects.bool(coreProperties.checkOutputs)
 
   override val pathTransforms = PathTransformSpecImpl(objects)
   override fun pathTransforms(action: Action<PathTransformSpec>) = action.execute(pathTransforms)

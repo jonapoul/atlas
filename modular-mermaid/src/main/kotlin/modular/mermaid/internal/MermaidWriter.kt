@@ -114,12 +114,6 @@ internal class MermaidWriter(
   private val String.label: String
     get() = split(":", "-", " ").joinToString("_")
 
-  private fun String.cleaned(): String {
-    var string = this
-    replacements.forEach { r -> string = string.replace(r.pattern, r.replacement) }
-    return string
-  }
-
   @Suppress("SpreadOperator")
   private class Attrs private constructor(
     private val delegate: MutableMap<String, Any?>,
