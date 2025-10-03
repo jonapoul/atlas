@@ -2,12 +2,9 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("MatchingDeclarationName")
+package modular.test
 
-package modular.graphviz.internal
-
-import modular.test.moduleLink
-import modular.test.typedModule
+import modular.core.internal.ModuleLink
 
 internal object OneLevelOfSubmodules {
   val modules = setOf(
@@ -63,4 +60,12 @@ internal object TwoLevelsOfSubmodules {
     moduleLink(fromPath = ":ui:c", toPath = ":domain:a"),
     moduleLink(fromPath = ":ui:c", toPath = ":domain:b"),
   )
+}
+
+internal object ModuleWithNoLinks {
+  val modules = setOf(
+    typedModule(path = ":app"),
+  )
+
+  val links = emptySet<ModuleLink>()
 }

@@ -8,6 +8,7 @@ pluginManagement {
 
 include(
   ":modular-core",
+  ":modular-d2",
   ":modular-graphviz",
   ":modular-mermaid",
   ":modular-test",
