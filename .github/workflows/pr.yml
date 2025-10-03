@@ -41,7 +41,10 @@ jobs:
         run: scripts/ktlintCheck.sh
 
       - name: Install Graphviz
-        uses: ts-graphviz/setup-graphviz@v2
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: graphviz
+          version: 1.0
 
       - name: Setup JDK
         uses: actions/setup-java@v5
@@ -57,21 +60,19 @@ jobs:
       - name: Check
         run: ./gradlew check
 
-      - name: Check graphviz sample
+      - name: Generate graphviz sample
         working-directory: samples/sample-graphviz
-        run: |
-          ./gradlew modularGenerate
-          if [[ -n $(git status --porcelain .) ]]; then
-            echo "Error: Uncommitted changes detected in $(pwd)"
-            exit 1
-          fi
+        run: ./gradlew modularGenerate
 
       - name: Check mermaid sample
         working-directory: samples/sample-mermaid
+        run: ./gradlew modularGenerate
+
+      - name: Make sure no diffs
         run: |
-          ./gradlew modularGenerate
           if [[ -n $(git status --porcelain .) ]]; then
-            echo "Error: Uncommitted changes detected in $(pwd)"
+            echo "Error: Uncommitted changes detected!"
+            git diff
             exit 1
           fi
 
