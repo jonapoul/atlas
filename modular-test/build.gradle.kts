@@ -1,28 +1,22 @@
-import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
-
 plugins {
-  id("modular.convention.kotlin")
+  id("modular.convention.plugin")
+  id("modular.convention.test")
   alias(libs.plugins.buildConfig)
 }
 
 buildConfig {
-  packageName = "modular.test"
   generateAtSync = true
-  useKotlinOutput { topLevelConstants = true }
-  buildConfigField<String>("AGP_VERSION", libs.versions.agp.get())
-  buildConfigField<String>("KOTLIN_VERSION", libs.versions.kotlin.get())
+  sourceSets.getByName("test") {
+    packageName = "modular.test"
+    useKotlinOutput { topLevelConstants = true }
+    buildConfigField<String>("AGP_VERSION", libs.versions.agp.get())
+    buildConfigField<String>("KOTLIN_VERSION", libs.versions.kotlin.get())
+  }
 }
 
 dependencies {
-  api(gradleTestKit())
-  api(kotlin("stdlib"))
-  api(kotlin("test"))
-  api(libs.assertk)
-  api(libs.junit.api)
-  implementation(project(":modular-core"))
-}
-
-@OptIn(ExperimentalAbiValidation::class)
-kotlin {
-  abiValidation.enabled = false
+  testImplementation(kotlin("stdlib"))
+  testImplementation(project(":modular-core"))
+  testImplementation(project(":modular-graphviz"))
+  testImplementation(project(":modular-mermaid"))
 }

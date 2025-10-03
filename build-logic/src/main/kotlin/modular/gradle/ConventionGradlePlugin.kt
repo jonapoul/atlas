@@ -21,7 +21,6 @@ class ConventionGradlePlugin : Plugin<Project> {
       apply(ConventionSpotless::class)
       apply(ConventionLicensee::class)
       apply(ConventionPublish::class)
-      apply(ConventionTest::class)
       apply(JavaGradlePluginPlugin::class)
     }
 
