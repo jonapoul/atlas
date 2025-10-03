@@ -41,7 +41,7 @@ jobs:
         run: scripts/ktlintCheck.sh
 
       - name: Install Graphviz
-        run: sudo apt-get install -y graphviz
+        uses: ts-graphviz/setup-graphviz@v2
 
       - name: Setup JDK
         uses: actions/setup-java@v5
