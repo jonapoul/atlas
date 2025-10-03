@@ -49,7 +49,6 @@ gradlePlugin {
     create(id = "modular.convention.plugin", impl = "modular.gradle.ConventionGradlePlugin")
     create(id = "modular.convention.publish", impl = "modular.gradle.ConventionPublish")
     create(id = "modular.convention.spotless", impl = "modular.gradle.ConventionSpotless")
-    create(id = "modular.convention.test", impl = "modular.gradle.ConventionTest")
   }
 }
 
