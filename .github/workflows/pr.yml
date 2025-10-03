@@ -58,10 +58,22 @@ jobs:
         run: ./gradlew check
 
       - name: Check graphviz sample
-        run: ./gradlew check -p samples/sample-graphviz
+        working-directory: samples/sample-graphviz
+        run: |
+          ./gradlew modularGenerate
+          if [[ -n $(git status --porcelain .) ]]; then
+            echo "Error: Uncommitted changes detected in $(pwd)"
+            exit 1
+          fi
 
       - name: Check mermaid sample
-        run: ./gradlew check -p samples/sample-mermaid
+        working-directory: samples/sample-mermaid
+        run: |
+          ./gradlew modularGenerate
+          if [[ -n $(git status --porcelain .) ]]; then
+            echo "Error: Uncommitted changes detected in $(pwd)"
+            exit 1
+          fi
 
       - name: Upload reports
         uses: actions/upload-artifact@v4
