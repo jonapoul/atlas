@@ -1,11 +1,8 @@
 plugins {
-  id("modular.convention.plugin")
+  id("modular.convention.kotlin")
 }
 
 dependencies {
   compileOnly(gradleApi())
   compileOnly(kotlin("stdlib"))
-  testImplementation(project(":modular-test"))
-  testPluginClasspath(project(":modular-graphviz"))
-  testPluginClasspath(project(":modular-mermaid"))
 }

@@ -21,7 +21,6 @@ class ConventionGradlePlugin : Plugin<Project> {
       apply(ConventionSpotless::class)
       apply(ConventionLicensee::class)
       apply(ConventionPublish::class)
-      apply(ConventionTest::class)
       apply(JavaGradlePluginPlugin::class)
     }
 
@@ -39,9 +38,6 @@ class ConventionGradlePlugin : Plugin<Project> {
 
     dependencies {
       "compileOnly"(libs("kotlin.gradle"))
-      "testImplementation"(gradleTestKit())
-      "testImplementation"(project(":modular-graphviz"))
-      "testImplementation"(project(":modular-mermaid"))
       testPluginClasspath(libs("agp"))
       testPluginClasspath(libs("kotlin.gradle"))
     }
