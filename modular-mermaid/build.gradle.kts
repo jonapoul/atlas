@@ -15,5 +15,4 @@ gradlePlugin {
 
 dependencies {
   api(project(":modular-core"))
-  testImplementation(project(":modular-test"))
 }
