@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - "docker/Dockerfile"
-#    branches:
-#      - main
+      - "docker/docker-compose.yml"
+      - ".github/workflows/publish-docker.yml"
   workflow_dispatch:
 
 jobs:
