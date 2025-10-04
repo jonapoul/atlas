@@ -129,7 +129,7 @@ public final class modular/graphviz/GraphvizModularPlugin : modular/core/Modular
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 }
 
-public abstract interface class modular/graphviz/GraphvizSpec : modular/core/spec/ModularSpec {
+public abstract interface class modular/graphviz/GraphvizSpec : modular/core/ModularSpec {
 	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
 	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
 	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;

@@ -73,7 +73,7 @@ public final class modular/mermaid/MermaidModularPlugin : modular/core/ModularPl
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 }
 
-public abstract interface class modular/mermaid/MermaidSpec : modular/core/spec/ModularSpec {
+public abstract interface class modular/mermaid/MermaidSpec : modular/core/ModularSpec {
 	public abstract fun elk (Lorg/gradle/api/Action;)V
 	public static synthetic fun elk$default (Lmodular/mermaid/MermaidSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
 	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;

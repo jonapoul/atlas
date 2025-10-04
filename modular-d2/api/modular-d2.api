@@ -61,7 +61,7 @@ public abstract interface class modular/d2/D2RootStyleSpec : modular/d2/D2StyleS
 	public abstract fun setStrokeWidth (Ljava/lang/Integer;)V
 }
 
-public abstract interface class modular/d2/D2Spec : modular/core/spec/ModularSpec {
+public abstract interface class modular/d2/D2Spec : modular/core/ModularSpec {
 	public abstract fun getArrowType ()Lorg/gradle/api/provider/Property;
 	public abstract fun getContainerLabelPosition ()Lorg/gradle/api/provider/Property;
 	public abstract fun getDirection ()Lorg/gradle/api/provider/Property;
