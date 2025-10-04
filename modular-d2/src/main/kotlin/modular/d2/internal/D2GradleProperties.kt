@@ -20,11 +20,12 @@ import org.gradle.api.provider.Provider
 internal class D2GradleProperties(override val project: Project) : IGradleProperties {
   val arrowType: Provider<ArrowType> = enum("modular.d2.arrowType", default = null)
   val containerLabelPosition: Provider<String> = string("modular.d2.containerLabelPosition", default = null)
+  val darkTheme: Provider<Theme> = intEnum("modular.d2.darkTheme", default = null)
   val direction: Provider<Direction> = enum("modular.d2.direction", default = null)
   val fileFormat: Provider<FileFormat> = enum("modular.d2.fileFormat", default = FileFormat.Svg)
   val layoutEngine: Provider<LayoutEngine> = enum("modular.d2.layoutEngine", default = null)
   val pathToD2Command: Provider<String> = string("modular.d2.pathToD2Command", default = null)
+  val sketch: Provider<Boolean> = bool("modular.d2.sketch", default = null)
   val suppressPlaywrightWarning: Provider<Boolean> = bool("modular.d2.suppressPlaywrightWarning", default = false)
   val theme: Provider<Theme> = intEnum("modular.d2.theme", default = null)
-  val darkTheme: Provider<Theme> = intEnum("modular.d2.darkTheme", default = null)
 }
