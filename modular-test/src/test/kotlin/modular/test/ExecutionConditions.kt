@@ -54,7 +54,7 @@ class RequiresCommandExtension : ExecutionCondition {
 
   private fun isCommandAvailable(command: String): Boolean = try {
     ProcessBuilder()
-      .apply { command(if (isWindows()) "where" else "which", command) }
+      .command(if (isWindows()) "where" else "which", command)
       .redirectErrorStream(true)
       .start()
       .waitFor() == 0

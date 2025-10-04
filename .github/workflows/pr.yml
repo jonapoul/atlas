@@ -43,8 +43,9 @@ jobs:
       - name: Install Graphviz
         uses: awalsh128/cache-apt-pkgs-action@v1
         with:
-          packages: graphviz libgraphviz-dev
+          packages: graphviz
           version: 1.0
+          execute_install_scripts: true
 
       - name: Setup JDK
         uses: actions/setup-java@v5
