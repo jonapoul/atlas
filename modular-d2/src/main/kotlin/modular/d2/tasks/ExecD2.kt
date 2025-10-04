@@ -28,6 +28,8 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.process.ExecOperations
 import org.gradle.process.ExecSpec
+import java.io.ByteArrayOutputStream
+import java.io.OutputStream
 import javax.inject.Inject
 
 @CacheableTask
@@ -47,15 +49,21 @@ abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile
 
   @TaskAction
   fun execute() {
-    execOperations
-      .exec(::configureExec)
+    val errorBuffer = ByteArrayOutputStream()
+
+    val result = execOperations
+      .exec { configureExec(it, errorBuffer) }
       .rethrowFailure()
       .assertNormalExitValue()
+
+    if (result.exitValue != 0) {
+      logger.error(errorBuffer.toString())
+    }
 
     logIfConfigured(outputFile.get().asFile)
   }
 
-  private fun configureExec(spec: ExecSpec) {
+  private fun configureExec(spec: ExecSpec, errorBuffer: OutputStream) {
     val dotFile = inputFile.get().asFile.absolutePath
     val outputFile = outputFile.get().asFile
     val d2Executable = pathToD2Command.getOrElse("d2")
@@ -66,9 +74,10 @@ abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile
       add(outputFile)
     }
 
-    logger.info("Starting d2: $command")
+    logger.info("Starting d2: '$command'")
 
     spec.commandLine(command)
+    spec.errorOutput = errorBuffer
     spec.standardOutput = outputFile.outputStream()
   }
 

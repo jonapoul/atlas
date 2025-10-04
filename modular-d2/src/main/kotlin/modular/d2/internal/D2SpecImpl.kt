@@ -25,7 +25,7 @@ class D2SpecImpl(
   objects: ObjectFactory,
   project: Project,
 ) : D2Spec {
-  private val properties = D2GradleProperties(project)
+  internal val properties = D2GradleProperties(project)
 
   override val name = "D2"
   override val fileExtension = objects.string(convention = "d2")

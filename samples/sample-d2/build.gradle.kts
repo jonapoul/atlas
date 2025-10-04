@@ -36,7 +36,7 @@ modular {
 
   d2 {
     arrowType = ArrowType.Box
-    fileFormat = FileFormat.Ascii
+    fileFormat = FileFormat.Svg
     direction = Direction.Right
     style {
       fill = "darkblue"

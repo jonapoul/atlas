@@ -1,4 +1,4 @@
-rootProject.name = "sample-mermaid"
+rootProject.name = "sample-d2"
 
 apply("../../gradle/repositories.gradle.kts")
 

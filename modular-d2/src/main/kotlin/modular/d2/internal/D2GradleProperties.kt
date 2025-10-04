@@ -5,6 +5,7 @@
 package modular.d2.internal
 
 import modular.core.internal.IGradleProperties
+import modular.core.internal.bool
 import modular.core.internal.enum
 import modular.core.internal.string
 import modular.d2.ArrowType
@@ -19,4 +20,5 @@ internal class D2GradleProperties(override val project: Project) : IGradleProper
   val direction: Provider<Direction> = enum("modular.d2.direction", default = null)
   val fileFormat: Provider<FileFormat> = enum("modular.d2.fileFormat", default = FileFormat.Svg)
   val pathToD2Command: Provider<String> = string("modular.d2.pathToD2Command", default = null)
+  val suppressPlaywrightWarning: Provider<Boolean> = bool("modular.d2.suppressPlaywrightWarning", default = false)
 }
