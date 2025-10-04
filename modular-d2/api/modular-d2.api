@@ -76,3 +76,22 @@ public final class modular/d2/FillPattern : java/lang/Enum, modular/core/interna
 	public static fun values ()[Lmodular/d2/FillPattern;
 }
 
+public abstract class modular/d2/tasks/WriteD2Chart : modular/d2/tasks/WriteD2ChartBase, modular/core/tasks/ModularGenerationTask {
+	public fun <init> ()V
+	public fun execute ()V
+	public fun getDescription ()Ljava/lang/String;
+}
+
+public abstract class modular/d2/tasks/WriteD2ChartBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+	public fun <init> ()V
+	public fun execute ()V
+	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
