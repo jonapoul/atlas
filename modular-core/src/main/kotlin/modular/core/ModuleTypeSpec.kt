@@ -4,9 +4,8 @@
  */
 @file:Suppress("unused") // public API
 
-package modular.core.spec
+package modular.core
 
-import modular.core.ModularDsl
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.provider.Property

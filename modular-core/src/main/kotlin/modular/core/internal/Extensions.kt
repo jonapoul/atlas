@@ -5,10 +5,10 @@
 package modular.core.internal
 
 import modular.core.InternalModularApi
-import modular.core.spec.LinkType
-import modular.core.spec.LinkTypeSpec
-import modular.core.spec.ModuleType
-import modular.core.spec.ModuleTypeSpec
+import modular.core.LinkType
+import modular.core.LinkTypeSpec
+import modular.core.ModuleType
+import modular.core.ModuleTypeSpec
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
 import org.gradle.api.file.RegularFile

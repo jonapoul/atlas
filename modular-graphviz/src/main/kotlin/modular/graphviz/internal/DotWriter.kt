@@ -10,7 +10,7 @@ import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
-import modular.core.spec.Replacement
+import modular.core.Replacement
 import modular.graphviz.DotConfig
 
 @InternalModularApi

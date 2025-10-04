@@ -6,7 +6,7 @@ package modular.graphviz
 
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
-import modular.core.spec.Replacement
+import modular.core.Replacement
 import modular.graphviz.internal.DotWriter
 
 internal fun dotWriter(

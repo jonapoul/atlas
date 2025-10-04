@@ -6,8 +6,8 @@
 
 package org.gradle.kotlin.dsl
 
-import modular.core.spec.ModuleTypeSpec
-import modular.core.spec.NamedModuleTypeContainer
+import modular.core.ModuleTypeSpec
+import modular.core.NamedModuleTypeContainer
 import org.gradle.api.NamedDomainObjectProvider
 
 @JvmOverloads

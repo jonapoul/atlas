@@ -11,7 +11,7 @@ import modular.core.ModularExtension
 import modular.core.internal.Variant
 import modular.core.internal.diff
 import modular.core.internal.problemId
-import modular.core.spec.ModularSpec
+import modular.core.ModularSpec
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project

@@ -5,7 +5,7 @@
 package modular.core.internal
 
 import modular.core.InternalModularApi
-import modular.core.spec.ModuleType
+import modular.core.ModuleType
 import java.io.File
 
 @InternalModularApi

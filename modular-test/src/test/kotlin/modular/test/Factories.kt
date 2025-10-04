@@ -7,8 +7,8 @@ package modular.test
 import modular.core.internal.ModuleLink
 import modular.core.internal.Node
 import modular.core.internal.TypedModule
-import modular.core.spec.LinkStyle
-import modular.core.spec.ModuleType
+import modular.core.LinkStyle
+import modular.core.ModuleType
 
 fun node(path: String) = Node(typedModule(path))
 

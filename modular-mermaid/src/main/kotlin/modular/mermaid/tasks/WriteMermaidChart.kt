@@ -9,7 +9,7 @@ import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.TypedModules
 import modular.core.internal.logIfConfigured
 import modular.core.internal.readModuleLinks
-import modular.core.spec.Replacement
+import modular.core.Replacement
 import modular.core.tasks.CollateModuleTypes
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile

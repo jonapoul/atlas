@@ -11,9 +11,9 @@ import modular.core.internal.logIfConfigured
 import modular.core.internal.moduleType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.orderedModuleTypes
-import modular.core.spec.LinkType
-import modular.core.spec.ModularSpec
-import modular.core.spec.ModuleType
+import modular.core.LinkType
+import modular.core.ModularSpec
+import modular.core.ModuleType
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
 import modular.core.tasks.TaskWithSeparator

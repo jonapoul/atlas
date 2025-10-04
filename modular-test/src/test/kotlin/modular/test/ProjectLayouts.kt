@@ -6,7 +6,7 @@ package modular.test
 
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
-import modular.core.spec.LinkStyle
+import modular.core.LinkStyle
 
 internal interface ProjectLayout {
   val modules: Set<TypedModule>

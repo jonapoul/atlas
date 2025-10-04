@@ -6,9 +6,9 @@
 
 package org.gradle.kotlin.dsl
 
-import modular.core.spec.LinkStyle
-import modular.core.spec.LinkTypeSpec
-import modular.core.spec.NamedLinkTypeContainer
+import modular.core.LinkStyle
+import modular.core.LinkTypeSpec
+import modular.core.NamedLinkTypeContainer
 import org.gradle.api.NamedDomainObjectProvider
 
 @JvmOverloads
@@ -25,14 +25,14 @@ fun NamedLinkTypeContainer.register(
 
 @JvmOverloads
 fun NamedLinkTypeContainer.api(
-  style: LinkStyle,
+  style: LinkStyle? = null,
   color: String? = null,
   displayName: String = "api",
 ): NamedDomainObjectProvider<LinkTypeSpec> = register(configuration = ".*?api", style, color, displayName)
 
 @JvmOverloads
 fun NamedLinkTypeContainer.implementation(
-  style: LinkStyle,
+  style: LinkStyle? = null,
   color: String? = null,
   displayName: String = "implementation",
 ): NamedDomainObjectProvider<LinkTypeSpec> = register(configuration = ".*?implementation", style, color, displayName)

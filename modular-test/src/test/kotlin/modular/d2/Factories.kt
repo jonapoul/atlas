@@ -4,7 +4,7 @@
  */
 package modular.d2
 
-import modular.core.spec.Replacement
+import modular.core.Replacement
 import modular.d2.internal.D2Writer
 import modular.test.ProjectLayout
 

@@ -4,9 +4,8 @@
  */
 @file:Suppress("ktlint:standard:parameter-list-wrapping")
 
-package modular.core.spec
+package modular.core
 
-import modular.core.ModularDsl
 import org.gradle.api.provider.SetProperty
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 import java.io.Serializable as JSerializable

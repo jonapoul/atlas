@@ -6,13 +6,13 @@ package modular.core.internal
 
 import modular.core.InternalModularApi
 import modular.core.ModularExtension
-import modular.core.spec.LinkStyle
-import modular.core.spec.LinkTypeSpec
-import modular.core.spec.ModuleTypeSpec
-import modular.core.spec.NamedLinkTypeContainer
-import modular.core.spec.NamedModuleTypeContainer
-import modular.core.spec.PathTransformSpec
-import modular.core.spec.Replacement
+import modular.core.LinkStyle
+import modular.core.LinkTypeSpec
+import modular.core.ModuleTypeSpec
+import modular.core.NamedLinkTypeContainer
+import modular.core.NamedModuleTypeContainer
+import modular.core.PathTransformSpec
+import modular.core.Replacement
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory

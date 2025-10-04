@@ -11,7 +11,7 @@ import modular.core.internal.fileInBuildDirectory
 import modular.core.internal.linkType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.writeModuleLinks
-import modular.core.spec.LinkType
+import modular.core.LinkType
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException

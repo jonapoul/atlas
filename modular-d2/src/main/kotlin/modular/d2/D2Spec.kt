@@ -5,7 +5,7 @@
 package modular.d2
 
 import modular.core.ModularDsl
-import modular.core.spec.ModularSpec
+import modular.core.ModularSpec
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 

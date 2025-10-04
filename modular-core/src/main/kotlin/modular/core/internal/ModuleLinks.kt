@@ -5,8 +5,8 @@
 package modular.core.internal
 
 import modular.core.InternalModularApi
-import modular.core.spec.LinkStyle
-import modular.core.spec.LinkType
+import modular.core.LinkStyle
+import modular.core.LinkType
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.ProjectDependency

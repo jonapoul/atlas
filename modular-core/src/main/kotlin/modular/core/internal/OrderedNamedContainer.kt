@@ -6,10 +6,10 @@ package modular.core.internal
 
 import groovy.lang.Closure
 import modular.core.InternalModularApi
-import modular.core.spec.LinkTypeSpec
-import modular.core.spec.ModuleTypeSpec
-import modular.core.spec.NamedLinkTypeContainer
-import modular.core.spec.NamedModuleTypeContainer
+import modular.core.LinkTypeSpec
+import modular.core.ModuleTypeSpec
+import modular.core.NamedLinkTypeContainer
+import modular.core.NamedModuleTypeContainer
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider

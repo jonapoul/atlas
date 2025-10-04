@@ -10,8 +10,8 @@ import modular.core.internal.TypedModule
 import modular.core.internal.fileInBuildDirectory
 import modular.core.internal.moduleType
 import modular.core.internal.orderedModuleTypes
-import modular.core.spec.ModuleType
-import modular.core.spec.ModuleTypeSpec
+import modular.core.ModuleType
+import modular.core.ModuleTypeSpec
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException

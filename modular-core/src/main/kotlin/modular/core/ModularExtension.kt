@@ -4,9 +4,6 @@
  */
 package modular.core
 
-import modular.core.spec.NamedLinkTypeContainer
-import modular.core.spec.NamedModuleTypeContainer
-import modular.core.spec.PathTransformSpec
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
@@ -43,7 +40,7 @@ interface ModularExtension {
 
   /**
    * A separator character used internally when caching module types and links. You should only need to change this if
-   * any module paths or names in configured [modular.core.spec.ModuleTypeSpec]s contain a semi-colon.
+   * any module paths or names in configured [ModuleTypeSpec]s contain a semi-colon.
    * Defaults to ";".
    */
   val separator: Property<String>

@@ -10,8 +10,8 @@ import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
-import modular.core.spec.LinkStyle
-import modular.core.spec.Replacement
+import modular.core.LinkStyle
+import modular.core.Replacement
 import modular.mermaid.MermaidConfig
 
 internal class MermaidWriter(

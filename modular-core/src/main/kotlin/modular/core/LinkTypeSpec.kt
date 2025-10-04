@@ -4,9 +4,8 @@
  */
 @file:Suppress("unused") // public API
 
-package modular.core.spec
+package modular.core
 
-import modular.core.ModularDsl
 import modular.core.internal.StringEnum
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
@@ -40,7 +39,7 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 interface NamedLinkTypeContainer : NamedDomainObjectContainer<LinkTypeSpec> {
   @ModularDsl
   operator fun String.invoke(
-    style: LinkStyle?,
+    style: LinkStyle? = null,
     color: String? = null,
     displayName: String = this,
   ): NamedDomainObjectProvider<LinkTypeSpec> = register(this, style, color, displayName)
