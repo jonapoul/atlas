@@ -18,7 +18,7 @@ import org.gradle.api.provider.Property
  *
  *   graphviz {
  *     pathToDotCommand = "/custom/path/to/dot"
- *     fileFormat = "svg"
+ *     fileFormat = FileFormat.Svg
  *
  *     ...
  *   }

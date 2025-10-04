@@ -9,6 +9,8 @@ import modular.test.Scenario
 
 object GraphVizBasicWithPngOutput : Scenario by GraphVizBasic {
   override val rootBuildFile = """
+    import modular.graphviz.FileFormat
+
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
@@ -21,7 +23,7 @@ object GraphVizBasicWithPngOutput : Scenario by GraphVizBasic {
       }
 
       graphviz {
-        fileFormat = "png"
+        fileFormat = FileFormat.Png
       }
     }
   """.trimIndent()

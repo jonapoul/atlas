@@ -164,17 +164,17 @@ class D2WriterTest {
         style = mapOf(
           "fill" to "LightBlue",
           "stroke" to "FireBrick",
-          "stroke-width" to "2",
+          "stroke-width" to "15",
         ),
       ),
     )
 
     assertThat(writer()).contains(
       """
-        style {
+        style: {
           fill: "LightBlue"
           stroke: "FireBrick"
-          stroke-width: "2"
+          stroke-width: "15"
         }
         a: :a
         b: :b

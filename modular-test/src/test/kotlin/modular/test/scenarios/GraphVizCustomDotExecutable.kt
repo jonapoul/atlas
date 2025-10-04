@@ -10,6 +10,7 @@ import kotlin.text.trimIndent
 
 object GraphVizCustomDotExecutable : Scenario by GraphVizBasic {
   override val rootBuildFile = """
+    import modular.graphviz.FileFormat
     import modular.graphviz.LayoutEngine.Neato
 
     plugins {
@@ -25,7 +26,7 @@ object GraphVizCustomDotExecutable : Scenario by GraphVizBasic {
 
       graphviz {
         pathToDotCommand = file("path/to/custom/dot").absolutePath
-        fileFormat = "svg"
+        fileFormat = FileFormat.Svg
       }
     }
   """.trimIndent()

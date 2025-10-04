@@ -10,6 +10,7 @@ import kotlin.text.trimIndent
 
 object GraphVizCustomLayoutEngine : Scenario by GraphVizBigGraph {
   override val rootBuildFile = """
+    import modular.graphviz.FileFormat
     import modular.graphviz.LayoutEngine.Neato
 
     plugins {
@@ -23,8 +24,8 @@ object GraphVizCustomLayoutEngine : Scenario by GraphVizBigGraph {
       }
 
       graphviz {
-        layoutEngine(Neato)
-        fileFormat = "svg"
+        layoutEngine = Neato
+        fileFormat = FileFormat.Svg
       }
     }
   """.trimIndent()

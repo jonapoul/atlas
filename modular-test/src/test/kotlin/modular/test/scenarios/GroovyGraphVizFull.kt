@@ -20,15 +20,15 @@ object GroovyGraphVizFull : GraphvizScenario by GroovyBasic {
     modular {
       graphviz {
         adjustSvgViewBox = true
-        fileFormat('svg')
-        arrowHead('halfopen')
-        arrowTail('diamond')
-        layoutEngine('circo')
+        fileFormat = FileFormat.Svg
+        arrowHead = ArrowType.HalfOpen
+        arrowTail = ArrowType.Diamond
+        layoutEngine = LayoutEngine.Circo
         dpi = 123
         fontSize = 40
-        rankDir(RankDir.TopToBottom)
+        rankDir = RankDir.TopToBottom
         rankSep = 1.2f
-        dir(Dir.Forward)
+        dir = Dir.Forward
       }
     }
   """.trimIndent()
