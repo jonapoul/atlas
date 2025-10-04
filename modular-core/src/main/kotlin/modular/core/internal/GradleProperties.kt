@@ -35,6 +35,12 @@ fun IGradleProperties.int(key: String, default: Int? = null) = prop(key, default
 @InternalModularApi
 fun IGradleProperties.string(key: String, default: String? = null) = prop(key, default) { it }
 
+@InternalModularApi
+inline fun <reified E> IGradleProperties.enum(
+  key: String,
+  default: E? = null,
+): Provider<E> where E : StringEnum, E : Enum<E> = string(key, default?.string).map { parseEnum(it) }
+
 private inline fun <reified T : Any> IGradleProperties.prop(
   key: String,
   default: T?,

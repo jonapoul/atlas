@@ -9,6 +9,21 @@ package modular.d2
 import modular.core.internal.StringEnum
 
 /**
+ * https://d2lang.com/tour/exports/
+ */
+enum class FileFormat(override val string: String) : StringEnum {
+  Svg("svg"),
+  Png("png"),
+  Pdf("pdf"),
+  Pptx("pptx"),
+  Gif("gif"),
+  Ascii("txt"),
+  ;
+
+  override fun toString() = string
+}
+
+/**
  * https://d2lang.com/tour/layouts/#direction
  */
 enum class Direction(override val string: String) : StringEnum {

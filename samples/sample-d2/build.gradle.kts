@@ -38,7 +38,7 @@ modular {
     direction = Direction.Right
     style {
       fill = "darkblue"
-      fillPattern = FillPattern.Grain
+      fillPattern = FillPattern.Lines
       stroke = "floralwhite"
       strokeWidth = 3
       strokeDash = 4

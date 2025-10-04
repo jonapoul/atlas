@@ -33,6 +33,8 @@ class D2SpecImpl(
   override val arrowType = objects.enum(properties.arrowType)
   override val containerLabelPosition = objects.string(properties.containerLabelPosition)
   override val direction = objects.enum(properties.direction)
+  override val fileFormat = objects.enum(properties.fileFormat)
+  override val pathToD2Command = objects.string(properties.pathToD2Command)
 
   override val style = D2RootStyleSpecImpl(objects)
   override fun style(action: Action<D2RootStyleSpec>) = action.execute(style)

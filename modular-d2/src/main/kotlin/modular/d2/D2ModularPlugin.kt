@@ -8,12 +8,12 @@ package modular.d2
 
 import modular.core.ModularPlugin
 import modular.core.internal.ModularExtensionImpl
-import modular.core.internal.Variant
 import modular.core.internal.Variant.Chart
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
 import modular.d2.internal.D2ModularExtensionImpl
+import modular.d2.tasks.ExecD2
 import modular.d2.tasks.WriteD2Chart
 import modular.d2.tasks.WriteD2ChartBase
 import modular.d2.tasks.WriteDummyD2Chart
@@ -62,14 +62,14 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
       realTask = chartTask,
       dummyTask = dummyChartTask,
     )
-    //
-    //    val d2Task = ExecD2.register(
-    //      target = project,
-    //      spec = d2Spec,
-    //      variant = Chart,
-    //      dotFileTask = chartTask,
-    //    )
-    //
+
+    ExecD2.register(
+      target = project,
+      spec = d2Spec,
+      variant = Chart,
+      dotFileTask = chartTask,
+    )
+
     //    WriteReadme.register(
     //      target = project,
     //      flavor = "D2",

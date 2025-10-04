@@ -65,6 +65,8 @@ public abstract interface class modular/d2/D2Spec : modular/core/ModularSpec {
 	public abstract fun getArrowType ()Lorg/gradle/api/provider/Property;
 	public abstract fun getContainerLabelPosition ()Lorg/gradle/api/provider/Property;
 	public abstract fun getDirection ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFileFormat ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathToD2Command ()Lorg/gradle/api/provider/Property;
 	public abstract fun getStyle ()Lmodular/d2/D2RootStyleSpec;
 	public abstract fun style (Lorg/gradle/api/Action;)V
 }
@@ -84,6 +86,20 @@ public final class modular/d2/Direction : java/lang/Enum, modular/core/internal/
 	public static fun values ()[Lmodular/d2/Direction;
 }
 
+public final class modular/d2/FileFormat : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Ascii Lmodular/d2/FileFormat;
+	public static final field Gif Lmodular/d2/FileFormat;
+	public static final field Pdf Lmodular/d2/FileFormat;
+	public static final field Png Lmodular/d2/FileFormat;
+	public static final field Pptx Lmodular/d2/FileFormat;
+	public static final field Svg Lmodular/d2/FileFormat;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/d2/FileFormat;
+	public static fun values ()[Lmodular/d2/FileFormat;
+}
+
 public final class modular/d2/FillPattern : java/lang/Enum, modular/core/internal/StringEnum {
 	public static final field Dots Lmodular/d2/FillPattern;
 	public static final field Grain Lmodular/d2/FillPattern;
@@ -94,6 +110,17 @@ public final class modular/d2/FillPattern : java/lang/Enum, modular/core/interna
 	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/d2/FillPattern;
 	public static fun values ()[Lmodular/d2/FillPattern;
+}
+
+public abstract class modular/d2/tasks/ExecD2 : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public fun getDescription ()Ljava/lang/String;
+	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
+	public abstract fun getInputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathToD2Command ()Lorg/gradle/api/provider/Property;
 }
 
 public abstract class modular/d2/tasks/WriteD2Chart : modular/d2/tasks/WriteD2ChartBase, modular/core/tasks/ModularGenerationTask {
