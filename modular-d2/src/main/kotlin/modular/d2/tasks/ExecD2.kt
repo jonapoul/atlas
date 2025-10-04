@@ -13,6 +13,7 @@ import modular.core.tasks.TaskWithOutputFile
 import modular.d2.D2Spec
 import modular.d2.FileFormat
 import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
@@ -27,9 +28,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.process.ExecOperations
-import org.gradle.process.ExecSpec
 import java.io.ByteArrayOutputStream
-import java.io.OutputStream
 import javax.inject.Inject
 
 @CacheableTask
@@ -49,36 +48,31 @@ abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile
 
   @TaskAction
   fun execute() {
-    val errorBuffer = ByteArrayOutputStream()
-
-    val result = execOperations
-      .exec { configureExec(it, errorBuffer) }
-      .rethrowFailure()
-      .assertNormalExitValue()
-
-    if (result.exitValue != 0) {
-      logger.error(errorBuffer.toString())
-    }
-
-    logIfConfigured(outputFile.get().asFile)
-  }
-
-  private fun configureExec(spec: ExecSpec, errorBuffer: OutputStream) {
-    val dotFile = inputFile.get().asFile.absolutePath
+    val inputFile = inputFile.get().asFile.absolutePath
     val outputFile = outputFile.get().asFile
     val d2Executable = pathToD2Command.getOrElse("d2")
 
+    val errorBuffer = ByteArrayOutputStream()
     val command = buildList {
       add(d2Executable)
-      add(dotFile)
+      add(inputFile)
       add(outputFile)
     }
 
     logger.info("Starting d2: '$command'")
+    val result = execOperations.exec { spec ->
+      spec.errorOutput = errorBuffer
+      spec.standardOutput = outputFile.outputStream()
+      spec.isIgnoreExitValue = true
+      spec.commandLine(command)
+    }
 
-    spec.commandLine(command)
-    spec.errorOutput = errorBuffer
-    spec.standardOutput = outputFile.outputStream()
+    if (result.exitValue != 0) {
+      val cmd = command.joinToString(separator = " ")
+      throw GradleException("Error code ${result.exitValue} running '$cmd':\n $errorBuffer")
+    }
+
+    logIfConfigured(outputFile)
   }
 
   @InternalModularApi

@@ -10,6 +10,18 @@ import modular.core.internal.IntEnum
 import modular.core.internal.StringEnum
 
 /**
+ * https://d2lang.com/tour/layouts/
+ */
+enum class LayoutEngine(override val string: String) : StringEnum {
+  Dagre("dagre"), // https://d2lang.com/tour/dagre/
+  Elk("elk"), // https://d2lang.com/tour/elk/
+  Tala("tala"), // https://d2lang.com/tour/tala/
+  ;
+
+  override fun toString() = string
+}
+
+/**
  * https://d2lang.com/tour/themes/
  */
 enum class Theme(override val value: Int) : IntEnum {
