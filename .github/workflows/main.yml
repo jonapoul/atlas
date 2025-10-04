@@ -41,7 +41,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build
-        uses: hoverkraft-tech/compose-action@v2
-        with:
-          compose-file: docker/docker-compose.yml
-          services: build
+        run: docker compose -f docker/docker-compose.yml run --rm build

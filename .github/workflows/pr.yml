@@ -53,16 +53,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check
-        uses: hoverkraft-tech/compose-action@v2
-        with:
-          compose-file: docker/docker-compose.yml
-          services: check
+        run: docker compose -f docker/docker-compose.yml run --rm check
 
       - name: Generate samples
-        uses: hoverkraft-tech/compose-action@v2
-        with:
-          compose-file: docker/docker-compose.yml
-          services: generate-samples
+        run: docker compose -f docker/docker-compose.yml run --rm generate-samples
 
       - name: Make sure no diffs
         run: |
