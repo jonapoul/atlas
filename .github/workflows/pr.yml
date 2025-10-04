@@ -25,49 +25,23 @@ jobs:
           fetch-tags: true
           ref: ${{ github.head_ref }}
 
-      - name: Gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_CONFIG: ./config/gitleaks.toml
-
-      - name: Install ktlint
-        run: |
-          curl -sSLO https://github.com/pinterest/ktlint/releases/download/1.7.1/ktlint
-          chmod a+x ktlint
-          sudo mv ktlint /usr/local/bin/
-
-      - name: Run ktlint
-        run: scripts/ktlintCheck.sh
-
-      - name: Install Graphviz
-        uses: awalsh128/cache-apt-pkgs-action@v1
-        with:
-          packages: graphviz
-          version: 1.1
-          execute_install_scripts: true
-
-      - name: Setup JDK
-        uses: actions/setup-java@v5
-        with:
-          java-version-file: .github/workflows/.java-version
-          distribution: "zulu"
-
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v5
         with:
           add-job-summary: on-failure
 
+      - name: Login to registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Check
-        run: ./gradlew check
+        run: docker compose -f docker/docker-compose.yml run --rm check
 
-      - name: Generate graphviz sample
-        working-directory: samples/sample-graphviz
-        run: ./gradlew modularGenerate
-
-      - name: Check mermaid sample
-        working-directory: samples/sample-mermaid
-        run: ./gradlew modularGenerate
+      - name: Generate samples
+        run: docker compose -f docker/docker-compose.yml run --rm generate-samples
 
       - name: Make sure no diffs
         run: |
@@ -86,6 +60,9 @@ jobs:
             ./*/build/reports
             ./build/reports
           if-no-files-found: warn
+
+      - name: Fix permissions
+        run: sudo chown -R runner:runner .
 
       - name: Publish test reports
         uses: mikepenz/action-junit-report@v5
