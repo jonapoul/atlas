@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.Scenario
 import kotlin.text.trimIndent
 
-object GraphVizChartWithProperties : Scenario by GraphVizBasic {
+object GraphVizChartWithProperties : Scenario by GraphvizBasic {
   override val gradlePropertiesFile = """
     modular.graphviz.chart.arrowHead=halfopen
     modular.graphviz.chart.arrowTail=open

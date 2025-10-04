@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 
-object CheckExplicitlyDisabled : Scenario by GraphVizBasic {
+object CheckExplicitlyDisabled : Scenario by GraphvizBasic {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false

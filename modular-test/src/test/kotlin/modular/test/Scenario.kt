@@ -13,6 +13,10 @@ interface Scenario {
   val pluginId get() = "dev.jonpoulton.modular.$variant"
 }
 
+interface D2Scenario : Scenario {
+  override val variant get() = PluginVariant.D2
+}
+
 interface GraphvizScenario : Scenario {
   override val variant get() = PluginVariant.Graphviz
 }
@@ -22,6 +26,7 @@ interface MermaidScenario : Scenario {
 }
 
 enum class PluginVariant(val string: String) {
+  D2("d2"),
   Graphviz("graphviz"),
   Mermaid("mermaid"),
   ;
