@@ -25,7 +25,7 @@ internal class D2GradleProperties(override val project: Project) : IGradleProper
   val fileFormat: Provider<FileFormat> = enum("modular.d2.fileFormat", default = FileFormat.Svg)
   val layoutEngine: Provider<LayoutEngine> = enum("modular.d2.layoutEngine", default = null)
   val pathToD2Command: Provider<String> = string("modular.d2.pathToD2Command", default = null)
-  val sketch: Provider<Boolean> = bool("modular.d2.sketch", default = false)
+  val sketch: Provider<Boolean> = bool("modular.d2.sketch", default = null)
   val suppressPlaywrightWarning: Provider<Boolean> = bool("modular.d2.suppressPlaywrightWarning", default = false)
   val theme: Provider<Theme> = intEnum("modular.d2.theme", default = null)
 }

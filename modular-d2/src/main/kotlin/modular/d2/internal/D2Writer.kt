@@ -32,7 +32,7 @@ data class D2Writer(
   }
 
   private fun IndentedStringBuilder.appendVars() = with(config) {
-    val attrs = mapOf(
+    val attrs = mapOf<String, Any?>(
       "theme-id" to theme?.value,
       "dark-theme-id" to darkTheme?.value,
       "layout-engine" to layoutEngine?.string,
