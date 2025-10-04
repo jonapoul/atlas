@@ -4,12 +4,12 @@
  */
 package modular.test.scenarios
 
-import modular.test.GraphvizScenario
+import modular.test.D2Scenario
 import modular.test.KOTLIN_VERSION
 import modular.test.javaBuildScript
 import modular.test.kotlinJvmBuildScript
 
-object GraphVizBasic : GraphvizScenario {
+object D2Basic : D2Scenario {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
@@ -20,7 +20,6 @@ object GraphVizBasic : GraphvizScenario {
       moduleTypes {
         kotlinJvm()
         java()
-        registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
     }
   """.trimIndent()

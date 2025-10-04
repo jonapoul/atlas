@@ -10,13 +10,13 @@ import assertk.assertions.exists
 import modular.test.ScenarioTest
 import modular.test.contentEquals
 import modular.test.runTask
-import modular.test.scenarios.GraphVizBasic
 import modular.test.scenarios.GraphVizWithLinkTypes
+import modular.test.scenarios.GraphvizBasic
 import kotlin.test.Test
 
 class WriteGraphvizChartTest : ScenarioTest() {
   @Test
-  fun `Generate dotfile legend from basic config`() = runScenario(GraphVizBasic) {
+  fun `Generate dotfile legend from basic config`() = runScenario(GraphvizBasic) {
     // when
     runTask("writeGraphvizLegend").build()
 
@@ -72,7 +72,6 @@ class WriteGraphvizChartTest : ScenarioTest() {
           </TABLE>
           >];
         }
-
       """.trimIndent(),
     )
   }

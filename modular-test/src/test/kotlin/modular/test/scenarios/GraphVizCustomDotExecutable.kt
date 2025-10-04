@@ -8,7 +8,7 @@ import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 import kotlin.text.trimIndent
 
-object GraphVizCustomDotExecutable : Scenario by GraphVizBasic {
+object GraphVizCustomDotExecutable : Scenario by GraphvizBasic {
   override val rootBuildFile = """
     import modular.graphviz.FileFormat
     import modular.graphviz.LayoutEngine.Neato

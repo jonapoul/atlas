@@ -31,7 +31,7 @@ fun Assert<BuildTask?>.hadResult(expected: TaskOutcome) = given { result ->
 }
 
 fun Assert<File>.contentEquals(expected: String) = given { file ->
-  val contents = file.readText()
+  val contents = file.readText().removeSuffix("\n")
   if (contents == expected) return@given
   fail("Failed contentEquals: expected='$expected', actual='$contents'")
 }

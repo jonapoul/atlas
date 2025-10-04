@@ -9,18 +9,18 @@ import assertk.assertions.contains
 import assertk.assertions.exists
 import modular.test.ScenarioTest
 import modular.test.runTask
-import modular.test.scenarios.GraphVizBasic
 import modular.test.scenarios.GraphVizChartCustomConfig
 import modular.test.scenarios.GraphVizChartWithCustomLinkTypes
 import modular.test.scenarios.GraphVizChartWithProperties
 import modular.test.scenarios.GraphVizChartWithReplacements
-import modular.test.scenarios.NestedModules
-import modular.test.scenarios.NestedModulesNoModuleTypes
+import modular.test.scenarios.GraphvizBasic
+import modular.test.scenarios.GraphvizNestedModules
+import modular.test.scenarios.GraphvizNestedModulesNoModuleTypes
 import kotlin.test.Test
 
 class WriteDotChartTest : ScenarioTest() {
   @Test
-  fun `Run if no module types are declared`() = runScenario(NestedModulesNoModuleTypes) {
+  fun `Run if no module types are declared`() = runScenario(GraphvizNestedModulesNoModuleTypes) {
     // when
     runTask("writeGraphvizChart").build()
 
@@ -53,7 +53,7 @@ class WriteDotChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Generate dotfiles from basic config`() = runScenario(GraphVizBasic) {
+  fun `Generate dotfiles from basic config`() = runScenario(GraphvizBasic) {
     // when
     runTask("writeGraphvizChart").build()
 
@@ -197,7 +197,7 @@ class WriteDotChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Handle nested modules`() = runScenario(NestedModules) {
+  fun `Handle nested modules`() = runScenario(GraphvizNestedModules) {
     // when
     runTask("writeGraphvizChart").build()
 
