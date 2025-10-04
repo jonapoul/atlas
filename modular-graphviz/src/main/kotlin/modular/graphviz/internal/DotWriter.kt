@@ -5,12 +5,12 @@
 package modular.graphviz.internal
 
 import modular.core.InternalModularApi
+import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
-import modular.core.spec.Replacement
 import modular.graphviz.DotConfig
 
 @InternalModularApi

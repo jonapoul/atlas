@@ -1,5 +1,6 @@
 plugins {
   id("modular.convention.kotlin")
+  id("modular.convention.publish")
 }
 
 dependencies {

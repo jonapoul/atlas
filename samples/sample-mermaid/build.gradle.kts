@@ -1,6 +1,6 @@
-import modular.core.spec.LinkStyle.Bold
-import modular.core.spec.LinkStyle.Dotted
-import modular.core.spec.LinkStyle.Solid
+import modular.core.LinkStyle.Bold
+import modular.core.LinkStyle.Dotted
+import modular.core.LinkStyle.Solid
 import modular.mermaid.ConsiderModelOrder.PreferEdges
 import modular.mermaid.CycleBreakingStrategy.Interactive
 import modular.mermaid.Look.HandDrawn

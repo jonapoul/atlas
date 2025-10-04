@@ -5,12 +5,13 @@
 package modular.d2.internal
 
 import modular.core.InternalModularApi
+import modular.core.LinkStyle
+import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
-import modular.core.spec.Replacement
 import modular.d2.D2Config
 
 @InternalModularApi
@@ -58,11 +59,38 @@ data class D2Writer(
     links
       .map { link -> link.copy(fromPath = link.fromPath.cleaned(), toPath = link.toPath.cleaned()) }
       .sortedWith(compareBy({ it.fromPath.fullKey() }, { it.toPath.fullKey() }))
-      .forEach { (fromPath, toPath, _, _, _) ->
-        // TODO https://github.com/jonapoul/modular/issues/181
-        appendLine("${fromPath.fullKey()} -> ${toPath.fullKey()}")
+      .forEach { (fromPath, toPath, _, style, color) ->
+        val linkString = "${fromPath.fullKey()} -> ${toPath.fullKey()}"
+        val attrs = linkAttributes(style, color)
+        if (attrs.isNotEmpty()) {
+          appendLine("$linkString: {")
+          indent {
+            attrs
+              .toList()
+              .sortedBy { (key, _) -> key }
+              .forEach { (key, value) -> appendLine("$key: \"$value\"") }
+          }
+          appendLine("}")
+        } else {
+          appendLine(linkString)
+        }
       }
     return this
+  }
+
+  private fun linkAttributes(style: LinkStyle?, color: String?): Map<String, String> {
+    val attrs = mutableMapOf<String, String>()
+    color?.let { attrs["style.stroke"] = it }
+    config.arrowType?.let { attrs["target-arrowhead.shape"] = it.string }
+    when (style) {
+      LinkStyle.Dashed -> attrs["style.stroke-dash"] = "4"
+      LinkStyle.Dotted -> attrs["style.stroke-dash"] = "2"
+      LinkStyle.Solid -> Unit
+      LinkStyle.Invis -> attrs["style.opacity"] = "0"
+      LinkStyle.Bold -> attrs["style.stroke-width"] = "3" // default 2
+      null -> Unit
+    }
+    return attrs
   }
 
   // Colons in d2 have special meaning, so strip them out of the key string. Not visible in the diagram anyway.

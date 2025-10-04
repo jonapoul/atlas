@@ -5,7 +5,8 @@
 package modular.core.internal
 
 import modular.core.InternalModularApi
-import modular.core.spec.LinkType
+import modular.core.LinkStyle
+import modular.core.LinkType
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.ProjectDependency
@@ -79,7 +80,7 @@ data class ModuleLink(
   val fromPath: String,
   val toPath: String,
   val configuration: String,
-  val style: String?,
+  val style: LinkStyle?,
   val color: String?,
 ) : Comparable<ModuleLink> {
   override fun compareTo(other: ModuleLink): Int =
@@ -87,7 +88,7 @@ data class ModuleLink(
       ?: toPath.compareTo(other.toPath).takeIf { it != 0 }
       ?: configuration.compareTo(other.configuration)
 
-  fun string(separator: String): String = listOf(fromPath, toPath, configuration, style, color)
+  fun string(separator: String): String = listOf(fromPath, toPath, configuration, style?.string, color)
     .joinToString(separator) { it.orEmpty() }
 }
 
@@ -101,7 +102,7 @@ private fun ModuleLink(line: String, separator: String): ModuleLink {
     fromPath = fromPath,
     toPath = toPath,
     configuration = configuration,
-    style = style.ifEmpty { null },
+    style = style.ifEmpty { null }?.let(::parseEnum),
     color = color.ifEmpty { null },
   )
 }

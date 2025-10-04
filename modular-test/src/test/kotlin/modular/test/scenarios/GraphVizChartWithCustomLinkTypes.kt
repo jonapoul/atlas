@@ -11,8 +11,8 @@ import modular.test.kotlinJvmBuildScript
 
 object GraphVizChartWithCustomLinkTypes : GraphvizScenario {
   override val rootBuildFile = """
+    import modular.core.LinkStyle
     import modular.graphviz.ArrowType
-    import modular.core.spec.LinkStyle
     import modular.graphviz.RankDir
 
     plugins {
@@ -29,7 +29,7 @@ object GraphVizChartWithCustomLinkTypes : GraphvizScenario {
       linkTypes {
         api(style = LinkStyle.Bold)
         implementation(color = "blue")
-        "compileOnly"(color = "#FF55FF", style = "dotted")
+        "compileOnly"(color = "#FF55FF", style = LinkStyle.Dotted)
       }
     }
   """.trimIndent()

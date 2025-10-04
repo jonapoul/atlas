@@ -4,6 +4,9 @@
  */
 package modular.graphviz.tasks
 
+import modular.core.LinkType
+import modular.core.ModularSpec
+import modular.core.ModuleType
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.buildIndentedString
@@ -12,9 +15,6 @@ import modular.core.internal.logIfConfigured
 import modular.core.internal.moduleType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.orderedModuleTypes
-import modular.core.spec.LinkType
-import modular.core.spec.ModularSpec
-import modular.core.spec.ModuleType
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
 import modular.core.tasks.TaskWithSeparator
@@ -97,8 +97,8 @@ sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
           appendLine("  <TR><TD COLSPAN=\"2\" BGCOLOR=\"#DDDDDD\"><B>Link Types</B></TD></TR>")
           linkTypes.forEach { type ->
             val bgColor = if (type.color == null) "" else " BGCOLOR=\"${type.color}\""
-            val style = type.style ?: "Solid"
-            appendLine("  <TR><TD>${type.displayName}</TD><TD$bgColor>${style.capitalized()}</TD></TR>")
+            val style = type.style?.string?.capitalized() ?: "Solid"
+            appendLine("  <TR><TD>${type.displayName}</TD><TD$bgColor>$style</TD></TR>")
           }
           appendLine("</TABLE>")
           appendLine(">];")

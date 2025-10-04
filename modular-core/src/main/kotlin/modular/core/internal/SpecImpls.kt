@@ -5,13 +5,14 @@
 package modular.core.internal
 
 import modular.core.InternalModularApi
+import modular.core.LinkStyle
+import modular.core.LinkTypeSpec
 import modular.core.ModularExtension
-import modular.core.spec.LinkTypeSpec
-import modular.core.spec.ModuleTypeSpec
-import modular.core.spec.NamedLinkTypeContainer
-import modular.core.spec.NamedModuleTypeContainer
-import modular.core.spec.PathTransformSpec
-import modular.core.spec.Replacement
+import modular.core.ModuleTypeSpec
+import modular.core.NamedLinkTypeContainer
+import modular.core.NamedModuleTypeContainer
+import modular.core.PathTransformSpec
+import modular.core.Replacement
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
@@ -79,7 +80,7 @@ abstract class ModuleTypeSpecImpl @Inject constructor(override val name: String)
 
 internal abstract class LinkTypeSpecImpl @Inject constructor(override val name: String) : LinkTypeSpec {
   @get:Input abstract override val configuration: Property<String>
-  @get:Input abstract override val style: Property<String>
+  @get:Input abstract override val style: Property<LinkStyle>
   @get:Input abstract override val color: Property<String>
 
   init {

@@ -5,7 +5,7 @@
 package modular.core.internal
 
 import modular.core.InternalModularApi
-import modular.core.spec.Replacement
+import modular.core.Replacement
 
 @InternalModularApi
 sealed interface GraphElement

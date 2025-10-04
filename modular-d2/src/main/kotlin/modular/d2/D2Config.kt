@@ -9,13 +9,15 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 
 @KSerializable
 data class D2Config(
+  val arrowType: ArrowType? = null,
   val containerLabelPosition: String? = null,
+  val direction: Direction? = null,
   val style: Map<String, String>? = null,
-  val direction: String? = null,
 ) : JSerializable
 
 internal fun D2Config(spec: D2Spec): D2Config = D2Config(
+  arrowType = spec.arrowType.orNull,
   containerLabelPosition = spec.containerLabelPosition.orNull,
-  style = spec.style.properties.orNull,
   direction = spec.direction.orNull,
+  style = spec.style.properties.orNull,
 )

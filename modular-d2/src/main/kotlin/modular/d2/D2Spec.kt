@@ -5,7 +5,7 @@
 package modular.d2
 
 import modular.core.ModularDsl
-import modular.core.spec.ModularSpec
+import modular.core.ModularSpec
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
@@ -18,17 +18,17 @@ import org.gradle.api.provider.Property
  *   // other Modular config
  *
  *   d2 {
- *     ...
+ *     arrowType = ArrowType.Triangle
+ *     direction = Direction.Down
  *   }
  * }
  * ```
  */
 @ModularDsl
 interface D2Spec : ModularSpec {
+  val arrowType: Property<ArrowType>
   val containerLabelPosition: Property<String>
-
-  val direction: Property<String>
-  fun direction(value: Direction)
+  val direction: Property<Direction>
 
   val style: D2RootStyleSpec
   fun style(action: Action<D2RootStyleSpec>)

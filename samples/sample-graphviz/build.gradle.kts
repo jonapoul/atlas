@@ -1,6 +1,6 @@
-import modular.core.spec.LinkStyle.Bold
-import modular.core.spec.LinkStyle.Dotted
-import modular.core.spec.LinkStyle.Solid
+import modular.core.LinkStyle.Bold
+import modular.core.LinkStyle.Dotted
+import modular.core.LinkStyle.Solid
 import modular.graphviz.ArrowType.None
 import modular.graphviz.ArrowType.Normal
 import modular.graphviz.FileFormat.Svg
