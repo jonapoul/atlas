@@ -2,16 +2,14 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-package modular.graphviz
+package modular.d2
 
 import modular.test.RequiresCommand
-import org.junit.jupiter.api.Tag
 import kotlin.annotation.AnnotationRetention.RUNTIME
 import kotlin.annotation.AnnotationTarget.CLASS
 import kotlin.annotation.AnnotationTarget.FUNCTION
 
 @Target(FUNCTION, CLASS)
 @Retention(RUNTIME)
-@RequiresCommand(command = "dot")
-@Tag("graphviz")
-internal annotation class RequiresGraphviz
+@RequiresCommand(command = "d2")
+internal annotation class RequiresD2

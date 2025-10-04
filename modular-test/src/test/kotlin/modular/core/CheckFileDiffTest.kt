@@ -13,15 +13,16 @@ import modular.test.ScenarioTest
 import modular.test.runTask
 import modular.test.scenarios.CheckExplicitlyDisabled
 import modular.test.scenarios.CheckExplicitlyEnabled
-import modular.test.scenarios.GraphVizBasic
+import modular.test.scenarios.D2Basic
 import modular.test.scenarios.GraphVizBasicWithPngOutput
+import modular.test.scenarios.GraphvizBasic
 import org.gradle.testkit.runner.TaskOutcome.FAILED
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.junit.jupiter.api.Test
 
 class CheckFileDiffTest : ScenarioTest() {
   @Test
-  fun `Write doesn't run as a dependency of check`() = runScenario(GraphVizBasic) {
+  fun `Write doesn't run as a dependency of check for graphviz`() = runScenario(GraphvizBasic) {
     // when
     val result = runTask(":a:checkGraphvizChart", extras = listOf("--dry-run")).build()
 
@@ -34,7 +35,20 @@ class CheckFileDiffTest : ScenarioTest() {
   }
 
   @Test
-  fun `Fail if the expected file hasn't been generated yet`() = runScenario(GraphVizBasic) {
+  fun `Write doesn't run as a dependency of check for D2`() = runScenario(D2Basic) {
+    // when
+    val result = runTask(":a:checkD2Chart", extras = listOf("--dry-run")).build()
+
+    // then the chart wasn't written
+    assertThat(result.output).doesNotContain(":a:writeD2Chart")
+
+    // but the dummy and check tasks were run
+    assertThat(result.output).contains(":a:writeDummyD2Chart")
+    assertThat(result.output).contains(":a:checkD2Chart")
+  }
+
+  @Test
+  fun `Fail if the expected file hasn't been generated yet`() = runScenario(GraphvizBasic) {
     // when
     val result = runTask(":a:checkGraphvizChart").buildAndFail()
 
@@ -91,7 +105,7 @@ class CheckFileDiffTest : ScenarioTest() {
   }
 
   @Test
-  fun `Verify legend of a basic project`() = runScenario(GraphVizBasic) {
+  fun `Verify legend of a basic project`() = runScenario(GraphvizBasic) {
     // given initial dotfile is generated
     runTask("writeGraphvizLegend").build()
 

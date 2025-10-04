@@ -34,9 +34,15 @@ dependencies {
   testRuntimeOnly(libs.junit.launcher)
 }
 
-tasks.withType<Test>().configureEach {
-  useJUnitPlatform()
+tasks.register<Test>("testGraphviz") {
+  useJUnitPlatform { includeTags("graphviz") }
+}
 
+tasks.test {
+  useJUnitPlatform { excludeTags("graphviz") }
+}
+
+tasks.withType<Test>().configureEach {
   systemProperty("test.version.gradle", GradleVersion.current().version)
   androidHome()?.let { systemProperty("test.androidHome", it) }
 

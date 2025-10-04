@@ -16,18 +16,18 @@ import modular.test.ScenarioTest
 import modular.test.allSuccessful
 import modular.test.doesNotExist
 import modular.test.runTask
-import modular.test.scenarios.GraphVizBasic
 import modular.test.scenarios.GraphVizBasicWithPngOutput
 import modular.test.scenarios.GraphVizBigGraph100DpiSvg
 import modular.test.scenarios.GraphVizBigGraph100DpiSvgWithAdjustment
 import modular.test.scenarios.GraphVizCustomDotExecutable
 import modular.test.scenarios.GraphVizCustomLayoutEngine
+import modular.test.scenarios.GraphvizBasic
 import org.gradle.testkit.runner.TaskOutcome
 import kotlin.test.Test
 
 class ExecGraphvizTest : ScenarioTest() {
   @Test
-  fun `No extras are generated if no file formats have been declared`() = runScenario(GraphVizBasic) {
+  fun `No extras are generated if no file formats have been declared`() = runScenario(GraphvizBasic) {
     // when
     val result = runTask("modularGenerate", extras = listOf("--dry-run")).build()
 

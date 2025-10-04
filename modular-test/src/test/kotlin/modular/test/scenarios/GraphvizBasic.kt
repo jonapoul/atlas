@@ -4,16 +4,13 @@
  */
 package modular.test.scenarios
 
+import modular.test.GraphvizScenario
 import modular.test.KOTLIN_VERSION
-import modular.test.Scenario
-import kotlin.text.trimIndent
+import modular.test.javaBuildScript
+import modular.test.kotlinJvmBuildScript
 
-object GraphVizChartCustomConfig : Scenario by GraphvizBasic {
+object GraphvizBasic : GraphvizScenario {
   override val rootBuildFile = """
-    import modular.graphviz.ArrowType
-    import modular.graphviz.Dir
-    import modular.graphviz.RankDir
-
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
@@ -25,16 +22,20 @@ object GraphVizChartCustomConfig : Scenario by GraphvizBasic {
         java()
         registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
-
-      graphviz {
-        arrowHead = ArrowType.HalfOpen
-        arrowTail = ArrowType.Open
-        dpi = 150
-        fontSize = 20
-        rankDir = RankDir.LeftToRight
-        rankSep = 2.5f
-        dir = Dir.None
-      }
     }
   """.trimIndent()
+
+  override val submoduleBuildFiles = mapOf(
+    "a" to """
+      $kotlinJvmBuildScript
+      dependencies {
+        api(project(":b"))
+        implementation(project(":c"))
+      }
+    """.trimIndent(),
+
+    "b" to javaBuildScript,
+
+    "c" to javaBuildScript,
+  )
 }

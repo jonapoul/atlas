@@ -8,7 +8,7 @@ import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 import kotlin.text.trimIndent
 
-object GraphVizWithLinkTypes : Scenario by GraphVizBasic {
+object GraphVizWithLinkTypes : Scenario by GraphvizBasic {
   override val rootBuildFile = """
     import modular.core.spec.LinkStyle
 

@@ -36,7 +36,6 @@ class CollateModuleTypesTest : ScenarioTest() {
         :test-data,Data,#ABC123
         :test-domain,Domain,#123ABC
         :test-ui,Android,#A1B2C3
-
       """.trimIndent(),
     )
   }
@@ -60,7 +59,6 @@ class CollateModuleTypesTest : ScenarioTest() {
         :test-data,Java,orange
         :test-domain,Kotlin JVM,mediumorchid
         :test-ui,Android Library,lightgreen
-
       """.trimIndent(),
     )
   }

@@ -1,0 +1,10 @@
+ digraph {
+  edge [dir="none",arrowhead="halfopen",arrowtail="open"]
+  graph [dpi="150",fontsize="20",ranksep="2.5",rankdir="LR",layout="neato"]
+  node [style="filled"]
+  ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
+  ":b" [fillcolor="orange",shape="none"]
+  ":c" [fillcolor="orange",shape="none"]
+  ":a" -> ":b"
+  ":a" -> ":c"
+}
