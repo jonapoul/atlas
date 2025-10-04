@@ -1,3 +1,4 @@
+import org.gradle.api.publish.maven.tasks.AbstractPublishToMaven
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
@@ -7,6 +8,10 @@ import java.util.Properties
 plugins {
   id("modular.convention.plugin")
   alias(libs.plugins.buildConfig)
+}
+
+tasks.withType<AbstractPublishToMaven>().configureEach {
+  enabled = false
 }
 
 buildConfig {
