@@ -40,7 +40,7 @@ jobs:
           add-job-summary: on-failure
 
       - name: Install Graphviz
-        uses: awalsh128/cache-apt-pkgs-action@latest
+        uses: awalsh128/cache-apt-pkgs-action@v1
         with:
           packages: graphviz libgraphviz-dev
           version: 1.0
