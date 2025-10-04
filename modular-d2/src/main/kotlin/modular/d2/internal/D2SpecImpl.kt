@@ -9,6 +9,7 @@ import modular.core.internal.PropertiesSpec
 import modular.core.internal.PropertiesSpecImpl
 import modular.core.internal.boolDelegate
 import modular.core.internal.enum
+import modular.core.internal.intEnum
 import modular.core.internal.enumDelegate
 import modular.core.internal.intDelegate
 import modular.core.internal.string
@@ -35,6 +36,8 @@ class D2SpecImpl(
   override val direction = objects.enum(properties.direction)
   override val fileFormat = objects.enum(properties.fileFormat)
   override val pathToD2Command = objects.string(properties.pathToD2Command)
+  override val theme = objects.intEnum(properties.theme)
+  override val themeDark = objects.intEnum(properties.darkTheme)
 
   override val style = D2RootStyleSpecImpl(objects)
   override fun style(action: Action<D2RootStyleSpec>) = action.execute(style)

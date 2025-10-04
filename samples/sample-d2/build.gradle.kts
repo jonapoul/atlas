@@ -4,7 +4,7 @@ import modular.core.LinkStyle.Solid
 import modular.d2.ArrowType
 import modular.d2.Direction
 import modular.d2.FileFormat
-import modular.d2.FillPattern
+import modular.d2.Theme
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -36,11 +36,11 @@ modular {
 
   d2 {
     arrowType = ArrowType.Box
-    fileFormat = FileFormat.Svg
     direction = Direction.Right
+    fileFormat = FileFormat.Svg
+    theme = Theme.ShirleyTemple
+    themeDark = Theme.DarkMauve
     style {
-      fill = "darkblue"
-      fillPattern = FillPattern.Lines
       stroke = "floralwhite"
       strokeWidth = 3
       strokeDash = 4

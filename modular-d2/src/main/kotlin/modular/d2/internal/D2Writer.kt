@@ -25,9 +25,34 @@ data class D2Writer(
   private val config: D2Config,
 ) : ChartWriter() {
   operator fun invoke(): String = buildIndentedString(size = 2) {
+    appendVars()
     appendStyles()
     appendModules()
     appendLinks()
+  }
+
+  private fun IndentedStringBuilder.appendVars() = with(config) {
+    val attrs = mapOf(
+      "theme-id" to theme?.value,
+      "dark-theme-id" to darkTheme?.value,
+    )
+    if (attrs.count { it.value != null } == 0) {
+      return@with
+    }
+
+    appendLine("vars: {")
+    indent {
+      appendLine("d2-config: {")
+      indent {
+        attrs.forEach { (key, value) ->
+          if (value != null) {
+            appendLine("$key: $value")
+          }
+        }
+      }
+      appendLine("}")
+    }
+    appendLine("}")
   }
 
   private fun IndentedStringBuilder.appendStyles() = with(config) {

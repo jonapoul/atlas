@@ -13,6 +13,8 @@ data class D2Config(
   val containerLabelPosition: String? = null,
   val direction: Direction? = null,
   val style: Map<String, String>? = null,
+  val theme: Theme? = null,
+  val darkTheme: Theme? = null,
 ) : JSerializable
 
 internal fun D2Config(spec: D2Spec): D2Config = D2Config(
@@ -20,4 +22,6 @@ internal fun D2Config(spec: D2Spec): D2Config = D2Config(
   containerLabelPosition = spec.containerLabelPosition.orNull,
   direction = spec.direction.orNull,
   style = spec.style.properties.orNull,
+  theme = spec.theme.orNull,
+  darkTheme = spec.themeDark.orNull,
 )

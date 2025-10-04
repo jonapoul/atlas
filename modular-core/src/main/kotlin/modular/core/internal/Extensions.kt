@@ -69,6 +69,10 @@ inline fun <reified E> ObjectFactory.enum(convention: Provider<E>): Property<E> 
   property(E::class.java).convention(convention)
 
 @InternalModularApi
+inline fun <reified E> ObjectFactory.intEnum(convention: Provider<E>): Property<E> where E : IntEnum, E : Enum<E> =
+  property(E::class.java).convention(convention)
+
+@InternalModularApi
 inline fun <reified T : Any> ObjectFactory.set(convention: Set<T>): SetProperty<T> =
   setProperty(T::class.java).convention(convention)
 

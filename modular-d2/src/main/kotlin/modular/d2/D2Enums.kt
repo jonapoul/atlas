@@ -2,11 +2,40 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("unused") // public API
+@file:Suppress("unused", "MagicNumber") // public API
 
 package modular.d2
 
+import modular.core.internal.IntEnum
 import modular.core.internal.StringEnum
+
+/**
+ * https://d2lang.com/tour/themes/
+ */
+enum class Theme(override val value: Int) : IntEnum {
+  Default(0),
+  NeutralGrey(1),
+  FlagshipTerrastruct(3),
+  CoolClassics(4),
+  MixedBerryBlue(5),
+  GrapeSoda(6),
+  Aubergine(7),
+  ColorblindClear(8),
+  VanillaNitroCola(100),
+  OrangeCreamsicle(101),
+  ShirleyTemple(102),
+  EarthTones(103),
+  EvergladeGreen(104),
+  ButteredToast(105),
+  Terminal(300),
+  TerminalGrayscale(301),
+  Origami(302),
+  C4(303),
+
+  // These two are intended for configuration as dark themes
+  DarkMauve(200),
+  DarkFlagshipTerrastruct(201),
+}
 
 /**
  * https://d2lang.com/tour/exports/
