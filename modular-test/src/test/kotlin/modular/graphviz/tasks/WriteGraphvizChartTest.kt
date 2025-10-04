@@ -8,69 +8,226 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.exists
 import modular.test.ScenarioTest
-import modular.test.contentEquals
 import modular.test.runTask
-import modular.test.scenarios.GraphVizWithLinkTypes
+import modular.test.scenarios.GraphVizChartCustomConfig
+import modular.test.scenarios.GraphVizChartWithCustomLinkTypes
+import modular.test.scenarios.GraphVizChartWithProperties
+import modular.test.scenarios.GraphVizChartWithReplacements
 import modular.test.scenarios.GraphvizBasic
+import modular.test.scenarios.GraphvizNestedModules
+import modular.test.scenarios.GraphvizNestedModulesNoModuleTypes
 import kotlin.test.Test
 
 class WriteGraphvizChartTest : ScenarioTest() {
   @Test
-  fun `Generate dotfile legend from basic config`() = runScenario(GraphvizBasic) {
+  fun `Run if no module types are declared`() = runScenario(GraphvizNestedModulesNoModuleTypes) {
     // when
-    runTask("writeGraphvizLegend").build()
+    runTask("writeGraphvizChart").build()
 
-    // then the file was generated
-    val legendFile = resolve("modular/legend.dot")
-    assertThat(legendFile).exists()
-
-    // and contains expected contents, with modules in declaration order
-    assertThat(legendFile.readText()).contains(
+    // then
+    assertThat(resolve("app/modular/chart.dot").readText()).contains(
       """
         digraph {
-          node [shape=plaintext]
-          modules [label=<
-          <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-            <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
-            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
-          </TABLE>
-          >];
+          node [style="filled"]
+          ":app" [penwidth="3",shape="box"]
+          ":data:a" [shape="none"]
+          ":data:b" [shape="none"]
+          ":domain:a" [shape="none"]
+          ":domain:b" [shape="none"]
+          ":ui:a" [shape="none"]
+          ":ui:b" [shape="none"]
+          ":ui:c" [shape="none"]
+          ":app" -> ":ui:a"
+          ":app" -> ":ui:b"
+          ":app" -> ":ui:c"
+          ":domain:a" -> ":data:a"
+          ":domain:b" -> ":data:a"
+          ":domain:b" -> ":data:b"
+          ":ui:a" -> ":domain:a"
+          ":ui:b" -> ":domain:b"
+          ":ui:c" -> ":domain:a"
+          ":ui:c" -> ":domain:b"
         }
       """.trimIndent(),
     )
   }
 
   @Test
-  fun `Show modules and links next to each other`() = runScenario(GraphVizWithLinkTypes) {
+  fun `Generate dotfiles from basic config`() = runScenario(GraphvizBasic) {
     // when
-    runTask("writeGraphvizLegend").build()
+    runTask("writeGraphvizChart").build()
 
-    // then the file was generated
-    val legendFile = resolve("modular/legend.dot")
-    assertThat(legendFile).exists()
+    // then the files were generated
+    val dotFileA = resolve("a/modular/chart.dot")
+    val dotFileB = resolve("b/modular/chart.dot")
+    val dotFileC = resolve("c/modular/chart.dot")
 
-    // and contains expected contents, overriding build script
-    assertThat(legendFile).contentEquals(
+    // and contain expected contents, with modules in declaration order
+    assertThat(dotFileA.readText()).contains(
       """
         digraph {
-          node [shape=plaintext]
-          modules [label=<
-          <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-            <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
-            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
-          </TABLE>
-          >];
-          links [label=<
-          <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-            <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Link Types</B></TD></TR>
-            <TR><TD>jvmMainImplementation</TD><TD BGCOLOR="orange">Bold</TD></TR>
-            <TR><TD>api</TD><TD>Solid</TD></TR>
-            <TR><TD>implementation</TD><TD>Dotted</TD></TR>
-          </TABLE>
-          >];
+          node [style="filled"]
+          ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
+          ":b" [fillcolor="orange",shape="none"]
+          ":c" [fillcolor="orange",shape="none"]
+          ":a" -> ":b"
+          ":a" -> ":c"
+        }
+      """.trimIndent(),
+    )
+
+    assertThat(dotFileB.readText()).contains(
+      """
+        digraph {
+          node [style="filled"]
+          ":b" [fillcolor="orange",penwidth="3",shape="box"]
+        }
+      """.trimIndent(),
+    )
+    assertThat(dotFileC.readText()).contains(
+      """
+        digraph {
+          node [style="filled"]
+          ":c" [fillcolor="orange",penwidth="3",shape="box"]
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Customise dotfile from build script`() = runScenario(GraphVizChartCustomConfig) {
+    // when
+    runTask("writeGraphvizChart").build()
+
+    // then the file was generated
+    val dotFile = resolve("a/modular/chart.dot")
+    assertThat(dotFile).exists()
+
+    // and contains expected contents, with modules in alphabetical order
+    assertThat(dotFile.readText()).contains(
+      """
+        digraph {
+          edge [dir="none",arrowhead="halfopen",arrowtail="open"]
+          graph [dpi="150",fontsize="20",ranksep="2.5",rankdir="LR"]
+          node [style="filled"]
+          ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
+          ":b" [fillcolor="orange",shape="none"]
+          ":c" [fillcolor="orange",shape="none"]
+          ":a" -> ":b"
+          ":a" -> ":c"
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Customise dotfile from gradle properties`() = runScenario(GraphVizChartWithProperties) {
+    // when
+    runTask("writeGraphvizChart").build()
+
+    // then the file was generated
+    val dotFile = resolve("a/modular/chart.dot")
+    assertThat(dotFile).exists()
+
+    // and contains expected contents, with modules in alphabetical order
+    assertThat(dotFile.readText()).contains(
+      """
+        digraph {
+          edge [dir="none",arrowhead="halfopen",arrowtail="open"]
+          graph [dpi="150",fontsize="20",ranksep="2.5",rankdir="LR"]
+          node [style="filled"]
+          ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
+          ":b" [fillcolor="orange",shape="none"]
+          ":c" [fillcolor="orange",shape="none"]
+          ":a" -> ":b"
+          ":a" -> ":c"
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Replace module names`() = runScenario(GraphVizChartWithReplacements) {
+    // when
+    runTask("writeGraphvizChart").build()
+
+    // then the file was generated
+    val dotFile = resolve("a/modular/chart.dot")
+    assertThat(dotFile).exists()
+
+    // and contains expected contents, colons removed from module prefixes and "b" -> "B"
+    assertThat(dotFile.readText()).contains(
+      """
+        digraph {
+          node [style="filled"]
+          "B" [fillcolor="orange",shape="none"]
+          "a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
+          "c" [fillcolor="orange",shape="none"]
+          "a" -> "B"
+          "a" -> "c"
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Handle custom link types`() = runScenario(GraphVizChartWithCustomLinkTypes) {
+    // when
+    runTask("writeGraphvizChart").build()
+
+    // then the file was generated
+    val dotFile = resolve("a/modular/chart.dot")
+    assertThat(dotFile).exists()
+
+    // and contains expected link styles
+    assertThat(dotFile.readText()).contains(
+      """
+        digraph {
+          node [style="filled"]
+          ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
+          ":b" [fillcolor="mediumorchid",shape="none"]
+          ":c" [fillcolor="orange",shape="none"]
+          ":d" [fillcolor="orange",shape="none"]
+          ":a" -> ":b" [style="bold"]
+          ":a" -> ":c" [color="blue"]
+          ":a" -> ":d" [style="dotted",color="#FF55FF"]
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Handle nested modules`() = runScenario(GraphvizNestedModules) {
+    // when
+    runTask("writeGraphvizChart").build()
+
+    // then the file was generated
+    val dotFile = resolve("app/modular/chart.dot")
+    assertThat(dotFile).exists()
+
+    // and contains expected link styles
+    assertThat(dotFile.readText()).contains(
+      """
+        digraph {
+          node [style="filled"]
+          ":app" [fillcolor="mediumorchid",penwidth="3",shape="box"]
+          ":data:a" [fillcolor="mediumorchid",shape="none"]
+          ":data:b" [fillcolor="mediumorchid",shape="none"]
+          ":domain:a" [fillcolor="mediumorchid",shape="none"]
+          ":domain:b" [fillcolor="mediumorchid",shape="none"]
+          ":ui:a" [fillcolor="mediumorchid",shape="none"]
+          ":ui:b" [fillcolor="mediumorchid",shape="none"]
+          ":ui:c" [fillcolor="mediumorchid",shape="none"]
+          ":app" -> ":ui:a"
+          ":app" -> ":ui:b"
+          ":app" -> ":ui:c"
+          ":domain:a" -> ":data:a"
+          ":domain:b" -> ":data:a"
+          ":domain:b" -> ":data:b"
+          ":ui:a" -> ":domain:a"
+          ":ui:b" -> ":domain:b"
+          ":ui:c" -> ":domain:a"
+          ":ui:c" -> ":domain:b"
         }
       """.trimIndent(),
     )
