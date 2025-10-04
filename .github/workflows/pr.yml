@@ -46,7 +46,7 @@ jobs:
           packages: graphviz
           version: 1.0
 
-      - run: dot --version
+      - run: dot -V
 
       - name: Setup JDK
         uses: actions/setup-java@v5
