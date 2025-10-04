@@ -12,8 +12,8 @@ class MermaidConfig(
   val layout: String?,
   val layoutProperties: Map<String, String>?,
   val themeVariables: Map<String, String>?,
-  val look: String?,
-  val theme: String?,
+  val look: Look?,
+  val theme: Theme?,
   val animateLinks: Boolean,
 ) : JSerializable
 

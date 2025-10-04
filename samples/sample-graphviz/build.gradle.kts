@@ -38,10 +38,10 @@ modular {
     fontSize = 30
     rankSep = 1.5f
 
-    arrowHead(Normal)
-    arrowTail(None)
-    fileFormat(Svg)
-    layoutEngine(Dot)
-    rankDir(TopToBottom)
+    arrowHead = Normal
+    arrowTail = None
+    fileFormat = Svg
+    layoutEngine = Dot
+    rankDir = TopToBottom
   }
 }

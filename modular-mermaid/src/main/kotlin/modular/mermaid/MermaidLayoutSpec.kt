@@ -7,13 +7,10 @@
 package modular.mermaid
 
 import modular.core.ModularDsl
-import org.gradle.api.provider.MapProperty
+import modular.core.internal.PropertiesSpec
 import org.gradle.api.provider.Property
 
 @ModularDsl
-interface MermaidLayoutSpec {
+interface MermaidLayoutSpec : PropertiesSpec {
   val name: Property<String>
-  val properties: MapProperty<String, String>
-
-  fun put(key: String, value: Any) = properties.put(key, value.toString())
 }

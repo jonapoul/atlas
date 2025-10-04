@@ -5,25 +5,22 @@
 package modular.mermaid
 
 import modular.core.ModularDsl
-import org.gradle.api.provider.MapProperty
+import modular.core.internal.PropertiesSpec
 
 /**
  * See https://mermaid.js.org/config/theming.html#theme-variables for all custom properties, any of which can be set
  * with [put].
  */
 @ModularDsl
-interface MermaidThemeVariablesSpec {
-  val properties: MapProperty<String, String>
-  fun put(key: String, value: Any) = properties.put(key, value.toString())
-
-  fun background(value: String)
-  fun darkMode(value: Boolean)
-  fun fontFamily(value: String)
-  fun fontSize(value: String)
-  fun lineColor(value: String)
-  fun primaryBorderColor(value: String)
-  fun primaryColor(value: String)
-  fun primaryTextColor(value: String)
-  fun secondaryColor(value: String)
-  fun tertiaryColor(value: String)
+interface MermaidThemeVariablesSpec : PropertiesSpec {
+  var background: String?
+  var darkMode: Boolean?
+  var fontFamily: String?
+  var fontSize: String?
+  var lineColor: String?
+  var primaryBorderColor: String?
+  var primaryColor: String?
+  var primaryTextColor: String?
+  var secondaryColor: String?
+  var tertiaryColor: String?
 }

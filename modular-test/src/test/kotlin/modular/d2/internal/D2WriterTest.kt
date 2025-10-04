@@ -6,7 +6,9 @@ package modular.d2.internal
 
 import assertk.assertThat
 import assertk.assertions.contains
+import modular.d2.D2Config
 import modular.d2.d2Writer
+import modular.test.Abc
 import modular.test.ModuleWithNoLinks
 import modular.test.OneLevelOfSubmodules
 import modular.test.TwoLevelsOfSubmodules
@@ -16,8 +18,7 @@ class D2WriterTest {
   @Test
   fun `Base config with no module types`() {
     val writer = d2Writer(
-      typedModules = OneLevelOfSubmodules.modules,
-      links = OneLevelOfSubmodules.links,
+      layout = OneLevelOfSubmodules,
       groupModules = false,
     )
 
@@ -48,8 +49,7 @@ class D2WriterTest {
   @Test
   fun `Grouping modules`() {
     val writer = d2Writer(
-      typedModules = OneLevelOfSubmodules.modules,
-      links = OneLevelOfSubmodules.links,
+      layout = OneLevelOfSubmodules,
       groupModules = true,
     )
 
@@ -86,8 +86,7 @@ class D2WriterTest {
   @Test
   fun `Grouping modules with sub-subgraphs`() {
     val writer = d2Writer(
-      typedModules = TwoLevelsOfSubmodules.modules,
-      links = TwoLevelsOfSubmodules.links,
+      layout = TwoLevelsOfSubmodules,
       groupModules = true,
     )
 
@@ -129,14 +128,59 @@ class D2WriterTest {
 
   @Test
   fun `Single module with no links`() {
-    val writer = d2Writer(
-      typedModules = ModuleWithNoLinks.modules,
-      links = ModuleWithNoLinks.links,
-    )
+    val writer = d2Writer(layout = ModuleWithNoLinks)
 
     assertThat(writer()).contains(
       """
         app: :app
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Simple graph with direction`() {
+    val writer = d2Writer(
+      layout = Abc,
+      config = D2Config(direction = "right"),
+    )
+
+    assertThat(writer()).contains(
+      """
+        direction: right
+        a: :a
+        b: :b
+        c: :c
+        a -> b
+        a -> c
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Simple graph with root style`() {
+    val writer = d2Writer(
+      layout = Abc,
+      config = D2Config(
+        style = mapOf(
+          "fill" to "LightBlue",
+          "stroke" to "FireBrick",
+          "stroke-width" to "15",
+        ),
+      ),
+    )
+
+    assertThat(writer()).contains(
+      """
+        style: {
+          fill: "LightBlue"
+          stroke: "FireBrick"
+          stroke-width: "15"
+        }
+        a: :a
+        b: :b
+        c: :c
+        a -> b
+        a -> c
       """.trimIndent(),
     )
   }

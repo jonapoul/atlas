@@ -10,6 +10,8 @@ import kotlin.text.trimIndent
 
 object GraphVizBigGraph100DpiSvg : Scenario by GraphVizBigGraph {
   override val rootBuildFile = """
+    import modular.graphviz.FileFormat
+
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
@@ -22,7 +24,7 @@ object GraphVizBigGraph100DpiSvg : Scenario by GraphVizBigGraph {
 
       graphviz {
         dpi = 100
-        fileFormat = "svg"
+        fileFormat = FileFormat.Svg
       }
     }
   """.trimIndent()

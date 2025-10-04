@@ -28,11 +28,13 @@ data class D2Writer(
     appendLinks()
   }
 
-  private fun IndentedStringBuilder.appendStyles() {
-    if (config.style.isNullOrEmpty()) return
+  private fun IndentedStringBuilder.appendStyles() = with(config) {
+    direction?.let { appendLine("direction: $it") }
+
+    if (style.isNullOrEmpty()) return@with
     appendLine("style: {")
     indent {
-      config.style.forEach { (key, value) ->
+      style.forEach { (key, value) ->
         appendLine("$key: \"$value\"")
       }
     }

@@ -38,25 +38,25 @@ modular {
   mermaid {
     animateLinks = false
 
-    look(HandDrawn)
-    theme(Forest)
+    look = HandDrawn
+    theme = Forest
 
     elk {
-      mergeEdges(true)
-      forceNodeModelOrder(true)
-      nodePlacementStrategy(LinearSegments)
-      cycleBreakingStrategy(Interactive)
-      considerModelOrder(PreferEdges)
+      mergeEdges = true
+      forceNodeModelOrder = true
+      nodePlacementStrategy = LinearSegments
+      cycleBreakingStrategy = Interactive
+      considerModelOrder = PreferEdges
     }
 
     themeVariables {
-      background("#FFF")
-      fontFamily("arial")
-      lineColor("#55FF55")
-      primaryBorderColor("#FF5555")
-      primaryColor("#ABC123")
-      darkMode(true)
-      fontSize("30px")
+      background = "#FFF"
+      fontFamily = "arial"
+      lineColor = "#55FF55"
+      primaryBorderColor = "#FF5555"
+      primaryColor = "#ABC123"
+      darkMode = true
+      fontSize = "30px"
 
       put("defaultLinkColor", "#5555FF")
     }

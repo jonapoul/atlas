@@ -22,7 +22,6 @@ import modular.test.scenarios.GraphVizBigGraph100DpiSvg
 import modular.test.scenarios.GraphVizBigGraph100DpiSvgWithAdjustment
 import modular.test.scenarios.GraphVizCustomDotExecutable
 import modular.test.scenarios.GraphVizCustomLayoutEngine
-import modular.test.scenarios.GraphVizInvalidLayoutEngine
 import org.gradle.testkit.runner.TaskOutcome
 import kotlin.test.Test
 
@@ -131,20 +130,6 @@ class ExecGraphvizTest : ScenarioTest() {
         viewBox="0.00 0.00 350.00 260.00"
       """.trimIndent(),
     )
-  }
-
-  @Test
-  @RequiresGraphviz
-  fun `Fail with useful message for invalid layout engine`() = runScenario(GraphVizInvalidLayoutEngine) {
-    // when
-    val result = runTask(":app:execGraphvizChart").buildAndFail()
-
-    // then the error log contains a useful message from graphviz
-    assertThat(result.output).contains("There is no layout engine support for \"abc123\"")
-
-    // on my machine the bit following this is "circo dot fdp neato nop nop1 nop2 osage patchwork sfdp twopi", but
-    // it'll probs be installation-dependent
-    assertThat(result.output).contains("Use one of: ")
   }
 
   @Test

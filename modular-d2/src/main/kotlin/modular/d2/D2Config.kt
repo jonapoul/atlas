@@ -4,7 +4,6 @@
  */
 package modular.d2
 
-import modular.core.InternalModularApi
 import java.io.Serializable as JSerializable
 import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 
@@ -12,10 +11,11 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 data class D2Config(
   val containerLabelPosition: String? = null,
   val style: Map<String, String>? = null,
+  val direction: String? = null,
 ) : JSerializable
 
-@InternalModularApi
-fun D2Config(spec: D2Spec): D2Config = D2Config(
+internal fun D2Config(spec: D2Spec): D2Config = D2Config(
   containerLabelPosition = spec.containerLabelPosition.orNull,
   style = spec.style.properties.orNull,
+  direction = spec.direction.orNull,
 )

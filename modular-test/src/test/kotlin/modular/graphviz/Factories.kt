@@ -15,7 +15,7 @@ internal fun dotWriter(
   replacements: Set<Replacement> = emptySet(),
   thisPath: String = ":app",
   groupModules: Boolean = false,
-  config: DotConfig = dotConfig(),
+  config: DotConfig = DotConfig(),
 ) = DotWriter(
   typedModules = typedModules,
   links = links,
@@ -23,24 +23,4 @@ internal fun dotWriter(
   thisPath = thisPath,
   groupModules = groupModules,
   config = config,
-)
-
-fun dotConfig(
-  arrowHead: String? = null,
-  arrowTail: String? = null,
-  dir: String? = null,
-  dpi: Int? = null,
-  fontSize: Int? = null,
-  layoutEngine: String? = null,
-  rankDir: String? = null,
-  rankSep: Float? = null,
-) = DotConfig(
-  arrowHead = arrowHead,
-  arrowTail = arrowTail,
-  dir = dir,
-  dpi = dpi,
-  fontSize = fontSize,
-  layoutEngine = layoutEngine,
-  rankDir = rankDir,
-  rankSep = rankSep,
 )

@@ -26,15 +26,13 @@ interface MermaidSpec : ModularSpec {
    * Also controlled by the `modular.mermaid.chart.look` Gradle property. Defaults to unset.
    * See https://mermaid.js.org/intro/syntax-reference.html#layout-and-look
    */
-  val look: Property<String>
-  fun look(look: Look) = this.look.set(look.string)
+  val look: Property<Look>
 
   /**
    * Also controlled by the `modular.mermaid.chart.theme` Gradle property. Defaults to unset.
    * See https://mermaid.js.org/config/theming.html
    */
-  val theme: Property<String>
-  fun theme(theme: Theme) = this.theme.set(theme.string)
+  val theme: Property<Theme>
 
   val themeVariables: MermaidThemeVariablesSpec
   fun themeVariables(action: Action<MermaidThemeVariablesSpec>)

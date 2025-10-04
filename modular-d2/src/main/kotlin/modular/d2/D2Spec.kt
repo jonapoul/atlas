@@ -27,6 +27,9 @@ import org.gradle.api.provider.Property
 interface D2Spec : ModularSpec {
   val containerLabelPosition: Property<String>
 
-  val style: D2StyleSpec
-  fun style(action: Action<D2StyleSpec>)
+  val direction: Property<String>
+  fun direction(value: Direction)
+
+  val style: D2RootStyleSpec
+  fun style(action: Action<D2RootStyleSpec>)
 }

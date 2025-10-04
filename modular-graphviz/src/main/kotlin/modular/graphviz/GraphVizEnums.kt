@@ -17,6 +17,9 @@ enum class RankDir(override val string: String) : StringEnum {
   BottomToTop("BT"),
   LeftToRight("LR"),
   RightToLeft("RL"),
+  ;
+
+  override fun toString() = string
 }
 
 /**
@@ -42,6 +45,9 @@ enum class ArrowType(override val string: String) : StringEnum {
   Open("open"),
   Tee("tee"),
   Vee("vee"),
+  ;
+
+  override fun toString() = string
 }
 
 /**
@@ -63,6 +69,9 @@ enum class LayoutEngine(override val string: String) : StringEnum {
   Nop2("nop2"),
   Osage("osage"),
   Patchwork("patchwork"),
+  ;
+
+  override fun toString() = string
 }
 
 /**
@@ -73,6 +82,9 @@ enum class Dir(override val string: String) : StringEnum {
   Back("back"),
   Both("both"),
   None("none"),
+  ;
+
+  override fun toString() = string
 }
 
 /**
@@ -124,4 +136,7 @@ enum class FileFormat(override val string: String) : StringEnum {
   Xdot14("xdot1.4"),
   XdotJson("xdot_json"),
   Xlib("xlib"),
+  ;
+
+  override fun toString() = string
 }

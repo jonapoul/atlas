@@ -7,10 +7,23 @@
 package modular.d2
 
 import modular.core.ModularDsl
-import org.gradle.api.provider.MapProperty
+import modular.core.internal.PropertiesSpec
 
+/**
+ * https://d2lang.com/tour/style/
+ */
 @ModularDsl
-interface D2StyleSpec {
-  val properties: MapProperty<String, String>
-  fun put(key: String, value: Any) = properties.put(key, value.toString())
+interface D2StyleSpec : PropertiesSpec
+
+/**
+ * https://d2lang.com/tour/style/#root
+ */
+@ModularDsl
+interface D2RootStyleSpec : D2StyleSpec {
+  var fill: String?
+  var fillPattern: FillPattern?
+  var stroke: String?
+  var strokeWidth: Int?
+  var strokeDash: Int?
+  var doubleBorder: Int?
 }

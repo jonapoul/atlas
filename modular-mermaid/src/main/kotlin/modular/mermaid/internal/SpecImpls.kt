@@ -5,8 +5,14 @@
 package modular.mermaid.internal
 
 import modular.core.InternalModularApi
+import modular.core.internal.PropertiesSpec
+import modular.core.internal.PropertiesSpecImpl
 import modular.core.internal.bool
+import modular.core.internal.boolDelegate
+import modular.core.internal.enum
+import modular.core.internal.enumDelegate
 import modular.core.internal.string
+import modular.core.internal.stringDelegate
 import modular.mermaid.ConsiderModelOrder
 import modular.mermaid.CycleBreakingStrategy
 import modular.mermaid.ElkLayoutSpec
@@ -41,19 +47,17 @@ class MermaidSpecImpl(
   }
 
   override val animateLinks = objects.bool(properties.animateLinks)
-  override val look = objects.string(properties.look)
-  override val theme = objects.string(properties.theme)
+  override val look = objects.enum(properties.look)
+  override val theme = objects.enum(properties.theme)
 }
 
 @InternalModularApi
-open class MermaidLayoutSpecImpl(objects: ObjectFactory) : MermaidLayoutSpec {
+open class MermaidLayoutSpecImpl(
+  objects: ObjectFactory,
+) : MermaidLayoutSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
   override val name: Property<String> = objects
     .property(String::class.java)
     .unsetConvention()
-
-  override val properties = objects
-    .mapProperty(String::class.java, String::class.java)
-    .convention(null)
 }
 
 @InternalModularApi
@@ -63,27 +67,25 @@ class ElkLayoutSpecImpl(objects: ObjectFactory) : MermaidLayoutSpecImpl(objects)
     name.finalizeValue()
   }
 
-  override fun considerModelOrder(order: ConsiderModelOrder) = put("considerModelOrder", order.string)
-  override fun cycleBreakingStrategy(strategy: CycleBreakingStrategy) = put("cycleBreakingStrategy", strategy.string)
-  override fun forceNodeModelOrder(enabled: Boolean) = put("forceNodeModelOrder", enabled)
-  override fun mergeEdges(enabled: Boolean) = put("mergeEdges", enabled)
-  override fun nodePlacementStrategy(strategy: NodePlacementStrategy) = put("nodePlacementStrategy", strategy.string)
+  override var considerModelOrder by enumDelegate<ConsiderModelOrder>("considerModelOrder")
+  override var cycleBreakingStrategy by enumDelegate<CycleBreakingStrategy>("cycleBreakingStrategy")
+  override var forceNodeModelOrder by boolDelegate("forceNodeModelOrder")
+  override var mergeEdges by boolDelegate("mergeEdges")
+  override var nodePlacementStrategy by enumDelegate<NodePlacementStrategy>("nodePlacementStrategy")
 }
 
 @InternalModularApi
-class MermaidThemeVariablesSpecImpl(objects: ObjectFactory) : MermaidThemeVariablesSpec {
-  override val properties = objects
-    .mapProperty(String::class.java, String::class.java)
-    .convention(null)
-
-  override fun background(value: String) = put("background", value)
-  override fun darkMode(value: Boolean) = put("darkMode", value)
-  override fun fontFamily(value: String) = put("fontFamily", value)
-  override fun fontSize(value: String) = put("fontSize", value)
-  override fun lineColor(value: String) = put("lineColor", value)
-  override fun primaryBorderColor(value: String) = put("primaryBorderColor", value)
-  override fun primaryColor(value: String) = put("primaryColor", value)
-  override fun primaryTextColor(value: String) = put("primaryTextColor", value)
-  override fun secondaryColor(value: String) = put("secondaryColor", value)
-  override fun tertiaryColor(value: String) = put("tertiaryColor", value)
+class MermaidThemeVariablesSpecImpl(
+  objects: ObjectFactory,
+) : MermaidThemeVariablesSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+  override var background by stringDelegate(key = "background")
+  override var darkMode by boolDelegate(key = "darkMode")
+  override var fontFamily by stringDelegate(key = "fontFamily")
+  override var fontSize by stringDelegate(key = "fontSize")
+  override var lineColor by stringDelegate(key = "lineColor")
+  override var primaryBorderColor by stringDelegate(key = "primaryBorderColor")
+  override var primaryColor by stringDelegate(key = "primaryColor")
+  override var primaryTextColor by stringDelegate(key = "primaryTextColor")
+  override var secondaryColor by stringDelegate(key = "secondaryColor")
+  override var tertiaryColor by stringDelegate(key = "tertiaryColor")
 }

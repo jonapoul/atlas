@@ -5,9 +5,16 @@
 package modular.d2.internal
 
 import modular.core.InternalModularApi
+import modular.core.internal.PropertiesSpec
+import modular.core.internal.PropertiesSpecImpl
+import modular.core.internal.enumDelegate
+import modular.core.internal.intDelegate
 import modular.core.internal.string
+import modular.core.internal.stringDelegate
+import modular.d2.D2RootStyleSpec
 import modular.d2.D2Spec
-import modular.d2.D2StyleSpec
+import modular.d2.Direction
+import modular.d2.FillPattern
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
@@ -24,13 +31,21 @@ class D2SpecImpl(
 
   override val containerLabelPosition = objects.string(properties.containerLabelPosition)
 
-  override val style = D2StyleSpecImpl(objects)
-  override fun style(action: Action<D2StyleSpec>) = action.execute(style)
+  override val direction = objects.string(properties.direction)
+  override fun direction(value: Direction) = direction.set(value.string)
+
+  override val style = D2RootStyleSpecImpl(objects)
+  override fun style(action: Action<D2RootStyleSpec>) = action.execute(style)
 }
 
 @InternalModularApi
-open class D2StyleSpecImpl(objects: ObjectFactory) : D2StyleSpec {
-  override val properties = objects
-    .mapProperty(String::class.java, String::class.java)
-    .convention(null)
+open class D2RootStyleSpecImpl(
+  objects: ObjectFactory,
+) : D2RootStyleSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+  override var fill by stringDelegate("fill")
+  override var fillPattern by enumDelegate<FillPattern>("fill-pattern")
+  override var stroke by stringDelegate("stroke")
+  override var strokeWidth by intDelegate("stroke-width")
+  override var strokeDash by intDelegate("stroke-dash")
+  override var doubleBorder by intDelegate("double-border")
 }

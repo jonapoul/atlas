@@ -17,6 +17,9 @@ enum class NodePlacementStrategy(override val string: String) : StringEnum {
   NetworkSimplex("NETWORK_SIMPLEX"),
   LinearSegments("LINEAR_SEGMENTS"),
   BrandesKoepf("BRANDES_KOEPF"),
+  ;
+
+  override fun toString() = string
 }
 
 /**
@@ -30,6 +33,9 @@ enum class CycleBreakingStrategy(override val string: String) : StringEnum {
   Interactive("INTERACTIVE"),
   ModelOrder("MODEL_ORDER"),
   GreedyModelOrder("GREEDY_MODEL_ORDER"),
+  ;
+
+  override fun toString() = string
 }
 
 /**
@@ -43,6 +49,9 @@ enum class ConsiderModelOrder(override val string: String) : StringEnum {
   NodesAndEdges("NODES_AND_EDGES"),
   PreferEdges("PREFER_EDGES"),
   PreferNodes("PREFER_NODES"),
+  ;
+
+  override fun toString() = string
 }
 
 /**
@@ -52,6 +61,9 @@ enum class ConsiderModelOrder(override val string: String) : StringEnum {
 enum class Look(override val string: String) : StringEnum {
   Classic("classic"),
   HandDrawn("handDrawn"),
+  ;
+
+  override fun toString() = string
 }
 
 /**
@@ -63,4 +75,7 @@ enum class Theme(override val string: String) : StringEnum {
   Dark("dark"),
   Forest("forest"),
   Base("base"),
+  ;
+
+  override fun toString() = string
 }
