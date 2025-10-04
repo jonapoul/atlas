@@ -42,7 +42,7 @@ jobs:
       - name: Install Graphviz
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: graphviz
+          packages: graphviz libgraphviz-dev
           version: 1.0
 
       - name: Build
