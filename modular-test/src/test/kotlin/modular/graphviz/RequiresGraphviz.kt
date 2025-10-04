@@ -5,6 +5,7 @@
 package modular.graphviz
 
 import modular.test.RequiresCommand
+import org.junit.jupiter.api.Tag
 import kotlin.annotation.AnnotationRetention.RUNTIME
 import kotlin.annotation.AnnotationTarget.CLASS
 import kotlin.annotation.AnnotationTarget.FUNCTION
@@ -12,4 +13,5 @@ import kotlin.annotation.AnnotationTarget.FUNCTION
 @Target(FUNCTION, CLASS)
 @Retention(RUNTIME)
 @RequiresCommand(command = "dot")
+@Tag("graphviz")
 internal annotation class RequiresGraphviz
