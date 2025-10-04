@@ -9,9 +9,9 @@ import modular.core.internal.PropertiesSpec
 import modular.core.internal.PropertiesSpecImpl
 import modular.core.internal.boolDelegate
 import modular.core.internal.enum
-import modular.core.internal.intEnum
 import modular.core.internal.enumDelegate
 import modular.core.internal.intDelegate
+import modular.core.internal.intEnum
 import modular.core.internal.string
 import modular.core.internal.stringDelegate
 import modular.d2.D2RootStyleSpec
