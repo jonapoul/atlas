@@ -1,5 +1,5 @@
 services:
-  modular:
+  base:
     build:
       context: ..
       dockerfile: docker/Dockerfile
@@ -8,4 +8,17 @@ services:
       - $HOME/.gradle:/home/gradle/.gradle
       - ..:/modular
     working_dir: /modular
-    command: /bin/bash
+
+  check:
+    extends: base
+    command: gradle -Dorg.gradle.java.home=/opt/java/openjdk/ check
+
+  build:
+    extends: base
+    command: gradle -Dorg.gradle.java.home=/opt/java/openjdk/ build
+
+  generate-samples:
+    extends: base
+    command: |
+      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-graphviz
+      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-mermaid

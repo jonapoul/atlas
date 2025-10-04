@@ -45,15 +45,16 @@ jobs:
         with:
           add-job-summary: on-failure
 
-      - name: Check
+      - name: Docker Compose
         uses: hoverkraft-tech/compose-action@v2
         with:
           compose-file: docker/docker-compose.yml
-          services: modular
-          run: |
-            ./gradlew check
-            ./gradlew modularGenerate -p samples/sample-mermaid
-            ./gradlew modularGenerate -p samples/sample-graphviz
+
+      - name: Check
+        run: docker compose run --rm check
+
+      - name: Generate samples
+        run: docker compose run --rm generate-samples
 
       - name: Make sure no diffs
         run: |

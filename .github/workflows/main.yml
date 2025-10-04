@@ -33,9 +33,10 @@ jobs:
         with:
           add-job-summary: on-failure
 
-      - name: Build
+      - name: Docker Compose
         uses: hoverkraft-tech/compose-action@v2
         with:
           compose-file: docker/docker-compose.yml
-          services: modular
-          run: ./gradlew build
+
+      - name: Build
+        run: docker compose run --rm build
