@@ -49,7 +49,7 @@ jobs:
         uses: hoverkraft-tech/compose-action@v2
         with:
           compose-file: docker/docker-compose.yml
-          services: graphviz
+          services: modular
           run: |
             ./gradlew check
             ./gradlew modularGenerate -p samples/sample-mermaid
