@@ -40,34 +40,20 @@ jobs:
       - name: Run ktlint
         run: scripts/ktlintCheck.sh
 
-      - name: Install Graphviz
-        uses: awalsh128/cache-apt-pkgs-action@v1
-        with:
-          packages: graphviz
-          version: 1.1
-          execute_install_scripts: true
-
-      - name: Setup JDK
-        uses: actions/setup-java@v5
-        with:
-          java-version-file: .github/workflows/.java-version
-          distribution: "zulu"
-
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v5
         with:
           add-job-summary: on-failure
 
       - name: Check
-        run: ./gradlew check
-
-      - name: Generate graphviz sample
-        working-directory: samples/sample-graphviz
-        run: ./gradlew modularGenerate
-
-      - name: Check mermaid sample
-        working-directory: samples/sample-mermaid
-        run: ./gradlew modularGenerate
+        uses: hoverkraft-tech/compose-action@v2
+        with:
+          compose-file: docker/docker-compose.yml
+          services: graphviz
+          run: |
+            ./gradlew check
+            ./gradlew modularGenerate -p samples/sample-mermaid
+            ./gradlew modularGenerate -p samples/sample-graphviz
 
       - name: Make sure no diffs
         run: |

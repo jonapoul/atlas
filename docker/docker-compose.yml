@@ -1,0 +1,11 @@
+services:
+  modular:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+#    image: ghcr.io/jonapoul/modular:latest
+    volumes:
+      - $HOME/.gradle:/home/gradle/.gradle
+      - ..:/modular
+    working_dir: /modular
+    command: /bin/bash

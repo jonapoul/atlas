@@ -28,23 +28,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_CONFIG: ./config/gitleaks.toml
 
-      - name: Setup JDK
-        uses: actions/setup-java@v5
-        with:
-          java-version-file: .github/workflows/.java-version
-          distribution: "zulu"
-
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v5
         with:
           add-job-summary: on-failure
 
-      - name: Install Graphviz
-        uses: awalsh128/cache-apt-pkgs-action@v1
-        with:
-          packages: graphviz
-          version: 1.1
-          execute_install_scripts: true
-
       - name: Build
-        run: ./gradlew build
+        uses: hoverkraft-tech/compose-action@v2
+        with:
+          compose-file: docker/docker-compose.yml
+          services: modular
+          run: ./gradlew build
