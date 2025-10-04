@@ -23,6 +23,7 @@ import org.gradle.api.provider.Property
  *     direction = Direction.Down
  *     fileFormat = FileFormat.Svg
  *     layoutEngine = LayoutEngine.Dagre
+ *     pad = 5
  *     pathToD2Command = "/path/to/d2"
  *     sketch = true
  *     theme = Theme.ColorblindClear
@@ -39,6 +40,7 @@ interface D2Spec : ModularSpec {
   val direction: Property<Direction>
   val fileFormat: Property<FileFormat>
   val layoutEngine: Property<LayoutEngine>
+  val pad: Property<Int>
   val pathToD2Command: Property<String>
   val sketch: Property<Boolean>
   val theme: Property<Theme>
