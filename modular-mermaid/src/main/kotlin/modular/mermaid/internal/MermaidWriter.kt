@@ -4,14 +4,14 @@
  */
 package modular.mermaid.internal
 
+import modular.core.LinkStyle
+import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
-import modular.core.LinkStyle
-import modular.core.Replacement
 import modular.mermaid.MermaidConfig
 
 internal class MermaidWriter(

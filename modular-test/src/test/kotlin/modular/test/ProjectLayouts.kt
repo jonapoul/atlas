@@ -4,9 +4,9 @@
  */
 package modular.test
 
+import modular.core.LinkStyle
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
-import modular.core.LinkStyle
 
 internal interface ProjectLayout {
   val modules: Set<TypedModule>

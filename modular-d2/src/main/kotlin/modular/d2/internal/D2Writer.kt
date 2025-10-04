@@ -5,13 +5,13 @@
 package modular.d2.internal
 
 import modular.core.InternalModularApi
+import modular.core.LinkStyle
+import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
-import modular.core.LinkStyle
-import modular.core.Replacement
 import modular.d2.D2Config
 
 @InternalModularApi

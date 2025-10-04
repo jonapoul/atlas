@@ -4,6 +4,7 @@
  */
 package modular.core.tasks
 
+import modular.core.LinkType
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.createModuleLinks
@@ -11,7 +12,6 @@ import modular.core.internal.fileInBuildDirectory
 import modular.core.internal.linkType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.writeModuleLinks
-import modular.core.LinkType
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException

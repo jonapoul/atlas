@@ -5,9 +5,9 @@
 package modular.core.internal
 
 import modular.core.InternalModularApi
-import modular.core.ModularExtension
 import modular.core.LinkStyle
 import modular.core.LinkTypeSpec
+import modular.core.ModularExtension
 import modular.core.ModuleTypeSpec
 import modular.core.NamedLinkTypeContainer
 import modular.core.NamedModuleTypeContainer
