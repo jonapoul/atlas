@@ -4,6 +4,7 @@ import modular.core.LinkStyle.Solid
 import modular.d2.ArrowType
 import modular.d2.Direction
 import modular.d2.FileFormat
+import modular.d2.LayoutEngine
 import modular.d2.Theme
 
 plugins {
@@ -38,6 +39,7 @@ modular {
     arrowType = ArrowType.Box
     direction = Direction.Right
     fileFormat = FileFormat.Svg
+    layoutEngine = LayoutEngine.Elk
     theme = Theme.ShirleyTemple
     themeDark = Theme.DarkMauve
     style {

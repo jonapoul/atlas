@@ -21,6 +21,7 @@ import org.gradle.api.provider.Property
  *     arrowType = ArrowType.Triangle
  *     direction = Direction.Down
  *     fileFormat = FileFormat.Svg
+ *     layoutEngine = LayoutEngine.Dagre
  *     pathToD2Command = "/path/to/d2"
  *     theme = Theme.ColorblindClear
  *     themeDark = Theme.DarkMauve
@@ -34,6 +35,7 @@ interface D2Spec : ModularSpec {
   val containerLabelPosition: Property<String>
   val direction: Property<Direction>
   val fileFormat: Property<FileFormat>
+  val layoutEngine: Property<LayoutEngine>
   val pathToD2Command: Property<String>
   val theme: Property<Theme>
   val themeDark: Property<Theme>

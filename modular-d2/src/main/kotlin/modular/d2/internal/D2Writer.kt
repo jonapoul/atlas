@@ -35,6 +35,7 @@ data class D2Writer(
     val attrs = mapOf(
       "theme-id" to theme?.value,
       "dark-theme-id" to darkTheme?.value,
+      "layout-engine" to layoutEngine?.string,
     )
     if (attrs.count { it.value != null } == 0) {
       return@with

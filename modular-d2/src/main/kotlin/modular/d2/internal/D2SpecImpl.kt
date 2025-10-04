@@ -35,6 +35,7 @@ class D2SpecImpl(
   override val containerLabelPosition = objects.string(properties.containerLabelPosition)
   override val direction = objects.enum(properties.direction)
   override val fileFormat = objects.enum(properties.fileFormat)
+  override val layoutEngine = objects.enum(properties.layoutEngine)
   override val pathToD2Command = objects.string(properties.pathToD2Command)
   override val theme = objects.intEnum(properties.theme)
   override val themeDark = objects.intEnum(properties.darkTheme)
