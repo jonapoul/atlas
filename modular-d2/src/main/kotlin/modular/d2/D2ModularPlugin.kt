@@ -8,12 +8,12 @@ package modular.d2
 
 import modular.core.ModularPlugin
 import modular.core.internal.ModularExtensionImpl
-import modular.core.internal.Variant
 import modular.core.internal.Variant.Chart
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
 import modular.d2.internal.D2ModularExtensionImpl
+import modular.d2.tasks.ExecD2
 import modular.d2.tasks.WriteD2Chart
 import modular.d2.tasks.WriteD2ChartBase
 import modular.d2.tasks.WriteDummyD2Chart
@@ -33,7 +33,7 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
     super.applyToRoot(target)
 
     afterEvaluate {
-      // TBC: Validate anything?
+      warnIfFileFormatRequiresPlaywright()
     }
   }
 
@@ -62,14 +62,14 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
       realTask = chartTask,
       dummyTask = dummyChartTask,
     )
-    //
-    //    val d2Task = ExecD2.register(
-    //      target = project,
-    //      spec = d2Spec,
-    //      variant = Chart,
-    //      dotFileTask = chartTask,
-    //    )
-    //
+
+    ExecD2.register(
+      target = project,
+      spec = d2Spec,
+      variant = Chart,
+      dotFileTask = chartTask,
+    )
+
     //    WriteReadme.register(
     //      target = project,
     //      flavor = "D2",
@@ -111,5 +111,21 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
     //      realTask = realTask,
     //      dummyTask = dummyTask,
     //    )
+  }
+
+  private fun Project.warnIfFileFormatRequiresPlaywright() {
+    val d2 = extension.d2
+    val format = d2.fileFormat.get()
+    val shouldSuppress = d2.properties.suppressPlaywrightWarning.get()
+    val simpleFormats = setOf(FileFormat.Svg, FileFormat.Ascii)
+    if (format !in simpleFormats && !shouldSuppress) {
+      logger.warn(
+        "Warning: Most of D2's output formats (including your selection: $format) require installation of " +
+          "Playwright for image conversion. Depending on your OS, this might need to download a build of Chromium " +
+          "to run Playwright. See https://github.com/terrastruct/d2/issues/2502 for a bit more context. " +
+          "If you want to suppress this warning, add 'modular.d2.suppressPlaywrightWarning=true' to your " +
+          "gradle.properties file.",
+      )
+    }
   }
 }

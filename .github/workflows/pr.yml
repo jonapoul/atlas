@@ -40,6 +40,9 @@ jobs:
       - name: Check
         run: docker compose -f docker/docker-compose.yml run --rm check
 
+      - name: Fix permissions
+        run: sudo chown -R runner:runner .
+
       - name: Check for generated diffs
         run: |
           if [[ -n $(git status --porcelain .) ]]; then
@@ -57,9 +60,6 @@ jobs:
             ./*/build/reports
             ./build/reports
           if-no-files-found: warn
-
-      - name: Fix permissions
-        run: sudo chown -R runner:runner .
 
       - name: Publish test reports
         uses: mikepenz/action-junit-report@v5

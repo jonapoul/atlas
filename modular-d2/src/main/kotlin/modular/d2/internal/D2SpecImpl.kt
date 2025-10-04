@@ -25,7 +25,7 @@ class D2SpecImpl(
   objects: ObjectFactory,
   project: Project,
 ) : D2Spec {
-  private val properties = D2GradleProperties(project)
+  internal val properties = D2GradleProperties(project)
 
   override val name = "D2"
   override val fileExtension = objects.string(convention = "d2")
@@ -33,6 +33,8 @@ class D2SpecImpl(
   override val arrowType = objects.enum(properties.arrowType)
   override val containerLabelPosition = objects.string(properties.containerLabelPosition)
   override val direction = objects.enum(properties.direction)
+  override val fileFormat = objects.enum(properties.fileFormat)
+  override val pathToD2Command = objects.string(properties.pathToD2Command)
 
   override val style = D2RootStyleSpecImpl(objects)
   override fun style(action: Action<D2RootStyleSpec>) = action.execute(style)

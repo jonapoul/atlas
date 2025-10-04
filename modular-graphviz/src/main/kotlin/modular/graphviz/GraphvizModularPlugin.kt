@@ -122,7 +122,7 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
     val adjustSvgViewBox = extension.graphviz.adjustSvgViewBox.get()
     val warningIsSuppressed = extension.graphviz.properties.suppressSvgViewBoxWarning
     if (!adjustSvgViewBox && extension.graphviz.dpi.isPresent && !warningIsSuppressed.get()) {
-      val msg = "Configuring a custom DPI with SVG output enabled will likely cause a misaligned " +
+      val msg = "Warning: Configuring a custom DPI with SVG output enabled will likely cause a misaligned " +
         "viewBox. Try adding the following property to your build file to automatically attempt a fix:"
       logger.warn(
         """

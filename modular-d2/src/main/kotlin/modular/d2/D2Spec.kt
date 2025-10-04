@@ -20,6 +20,8 @@ import org.gradle.api.provider.Property
  *   d2 {
  *     arrowType = ArrowType.Triangle
  *     direction = Direction.Down
+ *     fileFormat = FileFormat.Svg
+ *     pathToD2Command = "/path/to/d2"
  *   }
  * }
  * ```
@@ -29,6 +31,8 @@ interface D2Spec : ModularSpec {
   val arrowType: Property<ArrowType>
   val containerLabelPosition: Property<String>
   val direction: Property<Direction>
+  val fileFormat: Property<FileFormat>
+  val pathToD2Command: Property<String>
 
   val style: D2RootStyleSpec
   fun style(action: Action<D2RootStyleSpec>)
