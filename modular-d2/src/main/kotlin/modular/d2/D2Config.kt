@@ -10,6 +10,7 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 @KSerializable
 data class D2Config(
   val arrowType: ArrowType? = null,
+  val center: Boolean? = null,
   val containerLabelPosition: String? = null,
   val direction: Direction? = null,
   val layoutEngine: LayoutEngine? = null,
@@ -21,6 +22,7 @@ data class D2Config(
 
 internal fun D2Config(spec: D2Spec): D2Config = D2Config(
   arrowType = spec.arrowType.orNull,
+  center = spec.center.orNull,
   containerLabelPosition = spec.containerLabelPosition.orNull,
   direction = spec.direction.orNull,
   layoutEngine = spec.layoutEngine.orNull,

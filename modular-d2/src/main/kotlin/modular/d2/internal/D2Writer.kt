@@ -37,6 +37,7 @@ data class D2Writer(
       "dark-theme-id" to darkTheme?.value,
       "layout-engine" to layoutEngine?.string,
       "sketch" to sketch,
+      "center" to center,
     )
     if (attrs.count { it.value != null } == 0) {
       return@with
@@ -46,7 +47,7 @@ data class D2Writer(
     indent {
       appendLine("d2-config: {")
       indent {
-        attrs.forEach { (key, value) ->
+        attrs.sortedByKeys().forEach { (key, value) ->
           if (value != null) {
             appendLine("$key: $value")
           }
@@ -93,10 +94,9 @@ data class D2Writer(
         if (attrs.isNotEmpty()) {
           appendLine("$linkString: {")
           indent {
-            attrs
-              .toList()
-              .sortedBy { (key, _) -> key }
-              .forEach { (key, value) -> appendLine("$key: \"$value\"") }
+            attrs.sortedByKeys().forEach { (key, value) ->
+              appendLine("$key: \"$value\"")
+            }
           }
           appendLine("}")
         } else {
@@ -150,6 +150,8 @@ data class D2Writer(
   } else {
     fullKey()
   }
+
+  private fun <T> Map<String, T>.sortedByKeys(): List<Pair<String, T>> = toList().sortedBy { (k, _) -> k }
 
   private companion object {
     val DISALLOWED_SUBSTRINGS = setOf("{", "}", "->", "--", "<-", "<->", "|", "#", "\"", "'")

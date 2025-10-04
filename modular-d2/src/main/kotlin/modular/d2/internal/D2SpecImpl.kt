@@ -33,6 +33,7 @@ class D2SpecImpl(
   override val fileExtension = objects.string(convention = "d2")
 
   override val arrowType = objects.enum(properties.arrowType)
+  override val center = objects.bool(properties.center)
   override val containerLabelPosition = objects.string(properties.containerLabelPosition)
   override val direction = objects.enum(properties.direction)
   override val fileFormat = objects.enum(properties.fileFormat)

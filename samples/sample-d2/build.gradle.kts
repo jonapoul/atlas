@@ -37,6 +37,7 @@ modular {
 
   d2 {
     arrowType = ArrowType.Box
+    center = true
     direction = Direction.Right
     fileFormat = FileFormat.Svg
     layoutEngine = LayoutEngine.Elk
