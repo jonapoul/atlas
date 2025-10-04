@@ -45,6 +45,13 @@ jobs:
         with:
           add-job-summary: on-failure
 
+      - name: Login to registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Check
         uses: hoverkraft-tech/compose-action@v2
         with:
