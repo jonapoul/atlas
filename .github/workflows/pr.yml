@@ -40,9 +40,6 @@ jobs:
       - name: Check
         run: docker compose -f docker/docker-compose.yml run --rm check
 
-      - name: Generate samples
-        run: docker compose -f docker/docker-compose.yml run --rm generate-samples
-
       - name: Make sure no diffs
         run: |
           if [[ -n $(git status --porcelain .) ]]; then
