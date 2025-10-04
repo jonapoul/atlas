@@ -10,14 +10,14 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 
 @KSerializable
 data class DotConfig(
-  val arrowHead: String? = null,
-  val arrowTail: String? = null,
+  val arrowHead: ArrowType? = null,
+  val arrowTail: ArrowType? = null,
   val backgroundColor: String? = null,
-  val dir: String? = null,
+  val dir: Dir? = null,
   val dpi: Int? = null,
   val fontSize: Int? = null,
-  val layoutEngine: String? = null,
-  val rankDir: String? = null,
+  val layoutEngine: LayoutEngine? = null,
+  val rankDir: RankDir? = null,
   val rankSep: Float? = null,
 ) : JSerializable
 

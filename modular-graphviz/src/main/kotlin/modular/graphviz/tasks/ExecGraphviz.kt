@@ -8,10 +8,11 @@ import modular.core.InternalModularApi
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.Variant
 import modular.core.internal.logIfConfigured
-import modular.core.internal.outputFile
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
+import modular.graphviz.FileFormat
 import modular.graphviz.GraphvizSpec
+import modular.graphviz.LayoutEngine
 import modular.graphviz.internal.doGraphvizPostProcessing
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -34,9 +35,9 @@ import javax.inject.Inject
 @CacheableTask
 abstract class ExecGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val dotFile: RegularFileProperty
-  @get:Input abstract val outputFormat: Property<String>
+  @get:Input abstract val outputFormat: Property<FileFormat>
   @get:[Input Optional] abstract val pathToDotCommand: Property<String>
-  @get:[Input Optional] abstract val engine: Property<String>
+  @get:[Input Optional] abstract val engine: Property<LayoutEngine>
   @get:Input abstract val adjustSvgViewBox: Property<Boolean>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
   @get:Inject abstract val execOperations: ExecOperations

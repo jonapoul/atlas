@@ -76,4 +76,7 @@ enum class LinkStyle(override val string: String) : StringEnum {
   Solid("solid"),
   Invis("invis"),
   Bold("bold"),
+  ;
+
+  override fun toString() = string
 }

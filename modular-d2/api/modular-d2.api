@@ -1,13 +1,15 @@
 public final class modular/d2/D2Config : java/io/Serializable {
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/util/Map;
-	public final fun copy (Ljava/lang/String;Ljava/util/Map;)Lmodular/d2/D2Config;
-	public static synthetic fun copy$default (Lmodular/d2/D2Config;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lmodular/d2/D2Config;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;)Lmodular/d2/D2Config;
+	public static synthetic fun copy$default (Lmodular/d2/D2Config;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;ILjava/lang/Object;)Lmodular/d2/D2Config;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getContainerLabelPosition ()Ljava/lang/String;
+	public final fun getDirection ()Ljava/lang/String;
 	public final fun getStyle ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -24,18 +26,53 @@ public final class modular/d2/D2ModularPlugin : modular/core/ModularPlugin {
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 }
 
+public abstract interface class modular/d2/D2RootStyleSpec : modular/d2/D2StyleSpec {
+	public abstract fun getDoubleBorder ()Ljava/lang/Integer;
+	public abstract fun getFill ()Ljava/lang/String;
+	public abstract fun getFillPattern ()Lmodular/d2/FillPattern;
+	public abstract fun getStroke ()Ljava/lang/String;
+	public abstract fun getStrokeDash ()Ljava/lang/Integer;
+	public abstract fun getStrokeWidth ()Ljava/lang/Integer;
+	public abstract fun setDoubleBorder (Ljava/lang/Integer;)V
+	public abstract fun setFill (Ljava/lang/String;)V
+	public abstract fun setFillPattern (Lmodular/d2/FillPattern;)V
+	public abstract fun setStroke (Ljava/lang/String;)V
+	public abstract fun setStrokeDash (Ljava/lang/Integer;)V
+	public abstract fun setStrokeWidth (Ljava/lang/Integer;)V
+}
+
 public abstract interface class modular/d2/D2Spec : modular/core/spec/ModularSpec {
+	public abstract fun direction (Lmodular/d2/Direction;)V
 	public abstract fun getContainerLabelPosition ()Lorg/gradle/api/provider/Property;
-	public abstract fun getStyle ()Lmodular/d2/D2StyleSpec;
+	public abstract fun getDirection ()Lorg/gradle/api/provider/Property;
+	public abstract fun getStyle ()Lmodular/d2/D2RootStyleSpec;
 	public abstract fun style (Lorg/gradle/api/Action;)V
 }
 
-public abstract interface class modular/d2/D2StyleSpec {
-	public abstract fun getProperties ()Lorg/gradle/api/provider/MapProperty;
-	public fun put (Ljava/lang/String;Ljava/lang/Object;)V
+public abstract interface class modular/d2/D2StyleSpec : modular/core/internal/PropertiesSpec {
 }
 
-public final class modular/d2/D2StyleSpec$DefaultImpls {
-	public static fun put (Lmodular/d2/D2StyleSpec;Ljava/lang/String;Ljava/lang/Object;)V
+public final class modular/d2/Direction : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Down Lmodular/d2/Direction;
+	public static final field Left Lmodular/d2/Direction;
+	public static final field Right Lmodular/d2/Direction;
+	public static final field Up Lmodular/d2/Direction;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/d2/Direction;
+	public static fun values ()[Lmodular/d2/Direction;
+}
+
+public final class modular/d2/FillPattern : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Dots Lmodular/d2/FillPattern;
+	public static final field Grain Lmodular/d2/FillPattern;
+	public static final field Lines Lmodular/d2/FillPattern;
+	public static final field None Lmodular/d2/FillPattern;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/d2/FillPattern;
+	public static fun values ()[Lmodular/d2/FillPattern;
 }
 

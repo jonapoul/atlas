@@ -5,9 +5,15 @@
 package modular.test
 
 import modular.core.internal.ModuleLink
+import modular.core.internal.TypedModule
 
-internal object OneLevelOfSubmodules {
-  val modules = setOf(
+internal interface ProjectLayout {
+  val modules: Set<TypedModule>
+  val links: Set<ModuleLink>
+}
+
+internal object OneLevelOfSubmodules : ProjectLayout {
+  override val modules = setOf(
     typedModule(path = ":app"),
     typedModule(path = ":data:a"),
     typedModule(path = ":data:b"),
@@ -18,7 +24,7 @@ internal object OneLevelOfSubmodules {
     typedModule(path = ":ui:c"),
   )
 
-  val links = setOf(
+  override val links = setOf(
     moduleLink(fromPath = ":app", toPath = ":ui:a"),
     moduleLink(fromPath = ":app", toPath = ":ui:b"),
     moduleLink(fromPath = ":app", toPath = ":ui:c"),
@@ -32,8 +38,8 @@ internal object OneLevelOfSubmodules {
   )
 }
 
-internal object TwoLevelsOfSubmodules {
-  val modules = setOf(
+internal object TwoLevelsOfSubmodules : ProjectLayout {
+  override val modules = setOf(
     typedModule(path = ":app"),
     typedModule(path = ":data:a"),
     typedModule(path = ":data:b"),
@@ -46,7 +52,7 @@ internal object TwoLevelsOfSubmodules {
     typedModule(path = ":ui:c"),
   )
 
-  val links = setOf(
+  override val links = setOf(
     moduleLink(fromPath = ":app", toPath = ":ui:a"),
     moduleLink(fromPath = ":app", toPath = ":ui:b"),
     moduleLink(fromPath = ":app", toPath = ":ui:c"),
@@ -62,10 +68,23 @@ internal object TwoLevelsOfSubmodules {
   )
 }
 
-internal object ModuleWithNoLinks {
-  val modules = setOf(
+internal object ModuleWithNoLinks : ProjectLayout {
+  override val modules = setOf(
     typedModule(path = ":app"),
   )
 
-  val links = emptySet<ModuleLink>()
+  override val links = emptySet<ModuleLink>()
+}
+
+internal object Abc : ProjectLayout {
+  override val modules = setOf(
+    typedModule(path = ":a"),
+    typedModule(path = ":b"),
+    typedModule(path = ":c"),
+  )
+
+  override val links = setOf(
+    moduleLink(fromPath = ":a", toPath = ":b"),
+    moduleLink(fromPath = ":a", toPath = ":c"),
+  )
 }

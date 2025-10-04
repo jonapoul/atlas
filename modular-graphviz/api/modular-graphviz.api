@@ -20,6 +20,7 @@ public final class modular/graphviz/ArrowType : java/lang/Enum, modular/core/int
 	public static final field Vee Lmodular/graphviz/ArrowType;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/ArrowType;
 	public static fun values ()[Lmodular/graphviz/ArrowType;
 }
@@ -31,34 +32,35 @@ public final class modular/graphviz/Dir : java/lang/Enum, modular/core/internal/
 	public static final field None Lmodular/graphviz/Dir;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/Dir;
 	public static fun values ()[Lmodular/graphviz/Dir;
 }
 
 public final class modular/graphviz/DotConfig : java/io/Serializable {
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Float;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Float;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
+	public fun <init> (Lmodular/graphviz/ArrowType;Lmodular/graphviz/ArrowType;Ljava/lang/String;Lmodular/graphviz/Dir;Ljava/lang/Integer;Ljava/lang/Integer;Lmodular/graphviz/LayoutEngine;Lmodular/graphviz/RankDir;Ljava/lang/Float;)V
+	public synthetic fun <init> (Lmodular/graphviz/ArrowType;Lmodular/graphviz/ArrowType;Ljava/lang/String;Lmodular/graphviz/Dir;Ljava/lang/Integer;Ljava/lang/Integer;Lmodular/graphviz/LayoutEngine;Lmodular/graphviz/RankDir;Ljava/lang/Float;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lmodular/graphviz/ArrowType;
+	public final fun component2 ()Lmodular/graphviz/ArrowType;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/String;
+	public final fun component4 ()Lmodular/graphviz/Dir;
 	public final fun component5 ()Ljava/lang/Integer;
 	public final fun component6 ()Ljava/lang/Integer;
-	public final fun component7 ()Ljava/lang/String;
-	public final fun component8 ()Ljava/lang/String;
+	public final fun component7 ()Lmodular/graphviz/LayoutEngine;
+	public final fun component8 ()Lmodular/graphviz/RankDir;
 	public final fun component9 ()Ljava/lang/Float;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Float;)Lmodular/graphviz/DotConfig;
-	public static synthetic fun copy$default (Lmodular/graphviz/DotConfig;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Float;ILjava/lang/Object;)Lmodular/graphviz/DotConfig;
+	public final fun copy (Lmodular/graphviz/ArrowType;Lmodular/graphviz/ArrowType;Ljava/lang/String;Lmodular/graphviz/Dir;Ljava/lang/Integer;Ljava/lang/Integer;Lmodular/graphviz/LayoutEngine;Lmodular/graphviz/RankDir;Ljava/lang/Float;)Lmodular/graphviz/DotConfig;
+	public static synthetic fun copy$default (Lmodular/graphviz/DotConfig;Lmodular/graphviz/ArrowType;Lmodular/graphviz/ArrowType;Ljava/lang/String;Lmodular/graphviz/Dir;Ljava/lang/Integer;Ljava/lang/Integer;Lmodular/graphviz/LayoutEngine;Lmodular/graphviz/RankDir;Ljava/lang/Float;ILjava/lang/Object;)Lmodular/graphviz/DotConfig;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getArrowHead ()Ljava/lang/String;
-	public final fun getArrowTail ()Ljava/lang/String;
+	public final fun getArrowHead ()Lmodular/graphviz/ArrowType;
+	public final fun getArrowTail ()Lmodular/graphviz/ArrowType;
 	public final fun getBackgroundColor ()Ljava/lang/String;
-	public final fun getDir ()Ljava/lang/String;
+	public final fun getDir ()Lmodular/graphviz/Dir;
 	public final fun getDpi ()Ljava/lang/Integer;
 	public final fun getFontSize ()Ljava/lang/Integer;
-	public final fun getLayoutEngine ()Ljava/lang/String;
-	public final fun getRankDir ()Ljava/lang/String;
+	public final fun getLayoutEngine ()Lmodular/graphviz/LayoutEngine;
+	public final fun getRankDir ()Lmodular/graphviz/RankDir;
 	public final fun getRankSep ()Ljava/lang/Float;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -111,6 +113,7 @@ public final class modular/graphviz/FileFormat : java/lang/Enum, modular/core/in
 	public static final field Xlib Lmodular/graphviz/FileFormat;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/FileFormat;
 	public static fun values ()[Lmodular/graphviz/FileFormat;
 }
@@ -127,14 +130,6 @@ public final class modular/graphviz/GraphvizModularPlugin : modular/core/Modular
 }
 
 public abstract interface class modular/graphviz/GraphvizSpec : modular/core/spec/ModularSpec {
-	public abstract fun arrowHead (Ljava/lang/String;)V
-	public abstract fun arrowHead (Lmodular/graphviz/ArrowType;)V
-	public abstract fun arrowTail (Ljava/lang/String;)V
-	public abstract fun arrowTail (Lmodular/graphviz/ArrowType;)V
-	public abstract fun dir (Ljava/lang/String;)V
-	public abstract fun dir (Lmodular/graphviz/Dir;)V
-	public abstract fun fileFormat (Ljava/lang/String;)V
-	public abstract fun fileFormat (Lmodular/graphviz/FileFormat;)V
 	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
 	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
 	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
@@ -147,10 +142,6 @@ public abstract interface class modular/graphviz/GraphvizSpec : modular/core/spe
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
 	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
 	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
-	public abstract fun layoutEngine (Ljava/lang/String;)V
-	public abstract fun layoutEngine (Lmodular/graphviz/LayoutEngine;)V
-	public abstract fun rankDir (Ljava/lang/String;)V
-	public abstract fun rankDir (Lmodular/graphviz/RankDir;)V
 }
 
 public final class modular/graphviz/LayoutEngine : java/lang/Enum, modular/core/internal/StringEnum {
@@ -166,6 +157,7 @@ public final class modular/graphviz/LayoutEngine : java/lang/Enum, modular/core/
 	public static final field TwoPi Lmodular/graphviz/LayoutEngine;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/LayoutEngine;
 	public static fun values ()[Lmodular/graphviz/LayoutEngine;
 }
@@ -177,6 +169,7 @@ public final class modular/graphviz/RankDir : java/lang/Enum, modular/core/inter
 	public static final field TopToBottom Lmodular/graphviz/RankDir;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/RankDir;
 	public static fun values ()[Lmodular/graphviz/RankDir;
 }

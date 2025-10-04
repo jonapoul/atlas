@@ -72,9 +72,7 @@ interface GraphvizSpec : ModularSpec {
    * See [FileFormat] for some default options, but bear in mind your machine may not have them all
    * available (depending on your installed Graphviz version).
    */
-  val fileFormat: Property<String>
-  fun fileFormat(value: String)
-  fun fileFormat(value: FileFormat)
+  val fileFormat: Property<FileFormat>
 
   /**
    * Configure the arrow type from a module pointing to its dependency. Defaults to unset, so Graphviz will fall back
@@ -82,9 +80,7 @@ interface GraphvizSpec : ModularSpec {
    * you can pass them into [arrowHead] as a string instead.
    * See https://graphviz.org/docs/attrs/arrowhead/
    */
-  val arrowHead: Property<String>
-  fun arrowHead(value: ArrowType)
-  fun arrowHead(value: String)
+  val arrowHead: Property<ArrowType>
 
   /**
    * Configure the arrow type from a dependency pointing to its dependent. Defaults to unset, so Graphviz will fall back
@@ -92,9 +88,7 @@ interface GraphvizSpec : ModularSpec {
    * you can pass them into [arrowTail] as a string instead.
    * See https://graphviz.org/docs/attrs/arrowtail/
    */
-  val arrowTail: Property<String>
-  fun arrowTail(value: ArrowType)
-  fun arrowTail(value: String)
+  val arrowTail: Property<ArrowType>
 
   /**
    * Customise the layout engine used to organise your module nodes in the chart. Defaults to [LayoutEngine.Dot].
@@ -102,9 +96,7 @@ interface GraphvizSpec : ModularSpec {
    * into [layoutEngine] as a string instead.
    * See https://graphviz.org/docs/layouts/
    */
-  val layoutEngine: Property<String>
-  fun layoutEngine(value: LayoutEngine)
-  fun layoutEngine(value: String)
+  val layoutEngine: Property<LayoutEngine>
 
   /**
    * Specifies the expected number of pixels per inch on a display device. Defaults to unset, but Graphviz will fall
@@ -123,9 +115,7 @@ interface GraphvizSpec : ModularSpec {
    * Sets direction of graph layout. Unset by default, but Graphviz will fall back to [RankDir.TopToBottom] internally.
    * See https://graphviz.org/docs/attrs/rankdir/
    */
-  val rankDir: Property<String>
-  fun rankDir(value: RankDir)
-  fun rankDir(value: String)
+  val rankDir: Property<RankDir>
 
   /**
    * Specifies separation between ranks in the chart. Unset by default, Graphviz will use a different default value
@@ -138,7 +128,5 @@ interface GraphvizSpec : ModularSpec {
    * Edge type for drawing arrowheads. Unset by default, Graphviz will
    * See https://graphviz.org/docs/attrs/dir/
    */
-  val dir: Property<String>
-  fun dir(value: Dir)
-  fun dir(value: String)
+  val dir: Property<Dir>
 }

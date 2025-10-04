@@ -11,4 +11,5 @@ import org.gradle.api.provider.Provider
 
 internal class D2GradleProperties(override val project: Project) : IGradleProperties {
   val containerLabelPosition: Provider<String> = string("modular.d2.containerLabelPosition", default = null)
+  val direction: Provider<String> = string("modular.d2.direction", default = null)
 }

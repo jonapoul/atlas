@@ -5,6 +5,7 @@ public final class modular/mermaid/ConsiderModelOrder : java/lang/Enum, modular/
 	public static final field PreferNodes Lmodular/mermaid/ConsiderModelOrder;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/ConsiderModelOrder;
 	public static fun values ()[Lmodular/mermaid/ConsiderModelOrder;
 }
@@ -17,24 +18,22 @@ public final class modular/mermaid/CycleBreakingStrategy : java/lang/Enum, modul
 	public static final field ModelOrder Lmodular/mermaid/CycleBreakingStrategy;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/CycleBreakingStrategy;
 	public static fun values ()[Lmodular/mermaid/CycleBreakingStrategy;
 }
 
 public abstract interface class modular/mermaid/ElkLayoutSpec : modular/mermaid/MermaidLayoutSpec {
-	public abstract fun considerModelOrder (Lmodular/mermaid/ConsiderModelOrder;)V
-	public abstract fun cycleBreakingStrategy (Lmodular/mermaid/CycleBreakingStrategy;)V
-	public abstract fun forceNodeModelOrder (Z)V
-	public static synthetic fun forceNodeModelOrder$default (Lmodular/mermaid/ElkLayoutSpec;ZILjava/lang/Object;)V
-	public abstract fun mergeEdges (Z)V
-	public static synthetic fun mergeEdges$default (Lmodular/mermaid/ElkLayoutSpec;ZILjava/lang/Object;)V
-	public abstract fun nodePlacementStrategy (Lmodular/mermaid/NodePlacementStrategy;)V
-}
-
-public final class modular/mermaid/ElkLayoutSpec$DefaultImpls {
-	public static synthetic fun forceNodeModelOrder$default (Lmodular/mermaid/ElkLayoutSpec;ZILjava/lang/Object;)V
-	public static synthetic fun mergeEdges$default (Lmodular/mermaid/ElkLayoutSpec;ZILjava/lang/Object;)V
-	public static fun put (Lmodular/mermaid/ElkLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
+	public abstract fun getConsiderModelOrder ()Lmodular/mermaid/ConsiderModelOrder;
+	public abstract fun getCycleBreakingStrategy ()Lmodular/mermaid/CycleBreakingStrategy;
+	public abstract fun getForceNodeModelOrder ()Ljava/lang/Boolean;
+	public abstract fun getMergeEdges ()Ljava/lang/Boolean;
+	public abstract fun getNodePlacementStrategy ()Lmodular/mermaid/NodePlacementStrategy;
+	public abstract fun setConsiderModelOrder (Lmodular/mermaid/ConsiderModelOrder;)V
+	public abstract fun setCycleBreakingStrategy (Lmodular/mermaid/CycleBreakingStrategy;)V
+	public abstract fun setForceNodeModelOrder (Ljava/lang/Boolean;)V
+	public abstract fun setMergeEdges (Ljava/lang/Boolean;)V
+	public abstract fun setNodePlacementStrategy (Lmodular/mermaid/NodePlacementStrategy;)V
 }
 
 public final class modular/mermaid/Look : java/lang/Enum, modular/core/internal/StringEnum {
@@ -42,28 +41,23 @@ public final class modular/mermaid/Look : java/lang/Enum, modular/core/internal/
 	public static final field HandDrawn Lmodular/mermaid/Look;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/Look;
 	public static fun values ()[Lmodular/mermaid/Look;
 }
 
 public final class modular/mermaid/MermaidConfig : java/io/Serializable {
-	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/String;Ljava/lang/String;Z)V
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lmodular/mermaid/Look;Lmodular/mermaid/Theme;Z)V
 	public final fun getAnimateLinks ()Z
 	public final fun getLayout ()Ljava/lang/String;
 	public final fun getLayoutProperties ()Ljava/util/Map;
-	public final fun getLook ()Ljava/lang/String;
-	public final fun getTheme ()Ljava/lang/String;
+	public final fun getLook ()Lmodular/mermaid/Look;
+	public final fun getTheme ()Lmodular/mermaid/Theme;
 	public final fun getThemeVariables ()Ljava/util/Map;
 }
 
-public abstract interface class modular/mermaid/MermaidLayoutSpec {
+public abstract interface class modular/mermaid/MermaidLayoutSpec : modular/core/internal/PropertiesSpec {
 	public abstract fun getName ()Lorg/gradle/api/provider/Property;
-	public abstract fun getProperties ()Lorg/gradle/api/provider/MapProperty;
-	public fun put (Ljava/lang/String;Ljava/lang/Object;)V
-}
-
-public final class modular/mermaid/MermaidLayoutSpec$DefaultImpls {
-	public static fun put (Lmodular/mermaid/MermaidLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public abstract interface class modular/mermaid/MermaidModularExtension : modular/core/ModularExtension {
@@ -88,34 +82,34 @@ public abstract interface class modular/mermaid/MermaidSpec : modular/core/spec/
 	public abstract fun getTheme ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThemeVariables ()Lmodular/mermaid/MermaidThemeVariablesSpec;
 	public abstract fun layout (Lorg/gradle/api/Action;)V
-	public fun look (Lmodular/mermaid/Look;)V
-	public fun theme (Lmodular/mermaid/Theme;)V
 	public abstract fun themeVariables (Lorg/gradle/api/Action;)V
 }
 
 public final class modular/mermaid/MermaidSpec$DefaultImpls {
 	public static synthetic fun elk$default (Lmodular/mermaid/MermaidSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
-	public static fun look (Lmodular/mermaid/MermaidSpec;Lmodular/mermaid/Look;)V
-	public static fun theme (Lmodular/mermaid/MermaidSpec;Lmodular/mermaid/Theme;)V
 }
 
-public abstract interface class modular/mermaid/MermaidThemeVariablesSpec {
-	public abstract fun background (Ljava/lang/String;)V
-	public abstract fun darkMode (Z)V
-	public abstract fun fontFamily (Ljava/lang/String;)V
-	public abstract fun fontSize (Ljava/lang/String;)V
-	public abstract fun getProperties ()Lorg/gradle/api/provider/MapProperty;
-	public abstract fun lineColor (Ljava/lang/String;)V
-	public abstract fun primaryBorderColor (Ljava/lang/String;)V
-	public abstract fun primaryColor (Ljava/lang/String;)V
-	public abstract fun primaryTextColor (Ljava/lang/String;)V
-	public fun put (Ljava/lang/String;Ljava/lang/Object;)V
-	public abstract fun secondaryColor (Ljava/lang/String;)V
-	public abstract fun tertiaryColor (Ljava/lang/String;)V
-}
-
-public final class modular/mermaid/MermaidThemeVariablesSpec$DefaultImpls {
-	public static fun put (Lmodular/mermaid/MermaidThemeVariablesSpec;Ljava/lang/String;Ljava/lang/Object;)V
+public abstract interface class modular/mermaid/MermaidThemeVariablesSpec : modular/core/internal/PropertiesSpec {
+	public abstract fun getBackground ()Ljava/lang/String;
+	public abstract fun getDarkMode ()Ljava/lang/Boolean;
+	public abstract fun getFontFamily ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getLineColor ()Ljava/lang/String;
+	public abstract fun getPrimaryBorderColor ()Ljava/lang/String;
+	public abstract fun getPrimaryColor ()Ljava/lang/String;
+	public abstract fun getPrimaryTextColor ()Ljava/lang/String;
+	public abstract fun getSecondaryColor ()Ljava/lang/String;
+	public abstract fun getTertiaryColor ()Ljava/lang/String;
+	public abstract fun setBackground (Ljava/lang/String;)V
+	public abstract fun setDarkMode (Ljava/lang/Boolean;)V
+	public abstract fun setFontFamily (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setLineColor (Ljava/lang/String;)V
+	public abstract fun setPrimaryBorderColor (Ljava/lang/String;)V
+	public abstract fun setPrimaryColor (Ljava/lang/String;)V
+	public abstract fun setPrimaryTextColor (Ljava/lang/String;)V
+	public abstract fun setSecondaryColor (Ljava/lang/String;)V
+	public abstract fun setTertiaryColor (Ljava/lang/String;)V
 }
 
 public final class modular/mermaid/NodePlacementStrategy : java/lang/Enum, modular/core/internal/StringEnum {
@@ -125,6 +119,7 @@ public final class modular/mermaid/NodePlacementStrategy : java/lang/Enum, modul
 	public static final field Simple Lmodular/mermaid/NodePlacementStrategy;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/NodePlacementStrategy;
 	public static fun values ()[Lmodular/mermaid/NodePlacementStrategy;
 }
@@ -137,6 +132,7 @@ public final class modular/mermaid/Theme : java/lang/Enum, modular/core/internal
 	public static final field Neutral Lmodular/mermaid/Theme;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/Theme;
 	public static fun values ()[Lmodular/mermaid/Theme;
 }
