@@ -14,6 +14,7 @@ services:
     command: >
       /bin/bash -c "
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ check &&
+      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-d2 &&
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-graphviz &&
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-mermaid
       "

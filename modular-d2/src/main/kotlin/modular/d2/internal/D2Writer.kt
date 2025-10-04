@@ -12,6 +12,7 @@ import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
+import modular.d2.ArrowType
 import modular.d2.D2Config
 
 @InternalModularApi
@@ -81,7 +82,13 @@ data class D2Writer(
   private fun linkAttributes(style: LinkStyle?, color: String?): Map<String, String> {
     val attrs = mutableMapOf<String, String>()
     color?.let { attrs["style.stroke"] = it }
-    config.arrowType?.let { attrs["target-arrowhead.shape"] = it.string }
+    config.arrowType?.let { type ->
+      attrs["target-arrowhead.shape"] = type.string
+      if (type in FILLABLE_ARROW_TYPES) {
+        attrs["target-arrowhead.style.filled"] = "true"
+      }
+    }
+
     when (style) {
       LinkStyle.Dashed -> attrs["style.stroke-dash"] = "4"
       LinkStyle.Dotted -> attrs["style.stroke-dash"] = "2"
@@ -119,5 +126,6 @@ data class D2Writer(
 
   private companion object {
     val DISALLOWED_SUBSTRINGS = setOf("{", "}", "->", "--", "<-", "<->", "|", "#", "\"", "'")
+    val FILLABLE_ARROW_TYPES = setOf(ArrowType.Triangle, ArrowType.Diamond, ArrowType.Circle, ArrowType.Box)
   }
 }

@@ -1,0 +1,48 @@
+direction: right
+style: {
+  fill: "darkblue"
+  fill-pattern: "grain"
+  stroke: "floralwhite"
+  stroke-width: "3"
+  stroke-dash: "4"
+  double-border: "true"
+}
+app android: app android
+lib android: lib android
+lib java: lib java
+lib kotlin jvm: lib kotlin jvm
+lib kotlin mp: lib kotlin mp
+app android -> lib android: {
+  style.stroke: "fuchsia"
+  style.stroke-dash: "2"
+  target-arrowhead.shape: "box"
+  target-arrowhead.style.filled: "true"
+}
+app android -> lib kotlin mp: {
+  style.stroke: "fuchsia"
+  style.stroke-dash: "2"
+  target-arrowhead.shape: "box"
+  target-arrowhead.style.filled: "true"
+}
+lib android -> lib kotlin jvm: {
+  style.stroke: "fuchsia"
+  style.stroke-dash: "2"
+  target-arrowhead.shape: "box"
+  target-arrowhead.style.filled: "true"
+}
+lib kotlin mp -> lib android: {
+  style.stroke: "greenyellow"
+  target-arrowhead.shape: "box"
+  target-arrowhead.style.filled: "true"
+}
+lib kotlin mp -> lib java: {
+  style.stroke: "orange"
+  style.stroke-width: "3"
+  target-arrowhead.shape: "box"
+  target-arrowhead.style.filled: "true"
+}
+lib kotlin mp -> lib kotlin jvm: {
+  style.stroke: "greenyellow"
+  target-arrowhead.shape: "box"
+  target-arrowhead.style.filled: "true"
+}

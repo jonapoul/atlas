@@ -7,6 +7,7 @@ package modular.d2.internal
 import modular.core.InternalModularApi
 import modular.core.internal.PropertiesSpec
 import modular.core.internal.PropertiesSpecImpl
+import modular.core.internal.boolDelegate
 import modular.core.internal.enum
 import modular.core.internal.enumDelegate
 import modular.core.internal.intDelegate
@@ -46,5 +47,5 @@ open class D2RootStyleSpecImpl(
   override var stroke by stringDelegate("stroke")
   override var strokeWidth by intDelegate("stroke-width")
   override var strokeDash by intDelegate("stroke-dash")
-  override var doubleBorder by intDelegate("double-border")
+  override var doubleBorder by boolDelegate("double-border")
 }

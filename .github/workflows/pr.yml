@@ -40,7 +40,7 @@ jobs:
       - name: Check
         run: docker compose -f docker/docker-compose.yml run --rm check
 
-      - name: Make sure no diffs
+      - name: Check for generated diffs
         run: |
           if [[ -n $(git status --porcelain .) ]]; then
             echo "Error: Uncommitted changes detected!"

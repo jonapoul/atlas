@@ -25,5 +25,5 @@ interface D2RootStyleSpec : D2StyleSpec {
   var stroke: String?
   var strokeWidth: Int?
   var strokeDash: Int?
-  var doubleBorder: Int?
+  var doubleBorder: Boolean?
 }
