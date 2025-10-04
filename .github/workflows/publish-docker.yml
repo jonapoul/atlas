@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - "docker/Dockerfile"
-      - "docker/docker-compose.yml"
       - ".github/workflows/publish-docker.yml"
   workflow_dispatch:
 

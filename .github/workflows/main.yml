@@ -39,4 +39,7 @@ jobs:
           compose-file: docker/docker-compose.yml
 
       - name: Build
-        run: docker compose run --rm build
+        uses: hoverkraft-tech/compose-action@v2
+        with:
+          compose-file: docker/docker-compose.yml
+          services: build

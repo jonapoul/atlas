@@ -1,9 +1,9 @@
 services:
   base:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-#    image: ghcr.io/jonapoul/modular:latest
+#    build:
+#      context: ..
+#      dockerfile: docker/Dockerfile
+    image: ghcr.io/jonapoul/modular:latest
     volumes:
       - $HOME/.gradle:/home/gradle/.gradle
       - ..:/modular

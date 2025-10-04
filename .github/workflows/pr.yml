@@ -45,16 +45,17 @@ jobs:
         with:
           add-job-summary: on-failure
 
-      - name: Docker Compose
+      - name: Check
         uses: hoverkraft-tech/compose-action@v2
         with:
           compose-file: docker/docker-compose.yml
-
-      - name: Check
-        run: docker compose run --rm check
+          services: check
 
       - name: Generate samples
-        run: docker compose run --rm generate-samples
+        uses: hoverkraft-tech/compose-action@v2
+        with:
+          compose-file: docker/docker-compose.yml
+          services: generate-samples
 
       - name: Make sure no diffs
         run: |
