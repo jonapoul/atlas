@@ -130,6 +130,10 @@ public final class modular/core/Replacement : java/io/Serializable {
 	public final fun getReplacement ()Ljava/lang/String;
 }
 
+public abstract interface class modular/core/internal/IntEnum {
+	public abstract fun getValue ()I
+}
+
 public abstract interface class modular/core/internal/StringEnum {
 	public abstract fun getString ()Ljava/lang/String;
 }
