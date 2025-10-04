@@ -47,13 +47,13 @@ public final class modular/d2/D2ModularPlugin : modular/core/ModularPlugin {
 }
 
 public abstract interface class modular/d2/D2RootStyleSpec : modular/d2/D2StyleSpec {
-	public abstract fun getDoubleBorder ()Ljava/lang/Integer;
+	public abstract fun getDoubleBorder ()Ljava/lang/Boolean;
 	public abstract fun getFill ()Ljava/lang/String;
 	public abstract fun getFillPattern ()Lmodular/d2/FillPattern;
 	public abstract fun getStroke ()Ljava/lang/String;
 	public abstract fun getStrokeDash ()Ljava/lang/Integer;
 	public abstract fun getStrokeWidth ()Ljava/lang/Integer;
-	public abstract fun setDoubleBorder (Ljava/lang/Integer;)V
+	public abstract fun setDoubleBorder (Ljava/lang/Boolean;)V
 	public abstract fun setFill (Ljava/lang/String;)V
 	public abstract fun setFillPattern (Lmodular/d2/FillPattern;)V
 	public abstract fun setStroke (Ljava/lang/String;)V

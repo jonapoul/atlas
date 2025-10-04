@@ -38,11 +38,11 @@ enum class FillPattern(override val string: String) : StringEnum {
  * https://d2lang.com/tour/connections/#arrowheads
  */
 enum class ArrowType(override val string: String) : StringEnum {
-  Triangle("dots"),
-  Arrow("lines"),
-  Diamond("grain"),
-  Circle("none"),
-  Box("none"),
+  Triangle("triangle"),
+  Arrow("arrow"),
+  Diamond("diamond"),
+  Circle("circle"),
+  Box("box"),
   CrowsFootOne("cf-one"),
   CrowsFootOneRequired("cf-one-required"),
   CrowsFootMany("cf-many"),
