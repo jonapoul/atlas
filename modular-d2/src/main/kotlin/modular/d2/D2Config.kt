@@ -4,8 +4,8 @@
  */
 package modular.d2
 
-import java.io.Serializable as JSerializable
 import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
+import java.io.Serializable as JSerializable
 
 @KSerializable
 data class D2Config(
@@ -13,6 +13,7 @@ data class D2Config(
   val containerLabelPosition: String? = null,
   val direction: Direction? = null,
   val layoutEngine: LayoutEngine? = null,
+  val sketch: Boolean? = null,
   val style: Map<String, String>? = null,
   val theme: Theme? = null,
   val darkTheme: Theme? = null,
@@ -23,6 +24,7 @@ internal fun D2Config(spec: D2Spec): D2Config = D2Config(
   containerLabelPosition = spec.containerLabelPosition.orNull,
   direction = spec.direction.orNull,
   layoutEngine = spec.layoutEngine.orNull,
+  sketch = spec.sketch.orNull,
   style = spec.style.properties.orNull,
   theme = spec.theme.orNull,
   darkTheme = spec.themeDark.orNull,

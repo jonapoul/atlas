@@ -36,6 +36,7 @@ data class D2Writer(
       "theme-id" to theme?.value,
       "dark-theme-id" to darkTheme?.value,
       "layout-engine" to layoutEngine?.string,
+      "sketch" to sketch,
     )
     if (attrs.count { it.value != null } == 0) {
       return@with

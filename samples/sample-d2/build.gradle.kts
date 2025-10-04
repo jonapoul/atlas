@@ -40,6 +40,7 @@ modular {
     direction = Direction.Right
     fileFormat = FileFormat.Svg
     layoutEngine = LayoutEngine.Elk
+    sketch = true
     theme = Theme.ShirleyTemple
     themeDark = Theme.DarkMauve
     style {

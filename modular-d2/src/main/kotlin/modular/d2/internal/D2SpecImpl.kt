@@ -7,6 +7,7 @@ package modular.d2.internal
 import modular.core.InternalModularApi
 import modular.core.internal.PropertiesSpec
 import modular.core.internal.PropertiesSpecImpl
+import modular.core.internal.bool
 import modular.core.internal.boolDelegate
 import modular.core.internal.enum
 import modular.core.internal.enumDelegate
@@ -37,6 +38,7 @@ class D2SpecImpl(
   override val fileFormat = objects.enum(properties.fileFormat)
   override val layoutEngine = objects.enum(properties.layoutEngine)
   override val pathToD2Command = objects.string(properties.pathToD2Command)
+  override val sketch = objects.bool(properties.sketch)
   override val theme = objects.intEnum(properties.theme)
   override val themeDark = objects.intEnum(properties.darkTheme)
 
