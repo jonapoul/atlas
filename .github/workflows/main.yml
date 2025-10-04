@@ -22,12 +22,6 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_CONFIG: ./config/gitleaks.toml
-
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v5
         with:

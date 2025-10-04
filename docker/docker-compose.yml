@@ -19,6 +19,8 @@ services:
 
   generate-samples:
     extends: base
-    command: |
-      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-graphviz
+    command: >
+      /bin/bash -c "
+      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-graphviz &&
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-mermaid
+      "
