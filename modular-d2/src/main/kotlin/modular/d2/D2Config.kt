@@ -29,7 +29,7 @@ internal fun D2Config(spec: D2Spec): D2Config = D2Config(
   layoutEngine = spec.layoutEngine.orNull,
   pad = spec.pad.orNull,
   sketch = spec.sketch.orNull,
-  style = spec.style.properties.orNull,
+  style = spec.rootStyle.properties.orNull,
   theme = spec.theme.orNull,
   darkTheme = spec.themeDark.orNull,
 )

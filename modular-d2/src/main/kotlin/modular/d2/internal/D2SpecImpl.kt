@@ -45,8 +45,8 @@ class D2SpecImpl(
   override val theme = objects.intEnum(properties.theme)
   override val themeDark = objects.intEnum(properties.darkTheme)
 
-  override val style = D2RootStyleSpecImpl(objects)
-  override fun style(action: Action<D2RootStyleSpec>) = action.execute(style)
+  override val rootStyle = D2RootStyleSpecImpl(objects)
+  override fun rootStyle(action: Action<D2RootStyleSpec>) = action.execute(rootStyle)
 }
 
 @InternalModularApi

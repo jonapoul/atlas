@@ -46,6 +46,6 @@ interface D2Spec : ModularSpec {
   val theme: Property<Theme>
   val themeDark: Property<Theme>
 
-  val style: D2RootStyleSpec
-  fun style(action: Action<D2RootStyleSpec>)
+  val rootStyle: D2RootStyleSpec
+  fun rootStyle(action: Action<D2RootStyleSpec>)
 }

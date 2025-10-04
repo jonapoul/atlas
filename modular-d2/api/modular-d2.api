@@ -82,11 +82,11 @@ public abstract interface class modular/d2/D2Spec : modular/core/ModularSpec {
 	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPad ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathToD2Command ()Lorg/gradle/api/provider/Property;
+	public abstract fun getRootStyle ()Lmodular/d2/D2RootStyleSpec;
 	public abstract fun getSketch ()Lorg/gradle/api/provider/Property;
-	public abstract fun getStyle ()Lmodular/d2/D2RootStyleSpec;
 	public abstract fun getTheme ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThemeDark ()Lorg/gradle/api/provider/Property;
-	public abstract fun style (Lorg/gradle/api/Action;)V
+	public abstract fun rootStyle (Lorg/gradle/api/Action;)V
 }
 
 public abstract interface class modular/d2/D2StyleSpec : modular/core/internal/PropertiesSpec {

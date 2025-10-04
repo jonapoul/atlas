@@ -45,7 +45,7 @@ modular {
     sketch = true
     theme = Theme.ShirleyTemple
     themeDark = Theme.DarkMauve
-    style {
+    rootStyle {
       stroke = "floralwhite"
       strokeWidth = 3
       strokeDash = 4
