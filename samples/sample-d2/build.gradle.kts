@@ -3,6 +3,7 @@ import modular.core.LinkStyle.Dotted
 import modular.core.LinkStyle.Solid
 import modular.d2.ArrowType
 import modular.d2.Direction
+import modular.d2.FileFormat
 import modular.d2.FillPattern
 
 plugins {
@@ -35,6 +36,7 @@ modular {
 
   d2 {
     arrowType = ArrowType.Box
+    fileFormat = FileFormat.Ascii
     direction = Direction.Right
     style {
       fill = "darkblue"
