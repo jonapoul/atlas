@@ -36,6 +36,7 @@ data class D2Writer(
       "theme-id" to theme?.value,
       "dark-theme-id" to darkTheme?.value,
       "layout-engine" to layoutEngine?.string,
+      "pad" to pad,
       "sketch" to sketch,
       "center" to center,
     )
