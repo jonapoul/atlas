@@ -19,6 +19,7 @@ import org.gradle.api.provider.Property
  *
  *   d2 {
  *     arrowType = ArrowType.Triangle
+ *     center = true
  *     direction = Direction.Down
  *     fileFormat = FileFormat.Svg
  *     layoutEngine = LayoutEngine.Dagre
@@ -33,6 +34,7 @@ import org.gradle.api.provider.Property
 @ModularDsl
 interface D2Spec : ModularSpec {
   val arrowType: Property<ArrowType>
+  val center: Property<Boolean>
   val containerLabelPosition: Property<String>
   val direction: Property<Direction>
   val fileFormat: Property<FileFormat>
