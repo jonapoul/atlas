@@ -2,6 +2,8 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
+@file:Suppress("unused") // public API
+
 package modular.core.spec
 
 import modular.core.ModularDsl
@@ -38,30 +40,23 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 interface NamedLinkTypeContainer : NamedDomainObjectContainer<LinkTypeSpec> {
   @ModularDsl
   operator fun String.invoke(
-    style: String? = null,
+    style: LinkStyle?,
     color: String? = null,
     displayName: String = this,
   ): NamedDomainObjectProvider<LinkTypeSpec> = register(this, style, color, displayName)
-
-  @ModularDsl
-  operator fun String.invoke(
-    style: StringEnum?,
-    color: String? = null,
-    displayName: String = this,
-  ): NamedDomainObjectProvider<LinkTypeSpec> = register(this, style?.string, color, displayName)
 }
 
 interface LinkTypeSpec {
   val name: String
   val configuration: Property<String>
-  val style: Property<String>
+  val style: Property<LinkStyle>
   val color: Property<String>
 }
 
 @KSerializable
 data class LinkType(
   val configuration: String,
-  val style: String? = null,
+  val style: LinkStyle? = null,
   val color: String? = null,
   val displayName: String = configuration,
 ) : JSerializable

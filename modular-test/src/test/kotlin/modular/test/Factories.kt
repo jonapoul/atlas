@@ -7,6 +7,7 @@ package modular.test
 import modular.core.internal.ModuleLink
 import modular.core.internal.Node
 import modular.core.internal.TypedModule
+import modular.core.spec.LinkStyle
 import modular.core.spec.ModuleType
 
 fun node(path: String) = Node(typedModule(path))
@@ -23,7 +24,7 @@ fun moduleLink(
   fromPath: String,
   toPath: String,
   configuration: String = "implementation",
-  style: String? = null,
+  style: LinkStyle? = null,
   color: String? = null,
 ) = ModuleLink(
   fromPath,

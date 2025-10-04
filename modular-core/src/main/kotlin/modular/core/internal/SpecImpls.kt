@@ -6,6 +6,7 @@ package modular.core.internal
 
 import modular.core.InternalModularApi
 import modular.core.ModularExtension
+import modular.core.spec.LinkStyle
 import modular.core.spec.LinkTypeSpec
 import modular.core.spec.ModuleTypeSpec
 import modular.core.spec.NamedLinkTypeContainer
@@ -79,7 +80,7 @@ abstract class ModuleTypeSpecImpl @Inject constructor(override val name: String)
 
 internal abstract class LinkTypeSpecImpl @Inject constructor(override val name: String) : LinkTypeSpec {
   @get:Input abstract override val configuration: Property<String>
-  @get:Input abstract override val style: Property<String>
+  @get:Input abstract override val style: Property<LinkStyle>
   @get:Input abstract override val color: Property<String>
 
   init {

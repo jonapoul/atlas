@@ -7,8 +7,10 @@ package modular.d2.internal
 import assertk.assertThat
 import assertk.assertions.contains
 import modular.d2.D2Config
+import modular.d2.Direction
 import modular.d2.d2Writer
 import modular.test.Abc
+import modular.test.AbcWithLinkStyles
 import modular.test.ModuleWithNoLinks
 import modular.test.OneLevelOfSubmodules
 import modular.test.TwoLevelsOfSubmodules
@@ -141,7 +143,7 @@ class D2WriterTest {
   fun `Simple graph with direction`() {
     val writer = d2Writer(
       layout = Abc,
-      config = D2Config(direction = "right"),
+      config = D2Config(direction = Direction.Right),
     )
 
     assertThat(writer()).contains(
@@ -181,6 +183,28 @@ class D2WriterTest {
         c: :c
         a -> b
         a -> c
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Graph with link styles and colors`() {
+    val writer = d2Writer(
+      layout = AbcWithLinkStyles,
+    )
+
+    assertThat(writer()).contains(
+      """
+        a: :a
+        b: :b
+        c: :c
+        a -> b: {
+          style.stroke: "orange"
+          style.stroke-dash: "4"
+        }
+        a -> c: {
+          style.stroke-width: "3"
+        }
       """.trimIndent(),
     )
   }

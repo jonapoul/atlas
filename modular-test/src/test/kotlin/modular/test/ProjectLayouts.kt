@@ -6,6 +6,7 @@ package modular.test
 
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
+import modular.core.spec.LinkStyle
 
 internal interface ProjectLayout {
   val modules: Set<TypedModule>
@@ -86,5 +87,12 @@ internal object Abc : ProjectLayout {
   override val links = setOf(
     moduleLink(fromPath = ":a", toPath = ":b"),
     moduleLink(fromPath = ":a", toPath = ":c"),
+  )
+}
+
+internal object AbcWithLinkStyles : ProjectLayout by Abc {
+  override val links = setOf(
+    moduleLink(fromPath = ":a", toPath = ":b", style = LinkStyle.Dashed, color = "orange"),
+    moduleLink(fromPath = ":a", toPath = ":c", style = LinkStyle.Bold),
   )
 }

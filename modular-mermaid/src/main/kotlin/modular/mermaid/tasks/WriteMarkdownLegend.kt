@@ -103,7 +103,7 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
     appendLine("|:--:|:--:|")
 
     for (type in linkTypes) {
-      val style = listOfNotNull(type.color, type.style).joinToString(separator = " ") { it.capitalized() }
+      val style = listOfNotNull(type.color, type.style?.string).joinToString(separator = " ") { it.capitalized() }
       appendLine("| ${type.displayName} | $style |")
     }
   }

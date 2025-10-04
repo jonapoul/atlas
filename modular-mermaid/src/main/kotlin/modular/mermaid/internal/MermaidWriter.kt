@@ -10,6 +10,7 @@ import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
+import modular.core.spec.LinkStyle
 import modular.core.spec.Replacement
 import modular.mermaid.MermaidConfig
 
@@ -89,12 +90,12 @@ internal class MermaidWriter(
   private fun IndentedStringBuilder.appendLinks() {
     links.forEachIndexed { i, link ->
       val arrowPrefix = if (config.animateLinks) "link$i@" else ""
-      val arrow = when (link.style?.lowercase()) {
-        "bold" -> "==>"
-        "dashed" -> "-.->"
-        "dotted" -> "-.->"
-        "invis" -> "~~~"
-        "solid" -> "-->"
+      val arrow = when (link.style) {
+        LinkStyle.Bold -> "==>"
+        LinkStyle.Dashed -> "-.->"
+        LinkStyle.Dotted -> "-.->"
+        LinkStyle.Invis -> "~~~"
+        LinkStyle.Solid -> "-->"
         else -> "-->"
       }
       appendLine("${link.fromPath.label} $arrowPrefix$arrow ${link.toPath.label}")

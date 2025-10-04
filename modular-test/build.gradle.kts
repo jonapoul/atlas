@@ -25,13 +25,12 @@ dependencies {
   testImplementation(libs.assertk)
   testImplementation(libs.junit.api)
   testImplementation(project(":modular-core"))
-  testImplementation(project(":modular-d2"))
-  testImplementation(project(":modular-graphviz"))
-  testImplementation(project(":modular-mermaid"))
-  testPluginClasspath(project(":modular-d2"))
-  testPluginClasspath(project(":modular-graphviz"))
-  testPluginClasspath(project(":modular-mermaid"))
   testRuntimeOnly(libs.junit.launcher)
+
+  listOf("d2", "graphviz", "mermaid").forEach {
+    testImplementation(project(":modular-$it"))
+    testPluginClasspath(project(":modular-$it"))
+  }
 }
 
 tasks.withType<Test>().configureEach {
