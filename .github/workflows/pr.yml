@@ -61,6 +61,9 @@ jobs:
             ./build/reports
           if-no-files-found: warn
 
+      - name: Fix permissions
+        run: sudo chown -R runner:runner .
+
       - name: Publish test reports
         uses: mikepenz/action-junit-report@v5
         if: always()
