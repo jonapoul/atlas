@@ -22,6 +22,8 @@ import org.gradle.api.provider.Property
  *     center = true
  *     direction = Direction.Down
  *     fileFormat = FileFormat.Svg
+ *     groupLabelLocation = Location.Inside
+ *     groupLabelPosition = Position.TopCenter
  *     layoutEngine = LayoutEngine.Dagre
  *     pad = 5
  *     pathToD2Command = "/path/to/d2"
@@ -36,9 +38,10 @@ import org.gradle.api.provider.Property
 interface D2Spec : ModularSpec {
   val arrowType: Property<ArrowType>
   val center: Property<Boolean>
-  val containerLabelPosition: Property<String>
   val direction: Property<Direction>
   val fileFormat: Property<FileFormat>
+  val groupLabelLocation: Property<Location>
+  val groupLabelPosition: Property<Position>
   val layoutEngine: Property<LayoutEngine>
   val pad: Property<Int>
   val pathToD2Command: Property<String>

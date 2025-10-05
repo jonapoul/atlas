@@ -34,6 +34,7 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
 
     afterEvaluate {
       warnIfFileFormatRequiresPlaywright()
+      warnIfLabelLocationSpecifiedButNotPosition()
     }
   }
 
@@ -125,6 +126,20 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
           "to run Playwright. See https://github.com/terrastruct/d2/issues/2502 for a bit more context. " +
           "If you want to suppress this warning, add 'modular.d2.suppressPlaywrightWarning=true' to your " +
           "gradle.properties file.",
+      )
+    }
+  }
+
+  private fun Project.warnIfLabelLocationSpecifiedButNotPosition() {
+    val d2 = extension.d2
+    val position = d2.groupLabelPosition.orNull
+    val location = d2.groupLabelLocation.orNull
+    val shouldSuppress = d2.properties.suppressLabelLocationWarning.get()
+    if (position == null && location != null && !shouldSuppress) {
+      logger.warn(
+        "Warning: you've configured groupLabelLocation but not groupLabelPosition - this is not supported in D2 " +
+          "diagrams. If you want to suppress this warning, add 'modular.d2.suppressLabelLocationWarning=true' to " +
+          "your gradle.properties file.",
       )
     }
   }

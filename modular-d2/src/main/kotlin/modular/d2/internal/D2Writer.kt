@@ -15,6 +15,7 @@ import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.d2.ArrowType
 import modular.d2.D2Config
+import modular.d2.Position
 
 @InternalModularApi
 data class D2Writer(
@@ -77,7 +78,8 @@ data class D2Writer(
 
   override fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph) {
     val key = graph.path[subgraphNestingLevel].cleaned()
-    appendLine("$key: ${graph.name} {")
+    appendLine("$key: :${graph.name} {")
+    groupLabelSpecifier()?.let { pos -> indent { appendLine("label.near: $pos") } }
     subgraphNestingLevel++
   }
 
@@ -153,13 +155,30 @@ data class D2Writer(
   }
 
   private fun String.localKey(): String = if (groupModules) {
-    // "path.to.my.module" -> "module"
+    // "path.to.my.module" -> "module" for subgraphNestingLevel=3
     fullKey().split(".")[subgraphNestingLevel]
   } else {
     fullKey()
   }
 
   private fun <T> Map<String, T>.sortedByKeys(): List<Pair<String, T>> = toList().sortedBy { (k, _) -> k }
+
+  private fun groupLabelSpecifier(): String? {
+    val position = config.groupLabelPosition ?: return null // e.g. top-right
+    val location = config.groupLabelLocation // e.g. outside
+    return if (location == null) {
+      position.toString()
+    } else {
+      // need to swap the order to "left-center" if we have a location specifier prefix
+      val rejiggedPosition = if (position in setOf(Position.CenterLeft, Position.CenterRight)) {
+        val split = position.toString().split("-")
+        "${split[1]}-${split[0]}"
+      } else {
+        position.toString()
+      }
+      "$location-$rejiggedPosition"
+    }
+  }
 
   private companion object {
     val DISALLOWED_SUBSTRINGS = setOf("{", "}", "->", "--", "<-", "<->", "|", "#", "\"", "'")

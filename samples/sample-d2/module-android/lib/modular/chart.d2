@@ -15,10 +15,12 @@ style: {
   stroke-dash: "4"
   double-border: "true"
 }
-module-android: module-android {
+module-android: :module-android {
+  label.near: border-bottom-center
   lib: :lib
 }
-module-kotlin: module-kotlin {
+module-kotlin: :module-kotlin {
+  label.near: border-bottom-center
   jvm: :jvm
 }
 module-android.lib -> module-kotlin.jvm: {

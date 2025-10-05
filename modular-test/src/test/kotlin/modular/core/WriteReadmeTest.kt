@@ -8,8 +8,8 @@ import assertk.assertThat
 import assertk.assertions.exists
 import modular.test.ScenarioTest
 import modular.test.allSuccessful
-import modular.test.containsDiffed
 import modular.test.doesNotExist
+import modular.test.equalsDiffed
 import modular.test.runTask
 import modular.test.scenarios.MermaidBasic
 import modular.test.scenarios.MermaidWithLinkTypes
@@ -27,7 +27,7 @@ class WriteReadmeTest : ScenarioTest() {
     // then
     val readme = resolve("a/README.md")
     assertThat(readme).exists()
-    assertThat(readme.readText()).containsDiffed(
+    assertThat(readme.readText()).equalsDiffed(
       """
         # a
 
@@ -62,7 +62,7 @@ class WriteReadmeTest : ScenarioTest() {
     // then
     val readme = resolve("a/README.md")
     assertThat(readme).exists()
-    assertThat(readme.readText()).containsDiffed(
+    assertThat(readme.readText()).equalsDiffed(
       """
         # a
 
@@ -154,11 +154,11 @@ class WriteReadmeTest : ScenarioTest() {
 
       Some suffix
     """.trimIndent()
-    assertThat(readme.readText()).containsDiffed(expected)
+    assertThat(readme.readText()).equalsDiffed(expected)
 
     // when we run again and force the regeneration
     val result2 = runTask(":a:writeMermaidReadme", extras = listOf("--rerun-tasks")).build()
     assertThat(result2).taskHadResult(":a:writeMermaidReadme", SUCCESS)
-    assertThat(readme.readText()).containsDiffed(expected)
+    assertThat(readme.readText()).equalsDiffed(expected)
   }
 }

@@ -9,7 +9,7 @@ import java.io.Serializable as JSerializable
 import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
-data class DotConfig(
+class DotConfig(
   val arrowHead: ArrowType? = null,
   val arrowTail: ArrowType? = null,
   val backgroundColor: String? = null,

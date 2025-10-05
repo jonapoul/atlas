@@ -35,9 +35,10 @@ class D2SpecImpl(
 
   override val arrowType = objects.enum(properties.arrowType)
   override val center = objects.bool(properties.center)
-  override val containerLabelPosition = objects.string(properties.containerLabelPosition)
   override val direction = objects.enum(properties.direction)
   override val fileFormat = objects.enum(properties.fileFormat)
+  override val groupLabelLocation = objects.enum(properties.groupLabelLocation)
+  override val groupLabelPosition = objects.enum(properties.groupLabelPosition)
   override val layoutEngine = objects.enum(properties.layoutEngine)
   override val pad = objects.int(properties.pad)
   override val pathToD2Command = objects.string(properties.pathToD2Command)

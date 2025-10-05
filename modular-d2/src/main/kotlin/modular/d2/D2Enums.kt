@@ -108,3 +108,32 @@ enum class ArrowType(override val string: String) : StringEnum {
 
   override fun toString() = string
 }
+
+/**
+ * https://d2lang.com/tour/positions/
+ */
+enum class Position(override val string: String) : StringEnum {
+  TopLeft("top-left"),
+  TopCenter("top-center"),
+  TopRight("top-right"),
+  CenterLeft("center-left"),
+  CenterRight("center-right"),
+  BottomLeft("bottom-left"),
+  BottomCenter("bottom-center"),
+  BottomRight("bottom-right"),
+  ;
+
+  override fun toString() = string
+}
+
+/**
+ * https://d2lang.com/tour/positions/#outside-and-border
+ */
+enum class Location(override val string: String) : StringEnum {
+  Border("border"),
+  Inside("inside"),
+  Outside("outside"),
+  ;
+
+  override fun toString() = string
+}
