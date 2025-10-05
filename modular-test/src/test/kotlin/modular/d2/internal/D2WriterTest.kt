@@ -165,7 +165,7 @@ class D2WriterTest {
     val writer = d2Writer(
       layout = Abc,
       config = D2Config(
-        style = mapOf(
+        rootStyle = mapOf(
           "fill" to "LightBlue",
           "stroke" to "FireBrick",
           "stroke-width" to "15",

@@ -30,7 +30,7 @@ data class D2Writer(
 ) : ChartWriter() {
   private var subgraphNestingLevel = 0
 
-  override fun invoke(): String = buildIndentedString(size = 2) {
+  override fun invoke(): String = buildIndentedString {
     appendVars()
     appendStyles()
     appendModules()
@@ -69,10 +69,10 @@ data class D2Writer(
   private fun IndentedStringBuilder.appendStyles() = with(config) {
     direction?.let { appendLine("direction: $it") }
 
-    if (style.isNullOrEmpty()) return@with
+    if (rootStyle.isNullOrEmpty()) return@with
     appendLine("style: {")
     indent {
-      style.forEach { (key, value) ->
+      rootStyle.forEach { (key, value) ->
         appendLine("$key: \"$value\"")
       }
     }
@@ -118,16 +118,10 @@ data class D2Writer(
       }
   }
 
-  private fun IndentedStringBuilder.appendGlobs() = with(config) {
-    if (links.isNotEmpty() && arrowType != null) {
-      appendLine("(** -> **)[*].target-arrowhead.shape: $arrowType")
-      if (arrowType in FILLABLE_ARROW_TYPES) {
-        appendLine("(** -> **)[*].target-arrowhead.style.filled: true")
-      }
+  private fun IndentedStringBuilder.appendGlobs() = config.globalProps?.let { props ->
+    props.sortedByKeys().forEach { (key, value) ->
+      appendLine("$key: $value")
     }
-
-    fontSize?.let { appendLine("***.style.font-size: $it") }
-    font?.let { appendLine("***.style.font: $it") }
   }
 
   private fun linkAttributes(style: LinkStyle?, color: String?): Map<String, String> {

@@ -16,9 +16,12 @@ import modular.core.internal.intDelegate
 import modular.core.internal.intEnum
 import modular.core.internal.string
 import modular.core.internal.stringDelegate
+import modular.d2.ArrowType
+import modular.d2.D2GlobalPropsSpec
 import modular.d2.D2RootStyleSpec
 import modular.d2.D2Spec
 import modular.d2.FillPattern
+import modular.d2.Font
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
@@ -34,12 +37,9 @@ class D2SpecImpl(
   override val fileExtension = objects.string(convention = "d2")
 
   override val animateLinks = objects.bool(properties.animateLinks)
-  override val arrowType = objects.enum(properties.arrowType)
   override val center = objects.bool(properties.center)
   override val direction = objects.enum(properties.direction)
   override val fileFormat = objects.enum(properties.fileFormat)
-  override val font = objects.enum(properties.font)
-  override val fontSize = objects.int(properties.fontSize)
   override val groupLabelLocation = objects.enum(properties.groupLabelLocation)
   override val groupLabelPosition = objects.enum(properties.groupLabelPosition)
   override val layoutEngine = objects.enum(properties.layoutEngine)
@@ -51,6 +51,9 @@ class D2SpecImpl(
 
   override val rootStyle = D2RootStyleSpecImpl(objects)
   override fun rootStyle(action: Action<D2RootStyleSpec>) = action.execute(rootStyle)
+
+  override val globalProps = D2GlobalPropsSpecImpl(objects)
+  override fun globalProps(action: Action<D2GlobalPropsSpec>) = action.execute(globalProps)
 }
 
 @InternalModularApi
@@ -63,4 +66,14 @@ open class D2RootStyleSpecImpl(
   override var strokeWidth by intDelegate("stroke-width")
   override var strokeDash by intDelegate("stroke-dash")
   override var doubleBorder by boolDelegate("double-border")
+}
+
+@InternalModularApi
+open class D2GlobalPropsSpecImpl(
+  objects: ObjectFactory,
+) : D2GlobalPropsSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+  override var arrowType by enumDelegate<ArrowType>("(** -> **)[*].target-arrowhead.shape")
+  override var fillArrowHeads by boolDelegate("(** -> **)[*].target-arrowhead.style.filled")
+  override var font by enumDelegate<Font>("***.style.font")
+  override var fontSize by intDelegate("***.style.font-size")
 }
