@@ -119,15 +119,15 @@ data class D2Writer(
   }
 
   private fun IndentedStringBuilder.appendGlobs() = with(config) {
-    val linkAttrs = mutableMapOf<String, Any>()
     if (links.isNotEmpty() && arrowType != null) {
-      linkAttrs["target-arrowhead.shape"] = arrowType.string
+      appendLine("(** -> **)[*].target-arrowhead.shape: $arrowType")
       if (arrowType in FILLABLE_ARROW_TYPES) {
-        linkAttrs["target-arrowhead.style.filled"] = true
+        appendLine("(** -> **)[*].target-arrowhead.style.filled: true")
       }
     }
-    linkAttrs.sortedByKeys().forEach { (key, value) ->
-      appendLine("(** -> **)[*].$key: $value")
+
+    if (fontSize != null) {
+      appendLine("***.style.font-size: $fontSize")
     }
   }
 

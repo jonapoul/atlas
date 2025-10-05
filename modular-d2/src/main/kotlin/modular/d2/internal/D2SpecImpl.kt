@@ -38,6 +38,7 @@ class D2SpecImpl(
   override val center = objects.bool(properties.center)
   override val direction = objects.enum(properties.direction)
   override val fileFormat = objects.enum(properties.fileFormat)
+  override val fontSize = objects.int(properties.fontSize)
   override val groupLabelLocation = objects.enum(properties.groupLabelLocation)
   override val groupLabelPosition = objects.enum(properties.groupLabelPosition)
   override val layoutEngine = objects.enum(properties.layoutEngine)
