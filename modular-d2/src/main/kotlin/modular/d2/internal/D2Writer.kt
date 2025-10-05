@@ -30,11 +30,12 @@ data class D2Writer(
 ) : ChartWriter() {
   private var subgraphNestingLevel = 0
 
-  operator fun invoke(): String = buildIndentedString(size = 2) {
+  override fun invoke(): String = buildIndentedString(size = 2) {
     appendVars()
     appendStyles()
     appendModules()
     appendLinks()
+    appendGlobs()
   }
 
   private fun IndentedStringBuilder.appendVars() = with(config) {
@@ -96,7 +97,7 @@ data class D2Writer(
     appendLine("$key: $name")
   }
 
-  private fun IndentedStringBuilder.appendLinks(): IndentedStringBuilder {
+  private fun IndentedStringBuilder.appendLinks() {
     links
       .map { link -> link.copy(fromPath = link.fromPath.cleaned(), toPath = link.toPath.cleaned()) }
       .sortedWith(compareBy({ it.fromPath.fullKey() }, { it.toPath.fullKey() }))
@@ -115,19 +116,24 @@ data class D2Writer(
           appendLine(linkString)
         }
       }
-    return this
+  }
+
+  private fun IndentedStringBuilder.appendGlobs() = with(config) {
+    val linkAttrs = mutableMapOf<String, Any>()
+    if (links.isNotEmpty() && arrowType != null) {
+      linkAttrs["target-arrowhead.shape"] = arrowType.string
+      if (arrowType in FILLABLE_ARROW_TYPES) {
+        linkAttrs["target-arrowhead.style.filled"] = true
+      }
+    }
+    linkAttrs.sortedByKeys().forEach { (key, value) ->
+      appendLine("(** -> **)[*].$key: $value")
+    }
   }
 
   private fun linkAttributes(style: LinkStyle?, color: String?): Map<String, String> {
     val attrs = mutableMapOf<String, String>()
     color?.let { attrs["style.stroke"] = it }
-
-    config.arrowType?.let { type ->
-      attrs["target-arrowhead.shape"] = type.string
-      if (type in FILLABLE_ARROW_TYPES) {
-        attrs["target-arrowhead.style.filled"] = "true"
-      }
-    }
 
     when (style) {
       LinkStyle.Dashed -> attrs["style.stroke-dash"] = "4"

@@ -79,6 +79,8 @@ private fun buildSubgraphElements(nodeData: List<Pair<TypedModule, List<String>>
 
 @InternalModularApi
 abstract class ChartWriter {
+  abstract operator fun invoke(): String
+
   protected abstract val typedModules: Set<TypedModule>
   protected abstract val links: Set<ModuleLink>
   protected abstract val replacements: Set<Replacement>

@@ -87,7 +87,7 @@ class IndentedStringBuilder(private val indentSize: Int) {
 @InternalModularApi
 fun buildIndentedString(
   size: Int = 2,
-  block: IndentedStringBuilder.() -> IndentedStringBuilder,
+  block: IndentedStringBuilder.() -> Unit,
 ): String = IndentedStringBuilder(size)
-  .block()
+  .also { it.block() }
   .toString()
