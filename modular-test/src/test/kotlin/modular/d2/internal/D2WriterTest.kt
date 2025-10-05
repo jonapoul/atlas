@@ -59,17 +59,17 @@ class D2WriterTest {
       """
         app: :app
         data: data {
-          a: :data:a
-          b: :data:b
+          a: :a
+          b: :b
         }
         domain: domain {
-          a: :domain:a
-          b: :domain:b
+          a: :a
+          b: :b
         }
         ui: ui {
-          a: :ui:a
-          b: :ui:b
-          c: :ui:c
+          a: :a
+          b: :b
+          c: :c
         }
         app -> ui.a
         app -> ui.b
@@ -96,21 +96,21 @@ class D2WriterTest {
       """
         app: :app
         data: data {
-          a: :data:a
-          b: :data:b
+          a: :a
+          b: :b
           sub: sub {
-            sub1: :data:sub:sub1
-            sub2: :data:sub:sub2
+            sub1: :sub1
+            sub2: :sub2
           }
         }
         domain: domain {
-          a: :domain:a
-          b: :domain:b
+          a: :a
+          b: :b
         }
         ui: ui {
-          a: :ui:a
-          b: :ui:b
-          c: :ui:c
+          a: :a
+          b: :b
+          c: :c
         }
         app -> ui.a
         app -> ui.b

@@ -10,6 +10,7 @@ import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
+import modular.core.internal.Subgraph
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.d2.ArrowType
@@ -24,6 +25,8 @@ data class D2Writer(
   override val groupModules: Boolean,
   private val config: D2Config,
 ) : ChartWriter() {
+  private var subgraphNestingLevel = 0
+
   operator fun invoke(): String = buildIndentedString(size = 2) {
     appendVars()
     appendStyles()
@@ -72,17 +75,21 @@ data class D2Writer(
     appendLine("}")
   }
 
-  override fun IndentedStringBuilder.appendSubgraphHeader(cleanedModuleName: String, displayName: String) {
-    // TODO https://github.com/jonapoul/modular/issues/180
-    appendLine("$cleanedModuleName: $displayName {")
+  override fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph) {
+    val key = graph.path[subgraphNestingLevel].cleaned()
+    appendLine("$key: ${graph.name} {")
+    subgraphNestingLevel++
   }
 
   override fun IndentedStringBuilder.appendSubgraphFooter() {
     appendLine("}")
+    subgraphNestingLevel--
   }
 
   override fun IndentedStringBuilder.appendModule(module: TypedModule) {
-    appendLine("${module.projectPath.localKey()}: ${module.projectPath.cleaned()}")
+    val key = module.projectPath.localKey()
+    val name = if (groupModules) ":$key" else module.projectPath
+    appendLine("$key: $name")
   }
 
   private fun IndentedStringBuilder.appendLinks(): IndentedStringBuilder {
@@ -147,7 +154,7 @@ data class D2Writer(
 
   private fun String.localKey(): String = if (groupModules) {
     // "path.to.my.module" -> "module"
-    fullKey().split(".").last()
+    fullKey().split(".")[subgraphNestingLevel]
   } else {
     fullKey()
   }

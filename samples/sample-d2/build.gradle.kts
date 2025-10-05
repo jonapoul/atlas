@@ -19,6 +19,7 @@ plugins {
 modular {
   alsoTraverseUpwards = false
   generateOnSync = true
+  groupModules = true
 
   moduleTypes {
     builtIns()
@@ -31,8 +32,8 @@ modular {
   }
 
   pathTransforms {
-    remove(pattern = "^:sample-")
-    replace(pattern = "-", replacement = " ")
+//    remove(pattern = "^:module-")
+//    replace(pattern = "-", replacement = " ")
   }
 
   d2 {
