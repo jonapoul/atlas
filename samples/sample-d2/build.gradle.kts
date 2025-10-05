@@ -28,6 +28,7 @@ modular {
   }
 
   d2 {
+    animateLinks = true
     arrowType = ArrowType.Box
     center = true
     direction = Direction.Right

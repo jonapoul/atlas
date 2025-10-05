@@ -2,6 +2,8 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
+@file:Suppress("TooManyFunctions")
+
 package modular.d2.internal
 
 import modular.core.InternalModularApi
@@ -119,6 +121,7 @@ data class D2Writer(
   private fun linkAttributes(style: LinkStyle?, color: String?): Map<String, String> {
     val attrs = mutableMapOf<String, String>()
     color?.let { attrs["style.stroke"] = it }
+
     config.arrowType?.let { type ->
       attrs["target-arrowhead.shape"] = type.string
       if (type in FILLABLE_ARROW_TYPES) {
@@ -134,6 +137,11 @@ data class D2Writer(
       LinkStyle.Bold -> attrs["style.stroke-width"] = "3" // default 2
       null -> Unit
     }
+
+    if (config.animateLinks == true && style in ANIMATABLE_LINK_TYPES) {
+      attrs["style.animated"] = "true"
+    }
+
     return attrs
   }
 
@@ -183,5 +191,6 @@ data class D2Writer(
   private companion object {
     val DISALLOWED_SUBSTRINGS = setOf("{", "}", "->", "--", "<-", "<->", "|", "#", "\"", "'")
     val FILLABLE_ARROW_TYPES = setOf(ArrowType.Triangle, ArrowType.Diamond, ArrowType.Circle, ArrowType.Box)
+    val ANIMATABLE_LINK_TYPES = setOf(LinkStyle.Dashed, LinkStyle.Dotted)
   }
 }

@@ -35,6 +35,7 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
     afterEvaluate {
       warnIfFileFormatRequiresPlaywright()
       warnIfLabelLocationSpecifiedButNotPosition()
+      warnIfAnimationSelectedWithNonAnimatedFileFormat()
     }
   }
 
@@ -140,6 +141,20 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
         "Warning: you've configured groupLabelLocation but not groupLabelPosition - this is not supported in D2 " +
           "diagrams. If you want to suppress this warning, add 'modular.d2.suppressLabelLocationWarning=true' to " +
           "your gradle.properties file.",
+      )
+    }
+  }
+
+  private fun Project.warnIfAnimationSelectedWithNonAnimatedFileFormat() {
+    val d2 = extension.d2
+    val format = d2.fileFormat.get()
+    val animatedFormats = setOf(FileFormat.Svg, FileFormat.Gif)
+    val animated = d2.animateLinks.orNull
+    val shouldSuppress = d2.properties.suppressAnimationWarning.get()
+    if (animated == true && format !in animatedFormats && !shouldSuppress) {
+      logger.warn(
+        "Warning: you've configured animateLinks but chosen a non-animatable file format ($format). If you want to " +
+          "suppress this warning, add 'modular.d2.suppressAnimationWarning=true' to your gradle.properties file.",
       )
     }
   }
