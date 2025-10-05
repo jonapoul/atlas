@@ -29,12 +29,9 @@ modular {
 
   d2 {
     animateLinks = true
-    arrowType = ArrowType.Box
     center = true
     direction = Direction.Right
     fileFormat = FileFormat.Svg
-    font = Font.Mono
-    fontSize = 32
     groupLabelLocation = Location.Border
     groupLabelPosition = Position.BottomCenter
     layoutEngine = LayoutEngine.Elk
@@ -42,11 +39,19 @@ modular {
     sketch = true
     theme = Theme.ShirleyTemple
     themeDark = Theme.DarkMauve
+
     rootStyle {
       stroke = "floralwhite"
       strokeWidth = 3
       strokeDash = 4
       doubleBorder = true
+    }
+
+    globalProps {
+      arrowType = ArrowType.Box
+      fillArrowHeads = true
+      font = Font.Mono
+      fontSize = 32
     }
   }
 }

@@ -19,12 +19,9 @@ import org.gradle.api.provider.Property
  *
  *   d2 {
  *     animateLinks = true
- *     arrowType = ArrowType.Triangle
  *     center = true
  *     direction = Direction.Down
  *     fileFormat = FileFormat.Svg
- *     font = Font.Mono
- *     fontSize = 32
  *     groupLabelLocation = Location.Inside
  *     groupLabelPosition = Position.TopCenter
  *     layoutEngine = LayoutEngine.Dagre
@@ -33,6 +30,14 @@ import org.gradle.api.provider.Property
  *     sketch = true
  *     theme = Theme.ColorblindClear
  *     themeDark = Theme.DarkMauve
+ *
+ *     rootStyle {
+ *       ...
+ *     }
+ *
+ *     globalProps {
+ *       ...
+ *     }
  *   }
  * }
  * ```
@@ -40,12 +45,9 @@ import org.gradle.api.provider.Property
 @ModularDsl
 interface D2Spec : ModularSpec {
   val animateLinks: Property<Boolean>
-  val arrowType: Property<ArrowType>
   val center: Property<Boolean>
   val direction: Property<Direction>
   val fileFormat: Property<FileFormat>
-  val font: Property<Font>
-  val fontSize: Property<Int>
   val groupLabelLocation: Property<Location>
   val groupLabelPosition: Property<Position>
   val layoutEngine: Property<LayoutEngine>
@@ -57,4 +59,7 @@ interface D2Spec : ModularSpec {
 
   val rootStyle: D2RootStyleSpec
   fun rootStyle(action: Action<D2RootStyleSpec>)
+
+  val globalProps: D2GlobalPropsSpec
+  fun globalProps(action: Action<D2GlobalPropsSpec>)
 }
