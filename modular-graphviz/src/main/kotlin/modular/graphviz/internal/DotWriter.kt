@@ -23,7 +23,7 @@ data class DotWriter(
   override val groupModules: Boolean,
   private val config: DotConfig,
 ) : ChartWriter() {
-  override fun invoke(): String = buildIndentedString(size = 2) {
+  override fun invoke(): String = buildIndentedString {
     appendLine("digraph {")
     indent {
       appendHeader()

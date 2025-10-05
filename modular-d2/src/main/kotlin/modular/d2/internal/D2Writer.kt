@@ -30,7 +30,7 @@ data class D2Writer(
 ) : ChartWriter() {
   private var subgraphNestingLevel = 0
 
-  override fun invoke(): String = buildIndentedString(size = 2) {
+  override fun invoke(): String = buildIndentedString {
     appendVars()
     appendStyles()
     appendModules()

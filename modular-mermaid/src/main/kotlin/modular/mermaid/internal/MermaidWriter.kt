@@ -23,7 +23,7 @@ internal class MermaidWriter(
   override val groupModules: Boolean,
   private val config: MermaidConfig,
 ) : ChartWriter() {
-  override fun invoke(): String = buildIndentedString(size = 2) {
+  override fun invoke(): String = buildIndentedString {
     appendConfig()
     appendLine("graph TD")
     indent {
