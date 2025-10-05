@@ -33,6 +33,7 @@ modular {
     center = true
     direction = Direction.Right
     fileFormat = FileFormat.Svg
+    fontSize = 32
     groupLabelLocation = Location.Border
     groupLabelPosition = Position.BottomCenter
     layoutEngine = LayoutEngine.Elk

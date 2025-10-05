@@ -23,6 +23,7 @@ import org.gradle.api.provider.Property
  *     center = true
  *     direction = Direction.Down
  *     fileFormat = FileFormat.Svg
+ *     fontSize = 32
  *     groupLabelLocation = Location.Inside
  *     groupLabelPosition = Position.TopCenter
  *     layoutEngine = LayoutEngine.Dagre
@@ -42,6 +43,7 @@ interface D2Spec : ModularSpec {
   val center: Property<Boolean>
   val direction: Property<Direction>
   val fileFormat: Property<FileFormat>
+  val fontSize: Property<Int>
   val groupLabelLocation: Property<Location>
   val groupLabelPosition: Property<Position>
   val layoutEngine: Property<LayoutEngine>
