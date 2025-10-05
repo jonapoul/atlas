@@ -9,6 +9,7 @@ import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerial
 
 @KSerializable
 class D2Config(
+  val animateLinks: Boolean? = null,
   val arrowType: ArrowType? = null,
   val center: Boolean? = null,
   val direction: Direction? = null,
@@ -23,6 +24,7 @@ class D2Config(
 ) : JSerializable
 
 internal fun D2Config(spec: D2Spec): D2Config = D2Config(
+  animateLinks = spec.animateLinks.orNull,
   arrowType = spec.arrowType.orNull,
   center = spec.center.orNull,
   direction = spec.direction.orNull,

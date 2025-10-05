@@ -18,6 +18,7 @@ import org.gradle.api.provider.Property
  *   // other Modular config
  *
  *   d2 {
+ *     animateLinks = true
  *     arrowType = ArrowType.Triangle
  *     center = true
  *     direction = Direction.Down
@@ -36,6 +37,7 @@ import org.gradle.api.provider.Property
  */
 @ModularDsl
 interface D2Spec : ModularSpec {
+  val animateLinks: Property<Boolean>
   val arrowType: Property<ArrowType>
   val center: Property<Boolean>
   val direction: Property<Direction>

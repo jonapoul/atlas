@@ -61,7 +61,7 @@ data class LinkType(
 ) : JSerializable
 
 /**
- * These come from graphviz, but also work with mermaid.
+ * These come from graphviz, but also work with mermaid/d2.
  * See https://graphviz.org/docs/attr-types/style/
  */
 enum class LinkStyle(override val string: String) : StringEnum {

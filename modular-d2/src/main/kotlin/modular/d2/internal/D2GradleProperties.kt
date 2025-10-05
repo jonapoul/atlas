@@ -22,6 +22,7 @@ import org.gradle.api.provider.Provider
 
 internal class D2GradleProperties(override val project: Project) : IGradleProperties {
   // Actual config
+  val animateLinks: Provider<Boolean> = bool("modular.d2.animateLinks", default = null)
   val arrowType: Provider<ArrowType> = enum("modular.d2.arrowType", default = null)
   val center: Provider<Boolean> = bool("modular.d2.center", default = null)
   val darkTheme: Provider<Theme> = intEnum("modular.d2.darkTheme", default = null)
@@ -38,4 +39,5 @@ internal class D2GradleProperties(override val project: Project) : IGradleProper
   // Warning suppressions
   val suppressPlaywrightWarning: Provider<Boolean> = bool("modular.d2.suppressPlaywrightWarning", default = false)
   val suppressLabelLocationWarning: Provider<Boolean> = bool("modular.d2.suppressLabelLocationWarning", default = false)
+  val suppressAnimationWarning: Provider<Boolean> = bool("modular.d2.suppressAnimationWarning", default = false)
 }
