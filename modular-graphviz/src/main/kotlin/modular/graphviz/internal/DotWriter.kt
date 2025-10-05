@@ -9,6 +9,7 @@ import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
+import modular.core.internal.Subgraph
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.graphviz.DotConfig
@@ -78,10 +79,11 @@ data class DotWriter(
       }
   }
 
-  override fun IndentedStringBuilder.appendSubgraphHeader(cleanedModuleName: String, displayName: String) {
+  override fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph) {
+    val cleanedModuleName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
     appendLine("subgraph cluster_$cleanedModuleName {")
     indent {
-      appendLine("label = \":$displayName\"")
+      appendLine("label = \":${graph.name}\"")
     }
   }
 

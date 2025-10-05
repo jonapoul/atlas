@@ -9,5 +9,5 @@ android {
 }
 
 dependencies {
-  implementation(project(":sample-lib-kotlin-jvm"))
+  implementation(project(":module-kotlin:jvm"))
 }

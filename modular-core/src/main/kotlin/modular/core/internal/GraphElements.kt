@@ -86,7 +86,7 @@ abstract class ChartWriter {
   protected abstract val thisPath: String
 
   protected abstract fun IndentedStringBuilder.appendModule(module: TypedModule)
-  protected abstract fun IndentedStringBuilder.appendSubgraphHeader(cleanedModuleName: String, displayName: String)
+  protected abstract fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph)
   protected abstract fun IndentedStringBuilder.appendSubgraphFooter()
 
   protected fun IndentedStringBuilder.appendModules() {
@@ -108,8 +108,7 @@ abstract class ChartWriter {
   }
 
   private fun IndentedStringBuilder.appendSubgraph(graph: Subgraph) {
-    val cleanedName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
-    appendSubgraphHeader(cleanedName, graph.name)
+    appendSubgraphHeader(graph)
     indent {
       for (element in graph.elements) {
         appendGraphNode(element)
@@ -141,7 +140,9 @@ abstract class ChartWriter {
 
   protected fun TypedModule.cleaned() = copy(projectPath = projectPath.cleaned())
 
-  private companion object {
-    private val SUPPORTED_CHAR_REGEX = "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()
+  @InternalModularApi
+  companion object {
+    @InternalModularApi
+    val SUPPORTED_CHAR_REGEX = "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()
   }
 }

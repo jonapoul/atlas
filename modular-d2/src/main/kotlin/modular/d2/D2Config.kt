@@ -8,11 +8,12 @@ import java.io.Serializable as JSerializable
 import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
-data class D2Config(
+class D2Config(
   val arrowType: ArrowType? = null,
   val center: Boolean? = null,
-  val containerLabelPosition: String? = null,
   val direction: Direction? = null,
+  val groupLabelLocation: Location? = null,
+  val groupLabelPosition: Position? = null,
   val layoutEngine: LayoutEngine? = null,
   val pad: Int? = null,
   val sketch: Boolean? = null,
@@ -24,12 +25,13 @@ data class D2Config(
 internal fun D2Config(spec: D2Spec): D2Config = D2Config(
   arrowType = spec.arrowType.orNull,
   center = spec.center.orNull,
-  containerLabelPosition = spec.containerLabelPosition.orNull,
   direction = spec.direction.orNull,
+  groupLabelLocation = spec.groupLabelLocation.orNull,
+  groupLabelPosition = spec.groupLabelPosition.orNull,
   layoutEngine = spec.layoutEngine.orNull,
   pad = spec.pad.orNull,
   sketch = spec.sketch.orNull,
-  style = spec.style.properties.orNull,
+  style = spec.rootStyle.properties.orNull,
   theme = spec.theme.orNull,
   darkTheme = spec.themeDark.orNull,
 )

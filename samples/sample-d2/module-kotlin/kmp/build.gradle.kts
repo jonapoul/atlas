@@ -8,9 +8,9 @@ kotlin {
   androidTarget()
 
   sourceSets {
-    commonMain.dependencies { api(project(":sample-lib-kotlin-jvm")) }
-    androidMain.dependencies { api(project(":sample-lib-android")) }
-    jvmMain.dependencies { implementation(project(":sample-lib-java")) }
+    commonMain.dependencies { api(project(":module-kotlin:jvm")) }
+    androidMain.dependencies { api(project(":module-android:lib")) }
+    jvmMain.dependencies { implementation(project(":module-java")) }
   }
 }
 

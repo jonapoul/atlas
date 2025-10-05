@@ -9,6 +9,6 @@ android {
 }
 
 dependencies {
-  implementation(project(":sample-lib-android"))
-  implementation(project(":sample-lib-kotlin-mp"))
+  implementation(project(":module-android:lib"))
+  implementation(project(":module-kotlin:kmp"))
 }

@@ -12,6 +12,7 @@ import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.BuildTask
 import org.gradle.testkit.runner.TaskOutcome
 import java.io.File
+import kotlin.text.removeSuffix
 
 fun Assert<List<BuildTask>>.allSuccessful() = given { tasks ->
   val nonSuccesses = tasks.filter { task -> task.outcome != TaskOutcome.SUCCESS }
@@ -43,9 +44,10 @@ fun Assert<File>.doesNotExist() = given { actual ->
   expected("$actual not to exist")
 }
 
-fun Assert<String>.containsDiffed(expected: String) = given { actual ->
-  if (expected == actual) return
+fun Assert<String>.equalsDiffed(expected: String) = given { actual ->
+  val stripped = actual.removeSuffix("\n")
+  if (expected == stripped) return
   expected(
-    "Unequal strings between expected{${expected.length}} and actual{${actual.length}}:\n" + diff(expected, actual),
+    "Unequal strings between expected{${expected.length}} and actual{${stripped.length}}:\n" + diff(expected, stripped),
   )
 }

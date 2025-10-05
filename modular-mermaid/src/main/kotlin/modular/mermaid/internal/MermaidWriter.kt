@@ -9,6 +9,7 @@ import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
 import modular.core.internal.ModuleLink
+import modular.core.internal.Subgraph
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
@@ -56,8 +57,9 @@ internal class MermaidWriter(
     }
   }
 
-  override fun IndentedStringBuilder.appendSubgraphHeader(cleanedModuleName: String, displayName: String) {
-    appendLine("subgraph $cleanedModuleName[\"$displayName\"]")
+  override fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph) {
+    val cleanedModuleName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
+    appendLine("subgraph $cleanedModuleName[\"${graph.name}\"]")
   }
 
   override fun IndentedStringBuilder.appendSubgraphFooter() {

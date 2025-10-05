@@ -5,15 +5,17 @@
 package modular.d2.internal
 
 import assertk.assertThat
-import assertk.assertions.contains
 import modular.d2.D2Config
 import modular.d2.Direction
+import modular.d2.Location
+import modular.d2.Position
 import modular.d2.d2Writer
 import modular.test.Abc
 import modular.test.AbcWithLinkStyles
 import modular.test.ModuleWithNoLinks
 import modular.test.OneLevelOfSubmodules
 import modular.test.TwoLevelsOfSubmodules
+import modular.test.equalsDiffed
 import kotlin.test.Test
 
 class D2WriterTest {
@@ -24,7 +26,7 @@ class D2WriterTest {
       groupModules = false,
     )
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         app: :app
         data_a: :data:a
@@ -55,21 +57,21 @@ class D2WriterTest {
       groupModules = true,
     )
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         app: :app
-        data: data {
-          a: :data:a
-          b: :data:b
+        data: :data {
+          a: :a
+          b: :b
         }
-        domain: domain {
-          a: :domain:a
-          b: :domain:b
+        domain: :domain {
+          a: :a
+          b: :b
         }
-        ui: ui {
-          a: :ui:a
-          b: :ui:b
-          c: :ui:c
+        ui: :ui {
+          a: :a
+          b: :b
+          c: :c
         }
         app -> ui.a
         app -> ui.b
@@ -92,25 +94,25 @@ class D2WriterTest {
       groupModules = true,
     )
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         app: :app
-        data: data {
-          a: :data:a
-          b: :data:b
-          sub: sub {
-            sub1: :data:sub:sub1
-            sub2: :data:sub:sub2
+        data: :data {
+          a: :a
+          b: :b
+          sub: :sub {
+            sub1: :sub1
+            sub2: :sub2
           }
         }
-        domain: domain {
-          a: :domain:a
-          b: :domain:b
+        domain: :domain {
+          a: :a
+          b: :b
         }
-        ui: ui {
-          a: :ui:a
-          b: :ui:b
-          c: :ui:c
+        ui: :ui {
+          a: :a
+          b: :b
+          c: :c
         }
         app -> ui.a
         app -> ui.b
@@ -132,7 +134,7 @@ class D2WriterTest {
   fun `Single module with no links`() {
     val writer = d2Writer(layout = ModuleWithNoLinks)
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         app: :app
       """.trimIndent(),
@@ -146,7 +148,7 @@ class D2WriterTest {
       config = D2Config(direction = Direction.Right),
     )
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         direction: right
         a: :a
@@ -171,7 +173,7 @@ class D2WriterTest {
       ),
     )
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         style: {
           fill: "LightBlue"
@@ -193,7 +195,7 @@ class D2WriterTest {
       layout = AbcWithLinkStyles,
     )
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         a: :a
         b: :b
@@ -205,6 +207,105 @@ class D2WriterTest {
         a -> c: {
           style.stroke-width: "3"
         }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Specify group label position`() {
+    val writer = d2Writer(
+      layout = TwoLevelsOfSubmodules,
+      groupModules = true,
+      config = D2Config(groupLabelPosition = Position.TopRight),
+    )
+
+    assertThat(writer()).equalsDiffed(
+      """
+        app: :app
+        data: :data {
+          label.near: top-right
+          a: :a
+          b: :b
+          sub: :sub {
+            label.near: top-right
+            sub1: :sub1
+            sub2: :sub2
+          }
+        }
+        domain: :domain {
+          label.near: top-right
+          a: :a
+          b: :b
+        }
+        ui: :ui {
+          label.near: top-right
+          a: :a
+          b: :b
+          c: :c
+        }
+        app -> ui.a
+        app -> ui.b
+        app -> ui.c
+        domain.a -> data.a
+        domain.a -> data.sub.sub1
+        domain.a -> data.sub.sub2
+        domain.b -> data.a
+        domain.b -> data.b
+        ui.a -> domain.a
+        ui.b -> domain.b
+        ui.c -> domain.a
+        ui.c -> domain.b
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Specify group label position and location`() {
+    val writer = d2Writer(
+      layout = TwoLevelsOfSubmodules,
+      groupModules = true,
+      config = D2Config(
+        groupLabelPosition = Position.CenterLeft,
+        groupLabelLocation = Location.Border,
+      ),
+    )
+
+    assertThat(writer()).equalsDiffed(
+      """
+        app: :app
+        data: :data {
+          label.near: border-left-center
+          a: :a
+          b: :b
+          sub: :sub {
+            label.near: border-left-center
+            sub1: :sub1
+            sub2: :sub2
+          }
+        }
+        domain: :domain {
+          label.near: border-left-center
+          a: :a
+          b: :b
+        }
+        ui: :ui {
+          label.near: border-left-center
+          a: :a
+          b: :b
+          c: :c
+        }
+        app -> ui.a
+        app -> ui.b
+        app -> ui.c
+        domain.a -> data.a
+        domain.a -> data.sub.sub1
+        domain.a -> data.sub.sub2
+        domain.b -> data.a
+        domain.b -> data.b
+        ui.a -> domain.a
+        ui.b -> domain.b
+        ui.c -> domain.a
+        ui.c -> domain.b
       """.trimIndent(),
     )
   }

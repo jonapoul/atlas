@@ -35,9 +35,10 @@ class D2SpecImpl(
 
   override val arrowType = objects.enum(properties.arrowType)
   override val center = objects.bool(properties.center)
-  override val containerLabelPosition = objects.string(properties.containerLabelPosition)
   override val direction = objects.enum(properties.direction)
   override val fileFormat = objects.enum(properties.fileFormat)
+  override val groupLabelLocation = objects.enum(properties.groupLabelLocation)
+  override val groupLabelPosition = objects.enum(properties.groupLabelPosition)
   override val layoutEngine = objects.enum(properties.layoutEngine)
   override val pad = objects.int(properties.pad)
   override val pathToD2Command = objects.string(properties.pathToD2Command)
@@ -45,8 +46,8 @@ class D2SpecImpl(
   override val theme = objects.intEnum(properties.theme)
   override val themeDark = objects.intEnum(properties.darkTheme)
 
-  override val style = D2RootStyleSpecImpl(objects)
-  override fun style(action: Action<D2RootStyleSpec>) = action.execute(style)
+  override val rootStyle = D2RootStyleSpecImpl(objects)
+  override fun rootStyle(action: Action<D2RootStyleSpec>) = action.execute(rootStyle)
 }
 
 @InternalModularApi

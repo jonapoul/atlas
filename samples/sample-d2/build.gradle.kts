@@ -1,11 +1,7 @@
-import modular.core.LinkStyle.Bold
-import modular.core.LinkStyle.Dotted
-import modular.core.LinkStyle.Solid
-import modular.d2.ArrowType
-import modular.d2.Direction
-import modular.d2.FileFormat
-import modular.d2.LayoutEngine
-import modular.d2.Theme
+@file:Suppress("ktlint:standard:no-wildcard-imports")
+
+import modular.core.*
+import modular.d2.*
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -19,20 +15,16 @@ plugins {
 modular {
   alsoTraverseUpwards = false
   generateOnSync = true
+  groupModules = true
 
   moduleTypes {
     builtIns()
   }
 
   linkTypes {
-    "jvmMainImplementation"(style = Bold, color = "orange")
-    api(style = Solid, color = "greenyellow")
-    implementation(style = Dotted, color = "fuchsia")
-  }
-
-  pathTransforms {
-    remove(pattern = "^:sample-")
-    replace(pattern = "-", replacement = " ")
+    "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
+    api(style = LinkStyle.Solid, color = "greenyellow")
+    implementation(style = LinkStyle.Dotted, color = "fuchsia")
   }
 
   d2 {
@@ -40,12 +32,14 @@ modular {
     center = true
     direction = Direction.Right
     fileFormat = FileFormat.Svg
+    groupLabelLocation = Location.Border
+    groupLabelPosition = Position.BottomCenter
     layoutEngine = LayoutEngine.Elk
     pad = 100
     sketch = true
     theme = Theme.ShirleyTemple
     themeDark = Theme.DarkMauve
-    style {
+    rootStyle {
       stroke = "floralwhite"
       strokeWidth = 3
       strokeDash = 4
