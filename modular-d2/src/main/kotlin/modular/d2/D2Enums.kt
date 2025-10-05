@@ -137,3 +137,13 @@ enum class Location(override val string: String) : StringEnum {
 
   override fun toString() = string
 }
+
+/**
+ * https://d2lang.com/tour/style/#font
+ */
+enum class Font(override val string: String) : StringEnum {
+  Mono("mono"),
+  ;
+
+  override fun toString() = string
+}

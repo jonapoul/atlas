@@ -126,9 +126,8 @@ data class D2Writer(
       }
     }
 
-    if (fontSize != null) {
-      appendLine("***.style.font-size: $fontSize")
-    }
+    fontSize?.let { appendLine("***.style.font-size: $it") }
+    font?.let { appendLine("***.style.font: $it") }
   }
 
   private fun linkAttributes(style: LinkStyle?, color: String?): Map<String, String> {

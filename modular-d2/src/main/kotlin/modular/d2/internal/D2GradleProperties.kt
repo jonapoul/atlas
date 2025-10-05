@@ -13,6 +13,7 @@ import modular.core.internal.string
 import modular.d2.ArrowType
 import modular.d2.Direction
 import modular.d2.FileFormat
+import modular.d2.Font
 import modular.d2.LayoutEngine
 import modular.d2.Location
 import modular.d2.Position
@@ -28,6 +29,7 @@ internal class D2GradleProperties(override val project: Project) : IGradleProper
   val darkTheme: Provider<Theme> = intEnum("modular.d2.darkTheme", default = null)
   val direction: Provider<Direction> = enum("modular.d2.direction", default = null)
   val fileFormat: Provider<FileFormat> = enum("modular.d2.fileFormat", default = FileFormat.Svg)
+  val font: Provider<Font> = enum("modular.d2.font", default = null)
   val fontSize: Provider<Int> = int("modular.d2.fontSize", default = null)
   val groupLabelLocation: Provider<Location> = enum("fontSize.d2.groupLabelLocation", default = null)
   val groupLabelPosition: Provider<Position> = enum("modular.d2.groupLabelPosition", default = null)
