@@ -33,6 +33,7 @@ modular {
     center = true
     direction = Direction.Right
     fileFormat = FileFormat.Svg
+    font = Font.Mono
     fontSize = 32
     groupLabelLocation = Location.Border
     groupLabelPosition = Position.BottomCenter
