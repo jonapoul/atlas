@@ -153,7 +153,7 @@ class DotWriterTest {
       """
         digraph {
           node [style="filled"]
-          ":app" [penwidth="3",shape="box"]
+          ":app" [fillcolor="red",penwidth="3",shape="box"]
         }
       """.trimIndent(),
     )

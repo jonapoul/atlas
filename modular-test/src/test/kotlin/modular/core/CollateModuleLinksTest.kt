@@ -111,7 +111,7 @@ class CollateModuleLinksTest : ScenarioTest() {
   }
 
   private val moduleLinksFile: File
-    get() = projectRoot.resolve("build/modular/module-links")
+    get() = projectRoot.resolve("build/modular/module-links.json")
 
   private val moduleLinks: Set<ModuleLink>
     get() = readModuleLinks(moduleLinksFile)

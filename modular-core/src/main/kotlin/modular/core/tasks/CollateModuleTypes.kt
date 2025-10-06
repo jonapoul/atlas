@@ -61,7 +61,7 @@ abstract class CollateModuleTypes : DefaultTask(), TaskWithOutputFile {
     @InternalModularApi
     fun register(target: Project): TaskProvider<CollateModuleTypes> = with(target) {
       val collateTypes = tasks.register(NAME, CollateModuleTypes::class.java) { task ->
-        task.outputFile.convention(fileInBuildDirectory("module-types"))
+        task.outputFile.convention(fileInBuildDirectory("module-types.json"))
       }
 
       gradle.projectsEvaluated {

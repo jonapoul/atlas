@@ -29,6 +29,7 @@ class D2Writer(
   override fun invoke(): String = buildIndentedString {
     appendImports()
     appendModules()
+    appendLine("${thisPath.fullKey()}.style.stroke-width: 8")
     appendLinks()
   }
 
@@ -49,9 +50,9 @@ class D2Writer(
   }
 
   override fun IndentedStringBuilder.appendModule(module: TypedModule) {
-    val key = module.projectPath.localKey()
-    val name = if (groupModules) ":$key" else module.projectPath
-    val type = module.type
+    val (path, type) = module
+    val key = path.localKey()
+    val name = if (groupModules) ":$key" else path
     if (type == null) {
       // just list the module with label
       appendLine("$key: $name")

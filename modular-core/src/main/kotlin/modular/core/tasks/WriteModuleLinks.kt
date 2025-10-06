@@ -66,7 +66,7 @@ abstract class WriteModuleLinks : DefaultTask(), TaskWithOutputFile {
     ): TaskProvider<WriteModuleLinks> = with(target) {
       val writeLinks = tasks.register(NAME, WriteModuleLinks::class.java) { task ->
         task.thisPath.convention(target.path)
-        task.outputFile.convention(fileInBuildDirectory("module-links"))
+        task.outputFile.convention(fileInBuildDirectory("module-links.json"))
       }
 
       writeLinks.configure { task ->

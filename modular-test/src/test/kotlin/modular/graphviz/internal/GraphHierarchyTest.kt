@@ -6,9 +6,11 @@ package modular.graphviz.internal
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import modular.core.ModuleType
 import modular.core.internal.Subgraph
 import modular.core.internal.buildGraphElements
 import modular.test.OneLevelOfSubmodules
+import modular.test.SingleNestedModuleWithNoLinks
 import modular.test.TwoLevelsOfSubmodules
 import modular.test.node
 import kotlin.test.Test
@@ -39,7 +41,11 @@ class GraphHierarchyTest {
       ),
     )
 
-    val elements = buildGraphElements(OneLevelOfSubmodules.modules, OneLevelOfSubmodules.links)
+    val elements = buildGraphElements(
+      typedModules = OneLevelOfSubmodules.modules,
+      links = OneLevelOfSubmodules.links,
+      thisPath = ":app",
+    )
     assertThat(elements).isEqualTo(
       listOf(
         node(path = ":app"),
@@ -82,7 +88,11 @@ class GraphHierarchyTest {
       ),
     )
 
-    val elements = buildGraphElements(TwoLevelsOfSubmodules.modules, TwoLevelsOfSubmodules.links)
+    val elements = buildGraphElements(
+      typedModules = TwoLevelsOfSubmodules.modules,
+      links = TwoLevelsOfSubmodules.links,
+      thisPath = ":app",
+    )
     assertThat(elements).isEqualTo(
       listOf(
         node(path = ":app"),
@@ -91,5 +101,24 @@ class GraphHierarchyTest {
         uiSubGraph,
       ),
     )
+  }
+
+  @Test
+  fun `Single nested module, no links, grouped`() {
+    val node = node(
+      path = ":a:b",
+      type = ModuleType(name = "red", color = "red"),
+    )
+    val aGraph = Subgraph(
+      path = listOf("a"),
+      elements = listOf(node),
+    )
+
+    val elements = buildGraphElements(
+      typedModules = SingleNestedModuleWithNoLinks.modules,
+      links = SingleNestedModuleWithNoLinks.links,
+      thisPath = ":a:b",
+    )
+    assertThat(elements).isEqualTo(listOf(aGraph))
   }
 }

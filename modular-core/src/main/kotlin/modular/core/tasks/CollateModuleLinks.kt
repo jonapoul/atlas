@@ -75,7 +75,7 @@ abstract class CollateModuleLinks : DefaultTask(), TaskWithOutputFile {
       extension: ModularExtension,
     ): TaskProvider<CollateModuleLinks> = with(target) {
       val collateLinks = tasks.register(NAME, CollateModuleLinks::class.java) { task ->
-        task.outputFile.convention(fileInBuildDirectory("module-links"))
+        task.outputFile.convention(fileInBuildDirectory("module-links.json"))
         task.ignoredModules.convention(extension.ignoredModules)
       }
 

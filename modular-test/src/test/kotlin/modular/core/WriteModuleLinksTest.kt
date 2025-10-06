@@ -134,6 +134,6 @@ class WriteModuleLinksTest : ScenarioTest() {
   }
 
   private fun moduleLinks(module: String): Set<ModuleLink> = projectRoot
-    .resolve("$module/build/modular/module-links")
+    .resolve("$module/build/modular/module-links.json")
     .let(::readModuleLinks)
 }

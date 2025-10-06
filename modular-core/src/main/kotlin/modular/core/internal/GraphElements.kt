@@ -27,9 +27,10 @@ data class Subgraph(
 fun buildGraphElements(
   typedModules: Set<TypedModule>,
   links: Set<ModuleLink>,
+  thisPath: String,
 ): List<GraphElement> = buildHierarchy(
   nodeData = typedModules
-    .filter { module -> module in links }
+    .filter { module -> module in links || (links.isEmpty() && module.projectPath == thisPath) }
     .map { module -> module to module.projectPath.split(":").filter { it.isNotEmpty() } },
 )
 
@@ -93,7 +94,7 @@ abstract class ChartWriter {
 
   protected fun IndentedStringBuilder.appendModules() {
     if (groupModules) {
-      val elements = buildGraphElements(typedModules, links)
+      val elements = buildGraphElements(typedModules, links, thisPath)
       for (element in elements) {
         appendGraphNode(element)
       }

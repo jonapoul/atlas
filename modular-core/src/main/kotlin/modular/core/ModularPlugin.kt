@@ -30,6 +30,10 @@ abstract class ModularPlugin<Impl : ModularExtensionImpl> : Plugin<Project> {
   protected abstract fun Project.createExtension(): Impl
 
   override fun apply(target: Project): Unit = with(target) {
+    // This only happens if you have nested modules where the group modules don't have a build file. In that
+    // case you don't want the group to be its own node in the chart
+    if (!target.buildFile.exists()) return@with
+
     if (target == rootProject) {
       applyToRoot(target)
     } else {
