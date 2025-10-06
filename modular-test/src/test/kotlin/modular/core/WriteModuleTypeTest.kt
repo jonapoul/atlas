@@ -103,6 +103,6 @@ class WriteModuleTypeTest : ScenarioTest() {
   }
 
   private fun File.moduleType(modulePath: String) =
-    resolve("$modulePath/build/modular/module-type")
+    resolve("$modulePath/build/modular/module-type.json")
       .let(::readModuleType)
 }
