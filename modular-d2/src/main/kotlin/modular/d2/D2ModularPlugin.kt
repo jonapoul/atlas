@@ -16,6 +16,7 @@ import modular.d2.internal.D2ModularExtensionImpl
 import modular.d2.tasks.ExecD2
 import modular.d2.tasks.WriteD2Chart
 import modular.d2.tasks.WriteD2ChartBase
+import modular.d2.tasks.WriteD2Classes
 import modular.d2.tasks.WriteDummyD2Chart
 import org.gradle.api.Project
 
@@ -81,8 +82,11 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
   }
 
   override fun Project.registerRootTasks() {
-    //    val spec = extension.d2
-    //
+    WriteD2Classes.register(
+      target = this,
+      extension = extension,
+    )
+
     //    val realTask = WriteD2LegendBase.register<WriteD2Legend>(
     //      target = project,
     //      spec = spec,

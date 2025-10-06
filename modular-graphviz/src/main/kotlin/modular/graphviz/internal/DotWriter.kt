@@ -13,6 +13,7 @@ import modular.core.internal.Subgraph
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.graphviz.DotConfig
+import org.gradle.internal.exceptions.StyledException.style
 
 @InternalModularApi
 data class DotWriter(
@@ -70,10 +71,10 @@ data class DotWriter(
     links
       .map { link -> link.copy(fromPath = link.fromPath.cleaned(), toPath = link.toPath.cleaned()) }
       .sortedWith(compareBy({ it.fromPath }, { it.toPath }))
-      .forEach { (fromPath, toPath, _, style, color) ->
+      .forEach { (fromPath, toPath, _, type) ->
         val attrs = Attrs(
-          "style" to style,
-          "color" to color,
+          "style" to type?.style,
+          "color" to type?.color,
         )
         appendLine("\"$fromPath\" -> \"$toPath\"$attrs")
       }

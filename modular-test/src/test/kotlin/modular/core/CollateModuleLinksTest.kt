@@ -7,6 +7,8 @@ package modular.core
 import assertk.assertThat
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
+import modular.core.internal.ModuleLink
+import modular.core.internal.readModuleLinks
 import modular.test.ScenarioTest
 import modular.test.allSuccessful
 import modular.test.doesNotExist
@@ -31,7 +33,7 @@ class CollateModuleLinksTest : ScenarioTest() {
     assertThat(result).taskWasSuccessful(":collateModuleLinks")
 
     // and the links file is empty
-    assertThat(moduleLinks).isEqualTo(emptyList())
+    assertThat(moduleLinks).isEmpty()
   }
 
   @Test
@@ -56,11 +58,11 @@ class CollateModuleLinksTest : ScenarioTest() {
 
     // and the links file contains the expected, in a-z order
     assertThat(moduleLinks).isEqualTo(
-      listOf(
-        ":mid-a,:bottom,api,,",
-        ":mid-b,:bottom,implementation,,",
-        ":top,:mid-a,api,,",
-        ":top,:mid-b,implementation,,",
+      setOf(
+        ModuleLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
+        ModuleLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
+        ModuleLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
+        ModuleLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
       ),
     )
   }
@@ -75,13 +77,13 @@ class CollateModuleLinksTest : ScenarioTest() {
 
     // and the triangle links were detected, in a-z order
     assertThat(moduleLinks).isEqualTo(
-      listOf(
-        ":a,:b1,implementation,,",
-        ":a,:b2,implementation,,",
-        ":b1,:c1,implementation,,",
-        ":b1,:c2,implementation,,",
-        ":b2,:c2,implementation,,",
-        ":b2,:c3,implementation,,",
+      setOf(
+        ModuleLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
+        ModuleLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
+        ModuleLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
+        ModuleLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
+        ModuleLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
+        ModuleLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
       ),
     )
   }
@@ -95,17 +97,15 @@ class CollateModuleLinksTest : ScenarioTest() {
     assertThat(moduleLinksFile).doesNotExist()
 
     // but the custom one does
-    val customModuleLinksFileContents = resolve("custom-module-links-file.txt")
-      .readLines()
-      .filter { it.isNotBlank() }
+    val customModuleLinksFileContents = readModuleLinks(resolve("custom-module-links-file.txt"))
 
     // and it contains the same from the diamond test a bit up from here
     assertThat(customModuleLinksFileContents).isEqualTo(
-      listOf(
-        ":mid-a,:bottom,api,,",
-        ":mid-b,:bottom,implementation,,",
-        ":top,:mid-a,api,,",
-        ":top,:mid-b,implementation,,",
+      setOf(
+        ModuleLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
+        ModuleLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
+        ModuleLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
+        ModuleLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
       ),
     )
   }
@@ -113,8 +113,6 @@ class CollateModuleLinksTest : ScenarioTest() {
   private val moduleLinksFile: File
     get() = projectRoot.resolve("build/modular/module-links")
 
-  private val moduleLinks: List<String>
-    get() = moduleLinksFile
-      .readLines()
-      .filter { it.isNotBlank() }
+  private val moduleLinks: Set<ModuleLink>
+    get() = readModuleLinks(moduleLinksFile)
 }

@@ -45,17 +45,17 @@ class ExecGraphvizTest : ScenarioTest() {
         :b:writeModuleLinks SKIPPED
         :c:writeModuleLinks SKIPPED
         :collateModuleLinks SKIPPED
-        :a:calculateModuleTree SKIPPED
+        :a:writeModuleTree SKIPPED
         :a:writeGraphvizChart SKIPPED
         :a:execGraphvizChart SKIPPED
         :a:writeGraphvizReadme SKIPPED
         :a:modularGenerate SKIPPED
-        :b:calculateModuleTree SKIPPED
+        :b:writeModuleTree SKIPPED
         :b:writeGraphvizChart SKIPPED
         :b:execGraphvizChart SKIPPED
         :b:writeGraphvizReadme SKIPPED
         :b:modularGenerate SKIPPED
-        :c:calculateModuleTree SKIPPED
+        :c:writeModuleTree SKIPPED
         :c:writeGraphvizChart SKIPPED
         :c:execGraphvizChart SKIPPED
         :c:writeGraphvizReadme SKIPPED

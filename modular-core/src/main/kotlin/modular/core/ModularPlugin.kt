@@ -10,7 +10,6 @@ import modular.core.internal.orderedModuleTypes
 import modular.core.tasks.CollateModuleLinks
 import modular.core.tasks.CollateModuleTypes
 import modular.core.tasks.ModularGenerationTask
-import modular.core.tasks.TaskWithSeparator
 import modular.core.tasks.WriteModuleLinks
 import modular.core.tasks.WriteModuleTree
 import modular.core.tasks.WriteModuleType
@@ -37,7 +36,6 @@ abstract class ModularPlugin<Impl : ModularExtensionImpl> : Plugin<Project> {
       applyToChild(target)
     }
 
-    configureSeparators()
     configurePrintFilesToConsole()
     val modularGenerate = registerModularGenerateTask()
     registerGenerationTaskOnSync(modularGenerate)
@@ -79,12 +77,6 @@ abstract class ModularPlugin<Impl : ModularExtensionImpl> : Plugin<Project> {
             "pathContains, pathMatches or hasPluginId.",
         )
       }
-    }
-  }
-
-  private fun Project.configureSeparators() {
-    tasks.withType(TaskWithSeparator::class.java).configureEach { t ->
-      t.separator.convention(extension.separator)
     }
   }
 

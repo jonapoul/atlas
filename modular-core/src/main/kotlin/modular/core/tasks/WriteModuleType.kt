@@ -12,6 +12,7 @@ import modular.core.internal.TypedModule
 import modular.core.internal.fileInBuildDirectory
 import modular.core.internal.moduleType
 import modular.core.internal.orderedModuleTypes
+import modular.core.internal.writeModuleType
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException
@@ -25,10 +26,9 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class WriteModuleType : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class WriteModuleType : DefaultTask(), TaskWithOutputFile {
   @get:Input abstract val projectPath: Property<String>
   @get:[Input Optional] abstract val moduleType: Property<ModuleType>
-  @get:Input abstract override val separator: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -40,11 +40,12 @@ abstract class WriteModuleType : DefaultTask(), TaskWithSeparator, TaskWithOutpu
   fun execute() {
     val projectPath = projectPath.get()
     val moduleType = moduleType.orNull
-    val separator = separator.get()
     val outputFile = outputFile.get().asFile
 
-    val typedModule = TypedModule(projectPath, moduleType)
-    outputFile.writeText(typedModule.string(separator))
+    writeModuleType(
+      module = TypedModule(projectPath = projectPath, type = moduleType),
+      outputFile = outputFile,
+    )
   }
 
   internal companion object {

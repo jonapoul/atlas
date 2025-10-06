@@ -4,29 +4,36 @@
  */
 package modular.core.internal
 
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.SetSerializer
+import kotlinx.serialization.json.decodeFromStream
+import kotlinx.serialization.json.encodeToStream
 import modular.core.InternalModularApi
-import modular.core.LinkStyle
 import modular.core.LinkType
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.provider.Provider
 import java.io.File
-import java.util.SortedMap
 import kotlin.text.RegexOption.IGNORE_CASE
+import java.io.Serializable as JSerializable
+import kotlinx.serialization.Serializable as KSerializable
 
 @InternalModularApi
-fun readModuleLinks(inputFile: File, separator: String): Set<ModuleLink> = inputFile
-  .readLines()
-  .map { ModuleLink(it, separator) }
-  .toSet()
+fun readModuleLinks(inputFile: File): Set<ModuleLink> = inputFile.inputStream().use { stream ->
+  ModularJson.decodeFromStream(
+    deserializer = SetSerializer(ModuleLink.serializer()),
+    stream = stream,
+  )
+}
 
-internal fun writeModuleLinks(links: Collection<ModuleLink>, outputFile: File, separator: String) {
-  outputFile.printWriter().use { writer ->
-    links.sorted().forEach { link ->
-      writer.write(link.string(separator))
-      writer.write("\n")
-    }
+internal fun writeModuleLinks(links: Collection<ModuleLink>, outputFile: File) {
+  outputFile.outputStream().use { stream ->
+    ModularJson.encodeToStream(
+      serializer = ListSerializer(ModuleLink.serializer()),
+      stream = stream,
+      value = links.sorted(),
+    )
   }
 }
 
@@ -35,26 +42,22 @@ internal fun writeModuleLinks(
   fromPath: String,
   moduleLinks: Map<String, List<String>>,
   linkTypes: Set<LinkType>,
-  separator: String,
-): SortedMap<String, List<String>> {
+): List<ModuleLink> {
   val links = moduleLinks.toSortedMap()
-  outputFile.writeText(
-    buildString {
-      links.forEach { (toPath, configurations) ->
-        configurations
-          .sorted()
-          .forEach { config ->
-            val type = linkTypes.firstOrNull { t ->
-              // treat the given string first as an exact match, then fall back to treating as regex
-              t.configuration == config || t.configuration.toRegex(IGNORE_CASE).matches(config)
-            }
-            val link = ModuleLink(fromPath, toPath, config, type?.style, type?.color)
-            appendLine(link.string(separator))
-          }
+  val filteredLinks = mutableListOf<ModuleLink>()
+  links.forEach { (toPath, configurations) ->
+    configurations
+      .sorted()
+      .forEach { config ->
+        val type = linkTypes.firstOrNull { t ->
+          // treat the given string first as an exact match, then fall back to treating as regex
+          t.configuration == config || t.configuration.toRegex(IGNORE_CASE).matches(config)
+        }
+        filteredLinks += ModuleLink(fromPath, toPath, config, type)
       }
-    },
-  )
-  return links
+  }
+  writeModuleLinks(filteredLinks, outputFile)
+  return filteredLinks
 }
 
 internal fun createModuleLinks(
@@ -76,36 +79,22 @@ internal fun createModuleLinks(
 }
 
 @InternalModularApi
+@KSerializable
 data class ModuleLink(
   val fromPath: String,
   val toPath: String,
   val configuration: String,
-  val style: LinkStyle?,
-  val color: String?,
-) : Comparable<ModuleLink> {
+  val type: LinkType?,
+) : JSerializable, Comparable<ModuleLink> {
   override fun compareTo(other: ModuleLink): Int =
     fromPath.compareTo(other.fromPath).takeIf { it != 0 }
       ?: toPath.compareTo(other.toPath).takeIf { it != 0 }
       ?: configuration.compareTo(other.configuration)
-
-  fun string(separator: String): String = listOf(fromPath, toPath, configuration, style?.string, color)
-    .joinToString(separator) { it.orEmpty() }
 }
 
 @InternalModularApi
 operator fun Iterable<ModuleLink>.contains(module: TypedModule): Boolean =
   any { (from, to, _) -> from == module.projectPath || to == module.projectPath }
-
-private fun ModuleLink(line: String, separator: String): ModuleLink {
-  val (fromPath, toPath, configuration, style, color) = line.split(separator)
-  return ModuleLink(
-    fromPath = fromPath,
-    toPath = toPath,
-    configuration = configuration,
-    style = style.ifEmpty { null }?.let(::parseEnum),
-    color = color.ifEmpty { null },
-  )
-}
 
 private fun ConfigurationContainer.filterUseful(ignoredConfigs: Iterable<String>) = filter { c ->
   ignoredConfigs.none { blocked ->

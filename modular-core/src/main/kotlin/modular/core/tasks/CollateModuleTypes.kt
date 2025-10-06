@@ -6,16 +6,14 @@ package modular.core.tasks
 
 import modular.core.InternalModularApi
 import modular.core.internal.MODULAR_TASK_GROUP
-import modular.core.internal.TypedModule
-import modular.core.internal.TypedModules
 import modular.core.internal.fileInBuildDirectory
+import modular.core.internal.readModuleType
+import modular.core.internal.writeModuleTypes
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
-import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
@@ -24,9 +22,8 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CollateModuleTypes : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class CollateModuleTypes : DefaultTask(), TaskWithOutputFile {
   @get:[PathSensitive(ABSOLUTE) InputFiles] abstract val projectTypeFiles: ConfigurableFileCollection
-  @get:Input abstract override val separator: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -37,16 +34,19 @@ abstract class CollateModuleTypes : DefaultTask(), TaskWithSeparator, TaskWithOu
   @TaskAction
   fun execute() {
     val outputFile = outputFile.get().asFile
-    val separator = separator.get()
-    val modulesWithType = projectTypeFiles
+    val typedModules = projectTypeFiles
       .filter { it.exists() }
-      .map { file -> TypedModule(file.readText(), separator) }
+      .map(::readModuleType)
       .toSortedSet()
-    TypedModules.write(modulesWithType, outputFile, separator)
 
-    logger.info("CollateModuleTypes: ${modulesWithType.size} modules")
-    modulesWithType.forEach { (projectPath, type) ->
-      logger.info("CollateModuleTypes:     path=$projectPath, type=${type?.name}")
+    writeModuleTypes(
+      modules = typedModules,
+      outputFile = outputFile,
+    )
+
+    logger.info("CollateModuleTypes: ${typedModules.size} modules")
+    typedModules.forEach { typedModule ->
+      logger.info("CollateModuleTypes:     typedModule=$typedModule")
     }
   }
 

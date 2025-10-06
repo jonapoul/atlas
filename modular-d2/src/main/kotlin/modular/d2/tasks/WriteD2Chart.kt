@@ -7,15 +7,13 @@ package modular.d2.tasks
 import modular.core.ModularExtension
 import modular.core.Replacement
 import modular.core.internal.MODULAR_TASK_GROUP
-import modular.core.internal.TypedModules
 import modular.core.internal.logIfConfigured
 import modular.core.internal.readModuleLinks
+import modular.core.internal.readModuleTypes
 import modular.core.tasks.CollateModuleTypes
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
-import modular.core.tasks.TaskWithSeparator
 import modular.core.tasks.WriteModuleTree
-import modular.d2.D2Config
 import modular.d2.D2Spec
 import modular.d2.internal.D2Writer
 import org.gradle.api.DefaultTask
@@ -55,20 +53,17 @@ internal abstract class WriteDummyD2Chart : WriteD2ChartBase() {
 }
 
 @CacheableTask
-abstract class WriteD2ChartBase : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class WriteD2ChartBase : DefaultTask(), TaskWithOutputFile {
   // Files
+  @get:[PathSensitive(RELATIVE) InputFile] abstract val globalFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] abstract val linksFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] abstract val moduleTypesFile: RegularFileProperty
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General
-  @get:Input abstract override val separator: Property<String>
   @get:Input abstract val groupModules: Property<Boolean>
   @get:Input abstract val replacements: SetProperty<Replacement>
   @get:Input abstract val thisPath: Property<String>
-
-  // Dotfile config
-  @get:Input abstract val config: Property<D2Config>
 
   init {
     group = MODULAR_TASK_GROUP
@@ -77,20 +72,20 @@ abstract class WriteD2ChartBase : DefaultTask(), TaskWithSeparator, TaskWithOutp
 
   @TaskAction
   open fun execute() {
+    val globalFile = globalFile.get().asFile
     val linksFile = linksFile.get().asFile
     val moduleTypesFile = moduleTypesFile.get().asFile
-    val separator = separator.get()
+    val outputFile = outputFile.get().asFile
 
     val writer = D2Writer(
-      typedModules = TypedModules.read(moduleTypesFile, separator),
-      links = readModuleLinks(linksFile, separator),
+      typedModules = readModuleTypes(moduleTypesFile),
+      links = readModuleLinks(linksFile),
       replacements = replacements.get(),
       thisPath = thisPath.get(),
       groupModules = groupModules.get(),
-      config = config.get(),
+      globalRelativePath = globalFile.relativeTo(outputFile.parentFile).path,
     )
 
-    val outputFile = outputFile.get().asFile
     outputFile.writeText(writer())
   }
 
@@ -103,6 +98,7 @@ abstract class WriteD2ChartBase : DefaultTask(), TaskWithSeparator, TaskWithOutp
     ): TaskProvider<T> = with(target) {
       val collateModuleTypes = CollateModuleTypes.get(rootProject)
       val calculateProjectTree = WriteModuleTree.get(target)
+      val writeD2Classes = WriteD2Classes.get(rootProject)
 
       val qualifier = when (T::class) {
         WriteDummyD2Chart::class -> "Dummy"
@@ -110,6 +106,7 @@ abstract class WriteD2ChartBase : DefaultTask(), TaskWithSeparator, TaskWithOutp
       }
       val name = "write$qualifier${spec.name.capitalized()}Chart"
       val writeChart = tasks.register(name, T::class.java) { task ->
+        task.globalFile.convention(writeD2Classes.map { it.outputFile.get() })
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.set(outputFile)
@@ -119,7 +116,6 @@ abstract class WriteD2ChartBase : DefaultTask(), TaskWithSeparator, TaskWithOutp
       writeChart.configure { task ->
         task.groupModules.convention(extension.groupModules)
         task.replacements.convention(extension.pathTransforms.replacements)
-        task.config.convention(D2Config(spec))
       }
 
       return writeChart

@@ -5,12 +5,7 @@
 package modular.d2.internal
 
 import assertk.assertThat
-import modular.d2.D2Config
-import modular.d2.Direction
-import modular.d2.Location
-import modular.d2.Position
 import modular.d2.d2Writer
-import modular.test.Abc
 import modular.test.AbcWithLinkStyles
 import modular.test.ModuleWithNoLinks
 import modular.test.OneLevelOfSubmodules
@@ -28,6 +23,7 @@ class D2WriterTest {
 
     assertThat(writer()).equalsDiffed(
       """
+        ...@../classes.d2
         app: :app
         data_a: :data:a
         data_b: :data:b
@@ -36,16 +32,16 @@ class D2WriterTest {
         ui_a: :ui:a
         ui_b: :ui:b
         ui_c: :ui:c
-        app -> ui_a
-        app -> ui_b
-        app -> ui_c
-        domain_a -> data_a
-        domain_b -> data_a
-        domain_b -> data_b
-        ui_a -> domain_a
-        ui_b -> domain_b
-        ui_c -> domain_a
-        ui_c -> domain_b
+        app -> ui_a { class: link-implementation }
+        app -> ui_b { class: link-implementation }
+        app -> ui_c { class: link-implementation }
+        domain_a -> data_a { class: link-implementation }
+        domain_b -> data_a { class: link-implementation }
+        domain_b -> data_b { class: link-implementation }
+        ui_a -> domain_a { class: link-implementation }
+        ui_b -> domain_b { class: link-implementation }
+        ui_c -> domain_a { class: link-implementation }
+        ui_c -> domain_b { class: link-implementation }
       """.trimIndent(),
     )
   }
@@ -59,30 +55,34 @@ class D2WriterTest {
 
     assertThat(writer()).equalsDiffed(
       """
+        ...@../classes.d2
         app: :app
         data: :data {
+          class: container
           a: :a
           b: :b
         }
         domain: :domain {
+          class: container
           a: :a
           b: :b
         }
         ui: :ui {
+          class: container
           a: :a
           b: :b
           c: :c
         }
-        app -> ui.a
-        app -> ui.b
-        app -> ui.c
-        domain.a -> data.a
-        domain.b -> data.a
-        domain.b -> data.b
-        ui.a -> domain.a
-        ui.b -> domain.b
-        ui.c -> domain.a
-        ui.c -> domain.b
+        app -> ui.a { class: link-implementation }
+        app -> ui.b { class: link-implementation }
+        app -> ui.c { class: link-implementation }
+        domain.a -> data.a { class: link-implementation }
+        domain.b -> data.a { class: link-implementation }
+        domain.b -> data.b { class: link-implementation }
+        ui.a -> domain.a { class: link-implementation }
+        ui.b -> domain.b { class: link-implementation }
+        ui.c -> domain.a { class: link-implementation }
+        ui.c -> domain.b { class: link-implementation }
       """.trimIndent(),
     )
   }
@@ -96,36 +96,41 @@ class D2WriterTest {
 
     assertThat(writer()).equalsDiffed(
       """
+        ...@../classes.d2
         app: :app
         data: :data {
+          class: container
           a: :a
           b: :b
           sub: :sub {
+            class: container
             sub1: :sub1
             sub2: :sub2
           }
         }
         domain: :domain {
+          class: container
           a: :a
           b: :b
         }
         ui: :ui {
+          class: container
           a: :a
           b: :b
           c: :c
         }
-        app -> ui.a
-        app -> ui.b
-        app -> ui.c
-        domain.a -> data.a
-        domain.a -> data.sub.sub1
-        domain.a -> data.sub.sub2
-        domain.b -> data.a
-        domain.b -> data.b
-        ui.a -> domain.a
-        ui.b -> domain.b
-        ui.c -> domain.a
-        ui.c -> domain.b
+        app -> ui.a { class: link-implementation }
+        app -> ui.b { class: link-implementation }
+        app -> ui.c { class: link-implementation }
+        domain.a -> data.a { class: link-implementation }
+        domain.a -> data.sub.sub1 { class: link-implementation }
+        domain.a -> data.sub.sub2 { class: link-implementation }
+        domain.b -> data.a { class: link-implementation }
+        domain.b -> data.b { class: link-implementation }
+        ui.a -> domain.a { class: link-implementation }
+        ui.b -> domain.b { class: link-implementation }
+        ui.c -> domain.a { class: link-implementation }
+        ui.c -> domain.b { class: link-implementation }
       """.trimIndent(),
     )
   }
@@ -136,55 +141,8 @@ class D2WriterTest {
 
     assertThat(writer()).equalsDiffed(
       """
+        ...@../classes.d2
         app: :app
-      """.trimIndent(),
-    )
-  }
-
-  @Test
-  fun `Simple graph with direction`() {
-    val writer = d2Writer(
-      layout = Abc,
-      config = D2Config(direction = Direction.Right),
-    )
-
-    assertThat(writer()).equalsDiffed(
-      """
-        direction: right
-        a: :a
-        b: :b
-        c: :c
-        a -> b
-        a -> c
-      """.trimIndent(),
-    )
-  }
-
-  @Test
-  fun `Simple graph with root style`() {
-    val writer = d2Writer(
-      layout = Abc,
-      config = D2Config(
-        rootStyle = mapOf(
-          "fill" to "LightBlue",
-          "stroke" to "FireBrick",
-          "stroke-width" to "15",
-        ),
-      ),
-    )
-
-    assertThat(writer()).equalsDiffed(
-      """
-        style: {
-          fill: "LightBlue"
-          stroke: "FireBrick"
-          stroke-width: "15"
-        }
-        a: :a
-        b: :b
-        c: :c
-        a -> b
-        a -> c
       """.trimIndent(),
     )
   }
@@ -197,115 +155,12 @@ class D2WriterTest {
 
     assertThat(writer()).equalsDiffed(
       """
+        ...@../classes.d2
         a: :a
         b: :b
         c: :c
-        a -> b: {
-          style.stroke: "orange"
-          style.stroke-dash: "4"
-        }
-        a -> c: {
-          style.stroke-width: "3"
-        }
-      """.trimIndent(),
-    )
-  }
-
-  @Test
-  fun `Specify group label position`() {
-    val writer = d2Writer(
-      layout = TwoLevelsOfSubmodules,
-      groupModules = true,
-      config = D2Config(groupLabelPosition = Position.TopRight),
-    )
-
-    assertThat(writer()).equalsDiffed(
-      """
-        app: :app
-        data: :data {
-          label.near: top-right
-          a: :a
-          b: :b
-          sub: :sub {
-            label.near: top-right
-            sub1: :sub1
-            sub2: :sub2
-          }
-        }
-        domain: :domain {
-          label.near: top-right
-          a: :a
-          b: :b
-        }
-        ui: :ui {
-          label.near: top-right
-          a: :a
-          b: :b
-          c: :c
-        }
-        app -> ui.a
-        app -> ui.b
-        app -> ui.c
-        domain.a -> data.a
-        domain.a -> data.sub.sub1
-        domain.a -> data.sub.sub2
-        domain.b -> data.a
-        domain.b -> data.b
-        ui.a -> domain.a
-        ui.b -> domain.b
-        ui.c -> domain.a
-        ui.c -> domain.b
-      """.trimIndent(),
-    )
-  }
-
-  @Test
-  fun `Specify group label position and location`() {
-    val writer = d2Writer(
-      layout = TwoLevelsOfSubmodules,
-      groupModules = true,
-      config = D2Config(
-        groupLabelPosition = Position.CenterLeft,
-        groupLabelLocation = Location.Border,
-      ),
-    )
-
-    assertThat(writer()).equalsDiffed(
-      """
-        app: :app
-        data: :data {
-          label.near: border-left-center
-          a: :a
-          b: :b
-          sub: :sub {
-            label.near: border-left-center
-            sub1: :sub1
-            sub2: :sub2
-          }
-        }
-        domain: :domain {
-          label.near: border-left-center
-          a: :a
-          b: :b
-        }
-        ui: :ui {
-          label.near: border-left-center
-          a: :a
-          b: :b
-          c: :c
-        }
-        app -> ui.a
-        app -> ui.b
-        app -> ui.c
-        domain.a -> data.a
-        domain.a -> data.sub.sub1
-        domain.a -> data.sub.sub2
-        domain.b -> data.a
-        domain.b -> data.b
-        ui.a -> domain.a
-        ui.b -> domain.b
-        ui.c -> domain.a
-        ui.c -> domain.b
+        a -> b { class: link-implementation }
+        a -> c { class: link-implementation }
       """.trimIndent(),
     )
   }

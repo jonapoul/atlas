@@ -33,7 +33,6 @@ abstract class ModularExtensionImpl(
   override val groupModules = objects.bool(coreProperties.groupModules)
   override val ignoredConfigs = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
   override val ignoredModules = objects.set(convention = emptySet<Regex>())
-  override val separator = objects.string(coreProperties.separator)
   override val alsoTraverseUpwards = objects.bool(coreProperties.alsoTraverseUpwards)
   override val printFilesToConsole = objects.bool(coreProperties.printFilesToConsole)
   override val checkOutputs = objects.bool(coreProperties.checkOutputs)

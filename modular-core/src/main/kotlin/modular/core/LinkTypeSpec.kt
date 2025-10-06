@@ -6,6 +6,7 @@
 
 package modular.core
 
+import modular.core.internal.ModularJson
 import modular.core.internal.StringEnum
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
@@ -14,7 +15,7 @@ import org.gradle.kotlin.dsl.api
 import org.gradle.kotlin.dsl.implementation
 import org.gradle.kotlin.dsl.register
 import java.io.Serializable as JSerializable
-import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
+import kotlinx.serialization.Serializable as KSerializable
 
 /**
  * Used to configure expected link "types" between your modules. The majority of the time, these are only ever

@@ -9,7 +9,6 @@ import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.createModuleLinks
 import modular.core.internal.fileInBuildDirectory
-import modular.core.internal.linkType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.writeModuleLinks
 import org.gradle.api.DefaultTask
@@ -26,11 +25,10 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class WriteModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class WriteModuleLinks : DefaultTask(), TaskWithOutputFile {
   @get:Input abstract val moduleLinks: MapProperty<String, List<String>>
   @get:Input abstract val linkTypes: SetProperty<LinkType>
   @get:Input abstract val thisPath: Property<String>
-  @get:Input abstract override val separator: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -45,12 +43,11 @@ abstract class WriteModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOutp
       fromPath = thisPath.get(),
       moduleLinks = moduleLinks.get(),
       linkTypes = linkTypes.get(),
-      separator = separator.get(),
     )
 
     logger.info("DumpModuleLinks: ${links.size} links")
-    links.forEach { (child, configurations) ->
-      logger.info("DumpModuleLinks:     child=$child, configurations=[${configurations.joinToString()}]")
+    links.forEach {
+      logger.info("DumpModuleLinks:     link=$it")
     }
   }
 
@@ -74,7 +71,7 @@ abstract class WriteModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOutp
 
       writeLinks.configure { task ->
         task.moduleLinks.convention(createModuleLinks(target, extension.ignoredConfigs.get()))
-        task.linkTypes.convention(extension.orderedLinkTypes().map(::linkType))
+        task.linkTypes.convention(extension.orderedLinkTypes())
       }
 
       return writeLinks

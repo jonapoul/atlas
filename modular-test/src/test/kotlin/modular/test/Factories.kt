@@ -5,6 +5,7 @@
 package modular.test
 
 import modular.core.LinkStyle
+import modular.core.LinkType
 import modular.core.ModuleType
 import modular.core.internal.ModuleLink
 import modular.core.internal.Node
@@ -30,6 +31,5 @@ fun moduleLink(
   fromPath,
   toPath,
   configuration,
-  style,
-  color,
+  type = LinkType(configuration, style, color),
 )

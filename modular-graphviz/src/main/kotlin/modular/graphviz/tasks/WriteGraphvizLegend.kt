@@ -10,19 +10,16 @@ import modular.core.ModuleType
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.buildIndentedString
-import modular.core.internal.linkType
 import modular.core.internal.logIfConfigured
 import modular.core.internal.moduleType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.orderedModuleTypes
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
-import modular.core.tasks.TaskWithSeparator
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.ListProperty
-import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
@@ -52,8 +49,7 @@ internal abstract class WriteDummyGraphvizLegend : WriteGraphvizLegendBase() {
 }
 
 @CacheableTask
-sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
-  @get:Input abstract override val separator: Property<String>
+sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithOutputFile {
   @get:Input abstract val moduleTypes: ListProperty<ModuleType>
   @get:Input abstract val linkTypes: ListProperty<LinkType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
@@ -132,7 +128,7 @@ sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithSeparator, TaskWit
 
       writeLegend.configure { task ->
         task.moduleTypes.convention(extension.orderedModuleTypes().map(::moduleType))
-        task.linkTypes.convention(extension.orderedLinkTypes().map(::linkType))
+        task.linkTypes.convention(extension.orderedLinkTypes())
       }
 
       return writeLegend

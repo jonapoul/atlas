@@ -1,0 +1,56 @@
+direction: right
+style: {
+  stroke: "floralwhite"
+  stroke-width: "3"
+  stroke-dash: "4"
+  double-border: "true"
+}
+vars: {
+  d2-config: {
+    center: true
+    dark-theme-id: 200
+    layout-engine: elk
+    pad: 100
+    sketch: true
+    theme-id: 102
+  }
+}
+classes: {
+  module-AndroidApp {
+    style.fill: "limegreen"
+  }
+  module-KotlinMultiplatform {
+    style.fill: "mediumslateblue"
+  }
+  module-AndroidLibrary {
+    style.fill: "lightgreen"
+  }
+  module-KotlinJVM {
+    style.fill: "mediumorchid"
+  }
+  module-Java {
+    style.fill: "orange"
+  }
+  module-Other {
+    style.fill: "gainsboro"
+  }
+  link-jvmMainImplementation {
+    style.stroke: "orange"
+    style.stroke-width: "3"
+  }
+  link-api {
+    style.stroke: "greenyellow"
+  }
+  link-implementation {
+    style.animated: "true"
+    style.stroke: "fuchsia"
+    style.stroke-dash: "2"
+  }
+  container {
+    label.near: border-bottom-center
+  }
+}
+(** -> **)[*].target-arrowhead.shape: box
+(** -> **)[*].target-arrowhead.style.filled: true
+***.style.font: mono
+***.style.font-size: 32

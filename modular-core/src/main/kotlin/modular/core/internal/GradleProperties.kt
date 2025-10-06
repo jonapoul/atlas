@@ -15,7 +15,6 @@ class CoreGradleProperties(override val project: Project) : IGradleProperties {
   val generateOnSync: Provider<Boolean> = bool(key = "modular.generateOnSync", default = false)
   val groupModules: Provider<Boolean> = bool(key = "modular.groupModules", default = false)
   val printFilesToConsole: Provider<Boolean> = bool(key = "modular.printFilesToConsole", default = false)
-  val separator: Provider<String> = string(key = "modular.separator", default = ",")
 }
 
 @InternalModularApi

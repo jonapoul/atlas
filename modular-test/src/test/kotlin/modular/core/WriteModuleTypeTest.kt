@@ -5,12 +5,12 @@
 package modular.core
 
 import assertk.assertThat
-import assertk.assertions.exists
 import assertk.assertions.isEqualTo
+import modular.core.internal.TypedModule
+import modular.core.internal.readModuleType
 import modular.test.ScenarioTest
 import modular.test.androidHomeOrSkip
 import modular.test.buildRunner
-import modular.test.contentEquals
 import modular.test.runTask
 import modular.test.scenarios.ModuleTypesDeclaredButNoneMatch
 import modular.test.scenarios.NoModuleTypesDeclared
@@ -33,7 +33,7 @@ class WriteModuleTypeTest : ScenarioTest() {
 
     // then
     assertThat(result).taskHadResult(":test-jvm:writeModuleType", SUCCESS)
-    assertThat(moduleTypeFile("test-jvm")).contentEquals(":test-jvm")
+    assertThat(moduleType("test-jvm")).isEqualTo(TypedModule(":test-jvm", type = null))
   }
 
   @Test
@@ -43,7 +43,7 @@ class WriteModuleTypeTest : ScenarioTest() {
 
     // then
     assertThat(result).taskHadResult(":test-jvm:writeModuleType", SUCCESS)
-    assertThat(moduleTypeFile("test-jvm")).contentEquals(":test-jvm")
+    assertThat(moduleType("test-jvm")).isEqualTo(TypedModule(":test-jvm", type = null))
   }
 
   @Test
@@ -53,9 +53,8 @@ class WriteModuleTypeTest : ScenarioTest() {
 
     // then
     assertThat(result).taskWasSuccessful(":test-jvm:writeModuleType")
-    val moduleTypeFile = moduleTypeFile("test-jvm")
-    assertThat(moduleTypeFile).exists()
-    assertThat(moduleTypeFile.readText()).isEqualTo(":test-jvm,Kotlin JVM,mediumorchid")
+    assertThat(moduleType("test-jvm"))
+      .isEqualTo(TypedModule(":test-jvm", type = ModuleType("Kotlin JVM", color = "mediumorchid")))
 
     // when running again, then it's cached
     val result2 = runTask("writeModuleType").build()
@@ -74,9 +73,12 @@ class WriteModuleTypeTest : ScenarioTest() {
     assertThat(result).taskWasSuccessful(":test-domain:writeModuleType")
     assertThat(result).taskWasSuccessful(":test-ui:writeModuleType")
 
-    assertThat(moduleTypeFileContents("test-data")).isEqualTo(":test-data,Data,#ABC123")
-    assertThat(moduleTypeFileContents("test-domain")).isEqualTo(":test-domain,Domain,#123ABC")
-    assertThat(moduleTypeFileContents("test-ui")).isEqualTo(":test-ui,Android,#A1B2C3")
+    assertThat(moduleType("test-data"))
+      .isEqualTo(TypedModule(":test-data", type = ModuleType("Data", color = "#ABC123")))
+    assertThat(moduleType("test-domain"))
+      .isEqualTo(TypedModule(":test-domain", type = ModuleType("Domain", color = "#123ABC")))
+    assertThat(moduleType("test-ui"))
+      .isEqualTo(TypedModule(":test-ui", type = ModuleType("Android", color = "#A1B2C3")))
   }
 
   @Test
@@ -85,9 +87,9 @@ class WriteModuleTypeTest : ScenarioTest() {
     runTask("writeModuleType", androidHomeOrSkip()).build()
 
     // then
-    assertThat(moduleTypeFileContents("a")).isEqualTo(":a,Other,gainsboro")
-    assertThat(moduleTypeFileContents("b")).isEqualTo(":b,Other,gainsboro")
-    assertThat(moduleTypeFileContents("c")).isEqualTo(":c,Other,gainsboro")
+    assertThat(moduleType("a")).isEqualTo(TypedModule(":a", type = ModuleType("Other", color = "gainsboro")))
+    assertThat(moduleType("b")).isEqualTo(TypedModule(":b", type = ModuleType("Other", color = "gainsboro")))
+    assertThat(moduleType("c")).isEqualTo(TypedModule(":c", type = ModuleType("Other", color = "gainsboro")))
   }
 
   @Test
@@ -97,10 +99,10 @@ class WriteModuleTypeTest : ScenarioTest() {
 
     // then
     assertThat(result).taskHadResult(":a:writeModuleType", SUCCESS)
-    assertThat(moduleTypeFile("a")).contentEquals(":a")
+    assertThat(moduleType("a")).isEqualTo(TypedModule(":a", type = null))
   }
 
-  private fun File.moduleTypeFile(modulePath: String): File = resolve("$modulePath/build/modular/module-type")
-
-  private fun File.moduleTypeFileContents(modulePath: String): String = moduleTypeFile(modulePath).readText()
+  private fun File.moduleType(modulePath: String) =
+    resolve("$modulePath/build/modular/module-type")
+      .let(::readModuleType)
 }

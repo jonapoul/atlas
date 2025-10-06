@@ -47,6 +47,7 @@ public final class modular/mermaid/Look : java/lang/Enum, modular/core/internal/
 }
 
 public final class modular/mermaid/MermaidConfig : java/io/Serializable {
+	public static final field Companion Lmodular/mermaid/MermaidConfig$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lmodular/mermaid/Look;Lmodular/mermaid/Theme;Z)V
 	public final fun getAnimateLinks ()Z
 	public final fun getLayout ()Ljava/lang/String;
@@ -54,6 +55,21 @@ public final class modular/mermaid/MermaidConfig : java/io/Serializable {
 	public final fun getLook ()Lmodular/mermaid/Look;
 	public final fun getTheme ()Lmodular/mermaid/Theme;
 	public final fun getThemeVariables ()Ljava/util/Map;
+}
+
+public final synthetic class modular/mermaid/MermaidConfig$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lmodular/mermaid/MermaidConfig$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lmodular/mermaid/MermaidConfig;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lmodular/mermaid/MermaidConfig;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class modular/mermaid/MermaidConfig$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public abstract interface class modular/mermaid/MermaidLayoutSpec : modular/core/internal/PropertiesSpec {
@@ -143,12 +159,11 @@ public abstract class modular/mermaid/tasks/WriteMarkdownLegend : modular/mermai
 	public fun getDescription ()Ljava/lang/String;
 }
 
-public abstract class modular/mermaid/tasks/WriteMarkdownLegendBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/mermaid/tasks/WriteMarkdownLegendBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
 	public fun execute ()V
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 
 public abstract class modular/mermaid/tasks/WriteMermaidChart : modular/mermaid/tasks/WriteMermaidChartBase, modular/core/tasks/ModularGenerationTask {
@@ -157,7 +172,7 @@ public abstract class modular/mermaid/tasks/WriteMermaidChart : modular/mermaid/
 	public fun getDescription ()Ljava/lang/String;
 }
 
-public abstract class modular/mermaid/tasks/WriteMermaidChartBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/mermaid/tasks/WriteMermaidChartBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
@@ -166,7 +181,6 @@ public abstract class modular/mermaid/tasks/WriteMermaidChartBase : org/gradle/a
 	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 

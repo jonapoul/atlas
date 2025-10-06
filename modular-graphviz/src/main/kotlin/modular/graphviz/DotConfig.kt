@@ -6,7 +6,7 @@ package modular.graphviz
 
 import modular.core.InternalModularApi
 import java.io.Serializable as JSerializable
-import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
+import kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
 class DotConfig(

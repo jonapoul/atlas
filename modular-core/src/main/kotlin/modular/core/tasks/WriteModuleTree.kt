@@ -25,11 +25,10 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class WriteModuleTree : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class WriteModuleTree : DefaultTask(), TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val collatedLinks: RegularFileProperty
   @get:Input abstract val alsoTraverseUpwards: Property<Boolean>
   @get:Input abstract val thisPath: Property<String>
-  @get:Input abstract override val separator: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -40,9 +39,8 @@ abstract class WriteModuleTree : DefaultTask(), TaskWithSeparator, TaskWithOutpu
   @TaskAction
   fun execute() {
     val thisPath = thisPath.get()
-    val separator = separator.get()
 
-    val allLinks = readModuleLinks(collatedLinks.get().asFile, separator)
+    val allLinks = readModuleLinks(collatedLinks.get().asFile)
     val tree = mutableSetOf<ModuleLink>()
 
     if (alsoTraverseUpwards.get()) {
@@ -51,7 +49,7 @@ abstract class WriteModuleTree : DefaultTask(), TaskWithSeparator, TaskWithOutpu
     calculate(thisPath, Direction.Down, allLinks, tree)
 
     val outputFile = outputFile.get().asFile
-    writeModuleLinks(tree, outputFile, separator)
+    writeModuleLinks(tree, outputFile)
 
     logger.info("CalculateModuleTree: written ${tree.size} links from ${allLinks.size} across the project")
     tree.forEach { link ->
@@ -88,7 +86,7 @@ abstract class WriteModuleTree : DefaultTask(), TaskWithSeparator, TaskWithOutpu
 
   @InternalModularApi
   companion object {
-    private const val NAME = "calculateModuleTree"
+    private const val NAME = "writeModuleTree"
 
     @InternalModularApi
     fun get(target: Project): TaskProvider<WriteModuleTree> =

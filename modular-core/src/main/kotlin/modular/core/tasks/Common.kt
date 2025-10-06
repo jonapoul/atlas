@@ -10,10 +10,6 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 
-interface TaskWithSeparator : Task {
-  @get:Input val separator: Property<String>
-}
-
 interface TaskWithOutputFile : Task {
   @get:OutputFile val outputFile: RegularFileProperty
 }

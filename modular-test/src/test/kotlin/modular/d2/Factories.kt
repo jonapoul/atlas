@@ -13,12 +13,12 @@ internal fun d2Writer(
   replacements: Set<Replacement> = emptySet(),
   thisPath: String = ":app",
   groupModules: Boolean = false,
-  config: D2Config = D2Config(),
+  classesRelativePath: String = "../classes.d2",
 ) = D2Writer(
   typedModules = layout.modules,
   links = layout.links,
   replacements = replacements,
   thisPath = thisPath,
   groupModules = groupModules,
-  config = config,
+  globalRelativePath = classesRelativePath,
 )
