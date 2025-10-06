@@ -5,6 +5,7 @@
 package modular.test
 
 import modular.core.LinkStyle
+import modular.core.ModuleType
 import modular.core.internal.ModuleLink
 import modular.core.internal.TypedModule
 
@@ -71,7 +72,15 @@ internal object TwoLevelsOfSubmodules : ProjectLayout {
 
 internal object ModuleWithNoLinks : ProjectLayout {
   override val modules = setOf(
-    typedModule(path = ":app"),
+    typedModule(path = ":app", type = ModuleType(name = "red", color = "red")),
+  )
+
+  override val links = emptySet<ModuleLink>()
+}
+
+internal object SingleNestedModuleWithNoLinks : ProjectLayout {
+  override val modules = setOf(
+    typedModule(path = ":a:b", type = ModuleType(name = "red", color = "red")),
   )
 
   override val links = emptySet<ModuleLink>()

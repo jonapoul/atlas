@@ -99,7 +99,7 @@ abstract class WriteModuleTree : DefaultTask(), TaskWithOutputFile {
     ): TaskProvider<WriteModuleTree> = with(target) {
       val calculateTree = tasks.register(NAME, WriteModuleTree::class.java) { task ->
         task.thisPath.convention(target.path)
-        task.outputFile.convention(fileInBuildDirectory("module-tree"))
+        task.outputFile.convention(fileInBuildDirectory("module-tree.json"))
       }
 
       calculateTree.configure { task ->

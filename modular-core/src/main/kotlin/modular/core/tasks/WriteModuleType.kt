@@ -63,7 +63,7 @@ abstract class WriteModuleType : DefaultTask(), TaskWithOutputFile {
     ): TaskProvider<WriteModuleType> = with(target) {
       val writeModule = tasks.register(NAME, WriteModuleType::class.java) { task ->
         task.projectPath.convention(target.path)
-        task.outputFile.convention(fileInBuildDirectory("module-type"))
+        task.outputFile.convention(fileInBuildDirectory("module-type.json"))
       }
 
       afterEvaluate {

@@ -11,7 +11,10 @@ import modular.core.internal.ModuleLink
 import modular.core.internal.Node
 import modular.core.internal.TypedModule
 
-fun node(path: String) = Node(typedModule(path))
+fun node(
+  path: String,
+  type: ModuleType? = null,
+) = Node(typedModule(path, type))
 
 fun typedModule(
   path: String,

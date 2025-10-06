@@ -76,5 +76,5 @@ class CollateModuleTypesTest : ScenarioTest() {
     assertThat(moduleTypes).isEmpty()
   }
 
-  private val File.moduleTypes get() = resolve("build/modular/module-types").let(::readModuleTypes)
+  private val File.moduleTypes get() = resolve("build/modular/module-types.json").let(::readModuleTypes)
 }

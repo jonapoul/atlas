@@ -220,6 +220,6 @@ class WriteModuleTreeTest : ScenarioTest() {
   }
 
   private fun moduleTree(module: String): Set<ModuleLink> = projectRoot
-    .resolve("$module/build/modular/module-tree")
+    .resolve("$module/build/modular/module-tree.json")
     .let(::readModuleLinks)
 }

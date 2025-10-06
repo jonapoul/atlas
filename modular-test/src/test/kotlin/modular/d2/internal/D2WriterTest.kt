@@ -9,6 +9,7 @@ import modular.d2.d2Writer
 import modular.test.AbcWithLinkStyles
 import modular.test.ModuleWithNoLinks
 import modular.test.OneLevelOfSubmodules
+import modular.test.SingleNestedModuleWithNoLinks
 import modular.test.TwoLevelsOfSubmodules
 import modular.test.equalsDiffed
 import kotlin.test.Test
@@ -32,6 +33,7 @@ class D2WriterTest {
         ui_a: :ui:a
         ui_b: :ui:b
         ui_c: :ui:c
+        app.style.stroke-width: 8
         app -> ui_a { class: link-implementation }
         app -> ui_b { class: link-implementation }
         app -> ui_c { class: link-implementation }
@@ -73,6 +75,7 @@ class D2WriterTest {
           b: :b
           c: :c
         }
+        app.style.stroke-width: 8
         app -> ui.a { class: link-implementation }
         app -> ui.b { class: link-implementation }
         app -> ui.c { class: link-implementation }
@@ -119,6 +122,7 @@ class D2WriterTest {
           b: :b
           c: :c
         }
+        app.style.stroke-width: 8
         app -> ui.a { class: link-implementation }
         app -> ui.b { class: link-implementation }
         app -> ui.c { class: link-implementation }
@@ -142,7 +146,28 @@ class D2WriterTest {
     assertThat(writer()).equalsDiffed(
       """
         ...@../classes.d2
-        app: :app
+        app: :app { class: module-red }
+        app.style.stroke-width: 8
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Single nested module with no links`() {
+    val writer = d2Writer(
+      layout = SingleNestedModuleWithNoLinks,
+      groupModules = true,
+      thisPath = ":a:b",
+    )
+
+    assertThat(writer()).equalsDiffed(
+      """
+        ...@../classes.d2
+        a: :a {
+          class: container
+          b: :b { class: module-red }
+        }
+        a.b.style.stroke-width: 8
       """.trimIndent(),
     )
   }
@@ -159,6 +184,7 @@ class D2WriterTest {
         a: :a
         b: :b
         c: :c
+        app.style.stroke-width: 8
         a -> b { class: link-implementation }
         a -> c { class: link-implementation }
       """.trimIndent(),

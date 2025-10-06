@@ -12,6 +12,7 @@ public final class modular/core/LinkStyle : java/lang/Enum, modular/core/interna
 }
 
 public final class modular/core/LinkType : java/io/Serializable {
+	public static final field Companion Lmodular/core/LinkType$Companion;
 	public fun <init> (Ljava/lang/String;Lmodular/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;Lmodular/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -38,6 +39,10 @@ public final synthetic class modular/core/LinkType$$serializer : kotlinx/seriali
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lmodular/core/LinkType;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class modular/core/LinkType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public abstract interface class modular/core/LinkTypeSpec {
@@ -84,6 +89,7 @@ public abstract interface class modular/core/ModularSpec {
 }
 
 public final class modular/core/ModuleType : java/io/Serializable {
+	public static final field Companion Lmodular/core/ModuleType$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -105,6 +111,10 @@ public final synthetic class modular/core/ModuleType$$serializer : kotlinx/seria
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lmodular/core/ModuleType;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class modular/core/ModuleType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public abstract interface class modular/core/ModuleTypeSpec {
@@ -180,6 +190,10 @@ public final synthetic class modular/core/internal/ModuleLink$$serializer : kotl
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lmodular/core/internal/ModuleLink;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class modular/core/internal/ModuleLink$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public abstract interface class modular/core/internal/StringEnum {
