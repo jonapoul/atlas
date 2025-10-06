@@ -39,13 +39,6 @@ interface ModularExtension {
   val ignoredModules: SetProperty<Regex>
 
   /**
-   * A separator character used internally when caching module types and links. You should only need to change this if
-   * any module paths or names in configured [ModuleTypeSpec]s contain a semi-colon.
-   * Defaults to ";".
-   */
-  val separator: Property<String>
-
-  /**
    * Set to true if you want module charts to also show modules that depend on the one in question. This will traverse
    * all the way upwards and downwards. Defaults to false.
    */

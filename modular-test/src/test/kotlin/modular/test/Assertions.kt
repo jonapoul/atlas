@@ -5,23 +5,28 @@
 package modular.test
 
 import assertk.Assert
+import assertk.assertions.isEqualTo
 import assertk.assertions.support.expected
 import assertk.fail
 import modular.core.internal.diff
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.BuildTask
 import org.gradle.testkit.runner.TaskOutcome
+import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import java.io.File
-import kotlin.text.removeSuffix
 
-fun Assert<List<BuildTask>>.allSuccessful() = given { tasks ->
-  val nonSuccesses = tasks.filter { task -> task.outcome != TaskOutcome.SUCCESS }
-  if (nonSuccesses.isEmpty()) return@given
-  val successes = tasks.filter { t -> t.outcome == TaskOutcome.SUCCESS }
+fun Assert<BuildResult>.allTasksSuccessful() = given { result -> assertTasksAllSuccessful(result.tasks) }
+
+fun Assert<List<BuildTask>>.allSuccessful() = given(::assertTasksAllSuccessful)
+
+private fun assertTasksAllSuccessful(tasks: List<BuildTask>) {
+  val nonSuccesses = tasks.filter { task -> task.outcome != SUCCESS }
+  if (nonSuccesses.isEmpty()) return
+  val successes = tasks.filter { t -> t.outcome == SUCCESS }
   fail("Failed allTasksSuccessful: failures=$nonSuccesses, successes=$successes")
 }
 
-fun Assert<BuildResult>.taskWasSuccessful(name: String) = taskHadResult(name, expected = TaskOutcome.SUCCESS)
+fun Assert<BuildResult>.taskWasSuccessful(name: String) = taskHadResult(name, expected = SUCCESS)
 
 fun Assert<BuildResult>.taskHadResult(name: String, expected: TaskOutcome) =
   given { result -> assertThat(result.task(name)).hadResult(expected) }
@@ -51,3 +56,5 @@ fun Assert<String>.equalsDiffed(expected: String) = given { actual ->
     "Unequal strings between expected{${expected.length}} and actual{${stripped.length}}:\n" + diff(expected, stripped),
   )
 }
+
+fun <T> Assert<Set<T>>.isEqualToSet(vararg expected: T) = isEqualTo(expected.toSet())

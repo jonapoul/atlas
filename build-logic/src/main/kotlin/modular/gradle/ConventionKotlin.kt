@@ -27,6 +27,7 @@ class ConventionKotlin : Plugin<Project> {
 
         freeCompilerArgs.addAll(
           "-opt-in=kotlin.RequiresOptIn",
+          "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
           "-opt-in=modular.core.InternalModularApi",
         )
       }

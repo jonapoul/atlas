@@ -22,6 +22,7 @@ class ConventionGradlePlugin : Plugin<Project> {
       apply(ConventionLicensee::class)
       apply(ConventionPublish::class)
       apply(JavaGradlePluginPlugin::class)
+      apply("org.jetbrains.kotlin.plugin.serialization")
     }
 
     extensions.configure<GradlePluginDevelopmentExtension> {
@@ -38,6 +39,7 @@ class ConventionGradlePlugin : Plugin<Project> {
 
     dependencies {
       "compileOnly"(libs("kotlin.gradle"))
+      "implementation"(libs("kotlinx.serialization"))
       testPluginClasspath(libs("agp"))
       testPluginClasspath(libs("kotlin.gradle"))
     }

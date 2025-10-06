@@ -5,7 +5,7 @@
 package modular.core
 
 import java.io.Serializable as JSerializable
-import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
+import kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
 data class ModuleType(

@@ -7,13 +7,12 @@ package modular.graphviz.tasks
 import modular.core.ModularExtension
 import modular.core.Replacement
 import modular.core.internal.MODULAR_TASK_GROUP
-import modular.core.internal.TypedModules
 import modular.core.internal.logIfConfigured
 import modular.core.internal.readModuleLinks
+import modular.core.internal.readModuleTypes
 import modular.core.tasks.CollateModuleTypes
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
-import modular.core.tasks.TaskWithSeparator
 import modular.core.tasks.WriteModuleTree
 import modular.graphviz.DotConfig
 import modular.graphviz.GraphvizSpec
@@ -55,14 +54,13 @@ internal abstract class WriteDummyGraphvizChart : WriteGraphvizChartBase() {
 }
 
 @CacheableTask
-abstract class WriteGraphvizChartBase : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class WriteGraphvizChartBase : DefaultTask(), TaskWithOutputFile {
   // Files
   @get:[PathSensitive(RELATIVE) InputFile] abstract val linksFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] abstract val moduleTypesFile: RegularFileProperty
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General
-  @get:Input abstract override val separator: Property<String>
   @get:Input abstract val groupModules: Property<Boolean>
   @get:Input abstract val replacements: SetProperty<Replacement>
   @get:Input abstract val thisPath: Property<String>
@@ -79,11 +77,10 @@ abstract class WriteGraphvizChartBase : DefaultTask(), TaskWithSeparator, TaskWi
   open fun execute() {
     val linksFile = linksFile.get().asFile
     val moduleTypesFile = moduleTypesFile.get().asFile
-    val separator = separator.get()
 
     val writer = DotWriter(
-      typedModules = TypedModules.read(moduleTypesFile, separator),
-      links = readModuleLinks(linksFile, separator),
+      typedModules = readModuleTypes(moduleTypesFile),
+      links = readModuleLinks(linksFile),
       replacements = replacements.get(),
       thisPath = thisPath.get(),
       groupModules = groupModules.get(),

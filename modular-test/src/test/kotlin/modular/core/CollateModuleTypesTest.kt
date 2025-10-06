@@ -5,9 +5,12 @@
 package modular.core
 
 import assertk.assertThat
+import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
+import modular.core.internal.TypedModule
+import modular.core.internal.readModuleTypes
 import modular.test.ScenarioTest
-import modular.test.contentEquals
+import modular.test.isEqualToSet
 import modular.test.runTask
 import modular.test.scenarios.NoSubmodules
 import modular.test.scenarios.ThreeModulesWithBuiltInTypes
@@ -31,12 +34,10 @@ class CollateModuleTypesTest : ScenarioTest() {
     assertThat(result).taskWasSuccessful(":collateModuleTypes")
 
     // and the types were aggregated in the root module's build dir
-    assertThat(moduleTypesFile).contentEquals(
-      expected = """
-        :test-data,Data,#ABC123
-        :test-domain,Domain,#123ABC
-        :test-ui,Android,#A1B2C3
-      """.trimIndent(),
+    assertThat(moduleTypes).isEqualToSet(
+      TypedModule(projectPath = ":test-data", type = ModuleType(name = "Data", color = "#ABC123")),
+      TypedModule(projectPath = ":test-domain", type = ModuleType(name = "Domain", color = "#123ABC")),
+      TypedModule(projectPath = ":test-ui", type = ModuleType(name = "Android", color = "#A1B2C3")),
     )
   }
 
@@ -54,12 +55,10 @@ class CollateModuleTypesTest : ScenarioTest() {
     assertThat(result).taskWasSuccessful(":collateModuleTypes")
 
     // and the types were aggregated in the root module's build dir
-    assertThat(moduleTypesFile).contentEquals(
-      expected = """
-        :test-data,Java,orange
-        :test-domain,Kotlin JVM,mediumorchid
-        :test-ui,Android Library,lightgreen
-      """.trimIndent(),
+    assertThat(moduleTypes).isEqualToSet(
+      TypedModule(projectPath = ":test-data", type = ModuleType(name = "Java", color = "orange")),
+      TypedModule(projectPath = ":test-domain", type = ModuleType(name = "Kotlin JVM", color = "mediumorchid")),
+      TypedModule(projectPath = ":test-ui", type = ModuleType(name = "Android Library", color = "lightgreen")),
     )
   }
 
@@ -74,8 +73,8 @@ class CollateModuleTypesTest : ScenarioTest() {
 
     // and no types were collated, but the task still passed
     assertThat(result).taskWasSuccessful(":collateModuleTypes")
-    assertThat(moduleTypesFile).contentEquals(expected = "")
+    assertThat(moduleTypes).isEmpty()
   }
 
-  private val File.moduleTypesFile get() = resolve("build/modular/module-types")
+  private val File.moduleTypes get() = resolve("build/modular/module-types").let(::readModuleTypes)
 }

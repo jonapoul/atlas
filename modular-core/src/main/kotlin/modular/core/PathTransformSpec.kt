@@ -6,10 +6,11 @@
 
 package modular.core
 
+import modular.core.internal.RegexSerializer
 import org.gradle.api.provider.SetProperty
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 import java.io.Serializable as JSerializable
-import org.gradle.internal.impldep.kotlinx.serialization.Serializable as KSerializable
+import kotlinx.serialization.Serializable as KSerializable
 
 /**
  * API for modifying module names when inserting them into any generated diagrams. For example if your modules are
@@ -39,6 +40,6 @@ interface PathTransformSpec {
 
 @KSerializable
 class Replacement(
-  val pattern: Regex,
+  @KSerializable(RegexSerializer::class) val pattern: Regex,
   val replacement: String,
 ) : JSerializable

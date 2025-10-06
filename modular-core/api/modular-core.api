@@ -29,6 +29,17 @@ public final class modular/core/LinkType : java/io/Serializable {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final synthetic class modular/core/LinkType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lmodular/core/LinkType$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lmodular/core/LinkType;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lmodular/core/LinkType;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
 public abstract interface class modular/core/LinkTypeSpec {
 	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
 	public abstract fun getConfiguration ()Lorg/gradle/api/provider/Property;
@@ -50,7 +61,6 @@ public abstract interface class modular/core/ModularExtension {
 	public abstract fun getModuleTypes ()Lmodular/core/NamedModuleTypeContainer;
 	public abstract fun getPathTransforms ()Lmodular/core/PathTransformSpec;
 	public abstract fun getPrintFilesToConsole ()Lorg/gradle/api/provider/Property;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
 	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
 	public abstract fun pathTransforms (Lorg/gradle/api/Action;)V
@@ -84,6 +94,17 @@ public final class modular/core/ModuleType : java/io/Serializable {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class modular/core/ModuleType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lmodular/core/ModuleType$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lmodular/core/ModuleType;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lmodular/core/ModuleType;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public abstract interface class modular/core/ModuleTypeSpec {
@@ -125,17 +146,59 @@ public abstract interface class modular/core/PathTransformSpec {
 }
 
 public final class modular/core/Replacement : java/io/Serializable {
+	public static final field Companion Lmodular/core/Replacement$Companion;
 	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
 	public final fun getPattern ()Lkotlin/text/Regex;
 	public final fun getReplacement ()Ljava/lang/String;
+}
+
+public final synthetic class modular/core/Replacement$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lmodular/core/Replacement$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lmodular/core/Replacement;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lmodular/core/Replacement;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class modular/core/Replacement$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public abstract interface class modular/core/internal/IntEnum {
 	public abstract fun getValue ()I
 }
 
+public final synthetic class modular/core/internal/ModuleLink$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lmodular/core/internal/ModuleLink$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lmodular/core/internal/ModuleLink;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lmodular/core/internal/ModuleLink;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
 public abstract interface class modular/core/internal/StringEnum {
 	public abstract fun getString ()Ljava/lang/String;
+}
+
+public final synthetic class modular/core/internal/TypedModule$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lmodular/core/internal/TypedModule$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lmodular/core/internal/TypedModule;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lmodular/core/internal/TypedModule;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class modular/core/internal/TypedModule$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public abstract class modular/core/tasks/CheckFileDiff : org/gradle/api/DefaultTask {
@@ -148,21 +211,19 @@ public abstract class modular/core/tasks/CheckFileDiff : org/gradle/api/DefaultT
 	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/core/tasks/CollateModuleLinks : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/core/tasks/CollateModuleLinks : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getModuleLinkFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/core/tasks/CollateModuleTypes : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/core/tasks/CollateModuleTypes : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getProjectTypeFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 
 public abstract interface class modular/core/tasks/ModularGenerationTask : org/gradle/api/Task {
@@ -173,37 +234,30 @@ public abstract interface class modular/core/tasks/TaskWithOutputFile : org/grad
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 }
 
-public abstract interface class modular/core/tasks/TaskWithSeparator : org/gradle/api/Task {
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
-}
-
-public abstract class modular/core/tasks/WriteModuleLinks : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/core/tasks/WriteModuleLinks : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getModuleLinks ()Lorg/gradle/api/provider/MapProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/core/tasks/WriteModuleTree : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/core/tasks/WriteModuleTree : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getAlsoTraverseUpwards ()Lorg/gradle/api/provider/Property;
 	public abstract fun getCollatedLinks ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/core/tasks/WriteModuleType : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/core/tasks/WriteModuleType : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getModuleType ()Lorg/gradle/api/provider/Property;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 
 public abstract class modular/core/tasks/WriteReadme : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {

@@ -6,6 +6,7 @@ package modular.d2.tasks
 
 import assertk.assertThat
 import modular.test.ScenarioTest
+import modular.test.allTasksSuccessful
 import modular.test.contentEquals
 import modular.test.runTask
 import modular.test.scenarios.D2Basic
@@ -15,9 +16,12 @@ class WriteD2ChartTest : ScenarioTest() {
   @Test
   fun `Generate charts from basic config`() = runScenario(D2Basic) {
     // when
-    runTask("writeD2Chart").build()
+    val result = runTask("writeD2Chart").build()
 
-    // then the files were generated
+    // then
+    assertThat(result).allTasksSuccessful()
+
+    // and the files were generated
     val d2FileA = resolve("a/modular/chart.d2")
     val d2FileB = resolve("b/modular/chart.d2")
     val d2FileC = resolve("c/modular/chart.d2")
@@ -25,15 +29,27 @@ class WriteD2ChartTest : ScenarioTest() {
     // and contain expected contents, with modules in declaration order
     assertThat(d2FileA).contentEquals(
       """
-        a: :a
-        b: :b
-        c: :c
+        ...@../../modular/classes.d2
+        a: :a { class: module-KotlinJVM }
+        b: :b { class: module-Java }
+        c: :c { class: module-Java }
         a -> b
         a -> c
       """.trimIndent(),
     )
 
-    assertThat(d2FileB).contentEquals("b: :b")
-    assertThat(d2FileC).contentEquals("c: :c")
+    assertThat(d2FileB).contentEquals(
+      """
+        ...@../../modular/classes.d2
+        b: :b { class: module-Java }
+      """.trimIndent(),
+    )
+
+    assertThat(d2FileC).contentEquals(
+      """
+        ...@../../modular/classes.d2
+        c: :c { class: module-Java }
+      """.trimIndent(),
+    )
   }
 }

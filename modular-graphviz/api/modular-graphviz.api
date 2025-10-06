@@ -38,6 +38,7 @@ public final class modular/graphviz/Dir : java/lang/Enum, modular/core/internal/
 }
 
 public final class modular/graphviz/DotConfig : java/io/Serializable {
+	public static final field Companion Lmodular/graphviz/DotConfig$Companion;
 	public fun <init> ()V
 	public fun <init> (Lmodular/graphviz/ArrowType;Lmodular/graphviz/ArrowType;Ljava/lang/String;Lmodular/graphviz/Dir;Ljava/lang/Integer;Ljava/lang/Integer;Lmodular/graphviz/LayoutEngine;Lmodular/graphviz/RankDir;Ljava/lang/Float;)V
 	public synthetic fun <init> (Lmodular/graphviz/ArrowType;Lmodular/graphviz/ArrowType;Ljava/lang/String;Lmodular/graphviz/Dir;Ljava/lang/Integer;Ljava/lang/Integer;Lmodular/graphviz/LayoutEngine;Lmodular/graphviz/RankDir;Ljava/lang/Float;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -50,6 +51,21 @@ public final class modular/graphviz/DotConfig : java/io/Serializable {
 	public final fun getLayoutEngine ()Lmodular/graphviz/LayoutEngine;
 	public final fun getRankDir ()Lmodular/graphviz/RankDir;
 	public final fun getRankSep ()Ljava/lang/Float;
+}
+
+public final synthetic class modular/graphviz/DotConfig$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lmodular/graphviz/DotConfig$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lmodular/graphviz/DotConfig;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lmodular/graphviz/DotConfig;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class modular/graphviz/DotConfig$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class modular/graphviz/FileFormat : java/lang/Enum, modular/core/internal/StringEnum {
@@ -179,7 +195,7 @@ public abstract class modular/graphviz/tasks/WriteGraphvizChart : modular/graphv
 	public fun getDescription ()Ljava/lang/String;
 }
 
-public abstract class modular/graphviz/tasks/WriteGraphvizChartBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/graphviz/tasks/WriteGraphvizChartBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
@@ -188,7 +204,6 @@ public abstract class modular/graphviz/tasks/WriteGraphvizChartBase : org/gradle
 	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 
@@ -198,12 +213,11 @@ public abstract class modular/graphviz/tasks/WriteGraphvizLegend : modular/graph
 	public fun getDescription ()Ljava/lang/String;
 }
 
-public abstract class modular/graphviz/tasks/WriteGraphvizLegendBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile, modular/core/tasks/TaskWithSeparator {
+public abstract class modular/graphviz/tasks/WriteGraphvizLegendBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
 	public fun execute ()V
 	public abstract fun getDescription ()Ljava/lang/String;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getSeparator ()Lorg/gradle/api/provider/Property;
 }
 

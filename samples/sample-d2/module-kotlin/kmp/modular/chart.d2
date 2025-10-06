@@ -1,46 +1,15 @@
-vars: {
-  d2-config: {
-    center: true
-    dark-theme-id: 200
-    layout-engine: elk
-    pad: 100
-    sketch: true
-    theme-id: 102
-  }
-}
-direction: right
-style: {
-  stroke: "floralwhite"
-  stroke-width: "3"
-  stroke-dash: "4"
-  double-border: "true"
-}
-module-java: :module-java
+...@../../../modular/classes.d2
+module-java: :module-java { class: module-Java }
 module-android: :module-android {
-  label.near: border-bottom-center
-  lib: :lib
+  class: container
+  lib: :lib { class: module-AndroidLibrary }
 }
 module-kotlin: :module-kotlin {
-  label.near: border-bottom-center
-  jvm: :jvm
-  kmp: :kmp
+  class: container
+  jvm: :jvm { class: module-KotlinJVM }
+  kmp: :kmp { class: module-KotlinMultiplatform }
 }
-module-android.lib -> module-kotlin.jvm: {
-  style.animated: "true"
-  style.stroke: "fuchsia"
-  style.stroke-dash: "2"
-}
-module-kotlin.kmp -> module-android.lib: {
-  style.stroke: "greenyellow"
-}
-module-kotlin.kmp -> module-java: {
-  style.stroke: "orange"
-  style.stroke-width: "3"
-}
-module-kotlin.kmp -> module-kotlin.jvm: {
-  style.stroke: "greenyellow"
-}
-(** -> **)[*].target-arrowhead.shape: box
-(** -> **)[*].target-arrowhead.style.filled: true
-***.style.font: mono
-***.style.font-size: 32
+module-android.lib -> module-kotlin.jvm { class: link-implementation }
+module-kotlin.kmp -> module-android.lib { class: link-api }
+module-kotlin.kmp -> module-java { class: link-jvmMainImplementation }
+module-kotlin.kmp -> module-kotlin.jvm { class: link-api }

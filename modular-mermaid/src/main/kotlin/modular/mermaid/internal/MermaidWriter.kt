@@ -92,7 +92,7 @@ internal class MermaidWriter(
   private fun IndentedStringBuilder.appendLinks() {
     links.forEachIndexed { i, link ->
       val arrowPrefix = if (config.animateLinks) "link$i@" else ""
-      val arrow = when (link.style) {
+      val arrow = when (link.type?.style) {
         LinkStyle.Bold -> "==>"
         LinkStyle.Dashed -> "-.->"
         LinkStyle.Dotted -> "-.->"
@@ -101,7 +101,7 @@ internal class MermaidWriter(
         else -> "-->"
       }
       appendLine("${link.fromPath.label} $arrowPrefix$arrow ${link.toPath.label}")
-      link.color?.let { color -> appendLine("linkStyle $i stroke:$color") }
+      link.type?.color?.let { color -> appendLine("linkStyle $i stroke:$color") }
     }
 
     if (config.animateLinks) {

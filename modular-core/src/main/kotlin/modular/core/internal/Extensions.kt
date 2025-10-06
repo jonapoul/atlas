@@ -23,8 +23,8 @@ fun ModularExtensionImpl.orderedModuleTypes(): List<ModuleTypeSpec> =
   (moduleTypes as OrderedNamedContainer<ModuleTypeSpec>).getInOrder()
 
 @InternalModularApi
-fun ModularExtensionImpl.orderedLinkTypes(): List<LinkTypeSpec> =
-  (linkTypes as OrderedNamedContainer<LinkTypeSpec>).getInOrder()
+fun ModularExtensionImpl.orderedLinkTypes(): List<LinkType> =
+  (linkTypes as OrderedNamedContainer<LinkTypeSpec>).getInOrder().map(::linkType)
 
 @InternalModularApi
 fun moduleType(type: ModuleTypeSpec) = ModuleType(
@@ -87,16 +87,17 @@ fun Project.fileInBuildDirectory(path: String): Provider<RegularFile> =
 private const val DIR_NAME = "modular"
 
 @InternalModularApi
-fun Project.outputFile(variant: Variant, fileExtension: String): File {
+fun Project.outputFile(variant: Variant, fileExtension: String, filename: String = defaultFilename(variant)): File {
   val directory = when (variant) {
     Variant.Chart -> project.rootDir().resolve(DIR_NAME)
     Variant.Legend -> rootProject.rootDir().resolve(DIR_NAME)
   }
-  val filename = when (variant) {
-    Variant.Chart -> "chart"
-    Variant.Legend -> "legend"
-  }
   return directory.resolve("$filename.$fileExtension")
+}
+
+private fun defaultFilename(variant: Variant) = when (variant) {
+  Variant.Chart -> "chart"
+  Variant.Legend -> "legend"
 }
 
 private fun Project.rootDir() = layout.projectDirectory.asFile

@@ -14,7 +14,6 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
@@ -26,10 +25,9 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CollateModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOutputFile {
+abstract class CollateModuleLinks : DefaultTask(), TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFiles] abstract val moduleLinkFiles: ConfigurableFileCollection
   @get:Input abstract val ignoredModules: SetProperty<Regex>
-  @get:Input abstract override val separator: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -39,11 +37,10 @@ abstract class CollateModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOu
 
   @TaskAction
   fun execute() {
-    val separator = separator.get()
     val outputFile = outputFile.get().asFile
 
     val links = moduleLinkFiles
-      .flatMap { file -> readModuleLinks(file, separator) }
+      .flatMap(::readModuleLinks)
       .filterModules()
       .toSet()
 
@@ -53,7 +50,7 @@ abstract class CollateModuleLinks : DefaultTask(), TaskWithSeparator, TaskWithOu
       }
     }
 
-    writeModuleLinks(links, outputFile, separator)
+    writeModuleLinks(links, outputFile)
 
     logger.info("CollateModuleLinks: ${links.size} links")
     links.forEach { link ->

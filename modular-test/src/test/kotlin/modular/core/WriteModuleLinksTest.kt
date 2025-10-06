@@ -7,8 +7,11 @@ package modular.core
 import assertk.assertThat
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
+import modular.core.internal.ModuleLink
+import modular.core.internal.readModuleLinks
 import modular.test.ScenarioTest
 import modular.test.allSuccessful
+import modular.test.isEqualToSet
 import modular.test.runTask
 import modular.test.scenarios.CustomConfigurationExcluded
 import modular.test.scenarios.CustomConfigurations
@@ -19,7 +22,7 @@ import modular.test.scenarios.TriangleGraph
 import modular.test.taskWasSuccessful
 import kotlin.test.Test
 
-class DumpModuleLinksTest : ScenarioTest() {
+class WriteModuleLinksTest : ScenarioTest() {
   @Test
   fun `Empty file for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when
@@ -29,7 +32,7 @@ class DumpModuleLinksTest : ScenarioTest() {
     assertThat(result).taskWasSuccessful(":test-jvm:writeModuleLinks")
 
     // and the links file is empty
-    assertThat(moduleLinks(module = "test-jvm")).isEqualTo(emptyList())
+    assertThat(moduleLinks(module = "test-jvm")).isEmpty()
   }
 
   @Test
@@ -60,14 +63,17 @@ class DumpModuleLinksTest : ScenarioTest() {
     assertThat(result).taskWasSuccessful(":bottom:writeModuleLinks")
 
     // and the links file is empty
-    assertThat(moduleLinks(module = "top"))
-      .isEqualTo(listOf(":top,:mid-a,api,,", ":top,:mid-b,implementation,,"))
-    assertThat(moduleLinks(module = "mid-a"))
-      .isEqualTo(listOf(":mid-a,:bottom,api,,"))
-    assertThat(moduleLinks(module = "mid-b"))
-      .isEqualTo(listOf(":mid-b,:bottom,implementation,,"))
-    assertThat(moduleLinks(module = "bottom"))
-      .isEqualTo(emptyList())
+    assertThat(moduleLinks(module = "top")).isEqualToSet(
+      ModuleLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
+      ModuleLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
+    )
+    assertThat(moduleLinks(module = "mid-a")).isEqualToSet(
+      ModuleLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
+    )
+    assertThat(moduleLinks(module = "mid-b")).isEqualToSet(
+      ModuleLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
+    )
+    assertThat(moduleLinks(module = "bottom")).isEqualTo(emptySet())
   }
 
   @Test
@@ -79,9 +85,18 @@ class DumpModuleLinksTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
 
     // and the triangle links were detected as expected
-    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b1,implementation,,", ":a,:b2,implementation,,"))
-    assertThat(moduleLinks(module = "b1")).isEqualTo(listOf(":b1,:c1,implementation,,", ":b1,:c2,implementation,,"))
-    assertThat(moduleLinks(module = "b2")).isEqualTo(listOf(":b2,:c2,implementation,,", ":b2,:c3,implementation,,"))
+    assertThat(moduleLinks(module = "a")).isEqualToSet(
+      ModuleLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
+      ModuleLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
+    )
+    assertThat(moduleLinks(module = "b1")).isEqualToSet(
+      ModuleLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
+      ModuleLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
+    )
+    assertThat(moduleLinks(module = "b2")).isEqualToSet(
+      ModuleLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
+      ModuleLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
+    )
     assertThat(moduleLinks(module = "c1")).isEmpty()
     assertThat(moduleLinks(module = "c2")).isEmpty()
     assertThat(moduleLinks(module = "c3")).isEmpty()
@@ -96,7 +111,10 @@ class DumpModuleLinksTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
 
     // and the two custom configs were detected as links
-    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b,abc,,", ":a,:b,xyz,,"))
+    assertThat(moduleLinks(module = "a")).isEqualToSet(
+      ModuleLink(fromPath = ":a", toPath = ":b", configuration = "abc", type = null),
+      ModuleLink(fromPath = ":a", toPath = ":b", configuration = "xyz", type = null),
+    )
     assertThat(moduleLinks(module = "b")).isEmpty()
   }
 
@@ -109,12 +127,13 @@ class DumpModuleLinksTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
 
     // and the two custom configs were detected as links, but the xyz config was excluded
-    assertThat(moduleLinks(module = "a")).isEqualTo(listOf(":a,:b,abc,,"))
+    assertThat(moduleLinks(module = "a")).isEqualToSet(
+      ModuleLink(fromPath = ":a", toPath = ":b", configuration = "abc", type = null),
+    )
     assertThat(moduleLinks(module = "b")).isEmpty()
   }
 
-  private fun moduleLinks(module: String) = projectRoot
+  private fun moduleLinks(module: String): Set<ModuleLink> = projectRoot
     .resolve("$module/build/modular/module-links")
-    .readLines()
-    .filter { it.isNotBlank() }
+    .let(::readModuleLinks)
 }
