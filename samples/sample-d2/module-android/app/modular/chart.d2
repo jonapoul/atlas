@@ -10,10 +10,24 @@ module-kotlin: :module-kotlin {
   jvm: :jvm { class: module-KotlinJVM }
   kmp: :kmp { class: module-KotlinMultiplatform }
 }
-module-android.app.style.stroke-width: 8
+module-android.app.class: thisProject
 module-android.app -> module-android.lib { class: link-implementation }
 module-android.app -> module-kotlin.kmp { class: link-implementation }
 module-android.lib -> module-kotlin.jvm { class: link-implementation }
 module-kotlin.kmp -> module-android.lib { class: link-api }
 module-kotlin.kmp -> module-java { class: link-jvmMainImplementation }
 module-kotlin.kmp -> module-kotlin.jvm { class: link-api }
+vars: {
+  d2-legend: {
+    module-AndroidApp: Android App { class: module-AndroidApp }
+    module-AndroidLibrary: Android Library { class: module-AndroidLibrary }
+    module-Java: Java { class: module-Java }
+    module-KotlinJVM: Kotlin JVM { class: module-KotlinJVM }
+    module-KotlinMultiplatform: Kotlin Multiplatform { class: module-KotlinMultiplatform }
+    module-dummy1.class: hidden
+    module-dummy2.class: hidden
+    module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+    module-dummy1 -> module-dummy2: api { class: link-api }
+    module-dummy1 -> module-dummy2: jvmMainImplementation { class: link-jvmMainImplementation }
+  }
+}

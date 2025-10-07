@@ -33,7 +33,7 @@ class D2WriterTest {
         ui_a: :ui:a
         ui_b: :ui:b
         ui_c: :ui:c
-        app.style.stroke-width: 8
+        app.class: thisProject
         app -> ui_a { class: link-implementation }
         app -> ui_b { class: link-implementation }
         app -> ui_c { class: link-implementation }
@@ -44,6 +44,13 @@ class D2WriterTest {
         ui_b -> domain_b { class: link-implementation }
         ui_c -> domain_a { class: link-implementation }
         ui_c -> domain_b { class: link-implementation }
+        vars: {
+          d2-legend: {
+            module-dummy1.class: hidden
+            module-dummy2.class: hidden
+            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+          }
+        }
       """.trimIndent(),
     )
   }
@@ -75,7 +82,7 @@ class D2WriterTest {
           b: :b
           c: :c
         }
-        app.style.stroke-width: 8
+        app.class: thisProject
         app -> ui.a { class: link-implementation }
         app -> ui.b { class: link-implementation }
         app -> ui.c { class: link-implementation }
@@ -86,6 +93,13 @@ class D2WriterTest {
         ui.b -> domain.b { class: link-implementation }
         ui.c -> domain.a { class: link-implementation }
         ui.c -> domain.b { class: link-implementation }
+        vars: {
+          d2-legend: {
+            module-dummy1.class: hidden
+            module-dummy2.class: hidden
+            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+          }
+        }
       """.trimIndent(),
     )
   }
@@ -122,7 +136,7 @@ class D2WriterTest {
           b: :b
           c: :c
         }
-        app.style.stroke-width: 8
+        app.class: thisProject
         app -> ui.a { class: link-implementation }
         app -> ui.b { class: link-implementation }
         app -> ui.c { class: link-implementation }
@@ -135,6 +149,13 @@ class D2WriterTest {
         ui.b -> domain.b { class: link-implementation }
         ui.c -> domain.a { class: link-implementation }
         ui.c -> domain.b { class: link-implementation }
+        vars: {
+          d2-legend: {
+            module-dummy1.class: hidden
+            module-dummy2.class: hidden
+            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+          }
+        }
       """.trimIndent(),
     )
   }
@@ -147,7 +168,12 @@ class D2WriterTest {
       """
         ...@../classes.d2
         app: :app { class: module-red }
-        app.style.stroke-width: 8
+        app.class: thisProject
+        vars: {
+          d2-legend: {
+            module-red: red { class: module-red }
+          }
+        }
       """.trimIndent(),
     )
   }
@@ -167,7 +193,12 @@ class D2WriterTest {
           class: container
           b: :b { class: module-red }
         }
-        a.b.style.stroke-width: 8
+        a.b.class: thisProject
+        vars: {
+          d2-legend: {
+            module-red: red { class: module-red }
+          }
+        }
       """.trimIndent(),
     )
   }
@@ -176,6 +207,7 @@ class D2WriterTest {
   fun `Graph with link styles and colors`() {
     val writer = d2Writer(
       layout = AbcWithLinkStyles,
+      thisPath = ":a",
     )
 
     assertThat(writer()).equalsDiffed(
@@ -184,9 +216,17 @@ class D2WriterTest {
         a: :a
         b: :b
         c: :c
-        app.style.stroke-width: 8
+        a.class: thisProject
         a -> b { class: link-implementation }
         a -> c { class: link-implementation }
+        vars: {
+          d2-legend: {
+            module-dummy1.class: hidden
+            module-dummy2.class: hidden
+            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+          }
+        }
       """.trimIndent(),
     )
   }

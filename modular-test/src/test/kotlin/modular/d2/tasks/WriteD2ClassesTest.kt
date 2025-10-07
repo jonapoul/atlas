@@ -45,6 +45,12 @@ class WriteD2ClassesTest : ScenarioTest() {
           }
           container {
           }
+          hidden {
+            style.opacity: 0
+          }
+          thisProject {
+            style.stroke-width: 8
+          }
         }
       """.trimIndent(),
     )

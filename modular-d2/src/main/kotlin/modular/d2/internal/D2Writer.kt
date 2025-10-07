@@ -7,6 +7,8 @@
 package modular.d2.internal
 
 import modular.core.InternalModularApi
+import modular.core.LinkType
+import modular.core.ModuleType
 import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
@@ -14,6 +16,7 @@ import modular.core.internal.ModuleLink
 import modular.core.internal.Subgraph
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
+import modular.core.internal.contains
 
 @InternalModularApi
 class D2Writer(
@@ -29,8 +32,9 @@ class D2Writer(
   override fun invoke(): String = buildIndentedString {
     appendImports()
     appendModules()
-    appendLine("${thisPath.fullKey()}.style.stroke-width: 8")
+    appendLine("${thisPath.fullKey()}.class: $THIS_PROJECT_CLASS")
     appendLinks()
+    appendLegend()
   }
 
   private fun IndentedStringBuilder.appendImports() {
@@ -70,6 +74,58 @@ class D2Writer(
         val suffix = l.type?.let { type -> " { class: ${type.classId} }" }.orEmpty()
         appendLine("${l.fromPath.fullKey()} -> ${l.toPath.fullKey()}$suffix")
       }
+  }
+
+  private fun IndentedStringBuilder.appendLegend() {
+    val moduleTypes = typedModules
+      .filter { it in links }
+      .mapNotNull { it.type }
+      .distinct()
+      .ifEmpty {
+        // single-module case
+        typedModules
+          .firstOrNull { it.projectPath == thisPath }
+          ?.type
+          ?.let(::listOf)
+          .orEmpty()
+      }
+
+    val linkTypes = links
+      .mapNotNull { it.type }
+      .distinct()
+
+    if (moduleTypes.isEmpty() && linkTypes.isEmpty()) return
+
+    appendLine("vars: {")
+    indent {
+      appendLine("d2-legend: {")
+      indent {
+        moduleTypes.forEach { appendModuleType(it) }
+        if (linkTypes.isNotEmpty()) {
+          val exampleNodes = getExampleNodesForLinks()
+          linkTypes.forEach { appendLinkType(it, exampleNodes) }
+        }
+      }
+      appendLine("}")
+    }
+    appendLine("}")
+  }
+
+  private fun IndentedStringBuilder.getExampleNodesForLinks(): Pair<ModuleType, ModuleType> {
+    val dummy = ModuleType(name = "dummy1", color = "")
+    val dummy2 = ModuleType(name = "dummy2", color = "")
+    appendLine("${dummy.classId}.class: $HIDDEN_CLASS")
+    appendLine("${dummy2.classId}.class: $HIDDEN_CLASS")
+    return dummy to dummy2
+  }
+
+  private fun IndentedStringBuilder.appendModuleType(type: ModuleType) {
+    appendLine("${type.classId}: ${type.name} { class: ${type.classId} }")
+  }
+
+  private fun IndentedStringBuilder.appendLinkType(type: LinkType, exampleNodes: Pair<ModuleType, ModuleType>) {
+    val (a, b) = exampleNodes
+    appendLine("${a.classId} -> ${b.classId}: ${type.displayName} { class: ${type.classId} }")
   }
 
   // Colons in d2 have special meaning, so strip them out of the key string. Not visible in the diagram anyway.

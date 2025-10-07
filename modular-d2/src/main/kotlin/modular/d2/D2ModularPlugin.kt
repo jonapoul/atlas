@@ -86,37 +86,6 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
       target = this,
       extension = extension,
     )
-
-    //    val realTask = WriteD2LegendBase.register<WriteD2Legend>(
-    //      target = project,
-    //      spec = spec,
-    //      extension = extension,
-    //      outputFile = outputFile(Legend, spec.fileExtension.get()),
-    //    )
-    //
-    //    ExecD2.register(
-    //      target = project,
-    //      spec = spec,
-    //      variant = Legend,
-    //      dotFileTask = realTask,
-    //    )
-    //
-    //    // Also validate the legend's dotfile when we call gradle check
-    //    val dummyTask = WriteD2LegendBase.register<WriteDummyD2Legend>(
-    //      target = project,
-    //      spec = spec,
-    //      extension = extension,
-    //      outputFile = modularBuildDirectory.get().file("legend-temp.dot").asFile,
-    //    )
-    //
-    //    CheckFileDiff.register(
-    //      target = project,
-    //      extension = extension,
-    //      spec = spec,
-    //      variant = Legend,
-    //      realTask = realTask,
-    //      dummyTask = dummyTask,
-    //    )
   }
 
   private fun Project.warnIfFileFormatRequiresPlaywright() {
