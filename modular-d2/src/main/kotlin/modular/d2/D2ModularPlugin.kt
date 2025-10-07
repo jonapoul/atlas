@@ -13,12 +13,15 @@ import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
 import modular.d2.internal.D2ModularExtensionImpl
+import modular.d2.tasks.DownloadD2Installer
 import modular.d2.tasks.ExecD2
+import modular.d2.tasks.InstallD2
 import modular.d2.tasks.WriteD2Chart
 import modular.d2.tasks.WriteD2ChartBase
 import modular.d2.tasks.WriteD2Classes
 import modular.d2.tasks.WriteDummyD2Chart
 import org.gradle.api.Project
+import org.gradle.process.ProcessExecutionException
 
 class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
   override fun Project.createExtension() = extensions.create(
@@ -82,6 +85,20 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
   }
 
   override fun Project.registerRootTasks() {
+    val downloadInstaller = DownloadD2Installer.register(this)
+    val installD2 = InstallD2.register(this, downloadInstaller)
+    val enableInstallTasks = provider {
+      val installed = isD2Installed()
+      val customPath = extension.d2.pathToD2Command.orNull
+      logger.info("D2 installed = $installed, custom path = $customPath")
+      !installed && customPath == null
+    }
+    listOf(downloadInstaller, installD2).forEach { task ->
+      task.configure { t ->
+        t.enabled = enableInstallTasks.get()
+      }
+    }
+
     WriteD2Classes.register(
       target = this,
       extension = extension,
@@ -161,5 +178,16 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
           "suppress this warning, add 'modular.d2.suppressAnimationWarning=true' to your gradle.properties file.",
       )
     }
+  }
+
+  private fun Project.isD2Installed(): Boolean = try {
+    providers.exec { spec ->
+      spec.commandLine("d2")
+      spec.isIgnoreExitValue = true
+    }.result
+      .map { it.exitValue == 0 }
+      .getOrElse(false)
+  } catch (_: ProcessExecutionException) {
+    false
   }
 }

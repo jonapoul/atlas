@@ -90,6 +90,7 @@ abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile
     ): TaskProvider<ExecD2> = with(target) {
       val name = "exec${spec.name.capitalized()}$variant"
       val execGraphviz = tasks.register(name, ExecD2::class.java)
+      val installD2 = InstallD2.get(rootProject)
 
       execGraphviz.configure { task ->
         val dotFile = dotFileTask.map { it.outputFile.get() }
@@ -102,6 +103,8 @@ abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile
         task.pathToD2Command.convention(spec.pathToD2Command)
         task.outputFormat.convention(spec.fileFormat)
         task.outputFile.convention(outputFile)
+
+        task.dependsOn(installD2)
       }
 
       return execGraphviz

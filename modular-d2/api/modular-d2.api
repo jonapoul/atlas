@@ -56,6 +56,7 @@ public abstract interface class modular/d2/D2RootStyleSpec : modular/core/intern
 
 public abstract interface class modular/d2/D2Spec : modular/core/ModularSpec {
 	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;
+	public abstract fun getAutoDownloadD2 ()Lorg/gradle/api/provider/Property;
 	public abstract fun getCenter ()Lorg/gradle/api/provider/Property;
 	public abstract fun getDirection ()Lorg/gradle/api/provider/Property;
 	public abstract fun getFileFormat ()Lorg/gradle/api/provider/Property;
@@ -221,6 +222,13 @@ public final class modular/d2/internal/D2ClassesConfig$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class modular/d2/tasks/DownloadD2Installer : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getScriptUrl ()Lorg/gradle/api/provider/Property;
+}
+
 public abstract class modular/d2/tasks/ExecD2 : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
@@ -230,6 +238,13 @@ public abstract class modular/d2/tasks/ExecD2 : org/gradle/api/DefaultTask, modu
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathToD2Command ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class modular/d2/tasks/InstallD2 : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
+	public abstract fun getScriptFile ()Lorg/gradle/api/file/RegularFileProperty;
 }
 
 public abstract class modular/d2/tasks/WriteD2Chart : modular/d2/tasks/WriteD2ChartBase, modular/core/tasks/ModularGenerationTask {
