@@ -33,9 +33,15 @@ class WriteD2ChartTest : ScenarioTest() {
         a: :a { class: module-KotlinJVM }
         b: :b { class: module-Java }
         c: :c { class: module-Java }
-        a.style.stroke-width: 8
+        a.class: thisProject
         a -> b
         a -> c
+        vars: {
+          d2-legend: {
+            module-KotlinJVM: Kotlin JVM { class: module-KotlinJVM }
+            module-Java: Java { class: module-Java }
+          }
+        }
       """.trimIndent(),
     )
 
@@ -43,7 +49,12 @@ class WriteD2ChartTest : ScenarioTest() {
       """
         ...@../../modular/classes.d2
         b: :b { class: module-Java }
-        b.style.stroke-width: 8
+        b.class: thisProject
+        vars: {
+          d2-legend: {
+            module-Java: Java { class: module-Java }
+          }
+        }
       """.trimIndent(),
     )
 
@@ -51,7 +62,12 @@ class WriteD2ChartTest : ScenarioTest() {
       """
         ...@../../modular/classes.d2
         c: :c { class: module-Java }
-        c.style.stroke-width: 8
+        c.class: thisProject
+        vars: {
+          d2-legend: {
+            module-Java: Java { class: module-Java }
+          }
+        }
       """.trimIndent(),
     )
   }

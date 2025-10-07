@@ -7,5 +7,14 @@ module-kotlin: :module-kotlin {
   class: container
   jvm: :jvm { class: module-KotlinJVM }
 }
-module-android.lib.style.stroke-width: 8
+module-android.lib.class: thisProject
 module-android.lib -> module-kotlin.jvm { class: link-implementation }
+vars: {
+  d2-legend: {
+    module-AndroidLibrary: Android Library { class: module-AndroidLibrary }
+    module-KotlinJVM: Kotlin JVM { class: module-KotlinJVM }
+    module-dummy1.class: hidden
+    module-dummy2.class: hidden
+    module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+  }
+}
