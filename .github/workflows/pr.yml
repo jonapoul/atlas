@@ -42,6 +42,7 @@ jobs:
 
       - name: Fix permissions
         run: sudo chown -R runner:runner .
+        if: ${{ !cancelled() }}
 
       - name: Check for generated diffs
         run: |
