@@ -181,10 +181,11 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
   }
 
   private fun Project.isD2Installed(): Boolean = try {
-    providers.exec { spec ->
-      spec.commandLine("d2")
-      spec.isIgnoreExitValue = true
-    }.result
+    providers
+      .exec { spec ->
+        spec.commandLine("d2")
+        spec.isIgnoreExitValue = true
+      }.result
       .map { it.exitValue == 0 }
       .getOrElse(false)
   } catch (_: ProcessExecutionException) {
