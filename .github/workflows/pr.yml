@@ -51,18 +51,6 @@ jobs:
             exit 1
           fi
 
-      - name: Upload reports
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: check-reports
-          path: |
-            ./*/build/reports
-            ./build/reports
-          if-no-files-found: warn
-
-      - name: Publish test reports
-        uses: mikepenz/action-junit-report@v5
-        if: always()
-        with:
-          report_paths: "**/build/test-results/*/TEST-*.xml"
+      - name: Report build results
+        uses: gmazzo/publish-report-annotations@v1
+        if: ${{ !cancelled() }}
