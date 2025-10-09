@@ -1,10 +1,10 @@
-import modular.core.LinkStyle.Bold
-import modular.core.LinkStyle.Dotted
-import modular.core.LinkStyle.Solid
 import modular.graphviz.ArrowType.None
 import modular.graphviz.ArrowType.Normal
 import modular.graphviz.FileFormat.Svg
 import modular.graphviz.LayoutEngine.Dot
+import modular.graphviz.LinkStyle.Bold
+import modular.graphviz.LinkStyle.Dotted
+import modular.graphviz.LinkStyle.Solid
 import modular.graphviz.RankDir.TopToBottom
 
 plugins {

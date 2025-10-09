@@ -7,6 +7,25 @@
 package modular.mermaid
 
 import modular.core.internal.StringEnum
+import modular.mermaid.ConsiderModelOrder.NodesAndEdges
+import modular.mermaid.CycleBreakingStrategy.GreedyModelOrder
+import modular.mermaid.LinkStyle.Basic
+import modular.mermaid.Look.Classic
+import modular.mermaid.NodePlacementStrategy.BrandesKoepf
+
+/**
+ * Default is [Basic].
+ * See https://mermaid.js.org/syntax/flowchart.html#links-between-nodes
+ */
+enum class LinkStyle(override val string: String) : StringEnum {
+  Basic("basic"),
+  Dashed("dashed"),
+  Invisible("invisible"),
+  Bold("bold"),
+  ;
+
+  override fun toString() = string
+}
 
 /**
  * Elk specific option affecting how nodes are placed. Default value is [BrandesKoepf].

@@ -4,7 +4,6 @@
  */
 package modular.mermaid.internal
 
-import modular.core.LinkStyle
 import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
@@ -13,6 +12,8 @@ import modular.core.internal.Subgraph
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
+import modular.core.internal.parseEnum
+import modular.mermaid.LinkStyle
 import modular.mermaid.MermaidConfig
 
 internal class MermaidWriter(
@@ -92,13 +93,16 @@ internal class MermaidWriter(
   private fun IndentedStringBuilder.appendLinks() {
     links.forEachIndexed { i, link ->
       val arrowPrefix = if (config.animateLinks) "link$i@" else ""
-      val arrow = when (link.type?.style) {
+      val style = link.type
+        ?.style
+        ?.let { parseEnum<LinkStyle>(it) }
+        ?: LinkStyle.Basic
+
+      val arrow = when (style) {
+        LinkStyle.Basic -> "-->"
         LinkStyle.Bold -> "==>"
         LinkStyle.Dashed -> "-.->"
-        LinkStyle.Dotted -> "-.->"
-        LinkStyle.Invis -> "~~~"
-        LinkStyle.Solid -> "-->"
-        else -> "-->"
+        LinkStyle.Invisible -> "~~~"
       }
       appendLine("${link.fromPath.label} $arrowPrefix$arrow ${link.toPath.label}")
       link.type?.color?.let { color -> appendLine("linkStyle $i stroke:$color") }

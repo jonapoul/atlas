@@ -40,7 +40,7 @@ graph TD
 | Link Types | Style |
 |:--:|:--:|
 | jvmMainImplementation | Orange Bold |
-| api | Solid |
-| implementation | Dotted |
+| api | Basic |
+| implementation | Dashed |
 
 <!--endregion-->

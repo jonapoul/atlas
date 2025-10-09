@@ -10,6 +10,20 @@ import modular.core.internal.IntEnum
 import modular.core.internal.StringEnum
 
 /**
+ * https://d2lang.com/tour/connections/
+ */
+enum class LinkStyle(override val string: String) : StringEnum {
+  Basic("basic"),
+  Dashed("dashed"),
+  Dotted("dotted"),
+  Invisible("invisible"),
+  Bold("bold"),
+  ;
+
+  override fun toString() = string
+}
+
+/**
  * https://d2lang.com/tour/layouts/
  */
 enum class LayoutEngine(override val string: String) : StringEnum {

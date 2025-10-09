@@ -12,4 +12,6 @@ import org.gradle.api.Action
 interface GraphvizModularExtension : ModularExtension {
   val graphviz: GraphvizSpec
   fun graphviz(action: Action<GraphvizSpec>): GraphvizSpec
+
+  fun linkTypes(action: Action<GraphvizNamedLinkTypeContainer>)
 }

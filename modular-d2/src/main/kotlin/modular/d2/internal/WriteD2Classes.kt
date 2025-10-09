@@ -7,7 +7,6 @@
 package modular.d2.internal
 
 import modular.core.InternalModularApi
-import modular.core.LinkStyle
 import modular.core.LinkType
 import modular.core.ModuleType
 import modular.core.internal.IndentedStringBuilder
@@ -15,8 +14,10 @@ import modular.core.internal.buildIndentedString
 import modular.core.internal.moduleType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.orderedModuleTypes
+import modular.core.internal.parseEnum
 import modular.d2.Direction
 import modular.d2.LayoutEngine
+import modular.d2.LinkStyle
 import modular.d2.Location
 import modular.d2.Position
 import modular.d2.Position.CenterLeft
@@ -113,16 +114,17 @@ private fun linkAttributes(config: D2ClassesConfig, link: LinkType): List<Pair<S
   val attrs = mutableMapOf<String, String>()
   link.color?.let { attrs["style.stroke"] = it }
 
-  when (link.style) {
+  val style = link.style?.let { parseEnum<LinkStyle>(it) }
+  when (style) {
     LinkStyle.Dashed -> attrs["style.stroke-dash"] = "4"
     LinkStyle.Dotted -> attrs["style.stroke-dash"] = "2"
-    LinkStyle.Solid -> Unit
-    LinkStyle.Invis -> attrs["style.opacity"] = "0"
+    LinkStyle.Basic -> Unit
+    LinkStyle.Invisible -> attrs["style.opacity"] = "0"
     LinkStyle.Bold -> attrs["style.stroke-width"] = "3" // default 2
     null -> Unit
   }
 
-  if (config.animateLinks == true && link.style in ANIMATABLE_LINK_TYPES) {
+  if (config.animateLinks == true && style in ANIMATABLE_LINK_TYPES) {
     attrs["style.animated"] = "true"
   }
 

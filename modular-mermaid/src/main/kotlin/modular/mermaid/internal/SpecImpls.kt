@@ -5,6 +5,7 @@
 package modular.mermaid.internal
 
 import modular.core.InternalModularApi
+import modular.core.internal.LinkTypeContainer
 import modular.core.internal.PropertiesSpec
 import modular.core.internal.PropertiesSpecImpl
 import modular.core.internal.bool
@@ -17,6 +18,7 @@ import modular.mermaid.ConsiderModelOrder
 import modular.mermaid.CycleBreakingStrategy
 import modular.mermaid.ElkLayoutSpec
 import modular.mermaid.MermaidLayoutSpec
+import modular.mermaid.MermaidNamedLinkTypeContainer
 import modular.mermaid.MermaidSpec
 import modular.mermaid.MermaidThemeVariablesSpec
 import modular.mermaid.NodePlacementStrategy
@@ -89,3 +91,6 @@ class MermaidThemeVariablesSpecImpl(
   override var secondaryColor by stringDelegate(key = "secondaryColor")
   override var tertiaryColor by stringDelegate(key = "tertiaryColor")
 }
+
+@InternalModularApi
+class MermaidLinkTypeContainer(objects: ObjectFactory) : LinkTypeContainer(objects), MermaidNamedLinkTypeContainer

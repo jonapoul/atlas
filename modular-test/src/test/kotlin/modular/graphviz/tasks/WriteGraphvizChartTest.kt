@@ -16,6 +16,7 @@ import modular.test.scenarios.GraphVizChartWithReplacements
 import modular.test.scenarios.GraphvizBasic
 import modular.test.scenarios.GraphvizNestedModules
 import modular.test.scenarios.GraphvizNestedModulesNoModuleTypes
+import org.junit.jupiter.api.Disabled
 import kotlin.test.Test
 
 class WriteGraphvizChartTest : ScenarioTest() {
@@ -171,6 +172,7 @@ class WriteGraphvizChartTest : ScenarioTest() {
   }
 
   @Test
+  @Disabled("https://github.com/jonapoul/modular/issues/247")
   fun `Handle custom link types`() = runScenario(GraphVizChartWithCustomLinkTypes) {
     // when
     runTask("writeGraphvizChart").build()

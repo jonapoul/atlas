@@ -5,11 +5,9 @@
 package modular.core.internal
 
 import modular.core.InternalModularApi
-import modular.core.LinkStyle
 import modular.core.LinkTypeSpec
 import modular.core.ModularExtension
 import modular.core.ModuleTypeSpec
-import modular.core.NamedLinkTypeContainer
 import modular.core.NamedModuleTypeContainer
 import modular.core.PathTransformSpec
 import modular.core.Replacement
@@ -22,7 +20,6 @@ import org.gradle.api.tasks.Input
 import javax.inject.Inject
 
 @InternalModularApi
-@Suppress("AbstractClassCanBeConcreteClass")
 abstract class ModularExtensionImpl(
   objects: ObjectFactory,
   internal val project: Project,
@@ -43,8 +40,7 @@ abstract class ModularExtensionImpl(
   override val moduleTypes = ModuleTypeContainer(objects)
   override fun moduleTypes(action: Action<NamedModuleTypeContainer>) = action.execute(moduleTypes)
 
-  override val linkTypes = LinkTypeContainer(objects)
-  override fun linkTypes(action: Action<NamedLinkTypeContainer>) = action.execute(linkTypes)
+  abstract override val linkTypes: LinkTypeContainer
 
   @InternalModularApi
   companion object {
@@ -79,7 +75,7 @@ abstract class ModuleTypeSpecImpl @Inject constructor(override val name: String)
 
 internal abstract class LinkTypeSpecImpl @Inject constructor(override val name: String) : LinkTypeSpec {
   @get:Input abstract override val configuration: Property<String>
-  @get:Input abstract override val style: Property<LinkStyle>
+  @get:Input abstract override val style: Property<String>
   @get:Input abstract override val color: Property<String>
 
   init {

@@ -62,5 +62,4 @@ interface ModularExtension {
   fun moduleTypes(action: Action<NamedModuleTypeContainer>)
 
   val linkTypes: NamedLinkTypeContainer
-  fun linkTypes(action: Action<NamedLinkTypeContainer>)
 }

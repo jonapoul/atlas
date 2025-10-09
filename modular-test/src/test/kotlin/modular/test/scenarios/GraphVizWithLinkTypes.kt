@@ -10,7 +10,7 @@ import kotlin.text.trimIndent
 
 object GraphVizWithLinkTypes : Scenario by GraphvizBasic {
   override val rootBuildFile = """
-    import modular.core.LinkStyle
+    import modular.graphviz.LinkStyle
 
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false

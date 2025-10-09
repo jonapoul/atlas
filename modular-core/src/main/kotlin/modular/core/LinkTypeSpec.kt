@@ -6,14 +6,8 @@
 
 package modular.core
 
-import modular.core.internal.ModularJson
-import modular.core.internal.StringEnum
 import org.gradle.api.NamedDomainObjectContainer
-import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.provider.Property
-import org.gradle.kotlin.dsl.api
-import org.gradle.kotlin.dsl.implementation
-import org.gradle.kotlin.dsl.register
 import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
@@ -37,41 +31,21 @@ import kotlinx.serialization.Serializable as KSerializable
  * Added entries are checked in priority order, so a configuration of `apiImplementationCompileOnly` in the example
  * above would match `api` but not reach `implementation` or `compileOnly`.
  */
-interface NamedLinkTypeContainer : NamedDomainObjectContainer<LinkTypeSpec> {
-  @ModularDsl
-  operator fun String.invoke(
-    style: LinkStyle? = null,
-    color: String? = null,
-    displayName: String = this,
-  ): NamedDomainObjectProvider<LinkTypeSpec> = register(this, style, color, displayName)
-}
+@ModularDsl
+interface NamedLinkTypeContainer : NamedDomainObjectContainer<LinkTypeSpec>
 
+@ModularDsl
 interface LinkTypeSpec {
   val name: String
   val configuration: Property<String>
-  val style: Property<LinkStyle>
+  val style: Property<String>
   val color: Property<String>
 }
 
 @KSerializable
 data class LinkType(
   val configuration: String,
-  val style: LinkStyle? = null,
+  val style: String? = null,
   val color: String? = null,
   val displayName: String = configuration,
 ) : JSerializable
-
-/**
- * These come from graphviz, but also work with mermaid/d2.
- * See https://graphviz.org/docs/attr-types/style/
- */
-enum class LinkStyle(override val string: String) : StringEnum {
-  Dashed("dashed"),
-  Dotted("dotted"),
-  Solid("solid"),
-  Invis("invis"),
-  Bold("bold"),
-  ;
-
-  override fun toString() = string
-}
