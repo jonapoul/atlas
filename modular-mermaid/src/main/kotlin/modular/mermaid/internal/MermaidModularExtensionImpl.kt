@@ -7,6 +7,7 @@ package modular.mermaid.internal
 import modular.core.InternalModularApi
 import modular.core.internal.ModularExtensionImpl
 import modular.mermaid.MermaidModularExtension
+import modular.mermaid.MermaidNamedLinkTypeContainer
 import modular.mermaid.MermaidSpec
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -20,4 +21,7 @@ open class MermaidModularExtensionImpl @Inject constructor(
 ) : ModularExtensionImpl(objects, project), MermaidModularExtension {
   override val mermaid = MermaidSpecImpl(objects, project)
   override fun mermaid(action: Action<MermaidSpec>): MermaidSpec = mermaid.also { action.execute(it) }
+
+  override val linkTypes = MermaidLinkTypeContainer(objects)
+  override fun linkTypes(action: Action<MermaidNamedLinkTypeContainer>) = action.execute(linkTypes)
 }

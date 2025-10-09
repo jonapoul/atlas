@@ -36,6 +36,18 @@ public abstract interface class modular/mermaid/ElkLayoutSpec : modular/mermaid/
 	public abstract fun setNodePlacementStrategy (Lmodular/mermaid/NodePlacementStrategy;)V
 }
 
+public final class modular/mermaid/LinkStyle : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Basic Lmodular/mermaid/LinkStyle;
+	public static final field Bold Lmodular/mermaid/LinkStyle;
+	public static final field Dashed Lmodular/mermaid/LinkStyle;
+	public static final field Invisible Lmodular/mermaid/LinkStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/mermaid/LinkStyle;
+	public static fun values ()[Lmodular/mermaid/LinkStyle;
+}
+
 public final class modular/mermaid/Look : java/lang/Enum, modular/core/internal/StringEnum {
 	public static final field Classic Lmodular/mermaid/Look;
 	public static final field HandDrawn Lmodular/mermaid/Look;
@@ -78,6 +90,7 @@ public abstract interface class modular/mermaid/MermaidLayoutSpec : modular/core
 
 public abstract interface class modular/mermaid/MermaidModularExtension : modular/core/ModularExtension {
 	public abstract fun getMermaid ()Lmodular/mermaid/MermaidSpec;
+	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
 	public abstract fun mermaid (Lorg/gradle/api/Action;)Lmodular/mermaid/MermaidSpec;
 }
 
@@ -87,6 +100,16 @@ public final class modular/mermaid/MermaidModularPlugin : modular/core/ModularPl
 	public fun apply (Lorg/gradle/api/Project;)V
 	public synthetic fun createExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
+}
+
+public abstract interface class modular/mermaid/MermaidNamedLinkTypeContainer : modular/core/NamedLinkTypeContainer {
+	public fun invoke (Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public final class modular/mermaid/MermaidNamedLinkTypeContainer$DefaultImpls {
+	public static fun invoke (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class modular/mermaid/MermaidSpec : modular/core/ModularSpec {
@@ -182,5 +205,23 @@ public abstract class modular/mermaid/tasks/WriteMermaidChartBase : org/gradle/a
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public final class org/gradle/kotlin/dsl/LinkTypeDslKt {
+	public static final fun api (Lmodular/mermaid/MermaidNamedLinkTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Lmodular/mermaid/LinkStyle;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Lmodular/mermaid/LinkStyle;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun api$default (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/mermaid/MermaidNamedLinkTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Lmodular/mermaid/LinkStyle;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Lmodular/mermaid/LinkStyle;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun implementation$default (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Lmodular/mermaid/LinkStyle;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun register$default (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 

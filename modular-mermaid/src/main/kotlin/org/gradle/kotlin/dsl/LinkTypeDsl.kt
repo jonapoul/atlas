@@ -6,33 +6,43 @@
 
 package org.gradle.kotlin.dsl
 
-import modular.core.LinkStyle
 import modular.core.LinkTypeSpec
-import modular.core.NamedLinkTypeContainer
+import modular.mermaid.LinkStyle
+import modular.mermaid.MermaidNamedLinkTypeContainer
 import org.gradle.api.NamedDomainObjectProvider
 
 @JvmOverloads
-fun NamedLinkTypeContainer.register(
+fun MermaidNamedLinkTypeContainer.register(
   configuration: String,
   style: LinkStyle? = null,
   color: String? = null,
   displayName: String = configuration,
 ): NamedDomainObjectProvider<LinkTypeSpec> = register(displayName) { spec ->
   spec.configuration.set(configuration)
-  spec.style.set(style)
+  spec.style.set(style?.string)
   spec.color.set(color)
 }
 
 @JvmOverloads
-fun NamedLinkTypeContainer.api(
+fun MermaidNamedLinkTypeContainer.api(
   style: LinkStyle? = null,
   color: String? = null,
   displayName: String = "api",
-): NamedDomainObjectProvider<LinkTypeSpec> = register(configuration = ".*?api", style, color, displayName)
+): NamedDomainObjectProvider<LinkTypeSpec> = register(
+  configuration = ".*?api",
+  style = style,
+  color = color,
+  displayName = displayName,
+)
 
 @JvmOverloads
-fun NamedLinkTypeContainer.implementation(
+fun MermaidNamedLinkTypeContainer.implementation(
   style: LinkStyle? = null,
   color: String? = null,
   displayName: String = "implementation",
-): NamedDomainObjectProvider<LinkTypeSpec> = register(configuration = ".*?implementation", style, color, displayName)
+): NamedDomainObjectProvider<LinkTypeSpec> = register(
+  configuration = ".*?implementation",
+  style = style,
+  color = color,
+  displayName = displayName,
+)

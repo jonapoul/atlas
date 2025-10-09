@@ -12,4 +12,6 @@ import org.gradle.api.Action
 interface MermaidModularExtension : ModularExtension {
   val mermaid: MermaidSpec
   fun mermaid(action: Action<MermaidSpec>): MermaidSpec
+
+  fun linkTypes(action: Action<MermaidNamedLinkTypeContainer>)
 }

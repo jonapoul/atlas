@@ -1,8 +1,9 @@
-import modular.core.LinkStyle.Bold
-import modular.core.LinkStyle.Dotted
-import modular.core.LinkStyle.Solid
 import modular.mermaid.ConsiderModelOrder.PreferEdges
 import modular.mermaid.CycleBreakingStrategy.Interactive
+import modular.mermaid.LinkStyle
+import modular.mermaid.LinkStyle.Bold
+import modular.mermaid.LinkStyle.Dashed
+import modular.mermaid.LinkStyle.Basic
 import modular.mermaid.Look.HandDrawn
 import modular.mermaid.NodePlacementStrategy.LinearSegments
 import modular.mermaid.Theme.Forest
@@ -26,8 +27,8 @@ modular {
 
   linkTypes {
     "jvmMainImplementation"(style = Bold, color = "orange")
-    api(Solid)
-    implementation(Dotted)
+    api(Basic)
+    implementation(Dashed)
   }
 
   pathTransforms {

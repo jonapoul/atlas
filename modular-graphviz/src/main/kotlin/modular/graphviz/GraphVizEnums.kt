@@ -10,6 +10,20 @@ import modular.core.internal.StringEnum
 import modular.graphviz.LayoutEngine.Dot
 
 /**
+ * See https://graphviz.org/docs/attr-types/style/
+ */
+enum class LinkStyle(override val string: String) : StringEnum {
+  Dashed("dashed"),
+  Dotted("dotted"),
+  Solid("solid"),
+  Invis("invis"),
+  Bold("bold"),
+  ;
+
+  override fun toString() = string
+}
+
+/**
  * https://graphviz.org/docs/attr-types/rankdir/
  */
 enum class RankDir(override val string: String) : StringEnum {
