@@ -1,3 +1,7 @@
+/**
+ * Copyright © 2025 Jon Poulton
+ * SPDX-License-Identifier: Apache-2.0
+ */
 package modular
 
 import assertk.assertThat
@@ -17,7 +21,7 @@ class MultiplePluginsTest : ScenarioTest() {
     assertThat(result.output).contains(
       """
         > Cannot add extension with name 'modular', as there is an extension already registered with that name.
-      """.trimIndent()
+      """.trimIndent(),
     )
   }
 }

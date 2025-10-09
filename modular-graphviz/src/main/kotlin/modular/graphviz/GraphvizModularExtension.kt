@@ -14,4 +14,5 @@ interface GraphvizModularExtension : ModularExtension {
   fun graphviz(action: Action<GraphvizSpec>): GraphvizSpec
 
   fun linkTypes(action: Action<GraphvizNamedLinkTypeContainer>)
+  fun moduleTypes(action: Action<GraphvizNamedModuleTypeContainer>)
 }

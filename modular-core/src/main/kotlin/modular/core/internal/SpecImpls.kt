@@ -8,7 +8,6 @@ import modular.core.InternalModularApi
 import modular.core.LinkTypeSpec
 import modular.core.ModularExtension
 import modular.core.ModuleTypeSpec
-import modular.core.NamedModuleTypeContainer
 import modular.core.PathTransformSpec
 import modular.core.Replacement
 import org.gradle.api.Action
@@ -37,9 +36,7 @@ abstract class ModularExtensionImpl(
   override val pathTransforms = PathTransformSpecImpl(objects)
   override fun pathTransforms(action: Action<PathTransformSpec>) = action.execute(pathTransforms)
 
-  override val moduleTypes = ModuleTypeContainer(objects)
-  override fun moduleTypes(action: Action<NamedModuleTypeContainer>) = action.execute(moduleTypes)
-
+  abstract override val moduleTypes: ModuleTypeContainer<*>
   abstract override val linkTypes: LinkTypeContainer
 
   @InternalModularApi

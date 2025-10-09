@@ -32,12 +32,52 @@ public abstract interface class modular/d2/D2ModularExtension : modular/core/Mod
 	public abstract fun d2 (Lorg/gradle/api/Action;)Lmodular/d2/D2Spec;
 	public abstract fun getD2 ()Lmodular/d2/D2Spec;
 	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
+	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
 }
 
 public final class modular/d2/D2ModularPlugin : modular/core/ModularPlugin {
 	public fun <init> ()V
 	public synthetic fun createExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
+}
+
+public abstract interface class modular/d2/D2ModuleTypeSpec : modular/core/ModuleTypeSpec {
+	public abstract fun getAnimated ()Ljava/lang/Boolean;
+	public abstract fun getBold ()Ljava/lang/Boolean;
+	public abstract fun getBorderRadius ()Ljava/lang/Integer;
+	public abstract fun getDoubleBorder ()Ljava/lang/String;
+	public abstract fun getFillPattern ()Lmodular/d2/FillPattern;
+	public abstract fun getFont ()Lmodular/d2/Font;
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/Integer;
+	public abstract fun getItalic ()Ljava/lang/Boolean;
+	public abstract fun getMultiple ()Ljava/lang/Boolean;
+	public abstract fun getOpacity ()Ljava/lang/Float;
+	public abstract fun getRender3D ()Ljava/lang/Boolean;
+	public abstract fun getShadow ()Ljava/lang/Boolean;
+	public abstract fun getStroke ()Ljava/lang/String;
+	public abstract fun getStrokeDash ()Ljava/lang/Integer;
+	public abstract fun getStrokeWidth ()Ljava/lang/Integer;
+	public abstract fun getTextTransform ()Lmodular/d2/TextTransform;
+	public abstract fun getUnderline ()Ljava/lang/Boolean;
+	public abstract fun setAnimated (Ljava/lang/Boolean;)V
+	public abstract fun setBold (Ljava/lang/Boolean;)V
+	public abstract fun setBorderRadius (Ljava/lang/Integer;)V
+	public abstract fun setDoubleBorder (Ljava/lang/String;)V
+	public abstract fun setFillPattern (Lmodular/d2/FillPattern;)V
+	public abstract fun setFont (Lmodular/d2/Font;)V
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/Integer;)V
+	public abstract fun setItalic (Ljava/lang/Boolean;)V
+	public abstract fun setMultiple (Ljava/lang/Boolean;)V
+	public abstract fun setOpacity (Ljava/lang/Float;)V
+	public abstract fun setRender3D (Ljava/lang/Boolean;)V
+	public abstract fun setShadow (Ljava/lang/Boolean;)V
+	public abstract fun setStroke (Ljava/lang/String;)V
+	public abstract fun setStrokeDash (Ljava/lang/Integer;)V
+	public abstract fun setStrokeWidth (Ljava/lang/Integer;)V
+	public abstract fun setTextTransform (Lmodular/d2/TextTransform;)V
+	public abstract fun setUnderline (Ljava/lang/Boolean;)V
 }
 
 public abstract interface class modular/d2/D2NamedLinkTypeContainer : modular/core/NamedLinkTypeContainer {
@@ -48,6 +88,15 @@ public abstract interface class modular/d2/D2NamedLinkTypeContainer : modular/co
 public final class modular/d2/D2NamedLinkTypeContainer$DefaultImpls {
 	public static fun invoke (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun invoke$default (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public abstract interface class modular/d2/D2NamedModuleTypeContainer : modular/core/NamedModuleTypeContainer {
+}
+
+public final class modular/d2/D2NamedModuleTypeContainer$DefaultImpls {
+	public static fun registerByPathContains (Lmodular/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Lmodular/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPluginId (Lmodular/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class modular/d2/D2RootStyleSpec : modular/core/internal/PropertiesSpec {
@@ -180,6 +229,18 @@ public final class modular/d2/Position : java/lang/Enum, modular/core/internal/S
 	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/d2/Position;
 	public static fun values ()[Lmodular/d2/Position;
+}
+
+public final class modular/d2/TextTransform : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Lowercase Lmodular/d2/TextTransform;
+	public static final field None Lmodular/d2/TextTransform;
+	public static final field Title Lmodular/d2/TextTransform;
+	public static final field Uppercase Lmodular/d2/TextTransform;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/d2/TextTransform;
+	public static fun values ()[Lmodular/d2/TextTransform;
 }
 
 public final class modular/d2/Theme : java/lang/Enum, modular/core/internal/IntEnum {

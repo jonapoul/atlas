@@ -58,8 +58,6 @@ interface ModularExtension {
   val pathTransforms: PathTransformSpec
   fun pathTransforms(action: Action<PathTransformSpec>)
 
-  val moduleTypes: NamedModuleTypeContainer
-  fun moduleTypes(action: Action<NamedModuleTypeContainer>)
-
+  val moduleTypes: NamedModuleTypeContainer<*>
   val linkTypes: NamedLinkTypeContainer
 }

@@ -95,7 +95,10 @@ private val String.key
 private fun IndentedStringBuilder.appendClass(type: ModuleType) = with(type) {
   appendLine("$classId {")
   indent {
-    appendLine("style.fill: \"$color\"")
+    val properties = type.properties + ("style.fill" to color)
+    properties.sortedByKeys().forEach { (key, value) ->
+      appendLine("$key: \"$value\"")
+    }
   }
   appendLine("}")
 }

@@ -17,13 +17,9 @@ import org.gradle.api.model.ObjectFactory
 import java.util.function.IntFunction
 
 @InternalModularApi
-open class ModuleTypeContainer(objects: ObjectFactory) :
-  OrderedNamedContainer<ModuleTypeSpec>(
-    container = objects.domainObjectContainer(ModuleTypeSpec::class.java) { name ->
-      objects.newInstance(ModuleTypeSpecImpl::class.java, name)
-    },
-  ),
-  NamedModuleTypeContainer
+open class ModuleTypeContainer<T : ModuleTypeSpec>(
+  delegate: NamedDomainObjectContainer<T>,
+) : OrderedNamedContainer<T>(delegate), NamedModuleTypeContainer<T>
 
 @InternalModularApi
 open class LinkTypeContainer(objects: ObjectFactory) :

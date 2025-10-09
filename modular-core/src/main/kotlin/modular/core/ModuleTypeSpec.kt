@@ -6,6 +6,7 @@
 
 package modular.core
 
+import modular.core.internal.PropertiesSpec
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.provider.Property
@@ -34,6 +35,14 @@ import org.gradle.api.provider.Property
  * ```kotlin
  * modular {
  *   moduleTypes {
+ *     // reference some built-in types
+ *     androidApp()
+ *     java {
+ *       // custom overrides
+ *       color = "black"
+ *     }
+ *
+ *     // plus some manually-defined ones
  *     registerByPluginId(name = "UI", color = "#ABC123", pluginId = "org.jetbrains.kotlin.plugin.compose")
  *     registerByPathMatches(name = "Data", color = "#ABCDEF", pathMatches = ".*data$".toRegex())
  *     registerByPathContains(name = "Domain", color = "#123ABC", pathContains = "domain")
@@ -49,39 +58,43 @@ import org.gradle.api.provider.Property
  * - warn you during IDE sync, or
  * - fail when running any tasks which reference them.
  */
-interface NamedModuleTypeContainer : NamedDomainObjectContainer<ModuleTypeSpec> {
-  @ModularDsl
+@ModularDsl
+interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContainer<T> {
   fun registerByPluginId(
     name: String,
     color: String,
     pluginId: String,
-  ): NamedDomainObjectProvider<ModuleTypeSpec> = register(name) { type ->
+    extraConfig: T.() -> Unit = {},
+  ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
     type.hasPluginId.convention(pluginId)
+    type.extraConfig()
   }
 
-  @ModularDsl
   fun registerByPathMatches(
     name: String,
     color: String,
     pathMatches: Regex,
-  ): NamedDomainObjectProvider<ModuleTypeSpec> = register(name) { type ->
+    extraConfig: T.() -> Unit = {},
+  ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
     type.pathMatches.convention(pathMatches.toString())
+    type.extraConfig()
   }
 
-  @ModularDsl
   fun registerByPathContains(
     name: String,
     color: String,
     pathContains: String,
-  ): NamedDomainObjectProvider<ModuleTypeSpec> = register(name) { type ->
+    extraConfig: T.() -> Unit = {},
+  ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
     type.pathContains.convention(pathContains)
+    type.extraConfig()
   }
 }
 
-interface ModuleTypeSpec {
+interface ModuleTypeSpec : PropertiesSpec {
   /**
    * Required - this will be shown on your generated legend files.
    */

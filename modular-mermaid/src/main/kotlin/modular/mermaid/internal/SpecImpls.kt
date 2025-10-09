@@ -6,6 +6,8 @@ package modular.mermaid.internal
 
 import modular.core.InternalModularApi
 import modular.core.internal.LinkTypeContainer
+import modular.core.internal.ModuleTypeContainer
+import modular.core.internal.ModuleTypeSpecImpl
 import modular.core.internal.PropertiesSpec
 import modular.core.internal.PropertiesSpecImpl
 import modular.core.internal.bool
@@ -18,14 +20,20 @@ import modular.mermaid.ConsiderModelOrder
 import modular.mermaid.CycleBreakingStrategy
 import modular.mermaid.ElkLayoutSpec
 import modular.mermaid.MermaidLayoutSpec
+import modular.mermaid.MermaidModuleTypeSpec
 import modular.mermaid.MermaidNamedLinkTypeContainer
+import modular.mermaid.MermaidNamedModuleTypeContainer
 import modular.mermaid.MermaidSpec
 import modular.mermaid.MermaidThemeVariablesSpec
 import modular.mermaid.NodePlacementStrategy
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
+import javax.inject.Inject
+import kotlin.jvm.java
 
 @InternalModularApi
 class MermaidSpecImpl(
@@ -94,3 +102,31 @@ class MermaidThemeVariablesSpecImpl(
 
 @InternalModularApi
 class MermaidLinkTypeContainer(objects: ObjectFactory) : LinkTypeContainer(objects), MermaidNamedLinkTypeContainer
+
+@InternalModularApi
+abstract class MermaidModuleTypeSpecImpl @Inject constructor(
+  override val name: String,
+) : ModuleTypeSpecImpl(name), MermaidModuleTypeSpec {
+  @get:Input abstract override val properties: MapProperty<String, String>
+
+  override fun put(key: String, value: Any) = properties.put(key, value.toString())
+
+  override var fontColor by stringDelegate("color")
+  override var fontSize by stringDelegate("font-size")
+  override var stroke by stringDelegate("stroke")
+  override var strokeDashArray by stringDelegate("stroke-dasharray")
+  override var strokeWidth by stringDelegate("stroke-width")
+
+  init {
+    properties.convention(emptyMap())
+  }
+}
+
+@InternalModularApi
+class MermaidModuleTypeContainer(objects: ObjectFactory) :
+  ModuleTypeContainer<MermaidModuleTypeSpec>(
+    delegate = objects.domainObjectContainer(MermaidModuleTypeSpec::class.java) { name ->
+      objects.newInstance(MermaidModuleTypeSpecImpl::class.java, name)
+    },
+  ),
+  MermaidNamedModuleTypeContainer

@@ -8,6 +8,7 @@ import modular.core.InternalModularApi
 import modular.core.internal.ModularExtensionImpl
 import modular.graphviz.GraphvizModularExtension
 import modular.graphviz.GraphvizNamedLinkTypeContainer
+import modular.graphviz.GraphvizNamedModuleTypeContainer
 import modular.graphviz.GraphvizSpec
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -24,4 +25,7 @@ open class GraphvizModularExtensionImpl @Inject constructor(
 
   override val linkTypes = GraphvizLinkTypeContainer(objects)
   override fun linkTypes(action: Action<GraphvizNamedLinkTypeContainer>) = action.execute(linkTypes)
+
+  override val moduleTypes = GraphvizModuleTypeContainer(objects)
+  override fun moduleTypes(action: Action<GraphvizNamedModuleTypeContainer>) = action.execute(moduleTypes)
 }

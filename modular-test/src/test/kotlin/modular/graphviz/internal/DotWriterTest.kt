@@ -10,6 +10,7 @@ import modular.graphviz.dotWriter
 import modular.test.ModuleWithNoLinks
 import modular.test.OneLevelOfSubmodules
 import modular.test.TwoLevelsOfSubmodules
+import modular.test.equalsDiffed
 import kotlin.test.Test
 
 class DotWriterTest {
@@ -20,11 +21,11 @@ class DotWriterTest {
       links = OneLevelOfSubmodules.links,
     )
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          ":app" [penwidth="3",shape="box"]
+          ":app" [shape="box",penwidth="3"]
           ":data:a" [shape="none"]
           ":data:b" [shape="none"]
           ":domain:a" [shape="none"]
@@ -55,11 +56,11 @@ class DotWriterTest {
       groupModules = true,
     )
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          ":app" [penwidth="3",shape="box"]
+          ":app" [shape="box",penwidth="3"]
           subgraph cluster_data {
             label = ":data"
             ":data:a" [shape="none"]
@@ -99,11 +100,11 @@ class DotWriterTest {
       groupModules = true,
     )
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          ":app" [penwidth="3",shape="box"]
+          ":app" [shape="box",penwidth="3"]
           subgraph cluster_data {
             label = ":data"
             ":data:a" [shape="none"]
@@ -149,11 +150,11 @@ class DotWriterTest {
       links = ModuleWithNoLinks.links,
     )
 
-    assertThat(writer()).contains(
+    assertThat(writer()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          ":app" [fillcolor="red",penwidth="3",shape="box"]
+          ":app" [shape="box",penwidth="3",fillcolor="red"]
         }
       """.trimIndent(),
     )

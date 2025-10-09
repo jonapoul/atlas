@@ -13,7 +13,6 @@ import modular.core.internal.Subgraph
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.graphviz.DotConfig
-import org.gradle.internal.exceptions.StyledException.style
 
 @InternalModularApi
 data class DotWriter(
@@ -96,17 +95,18 @@ data class DotWriter(
     val nodePath = module.projectPath.cleaned()
     val attrs = Attrs()
 
-    val type = module.type
-    if (type != null) {
-      attrs["fillcolor"] = type.color
-    }
+    // default, overridden by type.properties if configured
+    attrs["shape"] = "none"
 
     // Make "target" nodes more prominent with a thick black border
     if (thisPath.cleaned() == nodePath) {
       attrs["penwidth"] = "3"
       attrs["shape"] = "box"
-    } else {
-      attrs["shape"] = "none"
+    }
+
+    module.type?.let { type ->
+      val properties = type.properties + ("fillcolor" to type.color)
+      properties.forEach { (key, value) -> attrs[key] = value }
     }
 
     appendLine("\"$nodePath\"$attrs")
