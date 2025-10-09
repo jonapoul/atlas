@@ -5,9 +5,9 @@
 package modular.graphviz.tasks
 
 import assertk.assertThat
-import assertk.assertions.contains
 import assertk.assertions.exists
 import modular.test.ScenarioTest
+import modular.test.equalsDiffed
 import modular.test.runTask
 import modular.test.scenarios.GraphVizChartCustomConfig
 import modular.test.scenarios.GraphVizChartWithCustomLinkTypes
@@ -26,11 +26,11 @@ class WriteGraphvizChartTest : ScenarioTest() {
     runTask("writeGraphvizChart").build()
 
     // then
-    assertThat(resolve("app/modular/chart.dot").readText()).contains(
+    assertThat(resolve("app/modular/chart.dot").readText()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          ":app" [penwidth="3",shape="box"]
+          ":app" [shape="box",penwidth="3"]
           ":data:a" [shape="none"]
           ":data:b" [shape="none"]
           ":domain:a" [shape="none"]
@@ -64,32 +64,32 @@ class WriteGraphvizChartTest : ScenarioTest() {
     val dotFileC = resolve("c/modular/chart.dot")
 
     // and contain expected contents, with modules in declaration order
-    assertThat(dotFileA.readText()).contains(
+    assertThat(dotFileA.readText()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
-          ":b" [fillcolor="orange",shape="none"]
-          ":c" [fillcolor="orange",shape="none"]
+          ":a" [shape="box",penwidth="3",fillcolor="mediumorchid"]
+          ":b" [shape="none",fillcolor="orange"]
+          ":c" [shape="none",fillcolor="orange"]
           ":a" -> ":b"
           ":a" -> ":c"
         }
       """.trimIndent(),
     )
 
-    assertThat(dotFileB.readText()).contains(
+    assertThat(dotFileB.readText()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          ":b" [fillcolor="orange",penwidth="3",shape="box"]
+          ":b" [shape="box",penwidth="3",fillcolor="orange"]
         }
       """.trimIndent(),
     )
-    assertThat(dotFileC.readText()).contains(
+    assertThat(dotFileC.readText()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          ":c" [fillcolor="orange",penwidth="3",shape="box"]
+          ":c" [shape="box",penwidth="3",fillcolor="orange"]
         }
       """.trimIndent(),
     )
@@ -105,15 +105,15 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile).exists()
 
     // and contains expected contents, with modules in alphabetical order
-    assertThat(dotFile.readText()).contains(
+    assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
           edge [dir="none",arrowhead="halfopen",arrowtail="open"]
           graph [dpi="150",fontsize="20",ranksep="2.5",rankdir="LR"]
           node [style="filled"]
-          ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
-          ":b" [fillcolor="orange",shape="none"]
-          ":c" [fillcolor="orange",shape="none"]
+          ":a" [shape="box",penwidth="3",fillcolor="mediumorchid"]
+          ":b" [shape="none",fillcolor="orange"]
+          ":c" [shape="none",fillcolor="orange"]
           ":a" -> ":b"
           ":a" -> ":c"
         }
@@ -131,15 +131,15 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile).exists()
 
     // and contains expected contents, with modules in alphabetical order
-    assertThat(dotFile.readText()).contains(
+    assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
           edge [dir="none",arrowhead="halfopen",arrowtail="open"]
           graph [dpi="150",fontsize="20",ranksep="2.5",rankdir="LR"]
           node [style="filled"]
-          ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
-          ":b" [fillcolor="orange",shape="none"]
-          ":c" [fillcolor="orange",shape="none"]
+          ":a" [shape="box",penwidth="3",fillcolor="mediumorchid"]
+          ":b" [shape="none",fillcolor="orange"]
+          ":c" [shape="none",fillcolor="orange"]
           ":a" -> ":b"
           ":a" -> ":c"
         }
@@ -157,13 +157,13 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile).exists()
 
     // and contains expected contents, colons removed from module prefixes and "b" -> "B"
-    assertThat(dotFile.readText()).contains(
+    assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          "B" [fillcolor="orange",shape="none"]
-          "a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
-          "c" [fillcolor="orange",shape="none"]
+          "B" [shape="none",fillcolor="orange"]
+          "a" [shape="box",penwidth="3",fillcolor="mediumorchid"]
+          "c" [shape="none",fillcolor="orange"]
           "a" -> "B"
           "a" -> "c"
         }
@@ -182,11 +182,11 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile).exists()
 
     // and contains expected link styles
-    assertThat(dotFile.readText()).contains(
+    assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
+          ":a" [fillcolor="mediumorchid",shape="box",penwidth="3"]
           ":b" [fillcolor="mediumorchid",shape="none"]
           ":c" [fillcolor="orange",shape="none"]
           ":d" [fillcolor="orange",shape="none"]
@@ -208,18 +208,18 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile).exists()
 
     // and contains expected link styles
-    assertThat(dotFile.readText()).contains(
+    assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
           node [style="filled"]
-          ":app" [fillcolor="mediumorchid",penwidth="3",shape="box"]
-          ":data:a" [fillcolor="mediumorchid",shape="none"]
-          ":data:b" [fillcolor="mediumorchid",shape="none"]
-          ":domain:a" [fillcolor="mediumorchid",shape="none"]
-          ":domain:b" [fillcolor="mediumorchid",shape="none"]
-          ":ui:a" [fillcolor="mediumorchid",shape="none"]
-          ":ui:b" [fillcolor="mediumorchid",shape="none"]
-          ":ui:c" [fillcolor="mediumorchid",shape="none"]
+          ":app" [shape="box",penwidth="3",fillcolor="mediumorchid"]
+          ":data:a" [shape="none",fillcolor="mediumorchid"]
+          ":data:b" [shape="none",fillcolor="mediumorchid"]
+          ":domain:a" [shape="none",fillcolor="mediumorchid"]
+          ":domain:b" [shape="none",fillcolor="mediumorchid"]
+          ":ui:a" [shape="none",fillcolor="mediumorchid"]
+          ":ui:b" [shape="none",fillcolor="mediumorchid"]
+          ":ui:c" [shape="none",fillcolor="mediumorchid"]
           ":app" -> ":ui:a"
           ":app" -> ":ui:b"
           ":app" -> ":ui:c"

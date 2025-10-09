@@ -94,9 +94,9 @@ class CheckFileDiffTest : ScenarioTest() {
       |          digraph {
       |      ---   graph [layout="circo"]
       |            node [style="filled"]
-      |            ":a" [fillcolor="mediumorchid",penwidth="3",shape="box"]
-      |            ":b" [fillcolor="orange",shape="none"]
-      |            ":c" [fillcolor="orange",shape="none"]
+      |            ":a" [shape="box",penwidth="3",fillcolor="mediumorchid"]
+      |            ":b" [shape="none",fillcolor="orange"]
+      |            ":c" [shape="none",fillcolor="orange"]
       |            ":a" -> ":b"
       |            ":a" -> ":c"
       |          }
