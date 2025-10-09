@@ -103,7 +103,6 @@ class MermaidThemeVariablesSpecImpl(
 @InternalModularApi
 class MermaidLinkTypeContainer(objects: ObjectFactory) : LinkTypeContainer(objects), MermaidNamedLinkTypeContainer
 
-
 @InternalModularApi
 abstract class MermaidModuleTypeSpecImpl @Inject constructor(
   override val name: String,
