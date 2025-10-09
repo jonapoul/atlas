@@ -5,13 +5,16 @@
 package modular.d2.internal
 
 import assertk.assertThat
+import modular.d2.LinkStyle
 import modular.d2.d2Writer
-import modular.test.AbcWithLinkStyles
+import modular.test.Abc
 import modular.test.ModuleWithNoLinks
 import modular.test.OneLevelOfSubmodules
+import modular.test.ProjectLayout
 import modular.test.SingleNestedModuleWithNoLinks
 import modular.test.TwoLevelsOfSubmodules
 import modular.test.equalsDiffed
+import modular.test.moduleLink
 import kotlin.test.Test
 
 class D2WriterTest {
@@ -206,7 +209,7 @@ class D2WriterTest {
   @Test
   fun `Graph with link styles and colors`() {
     val writer = d2Writer(
-      layout = AbcWithLinkStyles,
+      layout = D2AbcWithLinkStyles,
       thisPath = ":a",
     )
 
@@ -230,4 +233,12 @@ class D2WriterTest {
       """.trimIndent(),
     )
   }
+
+  private object D2AbcWithLinkStyles : ProjectLayout by Abc {
+    override val links = setOf(
+      moduleLink(fromPath = ":a", toPath = ":b", style = LinkStyle.Dashed, color = "orange"),
+      moduleLink(fromPath = ":a", toPath = ":c", style = LinkStyle.Bold),
+    )
+  }
+
 }

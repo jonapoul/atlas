@@ -34,6 +34,7 @@ import kotlinx.serialization.Serializable as KSerializable
 @ModularDsl
 interface NamedLinkTypeContainer : NamedDomainObjectContainer<LinkTypeSpec>
 
+@ModularDsl
 interface LinkTypeSpec {
   val name: String
   val configuration: Property<String>

@@ -4,11 +4,11 @@
  */
 package modular.test
 
-import modular.core.LinkStyle
 import modular.core.LinkType
 import modular.core.ModuleType
 import modular.core.internal.ModuleLink
 import modular.core.internal.Node
+import modular.core.internal.StringEnum
 import modular.core.internal.TypedModule
 
 fun node(
@@ -28,11 +28,11 @@ fun moduleLink(
   fromPath: String,
   toPath: String,
   configuration: String = "implementation",
-  style: LinkStyle? = null,
+  style: StringEnum? = null,
   color: String? = null,
 ) = ModuleLink(
   fromPath,
   toPath,
   configuration,
-  type = LinkType(configuration, style, color),
+  type = LinkType(configuration, style?.string, color),
 )

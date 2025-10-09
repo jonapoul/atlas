@@ -5,11 +5,11 @@
 package modular.test.scenarios
 
 import modular.test.KOTLIN_VERSION
-import modular.test.Scenario
+import modular.test.MermaidScenario
 
-object MermaidWithLinkTypes : Scenario by MermaidBasic {
+object MermaidWithLinkTypes : MermaidScenario by MermaidBasic {
   override val rootBuildFile = """
-    import modular.core.LinkStyle
+    import modular.mermaid.LinkStyle
 
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
@@ -20,7 +20,7 @@ object MermaidWithLinkTypes : Scenario by MermaidBasic {
       linkTypes {
         api(color = "green")
         implementation(color = "#5555FF")
-        "compileOnly"(style = LinkStyle.Dotted, color = "yellow")
+        "compileOnly"(style = LinkStyle.Dashed, color = "yellow")
       }
     }
   """.trimIndent()

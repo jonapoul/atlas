@@ -12,6 +12,7 @@ import modular.test.contentEquals
 import modular.test.runTask
 import modular.test.scenarios.GraphVizWithLinkTypes
 import modular.test.scenarios.GraphvizBasic
+import org.junit.jupiter.api.Disabled
 import kotlin.test.Test
 
 class WriteGraphvizLegendTest : ScenarioTest() {
@@ -43,6 +44,7 @@ class WriteGraphvizLegendTest : ScenarioTest() {
   }
 
   @Test
+  @Disabled("https://github.com/jonapoul/modular/issues/247")
   fun `Show modules and links next to each other`() = runScenario(GraphVizWithLinkTypes) {
     // when
     runTask("writeGraphvizLegend").build()

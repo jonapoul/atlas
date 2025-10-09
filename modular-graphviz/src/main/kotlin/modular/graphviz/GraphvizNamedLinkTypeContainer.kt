@@ -12,7 +12,6 @@ import org.gradle.kotlin.dsl.register
 
 @ModularDsl
 interface GraphvizNamedLinkTypeContainer : NamedLinkTypeContainer {
-  @ModularDsl
   operator fun String.invoke(
     style: LinkStyle? = null,
     color: String? = null,

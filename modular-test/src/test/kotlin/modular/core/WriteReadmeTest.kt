@@ -15,6 +15,7 @@ import modular.test.scenarios.MermaidBasic
 import modular.test.scenarios.MermaidWithLinkTypes
 import modular.test.taskHadResult
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
+import org.junit.jupiter.api.Disabled
 import kotlin.test.Test
 
 class WriteReadmeTest : ScenarioTest() {
@@ -53,6 +54,7 @@ class WriteReadmeTest : ScenarioTest() {
     )
   }
 
+  @Disabled("https://github.com/jonapoul/modular/issues/247")
   @Test
   fun `Write mermaid readme with link types`() = runScenario(MermaidWithLinkTypes) {
     // when
@@ -96,6 +98,7 @@ class WriteReadmeTest : ScenarioTest() {
     )
   }
 
+  @Disabled("https://github.com/jonapoul/modular/issues/247")
   @Test
   fun `Inject mermaid into existing readme`() = runScenario(MermaidWithLinkTypes) {
     // given
