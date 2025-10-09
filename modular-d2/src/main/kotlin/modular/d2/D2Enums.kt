@@ -161,3 +161,16 @@ enum class Font(override val string: String) : StringEnum {
 
   override fun toString() = string
 }
+
+/**
+ * https://d2lang.com/tour/style/#text-transform
+ */
+enum class TextTransform(override val string: String) : StringEnum {
+  Uppercase("uppercase"),
+  Lowercase("lowercase"),
+  Title("title"),
+  None("none"),
+  ;
+
+  override fun toString() = string
+}

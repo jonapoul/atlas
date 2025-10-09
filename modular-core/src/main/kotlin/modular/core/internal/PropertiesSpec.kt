@@ -58,5 +58,9 @@ fun PropertiesSpec.intDelegate(key: String): Delegate<Int> =
   Delegate(properties, key, fromString = { Integer.valueOf(it) })
 
 @InternalModularApi
+fun PropertiesSpec.floatDelegate(key: String): Delegate<Float> =
+  Delegate(properties, key, fromString = { it.toFloat() })
+
+@InternalModularApi
 fun PropertiesSpec.stringDelegate(key: String): Delegate<String> =
   Delegate(properties, key, fromString = { it })

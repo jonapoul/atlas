@@ -19,8 +19,7 @@ import org.gradle.api.provider.SetProperty
 import java.io.File
 
 @InternalModularApi
-fun ModularExtensionImpl.orderedModuleTypes(): List<ModuleTypeSpec> =
-  (moduleTypes as OrderedNamedContainer<ModuleTypeSpec>).getInOrder()
+fun ModularExtensionImpl.orderedModuleTypes(): List<ModuleTypeSpec> = moduleTypes.getInOrder()
 
 @InternalModularApi
 fun ModularExtensionImpl.orderedLinkTypes(): List<LinkType> =
@@ -30,6 +29,7 @@ fun ModularExtensionImpl.orderedLinkTypes(): List<LinkType> =
 fun moduleType(type: ModuleTypeSpec) = ModuleType(
   name = type.name,
   color = type.color.get(),
+  properties = type.properties.getOrElse(mutableMapOf()),
 )
 
 @InternalModularApi

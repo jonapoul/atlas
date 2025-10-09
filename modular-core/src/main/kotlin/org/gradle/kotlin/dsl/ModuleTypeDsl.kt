@@ -11,66 +11,72 @@ import modular.core.NamedModuleTypeContainer
 import org.gradle.api.NamedDomainObjectProvider
 
 @JvmOverloads
-fun NamedModuleTypeContainer.androidApp(
+fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidApp(
   name: String = "Android App",
   color: String = "limegreen",
-): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
+  extraConfig: () -> Unit = {},
+): NamedDomainObjectProvider<T> = registerByPluginId(
   name = name,
   color = color,
   pluginId = "com.android.application",
 )
 
 @JvmOverloads
-fun NamedModuleTypeContainer.androidLibrary(
+fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidLibrary(
   name: String = "Android Library",
   color: String = "lightgreen",
-): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
+  extraConfig: () -> Unit = {},
+): NamedDomainObjectProvider<T> = registerByPluginId(
   name = name,
   color = color,
   pluginId = "com.android.library",
 )
 
 @JvmOverloads
-fun NamedModuleTypeContainer.java(
+fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.java(
   name: String = "Java",
   color: String = "orange",
-): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
+  extraConfig: () -> Unit = {},
+): NamedDomainObjectProvider<T> = registerByPluginId(
   name = name,
   color = color,
   pluginId = "java",
 )
 
 @JvmOverloads
-fun NamedModuleTypeContainer.kotlinJvm(
+fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinJvm(
   name: String = "Kotlin JVM",
   color: String = "mediumorchid",
-): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
+  extraConfig: () -> Unit = {},
+): NamedDomainObjectProvider<T> = registerByPluginId(
   name = name,
   color = color,
   pluginId = "org.jetbrains.kotlin.jvm",
 )
 
 @JvmOverloads
-fun NamedModuleTypeContainer.kotlinMultiplatform(
+fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinMultiplatform(
   name: String = "Kotlin Multiplatform",
   color: String = "mediumslateblue",
-): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPluginId(
+  extraConfig: () -> Unit = {},
+): NamedDomainObjectProvider<T> = registerByPluginId(
   name = name,
   color = color,
   pluginId = "org.jetbrains.kotlin.multiplatform",
 )
 
 @JvmOverloads
-fun NamedModuleTypeContainer.other(
+fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.other(
   name: String = "Other",
   color: String = "gainsboro",
-): NamedDomainObjectProvider<ModuleTypeSpec> = registerByPathMatches(
+  extraConfig: () -> Unit = {},
+): NamedDomainObjectProvider<T> = registerByPathMatches(
   name = name,
   color = color,
   pathMatches = ".*?".toRegex(), // match anything and everything - should always have this declared last
 )
 
-fun NamedModuleTypeContainer.builtIns() {
+fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.builtIns() {
   // Highest priority ↓↓
   androidApp()
   kotlinMultiplatform()

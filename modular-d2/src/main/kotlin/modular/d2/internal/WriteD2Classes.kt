@@ -23,8 +23,8 @@ import modular.d2.Position
 import modular.d2.Position.CenterLeft
 import modular.d2.Position.CenterRight
 import modular.d2.Theme
-import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
+import java.io.Serializable as JSerializable
 
 @InternalModularApi
 fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString {
@@ -95,7 +95,10 @@ private val String.key
 private fun IndentedStringBuilder.appendClass(type: ModuleType) = with(type) {
   appendLine("$classId {")
   indent {
-    appendLine("style.fill: \"$color\"")
+    val properties = type.properties + ("style.fill" to color)
+    properties.sortedByKeys().forEach { (key, value) ->
+      appendLine("$key: \"$value\"")
+    }
   }
   appendLine("}")
 }

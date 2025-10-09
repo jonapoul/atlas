@@ -14,4 +14,5 @@ interface D2ModularExtension : ModularExtension {
   fun d2(action: Action<D2Spec>): D2Spec
 
   fun linkTypes(action: Action<D2NamedLinkTypeContainer>)
+  fun moduleTypes(action: Action<D2NamedModuleTypeContainer>)
 }

@@ -112,8 +112,8 @@ class D2Writer(
   }
 
   private fun IndentedStringBuilder.getExampleNodesForLinks(): Pair<ModuleType, ModuleType> {
-    val dummy = ModuleType(name = "dummy1", color = "")
-    val dummy2 = ModuleType(name = "dummy2", color = "")
+    val dummy = ModuleType(name = "dummy1", color = "", properties = emptyMap())
+    val dummy2 = ModuleType(name = "dummy2", color = "", properties = emptyMap())
     appendLine("${dummy.classId}.class: $HIDDEN_CLASS")
     appendLine("${dummy2.classId}.class: $HIDDEN_CLASS")
     return dummy to dummy2
