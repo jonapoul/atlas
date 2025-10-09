@@ -31,12 +31,23 @@ public abstract interface class modular/d2/D2GlobalPropsSpec : modular/core/inte
 public abstract interface class modular/d2/D2ModularExtension : modular/core/ModularExtension {
 	public abstract fun d2 (Lorg/gradle/api/Action;)Lmodular/d2/D2Spec;
 	public abstract fun getD2 ()Lmodular/d2/D2Spec;
+	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
 }
 
 public final class modular/d2/D2ModularPlugin : modular/core/ModularPlugin {
 	public fun <init> ()V
 	public synthetic fun createExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
+}
+
+public abstract interface class modular/d2/D2NamedLinkTypeContainer : modular/core/NamedLinkTypeContainer {
+	public fun invoke (Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public final class modular/d2/D2NamedLinkTypeContainer$DefaultImpls {
+	public static fun invoke (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class modular/d2/D2RootStyleSpec : modular/core/internal/PropertiesSpec {
@@ -129,6 +140,19 @@ public final class modular/d2/LayoutEngine : java/lang/Enum, modular/core/intern
 	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/d2/LayoutEngine;
 	public static fun values ()[Lmodular/d2/LayoutEngine;
+}
+
+public final class modular/d2/LinkStyle : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Basic Lmodular/d2/LinkStyle;
+	public static final field Bold Lmodular/d2/LinkStyle;
+	public static final field Dashed Lmodular/d2/LinkStyle;
+	public static final field Dotted Lmodular/d2/LinkStyle;
+	public static final field Invisible Lmodular/d2/LinkStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/d2/LinkStyle;
+	public static fun values ()[Lmodular/d2/LinkStyle;
 }
 
 public final class modular/d2/Location : java/lang/Enum, modular/core/internal/StringEnum {
@@ -255,5 +279,23 @@ public abstract class modular/d2/tasks/WriteD2Classes : org/gradle/api/DefaultTa
 	public fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public final class org/gradle/kotlin/dsl/LinkTypeDslKt {
+	public static final fun api (Lmodular/d2/D2NamedLinkTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/d2/D2NamedLinkTypeContainer;Lmodular/d2/LinkStyle;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/d2/D2NamedLinkTypeContainer;Lmodular/d2/LinkStyle;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/d2/D2NamedLinkTypeContainer;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun api$default (Lmodular/d2/D2NamedLinkTypeContainer;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/d2/D2NamedLinkTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/d2/D2NamedLinkTypeContainer;Lmodular/d2/LinkStyle;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/d2/D2NamedLinkTypeContainer;Lmodular/d2/LinkStyle;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/d2/D2NamedLinkTypeContainer;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun implementation$default (Lmodular/d2/D2NamedLinkTypeContainer;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Lmodular/d2/LinkStyle;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun register$default (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 

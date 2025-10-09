@@ -12,4 +12,6 @@ import org.gradle.api.Action
 interface D2ModularExtension : ModularExtension {
   val d2: D2Spec
   fun d2(action: Action<D2Spec>): D2Spec
+
+  fun linkTypes(action: Action<D2NamedLinkTypeContainer>)
 }

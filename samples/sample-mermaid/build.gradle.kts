@@ -1,9 +1,9 @@
 import modular.mermaid.ConsiderModelOrder.PreferEdges
 import modular.mermaid.CycleBreakingStrategy.Interactive
 import modular.mermaid.LinkStyle
+import modular.mermaid.LinkStyle.Basic
 import modular.mermaid.LinkStyle.Bold
 import modular.mermaid.LinkStyle.Dashed
-import modular.mermaid.LinkStyle.Basic
 import modular.mermaid.Look.HandDrawn
 import modular.mermaid.NodePlacementStrategy.LinearSegments
 import modular.mermaid.Theme.Forest

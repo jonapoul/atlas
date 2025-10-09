@@ -5,6 +5,7 @@
 package modular.d2.internal
 
 import modular.core.InternalModularApi
+import modular.core.internal.LinkTypeContainer
 import modular.core.internal.PropertiesSpec
 import modular.core.internal.PropertiesSpecImpl
 import modular.core.internal.bool
@@ -18,6 +19,7 @@ import modular.core.internal.string
 import modular.core.internal.stringDelegate
 import modular.d2.ArrowType
 import modular.d2.D2GlobalPropsSpec
+import modular.d2.D2NamedLinkTypeContainer
 import modular.d2.D2RootStyleSpec
 import modular.d2.D2Spec
 import modular.d2.FillPattern
@@ -77,3 +79,8 @@ open class D2GlobalPropsSpecImpl(
   override var font by enumDelegate<Font>("***.style.font")
   override var fontSize by intDelegate("***.style.font-size")
 }
+
+@InternalModularApi
+class D2LinkTypeContainer(
+  objects: ObjectFactory,
+) : LinkTypeContainer(objects), D2NamedLinkTypeContainer

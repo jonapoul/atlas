@@ -13,8 +13,8 @@ import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
 import modular.core.internal.parseEnum
-import modular.mermaid.MermaidConfig
 import modular.mermaid.LinkStyle
+import modular.mermaid.MermaidConfig
 
 internal class MermaidWriter(
   override val typedModules: Set<TypedModule>,
@@ -93,7 +93,8 @@ internal class MermaidWriter(
   private fun IndentedStringBuilder.appendLinks() {
     links.forEachIndexed { i, link ->
       val arrowPrefix = if (config.animateLinks) "link$i@" else ""
-      val style = link.type?.style
+      val style = link.type
+        ?.style
         ?.let { parseEnum<LinkStyle>(it) }
         ?: LinkStyle.Basic
 
