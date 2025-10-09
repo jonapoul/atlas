@@ -123,12 +123,23 @@ public final class modular/graphviz/FileFormat : java/lang/Enum, modular/core/in
 public abstract interface class modular/graphviz/GraphvizModularExtension : modular/core/ModularExtension {
 	public abstract fun getGraphviz ()Lmodular/graphviz/GraphvizSpec;
 	public abstract fun graphviz (Lorg/gradle/api/Action;)Lmodular/graphviz/GraphvizSpec;
+	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
 }
 
 public final class modular/graphviz/GraphvizModularPlugin : modular/core/ModularPlugin {
 	public fun <init> ()V
 	public synthetic fun createExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
+}
+
+public abstract interface class modular/graphviz/GraphvizNamedLinkTypeContainer : modular/core/NamedLinkTypeContainer {
+	public fun invoke (Ljava/lang/String;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public final class modular/graphviz/GraphvizNamedLinkTypeContainer$DefaultImpls {
+	public static fun invoke (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class modular/graphviz/GraphvizSpec : modular/core/ModularSpec {
@@ -162,6 +173,19 @@ public final class modular/graphviz/LayoutEngine : java/lang/Enum, modular/core/
 	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/LayoutEngine;
 	public static fun values ()[Lmodular/graphviz/LayoutEngine;
+}
+
+public final class modular/graphviz/LinkStyle : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Bold Lmodular/graphviz/LinkStyle;
+	public static final field Dashed Lmodular/graphviz/LinkStyle;
+	public static final field Dotted Lmodular/graphviz/LinkStyle;
+	public static final field Invis Lmodular/graphviz/LinkStyle;
+	public static final field Solid Lmodular/graphviz/LinkStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/LinkStyle;
+	public static fun values ()[Lmodular/graphviz/LinkStyle;
 }
 
 public final class modular/graphviz/RankDir : java/lang/Enum, modular/core/internal/StringEnum {
@@ -219,5 +243,23 @@ public abstract class modular/graphviz/tasks/WriteGraphvizLegendBase : org/gradl
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public final class org/gradle/kotlin/dsl/LinkTypeDslKt {
+	public static final fun api (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Lmodular/graphviz/LinkStyle;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Lmodular/graphviz/LinkStyle;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun api (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun api$default (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Lmodular/graphviz/LinkStyle;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Lmodular/graphviz/LinkStyle;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun implementation (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun implementation$default (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Lmodular/graphviz/LinkStyle;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Lmodular/graphviz/LinkStyle;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun register (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun register$default (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 

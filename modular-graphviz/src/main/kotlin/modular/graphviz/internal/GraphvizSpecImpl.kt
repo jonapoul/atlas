@@ -5,11 +5,13 @@
 package modular.graphviz.internal
 
 import modular.core.InternalModularApi
+import modular.core.internal.LinkTypeContainer
 import modular.core.internal.bool
 import modular.core.internal.enum
 import modular.core.internal.float
 import modular.core.internal.int
 import modular.core.internal.string
+import modular.graphviz.GraphvizNamedLinkTypeContainer
 import modular.graphviz.GraphvizSpec
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
@@ -38,3 +40,8 @@ class GraphvizSpecImpl(
   override val rankDir = objects.enum(properties.rankDir)
   override val rankSep = objects.float(properties.rankSep)
 }
+
+@InternalModularApi
+class GraphvizLinkTypeContainer(
+  objects: ObjectFactory,
+) : LinkTypeContainer(objects), GraphvizNamedLinkTypeContainer

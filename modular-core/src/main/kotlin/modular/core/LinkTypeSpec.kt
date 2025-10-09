@@ -31,6 +31,7 @@ import kotlinx.serialization.Serializable as KSerializable
  * Added entries are checked in priority order, so a configuration of `apiImplementationCompileOnly` in the example
  * above would match `api` but not reach `implementation` or `compileOnly`.
  */
+@ModularDsl
 interface NamedLinkTypeContainer : NamedDomainObjectContainer<LinkTypeSpec>
 
 interface LinkTypeSpec {

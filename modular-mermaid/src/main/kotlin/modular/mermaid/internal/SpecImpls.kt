@@ -93,4 +93,4 @@ class MermaidThemeVariablesSpecImpl(
 }
 
 @InternalModularApi
-open class MermaidLinkTypeContainer(objects: ObjectFactory) : LinkTypeContainer(objects), MermaidNamedLinkTypeContainer
+class MermaidLinkTypeContainer(objects: ObjectFactory) : LinkTypeContainer(objects), MermaidNamedLinkTypeContainer
