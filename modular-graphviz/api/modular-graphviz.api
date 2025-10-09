@@ -124,12 +124,19 @@ public abstract interface class modular/graphviz/GraphvizModularExtension : modu
 	public abstract fun getGraphviz ()Lmodular/graphviz/GraphvizSpec;
 	public abstract fun graphviz (Lorg/gradle/api/Action;)Lmodular/graphviz/GraphvizSpec;
 	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
+	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
 }
 
 public final class modular/graphviz/GraphvizModularPlugin : modular/core/ModularPlugin {
 	public fun <init> ()V
 	public synthetic fun createExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
+}
+
+public abstract interface class modular/graphviz/GraphvizModuleTypeSpec : modular/core/ModuleTypeSpec {
+	public abstract fun getShape ()Lmodular/graphviz/Shape;
+	public abstract fun put (Ljava/lang/String;Ljava/lang/Object;)V
+	public abstract fun setShape (Lmodular/graphviz/Shape;)V
 }
 
 public abstract interface class modular/graphviz/GraphvizNamedLinkTypeContainer : modular/core/NamedLinkTypeContainer {
@@ -140,6 +147,15 @@ public abstract interface class modular/graphviz/GraphvizNamedLinkTypeContainer 
 public final class modular/graphviz/GraphvizNamedLinkTypeContainer$DefaultImpls {
 	public static fun invoke (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun invoke$default (Lmodular/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Lmodular/graphviz/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public abstract interface class modular/graphviz/GraphvizNamedModuleTypeContainer : modular/core/NamedModuleTypeContainer {
+}
+
+public final class modular/graphviz/GraphvizNamedModuleTypeContainer$DefaultImpls {
+	public static fun registerByPathContains (Lmodular/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Lmodular/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPluginId (Lmodular/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class modular/graphviz/GraphvizSpec : modular/core/ModularSpec {
@@ -198,6 +214,73 @@ public final class modular/graphviz/RankDir : java/lang/Enum, modular/core/inter
 	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/RankDir;
 	public static fun values ()[Lmodular/graphviz/RankDir;
+}
+
+public final class modular/graphviz/Shape : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Assembly Lmodular/graphviz/Shape;
+	public static final field Box Lmodular/graphviz/Shape;
+	public static final field Box3d Lmodular/graphviz/Shape;
+	public static final field Cds Lmodular/graphviz/Shape;
+	public static final field Circle Lmodular/graphviz/Shape;
+	public static final field Component Lmodular/graphviz/Shape;
+	public static final field Cylinder Lmodular/graphviz/Shape;
+	public static final field Diamond Lmodular/graphviz/Shape;
+	public static final field Doublecircle Lmodular/graphviz/Shape;
+	public static final field Doubleoctagon Lmodular/graphviz/Shape;
+	public static final field Egg Lmodular/graphviz/Shape;
+	public static final field Ellipse Lmodular/graphviz/Shape;
+	public static final field Fivepoverhang Lmodular/graphviz/Shape;
+	public static final field Folder Lmodular/graphviz/Shape;
+	public static final field Hexagon Lmodular/graphviz/Shape;
+	public static final field House Lmodular/graphviz/Shape;
+	public static final field Insulator Lmodular/graphviz/Shape;
+	public static final field Invhouse Lmodular/graphviz/Shape;
+	public static final field Invtrapezium Lmodular/graphviz/Shape;
+	public static final field Invtriangle Lmodular/graphviz/Shape;
+	public static final field Larrow Lmodular/graphviz/Shape;
+	public static final field Lpromoter Lmodular/graphviz/Shape;
+	public static final field Mcircle Lmodular/graphviz/Shape;
+	public static final field Mdiamond Lmodular/graphviz/Shape;
+	public static final field Msquare Lmodular/graphviz/Shape;
+	public static final field None Lmodular/graphviz/Shape;
+	public static final field Note Lmodular/graphviz/Shape;
+	public static final field Noverhang Lmodular/graphviz/Shape;
+	public static final field Octagon Lmodular/graphviz/Shape;
+	public static final field Oval Lmodular/graphviz/Shape;
+	public static final field Parallelogram Lmodular/graphviz/Shape;
+	public static final field Pentagon Lmodular/graphviz/Shape;
+	public static final field Plain Lmodular/graphviz/Shape;
+	public static final field Plaintext Lmodular/graphviz/Shape;
+	public static final field Point Lmodular/graphviz/Shape;
+	public static final field Polygon Lmodular/graphviz/Shape;
+	public static final field Primersite Lmodular/graphviz/Shape;
+	public static final field Promoter Lmodular/graphviz/Shape;
+	public static final field Proteasesite Lmodular/graphviz/Shape;
+	public static final field Proteinstab Lmodular/graphviz/Shape;
+	public static final field Rarrow Lmodular/graphviz/Shape;
+	public static final field Rect Lmodular/graphviz/Shape;
+	public static final field Rectangle Lmodular/graphviz/Shape;
+	public static final field Restrictionsite Lmodular/graphviz/Shape;
+	public static final field Ribosite Lmodular/graphviz/Shape;
+	public static final field Rnastab Lmodular/graphviz/Shape;
+	public static final field Rpromoter Lmodular/graphviz/Shape;
+	public static final field Septagon Lmodular/graphviz/Shape;
+	public static final field Signature Lmodular/graphviz/Shape;
+	public static final field Square Lmodular/graphviz/Shape;
+	public static final field Star Lmodular/graphviz/Shape;
+	public static final field Tab Lmodular/graphviz/Shape;
+	public static final field Terminator Lmodular/graphviz/Shape;
+	public static final field Threepoverhang Lmodular/graphviz/Shape;
+	public static final field Trapezium Lmodular/graphviz/Shape;
+	public static final field Triangle Lmodular/graphviz/Shape;
+	public static final field Tripleoctagon Lmodular/graphviz/Shape;
+	public static final field Underline Lmodular/graphviz/Shape;
+	public static final field Utr Lmodular/graphviz/Shape;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/Shape;
+	public static fun values ()[Lmodular/graphviz/Shape;
 }
 
 public abstract class modular/graphviz/tasks/ExecGraphviz : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {

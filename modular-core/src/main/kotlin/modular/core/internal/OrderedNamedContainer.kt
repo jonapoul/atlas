@@ -17,7 +17,7 @@ import org.gradle.api.model.ObjectFactory
 import java.util.function.IntFunction
 
 @InternalModularApi
-abstract class ModuleTypeContainer<T : ModuleTypeSpec>(
+open class ModuleTypeContainer<T : ModuleTypeSpec>(
   delegate: NamedDomainObjectContainer<T>,
 ) : OrderedNamedContainer<T>(delegate), NamedModuleTypeContainer<T>
 
@@ -31,7 +31,7 @@ open class LinkTypeContainer(objects: ObjectFactory) :
   NamedLinkTypeContainer
 
 @InternalModularApi
-abstract class OrderedNamedContainer<T : Any>(
+open class OrderedNamedContainer<T : Any>(
   private val container: NamedDomainObjectContainer<T>,
 ) : NamedDomainObjectContainer<T> by container {
   private val orderedNames = mutableSetOf<String>()

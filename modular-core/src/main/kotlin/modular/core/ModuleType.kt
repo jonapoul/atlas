@@ -11,5 +11,5 @@ import kotlinx.serialization.Serializable as KSerializable
 data class ModuleType(
   val name: String,
   val color: String,
-  val properties: Map<String, String>,
+  val properties: Map<String, String> = emptyMap(),
 ) : JSerializable

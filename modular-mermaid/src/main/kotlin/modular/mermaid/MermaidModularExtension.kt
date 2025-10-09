@@ -14,4 +14,5 @@ interface MermaidModularExtension : ModularExtension {
   fun mermaid(action: Action<MermaidSpec>): MermaidSpec
 
   fun linkTypes(action: Action<MermaidNamedLinkTypeContainer>)
+  fun moduleTypes(action: Action<MermaidNamedModuleTypeContainer>)
 }

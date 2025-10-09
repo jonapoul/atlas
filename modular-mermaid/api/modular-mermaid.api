@@ -92,6 +92,7 @@ public abstract interface class modular/mermaid/MermaidModularExtension : modula
 	public abstract fun getMermaid ()Lmodular/mermaid/MermaidSpec;
 	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
 	public abstract fun mermaid (Lorg/gradle/api/Action;)Lmodular/mermaid/MermaidSpec;
+	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
 }
 
 public final class modular/mermaid/MermaidModularPlugin : modular/core/ModularPlugin {
@@ -102,6 +103,20 @@ public final class modular/mermaid/MermaidModularPlugin : modular/core/ModularPl
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 }
 
+public abstract interface class modular/mermaid/MermaidModuleTypeSpec : modular/core/ModuleTypeSpec {
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getStroke ()Ljava/lang/String;
+	public abstract fun getStrokeDashArray ()Ljava/lang/String;
+	public abstract fun getStrokeWidth ()Ljava/lang/String;
+	public abstract fun put (Ljava/lang/String;Ljava/lang/Object;)V
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setStroke (Ljava/lang/String;)V
+	public abstract fun setStrokeDashArray (Ljava/lang/String;)V
+	public abstract fun setStrokeWidth (Ljava/lang/String;)V
+}
+
 public abstract interface class modular/mermaid/MermaidNamedLinkTypeContainer : modular/core/NamedLinkTypeContainer {
 	public fun invoke (Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun invoke$default (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
@@ -110,6 +125,15 @@ public abstract interface class modular/mermaid/MermaidNamedLinkTypeContainer : 
 public final class modular/mermaid/MermaidNamedLinkTypeContainer$DefaultImpls {
 	public static fun invoke (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun invoke$default (Lmodular/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Lmodular/mermaid/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public abstract interface class modular/mermaid/MermaidNamedModuleTypeContainer : modular/core/NamedModuleTypeContainer {
+}
+
+public final class modular/mermaid/MermaidNamedModuleTypeContainer$DefaultImpls {
+	public static fun registerByPathContains (Lmodular/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Lmodular/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPluginId (Lmodular/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class modular/mermaid/MermaidSpec : modular/core/ModularSpec {
