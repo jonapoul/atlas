@@ -240,5 +240,4 @@ class D2WriterTest {
       moduleLink(fromPath = ":a", toPath = ":c", style = LinkStyle.Bold),
     )
   }
-
 }
