@@ -7,11 +7,14 @@ package modular.test
 import org.gradle.testkit.runner.GradleRunner
 import java.io.File
 
-fun File.buildRunner(androidHome: File? = null): GradleRunner = GradleRunner
+fun File.buildRunner(
+  androidHome: File? = null,
+  gradleVersion: String = System.getProperty("test.version.gradle"),
+): GradleRunner = GradleRunner
   .create()
   .withPluginClasspath()
   // .withDebug(true)
-  .withGradleVersion(System.getProperty("test.version.gradle"))
+  .withGradleVersion(gradleVersion)
   .withProjectDir(this)
   .apply {
     if (androidHome != null) {
@@ -22,8 +25,9 @@ fun File.buildRunner(androidHome: File? = null): GradleRunner = GradleRunner
 fun File.runTask(
   task: String,
   androidHome: File? = null,
+  gradleVersion: String = System.getProperty("test.version.gradle"),
   extras: List<String> = emptyList(),
-): GradleRunner = buildRunner(androidHome).runTask(task, extras)
+): GradleRunner = buildRunner(androidHome, gradleVersion).runTask(task, extras)
 
 fun GradleRunner.runTask(
   task: String,

@@ -12,3 +12,5 @@ internal val Project.libs: VersionCatalog
 internal operator fun VersionCatalog.invoke(alias: String) = findLibrary(alias).get()
 
 internal fun Project.pluginsInternal(block: PluginManager.() -> Unit) = pluginManager.block()
+
+val Project.minimumGradleVersion: String get() = properties["modular.minimumGradleVersion"].toString()
