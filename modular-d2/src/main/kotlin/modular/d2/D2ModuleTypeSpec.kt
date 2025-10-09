@@ -1,3 +1,7 @@
+/**
+ * Copyright © 2025 Jon Poulton
+ * SPDX-License-Identifier: Apache-2.0
+ */
 package modular.d2
 
 import modular.core.ModuleTypeSpec

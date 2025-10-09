@@ -2,7 +2,7 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
-@file:Suppress("unused") // public API
+@file:Suppress("unused", "SpellCheckingInspection") // public API
 
 package modular.graphviz
 
@@ -150,6 +150,74 @@ enum class FileFormat(override val string: String) : StringEnum {
   Xdot14("xdot1.4"),
   XdotJson("xdot_json"),
   Xlib("xlib"),
+  ;
+
+  override fun toString() = string
+}
+
+/**
+ * https://graphviz.org/doc/info/shapes.html
+ */
+enum class Shape(override val string: String) : StringEnum {
+  Box("box"),
+  Polygon("polygon"),
+  Ellipse("ellipse"),
+  Oval("oval"),
+  Circle("circle"),
+  Point("point"),
+  Egg("egg"),
+  Triangle("triangle"),
+  Plaintext("plaintext"),
+  Plain("plain"),
+  Diamond("diamond"),
+  Trapezium("trapezium"),
+  Parallelogram("parallelogram"),
+  House("house"),
+  Pentagon("pentagon"),
+  Hexagon("hexagon"),
+  Septagon("septagon"),
+  Octagon("octagon"),
+  Doublecircle("doublecircle"),
+  Doubleoctagon("doubleoctagon"),
+  Tripleoctagon("tripleoctagon"),
+  Invtriangle("invtriangle"),
+  Invtrapezium("invtrapezium"),
+  Invhouse("invhouse"),
+  Mdiamond("mdiamond"),
+  Msquare("msquare"),
+  Mcircle("mcircle"),
+  Rect("rect"),
+  Rectangle("rectangle"),
+  Square("square"),
+  Star("star"),
+  None("none"),
+  Underline("underline"),
+  Cylinder("cylinder"),
+  Note("note"),
+  Tab("tab"),
+  Folder("folder"),
+  Box3d("box3d"),
+  Component("component"),
+  Promoter("promoter"),
+  Cds("cds"),
+  Terminator("terminator"),
+  Utr("utr"),
+  Primersite("primersite"),
+  Restrictionsite("restrictionsite"),
+  Fivepoverhang("fivepoverhang"),
+  Threepoverhang("threepoverhang"),
+  Noverhang("noverhang"),
+  Assembly("assembly"),
+  Signature("signature"),
+  Insulator("insulator"),
+  Ribosite("ribosite"),
+  Rnastab("rnastab"),
+  Proteasesite("proteasesite"),
+  Proteinstab("proteinstab"),
+  Rpromoter("rpromoter"),
+  Rarrow("rarrow"),
+  Larrow("larrow"),
+  Lpromoter("lpromoter"),
   ;
 
   override fun toString() = string

@@ -23,8 +23,8 @@ import modular.d2.Position
 import modular.d2.Position.CenterLeft
 import modular.d2.Position.CenterRight
 import modular.d2.Theme
-import kotlinx.serialization.Serializable as KSerializable
 import java.io.Serializable as JSerializable
+import kotlinx.serialization.Serializable as KSerializable
 
 @InternalModularApi
 fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString {

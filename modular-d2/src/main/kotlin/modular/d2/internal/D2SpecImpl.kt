@@ -127,8 +127,10 @@ abstract class D2ModuleTypeSpecImpl @Inject constructor(
 }
 
 @InternalModularApi
-class D2ModuleTypeContainer(objects: ObjectFactory) : ModuleTypeContainer<D2ModuleTypeSpec>(
-  delegate = objects.domainObjectContainer(D2ModuleTypeSpec::class.java) { name ->
-    objects.newInstance(D2ModuleTypeSpecImpl::class.java, name)
-  },
-), D2NamedModuleTypeContainer
+class D2ModuleTypeContainer(objects: ObjectFactory) :
+  ModuleTypeContainer<D2ModuleTypeSpec>(
+    delegate = objects.domainObjectContainer(D2ModuleTypeSpec::class.java) { name ->
+      objects.newInstance(D2ModuleTypeSpecImpl::class.java, name)
+    },
+  ),
+  D2NamedModuleTypeContainer
