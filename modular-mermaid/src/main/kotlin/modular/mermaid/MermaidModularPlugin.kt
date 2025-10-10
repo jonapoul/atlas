@@ -10,17 +10,11 @@ import modular.core.ModularPlugin
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant.Chart
 import modular.core.internal.Variant.Legend
-import modular.core.internal.modularBuildDirectory
-import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
 import modular.core.tasks.WriteReadme
 import modular.mermaid.internal.MermaidModularExtensionImpl
-import modular.mermaid.tasks.WriteDummyMarkdownLegend
-import modular.mermaid.tasks.WriteDummyMermaidChart
 import modular.mermaid.tasks.WriteMarkdownLegend
-import modular.mermaid.tasks.WriteMarkdownLegendBase
 import modular.mermaid.tasks.WriteMermaidChart
-import modular.mermaid.tasks.WriteMermaidChartBase
 import org.gradle.api.Project
 
 class MermaidModularPlugin : ModularPlugin<MermaidModularExtensionImpl>() {
@@ -44,18 +38,16 @@ class MermaidModularPlugin : ModularPlugin<MermaidModularExtensionImpl>() {
   override fun Project.registerChildTasks() {
     val spec = extension.mermaid
 
-    val chartTask = WriteMermaidChartBase.register<WriteMermaidChart>(
+    val chartTask = WriteMermaidChart.real(
       target = project,
       extension = extension,
       spec = spec,
-      outputFile = outputFile(Chart, spec.fileExtension.get()),
     )
 
-    val dummyChartTask = WriteMermaidChartBase.register<WriteDummyMermaidChart>(
+    val dummyChartTask = WriteMermaidChart.dummy(
       target = project,
       extension = extension,
       spec = spec,
-      outputFile = modularBuildDirectory.get().file("chart-temp.mmd").asFile,
     )
 
     CheckFileDiff.register(
@@ -71,25 +63,21 @@ class MermaidModularPlugin : ModularPlugin<MermaidModularExtensionImpl>() {
       target = project,
       flavor = "Mermaid",
       chartFile = chartTask.map { it.outputFile.get() },
-      legendTask = rootProject.tasks.named("writeMermaidLegend", WriteMarkdownLegend::class.java),
+      legendTask = WriteMarkdownLegend.get(rootProject),
     )
   }
 
   override fun Project.registerRootTasks() {
     val spec = extension.mermaid
 
-    val realTask = WriteMarkdownLegendBase.register<WriteMarkdownLegend>(
+    val realTask = WriteMarkdownLegend.real(
       target = project,
-      spec = spec,
       extension = extension,
-      outputFile = outputFile(Legend, fileExtension = "md"),
     )
 
-    val dummyTask = WriteMarkdownLegendBase.register<WriteDummyMarkdownLegend>(
+    val dummyTask = WriteMarkdownLegend.dummy(
       target = project,
-      spec = spec,
       extension = extension,
-      outputFile = modularBuildDirectory.get().file("legend-temp.md").asFile,
     )
 
     CheckFileDiff.register(

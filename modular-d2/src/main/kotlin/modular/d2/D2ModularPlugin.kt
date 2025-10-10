@@ -9,15 +9,14 @@ package modular.d2
 import modular.core.ModularPlugin
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant.Chart
+import modular.core.internal.Variant.Legend
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
 import modular.d2.internal.D2ModularExtensionImpl
 import modular.d2.tasks.ExecD2
 import modular.d2.tasks.WriteD2Chart
-import modular.d2.tasks.WriteD2ChartBase
 import modular.d2.tasks.WriteD2Classes
-import modular.d2.tasks.WriteDummyD2Chart
 import org.gradle.api.Project
 
 class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
@@ -43,17 +42,15 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
   override fun Project.registerChildTasks() {
     val d2Spec = extension.d2
 
-    val chartTask = WriteD2ChartBase.register<WriteD2Chart>(
+    val chartTask = WriteD2Chart.real(
       target = project,
       extension = extension,
-      spec = d2Spec,
       outputFile = outputFile(Chart, d2Spec.fileExtension.get()),
     )
 
-    val dummyChartTask = WriteD2ChartBase.register<WriteDummyD2Chart>(
+    val dummyChartTask = WriteD2Chart.dummy(
       target = project,
       extension = extension,
-      spec = d2Spec,
       outputFile = modularBuildDirectory.get().file("chart-temp.d2").asFile,
     )
 
@@ -82,9 +79,27 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
   }
 
   override fun Project.registerRootTasks() {
-    WriteD2Classes.register(
+    val d2 = extension.d2
+
+    val classes = WriteD2Classes.real(
       target = this,
       extension = extension,
+      outputFile = outputFile(variant = Legend, fileExtension = "d2", filename = "classes"),
+    )
+
+    val dummyClasses = WriteD2Classes.dummy(
+      target = project,
+      extension = extension,
+      outputFile = modularBuildDirectory.get().file("classes-temp.d2").asFile,
+    )
+
+    CheckFileDiff.register(
+      target = project,
+      extension = extension,
+      spec = d2,
+      variant = Chart,
+      realTask = classes,
+      dummyTask = dummyClasses,
     )
   }
 

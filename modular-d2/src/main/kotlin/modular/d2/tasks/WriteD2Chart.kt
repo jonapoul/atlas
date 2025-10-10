@@ -6,15 +6,16 @@ package modular.d2.tasks
 
 import modular.core.ModularExtension
 import modular.core.Replacement
+import modular.core.internal.DummyModularGenerationTask
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.logIfConfigured
+import modular.core.internal.qualifier
 import modular.core.internal.readModuleLinks
 import modular.core.internal.readModuleTypes
 import modular.core.tasks.CollateModuleTypes
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
 import modular.core.tasks.WriteModuleTree
-import modular.d2.D2Spec
 import modular.d2.internal.D2Writer
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -29,31 +30,11 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 @CacheableTask
-abstract class WriteD2Chart : WriteD2ChartBase(), ModularGenerationTask {
-  override fun getDescription() = "Generates a project dependency graph in d2 format"
-
-  @TaskAction
-  override fun execute() {
-    super.execute()
-    logIfConfigured(outputFile.get().asFile)
-  }
-}
-
-@DisableCachingByDefault
-internal abstract class WriteDummyD2Chart : WriteD2ChartBase() {
-  override fun getDescription() = "Generates a dummy d2 chart for comparison against the golden"
-
-  @TaskAction
-  override fun execute() = super.execute()
-}
-
-@CacheableTask
-abstract class WriteD2ChartBase : DefaultTask(), TaskWithOutputFile {
+abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, ModularGenerationTask {
   // Files
   @get:[PathSensitive(RELATIVE) InputFile] abstract val globalFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] abstract val linksFile: RegularFileProperty
@@ -87,24 +68,34 @@ abstract class WriteD2ChartBase : DefaultTask(), TaskWithOutputFile {
     )
 
     outputFile.writeText(writer())
+    logIfConfigured(outputFile)
   }
 
+  @DisableCachingByDefault
+  internal abstract class WriteD2ChartDummy : WriteD2Chart(), DummyModularGenerationTask
+
   internal companion object {
-    internal inline fun <reified T : WriteD2ChartBase> register(
+    internal fun real(
       target: Project,
       extension: ModularExtension,
-      spec: D2Spec,
+      outputFile: File,
+    ) = register<WriteD2Chart>(target, extension, outputFile)
+
+    internal fun dummy(
+      target: Project,
+      extension: ModularExtension,
+      outputFile: File,
+    ) = register<WriteD2ChartDummy>(target, extension, outputFile)
+
+    internal inline fun <reified T : WriteD2Chart> register(
+      target: Project,
+      extension: ModularExtension,
       outputFile: File,
     ): TaskProvider<T> = with(target) {
       val collateModuleTypes = CollateModuleTypes.get(rootProject)
       val calculateProjectTree = WriteModuleTree.get(target)
       val writeD2Classes = WriteD2Classes.get(rootProject)
-
-      val qualifier = when (T::class) {
-        WriteDummyD2Chart::class -> "Dummy"
-        else -> ""
-      }
-      val name = "write$qualifier${spec.name.capitalized()}Chart"
+      val name = "write${T::class.qualifier}D2Chart"
       val writeChart = tasks.register(name, T::class.java) { task ->
         task.globalFile.convention(writeD2Classes.map { it.outputFile.get() })
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
