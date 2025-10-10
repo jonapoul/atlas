@@ -83,9 +83,11 @@ abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutpu
     if (!chart.isBlank()) appendLine(chart)
 
     legendFile.orNull?.asFile?.let {
-      if (!chart.isBlank()) appendLine()
       val legend = diagramContents(tag = "legend", it)
-      if (!legend.isBlank()) appendLine(legend)
+      if (!legend.isBlank()) {
+        if (!chart.isBlank()) appendLine()
+        appendLine(legend)
+      }
     }
   }
 
