@@ -35,16 +35,11 @@ class WriteReadmeTest : ScenarioTest() {
         <!--region chart-->
 
         ```mermaid
-        ---
-        config:
-        ---
         graph TD
           _a[":a"]
           _b[":b"]
           _c[":c"]
-          style _a color:black,font-weight:bold,stroke:black,stroke-width:2px
-          style _b color:black
-          style _c color:black
+          style _a font-weight:bold,stroke:black,stroke-width:2px
           _a --> _b
           _a --> _c
         ```

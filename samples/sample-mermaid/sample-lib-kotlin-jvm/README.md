@@ -26,7 +26,7 @@ config:
 ---
 graph TD
   lib_kotlin_jvm["lib kotlin jvm"]
-  style lib_kotlin_jvm fill:mediumorchid,color:black,font-weight:bold,stroke:black,stroke-width:2px
+  style lib_kotlin_jvm fill:mediumorchid,font-weight:bold,stroke:black,stroke-width:2px,fillcolor:mediumorchid
 ```
 
 | Module Types | Color |
