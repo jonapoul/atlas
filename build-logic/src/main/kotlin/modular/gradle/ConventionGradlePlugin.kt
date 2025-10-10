@@ -60,7 +60,7 @@ class ConventionGradlePlugin : Plugin<Project> {
       attributes {
         attribute(
           GradlePluginApiVersion.GRADLE_PLUGIN_API_VERSION_ATTRIBUTE,
-          objects.named(GradlePluginApiVersion::class.java, minimumGradleVersion),
+          objects.named(GradlePluginApiVersion::class.java, minimumGradleVersion.get()),
         )
       }
     }
