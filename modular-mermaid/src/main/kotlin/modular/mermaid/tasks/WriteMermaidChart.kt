@@ -115,7 +115,7 @@ abstract class WriteMermaidChart : DefaultTask(), ModularGenerationTask, TaskWit
       val collateModuleTypes = CollateModuleTypes.get(rootProject)
       val calculateProjectTree = WriteModuleTree.get(target)
 
-      val name = "write${T::class.qualifier}MermaidClasses"
+      val name = "write${T::class.qualifier}MermaidChart"
       val writeChart = tasks.register(name, WriteMermaidChart::class.java)
 
       writeChart.configure { task ->

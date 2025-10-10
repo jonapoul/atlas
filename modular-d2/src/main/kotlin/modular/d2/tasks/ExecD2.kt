@@ -88,7 +88,7 @@ abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile
       variant: Variant,
       dotFileTask: TaskProvider<T>,
     ): TaskProvider<ExecD2> = with(target) {
-      val name = "exec${spec.name.capitalized()}$variant"
+      val name = "execD2$variant"
       val execGraphviz = tasks.register(name, ExecD2::class.java)
 
       execGraphviz.configure { task ->

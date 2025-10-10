@@ -309,6 +309,7 @@ public abstract class modular/graphviz/tasks/WriteGraphvizChart : org/gradle/api
 }
 
 public abstract class modular/graphviz/tasks/WriteGraphvizLegend : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
 	public fun execute ()V
 	public abstract fun getDescription ()Ljava/lang/String;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/ListProperty;
