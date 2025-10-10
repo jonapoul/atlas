@@ -2,6 +2,7 @@ package modular.gradle
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.attributes.plugin.GradlePluginApiVersion
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
@@ -52,6 +53,17 @@ class ConventionGradlePlugin : Plugin<Project> {
     // Plugins used in tests could be resolved in classpath
     tasks.withType<PluginUnderTestMetadata> {
       pluginClasspath.from(testPluginClasspath)
+    }
+
+    // Set the minimum supported gradle version
+    val minimumGradleVersion = providers.gradleProperty("modular.minimumGradleVersion")
+    configurations.named("apiElements").configure {
+      attributes {
+        attribute(
+          GradlePluginApiVersion.GRADLE_PLUGIN_API_VERSION_ATTRIBUTE,
+          objects.named(GradlePluginApiVersion::class.java, minimumGradleVersion.get()),
+        )
+      }
     }
   }
 }
