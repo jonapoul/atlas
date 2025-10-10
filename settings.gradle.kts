@@ -6,6 +6,10 @@ pluginManagement {
   includeBuild("build-logic")
 }
 
+plugins {
+  id("com.fueledbycaffeine.fastsync") version "0.3.0"
+}
+
 include(
   ":modular-core",
   ":modular-d2",
