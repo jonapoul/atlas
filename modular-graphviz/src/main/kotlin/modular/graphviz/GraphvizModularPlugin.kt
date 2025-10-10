@@ -10,8 +10,6 @@ import modular.core.ModularPlugin
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant.Chart
 import modular.core.internal.Variant.Legend
-import modular.core.internal.modularBuildDirectory
-import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
 import modular.core.tasks.WriteReadme
 import modular.graphviz.internal.GraphvizModularExtensionImpl

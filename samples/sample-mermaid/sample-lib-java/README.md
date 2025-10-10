@@ -1,7 +1,6 @@
 # sample-lib-java
 
 <!--region chart-->
-
 ```mermaid
 ---
 config:
@@ -37,10 +36,10 @@ graph TD
 | Kotlin JVM | <img src="https://img.shields.io/badge/-%20-mediumorchid?style=flat-square" height="30" width="100"> |
 | Java | <img src="https://img.shields.io/badge/-%20-orange?style=flat-square" height="30" width="100"> |
 | Other | <img src="https://img.shields.io/badge/-%20-gainsboro?style=flat-square" height="30" width="100"> |
+
 | Link Types | Style |
 |:--:|:--:|
 | jvmMainImplementation | Orange Bold |
 | api | Basic |
 | implementation | Dashed |
-
 <!--endregion-->

@@ -10,6 +10,7 @@ import modular.core.internal.DummyModularGenerationTask
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant.Chart
+import modular.core.internal.logIfConfigured
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.internal.qualifier
@@ -74,6 +75,7 @@ abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, ModularGe
 
     val outputFile = outputFile.get().asFile
     outputFile.writeText(writer())
+    logIfConfigured(outputFile)
   }
 
   @DisableCachingByDefault

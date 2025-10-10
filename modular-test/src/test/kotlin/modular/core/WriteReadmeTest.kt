@@ -33,7 +33,6 @@ class WriteReadmeTest : ScenarioTest() {
         # a
 
         <!--region chart-->
-
         ```mermaid
         graph TD
           _a[":a"]
@@ -43,7 +42,6 @@ class WriteReadmeTest : ScenarioTest() {
           _a --> _b
           _a --> _c
         ```
-
         <!--endregion-->
       """.trimIndent(),
     )
@@ -66,9 +64,6 @@ class WriteReadmeTest : ScenarioTest() {
         <!--region chart-->
 
         ```mermaid
-        ---
-        config:
-        ---
         graph TD
           _a[":a"]
           _b[":b"]
@@ -87,7 +82,6 @@ class WriteReadmeTest : ScenarioTest() {
         | api | Green |
         | implementation | #5555FF |
         | compileOnly | Yellow Dotted |
-
         <!--endregion-->
       """.trimIndent(),
     )
@@ -126,9 +120,6 @@ class WriteReadmeTest : ScenarioTest() {
       <!--region chart-->
 
       ```mermaid
-      ---
-      config:
-      ---
       graph TD
         _a[":a"]
         _b[":b"]
@@ -147,7 +138,6 @@ class WriteReadmeTest : ScenarioTest() {
       | api | Green |
       | implementation | #5555FF |
       | compileOnly | Yellow Dotted |
-
       <!--endregion-->
 
       Some suffix

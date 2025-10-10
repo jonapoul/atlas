@@ -17,6 +17,7 @@ import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
@@ -29,7 +30,7 @@ import kotlin.text.RegexOption.DOT_MATCHES_ALL
 @CacheableTask
 abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] abstract val chartFile: RegularFileProperty
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val legendFile: RegularFileProperty
+  @get:[PathSensitive(RELATIVE) InputFile Optional] abstract val legendFile: RegularFileProperty
   @get:Internal abstract val readmeFile: RegularFileProperty
   @get:Input abstract val projectPath: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
@@ -61,7 +62,6 @@ abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutpu
     val (startRegion, _, endRegion) = result.destructured
     return buildString {
       appendLine(startRegion)
-      appendLine()
       appendContents()
       append(endRegion)
     }
@@ -73,7 +73,6 @@ abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutpu
       appendLine("# $expectedTitle")
       appendLine()
       appendLine(REGION_START)
-      appendLine()
       appendContents()
       append(REGION_END)
     }
@@ -82,15 +81,20 @@ abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutpu
   private fun StringBuilder.appendContents() {
     val chart = diagramContents(tag = "chart", chartFile.get().asFile)
     if (!chart.isBlank()) appendLine(chart)
-    val legend = diagramContents(tag = "legend", legendFile.get().asFile)
-    if (!legend.isBlank()) appendLine(legend)
+
+    legendFile.orNull?.asFile?.let {
+      val legend = diagramContents(tag = "legend", it)
+      if (!legend.isBlank()) {
+        if (!chart.isBlank()) appendLine()
+        appendLine(legend)
+      }
+    }
   }
 
   private fun diagramContents(tag: String, file: File) = when (file.extension.lowercase()) {
-    "md" -> buildString {
+    "md", "txt" -> buildString {
       file
         .readLines()
-        .filter { it.isNotBlank() }
         .onEach { appendLine(it) }
     }
 
@@ -98,7 +102,6 @@ abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutpu
       appendLine("```mermaid")
       file
         .readLines()
-        .filter { it.isNotBlank() }
         .forEach { appendLine(it) }
       appendLine("```")
     }
@@ -108,7 +111,7 @@ abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutpu
       val relativePath = file.relativeTo(readmeFile.parentFile)
       "![$tag]($relativePath)"
     }
-  }
+  }.trim()
 
   @InternalModularApi
   companion object {
@@ -117,15 +120,19 @@ abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutpu
     private val REGION_REGEX = "(.*$REGION_START)(.*?)($REGION_END.*)".toRegex(DOT_MATCHES_ALL)
 
     @InternalModularApi
-    fun <T : TaskWithOutputFile> register(
+    fun register(
       target: Project,
       flavor: String,
       chartFile: Provider<RegularFile>,
-      legendTask: Provider<T>,
+      legendTask: Provider<out TaskWithOutputFile>?,
     ): TaskProvider<WriteReadme> = with(target) {
       return tasks.register("write${flavor.capitalized()}Readme", WriteReadme::class.java) { task ->
         task.projectPath.convention(target.path)
-        task.legendFile.convention(legendTask.map { it.outputFile.get() })
+        if (legendTask == null) {
+          task.legendFile.convention(null)
+        } else {
+          task.legendFile.convention(legendTask.map { it.outputFile.get() })
+        }
         task.chartFile.convention(chartFile)
         val readme = layout.projectDirectory.file("README.md")
         task.readmeFile.convention(readme)
