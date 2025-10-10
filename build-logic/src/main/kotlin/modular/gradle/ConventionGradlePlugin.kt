@@ -56,6 +56,7 @@ class ConventionGradlePlugin : Plugin<Project> {
     }
 
     // Set the minimum supported gradle version
+    val minimumGradleVersion = providers.gradleProperty("modular.minimumGradleVersion")
     configurations.named("apiElements").configure {
       attributes {
         attribute(

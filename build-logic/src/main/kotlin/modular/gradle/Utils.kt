@@ -4,7 +4,6 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.plugins.PluginManager
-import org.gradle.api.provider.Provider
 import org.gradle.kotlin.dsl.getByType
 
 internal val Project.libs: VersionCatalog
@@ -13,5 +12,3 @@ internal val Project.libs: VersionCatalog
 internal operator fun VersionCatalog.invoke(alias: String) = findLibrary(alias).get()
 
 internal fun Project.pluginsInternal(block: PluginManager.() -> Unit) = pluginManager.block()
-
-val Project.minimumGradleVersion: Provider<String> get() = providers.gradleProperty("modular.minimumGradleVersion")

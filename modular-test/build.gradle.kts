@@ -1,4 +1,3 @@
-import modular.gradle.minimumGradleVersion
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
@@ -21,7 +20,6 @@ buildConfig {
     useKotlinOutput { topLevelConstants = true }
     buildConfigField<String>("AGP_VERSION", libs.versions.agp.get())
     buildConfigField<String>("KOTLIN_VERSION", libs.versions.kotlin.get())
-    buildConfigField<String>("MINIMUM_GRADLE_VERSION", minimumGradleVersion)
   }
 }
 
