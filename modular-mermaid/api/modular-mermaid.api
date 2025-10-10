@@ -60,8 +60,10 @@ public final class modular/mermaid/Look : java/lang/Enum, modular/core/internal/
 
 public final class modular/mermaid/MermaidConfig : java/io/Serializable {
 	public static final field Companion Lmodular/mermaid/MermaidConfig$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lmodular/mermaid/Look;Lmodular/mermaid/Theme;Z)V
-	public final fun getAnimateLinks ()Z
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lmodular/mermaid/Look;Lmodular/mermaid/Theme;Ljava/lang/Boolean;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lmodular/mermaid/Look;Lmodular/mermaid/Theme;Ljava/lang/Boolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAnimateLinks ()Ljava/lang/Boolean;
 	public final fun getLayout ()Ljava/lang/String;
 	public final fun getLayoutProperties ()Ljava/util/Map;
 	public final fun getLook ()Lmodular/mermaid/Look;

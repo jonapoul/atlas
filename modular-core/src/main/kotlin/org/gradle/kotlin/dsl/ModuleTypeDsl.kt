@@ -14,66 +14,72 @@ import org.gradle.api.NamedDomainObjectProvider
 fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidApp(
   name: String = "Android App",
   color: String = "limegreen",
-  extraConfig: () -> Unit = {},
+  extraConfig: T.() -> Unit = {},
 ): NamedDomainObjectProvider<T> = registerByPluginId(
   name = name,
   color = color,
   pluginId = "com.android.application",
+  extraConfig = extraConfig,
 )
 
 @JvmOverloads
 fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidLibrary(
   name: String = "Android Library",
   color: String = "lightgreen",
-  extraConfig: () -> Unit = {},
+  extraConfig: T.() -> Unit = {},
 ): NamedDomainObjectProvider<T> = registerByPluginId(
   name = name,
   color = color,
   pluginId = "com.android.library",
+  extraConfig = extraConfig,
 )
 
 @JvmOverloads
 fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.java(
   name: String = "Java",
   color: String = "orange",
-  extraConfig: () -> Unit = {},
+  extraConfig: T.() -> Unit = {},
 ): NamedDomainObjectProvider<T> = registerByPluginId(
   name = name,
   color = color,
   pluginId = "java",
+  extraConfig = extraConfig,
 )
 
 @JvmOverloads
 fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinJvm(
   name: String = "Kotlin JVM",
   color: String = "mediumorchid",
-  extraConfig: () -> Unit = {},
+  extraConfig: T.() -> Unit = {},
 ): NamedDomainObjectProvider<T> = registerByPluginId(
   name = name,
   color = color,
   pluginId = "org.jetbrains.kotlin.jvm",
+  extraConfig = extraConfig,
 )
 
 @JvmOverloads
 fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinMultiplatform(
   name: String = "Kotlin Multiplatform",
   color: String = "mediumslateblue",
-  extraConfig: () -> Unit = {},
+  extraConfig: T.() -> Unit = {},
 ): NamedDomainObjectProvider<T> = registerByPluginId(
   name = name,
   color = color,
   pluginId = "org.jetbrains.kotlin.multiplatform",
+  extraConfig = extraConfig,
 )
 
 @JvmOverloads
 fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.other(
   name: String = "Other",
   color: String = "gainsboro",
-  extraConfig: () -> Unit = {},
+  extraConfig: T.() -> Unit = {},
 ): NamedDomainObjectProvider<T> = registerByPathMatches(
   name = name,
   color = color,
   pathMatches = ".*?".toRegex(), // match anything and everything - should always have this declared last
+  extraConfig = extraConfig,
 )
 
 fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.builtIns() {

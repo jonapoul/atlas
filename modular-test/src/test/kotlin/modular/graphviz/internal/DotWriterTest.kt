@@ -5,7 +5,6 @@
 package modular.graphviz.internal
 
 import assertk.assertThat
-import assertk.assertions.contains
 import modular.graphviz.dotWriter
 import modular.test.ModuleWithNoLinks
 import modular.test.OneLevelOfSubmodules
