@@ -10,6 +10,7 @@ import modular.core.internal.DummyModularGenerationTask
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant.Legend
+import modular.core.internal.logIfConfigured
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.moduleType
 import modular.core.internal.orderedLinkTypes
@@ -55,16 +56,16 @@ abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, ModularG
     val contents = buildString {
       if (hasModuleTypes) {
         appendModuleTypesTable(moduleTypes)
-        appendLine()
       }
 
       if (hasLinkTypes) {
+        if (hasModuleTypes) appendLine()
         appendLinkTypesTable(linkTypes)
-        appendLine()
       }
     }
 
     outputFile.writeText(contents)
+    logIfConfigured(outputFile)
   }
 
   private fun StringBuilder.appendModuleTypesTable(moduleTypes: List<ModuleType>) {

@@ -13,6 +13,7 @@ import modular.core.internal.Variant.Legend
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
+import modular.core.tasks.WriteReadme
 import modular.d2.internal.D2ModularExtensionImpl
 import modular.d2.tasks.ExecD2
 import modular.d2.tasks.WriteD2Chart
@@ -63,19 +64,19 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
       dummyTask = dummyChartTask,
     )
 
-    ExecD2.register(
+    val d2Task = ExecD2.register(
       target = project,
       spec = d2Spec,
       variant = Chart,
       dotFileTask = chartTask,
     )
 
-    //    WriteReadme.register(
-    //      target = project,
-    //      flavor = "D2",
-    //      chartFile = d2Task.map { it.outputFile.get() },
-    //      legendTask = rootProject.tasks.named("execD2Legend", ExecD2::class.java),
-    //    )
+    WriteReadme.register(
+      target = project,
+      flavor = "D2",
+      chartFile = d2Task.map { it.outputFile.get() },
+      legendTask = null,
+    )
   }
 
   override fun Project.registerRootTasks() {
