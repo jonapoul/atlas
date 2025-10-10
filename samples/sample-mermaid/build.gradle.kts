@@ -22,7 +22,18 @@ modular {
   generateOnSync = true
 
   moduleTypes {
-    builtIns()
+    androidApp()
+
+    kotlinMultiplatform {
+      fontColor = "white"
+      strokeDashArray = "4 3 2 1"
+      fontSize = "20px"
+    }
+
+    androidLibrary()
+    kotlinJvm()
+    java()
+    other()
   }
 
   linkTypes {

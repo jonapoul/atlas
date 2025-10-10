@@ -26,7 +26,7 @@ config:
 ---
 graph TD
   lib_java["lib java"]
-  style _sample_lib_java fill:orange,color:black,font-weight:bold,stroke:black,stroke-width:2px
+  style lib_java fill:orange,color:black,font-weight:bold,stroke:black,stroke-width:2px
 ```
 
 | Module Types | Color |

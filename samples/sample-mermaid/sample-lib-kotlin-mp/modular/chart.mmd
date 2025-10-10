@@ -24,12 +24,12 @@ graph TD
   lib_java["lib java"]
   lib_kotlin_jvm["lib kotlin jvm"]
   lib_kotlin_mp["lib kotlin mp"]
-  style _sample_lib_android fill:lightgreen,color:black
-  style _sample_lib_java fill:orange,color:black
-  style _sample_lib_kotlin_jvm fill:mediumorchid,color:black
-  style _sample_lib_kotlin_mp fill:mediumslateblue,color:black,font-weight:bold,stroke:black,stroke-width:2px
-  _sample_lib_android -.-> _sample_lib_kotlin_jvm
-  _sample_lib_kotlin_mp --> _sample_lib_android
-  _sample_lib_kotlin_mp ==> _sample_lib_java
+  style lib_android fill:lightgreen,color:black
+  style lib_java fill:orange,color:black
+  style lib_kotlin_jvm fill:mediumorchid,color:black
+  style lib_kotlin_mp fill:mediumslateblue,color:black,font-weight:bold,stroke:black,stroke-width:2px
+  lib_android -.-> lib_kotlin_jvm
+  lib_kotlin_mp --> lib_android
+  lib_kotlin_mp ==> lib_java
   linkStyle 2 stroke:orange
-  _sample_lib_kotlin_mp --> _sample_lib_kotlin_jvm
+  lib_kotlin_mp --> lib_kotlin_jvm
