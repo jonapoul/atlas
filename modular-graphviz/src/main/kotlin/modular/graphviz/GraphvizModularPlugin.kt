@@ -16,12 +16,8 @@ import modular.core.tasks.CheckFileDiff
 import modular.core.tasks.WriteReadme
 import modular.graphviz.internal.GraphvizModularExtensionImpl
 import modular.graphviz.tasks.ExecGraphviz
-import modular.graphviz.tasks.WriteDummyGraphvizChart
-import modular.graphviz.tasks.WriteDummyGraphvizLegend
 import modular.graphviz.tasks.WriteGraphvizChart
-import modular.graphviz.tasks.WriteGraphvizChartBase
 import modular.graphviz.tasks.WriteGraphvizLegend
-import modular.graphviz.tasks.WriteGraphvizLegendBase
 import org.gradle.api.Project
 
 class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
@@ -45,18 +41,16 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
   override fun Project.registerChildTasks() {
     val graphvizSpec = extension.graphviz
 
-    val chartTask = WriteGraphvizChartBase.register<WriteGraphvizChart>(
+    val chartTask = WriteGraphvizChart.real(
       target = project,
       extension = extension,
       spec = graphvizSpec,
-      outputFile = outputFile(Chart, graphvizSpec.fileExtension.get()),
     )
 
-    val dummyChartTask = WriteGraphvizChartBase.register<WriteDummyGraphvizChart>(
+    val dummyChartTask = WriteGraphvizChart.dummy(
       target = project,
       extension = extension,
       spec = graphvizSpec,
-      outputFile = modularBuildDirectory.get().file("chart-temp.dot").asFile,
     )
 
     CheckFileDiff.register(
@@ -86,11 +80,10 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
   override fun Project.registerRootTasks() {
     val spec = extension.graphviz
 
-    val realTask = WriteGraphvizLegendBase.register<WriteGraphvizLegend>(
+    val realTask = WriteGraphvizLegend.real(
       target = project,
       spec = spec,
       extension = extension,
-      outputFile = outputFile(Legend, spec.fileExtension.get()),
     )
 
     ExecGraphviz.register(
@@ -101,11 +94,9 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
     )
 
     // Also validate the legend's dotfile when we call gradle check
-    val dummyTask = WriteGraphvizLegendBase.register<WriteDummyGraphvizLegend>(
+    val dummyTask = WriteGraphvizLegend.dummy(
       target = project,
-      spec = spec,
       extension = extension,
-      outputFile = modularBuildDirectory.get().file("legend-temp.dot").asFile,
     )
 
     CheckFileDiff.register(

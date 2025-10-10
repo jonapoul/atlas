@@ -4,6 +4,7 @@
  */
 package modular.core
 
+import modular.core.internal.DummyModularGenerationTask
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.orderedModuleTypes
@@ -17,7 +18,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.TaskProvider
-import kotlin.jvm.java
 
 abstract class ModularPlugin<Impl : ModularExtensionImpl> : Plugin<Project> {
   @InternalModularApi
@@ -93,7 +93,11 @@ abstract class ModularPlugin<Impl : ModularExtensionImpl> : Plugin<Project> {
   private fun Project.registerModularGenerateTask() = tasks.register("modularGenerate") { t ->
     t.group = MODULAR_TASK_GROUP
     t.description = "Aggregates all Modular generation tasks"
-    t.dependsOn(tasks.withType(ModularGenerationTask::class.java))
+    t.dependsOn(
+      tasks
+        .withType(ModularGenerationTask::class.java)
+        .matching { it !is DummyModularGenerationTask },
+    )
   }
 
   private fun Project.registerGenerationTaskOnSync(modularGenerate: TaskProvider<Task>) {

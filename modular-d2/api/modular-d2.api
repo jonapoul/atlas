@@ -317,13 +317,7 @@ public abstract class modular/d2/tasks/ExecD2 : org/gradle/api/DefaultTask, modu
 	public abstract fun getPathToD2Command ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/d2/tasks/WriteD2Chart : modular/d2/tasks/WriteD2ChartBase, modular/core/tasks/ModularGenerationTask {
-	public fun <init> ()V
-	public fun execute ()V
-	public fun getDescription ()Ljava/lang/String;
-}
-
-public abstract class modular/d2/tasks/WriteD2ChartBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
+public abstract class modular/d2/tasks/WriteD2Chart : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public fun execute ()V
 	public abstract fun getGlobalFile ()Lorg/gradle/api/file/RegularFileProperty;

@@ -296,13 +296,7 @@ public abstract class modular/graphviz/tasks/ExecGraphviz : org/gradle/api/Defau
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/graphviz/tasks/WriteGraphvizChart : modular/graphviz/tasks/WriteGraphvizChartBase, modular/core/tasks/ModularGenerationTask {
-	public fun <init> ()V
-	public fun execute ()V
-	public fun getDescription ()Ljava/lang/String;
-}
-
-public abstract class modular/graphviz/tasks/WriteGraphvizChartBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
+public abstract class modular/graphviz/tasks/WriteGraphvizChart : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
@@ -314,13 +308,7 @@ public abstract class modular/graphviz/tasks/WriteGraphvizChartBase : org/gradle
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class modular/graphviz/tasks/WriteGraphvizLegend : modular/graphviz/tasks/WriteGraphvizLegendBase, modular/core/tasks/ModularGenerationTask {
-	public fun <init> ()V
-	public fun execute ()V
-	public fun getDescription ()Ljava/lang/String;
-}
-
-public abstract class modular/graphviz/tasks/WriteGraphvizLegendBase : org/gradle/api/DefaultTask, modular/core/tasks/TaskWithOutputFile {
+public abstract class modular/graphviz/tasks/WriteGraphvizLegend : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun execute ()V
 	public abstract fun getDescription ()Ljava/lang/String;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/ListProperty;

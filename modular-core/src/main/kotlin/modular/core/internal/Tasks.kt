@@ -7,6 +7,8 @@ package modular.core.internal
 import modular.core.InternalModularApi
 import modular.core.tasks.ModularGenerationTask
 import java.io.File
+import kotlin.reflect.KClass
+import kotlin.reflect.full.isSubclassOf
 
 @InternalModularApi
 const val MODULAR_TASK_GROUP = "modular"
@@ -17,3 +19,13 @@ fun ModularGenerationTask.logIfConfigured(file: File) {
     logger.lifecycle(file.absolutePath)
   }
 }
+
+@InternalModularApi
+interface DummyModularGenerationTask : ModularGenerationTask
+
+@InternalModularApi
+val KClass<out ModularGenerationTask>.qualifier: String
+  get() = when {
+    isSubclassOf(DummyModularGenerationTask::class) -> "Dummy"
+    else -> ""
+  }
