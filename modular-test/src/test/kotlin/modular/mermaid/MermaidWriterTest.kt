@@ -41,7 +41,6 @@ class MermaidWriterTest {
     )
   }
 
-
   @Test
   fun `Grouping modules`() {
     val writer = mermaidWriter(
