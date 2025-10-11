@@ -17,8 +17,6 @@ import modular.test.allSuccessful
 import modular.test.doesNotExist
 import modular.test.runTask
 import modular.test.scenarios.GraphVizBasicWithPngOutput
-import modular.test.scenarios.GraphVizBigGraph100DpiSvg
-import modular.test.scenarios.GraphVizBigGraph100DpiSvgWithAdjustment
 import modular.test.scenarios.GraphVizCustomDotExecutable
 import modular.test.scenarios.GraphVizCustomLayoutEngine
 import modular.test.scenarios.GraphvizBasic
@@ -85,51 +83,6 @@ class ExecGraphvizTest : ScenarioTest() {
     for (submodule in listOf("a", "b", "c")) {
       assertThat(resolve("$submodule/modular/chart.png")).exists()
     }
-  }
-
-  @Test
-  @RequiresGraphviz
-  fun `SVG viewBox scales with nondefault DPI with flag enabled`() =
-    runScenario(GraphVizBigGraph100DpiSvgWithAdjustment) {
-      // when
-      runTask(":app:execGraphvizChart").build()
-
-      // then the app graph was generated as an svg
-      val contents = resolve("app/modular/chart.svg").readText()
-
-      // and the viewBox matches the width/height
-      assertThat(contents).contains(
-        """
-        <svg width="486pt" height="361pt"
-        """.trimIndent(),
-      )
-      assertThat(contents).contains(
-        """
-        viewBox="0.00 0.00 486.00 361.00"
-        """.trimIndent(),
-      )
-    }
-
-  @Test
-  @RequiresGraphviz
-  fun `SVG doesn't scale viewBox if experimental flag is unset`() = runScenario(GraphVizBigGraph100DpiSvg) {
-    // when
-    runTask(":app:execGraphvizChart").build()
-
-    // then the app graph was generated as an svg
-    val contents = resolve("app/modular/chart.svg").readText()
-
-    // and the viewBox doesn't match the width/height
-    assertThat(contents).contains(
-      """
-        <svg width="486pt" height="361pt"
-      """.trimIndent(),
-    )
-    assertThat(contents).contains(
-      """
-        viewBox="0.00 0.00 350.00 260.00"
-      """.trimIndent(),
-    )
   }
 
   @Test

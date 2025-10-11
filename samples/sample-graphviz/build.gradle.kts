@@ -1,11 +1,15 @@
+import modular.graphviz.ArrowType.Ediamond
 import modular.graphviz.ArrowType.None
-import modular.graphviz.ArrowType.Normal
 import modular.graphviz.FileFormat.Svg
 import modular.graphviz.LayoutEngine.Dot
 import modular.graphviz.LinkStyle.Bold
 import modular.graphviz.LinkStyle.Dotted
 import modular.graphviz.LinkStyle.Solid
+import modular.graphviz.NodeStyle.Filled
+import modular.graphviz.NodeStyle.Radial
 import modular.graphviz.RankDir.TopToBottom
+import modular.graphviz.Shape.Box
+import modular.graphviz.Shape.Rarrow
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -22,7 +26,18 @@ modular {
   checkOutputs = true
 
   moduleTypes {
-    builtIns()
+    androidApp {
+      shape = Rarrow
+      style = Radial
+    }
+    kotlinMultiplatform { fontColor = "white" }
+    androidLibrary {
+      color = "crimson:cyan4"
+      gradientAngle = 90
+    }
+    kotlinJvm()
+    java()
+    other()
   }
 
   linkTypes {
@@ -32,16 +47,29 @@ modular {
   }
 
   graphviz {
-    adjustSvgViewBox = true
-    backgroundColor = "transparent"
-    dpi = 100
-    fontSize = 30
-    rankSep = 1.5f
-
-    arrowHead = Normal
-    arrowTail = None
     fileFormat = Svg
     layoutEngine = Dot
-    rankDir = TopToBottom
+
+    node {
+      fontName = "Courier New"
+      peripheries = 3
+      style = Filled
+      shape = Box
+    }
+
+    graph {
+      bgColor = "MidnightBlue"
+      fontSize = "30"
+      rankDir = TopToBottom
+      rankSep = 1.5
+    }
+
+    edge {
+      arrowHead = Ediamond
+      arrowTail = None
+      color = "red"
+      labelFloat = true
+      fontColor = "lime"
+    }
   }
 }

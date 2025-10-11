@@ -12,7 +12,10 @@ object GraphVizChartCustomConfig : Scenario by GraphvizBasic {
   override val rootBuildFile = """
     import modular.graphviz.ArrowType
     import modular.graphviz.Dir
+    import modular.graphviz.FileFormat
+    import modular.graphviz.LayoutEngine
     import modular.graphviz.RankDir
+    import modular.graphviz.Shape
 
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
@@ -27,13 +30,21 @@ object GraphVizChartCustomConfig : Scenario by GraphvizBasic {
       }
 
       graphviz {
-        arrowHead = ArrowType.HalfOpen
-        arrowTail = ArrowType.Open
-        dpi = 150
-        fontSize = 20
-        rankDir = RankDir.LeftToRight
-        rankSep = 2.5f
-        dir = Dir.None
+        fileFormat = FileFormat.Gif
+        layoutEngine = LayoutEngine.TwoPi
+
+        edge {
+          arrowHead = ArrowType.HalfOpen
+          arrowTail = ArrowType.Open
+        }
+
+        graph {
+          dpi = 150
+        }
+
+        node {
+          shape = Shape.None
+        }
       }
     }
   """.trimIndent()

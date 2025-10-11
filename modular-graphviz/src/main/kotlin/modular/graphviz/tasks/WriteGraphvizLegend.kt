@@ -45,8 +45,6 @@ abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, ModularG
     description = "Generates the legend for a project dependency graph"
   }
 
-  abstract override fun getDescription(): String
-
   @TaskAction
   open fun execute() {
     val moduleTypes = moduleTypes.get()

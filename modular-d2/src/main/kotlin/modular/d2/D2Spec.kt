@@ -6,7 +6,7 @@ package modular.d2
 
 import modular.core.ModularDsl
 import modular.core.ModularSpec
-import modular.core.internal.PropertiesSpec
+import modular.core.PropertiesSpec
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
@@ -85,7 +85,6 @@ interface D2RootStyleSpec : PropertiesSpec {
  */
 @ModularDsl
 interface D2GlobalPropsSpec : PropertiesSpec {
-  override fun put(key: String, value: Any)
   var arrowType: ArrowType?
   var fillArrowHeads: Boolean?
   var font: Font?

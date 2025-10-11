@@ -36,6 +36,11 @@ public abstract interface class modular/mermaid/ElkLayoutSpec : modular/mermaid/
 	public abstract fun setNodePlacementStrategy (Lmodular/mermaid/NodePlacementStrategy;)V
 }
 
+public final class modular/mermaid/ElkLayoutSpec$DefaultImpls {
+	public static fun clear (Lmodular/mermaid/ElkLayoutSpec;)V
+	public static fun put (Lmodular/mermaid/ElkLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
 public final class modular/mermaid/LinkStyle : java/lang/Enum, modular/core/internal/StringEnum {
 	public static final field Basic Lmodular/mermaid/LinkStyle;
 	public static final field Bold Lmodular/mermaid/LinkStyle;
@@ -86,8 +91,13 @@ public final class modular/mermaid/MermaidConfig$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public abstract interface class modular/mermaid/MermaidLayoutSpec : modular/core/internal/PropertiesSpec {
+public abstract interface class modular/mermaid/MermaidLayoutSpec : modular/core/PropertiesSpec {
 	public abstract fun getName ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/mermaid/MermaidLayoutSpec$DefaultImpls {
+	public static fun clear (Lmodular/mermaid/MermaidLayoutSpec;)V
+	public static fun put (Lmodular/mermaid/MermaidLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public abstract interface class modular/mermaid/MermaidModularExtension : modular/core/ModularExtension {
@@ -111,12 +121,16 @@ public abstract interface class modular/mermaid/MermaidModuleTypeSpec : modular/
 	public abstract fun getStroke ()Ljava/lang/String;
 	public abstract fun getStrokeDashArray ()Ljava/lang/String;
 	public abstract fun getStrokeWidth ()Ljava/lang/String;
-	public abstract fun put (Ljava/lang/String;Ljava/lang/Object;)V
 	public abstract fun setFontColor (Ljava/lang/String;)V
 	public abstract fun setFontSize (Ljava/lang/String;)V
 	public abstract fun setStroke (Ljava/lang/String;)V
 	public abstract fun setStrokeDashArray (Ljava/lang/String;)V
 	public abstract fun setStrokeWidth (Ljava/lang/String;)V
+}
+
+public final class modular/mermaid/MermaidModuleTypeSpec$DefaultImpls {
+	public static fun clear (Lmodular/mermaid/MermaidModuleTypeSpec;)V
+	public static fun put (Lmodular/mermaid/MermaidModuleTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public abstract interface class modular/mermaid/MermaidNamedLinkTypeContainer : modular/core/NamedLinkTypeContainer {
@@ -154,7 +168,7 @@ public final class modular/mermaid/MermaidSpec$DefaultImpls {
 	public static synthetic fun elk$default (Lmodular/mermaid/MermaidSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
 }
 
-public abstract interface class modular/mermaid/MermaidThemeVariablesSpec : modular/core/internal/PropertiesSpec {
+public abstract interface class modular/mermaid/MermaidThemeVariablesSpec : modular/core/PropertiesSpec {
 	public abstract fun getBackground ()Ljava/lang/String;
 	public abstract fun getDarkMode ()Ljava/lang/Boolean;
 	public abstract fun getFontFamily ()Ljava/lang/String;
@@ -175,6 +189,11 @@ public abstract interface class modular/mermaid/MermaidThemeVariablesSpec : modu
 	public abstract fun setPrimaryTextColor (Ljava/lang/String;)V
 	public abstract fun setSecondaryColor (Ljava/lang/String;)V
 	public abstract fun setTertiaryColor (Ljava/lang/String;)V
+}
+
+public final class modular/mermaid/MermaidThemeVariablesSpec$DefaultImpls {
+	public static fun clear (Lmodular/mermaid/MermaidThemeVariablesSpec;)V
+	public static fun put (Lmodular/mermaid/MermaidThemeVariablesSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public final class modular/mermaid/NodePlacementStrategy : java/lang/Enum, modular/core/internal/StringEnum {

@@ -7,7 +7,7 @@
 package modular.mermaid
 
 import modular.core.ModularDsl
-import modular.core.internal.PropertiesSpec
+import modular.core.PropertiesSpec
 import org.gradle.api.provider.Property
 
 @ModularDsl

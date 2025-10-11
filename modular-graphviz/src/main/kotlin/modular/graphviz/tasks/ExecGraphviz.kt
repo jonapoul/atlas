@@ -13,7 +13,6 @@ import modular.core.tasks.TaskWithOutputFile
 import modular.graphviz.FileFormat
 import modular.graphviz.GraphvizSpec
 import modular.graphviz.LayoutEngine
-import modular.graphviz.internal.doGraphvizPostProcessing
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -37,7 +36,6 @@ abstract class ExecGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutp
   @get:Input abstract val outputFormat: Property<FileFormat>
   @get:[Input Optional] abstract val pathToDotCommand: Property<String>
   @get:[Input Optional] abstract val engine: Property<LayoutEngine>
-  @get:Input abstract val adjustSvgViewBox: Property<Boolean>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
   @get:Inject abstract val execOperations: ExecOperations
 
@@ -56,9 +54,7 @@ abstract class ExecGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutp
       .assertNormalExitValue()
 
     val outputFile = outputFile.get().asFile
-    val outputFormat = outputFormat.get()
     logIfConfigured(outputFile)
-    doGraphvizPostProcessing(outputFile, outputFormat, adjustSvgViewBox.get())
   }
 
   private fun configureExec(spec: ExecSpec) {
@@ -109,7 +105,6 @@ abstract class ExecGraphviz : DefaultTask(), ModularGenerationTask, TaskWithOutp
         task.engine.convention(spec.layoutEngine)
         task.outputFormat.convention(spec.fileFormat)
         task.outputFile.convention(outputFile)
-        task.adjustSvgViewBox.convention(spec.adjustSvgViewBox)
       }
 
       return execGraphviz

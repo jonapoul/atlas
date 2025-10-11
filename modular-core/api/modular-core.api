@@ -105,12 +105,17 @@ public final class modular/core/ModuleType$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public abstract interface class modular/core/ModuleTypeSpec : modular/core/internal/PropertiesSpec {
+public abstract interface class modular/core/ModuleTypeSpec : modular/core/PropertiesSpec {
 	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
 	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
 	public abstract fun getName ()Ljava/lang/String;
 	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
+}
+
+public final class modular/core/ModuleTypeSpec$DefaultImpls {
+	public static fun clear (Lmodular/core/ModuleTypeSpec;)V
+	public static fun put (Lmodular/core/ModuleTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public abstract interface class modular/core/NamedLinkTypeContainer : org/gradle/api/NamedDomainObjectContainer {
@@ -140,6 +145,17 @@ public abstract interface class modular/core/PathTransformSpec {
 	public abstract fun remove (Lkotlin/text/Regex;)V
 	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
 	public abstract fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
+}
+
+public abstract interface class modular/core/PropertiesSpec {
+	public fun clear ()V
+	public abstract fun getProperties ()Lorg/gradle/api/provider/MapProperty;
+	public fun put (Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class modular/core/PropertiesSpec$DefaultImpls {
+	public static fun clear (Lmodular/core/PropertiesSpec;)V
+	public static fun put (Lmodular/core/PropertiesSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public final class modular/core/Replacement : java/io/Serializable {
@@ -282,7 +298,6 @@ public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {
 	public static final fun androidLibrary (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun androidLibrary (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun androidLibrary$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun builtIns (Lmodular/core/NamedModuleTypeContainer;)V
 	public static final fun java (Lmodular/core/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun java (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun java (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
@@ -303,5 +318,6 @@ public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {
 	public static final fun other (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun other (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun other$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun useDefaults (Lmodular/core/NamedModuleTypeContainer;)V
 }
 

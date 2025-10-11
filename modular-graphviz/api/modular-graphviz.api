@@ -25,6 +25,17 @@ public final class modular/graphviz/ArrowType : java/lang/Enum, modular/core/int
 	public static fun values ()[Lmodular/graphviz/ArrowType;
 }
 
+public final class modular/graphviz/ClusterMode : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Global Lmodular/graphviz/ClusterMode;
+	public static final field Local Lmodular/graphviz/ClusterMode;
+	public static final field None Lmodular/graphviz/ClusterMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/ClusterMode;
+	public static fun values ()[Lmodular/graphviz/ClusterMode;
+}
+
 public final class modular/graphviz/Dir : java/lang/Enum, modular/core/internal/StringEnum {
 	public static final field Back Lmodular/graphviz/Dir;
 	public static final field Both Lmodular/graphviz/Dir;
@@ -40,17 +51,12 @@ public final class modular/graphviz/Dir : java/lang/Enum, modular/core/internal/
 public final class modular/graphviz/DotConfig : java/io/Serializable {
 	public static final field Companion Lmodular/graphviz/DotConfig$Companion;
 	public fun <init> ()V
-	public fun <init> (Lmodular/graphviz/ArrowType;Lmodular/graphviz/ArrowType;Ljava/lang/String;Lmodular/graphviz/Dir;Ljava/lang/Integer;Ljava/lang/Integer;Lmodular/graphviz/LayoutEngine;Lmodular/graphviz/RankDir;Ljava/lang/Float;)V
-	public synthetic fun <init> (Lmodular/graphviz/ArrowType;Lmodular/graphviz/ArrowType;Ljava/lang/String;Lmodular/graphviz/Dir;Ljava/lang/Integer;Ljava/lang/Integer;Lmodular/graphviz/LayoutEngine;Lmodular/graphviz/RankDir;Ljava/lang/Float;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getArrowHead ()Lmodular/graphviz/ArrowType;
-	public final fun getArrowTail ()Lmodular/graphviz/ArrowType;
-	public final fun getBackgroundColor ()Ljava/lang/String;
-	public final fun getDir ()Lmodular/graphviz/Dir;
-	public final fun getDpi ()Ljava/lang/Integer;
-	public final fun getFontSize ()Ljava/lang/Integer;
+	public fun <init> (Lmodular/graphviz/LayoutEngine;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Lmodular/graphviz/LayoutEngine;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getEdgeAttributes ()Ljava/util/Map;
+	public final fun getGraphAttributes ()Ljava/util/Map;
 	public final fun getLayoutEngine ()Lmodular/graphviz/LayoutEngine;
-	public final fun getRankDir ()Lmodular/graphviz/RankDir;
-	public final fun getRankSep ()Ljava/lang/Float;
+	public final fun getNodeAttributes ()Ljava/util/Map;
 }
 
 public final synthetic class modular/graphviz/DotConfig$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -66,6 +72,144 @@ public final synthetic class modular/graphviz/DotConfig$$serializer : kotlinx/se
 
 public final class modular/graphviz/DotConfig$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class modular/graphviz/EdgeAttributes : modular/core/PropertiesSpec {
+	public abstract fun getArrowHead ()Lmodular/graphviz/ArrowType;
+	public abstract fun getArrowSize ()Ljava/lang/Number;
+	public abstract fun getArrowTail ()Lmodular/graphviz/ArrowType;
+	public abstract fun getColor ()Ljava/lang/String;
+	public abstract fun getColorScheme ()Ljava/lang/String;
+	public abstract fun getComment ()Ljava/lang/String;
+	public abstract fun getConstraint ()Ljava/lang/Boolean;
+	public abstract fun getDecorate ()Ljava/lang/Boolean;
+	public abstract fun getDir ()Lmodular/graphviz/Dir;
+	public abstract fun getEdgeHref ()Ljava/lang/String;
+	public abstract fun getEdgeTarget ()Ljava/lang/String;
+	public abstract fun getEdgeTooltip ()Ljava/lang/String;
+	public abstract fun getEdgeUrl ()Ljava/lang/String;
+	public abstract fun getFillColor ()Ljava/lang/String;
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontName ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getHeadClip ()Ljava/lang/Boolean;
+	public abstract fun getHeadHref ()Ljava/lang/String;
+	public abstract fun getHeadLabel ()Ljava/lang/String;
+	public abstract fun getHeadLp ()Ljava/lang/String;
+	public abstract fun getHeadPort ()Ljava/lang/String;
+	public abstract fun getHeadTarget ()Ljava/lang/String;
+	public abstract fun getHeadTooltip ()Ljava/lang/String;
+	public abstract fun getHeadUrl ()Ljava/lang/String;
+	public abstract fun getHref ()Ljava/lang/String;
+	public abstract fun getId ()Ljava/lang/String;
+	public abstract fun getLabel ()Ljava/lang/String;
+	public abstract fun getLabelAngle ()Ljava/lang/Number;
+	public abstract fun getLabelDistance ()Ljava/lang/Number;
+	public abstract fun getLabelFloat ()Ljava/lang/Boolean;
+	public abstract fun getLabelFontColor ()Ljava/lang/String;
+	public abstract fun getLabelFontName ()Ljava/lang/String;
+	public abstract fun getLabelFontSize ()Ljava/lang/String;
+	public abstract fun getLabelHref ()Ljava/lang/String;
+	public abstract fun getLabelTarget ()Ljava/lang/String;
+	public abstract fun getLabelTooltip ()Ljava/lang/String;
+	public abstract fun getLabelUrl ()Ljava/lang/String;
+	public abstract fun getLayer ()Ljava/lang/String;
+	public abstract fun getLen ()Ljava/lang/Number;
+	public abstract fun getLhead ()Ljava/lang/String;
+	public abstract fun getLp ()Ljava/lang/String;
+	public abstract fun getLtail ()Ljava/lang/String;
+	public abstract fun getMinLen ()Ljava/lang/Integer;
+	public abstract fun getNoJustify ()Ljava/lang/Boolean;
+	public abstract fun getPenWidth ()Ljava/lang/Number;
+	public abstract fun getPos ()Ljava/lang/String;
+	public abstract fun getSameHead ()Ljava/lang/String;
+	public abstract fun getSameTail ()Ljava/lang/String;
+	public abstract fun getShowBoxes ()Ljava/lang/Integer;
+	public abstract fun getStyle ()Lmodular/graphviz/LinkStyle;
+	public abstract fun getTailClip ()Ljava/lang/Boolean;
+	public abstract fun getTailHref ()Ljava/lang/String;
+	public abstract fun getTailLabel ()Ljava/lang/String;
+	public abstract fun getTailLp ()Ljava/lang/String;
+	public abstract fun getTailPort ()Ljava/lang/String;
+	public abstract fun getTailTarget ()Ljava/lang/String;
+	public abstract fun getTailTooltip ()Ljava/lang/String;
+	public abstract fun getTailUrl ()Ljava/lang/String;
+	public abstract fun getTarget ()Ljava/lang/String;
+	public abstract fun getTooltip ()Ljava/lang/String;
+	public abstract fun getUrl ()Ljava/lang/String;
+	public abstract fun getWeight ()Ljava/lang/Number;
+	public abstract fun getXLabel ()Ljava/lang/String;
+	public abstract fun getXlp ()Ljava/lang/String;
+	public abstract fun setArrowHead (Lmodular/graphviz/ArrowType;)V
+	public abstract fun setArrowSize (Ljava/lang/Number;)V
+	public abstract fun setArrowTail (Lmodular/graphviz/ArrowType;)V
+	public abstract fun setColor (Ljava/lang/String;)V
+	public abstract fun setColorScheme (Ljava/lang/String;)V
+	public abstract fun setComment (Ljava/lang/String;)V
+	public abstract fun setConstraint (Ljava/lang/Boolean;)V
+	public abstract fun setDecorate (Ljava/lang/Boolean;)V
+	public abstract fun setDir (Lmodular/graphviz/Dir;)V
+	public abstract fun setEdgeHref (Ljava/lang/String;)V
+	public abstract fun setEdgeTarget (Ljava/lang/String;)V
+	public abstract fun setEdgeTooltip (Ljava/lang/String;)V
+	public abstract fun setEdgeUrl (Ljava/lang/String;)V
+	public abstract fun setFillColor (Ljava/lang/String;)V
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontName (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setHeadClip (Ljava/lang/Boolean;)V
+	public abstract fun setHeadHref (Ljava/lang/String;)V
+	public abstract fun setHeadLabel (Ljava/lang/String;)V
+	public abstract fun setHeadLp (Ljava/lang/String;)V
+	public abstract fun setHeadPort (Ljava/lang/String;)V
+	public abstract fun setHeadTarget (Ljava/lang/String;)V
+	public abstract fun setHeadTooltip (Ljava/lang/String;)V
+	public abstract fun setHeadUrl (Ljava/lang/String;)V
+	public abstract fun setHref (Ljava/lang/String;)V
+	public abstract fun setId (Ljava/lang/String;)V
+	public abstract fun setLabel (Ljava/lang/String;)V
+	public abstract fun setLabelAngle (Ljava/lang/Number;)V
+	public abstract fun setLabelDistance (Ljava/lang/Number;)V
+	public abstract fun setLabelFloat (Ljava/lang/Boolean;)V
+	public abstract fun setLabelFontColor (Ljava/lang/String;)V
+	public abstract fun setLabelFontName (Ljava/lang/String;)V
+	public abstract fun setLabelFontSize (Ljava/lang/String;)V
+	public abstract fun setLabelHref (Ljava/lang/String;)V
+	public abstract fun setLabelTarget (Ljava/lang/String;)V
+	public abstract fun setLabelTooltip (Ljava/lang/String;)V
+	public abstract fun setLabelUrl (Ljava/lang/String;)V
+	public abstract fun setLayer (Ljava/lang/String;)V
+	public abstract fun setLen (Ljava/lang/Number;)V
+	public abstract fun setLhead (Ljava/lang/String;)V
+	public abstract fun setLp (Ljava/lang/String;)V
+	public abstract fun setLtail (Ljava/lang/String;)V
+	public abstract fun setMinLen (Ljava/lang/Integer;)V
+	public abstract fun setNoJustify (Ljava/lang/Boolean;)V
+	public abstract fun setPenWidth (Ljava/lang/Number;)V
+	public abstract fun setPos (Ljava/lang/String;)V
+	public abstract fun setSameHead (Ljava/lang/String;)V
+	public abstract fun setSameTail (Ljava/lang/String;)V
+	public abstract fun setShowBoxes (Ljava/lang/Integer;)V
+	public abstract fun setStyle (Lmodular/graphviz/LinkStyle;)V
+	public abstract fun setTailClip (Ljava/lang/Boolean;)V
+	public abstract fun setTailHref (Ljava/lang/String;)V
+	public abstract fun setTailLabel (Ljava/lang/String;)V
+	public abstract fun setTailLp (Ljava/lang/String;)V
+	public abstract fun setTailPort (Ljava/lang/String;)V
+	public abstract fun setTailTarget (Ljava/lang/String;)V
+	public abstract fun setTailTooltip (Ljava/lang/String;)V
+	public abstract fun setTailUrl (Ljava/lang/String;)V
+	public abstract fun setTarget (Ljava/lang/String;)V
+	public abstract fun setTooltip (Ljava/lang/String;)V
+	public abstract fun setUrl (Ljava/lang/String;)V
+	public abstract fun setWeight (Ljava/lang/Number;)V
+	public abstract fun setXLabel (Ljava/lang/String;)V
+	public abstract fun setXlp (Ljava/lang/String;)V
+}
+
+public final class modular/graphviz/EdgeAttributes$DefaultImpls {
+	public static fun clear (Lmodular/graphviz/EdgeAttributes;)V
+	public static fun put (Lmodular/graphviz/EdgeAttributes;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public final class modular/graphviz/FileFormat : java/lang/Enum, modular/core/internal/StringEnum {
@@ -120,6 +264,218 @@ public final class modular/graphviz/FileFormat : java/lang/Enum, modular/core/in
 	public static fun values ()[Lmodular/graphviz/FileFormat;
 }
 
+public abstract interface class modular/graphviz/GraphAttributes : modular/core/PropertiesSpec {
+	public abstract fun getBackground ()Ljava/lang/String;
+	public abstract fun getBb ()Ljava/lang/String;
+	public abstract fun getBeautify ()Ljava/lang/Boolean;
+	public abstract fun getBgColor ()Ljava/lang/String;
+	public abstract fun getCenter ()Ljava/lang/Boolean;
+	public abstract fun getCharset ()Ljava/lang/String;
+	public abstract fun getClusterRank ()Lmodular/graphviz/ClusterMode;
+	public abstract fun getColorScheme ()Ljava/lang/String;
+	public abstract fun getComment ()Ljava/lang/String;
+	public abstract fun getCompound ()Ljava/lang/Boolean;
+	public abstract fun getConcentrate ()Ljava/lang/Boolean;
+	public abstract fun getDamping ()Ljava/lang/Float;
+	public abstract fun getDefaultDist ()Ljava/lang/Number;
+	public abstract fun getDim ()Ljava/lang/Integer;
+	public abstract fun getDimen ()Ljava/lang/Integer;
+	public abstract fun getDirEdgeConstraints ()Ljava/lang/String;
+	public abstract fun getDpi ()Ljava/lang/Number;
+	public abstract fun getEpsilon ()Ljava/lang/Float;
+	public abstract fun getEsep ()Ljava/lang/String;
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontName ()Ljava/lang/String;
+	public abstract fun getFontNames ()Ljava/lang/String;
+	public abstract fun getFontPath ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getForceLabels ()Ljava/lang/Boolean;
+	public abstract fun getGradientAngle ()Ljava/lang/Integer;
+	public abstract fun getHref ()Ljava/lang/String;
+	public abstract fun getId ()Ljava/lang/String;
+	public abstract fun getImagePath ()Ljava/lang/String;
+	public abstract fun getInputScale ()Ljava/lang/Number;
+	public abstract fun getK ()Ljava/lang/Number;
+	public abstract fun getLWidth ()Ljava/lang/Number;
+	public abstract fun getLabel ()Ljava/lang/String;
+	public abstract fun getLabelJust ()Ljava/lang/String;
+	public abstract fun getLabelLoc ()Ljava/lang/String;
+	public abstract fun getLabelScheme ()Ljava/lang/Integer;
+	public abstract fun getLandscape ()Ljava/lang/Boolean;
+	public abstract fun getLayerListSep ()Ljava/lang/String;
+	public abstract fun getLayerSelect ()Ljava/lang/String;
+	public abstract fun getLayerSep ()Ljava/lang/String;
+	public abstract fun getLayers ()Ljava/lang/String;
+	public abstract fun getLayout ()Lmodular/graphviz/LayoutEngine;
+	public abstract fun getLevels ()Ljava/lang/Integer;
+	public abstract fun getLevelsGap ()Ljava/lang/Number;
+	public abstract fun getLheight ()Ljava/lang/Number;
+	public abstract fun getLineLength ()Ljava/lang/Integer;
+	public abstract fun getLp ()Ljava/lang/String;
+	public abstract fun getMargin ()Ljava/lang/String;
+	public abstract fun getMaxiter ()Ljava/lang/Integer;
+	public abstract fun getMcLimit ()Ljava/lang/Number;
+	public abstract fun getMinDist ()Ljava/lang/Number;
+	public abstract fun getMode ()Ljava/lang/String;
+	public abstract fun getModel ()Ljava/lang/String;
+	public abstract fun getNewRank ()Ljava/lang/Boolean;
+	public abstract fun getNoJustify ()Ljava/lang/Boolean;
+	public abstract fun getNoTranslate ()Ljava/lang/Boolean;
+	public abstract fun getNodeSep ()Ljava/lang/Number;
+	public abstract fun getNormalize ()Ljava/lang/String;
+	public abstract fun getNsLimit ()Ljava/lang/Number;
+	public abstract fun getNsLimit1 ()Ljava/lang/Number;
+	public abstract fun getOneBlock ()Ljava/lang/Boolean;
+	public abstract fun getOrdering ()Ljava/lang/String;
+	public abstract fun getOrientation ()Ljava/lang/Number;
+	public abstract fun getOutputOrder ()Ljava/lang/String;
+	public abstract fun getOverlap ()Ljava/lang/String;
+	public abstract fun getOverlapScaling ()Ljava/lang/Number;
+	public abstract fun getOverlapShrink ()Ljava/lang/Boolean;
+	public abstract fun getPack ()Ljava/lang/String;
+	public abstract fun getPackMode ()Ljava/lang/String;
+	public abstract fun getPad ()Ljava/lang/String;
+	public abstract fun getPage ()Ljava/lang/String;
+	public abstract fun getPageDir ()Ljava/lang/String;
+	public abstract fun getQuadTree ()Ljava/lang/String;
+	public abstract fun getQuantum ()Ljava/lang/Number;
+	public abstract fun getRankDir ()Lmodular/graphviz/RankDir;
+	public abstract fun getRankSep ()Ljava/lang/Number;
+	public abstract fun getRatio ()Ljava/lang/String;
+	public abstract fun getReminCross ()Ljava/lang/Boolean;
+	public abstract fun getRepulsiveForce ()Ljava/lang/Number;
+	public abstract fun getResolution ()Ljava/lang/Number;
+	public abstract fun getRoot ()Ljava/lang/String;
+	public abstract fun getRotate ()Ljava/lang/Integer;
+	public abstract fun getRotation ()Ljava/lang/Number;
+	public abstract fun getScale ()Ljava/lang/String;
+	public abstract fun getSearchSize ()Ljava/lang/Integer;
+	public abstract fun getSep ()Ljava/lang/String;
+	public abstract fun getShowBoxes ()Ljava/lang/Integer;
+	public abstract fun getSize ()Ljava/lang/String;
+	public abstract fun getSmoothing ()Lmodular/graphviz/SmoothType;
+	public abstract fun getSortv ()Ljava/lang/Integer;
+	public abstract fun getSplines ()Ljava/lang/String;
+	public abstract fun getStart ()Ljava/lang/String;
+	public abstract fun getStyle ()Ljava/lang/String;
+	public abstract fun getStyleSheet ()Ljava/lang/String;
+	public abstract fun getTarget ()Ljava/lang/String;
+	public abstract fun getTbBalance ()Ljava/lang/String;
+	public abstract fun getTooltip ()Ljava/lang/String;
+	public abstract fun getTrueColor ()Ljava/lang/Boolean;
+	public abstract fun getUrl ()Ljava/lang/String;
+	public abstract fun getViewPort ()Ljava/lang/String;
+	public abstract fun getVoroMargin ()Ljava/lang/Number;
+	public abstract fun getXdotVersion ()Ljava/lang/String;
+	public abstract fun setBackground (Ljava/lang/String;)V
+	public abstract fun setBb (Ljava/lang/String;)V
+	public abstract fun setBeautify (Ljava/lang/Boolean;)V
+	public abstract fun setBgColor (Ljava/lang/String;)V
+	public abstract fun setCenter (Ljava/lang/Boolean;)V
+	public abstract fun setCharset (Ljava/lang/String;)V
+	public abstract fun setClusterRank (Lmodular/graphviz/ClusterMode;)V
+	public abstract fun setColorScheme (Ljava/lang/String;)V
+	public abstract fun setComment (Ljava/lang/String;)V
+	public abstract fun setCompound (Ljava/lang/Boolean;)V
+	public abstract fun setConcentrate (Ljava/lang/Boolean;)V
+	public abstract fun setDamping (Ljava/lang/Float;)V
+	public abstract fun setDefaultDist (Ljava/lang/Number;)V
+	public abstract fun setDim (Ljava/lang/Integer;)V
+	public abstract fun setDimen (Ljava/lang/Integer;)V
+	public abstract fun setDirEdgeConstraints (Ljava/lang/String;)V
+	public abstract fun setDpi (Ljava/lang/Number;)V
+	public abstract fun setEpsilon (Ljava/lang/Float;)V
+	public abstract fun setEsep (Ljava/lang/String;)V
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontName (Ljava/lang/String;)V
+	public abstract fun setFontNames (Ljava/lang/String;)V
+	public abstract fun setFontPath (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setForceLabels (Ljava/lang/Boolean;)V
+	public abstract fun setGradientAngle (Ljava/lang/Integer;)V
+	public abstract fun setHref (Ljava/lang/String;)V
+	public abstract fun setId (Ljava/lang/String;)V
+	public abstract fun setImagePath (Ljava/lang/String;)V
+	public abstract fun setInputScale (Ljava/lang/Number;)V
+	public abstract fun setK (Ljava/lang/Number;)V
+	public abstract fun setLWidth (Ljava/lang/Number;)V
+	public abstract fun setLabel (Ljava/lang/String;)V
+	public abstract fun setLabelJust (Ljava/lang/String;)V
+	public abstract fun setLabelLoc (Ljava/lang/String;)V
+	public abstract fun setLabelScheme (Ljava/lang/Integer;)V
+	public abstract fun setLandscape (Ljava/lang/Boolean;)V
+	public abstract fun setLayerListSep (Ljava/lang/String;)V
+	public abstract fun setLayerSelect (Ljava/lang/String;)V
+	public abstract fun setLayerSep (Ljava/lang/String;)V
+	public abstract fun setLayers (Ljava/lang/String;)V
+	public abstract fun setLayout (Lmodular/graphviz/LayoutEngine;)V
+	public abstract fun setLevels (Ljava/lang/Integer;)V
+	public abstract fun setLevelsGap (Ljava/lang/Number;)V
+	public abstract fun setLheight (Ljava/lang/Number;)V
+	public abstract fun setLineLength (Ljava/lang/Integer;)V
+	public abstract fun setLp (Ljava/lang/String;)V
+	public abstract fun setMargin (Ljava/lang/String;)V
+	public abstract fun setMaxiter (Ljava/lang/Integer;)V
+	public abstract fun setMcLimit (Ljava/lang/Number;)V
+	public abstract fun setMinDist (Ljava/lang/Number;)V
+	public abstract fun setMode (Ljava/lang/String;)V
+	public abstract fun setModel (Ljava/lang/String;)V
+	public abstract fun setNewRank (Ljava/lang/Boolean;)V
+	public abstract fun setNoJustify (Ljava/lang/Boolean;)V
+	public abstract fun setNoTranslate (Ljava/lang/Boolean;)V
+	public abstract fun setNodeSep (Ljava/lang/Number;)V
+	public abstract fun setNormalize (Ljava/lang/String;)V
+	public abstract fun setNsLimit (Ljava/lang/Number;)V
+	public abstract fun setNsLimit1 (Ljava/lang/Number;)V
+	public abstract fun setOneBlock (Ljava/lang/Boolean;)V
+	public abstract fun setOrdering (Ljava/lang/String;)V
+	public abstract fun setOrientation (Ljava/lang/Number;)V
+	public abstract fun setOutputOrder (Ljava/lang/String;)V
+	public abstract fun setOverlap (Ljava/lang/String;)V
+	public abstract fun setOverlapScaling (Ljava/lang/Number;)V
+	public abstract fun setOverlapShrink (Ljava/lang/Boolean;)V
+	public abstract fun setPack (Ljava/lang/String;)V
+	public abstract fun setPackMode (Ljava/lang/String;)V
+	public abstract fun setPad (Ljava/lang/String;)V
+	public abstract fun setPage (Ljava/lang/String;)V
+	public abstract fun setPageDir (Ljava/lang/String;)V
+	public abstract fun setQuadTree (Ljava/lang/String;)V
+	public abstract fun setQuantum (Ljava/lang/Number;)V
+	public abstract fun setRankDir (Lmodular/graphviz/RankDir;)V
+	public abstract fun setRankSep (Ljava/lang/Number;)V
+	public abstract fun setRatio (Ljava/lang/String;)V
+	public abstract fun setReminCross (Ljava/lang/Boolean;)V
+	public abstract fun setRepulsiveForce (Ljava/lang/Number;)V
+	public abstract fun setResolution (Ljava/lang/Number;)V
+	public abstract fun setRoot (Ljava/lang/String;)V
+	public abstract fun setRotate (Ljava/lang/Integer;)V
+	public abstract fun setRotation (Ljava/lang/Number;)V
+	public abstract fun setScale (Ljava/lang/String;)V
+	public abstract fun setSearchSize (Ljava/lang/Integer;)V
+	public abstract fun setSep (Ljava/lang/String;)V
+	public abstract fun setShowBoxes (Ljava/lang/Integer;)V
+	public abstract fun setSize (Ljava/lang/String;)V
+	public abstract fun setSmoothing (Lmodular/graphviz/SmoothType;)V
+	public abstract fun setSortv (Ljava/lang/Integer;)V
+	public abstract fun setSplines (Ljava/lang/String;)V
+	public abstract fun setStart (Ljava/lang/String;)V
+	public abstract fun setStyle (Ljava/lang/String;)V
+	public abstract fun setStyleSheet (Ljava/lang/String;)V
+	public abstract fun setTarget (Ljava/lang/String;)V
+	public abstract fun setTbBalance (Ljava/lang/String;)V
+	public abstract fun setTooltip (Ljava/lang/String;)V
+	public abstract fun setTrueColor (Ljava/lang/Boolean;)V
+	public abstract fun setUrl (Ljava/lang/String;)V
+	public abstract fun setViewPort (Ljava/lang/String;)V
+	public abstract fun setVoroMargin (Ljava/lang/Number;)V
+	public abstract fun setXdotVersion (Ljava/lang/String;)V
+}
+
+public final class modular/graphviz/GraphAttributes$DefaultImpls {
+	public static fun clear (Lmodular/graphviz/GraphAttributes;)V
+	public static fun put (Lmodular/graphviz/GraphAttributes;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
 public abstract interface class modular/graphviz/GraphvizModularExtension : modular/core/ModularExtension {
 	public abstract fun getGraphviz ()Lmodular/graphviz/GraphvizSpec;
 	public abstract fun graphviz (Lorg/gradle/api/Action;)Lmodular/graphviz/GraphvizSpec;
@@ -133,10 +489,12 @@ public final class modular/graphviz/GraphvizModularPlugin : modular/core/Modular
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 }
 
-public abstract interface class modular/graphviz/GraphvizModuleTypeSpec : modular/core/ModuleTypeSpec {
-	public abstract fun getShape ()Lmodular/graphviz/Shape;
-	public abstract fun put (Ljava/lang/String;Ljava/lang/Object;)V
-	public abstract fun setShape (Lmodular/graphviz/Shape;)V
+public abstract interface class modular/graphviz/GraphvizModuleTypeSpec : modular/core/ModuleTypeSpec, modular/graphviz/NodeAttributes {
+}
+
+public final class modular/graphviz/GraphvizModuleTypeSpec$DefaultImpls {
+	public static fun clear (Lmodular/graphviz/GraphvizModuleTypeSpec;)V
+	public static fun put (Lmodular/graphviz/GraphvizModuleTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public abstract interface class modular/graphviz/GraphvizNamedLinkTypeContainer : modular/core/NamedLinkTypeContainer {
@@ -159,18 +517,32 @@ public final class modular/graphviz/GraphvizNamedModuleTypeContainer$DefaultImpl
 }
 
 public abstract interface class modular/graphviz/GraphvizSpec : modular/core/ModularSpec {
-	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
-	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
-	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
-	public abstract fun getBackgroundColor ()Lorg/gradle/api/provider/Property;
-	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
-	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
+	public abstract fun edge (Lorg/gradle/api/Action;)V
+	public abstract fun getEdge ()Lmodular/graphviz/EdgeAttributes;
 	public abstract fun getFileFormat ()Lorg/gradle/api/provider/Property;
-	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGraph ()Lmodular/graphviz/GraphAttributes;
 	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getNode ()Lmodular/graphviz/NodeAttributes;
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
+	public abstract fun graph (Lorg/gradle/api/Action;)V
+	public abstract fun node (Lorg/gradle/api/Action;)V
+}
+
+public final class modular/graphviz/ImagePos : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field BottomCenter Lmodular/graphviz/ImagePos;
+	public static final field BottomLeft Lmodular/graphviz/ImagePos;
+	public static final field BottomRight Lmodular/graphviz/ImagePos;
+	public static final field MiddleCenter Lmodular/graphviz/ImagePos;
+	public static final field MiddleLeft Lmodular/graphviz/ImagePos;
+	public static final field MiddleRight Lmodular/graphviz/ImagePos;
+	public static final field TopCenter Lmodular/graphviz/ImagePos;
+	public static final field TopLeft Lmodular/graphviz/ImagePos;
+	public static final field TopRight Lmodular/graphviz/ImagePos;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/ImagePos;
+	public static fun values ()[Lmodular/graphviz/ImagePos;
 }
 
 public final class modular/graphviz/LayoutEngine : java/lang/Enum, modular/core/internal/StringEnum {
@@ -197,11 +569,131 @@ public final class modular/graphviz/LinkStyle : java/lang/Enum, modular/core/int
 	public static final field Dotted Lmodular/graphviz/LinkStyle;
 	public static final field Invis Lmodular/graphviz/LinkStyle;
 	public static final field Solid Lmodular/graphviz/LinkStyle;
+	public static final field Tapered Lmodular/graphviz/LinkStyle;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
 	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/LinkStyle;
 	public static fun values ()[Lmodular/graphviz/LinkStyle;
+}
+
+public abstract interface class modular/graphviz/NodeAttributes : modular/core/PropertiesSpec {
+	public abstract fun getColorScheme ()Ljava/lang/String;
+	public abstract fun getComment ()Ljava/lang/String;
+	public abstract fun getDistortion ()Ljava/lang/String;
+	public abstract fun getFillColor ()Ljava/lang/String;
+	public abstract fun getFixedSize ()Ljava/lang/String;
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontName ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getGradientAngle ()Ljava/lang/Integer;
+	public abstract fun getGroup ()Ljava/lang/String;
+	public abstract fun getHeight ()Ljava/lang/Number;
+	public abstract fun getHref ()Ljava/lang/String;
+	public abstract fun getId ()Ljava/lang/String;
+	public abstract fun getImage ()Ljava/lang/String;
+	public abstract fun getImagePos ()Lmodular/graphviz/ImagePos;
+	public abstract fun getImageScale ()Ljava/lang/String;
+	public abstract fun getLabel ()Ljava/lang/String;
+	public abstract fun getLabelLoc ()Ljava/lang/String;
+	public abstract fun getLayer ()Ljava/lang/String;
+	public abstract fun getMargin ()Ljava/lang/String;
+	public abstract fun getNoJustify ()Ljava/lang/Boolean;
+	public abstract fun getOrdering ()Ljava/lang/String;
+	public abstract fun getOrientation ()Ljava/lang/Number;
+	public abstract fun getPenWidth ()Ljava/lang/Number;
+	public abstract fun getPeripheries ()Ljava/lang/Integer;
+	public abstract fun getPin ()Ljava/lang/Boolean;
+	public abstract fun getPos ()Ljava/lang/String;
+	public abstract fun getRects ()Ljava/lang/String;
+	public abstract fun getRegular ()Ljava/lang/Boolean;
+	public abstract fun getRoot ()Ljava/lang/String;
+	public abstract fun getSamplePoints ()Ljava/lang/Integer;
+	public abstract fun getShape ()Lmodular/graphviz/Shape;
+	public abstract fun getShapeFile ()Ljava/lang/String;
+	public abstract fun getShowBoxes ()Ljava/lang/Integer;
+	public abstract fun getSides ()Ljava/lang/Integer;
+	public abstract fun getSkew ()Ljava/lang/Number;
+	public abstract fun getSortv ()Ljava/lang/Integer;
+	public abstract fun getStyle ()Lmodular/graphviz/NodeStyle;
+	public abstract fun getTarget ()Ljava/lang/String;
+	public abstract fun getTooltip ()Ljava/lang/String;
+	public abstract fun getUrl ()Ljava/lang/String;
+	public abstract fun getVertices ()Ljava/lang/String;
+	public abstract fun getWidth ()Ljava/lang/Number;
+	public abstract fun getXlabel ()Ljava/lang/String;
+	public abstract fun getXlp ()Ljava/lang/String;
+	public abstract fun getZ ()Ljava/lang/Number;
+	public abstract fun setColorScheme (Ljava/lang/String;)V
+	public abstract fun setComment (Ljava/lang/String;)V
+	public abstract fun setDistortion (Ljava/lang/String;)V
+	public abstract fun setFillColor (Ljava/lang/String;)V
+	public abstract fun setFixedSize (Ljava/lang/String;)V
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontName (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setGradientAngle (Ljava/lang/Integer;)V
+	public abstract fun setGroup (Ljava/lang/String;)V
+	public abstract fun setHeight (Ljava/lang/Number;)V
+	public abstract fun setHref (Ljava/lang/String;)V
+	public abstract fun setId (Ljava/lang/String;)V
+	public abstract fun setImage (Ljava/lang/String;)V
+	public abstract fun setImagePos (Lmodular/graphviz/ImagePos;)V
+	public abstract fun setImageScale (Ljava/lang/String;)V
+	public abstract fun setLabel (Ljava/lang/String;)V
+	public abstract fun setLabelLoc (Ljava/lang/String;)V
+	public abstract fun setLayer (Ljava/lang/String;)V
+	public abstract fun setMargin (Ljava/lang/String;)V
+	public abstract fun setNoJustify (Ljava/lang/Boolean;)V
+	public abstract fun setOrdering (Ljava/lang/String;)V
+	public abstract fun setOrientation (Ljava/lang/Number;)V
+	public abstract fun setPenWidth (Ljava/lang/Number;)V
+	public abstract fun setPeripheries (Ljava/lang/Integer;)V
+	public abstract fun setPin (Ljava/lang/Boolean;)V
+	public abstract fun setPos (Ljava/lang/String;)V
+	public abstract fun setRects (Ljava/lang/String;)V
+	public abstract fun setRegular (Ljava/lang/Boolean;)V
+	public abstract fun setRoot (Ljava/lang/String;)V
+	public abstract fun setSamplePoints (Ljava/lang/Integer;)V
+	public abstract fun setShape (Lmodular/graphviz/Shape;)V
+	public abstract fun setShapeFile (Ljava/lang/String;)V
+	public abstract fun setShowBoxes (Ljava/lang/Integer;)V
+	public abstract fun setSides (Ljava/lang/Integer;)V
+	public abstract fun setSkew (Ljava/lang/Number;)V
+	public abstract fun setSortv (Ljava/lang/Integer;)V
+	public abstract fun setStyle (Lmodular/graphviz/NodeStyle;)V
+	public abstract fun setTarget (Ljava/lang/String;)V
+	public abstract fun setTooltip (Ljava/lang/String;)V
+	public abstract fun setUrl (Ljava/lang/String;)V
+	public abstract fun setVertices (Ljava/lang/String;)V
+	public abstract fun setWidth (Ljava/lang/Number;)V
+	public abstract fun setXlabel (Ljava/lang/String;)V
+	public abstract fun setXlp (Ljava/lang/String;)V
+	public abstract fun setZ (Ljava/lang/Number;)V
+}
+
+public final class modular/graphviz/NodeAttributes$DefaultImpls {
+	public static fun clear (Lmodular/graphviz/NodeAttributes;)V
+	public static fun put (Lmodular/graphviz/NodeAttributes;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class modular/graphviz/NodeStyle : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field Bold Lmodular/graphviz/NodeStyle;
+	public static final field Dashed Lmodular/graphviz/NodeStyle;
+	public static final field Diagonals Lmodular/graphviz/NodeStyle;
+	public static final field Dotted Lmodular/graphviz/NodeStyle;
+	public static final field Filled Lmodular/graphviz/NodeStyle;
+	public static final field Invis Lmodular/graphviz/NodeStyle;
+	public static final field Radial Lmodular/graphviz/NodeStyle;
+	public static final field Rounded Lmodular/graphviz/NodeStyle;
+	public static final field Solid Lmodular/graphviz/NodeStyle;
+	public static final field Striped Lmodular/graphviz/NodeStyle;
+	public static final field Wedged Lmodular/graphviz/NodeStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/NodeStyle;
+	public static fun values ()[Lmodular/graphviz/NodeStyle;
 }
 
 public final class modular/graphviz/RankDir : java/lang/Enum, modular/core/internal/StringEnum {
@@ -283,10 +775,24 @@ public final class modular/graphviz/Shape : java/lang/Enum, modular/core/interna
 	public static fun values ()[Lmodular/graphviz/Shape;
 }
 
+public final class modular/graphviz/SmoothType : java/lang/Enum, modular/core/internal/StringEnum {
+	public static final field AvgDist Lmodular/graphviz/SmoothType;
+	public static final field GraphDist Lmodular/graphviz/SmoothType;
+	public static final field None Lmodular/graphviz/SmoothType;
+	public static final field PowerDist Lmodular/graphviz/SmoothType;
+	public static final field Rng Lmodular/graphviz/SmoothType;
+	public static final field Spring Lmodular/graphviz/SmoothType;
+	public static final field Triangle Lmodular/graphviz/SmoothType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lmodular/graphviz/SmoothType;
+	public static fun values ()[Lmodular/graphviz/SmoothType;
+}
+
 public abstract class modular/graphviz/tasks/ExecGraphviz : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
-	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
 	public fun getDescription ()Ljava/lang/String;
 	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getEngine ()Lorg/gradle/api/provider/Property;
@@ -311,7 +817,6 @@ public abstract class modular/graphviz/tasks/WriteGraphvizChart : org/gradle/api
 public abstract class modular/graphviz/tasks/WriteGraphvizLegend : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public fun execute ()V
-	public abstract fun getDescription ()Ljava/lang/String;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;

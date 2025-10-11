@@ -13,6 +13,7 @@ import modular.core.Replacement
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.Input
@@ -61,6 +62,7 @@ abstract class ModuleTypeSpecImpl @Inject constructor(override val name: String)
   @get:Input abstract override val pathContains: Property<String>
   @get:Input abstract override val pathMatches: Property<String>
   @get:Input abstract override val hasPluginId: Property<String>
+  @get:Input abstract override val properties: MapProperty<String, String>
 
   init {
     color.convention("#FFFFFF")
