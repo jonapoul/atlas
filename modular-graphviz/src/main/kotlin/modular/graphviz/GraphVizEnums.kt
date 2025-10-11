@@ -18,6 +18,27 @@ enum class LinkStyle(override val string: String) : StringEnum {
   Solid("solid"),
   Invis("invis"),
   Bold("bold"),
+  Tapered("tapered"),
+  ;
+
+  override fun toString() = string
+}
+
+/**
+ * See https://graphviz.org/docs/attr-types/style/
+ */
+enum class NodeStyle(override val string: String) : StringEnum {
+  Dashed("dashed"),
+  Dotted("dotted"),
+  Solid("solid"),
+  Invis("invis"),
+  Bold("bold"),
+  Filled("filled"),
+  Striped("striped"),
+  Wedged("wedged"),
+  Diagonals("diagonals"),
+  Rounded("rounded"),
+  Radial("radial"),
   ;
 
   override fun toString() = string
@@ -96,6 +117,52 @@ enum class Dir(override val string: String) : StringEnum {
   Back("back"),
   Both("both"),
   None("none"),
+  ;
+
+  override fun toString() = string
+}
+
+/**
+ * https://graphviz.org/docs/attrs/imagepos/
+ */
+enum class ImagePos(override val string: String) : StringEnum {
+  TopLeft("tl"),
+  TopCenter("tc"),
+  TopRight("tr"),
+  MiddleLeft("ml"),
+  MiddleCenter("mc"),
+  MiddleRight("mr"),
+  BottomLeft("bl"),
+  BottomCenter("bc"),
+  BottomRight("br"),
+  ;
+
+  override fun toString() = string
+}
+
+/**
+ * https://graphviz.org/docs/attr-types/clusterMode/
+ */
+enum class ClusterMode(override val string: String) : StringEnum {
+  Local("local"),
+  Global("global"),
+  None("none"),
+  ;
+
+  override fun toString() = string
+}
+
+/**
+ * https://graphviz.org/docs/attr-types/smoothType/
+ */
+enum class SmoothType(override val string: String) : StringEnum {
+  None("none"),
+  AvgDist("avg_dist"),
+  GraphDist("graph_dist"),
+  PowerDist("power_dist"),
+  Rng("rng"),
+  Spring("spring"),
+  Triangle("triangle"),
   ;
 
   override fun toString() = string

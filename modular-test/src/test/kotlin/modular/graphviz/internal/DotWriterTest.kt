@@ -23,15 +23,14 @@ class DotWriterTest {
     assertThat(writer()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          ":app" [shape="box",penwidth="3"]
-          ":data:a" [shape="none"]
-          ":data:b" [shape="none"]
-          ":domain:a" [shape="none"]
-          ":domain:b" [shape="none"]
-          ":ui:a" [shape="none"]
-          ":ui:b" [shape="none"]
-          ":ui:c" [shape="none"]
+          ":app" [penwidth="3"]
+          ":data:a"
+          ":data:b"
+          ":domain:a"
+          ":domain:b"
+          ":ui:a"
+          ":ui:b"
+          ":ui:c"
           ":app" -> ":ui:a"
           ":app" -> ":ui:b"
           ":app" -> ":ui:c"
@@ -58,23 +57,22 @@ class DotWriterTest {
     assertThat(writer()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          ":app" [shape="box",penwidth="3"]
+          ":app" [penwidth="3"]
           subgraph cluster_data {
             label = ":data"
-            ":data:a" [shape="none"]
-            ":data:b" [shape="none"]
+            ":data:a"
+            ":data:b"
           }
           subgraph cluster_domain {
             label = ":domain"
-            ":domain:a" [shape="none"]
-            ":domain:b" [shape="none"]
+            ":domain:a"
+            ":domain:b"
           }
           subgraph cluster_ui {
             label = ":ui"
-            ":ui:a" [shape="none"]
-            ":ui:b" [shape="none"]
-            ":ui:c" [shape="none"]
+            ":ui:a"
+            ":ui:b"
+            ":ui:c"
           }
           ":app" -> ":ui:a"
           ":app" -> ":ui:b"
@@ -102,28 +100,27 @@ class DotWriterTest {
     assertThat(writer()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          ":app" [shape="box",penwidth="3"]
+          ":app" [penwidth="3"]
           subgraph cluster_data {
             label = ":data"
-            ":data:a" [shape="none"]
-            ":data:b" [shape="none"]
+            ":data:a"
+            ":data:b"
             subgraph cluster_sub {
               label = ":sub"
-              ":data:sub:sub1" [shape="none"]
-              ":data:sub:sub2" [shape="none"]
+              ":data:sub:sub1"
+              ":data:sub:sub2"
             }
           }
           subgraph cluster_domain {
             label = ":domain"
-            ":domain:a" [shape="none"]
-            ":domain:b" [shape="none"]
+            ":domain:a"
+            ":domain:b"
           }
           subgraph cluster_ui {
             label = ":ui"
-            ":ui:a" [shape="none"]
-            ":ui:b" [shape="none"]
-            ":ui:c" [shape="none"]
+            ":ui:a"
+            ":ui:b"
+            ":ui:c"
           }
           ":app" -> ":ui:a"
           ":app" -> ":ui:b"
@@ -152,8 +149,7 @@ class DotWriterTest {
     assertThat(writer()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          ":app" [shape="box",penwidth="3",fillcolor="red"]
+          ":app" [penwidth="3",fillcolor="red"]
         }
       """.trimIndent(),
     )

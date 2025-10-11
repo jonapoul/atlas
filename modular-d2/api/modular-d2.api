@@ -16,16 +16,20 @@ public final class modular/d2/ArrowType : java/lang/Enum, modular/core/internal/
 	public static fun values ()[Lmodular/d2/ArrowType;
 }
 
-public abstract interface class modular/d2/D2GlobalPropsSpec : modular/core/internal/PropertiesSpec {
+public abstract interface class modular/d2/D2GlobalPropsSpec : modular/core/PropertiesSpec {
 	public abstract fun getArrowType ()Lmodular/d2/ArrowType;
 	public abstract fun getFillArrowHeads ()Ljava/lang/Boolean;
 	public abstract fun getFont ()Lmodular/d2/Font;
 	public abstract fun getFontSize ()Ljava/lang/Integer;
-	public abstract fun put (Ljava/lang/String;Ljava/lang/Object;)V
 	public abstract fun setArrowType (Lmodular/d2/ArrowType;)V
 	public abstract fun setFillArrowHeads (Ljava/lang/Boolean;)V
 	public abstract fun setFont (Lmodular/d2/Font;)V
 	public abstract fun setFontSize (Ljava/lang/Integer;)V
+}
+
+public final class modular/d2/D2GlobalPropsSpec$DefaultImpls {
+	public static fun clear (Lmodular/d2/D2GlobalPropsSpec;)V
+	public static fun put (Lmodular/d2/D2GlobalPropsSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public abstract interface class modular/d2/D2ModularExtension : modular/core/ModularExtension {
@@ -80,6 +84,11 @@ public abstract interface class modular/d2/D2ModuleTypeSpec : modular/core/Modul
 	public abstract fun setUnderline (Ljava/lang/Boolean;)V
 }
 
+public final class modular/d2/D2ModuleTypeSpec$DefaultImpls {
+	public static fun clear (Lmodular/d2/D2ModuleTypeSpec;)V
+	public static fun put (Lmodular/d2/D2ModuleTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
 public abstract interface class modular/d2/D2NamedLinkTypeContainer : modular/core/NamedLinkTypeContainer {
 	public fun invoke (Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun invoke$default (Lmodular/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Lmodular/d2/LinkStyle;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
@@ -99,7 +108,7 @@ public final class modular/d2/D2NamedModuleTypeContainer$DefaultImpls {
 	public static fun registerByPluginId (Lmodular/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
-public abstract interface class modular/d2/D2RootStyleSpec : modular/core/internal/PropertiesSpec {
+public abstract interface class modular/d2/D2RootStyleSpec : modular/core/PropertiesSpec {
 	public abstract fun getDoubleBorder ()Ljava/lang/Boolean;
 	public abstract fun getFill ()Ljava/lang/String;
 	public abstract fun getFillPattern ()Lmodular/d2/FillPattern;
@@ -112,6 +121,11 @@ public abstract interface class modular/d2/D2RootStyleSpec : modular/core/intern
 	public abstract fun setStroke (Ljava/lang/String;)V
 	public abstract fun setStrokeDash (Ljava/lang/Integer;)V
 	public abstract fun setStrokeWidth (Ljava/lang/Integer;)V
+}
+
+public final class modular/d2/D2RootStyleSpec$DefaultImpls {
+	public static fun clear (Lmodular/d2/D2RootStyleSpec;)V
+	public static fun put (Lmodular/d2/D2RootStyleSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public abstract interface class modular/d2/D2Spec : modular/core/ModularSpec {

@@ -18,7 +18,7 @@ modular {
   groupModules = true
 
   moduleTypes {
-    builtIns()
+    useDefaults()
   }
 
   linkTypes {

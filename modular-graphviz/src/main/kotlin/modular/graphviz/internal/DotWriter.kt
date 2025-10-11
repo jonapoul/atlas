@@ -13,6 +13,7 @@ import modular.core.internal.Subgraph
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.graphviz.DotConfig
+import modular.graphviz.Shape
 
 @InternalModularApi
 data class DotWriter(
@@ -36,28 +37,15 @@ data class DotWriter(
   private fun IndentedStringBuilder.appendHeader() {
     appendHeaderGroup(
       name = "edge",
-      attrs = Attrs(
-        "dir" to config.dir,
-        "arrowhead" to config.arrowHead,
-        "arrowtail" to config.arrowTail,
-      ),
+      attrs = attrs(config.edgeAttributes),
     )
     appendHeaderGroup(
       name = "graph",
-      attrs = Attrs(
-        "bgcolor" to config.backgroundColor,
-        "dpi" to config.dpi,
-        "fontsize" to config.fontSize,
-        "layout" to config.layoutEngine,
-        "ranksep" to config.rankSep,
-        "rankdir" to config.rankDir,
-      ),
+      attrs = Attrs("layout" to config.layoutEngine) + config.graphAttributes,
     )
     appendHeaderGroup(
       name = "node",
-      attrs = Attrs(
-        "style" to "filled",
-      ),
+      attrs = attrs(config.nodeAttributes),
     )
   }
 
@@ -95,13 +83,9 @@ data class DotWriter(
     val nodePath = module.projectPath.cleaned()
     val attrs = Attrs()
 
-    // default, overridden by type.properties if configured
-    attrs["shape"] = "none"
-
     // Make "target" nodes more prominent with a thick black border
     if (thisPath.cleaned() == nodePath) {
       attrs["penwidth"] = "3"
-      attrs["shape"] = "box"
     }
 
     module.type?.let { type ->
@@ -111,6 +95,8 @@ data class DotWriter(
 
     appendLine("\"$nodePath\"$attrs")
   }
+
+  private fun attrs(map: Map<String, String>?) = Attrs(map.orEmpty().toMutableMap())
 
   @Suppress("SpreadOperator")
   private class Attrs(private val delegate: MutableMap<String, Any?>) : MutableMap<String, Any?> by delegate {
@@ -123,5 +109,10 @@ data class DotWriter(
     }
 
     fun hasAnyValues() = values.any { it != null }
+
+    operator fun plus(other: Map<String, String>?): Attrs {
+      other?.let(delegate::putAll)
+      return Attrs(delegate)
+    }
   }
 }

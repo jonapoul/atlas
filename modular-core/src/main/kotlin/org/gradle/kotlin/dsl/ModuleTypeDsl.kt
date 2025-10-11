@@ -82,7 +82,7 @@ fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.other(
   extraConfig = extraConfig,
 )
 
-fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.builtIns() {
+fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.useDefaults() {
   // Highest priority ↓↓
   androidApp()
   kotlinMultiplatform()

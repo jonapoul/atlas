@@ -49,15 +49,11 @@ fun ObjectFactory.int(convention: Provider<Int>): Property<Int> =
   property(Int::class.java).convention(convention)
 
 @InternalModularApi
-fun ObjectFactory.float(convention: Provider<Float>): Property<Float> =
-  property(Float::class.java).convention(convention)
-
-@InternalModularApi
 fun ObjectFactory.string(convention: Provider<String>): Property<String> =
   property(String::class.java).convention(convention)
 
 @InternalModularApi
-fun ObjectFactory.string(convention: String): Property<String> =
+fun ObjectFactory.string(convention: String?): Property<String> =
   property(String::class.java).convention(convention)
 
 @InternalModularApi

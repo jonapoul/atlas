@@ -29,15 +29,14 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(resolve("app/modular/chart.dot").readText()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          ":app" [shape="box",penwidth="3"]
-          ":data:a" [shape="none"]
-          ":data:b" [shape="none"]
-          ":domain:a" [shape="none"]
-          ":domain:b" [shape="none"]
-          ":ui:a" [shape="none"]
-          ":ui:b" [shape="none"]
-          ":ui:c" [shape="none"]
+          ":app" [penwidth="3"]
+          ":data:a"
+          ":data:b"
+          ":domain:a"
+          ":domain:b"
+          ":ui:a"
+          ":ui:b"
+          ":ui:c"
           ":app" -> ":ui:a"
           ":app" -> ":ui:b"
           ":app" -> ":ui:c"
@@ -67,10 +66,9 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFileA.readText()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          ":a" [shape="box",penwidth="3",fillcolor="mediumorchid"]
-          ":b" [shape="none",fillcolor="orange"]
-          ":c" [shape="none",fillcolor="orange"]
+          ":a" [penwidth="3",fillcolor="mediumorchid"]
+          ":b" [fillcolor="orange"]
+          ":c" [fillcolor="orange"]
           ":a" -> ":b"
           ":a" -> ":c"
         }
@@ -80,16 +78,14 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFileB.readText()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          ":b" [shape="box",penwidth="3",fillcolor="orange"]
+          ":b" [penwidth="3",fillcolor="orange"]
         }
       """.trimIndent(),
     )
     assertThat(dotFileC.readText()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          ":c" [shape="box",penwidth="3",fillcolor="orange"]
+          ":c" [penwidth="3",fillcolor="orange"]
         }
       """.trimIndent(),
     )
@@ -108,12 +104,12 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
-          edge [dir="none",arrowhead="halfopen",arrowtail="open"]
-          graph [dpi="150",fontsize="20",ranksep="2.5",rankdir="LR"]
-          node [style="filled"]
-          ":a" [shape="box",penwidth="3",fillcolor="mediumorchid"]
-          ":b" [shape="none",fillcolor="orange"]
-          ":c" [shape="none",fillcolor="orange"]
+          edge [arrowhead="halfopen",arrowtail="open"]
+          graph [layout="twopi",dpi="150"]
+          node [shape="none"]
+          ":a" [penwidth="3",fillcolor="mediumorchid"]
+          ":b" [fillcolor="orange"]
+          ":c" [fillcolor="orange"]
           ":a" -> ":b"
           ":a" -> ":c"
         }
@@ -134,12 +130,10 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
-          edge [dir="none",arrowhead="halfopen",arrowtail="open"]
-          graph [dpi="150",fontsize="20",ranksep="2.5",rankdir="LR"]
-          node [style="filled"]
-          ":a" [shape="box",penwidth="3",fillcolor="mediumorchid"]
-          ":b" [shape="none",fillcolor="orange"]
-          ":c" [shape="none",fillcolor="orange"]
+          graph [layout="neato"]
+          ":a" [penwidth="3",fillcolor="mediumorchid"]
+          ":b" [fillcolor="orange"]
+          ":c" [fillcolor="orange"]
           ":a" -> ":b"
           ":a" -> ":c"
         }
@@ -160,10 +154,9 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          "B" [shape="none",fillcolor="orange"]
-          "a" [shape="box",penwidth="3",fillcolor="mediumorchid"]
-          "c" [shape="none",fillcolor="orange"]
+          "B" [fillcolor="orange"]
+          "a" [penwidth="3",fillcolor="mediumorchid"]
+          "c" [fillcolor="orange"]
           "a" -> "B"
           "a" -> "c"
         }
@@ -185,8 +178,7 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          ":a" [fillcolor="mediumorchid",shape="box",penwidth="3"]
+          ":a" [fillcolor="mediumorchid",penwidth="3"]
           ":b" [fillcolor="mediumorchid",shape="none"]
           ":c" [fillcolor="orange",shape="none"]
           ":d" [fillcolor="orange",shape="none"]
@@ -211,15 +203,14 @@ class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
-          node [style="filled"]
-          ":app" [shape="box",penwidth="3",fillcolor="mediumorchid"]
-          ":data:a" [shape="none",fillcolor="mediumorchid"]
-          ":data:b" [shape="none",fillcolor="mediumorchid"]
-          ":domain:a" [shape="none",fillcolor="mediumorchid"]
-          ":domain:b" [shape="none",fillcolor="mediumorchid"]
-          ":ui:a" [shape="none",fillcolor="mediumorchid"]
-          ":ui:b" [shape="none",fillcolor="mediumorchid"]
-          ":ui:c" [shape="none",fillcolor="mediumorchid"]
+          ":app" [penwidth="3",fillcolor="mediumorchid"]
+          ":data:a" [fillcolor="mediumorchid"]
+          ":data:b" [fillcolor="mediumorchid"]
+          ":domain:a" [fillcolor="mediumorchid"]
+          ":domain:b" [fillcolor="mediumorchid"]
+          ":ui:a" [fillcolor="mediumorchid"]
+          ":ui:b" [fillcolor="mediumorchid"]
+          ":ui:c" [fillcolor="mediumorchid"]
           ":app" -> ":ui:a"
           ":app" -> ":ui:b"
           ":app" -> ":ui:c"

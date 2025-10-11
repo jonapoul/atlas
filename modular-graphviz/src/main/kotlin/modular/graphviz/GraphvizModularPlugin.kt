@@ -32,7 +32,7 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
     super.applyToRoot(target)
 
     afterEvaluate {
-      warnIfSvgSelectedWithCustomDpi()
+      // Validation TBC
     }
   }
 
@@ -105,27 +105,5 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
       realTask = realTask,
       dummyTask = dummyTask,
     )
-  }
-
-  private fun Project.warnIfSvgSelectedWithCustomDpi() {
-    val adjustSvgViewBox = extension.graphviz.adjustSvgViewBox.get()
-    val warningIsSuppressed = extension.graphviz.properties.suppressSvgViewBoxWarning
-    if (!adjustSvgViewBox && extension.graphviz.dpi.isPresent && !warningIsSuppressed.get()) {
-      val msg = "Warning: Configuring a custom DPI with SVG output enabled will likely cause a misaligned " +
-        "viewBox. Try adding the following property to your build file to automatically attempt a fix:"
-      logger.warn(
-        """
-        $msg
-
-          modular {
-            graphviz {
-              adjustSvgViewBox = true
-            }
-          }
-
-        or add "modular.graphviz.suppressAdjustSvgViewBox=true" to your gradle.properties file to suppress this warning.
-        """.trimIndent(),
-      )
-    }
   }
 }

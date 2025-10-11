@@ -6,7 +6,6 @@
 
 package modular.core
 
-import modular.core.internal.PropertiesSpec
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.provider.Property
@@ -25,7 +24,7 @@ import org.gradle.api.provider.Property
  *     kotlinMultiplatform()
  *     other()
  *
- *     // or use builtIns() to include all of the above
+ *     // or use useDefaults() to include all of the above
  *   }
  * }
  * ```
