@@ -58,3 +58,19 @@ internal fun writeModuleType(module: TypedModule, outputFile: File) {
     )
   }
 }
+
+@InternalModularApi
+public object DefaultModuleTypes {
+  public const val ANDROID_APP_NAME: String = "Android App"
+  public const val ANDROID_APP_COLOR: String = "limegreen"
+  public const val ANDROID_LIB_NAME: String = "Android Library"
+  public const val ANDROID_LIB_COLOR: String = "lightgreen"
+  public const val JAVA_NAME: String = "Java"
+  public const val JAVA_COLOR: String = "orange"
+  public const val KOTLIN_JVM_NAME: String = "Kotlin JVM"
+  public const val KOTLIN_JVM_COLOR: String = "mediumorchid"
+  public const val KOTLIN_MP_NAME: String = "Kotlin Multiplatform"
+  public const val KOTLIN_MP_COLOR: String = "mediumslateblue"
+  public const val OTHER_NAME: String = "Other"
+  public const val OTHER_COLOR: String = "gainsboro"
+}

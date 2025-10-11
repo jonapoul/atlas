@@ -73,9 +73,12 @@ public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, M
     appendLine("|:--:|:--:|")
 
     for (type in moduleTypes) {
-      val url = "https://img.shields.io/badge/-%20-${parseColor(type.color)}?style=flat-square"
-      val img = "<img src=\"$url\" height=\"30\" width=\"100\">"
-      appendLine("| ${type.name} | $img |")
+      val value = type.color?.let { color ->
+        val url = "https://img.shields.io/badge/-%20-${parseColor(color)}?style=flat-square"
+        "<img src=\"$url\" height=\"30\" width=\"100\">"
+      } ?: "<no color>"
+
+      appendLine("| ${type.name} | $value |")
     }
   }
 

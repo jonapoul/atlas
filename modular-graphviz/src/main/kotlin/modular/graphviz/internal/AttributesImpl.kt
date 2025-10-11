@@ -32,8 +32,7 @@ import org.gradle.api.model.ObjectFactory
 internal class NodeAttributesImpl(
   objects: ObjectFactory,
 ) : NodeAttributes, PropertiesSpec by PropertiesSpecImpl(objects) {
-  // TODO: https://github.com/jonapoul/modular/issues/258
-  // override var color by string("color")
+  override var lineColor by string("color")
   override var colorScheme by string("colorscheme")
   override var comment by string("comment")
   override var distortion by string("distortion")

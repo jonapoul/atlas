@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test
 internal class GraphvizGroovyTest : ScenarioTest() {
   @Test
   @RequiresGraphviz
-  internal fun `Configure graphviz`() = runScenario(GroovyGraphVizBasic) {
+  fun `Configure graphviz`() = runScenario(GroovyGraphVizBasic) {
     // when
     val result = runTask("modularGenerate").build()
 
@@ -26,7 +26,7 @@ internal class GraphvizGroovyTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  internal fun `Configure graphviz module types`() = runScenario(GroovyGraphVizModuleTypes) {
+  fun `Configure graphviz module types`() = runScenario(GroovyGraphVizModuleTypes) {
     // when
     val result = runTask("modularGenerate").build()
 
@@ -36,7 +36,7 @@ internal class GraphvizGroovyTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  internal fun `Configure graphviz with everything`() = runScenario(GroovyGraphVizFull) {
+  fun `Configure graphviz with everything`() = runScenario(GroovyGraphVizFull) {
     // when
     val result = runTask("modularGenerate").build()
 

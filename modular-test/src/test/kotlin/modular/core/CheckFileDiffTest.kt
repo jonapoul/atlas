@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test
 
 internal class CheckFileDiffTest : ScenarioTest() {
   @Test
-  internal fun `Write doesn't run as a dependency of check for graphviz`() = runScenario(GraphvizBasic) {
+  fun `Write doesn't run as a dependency of check for graphviz`() = runScenario(GraphvizBasic) {
     // when
     val result = runTask(":a:checkGraphvizChart", extras = listOf("--dry-run")).build()
 
@@ -35,7 +35,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Write doesn't run as a dependency of check for D2`() = runScenario(D2Basic) {
+  fun `Write doesn't run as a dependency of check for D2`() = runScenario(D2Basic) {
     // when
     val result = runTask(":a:checkD2Chart", extras = listOf("--dry-run")).build()
 
@@ -48,7 +48,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Fail if the expected file hasn't been generated yet`() = runScenario(GraphvizBasic) {
+  fun `Fail if the expected file hasn't been generated yet`() = runScenario(GraphvizBasic) {
     // when
     val result = runTask(":a:checkGraphvizChart").buildAndFail()
 
@@ -69,7 +69,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Verify modules of a basic project`() = runScenario(GraphVizBasicWithPngOutput) {
+  fun `Verify modules of a basic project`() = runScenario(GraphVizBasicWithPngOutput) {
     // given initial dotfile is generated
     runTask(":a:writeGraphvizChart").build()
 
@@ -104,7 +104,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Verify legend of a basic project`() = runScenario(GraphvizBasic) {
+  fun `Verify legend of a basic project`() = runScenario(GraphvizBasic) {
     // given initial dotfile is generated
     runTask("writeGraphvizLegend").build()
 
@@ -147,7 +147,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Register check tasks when checkOutputs is true`() = runScenario(CheckExplicitlyEnabled) {
+  fun `Register check tasks when checkOutputs is true`() = runScenario(CheckExplicitlyEnabled) {
     // when
     val result = runTask("check", extras = listOf("--dry-run")).build()
     val output = result.output.lines()
@@ -163,7 +163,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Don't register check tasks when checkOutputs is false`() = runScenario(CheckExplicitlyDisabled) {
+  fun `Don't register check tasks when checkOutputs is false`() = runScenario(CheckExplicitlyDisabled) {
     // when
     val result = runTask("check", extras = listOf("--dry-run")).build()
 

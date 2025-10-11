@@ -13,7 +13,7 @@ import kotlin.test.Test
 
 internal class PluginValidationTest : ScenarioTest() {
   @Test
-  internal fun `Warn if module type is declared with no identifiers`() = runScenario(ModuleTypeWithNoIdentifiers) {
+  fun `Warn if module type is declared with no identifiers`() = runScenario(ModuleTypeWithNoIdentifiers) {
     // when we're not running any of our tasks
     val result = buildRunner()
       .withArguments("help")

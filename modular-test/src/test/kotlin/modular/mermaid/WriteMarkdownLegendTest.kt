@@ -17,7 +17,7 @@ import kotlin.test.Test
 
 internal class WriteMarkdownLegendTest : ScenarioTest() {
   @Test
-  internal fun `Write markdown legend with no link types`() = runScenario(MermaidWithModuleTypes) {
+  fun `Write markdown legend with no link types`() = runScenario(MermaidWithModuleTypes) {
     // when
     val result = runTask(":writeMermaidLegend").build()
 
@@ -37,7 +37,7 @@ internal class WriteMarkdownLegendTest : ScenarioTest() {
 
   @Disabled("https://github.com/jonapoul/modular/issues/247")
   @Test
-  internal fun `Write markdown legend with no module types`() = runScenario(MermaidWithLinkTypes) {
+  fun `Write markdown legend with no module types`() = runScenario(MermaidWithLinkTypes) {
     // when
     val result = runTask(":writeMermaidLegend").build()
 

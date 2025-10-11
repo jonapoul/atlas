@@ -13,7 +13,7 @@ import kotlin.test.Test
 
 internal class MultiplePluginsTest : ScenarioTest() {
   @Test
-  internal fun `Fail when multiple modular plugins are applied`() = runScenario(MultiplePluginsApplied) {
+  fun `Fail when multiple modular plugins are applied`() = runScenario(MultiplePluginsApplied) {
     // when
     val result = runTask("modularGenerate").buildAndFail()
 

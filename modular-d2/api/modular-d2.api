@@ -102,7 +102,7 @@ public abstract interface class modular/d2/D2NamedModuleTypeContainer : modular/
 
 public final class modular/d2/D2NamedModuleTypeContainer$DefaultImpls {
 	public static fun registerByPathContains (Lmodular/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun registerByPathMatches (Lmodular/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Lmodular/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static fun registerByPluginId (Lmodular/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 

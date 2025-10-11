@@ -27,7 +27,7 @@ import kotlin.test.Test
 
 internal class WriteModuleTypeTest : ScenarioTest() {
   @Test
-  internal fun `No module types declared`() = runScenario(NoModuleTypesDeclared) {
+  fun `No module types declared`() = runScenario(NoModuleTypesDeclared) {
     // when
     val result = runTask("writeModuleType").build()
 
@@ -37,7 +37,7 @@ internal class WriteModuleTypeTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Module types declared but none match`() = runScenario(ModuleTypesDeclaredButNoneMatch) {
+  fun `Module types declared but none match`() = runScenario(ModuleTypesDeclaredButNoneMatch) {
     // when
     val result = runTask("writeModuleType").build()
 
@@ -47,7 +47,7 @@ internal class WriteModuleTypeTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Write file if built-in type matches`() = runScenario(OneKotlinJvmModule) {
+  fun `Write file if built-in type matches`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("writeModuleType").build()
 
@@ -62,7 +62,7 @@ internal class WriteModuleTypeTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Write files if custom types match`() = runScenario(ThreeModulesWithCustomTypes) {
+  fun `Write files if custom types match`() = runScenario(ThreeModulesWithCustomTypes) {
     // when
     val result = buildRunner(androidHomeOrSkip())
       .runTask("writeModuleType")
@@ -82,7 +82,7 @@ internal class WriteModuleTypeTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Fall back to other if no types match`() = runScenario(ThreeModulesOnlyMatchingOther) {
+  fun `Fall back to other if no types match`() = runScenario(ThreeModulesOnlyMatchingOther) {
     // when
     runTask("writeModuleType", androidHomeOrSkip()).build()
 
@@ -93,7 +93,7 @@ internal class WriteModuleTypeTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `No types match`() = runScenario(ThreeModulesNoMatchingType) {
+  fun `No types match`() = runScenario(ThreeModulesNoMatchingType) {
     // when
     val result = runTask("a:writeModuleType", androidHomeOrSkip()).build()
 

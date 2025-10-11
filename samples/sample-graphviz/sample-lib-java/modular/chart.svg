@@ -12,17 +12,17 @@
 <!-- :sample&#45;app&#45;android -->
 <g id="node1" class="node">
 <title>:sample&#45;app&#45;android</title>
-<polygon fill="limegreen" stroke="black" points="171.5,-358 16.5,-358 16.5,-334 171.5,-334 171.5,-328 189.5,-346 171.5,-364 171.5,-358"/>
-<polygon fill="none" stroke="black" points="175.5,-362 12.5,-362 12.5,-330 175.5,-330 175.5,-324 193.5,-346 175.5,-368 175.5,-362"/>
-<polygon fill="none" stroke="black" points="179.5,-366 8.5,-366 8.5,-326 179.5,-326 179.5,-320 197.5,-346 179.5,-372 179.5,-366"/>
+<polygon fill="limegreen" stroke="#4c0000" points="171.5,-358 16.5,-358 16.5,-334 171.5,-334 171.5,-328 189.5,-346 171.5,-364 171.5,-358"/>
+<polygon fill="none" stroke="#4c0000" points="175.5,-362 12.5,-362 12.5,-330 175.5,-330 175.5,-324 193.5,-346 175.5,-368 175.5,-362"/>
+<polygon fill="none" stroke="#4c0000" points="179.5,-366 8.5,-366 8.5,-326 179.5,-326 179.5,-320 197.5,-346 179.5,-372 179.5,-366"/>
 <text text-anchor="middle" x="103" y="-342.3" font-family="Courier New" font-size="14.00">:sample&#45;app&#45;android</text>
 </g>
 <!-- :sample&#45;lib&#45;kotlin&#45;mp -->
 <g id="node3" class="node">
 <title>:sample&#45;lib&#45;kotlin&#45;mp</title>
-<polygon fill="mediumslateblue" stroke="black" points="198,-204 8,-204 8,-168 198,-168 198,-204"/>
-<polygon fill="none" stroke="black" points="202,-208 4,-208 4,-164 202,-164 202,-208"/>
-<polygon fill="none" stroke="black" points="206,-212 0,-212 0,-160 206,-160 206,-212"/>
+<polygon fill="mediumslateblue" stroke="#4c0000" points="198,-204 8,-204 8,-168 198,-168 198,-204"/>
+<polygon fill="none" stroke="#4c0000" points="202,-208 4,-208 4,-164 202,-164 202,-208"/>
+<polygon fill="none" stroke="#4c0000" points="206,-212 0,-212 0,-160 206,-160 206,-212"/>
 <text text-anchor="middle" x="103" y="-182.3" font-family="Courier New" font-size="14.00" fill="white">:sample&#45;lib&#45;kotlin&#45;mp</text>
 </g>
 <!-- :sample&#45;app&#45;android&#45;&gt;:sample&#45;lib&#45;kotlin&#45;mp -->
@@ -34,9 +34,9 @@
 <!-- :sample&#45;lib&#45;java -->
 <g id="node2" class="node">
 <title>:sample&#45;lib&#45;java</title>
-<polygon fill="orange" stroke="black" points="177.5,-44 28.5,-44 28.5,-8 177.5,-8 177.5,-44"/>
-<polygon fill="none" stroke="black" points="181.5,-48 24.5,-48 24.5,-4 181.5,-4 181.5,-48"/>
-<polygon fill="none" stroke="black" points="185.5,-52 20.5,-52 20.5,0 185.5,0 185.5,-52"/>
+<polygon fill="orange" stroke="#4c0000" points="177.5,-44 28.5,-44 28.5,-8 177.5,-8 177.5,-44"/>
+<polygon fill="none" stroke="#4c0000" points="181.5,-48 24.5,-48 24.5,-4 181.5,-4 181.5,-48"/>
+<polygon fill="none" stroke="#4c0000" points="185.5,-52 20.5,-52 20.5,0 185.5,0 185.5,-52"/>
 <text text-anchor="middle" x="103" y="-22.3" font-family="Courier New" font-size="14.00">:sample&#45;lib&#45;java</text>
 </g>
 <!-- :sample&#45;lib&#45;kotlin&#45;mp&#45;&gt;:sample&#45;lib&#45;java -->
