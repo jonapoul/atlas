@@ -62,8 +62,7 @@ public abstract class modular/core/ModularPlugin : org/gradle/api/Plugin {
 	public fun apply (Lorg/gradle/api/Project;)V
 	protected fun applyToChild (Lorg/gradle/api/Project;)V
 	protected fun applyToRoot (Lorg/gradle/api/Project;)V
-	protected abstract fun createExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
-	protected abstract fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
+	protected abstract fun getExtension ()Lmodular/core/internal/ModularExtensionImpl;
 	protected abstract fun registerChildTasks (Lorg/gradle/api/Project;)V
 	protected abstract fun registerRootTasks (Lorg/gradle/api/Project;)V
 }

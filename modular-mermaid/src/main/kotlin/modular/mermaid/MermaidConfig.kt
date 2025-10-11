@@ -8,13 +8,13 @@ import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
-class MermaidConfig(
-  val layout: String? = null,
-  val layoutProperties: Map<String, String>? = null,
-  val themeVariables: Map<String, String>? = null,
-  val look: Look? = null,
-  val theme: Theme? = null,
-  val animateLinks: Boolean? = null,
+public class MermaidConfig(
+  public val layout: String? = null,
+  public val layoutProperties: Map<String, String>? = null,
+  public val themeVariables: Map<String, String>? = null,
+  public val look: Look? = null,
+  public val theme: Theme? = null,
+  public val animateLinks: Boolean? = null,
 ) : JSerializable
 
 internal fun MermaidConfig(spec: MermaidSpec): MermaidConfig = MermaidConfig(

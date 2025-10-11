@@ -18,7 +18,7 @@ import modular.mermaid.LinkStyle
 import modular.mermaid.MermaidConfig
 
 @InternalModularApi
-class MermaidWriter(
+public class MermaidWriter(
   override val typedModules: Set<TypedModule>,
   override val links: Set<ModuleLink>,
   override val replacements: Set<Replacement>,

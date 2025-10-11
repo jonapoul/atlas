@@ -27,7 +27,7 @@ import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
 @InternalModularApi
-fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString {
+public fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString {
   appendStyles(config)
   appendVars(config)
 
@@ -45,21 +45,21 @@ fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString {
 }
 
 @KSerializable
-class D2ClassesConfig(
-  val animateLinks: Boolean? = null,
-  val center: Boolean? = null,
-  val darkTheme: Theme? = null,
-  val direction: Direction? = null,
-  val globalProps: Map<String, String>? = null,
-  val layoutEngine: LayoutEngine? = null,
-  val linkTypes: List<LinkType> = emptyList(),
-  val location: Location? = null,
-  val moduleTypes: List<ModuleType> = emptyList(),
-  val pad: Int? = null,
-  val position: Position? = null,
-  val rootStyle: Map<String, String> = emptyMap(),
-  val sketch: Boolean? = null,
-  val theme: Theme? = null,
+public class D2ClassesConfig(
+  public val animateLinks: Boolean? = null,
+  public val center: Boolean? = null,
+  public val darkTheme: Theme? = null,
+  public val direction: Direction? = null,
+  public val globalProps: Map<String, String>? = null,
+  public val layoutEngine: LayoutEngine? = null,
+  public val linkTypes: List<LinkType> = emptyList(),
+  public val location: Location? = null,
+  public val moduleTypes: List<ModuleType> = emptyList(),
+  public val pad: Int? = null,
+  public val position: Position? = null,
+  public val rootStyle: Map<String, String> = emptyMap(),
+  public val sketch: Boolean? = null,
+  public val theme: Theme? = null,
 ) : JSerializable
 
 internal fun D2ModularExtensionImpl.toConfig() = D2ClassesConfig(

@@ -27,8 +27,8 @@ import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 @CacheableTask
-abstract class WriteD2Classes : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
-  @get:Input abstract val config: Property<D2ClassesConfig>
+public abstract class WriteD2Classes : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
+  @get:Input public abstract val config: Property<D2ClassesConfig>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -37,7 +37,7 @@ abstract class WriteD2Classes : DefaultTask(), ModularGenerationTask, TaskWithOu
   }
 
   @TaskAction
-  open fun execute() {
+  public open fun execute() {
     val outputFile = outputFile.get().asFile
     val contents = writeD2Classes(config.get())
     outputFile.writeText(contents)

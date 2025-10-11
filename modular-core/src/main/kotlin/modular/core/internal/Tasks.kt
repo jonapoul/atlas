@@ -11,20 +11,20 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
 @InternalModularApi
-const val MODULAR_TASK_GROUP = "modular"
+public const val MODULAR_TASK_GROUP: String = "modular"
 
 @InternalModularApi
-fun ModularGenerationTask.logIfConfigured(file: File) {
+public fun ModularGenerationTask.logIfConfigured(file: File) {
   if (printFilesToConsole.get()) {
     logger.lifecycle(file.absolutePath)
   }
 }
 
 @InternalModularApi
-interface DummyModularGenerationTask : ModularGenerationTask
+public interface DummyModularGenerationTask : ModularGenerationTask
 
 @InternalModularApi
-val KClass<out ModularGenerationTask>.qualifier: String
+public val KClass<out ModularGenerationTask>.qualifier: String
   get() = when {
     isSubclassOf(DummyModularGenerationTask::class) -> "Dummy"
     else -> ""

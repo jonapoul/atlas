@@ -9,7 +9,7 @@ import modular.test.KOTLIN_VERSION
 import modular.test.javaBuildScript
 import modular.test.kotlinJvmBuildScript
 
-object D2Basic : D2Scenario {
+internal object D2Basic : D2Scenario {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false

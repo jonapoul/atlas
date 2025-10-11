@@ -40,19 +40,19 @@ import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 @CacheableTask
-abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, ModularGenerationTask {
+public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, ModularGenerationTask {
   // Files
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val linksFile: RegularFileProperty
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val moduleTypesFile: RegularFileProperty
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val linksFile: RegularFileProperty
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val moduleTypesFile: RegularFileProperty
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General
-  @get:Input abstract val groupModules: Property<Boolean>
-  @get:Input abstract val replacements: SetProperty<Replacement>
-  @get:Input abstract val thisPath: Property<String>
+  @get:Input public abstract val groupModules: Property<Boolean>
+  @get:Input public abstract val replacements: SetProperty<Replacement>
+  @get:Input public abstract val thisPath: Property<String>
 
   // Dotfile config
-  @get:Input abstract val config: Property<DotConfig>
+  @get:Input public abstract val config: Property<DotConfig>
 
   init {
     group = MODULAR_TASK_GROUP
@@ -60,7 +60,7 @@ abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, ModularGe
   }
 
   @TaskAction
-  open fun execute() {
+  public open fun execute() {
     val linksFile = linksFile.get().asFile
     val moduleTypesFile = moduleTypesFile.get().asFile
 

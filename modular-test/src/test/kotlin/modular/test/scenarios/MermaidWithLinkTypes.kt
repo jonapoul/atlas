@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.KOTLIN_VERSION
 import modular.test.MermaidScenario
 
-object MermaidWithLinkTypes : MermaidScenario by MermaidBasic {
+internal object MermaidWithLinkTypes : MermaidScenario by MermaidBasic {
   override val rootBuildFile = """
     import modular.mermaid.LinkStyle
 

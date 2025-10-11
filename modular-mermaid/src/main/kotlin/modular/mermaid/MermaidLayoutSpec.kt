@@ -11,6 +11,6 @@ import modular.core.PropertiesSpec
 import org.gradle.api.provider.Property
 
 @ModularDsl
-interface MermaidLayoutSpec : PropertiesSpec {
-  val name: Property<String>
+public interface MermaidLayoutSpec : PropertiesSpec {
+  public val name: Property<String>
 }

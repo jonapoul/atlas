@@ -15,9 +15,9 @@ import modular.test.scenarios.MermaidWithGroupsNotNested
 import modular.test.scenarios.MermaidWithoutGroups
 import kotlin.test.Test
 
-class WriteMermaidChartTest : ScenarioTest() {
+internal class WriteMermaidChartTest : ScenarioTest() {
   @Test
-  fun `Write chart without groups`() = runScenario(MermaidWithoutGroups) {
+  internal fun `Write chart without groups`() = runScenario(MermaidWithoutGroups) {
     // when
     val result = runTask(":a:writeMermaidChart").build()
 
@@ -39,7 +39,7 @@ class WriteMermaidChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Write chart with groups enabled but no nested modules`() = runScenario(MermaidWithGroupsNotNested) {
+  internal fun `Write chart with groups enabled but no nested modules`() = runScenario(MermaidWithGroupsNotNested) {
     // when
     val result = runTask(":a:writeMermaidChart").build()
 
@@ -61,7 +61,7 @@ class WriteMermaidChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Write chart with groups enabled and modules nested`() = runScenario(MermaidWithGroupsNested) {
+  internal fun `Write chart with groups enabled and modules nested`() = runScenario(MermaidWithGroupsNested) {
     // when
     val result = runTask(":a:writeMermaidChart").build()
 

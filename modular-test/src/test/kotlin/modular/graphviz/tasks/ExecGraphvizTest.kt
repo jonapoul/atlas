@@ -23,9 +23,9 @@ import modular.test.scenarios.GraphvizBasic
 import org.gradle.testkit.runner.TaskOutcome
 import kotlin.test.Test
 
-class ExecGraphvizTest : ScenarioTest() {
+internal class ExecGraphvizTest : ScenarioTest() {
   @Test
-  fun `No extras are generated if no file formats have been declared`() = runScenario(GraphvizBasic) {
+  internal fun `No extras are generated if no file formats have been declared`() = runScenario(GraphvizBasic) {
     // when
     val result = runTask("modularGenerate", extras = listOf("--dry-run")).build()
 
@@ -66,7 +66,7 @@ class ExecGraphvizTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Generate png, svg and eps files`() = runScenario(GraphVizBasicWithPngOutput) {
+  internal fun `Generate png, svg and eps files`() = runScenario(GraphVizBasicWithPngOutput) {
     // when
     val result = runTask("modularGenerate").build()
 
@@ -87,7 +87,7 @@ class ExecGraphvizTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Choose custom layout engine`() = runScenario(GraphVizCustomLayoutEngine) {
+  internal fun `Choose custom layout engine`() = runScenario(GraphVizCustomLayoutEngine) {
     // when we specify the "neato" layout engine
     val result = runTask(":app:execGraphvizChart").build()
 
@@ -99,7 +99,7 @@ class ExecGraphvizTest : ScenarioTest() {
   @RequiresGraphviz
   @RequiresLn
   @RequiresWhereis
-  fun `Use custom path to dot command`() = runScenario(GraphVizCustomDotExecutable) {
+  internal fun `Use custom path to dot command`() = runScenario(GraphVizCustomDotExecutable) {
     // Given we've made a symbolic link to a dot executable
     val whereisProcess = ProcessBuilder("whereis", "dot").start()
     val pathToDot = whereisProcess.inputReader().readLine().split(" ")[1]
@@ -122,7 +122,7 @@ class ExecGraphvizTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Fail with nonexistent custom path to dot command`() = runScenario(GraphVizCustomDotExecutable) {
+  internal fun `Fail with nonexistent custom path to dot command`() = runScenario(GraphVizCustomDotExecutable) {
     // Given we've made a symbolic link to a dot executable which doesn't exist
     val customDotFile = resolve("path/to/custom/dot")
     assertThat(customDotFile).doesNotExist()

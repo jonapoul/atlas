@@ -17,9 +17,9 @@ import modular.test.equalsDiffed
 import modular.test.moduleLink
 import kotlin.test.Test
 
-class D2WriterTest {
+internal class D2WriterTest {
   @Test
-  fun `Base config with no module types`() {
+  internal fun `Base config with no module types`() {
     val writer = d2Writer(
       layout = OneLevelOfSubmodules,
       groupModules = false,
@@ -59,7 +59,7 @@ class D2WriterTest {
   }
 
   @Test
-  fun `Grouping modules`() {
+  internal fun `Grouping modules`() {
     val writer = d2Writer(
       layout = OneLevelOfSubmodules,
       groupModules = true,
@@ -108,7 +108,7 @@ class D2WriterTest {
   }
 
   @Test
-  fun `Grouping modules with sub-subgraphs`() {
+  internal fun `Grouping modules with sub-subgraphs`() {
     val writer = d2Writer(
       layout = TwoLevelsOfSubmodules,
       groupModules = true,
@@ -164,7 +164,7 @@ class D2WriterTest {
   }
 
   @Test
-  fun `Single module with no links`() {
+  internal fun `Single module with no links`() {
     val writer = d2Writer(layout = ModuleWithNoLinks)
 
     assertThat(writer()).equalsDiffed(
@@ -182,7 +182,7 @@ class D2WriterTest {
   }
 
   @Test
-  fun `Single nested module with no links`() {
+  internal fun `Single nested module with no links`() {
     val writer = d2Writer(
       layout = SingleNestedModuleWithNoLinks,
       groupModules = true,
@@ -207,7 +207,7 @@ class D2WriterTest {
   }
 
   @Test
-  fun `Graph with link styles and colors`() {
+  internal fun `Graph with link styles and colors`() {
     val writer = d2Writer(
       layout = D2AbcWithLinkStyles,
       thisPath = ":a",

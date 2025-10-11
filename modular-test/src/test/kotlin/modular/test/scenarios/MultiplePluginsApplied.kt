@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.GraphvizScenario
 import modular.test.KOTLIN_VERSION
 
-object MultiplePluginsApplied : GraphvizScenario {
+internal object MultiplePluginsApplied : GraphvizScenario {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false

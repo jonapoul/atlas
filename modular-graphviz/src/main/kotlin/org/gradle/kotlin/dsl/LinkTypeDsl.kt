@@ -12,7 +12,7 @@ import modular.graphviz.LinkStyle
 import org.gradle.api.NamedDomainObjectProvider
 
 @JvmOverloads
-fun GraphvizNamedLinkTypeContainer.register(
+public fun GraphvizNamedLinkTypeContainer.register(
   configuration: String,
   style: LinkStyle? = null,
   color: String? = null,
@@ -24,7 +24,7 @@ fun GraphvizNamedLinkTypeContainer.register(
 }
 
 @JvmOverloads
-fun GraphvizNamedLinkTypeContainer.api(
+public fun GraphvizNamedLinkTypeContainer.api(
   style: LinkStyle? = null,
   color: String? = null,
   displayName: String = "api",
@@ -36,7 +36,7 @@ fun GraphvizNamedLinkTypeContainer.api(
 )
 
 @JvmOverloads
-fun GraphvizNamedLinkTypeContainer.implementation(
+public fun GraphvizNamedLinkTypeContainer.implementation(
   style: LinkStyle? = null,
   color: String? = null,
   displayName: String = "implementation",

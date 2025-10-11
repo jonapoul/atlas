@@ -17,26 +17,34 @@ import modular.mermaid.tasks.WriteMarkdownLegend
 import modular.mermaid.tasks.WriteMermaidChart
 import org.gradle.api.Project
 
-class MermaidModularPlugin : ModularPlugin<MermaidModularExtensionImpl>() {
-  override fun apply(target: Project) = with(target) {
-    super.apply(target)
+public class MermaidModularPlugin : ModularPlugin() {
+  private lateinit var mermaidExtension: MermaidModularExtensionImpl
+  override val extension: ModularExtensionImpl by lazy { mermaidExtension }
+
+  override fun applyToRoot(target: Project): Unit = with(target) {
+    mermaidExtension = extensions.create(
+      MermaidModularExtension::class.java,
+      ModularExtensionImpl.NAME,
+      MermaidModularExtensionImpl::class.java,
+    ) as MermaidModularExtensionImpl
+
+    super.applyToRoot(target)
 
     afterEvaluate {
-      // validation TBC
+      // Validation TBC
     }
   }
 
-  override fun Project.createExtension() = extensions.create(
-    MermaidModularExtension::class.java,
-    ModularExtensionImpl.NAME,
-    MermaidModularExtensionImpl::class.java,
-  ) as MermaidModularExtensionImpl
+  override fun applyToChild(target: Project) {
+    mermaidExtension = target.rootProject
+      .extensions
+      .getByType(MermaidModularExtension::class.java) as MermaidModularExtensionImpl
 
-  override fun Project.getExtension() =
-    rootProject.extensions.getByType(MermaidModularExtension::class.java) as MermaidModularExtensionImpl
+    super.applyToChild(target)
+  }
 
   override fun Project.registerChildTasks() {
-    val spec = extension.mermaid
+    val spec = mermaidExtension.mermaid
 
     val chartTask = WriteMermaidChart.real(
       target = project,
@@ -68,7 +76,7 @@ class MermaidModularPlugin : ModularPlugin<MermaidModularExtensionImpl>() {
   }
 
   override fun Project.registerRootTasks() {
-    val spec = extension.mermaid
+    val spec = mermaidExtension.mermaid
 
     val realTask = WriteMarkdownLegend.real(
       target = project,

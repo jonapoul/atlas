@@ -24,6 +24,7 @@ class ConventionKotlin : Plugin<Project> {
       compilerOptions {
         allWarningsAsErrors.set(true)
         jvmTarget.set(JvmTarget.JVM_21)
+        explicitApi()
 
         freeCompilerArgs.addAll(
           "-opt-in=kotlin.RequiresOptIn",

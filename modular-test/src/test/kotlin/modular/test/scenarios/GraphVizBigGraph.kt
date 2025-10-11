@@ -8,7 +8,7 @@ import modular.test.GraphvizScenario
 import modular.test.KOTLIN_VERSION
 import modular.test.kotlinJvmBuildScript
 
-object GraphVizBigGraph : GraphvizScenario {
+internal object GraphVizBigGraph : GraphvizScenario {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false

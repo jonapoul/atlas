@@ -8,7 +8,7 @@ import modular.test.Scenario
 import modular.test.javaBuildScript
 import modular.test.kotlinJvmBuildScript
 
-object MermaidWithGroupsNested : Scenario by MermaidWithGroupsNotNested {
+internal object MermaidWithGroupsNested : Scenario by MermaidWithGroupsNotNested {
   override val submoduleBuildFiles = mapOf(
     "a" to """
       $kotlinJvmBuildScript

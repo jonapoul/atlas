@@ -8,8 +8,8 @@ import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
-data class ModuleType(
-  val name: String,
-  val color: String,
-  val properties: Map<String, String> = emptyMap(),
+public data class ModuleType(
+  public val name: String,
+  public val color: String,
+  public val properties: Map<String, String> = emptyMap(),
 ) : JSerializable

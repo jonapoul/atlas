@@ -19,9 +19,9 @@ import modular.test.taskWasSuccessful
 import java.io.File
 import kotlin.test.Test
 
-class CollateModuleTypesTest : ScenarioTest() {
+internal class CollateModuleTypesTest : ScenarioTest() {
   @Test
-  fun `Collate three custom types`() = runScenario(ThreeModulesWithCustomTypes) {
+  internal fun `Collate three custom types`() = runScenario(ThreeModulesWithCustomTypes) {
     // when
     val result = runTask("collateModuleTypes").build()
 
@@ -42,7 +42,7 @@ class CollateModuleTypesTest : ScenarioTest() {
   }
 
   @Test
-  fun `Collate three built in types`() = runScenario(ThreeModulesWithBuiltInTypes) {
+  internal fun `Collate three built in types`() = runScenario(ThreeModulesWithBuiltInTypes) {
     // when
     val result = runTask("collateModuleTypes").build()
 
@@ -63,7 +63,7 @@ class CollateModuleTypesTest : ScenarioTest() {
   }
 
   @Test
-  fun `Collate with no submodules`() = runScenario(NoSubmodules) {
+  internal fun `Collate with no submodules`() = runScenario(NoSubmodules) {
     // when
     val result = runTask("collateModuleTypes").build()
 

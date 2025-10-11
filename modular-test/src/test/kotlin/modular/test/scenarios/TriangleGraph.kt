@@ -8,7 +8,7 @@ import modular.test.GraphvizScenario
 import modular.test.KOTLIN_VERSION
 import modular.test.kotlinJvmBuildScript
 
-object TriangleGraph : GraphvizScenario {
+internal object TriangleGraph : GraphvizScenario {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false

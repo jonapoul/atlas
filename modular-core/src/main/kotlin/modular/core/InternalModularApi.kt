@@ -8,4 +8,4 @@ import kotlin.RequiresOptIn.Level.WARNING
 
 @RequiresOptIn(level = WARNING, message = "This is internal functionality for Modular")
 @InternalModularApi
-annotation class InternalModularApi
+public annotation class InternalModularApi

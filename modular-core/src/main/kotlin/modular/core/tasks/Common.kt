@@ -10,10 +10,10 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 
-interface TaskWithOutputFile : Task {
-  @get:OutputFile val outputFile: RegularFileProperty
+public interface TaskWithOutputFile : Task {
+  @get:OutputFile public val outputFile: RegularFileProperty
 }
 
-interface ModularGenerationTask : Task {
-  @get:Input val printFilesToConsole: Property<Boolean>
+public interface ModularGenerationTask : Task {
+  @get:Input public val printFilesToConsole: Property<Boolean>
 }

@@ -11,9 +11,9 @@ import modular.test.buildRunner
 import modular.test.scenarios.ModuleTypeWithNoIdentifiers
 import kotlin.test.Test
 
-class PluginValidationTest : ScenarioTest() {
+internal class PluginValidationTest : ScenarioTest() {
   @Test
-  fun `Warn if module type is declared with no identifiers`() = runScenario(ModuleTypeWithNoIdentifiers) {
+  internal fun `Warn if module type is declared with no identifiers`() = runScenario(ModuleTypeWithNoIdentifiers) {
     // when we're not running any of our tasks
     val result = buildRunner()
       .withArguments("help")

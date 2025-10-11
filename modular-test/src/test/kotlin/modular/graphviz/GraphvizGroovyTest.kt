@@ -13,10 +13,10 @@ import modular.test.scenarios.GroovyGraphVizModuleTypes
 import modular.test.taskWasSuccessful
 import org.junit.jupiter.api.Test
 
-class GraphvizGroovyTest : ScenarioTest() {
+internal class GraphvizGroovyTest : ScenarioTest() {
   @Test
   @RequiresGraphviz
-  fun `Configure graphviz`() = runScenario(GroovyGraphVizBasic) {
+  internal fun `Configure graphviz`() = runScenario(GroovyGraphVizBasic) {
     // when
     val result = runTask("modularGenerate").build()
 
@@ -26,7 +26,7 @@ class GraphvizGroovyTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Configure graphviz module types`() = runScenario(GroovyGraphVizModuleTypes) {
+  internal fun `Configure graphviz module types`() = runScenario(GroovyGraphVizModuleTypes) {
     // when
     val result = runTask("modularGenerate").build()
 
@@ -36,7 +36,7 @@ class GraphvizGroovyTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Configure graphviz with everything`() = runScenario(GroovyGraphVizFull) {
+  internal fun `Configure graphviz with everything`() = runScenario(GroovyGraphVizFull) {
     // when
     val result = runTask("modularGenerate").build()
 

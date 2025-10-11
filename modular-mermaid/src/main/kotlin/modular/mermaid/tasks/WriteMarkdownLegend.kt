@@ -34,9 +34,9 @@ import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 @CacheableTask
-abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, ModularGenerationTask {
-  @get:Input abstract val moduleTypes: ListProperty<ModuleType>
-  @get:Input abstract val linkTypes: SetProperty<LinkType>
+public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, ModularGenerationTask {
+  @get:Input public abstract val moduleTypes: ListProperty<ModuleType>
+  @get:Input public abstract val linkTypes: SetProperty<LinkType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -45,7 +45,7 @@ abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, ModularG
   }
 
   @TaskAction
-  open fun execute() {
+  public open fun execute() {
     val moduleTypes = moduleTypes.get()
     val linkTypes = linkTypes.get()
     val outputFile = outputFile.get().asFile

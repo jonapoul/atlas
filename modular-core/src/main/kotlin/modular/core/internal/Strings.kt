@@ -7,7 +7,7 @@ package modular.core.internal
 import modular.core.InternalModularApi
 
 @InternalModularApi
-fun diff(expected: String, actual: String): String {
+public fun diff(expected: String, actual: String): String {
   val expectedLines = expected.lines()
   val actualLines = actual.lines()
 
@@ -54,38 +54,38 @@ fun diff(expected: String, actual: String): String {
 }
 
 @InternalModularApi
-class IndentedStringBuilder(private val indentSize: Int) {
+public class IndentedStringBuilder(private val indentSize: Int) {
   private val sb = StringBuilder()
   private var currentIndent = 0
   private var atLineStart = true
   private val indent get() = " ".repeat(currentIndent)
 
-  fun appendLine(line: String = ""): IndentedStringBuilder {
+  public fun appendLine(line: String = ""): IndentedStringBuilder {
     if (atLineStart) sb.append(indent)
     sb.appendLine(line)
     atLineStart = true
     return this
   }
 
-  fun append(text: String): IndentedStringBuilder {
+  public fun append(text: String): IndentedStringBuilder {
     if (atLineStart) sb.append(indent)
     sb.append(text)
     atLineStart = false
     return this
   }
 
-  fun indent(block: IndentedStringBuilder.() -> Unit): IndentedStringBuilder {
+  public fun indent(block: IndentedStringBuilder.() -> Unit): IndentedStringBuilder {
     currentIndent += indentSize
     block()
     currentIndent -= indentSize
     return this
   }
 
-  override fun toString() = sb.toString()
+  override fun toString(): String = sb.toString()
 }
 
 @InternalModularApi
-fun buildIndentedString(
+public fun buildIndentedString(
   size: Int = 2,
   block: IndentedStringBuilder.() -> Unit,
 ): String = IndentedStringBuilder(size)

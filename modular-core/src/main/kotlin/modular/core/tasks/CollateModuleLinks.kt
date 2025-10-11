@@ -25,9 +25,9 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CollateModuleLinks : DefaultTask(), TaskWithOutputFile {
-  @get:[PathSensitive(RELATIVE) InputFiles] abstract val moduleLinkFiles: ConfigurableFileCollection
-  @get:Input abstract val ignoredModules: SetProperty<Regex>
+public abstract class CollateModuleLinks : DefaultTask(), TaskWithOutputFile {
+  @get:[PathSensitive(RELATIVE) InputFiles] public abstract val moduleLinkFiles: ConfigurableFileCollection
+  @get:Input public abstract val ignoredModules: SetProperty<Regex>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -36,7 +36,7 @@ abstract class CollateModuleLinks : DefaultTask(), TaskWithOutputFile {
   }
 
   @TaskAction
-  fun execute() {
+  public fun execute() {
     val outputFile = outputFile.get().asFile
 
     val links = moduleLinkFiles

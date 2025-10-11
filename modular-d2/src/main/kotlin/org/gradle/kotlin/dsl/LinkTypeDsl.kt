@@ -12,7 +12,7 @@ import modular.d2.LinkStyle
 import org.gradle.api.NamedDomainObjectProvider
 
 @JvmOverloads
-fun D2NamedLinkTypeContainer.register(
+public fun D2NamedLinkTypeContainer.register(
   configuration: String,
   style: LinkStyle? = null,
   color: String? = null,
@@ -24,7 +24,7 @@ fun D2NamedLinkTypeContainer.register(
 }
 
 @JvmOverloads
-fun D2NamedLinkTypeContainer.api(
+public fun D2NamedLinkTypeContainer.api(
   style: LinkStyle? = null,
   color: String? = null,
   displayName: String = "api",
@@ -36,7 +36,7 @@ fun D2NamedLinkTypeContainer.api(
 )
 
 @JvmOverloads
-fun D2NamedLinkTypeContainer.implementation(
+public fun D2NamedLinkTypeContainer.implementation(
   style: LinkStyle? = null,
   color: String? = null,
   displayName: String = "implementation",

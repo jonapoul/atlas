@@ -4,7 +4,6 @@
  */
 package modular.d2.internal
 
-import modular.core.InternalModularApi
 import modular.core.PropertiesSpec
 import modular.core.internal.LinkTypeContainer
 import modular.core.internal.ModuleTypeContainer
@@ -31,8 +30,7 @@ import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import javax.inject.Inject
 
-@InternalModularApi
-class D2SpecImpl(
+internal class D2SpecImpl(
   objects: ObjectFactory,
   project: Project,
 ) : D2Spec {
@@ -61,8 +59,7 @@ class D2SpecImpl(
   override fun globalProps(action: Action<D2GlobalPropsSpec>) = action.execute(globalProps)
 }
 
-@InternalModularApi
-open class D2RootStyleSpecImpl(
+internal open class D2RootStyleSpecImpl(
   objects: ObjectFactory,
 ) : D2RootStyleSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
   override var fill by string("fill")
@@ -73,8 +70,7 @@ open class D2RootStyleSpecImpl(
   override var doubleBorder by bool("double-border")
 }
 
-@InternalModularApi
-open class D2GlobalPropsSpecImpl(
+internal open class D2GlobalPropsSpecImpl(
   objects: ObjectFactory,
 ) : D2GlobalPropsSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
   override var arrowType by enum<ArrowType>("(** -> **)[*].target-arrowhead.shape")
@@ -83,13 +79,11 @@ open class D2GlobalPropsSpecImpl(
   override var fontSize by int("***.style.font-size")
 }
 
-@InternalModularApi
-class D2LinkTypeContainer(
+internal class D2LinkTypeContainer(
   objects: ObjectFactory,
 ) : LinkTypeContainer(objects), D2NamedLinkTypeContainer
 
-@InternalModularApi
-abstract class D2ModuleTypeSpecImpl @Inject constructor(
+internal abstract class D2ModuleTypeSpecImpl @Inject constructor(
   override val name: String,
 ) : ModuleTypeSpecImpl(name), D2ModuleTypeSpec {
   override var animated by bool("style.animated")
@@ -112,8 +106,7 @@ abstract class D2ModuleTypeSpecImpl @Inject constructor(
   override var underline by bool("style.underline")
 }
 
-@InternalModularApi
-class D2ModuleTypeContainer(objects: ObjectFactory) :
+internal class D2ModuleTypeContainer(objects: ObjectFactory) :
   ModuleTypeContainer<D2ModuleTypeSpec>(
     delegate = objects.domainObjectContainer(D2ModuleTypeSpec::class.java) { name ->
       objects.newInstance(D2ModuleTypeSpecImpl::class.java, name)

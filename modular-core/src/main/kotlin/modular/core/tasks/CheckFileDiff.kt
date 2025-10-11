@@ -33,12 +33,12 @@ import java.io.FileNotFoundException
 import javax.inject.Inject
 
 @CacheableTask
-abstract class CheckFileDiff : DefaultTask() {
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val actualFile: RegularFileProperty
-  @get:Input abstract val expectedDirectory: Property<String>
-  @get:Input abstract val expectedFilename: Property<String>
-  @get:Input abstract val taskPath: Property<String>
-  @get:Inject abstract val problems: Problems
+public abstract class CheckFileDiff : DefaultTask() {
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val actualFile: RegularFileProperty
+  @get:Input public abstract val expectedDirectory: Property<String>
+  @get:Input public abstract val expectedFilename: Property<String>
+  @get:Input public abstract val taskPath: Property<String>
+  @get:Inject public abstract val problems: Problems
 
   init {
     group = VERIFICATION_GROUP
@@ -46,7 +46,7 @@ abstract class CheckFileDiff : DefaultTask() {
   }
 
   @TaskAction
-  fun execute() {
+  public fun execute() {
     val expectedFile = File(expectedDirectory.get(), expectedFilename.get())
     val actualFile = actualFile.get().asFile
 
@@ -81,7 +81,7 @@ abstract class CheckFileDiff : DefaultTask() {
   }
 
   @InternalModularApi
-  companion object {
+  public companion object {
     private val PROBLEM_DOESNT_EXIST = problemId(
       id = "modular-check-doesnt-exist",
       description = "Expected file doesn't exist",
@@ -92,7 +92,7 @@ abstract class CheckFileDiff : DefaultTask() {
     )
 
     @InternalModularApi
-    inline fun <reified T1 : TaskWithOutputFile, T2 : TaskWithOutputFile> register(
+    public inline fun <reified T1 : TaskWithOutputFile, T2 : TaskWithOutputFile> register(
       target: Project,
       extension: ModularExtension,
       spec: ModularSpec,

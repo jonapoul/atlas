@@ -19,9 +19,9 @@ import modular.test.scenarios.GraphvizNestedModulesNoModuleTypes
 import org.junit.jupiter.api.Disabled
 import kotlin.test.Test
 
-class WriteGraphvizChartTest : ScenarioTest() {
+internal class WriteGraphvizChartTest : ScenarioTest() {
   @Test
-  fun `Run if no module types are declared`() = runScenario(GraphvizNestedModulesNoModuleTypes) {
+  internal fun `Run if no module types are declared`() = runScenario(GraphvizNestedModulesNoModuleTypes) {
     // when
     runTask("writeGraphvizChart").build()
 
@@ -53,7 +53,7 @@ class WriteGraphvizChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Generate dotfiles from basic config`() = runScenario(GraphvizBasic) {
+  internal fun `Generate dotfiles from basic config`() = runScenario(GraphvizBasic) {
     // when
     runTask("writeGraphvizChart").build()
 
@@ -92,7 +92,7 @@ class WriteGraphvizChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Customise dotfile from build script`() = runScenario(GraphVizChartCustomConfig) {
+  internal fun `Customise dotfile from build script`() = runScenario(GraphVizChartCustomConfig) {
     // when
     runTask("writeGraphvizChart").build()
 
@@ -118,7 +118,7 @@ class WriteGraphvizChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Customise dotfile from gradle properties`() = runScenario(GraphVizChartWithProperties) {
+  internal fun `Customise dotfile from gradle properties`() = runScenario(GraphVizChartWithProperties) {
     // when
     runTask("writeGraphvizChart").build()
 
@@ -142,7 +142,7 @@ class WriteGraphvizChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Replace module names`() = runScenario(GraphVizChartWithReplacements) {
+  internal fun `Replace module names`() = runScenario(GraphVizChartWithReplacements) {
     // when
     runTask("writeGraphvizChart").build()
 
@@ -166,7 +166,7 @@ class WriteGraphvizChartTest : ScenarioTest() {
 
   @Test
   @Disabled("https://github.com/jonapoul/modular/issues/247")
-  fun `Handle custom link types`() = runScenario(GraphVizChartWithCustomLinkTypes) {
+  internal fun `Handle custom link types`() = runScenario(GraphVizChartWithCustomLinkTypes) {
     // when
     runTask("writeGraphvizChart").build()
 
@@ -191,7 +191,7 @@ class WriteGraphvizChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Handle nested modules`() = runScenario(GraphvizNestedModules) {
+  internal fun `Handle nested modules`() = runScenario(GraphvizNestedModules) {
     // when
     runTask("writeGraphvizChart").build()
 

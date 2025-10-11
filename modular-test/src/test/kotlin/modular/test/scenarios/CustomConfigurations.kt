@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.Scenario
 import modular.test.kotlinJvmBuildScript
 
-object CustomConfigurations : Scenario by OneKotlinJvmModule {
+internal object CustomConfigurations : Scenario by OneKotlinJvmModule {
   override val submoduleBuildFiles = mapOf(
     "a" to """
       $kotlinJvmBuildScript
