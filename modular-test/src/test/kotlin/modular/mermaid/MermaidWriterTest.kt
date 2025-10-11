@@ -13,7 +13,7 @@ import kotlin.test.Test
 
 internal class MermaidWriterTest {
   @Test
-  internal fun `Base config with no module types`() {
+  fun `Base config with no module types`() {
     val writer = mermaidWriter(
       typedModules = OneLevelOfSubmodules.modules,
       links = OneLevelOfSubmodules.links,
@@ -45,7 +45,7 @@ internal class MermaidWriterTest {
   }
 
   @Test
-  internal fun `Grouping modules`() {
+  fun `Grouping modules`() {
     val writer = mermaidWriter(
       typedModules = OneLevelOfSubmodules.modules,
       links = OneLevelOfSubmodules.links,
@@ -84,7 +84,7 @@ internal class MermaidWriterTest {
   }
 
   @Test
-  internal fun `Grouping modules with sub-subgraphs`() {
+  fun `Grouping modules with sub-subgraphs`() {
     val writer = mermaidWriter(
       typedModules = TwoLevelsOfSubmodules.modules,
       links = TwoLevelsOfSubmodules.links,
@@ -129,7 +129,7 @@ internal class MermaidWriterTest {
   }
 
   @Test
-  internal fun `Single module with no links`() {
+  fun `Single module with no links`() {
     val writer = mermaidWriter(
       typedModules = ModuleWithNoLinks.modules,
       links = ModuleWithNoLinks.links,

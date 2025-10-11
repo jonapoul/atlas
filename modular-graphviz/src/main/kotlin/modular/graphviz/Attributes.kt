@@ -14,8 +14,7 @@ import modular.core.PropertiesSpec
  */
 @ModularDsl
 public interface NodeAttributes : PropertiesSpec {
-  // TODO: https://github.com/jonapoul/modular/issues/258
-  // var color: String?
+  public var lineColor: String?
   public var colorScheme: String?
   public var comment: String?
   public var distortion: String?

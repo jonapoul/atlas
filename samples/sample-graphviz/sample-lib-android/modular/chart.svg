@@ -12,9 +12,9 @@
 <!-- :sample&#45;app&#45;android -->
 <g id="node1" class="node">
 <title>:sample&#45;app&#45;android</title>
-<polygon fill="limegreen" stroke="black" points="175.5,-518 20.5,-518 20.5,-494 175.5,-494 175.5,-488 193.5,-506 175.5,-524 175.5,-518"/>
-<polygon fill="none" stroke="black" points="179.5,-522 16.5,-522 16.5,-490 179.5,-490 179.5,-484 197.5,-506 179.5,-528 179.5,-522"/>
-<polygon fill="none" stroke="black" points="183.5,-526 12.5,-526 12.5,-486 183.5,-486 183.5,-480 201.5,-506 183.5,-532 183.5,-526"/>
+<polygon fill="limegreen" stroke="#4c0000" points="175.5,-518 20.5,-518 20.5,-494 175.5,-494 175.5,-488 193.5,-506 175.5,-524 175.5,-518"/>
+<polygon fill="none" stroke="#4c0000" points="179.5,-522 16.5,-522 16.5,-490 179.5,-490 179.5,-484 197.5,-506 179.5,-528 179.5,-522"/>
+<polygon fill="none" stroke="#4c0000" points="183.5,-526 12.5,-526 12.5,-486 183.5,-486 183.5,-480 201.5,-506 183.5,-532 183.5,-526"/>
 <text text-anchor="middle" x="107" y="-502.3" font-family="Courier New" font-size="14.00">:sample&#45;app&#45;android</text>
 </g>
 <!-- :sample&#45;lib&#45;android -->
@@ -26,9 +26,9 @@
 <stop offset="1" style="stop-color:#008b8b;stop-opacity:1.;"/>
 </linearGradient>
 </defs>
-<polygon fill="url(#l_0)" stroke="black" points="193.5,-204 20.5,-204 20.5,-168 193.5,-168 193.5,-204"/>
-<polygon fill="none" stroke="black" points="197.5,-208 16.5,-208 16.5,-164 197.5,-164 197.5,-208"/>
-<polygon fill="none" stroke="black" points="201.5,-212 12.5,-212 12.5,-160 201.5,-160 201.5,-212"/>
+<polygon fill="url(#l_0)" stroke="#4c0000" points="193.5,-204 20.5,-204 20.5,-168 193.5,-168 193.5,-204"/>
+<polygon fill="none" stroke="#4c0000" points="197.5,-208 16.5,-208 16.5,-164 197.5,-164 197.5,-208"/>
+<polygon fill="none" stroke="#4c0000" points="201.5,-212 12.5,-212 12.5,-160 201.5,-160 201.5,-212"/>
 <text text-anchor="middle" x="107" y="-182.3" font-family="Courier New" font-size="14.00">:sample&#45;lib&#45;android</text>
 </g>
 <!-- :sample&#45;app&#45;android&#45;&gt;:sample&#45;lib&#45;android -->
@@ -40,9 +40,9 @@
 <!-- :sample&#45;lib&#45;kotlin&#45;mp -->
 <g id="node4" class="node">
 <title>:sample&#45;lib&#45;kotlin&#45;mp</title>
-<polygon fill="mediumslateblue" stroke="black" points="268,-364 78,-364 78,-328 268,-328 268,-364"/>
-<polygon fill="none" stroke="black" points="272,-368 74,-368 74,-324 272,-324 272,-368"/>
-<polygon fill="none" stroke="black" points="276,-372 70,-372 70,-320 276,-320 276,-372"/>
+<polygon fill="mediumslateblue" stroke="#4c0000" points="268,-364 78,-364 78,-328 268,-328 268,-364"/>
+<polygon fill="none" stroke="#4c0000" points="272,-368 74,-368 74,-324 272,-324 272,-368"/>
+<polygon fill="none" stroke="#4c0000" points="276,-372 70,-372 70,-320 276,-320 276,-372"/>
 <text text-anchor="middle" x="173" y="-342.3" font-family="Courier New" font-size="14.00" fill="white">:sample&#45;lib&#45;kotlin&#45;mp</text>
 </g>
 <!-- :sample&#45;app&#45;android&#45;&gt;:sample&#45;lib&#45;kotlin&#45;mp -->
@@ -54,9 +54,9 @@
 <!-- :sample&#45;lib&#45;kotlin&#45;jvm -->
 <g id="node3" class="node">
 <title>:sample&#45;lib&#45;kotlin&#45;jvm</title>
-<polygon fill="mediumorchid" stroke="black" points="206,-44 8,-44 8,-8 206,-8 206,-44"/>
-<polygon fill="none" stroke="black" points="210,-48 4,-48 4,-4 210,-4 210,-48"/>
-<polygon fill="none" stroke="black" points="214,-52 0,-52 0,0 214,0 214,-52"/>
+<polygon fill="mediumorchid" stroke="#4c0000" points="206,-44 8,-44 8,-8 206,-8 206,-44"/>
+<polygon fill="none" stroke="#4c0000" points="210,-48 4,-48 4,-4 210,-4 210,-48"/>
+<polygon fill="none" stroke="#4c0000" points="214,-52 0,-52 0,0 214,0 214,-52"/>
 <text text-anchor="middle" x="107" y="-22.3" font-family="Courier New" font-size="14.00">:sample&#45;lib&#45;kotlin&#45;jvm</text>
 </g>
 <!-- :sample&#45;lib&#45;android&#45;&gt;:sample&#45;lib&#45;kotlin&#45;jvm -->

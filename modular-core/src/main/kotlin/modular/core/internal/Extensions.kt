@@ -28,7 +28,7 @@ public fun ModularExtensionImpl.orderedLinkTypes(): List<LinkType> =
 @InternalModularApi
 public fun moduleType(type: ModuleTypeSpec): ModuleType = ModuleType(
   name = type.name,
-  color = type.color.get(),
+  color = type.color.orNull,
   properties = type.properties.getOrElse(mutableMapOf()),
 )
 

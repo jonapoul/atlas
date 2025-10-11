@@ -144,7 +144,7 @@ public abstract interface class modular/mermaid/MermaidNamedModuleTypeContainer 
 
 public final class modular/mermaid/MermaidNamedModuleTypeContainer$DefaultImpls {
 	public static fun registerByPathContains (Lmodular/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun registerByPathMatches (Lmodular/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Lmodular/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static fun registerByPluginId (Lmodular/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 

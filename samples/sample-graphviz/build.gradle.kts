@@ -36,7 +36,7 @@ modular {
       gradientAngle = 90
     }
     kotlinJvm()
-    java()
+    java { color = null }
     other()
   }
 
@@ -55,6 +55,7 @@ modular {
       peripheries = 3
       style = Filled
       shape = Box
+      lineColor = "#4C0000"
     }
 
     graph {

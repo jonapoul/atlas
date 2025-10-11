@@ -24,7 +24,7 @@ import kotlin.test.Test
 
 internal class WriteModuleLinksTest : ScenarioTest() {
   @Test
-  internal fun `Empty file for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
+  fun `Empty file for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("writeModuleLinks").build()
 
@@ -36,7 +36,7 @@ internal class WriteModuleLinksTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Empty files for three modules with no dependencies`() = runScenario(ThreeModulesWithBuiltInTypes) {
+  fun `Empty files for three modules with no dependencies`() = runScenario(ThreeModulesWithBuiltInTypes) {
     // when
     val result = runTask("writeModuleLinks").build()
 
@@ -52,7 +52,7 @@ internal class WriteModuleLinksTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Single links for diamond`() = runScenario(DiamondGraph) {
+  fun `Single links for diamond`() = runScenario(DiamondGraph) {
     // when
     val result = runTask("writeModuleLinks").build()
 
@@ -77,7 +77,7 @@ internal class WriteModuleLinksTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Multiple links for triangle`() = runScenario(TriangleGraph) {
+  fun `Multiple links for triangle`() = runScenario(TriangleGraph) {
     // when
     val result = runTask("writeModuleLinks").build()
 
@@ -103,7 +103,7 @@ internal class WriteModuleLinksTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Custom configuration is picked up if we dont exclude it`() = runScenario(CustomConfigurations) {
+  fun `Custom configuration is picked up if we dont exclude it`() = runScenario(CustomConfigurations) {
     // when
     val result = runTask("writeModuleLinks").build()
 
@@ -119,7 +119,7 @@ internal class WriteModuleLinksTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Custom configuration is excluded`() = runScenario(CustomConfigurationExcluded) {
+  fun `Custom configuration is excluded`() = runScenario(CustomConfigurationExcluded) {
     // when
     val result = runTask("writeModuleLinks").build()
 

@@ -14,7 +14,7 @@ import kotlin.test.Test
 
 internal class DotWriterTest {
   @Test
-  internal fun `Base config with no module types`() {
+  fun `Base config with no module types`() {
     val writer = dotWriter(
       typedModules = OneLevelOfSubmodules.modules,
       links = OneLevelOfSubmodules.links,
@@ -47,7 +47,7 @@ internal class DotWriterTest {
   }
 
   @Test
-  internal fun `Grouping modules`() {
+  fun `Grouping modules`() {
     val writer = dotWriter(
       typedModules = OneLevelOfSubmodules.modules,
       links = OneLevelOfSubmodules.links,
@@ -90,7 +90,7 @@ internal class DotWriterTest {
   }
 
   @Test
-  internal fun `Grouping modules with sub-subgraphs`() {
+  fun `Grouping modules with sub-subgraphs`() {
     val writer = dotWriter(
       typedModules = TwoLevelsOfSubmodules.modules,
       links = TwoLevelsOfSubmodules.links,
@@ -140,7 +140,7 @@ internal class DotWriterTest {
   }
 
   @Test
-  internal fun `Single module with no links`() {
+  fun `Single module with no links`() {
     val writer = dotWriter(
       typedModules = ModuleWithNoLinks.modules,
       links = ModuleWithNoLinks.links,

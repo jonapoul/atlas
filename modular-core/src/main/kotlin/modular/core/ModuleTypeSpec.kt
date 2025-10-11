@@ -9,6 +9,8 @@ package modular.core
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.SetProperty
+import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 
 /**
  * Represents a category of module that you can use to match against those in your project. You can use some of the
@@ -44,7 +46,7 @@ import org.gradle.api.provider.Property
  *     // plus some manually-defined ones
  *     registerByPluginId(name = "UI", color = "#ABC123", pluginId = "org.jetbrains.kotlin.plugin.compose")
  *     registerByPathMatches(name = "Data", color = "#ABCDEF", pathMatches = ".*data$".toRegex())
- *     registerByPathContains(name = "Domain", color = "#123ABC", pathContains = "domain")
+ *     registerByPathContains(name = "Domain", pathContains = "domain")
  *   }
  * }
  * ```
@@ -61,8 +63,8 @@ import org.gradle.api.provider.Property
 public interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContainer<T> {
   public fun registerByPluginId(
     name: String,
-    color: String,
     pluginId: String,
+    color: String? = null,
     extraConfig: T.() -> Unit = {},
   ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
@@ -72,19 +74,21 @@ public interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjec
 
   public fun registerByPathMatches(
     name: String,
-    color: String,
-    pathMatches: Regex,
+    @Language("RegExp") pathMatches: String,
+    options: Set<RegexOption> = emptySet(),
+    color: String? = null,
     extraConfig: T.() -> Unit = {},
   ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
-    type.pathMatches.convention(pathMatches.toString())
+    type.pathMatches.convention(pathMatches)
+    type.regexOptions.convention(options)
     type.extraConfig()
   }
 
   public fun registerByPathContains(
     name: String,
-    color: String,
     pathContains: String,
+    color: String? = null,
     extraConfig: T.() -> Unit = {},
   ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
@@ -93,6 +97,7 @@ public interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjec
   }
 }
 
+@ModularDsl
 public interface ModuleTypeSpec : PropertiesSpec {
   /**
    * Required - this will be shown on your generated legend files.
@@ -111,8 +116,10 @@ public interface ModuleTypeSpec : PropertiesSpec {
 
   /**
    * Similar to [pathContains] but more flexible with [Regex] pattern checking instead of straight string comparison.
+   * Specify [regexOptions] if you want to get technical about it.
    */
   public val pathMatches: Property<String>
+  public val regexOptions: SetProperty<RegexOption>
 
   /**
    * Checks whether the given plugin ID string has been applied to your module.

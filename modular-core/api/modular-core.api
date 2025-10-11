@@ -110,6 +110,7 @@ public abstract interface class modular/core/ModuleTypeSpec : modular/core/Prope
 	public abstract fun getName ()Ljava/lang/String;
 	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
+	public abstract fun getRegexOptions ()Lorg/gradle/api/provider/SetProperty;
 }
 
 public final class modular/core/ModuleTypeSpec$DefaultImpls {
@@ -123,8 +124,8 @@ public abstract interface class modular/core/NamedLinkTypeContainer : org/gradle
 public abstract interface class modular/core/NamedModuleTypeContainer : org/gradle/api/NamedDomainObjectContainer {
 	public fun registerByPathContains (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun registerByPathContains$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public fun registerByPathMatches (Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun registerByPathMatches$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public fun registerByPathMatches (Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun registerByPathMatches$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public fun registerByPluginId (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun registerByPluginId$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
@@ -132,8 +133,8 @@ public abstract interface class modular/core/NamedModuleTypeContainer : org/grad
 public final class modular/core/NamedModuleTypeContainer$DefaultImpls {
 	public static fun registerByPathContains (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun registerByPathContains$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun registerByPathMatches (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun registerByPathMatches$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun registerByPathMatches$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static fun registerByPluginId (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun registerByPluginId$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }

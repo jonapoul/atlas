@@ -17,7 +17,7 @@ import kotlin.test.Test
 
 internal class GraphHierarchyTest {
   @Test
-  internal fun `Single-level groups`() {
+  fun `Single-level groups`() {
     val dataSubGraph = Subgraph(
       path = listOf("data"),
       elements = mutableListOf(
@@ -57,7 +57,7 @@ internal class GraphHierarchyTest {
   }
 
   @Test
-  internal fun `Multi-level groups`() {
+  fun `Multi-level groups`() {
     val dataSubGraph = Subgraph(
       path = listOf("data"),
       elements = mutableListOf(
@@ -104,7 +104,7 @@ internal class GraphHierarchyTest {
   }
 
   @Test
-  internal fun `Single nested module, no links, grouped`() {
+  fun `Single nested module, no links, grouped`() {
     val node = node(
       path = ":a:b",
       type = ModuleType(name = "red", color = "red"),

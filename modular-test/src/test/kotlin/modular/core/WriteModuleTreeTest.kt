@@ -22,7 +22,7 @@ import kotlin.test.Test
 
 internal class WriteModuleTreeTest : ScenarioTest() {
   @Test
-  internal fun `Empty files for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
+  fun `Empty files for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("writeModuleTree")
       .withPluginClasspath()
@@ -36,7 +36,7 @@ internal class WriteModuleTreeTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Empty files for three modules with no dependencies`() = runScenario(ThreeModulesWithBuiltInTypes) {
+  fun `Empty files for three modules with no dependencies`() = runScenario(ThreeModulesWithBuiltInTypes) {
     // when
     val result = runTask("writeModuleTree").build()
 
@@ -50,7 +50,7 @@ internal class WriteModuleTreeTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Single links for diamond`() = runScenario(DiamondGraph) {
+  fun `Single links for diamond`() = runScenario(DiamondGraph) {
     // when
     val result = runTask("writeModuleTree").build()
 
@@ -85,7 +85,7 @@ internal class WriteModuleTreeTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Single links for diamond with upwards traversal`() = runScenario(DiamondGraphWithUpwardsTraversal) {
+  fun `Single links for diamond with upwards traversal`() = runScenario(DiamondGraphWithUpwardsTraversal) {
     // when
     val result = runTask("writeModuleTree").build()
 
@@ -129,7 +129,7 @@ internal class WriteModuleTreeTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Multiple links for triangle`() = runScenario(TriangleGraph) {
+  fun `Multiple links for triangle`() = runScenario(TriangleGraph) {
     // when
     val result = runTask("writeModuleTree").build()
 
@@ -165,7 +165,7 @@ internal class WriteModuleTreeTest : ScenarioTest() {
   }
 
   @Test
-  internal fun `Multiple links for triangle with upwards traversal`() = runScenario(TriangleGraphWithUpwardsTraversal) {
+  fun `Multiple links for triangle with upwards traversal`() = runScenario(TriangleGraphWithUpwardsTraversal) {
     // when
     val result = runTask("writeModuleTree").build()
 

@@ -510,7 +510,7 @@ public abstract interface class modular/graphviz/GraphvizNamedModuleTypeContaine
 
 public final class modular/graphviz/GraphvizNamedModuleTypeContainer$DefaultImpls {
 	public static fun registerByPathContains (Lmodular/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun registerByPathMatches (Lmodular/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/text/Regex;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Lmodular/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static fun registerByPluginId (Lmodular/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
@@ -595,6 +595,7 @@ public abstract interface class modular/graphviz/NodeAttributes : modular/core/P
 	public abstract fun getLabel ()Ljava/lang/String;
 	public abstract fun getLabelLoc ()Ljava/lang/String;
 	public abstract fun getLayer ()Ljava/lang/String;
+	public abstract fun getLineColor ()Ljava/lang/String;
 	public abstract fun getMargin ()Ljava/lang/String;
 	public abstract fun getNoJustify ()Ljava/lang/Boolean;
 	public abstract fun getOrdering ()Ljava/lang/String;
@@ -641,6 +642,7 @@ public abstract interface class modular/graphviz/NodeAttributes : modular/core/P
 	public abstract fun setLabel (Ljava/lang/String;)V
 	public abstract fun setLabelLoc (Ljava/lang/String;)V
 	public abstract fun setLayer (Ljava/lang/String;)V
+	public abstract fun setLineColor (Ljava/lang/String;)V
 	public abstract fun setMargin (Ljava/lang/String;)V
 	public abstract fun setNoJustify (Ljava/lang/Boolean;)V
 	public abstract fun setOrdering (Ljava/lang/String;)V

@@ -17,7 +17,7 @@ import kotlin.test.Test
 
 internal class WriteGraphvizLegendTest : ScenarioTest() {
   @Test
-  internal fun `Generate dotfile legend from basic config`() = runScenario(GraphvizBasic) {
+  fun `Generate dotfile legend from basic config`() = runScenario(GraphvizBasic) {
     // when
     runTask("writeGraphvizLegend").build()
 
@@ -45,7 +45,7 @@ internal class WriteGraphvizLegendTest : ScenarioTest() {
 
   @Test
   @Disabled("https://github.com/jonapoul/modular/issues/247")
-  internal fun `Show modules and links next to each other`() = runScenario(GraphVizWithLinkTypes) {
+  fun `Show modules and links next to each other`() = runScenario(GraphVizWithLinkTypes) {
     // when
     runTask("writeGraphvizLegend").build()
 

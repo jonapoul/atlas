@@ -14,7 +14,7 @@ import kotlin.test.Test
 
 internal class WriteD2ChartTest : ScenarioTest() {
   @Test
-  internal fun `Generate charts from basic config`() = runScenario(D2Basic) {
+  fun `Generate charts from basic config`() = runScenario(D2Basic) {
     // when
     val result = runTask("writeD2Chart").build()
 

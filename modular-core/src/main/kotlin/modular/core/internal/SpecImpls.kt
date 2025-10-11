@@ -65,9 +65,10 @@ public abstract class ModuleTypeSpecImpl @Inject constructor(override val name: 
   @get:Input public abstract override val properties: MapProperty<String, String>
 
   init {
-    color.convention("#FFFFFF")
+    color.unsetConvention()
     pathContains.unsetConvention()
     pathMatches.unsetConvention()
+    regexOptions.unsetConvention()
     hasPluginId.unsetConvention()
   }
 }
