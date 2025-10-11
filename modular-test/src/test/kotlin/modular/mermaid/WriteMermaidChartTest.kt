@@ -31,7 +31,6 @@ internal class WriteMermaidChartTest : ScenarioTest() {
           _a[":a"]
           _b[":b"]
           _c[":c"]
-          style _a font-weight:bold,stroke:black,stroke-width:2px
           _a --> _b
           _a --> _c
       """.trimIndent(),
@@ -53,7 +52,6 @@ internal class WriteMermaidChartTest : ScenarioTest() {
           _a[":a"]
           _b[":b"]
           _c[":c"]
-          style _a font-weight:bold,stroke:black,stroke-width:2px
           _a --> _b
           _a --> _c
       """.trimIndent(),
@@ -84,7 +82,6 @@ internal class WriteMermaidChartTest : ScenarioTest() {
               _c_inner_c2[":c:inner:c2"]
             end
           end
-          style _a font-weight:bold,stroke:black,stroke-width:2px
           _a --> _b_b1
           _a --> _b_b2
           _b_b1 --> _c_inner_c1

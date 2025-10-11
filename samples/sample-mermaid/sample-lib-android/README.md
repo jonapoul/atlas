@@ -26,7 +26,7 @@ config:
 graph TD
   lib_android["lib android"]
   lib_kotlin_jvm["lib kotlin jvm"]
-  style lib_android fill:lightgreen,font-weight:bold,stroke:black,stroke-width:2px,fillcolor:lightgreen
+  style lib_android fill:lightgreen,fillcolor:lightgreen
   style lib_kotlin_jvm fill:mediumorchid,fillcolor:mediumorchid
   lib_android -.-> lib_kotlin_jvm
 ```

@@ -26,9 +26,9 @@
 <stop offset="1" style="stop-color:#008b8b;stop-opacity:1.;"/>
 </linearGradient>
 </defs>
-<polygon fill="url(#l_0)" stroke="black" stroke-width="3" points="193.5,-204 20.5,-204 20.5,-168 193.5,-168 193.5,-204"/>
-<polygon fill="none" stroke="black" stroke-width="3" points="197.5,-208 16.5,-208 16.5,-164 197.5,-164 197.5,-208"/>
-<polygon fill="none" stroke="black" stroke-width="3" points="201.5,-212 12.5,-212 12.5,-160 201.5,-160 201.5,-212"/>
+<polygon fill="url(#l_0)" stroke="black" points="193.5,-204 20.5,-204 20.5,-168 193.5,-168 193.5,-204"/>
+<polygon fill="none" stroke="black" points="197.5,-208 16.5,-208 16.5,-164 197.5,-164 197.5,-208"/>
+<polygon fill="none" stroke="black" points="201.5,-212 12.5,-212 12.5,-160 201.5,-160 201.5,-212"/>
 <text text-anchor="middle" x="107" y="-182.3" font-family="Courier New" font-size="14.00">:sample&#45;lib&#45;android</text>
 </g>
 <!-- :sample&#45;app&#45;android&#45;&gt;:sample&#45;lib&#45;android -->

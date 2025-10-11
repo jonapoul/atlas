@@ -37,7 +37,6 @@ public fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString
     for (type in config.linkTypes) appendLink(config, type)
     appendContainer(config)
     appendHidden()
-    appendThisProject()
   }
   appendLine("}")
 
@@ -81,7 +80,6 @@ internal fun D2ModularExtensionImpl.toConfig() = D2ClassesConfig(
 
 internal const val CONTAINER_CLASS = "container"
 internal const val HIDDEN_CLASS = "hidden"
-internal const val THIS_PROJECT_CLASS = "thisProject"
 
 internal val LinkType.classId get() = "link-$key"
 internal val ModuleType.classId get() = "module-$key"
@@ -143,12 +141,6 @@ private fun IndentedStringBuilder.appendContainer(config: D2ClassesConfig) {
 private fun IndentedStringBuilder.appendHidden() {
   appendLine("$HIDDEN_CLASS {")
   indent { appendLine("style.opacity: 0") }
-  appendLine("}")
-}
-
-private fun IndentedStringBuilder.appendThisProject() {
-  appendLine("$THIS_PROJECT_CLASS {")
-  indent { appendLine("style.stroke-width: 8") }
   appendLine("}")
 }
 

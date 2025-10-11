@@ -82,11 +82,6 @@ public data class DotWriter(
     val nodePath = module.projectPath.cleaned()
     val attrs = Attrs()
 
-    // Make "target" nodes more prominent with a thick black border
-    if (thisPath.cleaned() == nodePath) {
-      attrs["penwidth"] = "3"
-    }
-
     module.type?.let { type ->
       val properties = type.properties + ("fillcolor" to type.color)
       properties.forEach { (key, value) -> attrs[key] = value }

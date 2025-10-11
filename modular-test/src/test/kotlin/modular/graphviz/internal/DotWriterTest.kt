@@ -23,7 +23,7 @@ internal class DotWriterTest {
     assertThat(writer()).equalsDiffed(
       """
         digraph {
-          ":app" [penwidth="3"]
+          ":app"
           ":data:a"
           ":data:b"
           ":domain:a"
@@ -57,7 +57,7 @@ internal class DotWriterTest {
     assertThat(writer()).equalsDiffed(
       """
         digraph {
-          ":app" [penwidth="3"]
+          ":app"
           subgraph cluster_data {
             label = ":data"
             ":data:a"
@@ -100,7 +100,7 @@ internal class DotWriterTest {
     assertThat(writer()).equalsDiffed(
       """
         digraph {
-          ":app" [penwidth="3"]
+          ":app"
           subgraph cluster_data {
             label = ":data"
             ":data:a"
@@ -149,7 +149,7 @@ internal class DotWriterTest {
     assertThat(writer()).equalsDiffed(
       """
         digraph {
-          ":app" [penwidth="3",fillcolor="red"]
+          ":app" [fillcolor="red"]
         }
       """.trimIndent(),
     )

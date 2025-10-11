@@ -32,7 +32,6 @@ public class D2Writer(
   override fun invoke(): String = buildIndentedString {
     appendImports()
     appendModules()
-    appendLine("${thisPath.fullKey()}.class: $THIS_PROJECT_CLASS")
     appendLinks()
     appendLegend()
   }

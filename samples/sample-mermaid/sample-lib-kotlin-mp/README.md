@@ -31,7 +31,7 @@ graph TD
   style lib_android fill:lightgreen,fillcolor:lightgreen
   style lib_java fill:orange,fillcolor:orange
   style lib_kotlin_jvm fill:mediumorchid,fillcolor:mediumorchid
-  style lib_kotlin_mp fill:mediumslateblue,font-weight:bold,stroke:black,stroke-width:2px,color:white,stroke-dasharray:4 3 2 1,font-size:20px,fillcolor:mediumslateblue
+  style lib_kotlin_mp fill:mediumslateblue,color:white,stroke-dasharray:4 3 2 1,font-size:20px,fillcolor:mediumslateblue
   lib_android -.-> lib_kotlin_jvm
   lib_kotlin_mp --> lib_android
   lib_kotlin_mp ==> lib_java

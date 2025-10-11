@@ -20,9 +20,9 @@
 <!-- :sample&#45;lib&#45;kotlin&#45;mp -->
 <g id="node5" class="node">
 <title>:sample&#45;lib&#45;kotlin&#45;mp</title>
-<polygon fill="mediumslateblue" stroke="black" stroke-width="3" points="384.5,-364 194.5,-364 194.5,-328 384.5,-328 384.5,-364"/>
-<polygon fill="none" stroke="black" stroke-width="3" points="388.5,-368 190.5,-368 190.5,-324 388.5,-324 388.5,-368"/>
-<polygon fill="none" stroke="black" stroke-width="3" points="392.5,-372 186.5,-372 186.5,-320 392.5,-320 392.5,-372"/>
+<polygon fill="mediumslateblue" stroke="black" points="384.5,-364 194.5,-364 194.5,-328 384.5,-328 384.5,-364"/>
+<polygon fill="none" stroke="black" points="388.5,-368 190.5,-368 190.5,-324 388.5,-324 388.5,-368"/>
+<polygon fill="none" stroke="black" points="392.5,-372 186.5,-372 186.5,-320 392.5,-320 392.5,-372"/>
 <text text-anchor="middle" x="289.5" y="-342.3" font-family="Courier New" font-size="14.00" fill="white">:sample&#45;lib&#45;kotlin&#45;mp</text>
 </g>
 <!-- :sample&#45;app&#45;android&#45;&gt;:sample&#45;lib&#45;kotlin&#45;mp -->

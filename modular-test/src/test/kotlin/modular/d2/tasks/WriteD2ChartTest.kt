@@ -33,7 +33,6 @@ internal class WriteD2ChartTest : ScenarioTest() {
         a: :a { class: module-KotlinJVM }
         b: :b { class: module-Java }
         c: :c { class: module-Java }
-        a.class: thisProject
         a -> b
         a -> c
         vars: {
@@ -49,7 +48,6 @@ internal class WriteD2ChartTest : ScenarioTest() {
       """
         ...@../../modular/classes.d2
         b: :b { class: module-Java }
-        b.class: thisProject
         vars: {
           d2-legend: {
             module-Java: Java { class: module-Java }
@@ -62,7 +60,6 @@ internal class WriteD2ChartTest : ScenarioTest() {
       """
         ...@../../modular/classes.d2
         c: :c { class: module-Java }
-        c.class: thisProject
         vars: {
           d2-legend: {
             module-Java: Java { class: module-Java }
