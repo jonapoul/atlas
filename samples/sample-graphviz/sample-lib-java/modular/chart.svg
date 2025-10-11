@@ -34,9 +34,9 @@
 <!-- :sample&#45;lib&#45;java -->
 <g id="node2" class="node">
 <title>:sample&#45;lib&#45;java</title>
-<polygon fill="orange" stroke="black" stroke-width="3" points="177.5,-44 28.5,-44 28.5,-8 177.5,-8 177.5,-44"/>
-<polygon fill="none" stroke="black" stroke-width="3" points="181.5,-48 24.5,-48 24.5,-4 181.5,-4 181.5,-48"/>
-<polygon fill="none" stroke="black" stroke-width="3" points="185.5,-52 20.5,-52 20.5,0 185.5,0 185.5,-52"/>
+<polygon fill="orange" stroke="black" points="177.5,-44 28.5,-44 28.5,-8 177.5,-8 177.5,-44"/>
+<polygon fill="none" stroke="black" points="181.5,-48 24.5,-48 24.5,-4 181.5,-4 181.5,-48"/>
+<polygon fill="none" stroke="black" points="185.5,-52 20.5,-52 20.5,0 185.5,0 185.5,-52"/>
 <text text-anchor="middle" x="103" y="-22.3" font-family="Courier New" font-size="14.00">:sample&#45;lib&#45;java</text>
 </g>
 <!-- :sample&#45;lib&#45;kotlin&#45;mp&#45;&gt;:sample&#45;lib&#45;java -->

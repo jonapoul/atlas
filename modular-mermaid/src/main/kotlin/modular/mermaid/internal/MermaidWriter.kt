@@ -86,12 +86,6 @@ public class MermaidWriter(
         "fill" to module.type?.color,
       )
 
-      if (thisPath == module.projectPath) {
-        attrs["font-weight"] = "bold"
-        attrs["stroke"] = "black"
-        attrs["stroke-width"] = "2px"
-      }
-
       module.type?.let { type ->
         val properties = type.properties + ("fillcolor" to type.color)
         properties.forEach { (key, value) -> attrs[key] = value }

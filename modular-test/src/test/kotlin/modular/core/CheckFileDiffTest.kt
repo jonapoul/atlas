@@ -93,7 +93,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
       """
       |          digraph {
       |      ---   graph [layout="circo"]
-      |            ":a" [penwidth="3",fillcolor="mediumorchid"]
+      |            ":a" [fillcolor="mediumorchid"]
       |            ":b" [fillcolor="orange"]
       |            ":c" [fillcolor="orange"]
       |            ":a" -> ":b"

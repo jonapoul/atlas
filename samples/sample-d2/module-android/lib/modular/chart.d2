@@ -7,7 +7,6 @@ module-kotlin: :module-kotlin {
   class: container
   jvm: :jvm { class: module-KotlinJVM }
 }
-module-android.lib.class: thisProject
 module-android.lib -> module-kotlin.jvm { class: link-implementation }
 vars: {
   d2-legend: {

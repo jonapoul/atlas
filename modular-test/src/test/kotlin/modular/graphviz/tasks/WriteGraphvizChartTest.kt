@@ -29,7 +29,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(resolve("app/modular/chart.dot").readText()).equalsDiffed(
       """
         digraph {
-          ":app" [penwidth="3"]
+          ":app"
           ":data:a"
           ":data:b"
           ":domain:a"
@@ -66,7 +66,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFileA.readText()).equalsDiffed(
       """
         digraph {
-          ":a" [penwidth="3",fillcolor="mediumorchid"]
+          ":a" [fillcolor="mediumorchid"]
           ":b" [fillcolor="orange"]
           ":c" [fillcolor="orange"]
           ":a" -> ":b"
@@ -78,14 +78,14 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFileB.readText()).equalsDiffed(
       """
         digraph {
-          ":b" [penwidth="3",fillcolor="orange"]
+          ":b" [fillcolor="orange"]
         }
       """.trimIndent(),
     )
     assertThat(dotFileC.readText()).equalsDiffed(
       """
         digraph {
-          ":c" [penwidth="3",fillcolor="orange"]
+          ":c" [fillcolor="orange"]
         }
       """.trimIndent(),
     )
@@ -107,7 +107,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
           edge [arrowhead="halfopen",arrowtail="open"]
           graph [layout="twopi",dpi="150"]
           node [shape="none"]
-          ":a" [penwidth="3",fillcolor="mediumorchid"]
+          ":a" [fillcolor="mediumorchid"]
           ":b" [fillcolor="orange"]
           ":c" [fillcolor="orange"]
           ":a" -> ":b"
@@ -131,7 +131,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
       """
         digraph {
           graph [layout="neato"]
-          ":a" [penwidth="3",fillcolor="mediumorchid"]
+          ":a" [fillcolor="mediumorchid"]
           ":b" [fillcolor="orange"]
           ":c" [fillcolor="orange"]
           ":a" -> ":b"
@@ -155,7 +155,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
       """
         digraph {
           "B" [fillcolor="orange"]
-          "a" [penwidth="3",fillcolor="mediumorchid"]
+          "a" [fillcolor="mediumorchid"]
           "c" [fillcolor="orange"]
           "a" -> "B"
           "a" -> "c"
@@ -203,7 +203,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
-          ":app" [penwidth="3",fillcolor="mediumorchid"]
+          ":app" [fillcolor="mediumorchid"]
           ":data:a" [fillcolor="mediumorchid"]
           ":data:b" [fillcolor="mediumorchid"]
           ":domain:a" [fillcolor="mediumorchid"]

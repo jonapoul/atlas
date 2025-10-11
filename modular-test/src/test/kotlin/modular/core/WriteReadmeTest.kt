@@ -38,7 +38,6 @@ internal class WriteReadmeTest : ScenarioTest() {
           _a[":a"]
           _b[":b"]
           _c[":c"]
-          style _a font-weight:bold,stroke:black,stroke-width:2px
           _a --> _b
           _a --> _c
         ```

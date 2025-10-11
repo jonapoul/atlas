@@ -4,7 +4,7 @@ digraph {
   node [fontname="Courier New",peripheries="3",style="filled",shape="box"]
   ":sample-app-android" [shape="rarrow",style="radial",fillcolor="limegreen"]
   ":sample-lib-android" [gradientangle="90",fillcolor="crimson:cyan4"]
-  ":sample-lib-kotlin-jvm" [penwidth="3",fillcolor="mediumorchid"]
+  ":sample-lib-kotlin-jvm" [fillcolor="mediumorchid"]
   ":sample-lib-kotlin-mp" [fontcolor="white",fillcolor="mediumslateblue"]
   ":sample-app-android" -> ":sample-lib-android" [style="dotted"]
   ":sample-app-android" -> ":sample-lib-kotlin-mp" [style="dotted"]

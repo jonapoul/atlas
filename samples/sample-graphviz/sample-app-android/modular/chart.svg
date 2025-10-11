@@ -12,9 +12,9 @@
 <!-- :sample&#45;app&#45;android -->
 <g id="node1" class="node">
 <title>:sample&#45;app&#45;android</title>
-<polygon fill="limegreen" stroke="black" stroke-width="3" points="260,-518 105,-518 105,-494 260,-494 260,-488 278,-506 260,-524 260,-518"/>
-<polygon fill="none" stroke="black" stroke-width="3" points="264,-522 101,-522 101,-490 264,-490 264,-484 282,-506 264,-528 264,-522"/>
-<polygon fill="none" stroke="black" stroke-width="3" points="268,-526 97,-526 97,-486 268,-486 268,-480 286,-506 268,-532 268,-526"/>
+<polygon fill="limegreen" stroke="black" points="260,-518 105,-518 105,-494 260,-494 260,-488 278,-506 260,-524 260,-518"/>
+<polygon fill="none" stroke="black" points="264,-522 101,-522 101,-490 264,-490 264,-484 282,-506 264,-528 264,-522"/>
+<polygon fill="none" stroke="black" points="268,-526 97,-526 97,-486 268,-486 268,-480 286,-506 268,-532 268,-526"/>
 <text text-anchor="middle" x="191.5" y="-502.3" font-family="Courier New" font-size="14.00">:sample&#45;app&#45;android</text>
 </g>
 <!-- :sample&#45;lib&#45;android -->

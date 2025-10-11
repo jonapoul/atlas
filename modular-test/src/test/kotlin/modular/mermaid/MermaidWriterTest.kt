@@ -30,7 +30,6 @@ internal class MermaidWriterTest {
         _ui_a[":ui:a"]
         _ui_b[":ui:b"]
         _ui_c[":ui:c"]
-        style _app font-weight:bold,stroke:black,stroke-width:2px
         _app --> _ui_a
         _app --> _ui_b
         _app --> _ui_c
@@ -70,7 +69,6 @@ internal class MermaidWriterTest {
             _ui_b[":ui:b"]
             _ui_c[":ui:c"]
           end
-          style _app font-weight:bold,stroke:black,stroke-width:2px
           _app --> _ui_a
           _app --> _ui_b
           _app --> _ui_c
@@ -114,7 +112,6 @@ internal class MermaidWriterTest {
             _ui_b[":ui:b"]
             _ui_c[":ui:c"]
           end
-          style _app font-weight:bold,stroke:black,stroke-width:2px
           _app --> _ui_a
           _app --> _ui_b
           _app --> _ui_c
@@ -142,7 +139,7 @@ internal class MermaidWriterTest {
       """
         graph TD
           _app[":app"]
-          style _app fill:red,font-weight:bold,stroke:black,stroke-width:2px,fillcolor:red
+          style _app fill:red,fillcolor:red
       """.trimIndent(),
     )
   }
