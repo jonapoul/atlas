@@ -298,7 +298,6 @@ public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {
 	public static final fun androidLibrary (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun androidLibrary (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun androidLibrary$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun builtIns (Lmodular/core/NamedModuleTypeContainer;)V
 	public static final fun java (Lmodular/core/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun java (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun java (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
@@ -319,5 +318,6 @@ public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {
 	public static final fun other (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static final fun other (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun other$default (Lmodular/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun useDefaults (Lmodular/core/NamedModuleTypeContainer;)V
 }
 

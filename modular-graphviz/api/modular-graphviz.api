@@ -25,15 +25,6 @@ public final class modular/graphviz/ArrowType : java/lang/Enum, modular/core/int
 	public static fun values ()[Lmodular/graphviz/ArrowType;
 }
 
-public abstract interface class modular/graphviz/Attributes {
-	public abstract fun edge (Lorg/gradle/api/Action;)V
-	public abstract fun getEdge ()Lmodular/graphviz/EdgeAttributes;
-	public abstract fun getGraph ()Lmodular/graphviz/GraphAttributes;
-	public abstract fun getNode ()Lmodular/graphviz/NodeAttributes;
-	public abstract fun graph (Lorg/gradle/api/Action;)V
-	public abstract fun node (Lorg/gradle/api/Action;)V
-}
-
 public final class modular/graphviz/ClusterMode : java/lang/Enum, modular/core/internal/StringEnum {
 	public static final field Global Lmodular/graphviz/ClusterMode;
 	public static final field Local Lmodular/graphviz/ClusterMode;
@@ -60,20 +51,12 @@ public final class modular/graphviz/Dir : java/lang/Enum, modular/core/internal/
 public final class modular/graphviz/DotConfig : java/io/Serializable {
 	public static final field Companion Lmodular/graphviz/DotConfig$Companion;
 	public fun <init> ()V
-	public fun <init> (Lmodular/graphviz/ArrowType;Lmodular/graphviz/ArrowType;Ljava/lang/String;Lmodular/graphviz/Dir;Ljava/lang/Integer;Ljava/lang/Integer;Lmodular/graphviz/LayoutEngine;Lmodular/graphviz/RankDir;Ljava/lang/Float;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)V
-	public synthetic fun <init> (Lmodular/graphviz/ArrowType;Lmodular/graphviz/ArrowType;Ljava/lang/String;Lmodular/graphviz/Dir;Ljava/lang/Integer;Ljava/lang/Integer;Lmodular/graphviz/LayoutEngine;Lmodular/graphviz/RankDir;Ljava/lang/Float;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getArrowHead ()Lmodular/graphviz/ArrowType;
-	public final fun getArrowTail ()Lmodular/graphviz/ArrowType;
-	public final fun getBackgroundColor ()Ljava/lang/String;
-	public final fun getDir ()Lmodular/graphviz/Dir;
-	public final fun getDpi ()Ljava/lang/Integer;
+	public fun <init> (Lmodular/graphviz/LayoutEngine;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Lmodular/graphviz/LayoutEngine;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getEdgeAttributes ()Ljava/util/Map;
-	public final fun getFontSize ()Ljava/lang/Integer;
 	public final fun getGraphAttributes ()Ljava/util/Map;
 	public final fun getLayoutEngine ()Lmodular/graphviz/LayoutEngine;
 	public final fun getNodeAttributes ()Ljava/util/Map;
-	public final fun getRankDir ()Lmodular/graphviz/RankDir;
-	public final fun getRankSep ()Ljava/lang/Float;
 }
 
 public final synthetic class modular/graphviz/DotConfig$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -357,7 +340,7 @@ public abstract interface class modular/graphviz/GraphAttributes : modular/core/
 	public abstract fun getQuadTree ()Ljava/lang/String;
 	public abstract fun getQuantum ()Ljava/lang/Number;
 	public abstract fun getRankDir ()Lmodular/graphviz/RankDir;
-	public abstract fun getRankSep ()Ljava/lang/String;
+	public abstract fun getRankSep ()Ljava/lang/Number;
 	public abstract fun getRatio ()Ljava/lang/String;
 	public abstract fun getReminCross ()Ljava/lang/Boolean;
 	public abstract fun getRepulsiveForce ()Ljava/lang/Number;
@@ -459,7 +442,7 @@ public abstract interface class modular/graphviz/GraphAttributes : modular/core/
 	public abstract fun setQuadTree (Ljava/lang/String;)V
 	public abstract fun setQuantum (Ljava/lang/Number;)V
 	public abstract fun setRankDir (Lmodular/graphviz/RankDir;)V
-	public abstract fun setRankSep (Ljava/lang/String;)V
+	public abstract fun setRankSep (Ljava/lang/Number;)V
 	public abstract fun setRatio (Ljava/lang/String;)V
 	public abstract fun setReminCross (Ljava/lang/Boolean;)V
 	public abstract fun setRepulsiveForce (Ljava/lang/Number;)V
@@ -506,9 +489,7 @@ public final class modular/graphviz/GraphvizModularPlugin : modular/core/Modular
 	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 }
 
-public abstract interface class modular/graphviz/GraphvizModuleTypeSpec : modular/core/ModuleTypeSpec {
-	public abstract fun getShape ()Lmodular/graphviz/Shape;
-	public abstract fun setShape (Lmodular/graphviz/Shape;)V
+public abstract interface class modular/graphviz/GraphvizModuleTypeSpec : modular/core/ModuleTypeSpec, modular/graphviz/NodeAttributes {
 }
 
 public final class modular/graphviz/GraphvizModuleTypeSpec$DefaultImpls {
@@ -536,20 +517,15 @@ public final class modular/graphviz/GraphvizNamedModuleTypeContainer$DefaultImpl
 }
 
 public abstract interface class modular/graphviz/GraphvizSpec : modular/core/ModularSpec {
-	public abstract fun attributes (Lorg/gradle/api/Action;)V
-	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
-	public abstract fun getArrowHead ()Lorg/gradle/api/provider/Property;
-	public abstract fun getArrowTail ()Lorg/gradle/api/provider/Property;
-	public abstract fun getAttributes ()Lmodular/graphviz/Attributes;
-	public abstract fun getBackgroundColor ()Lorg/gradle/api/provider/Property;
-	public abstract fun getDir ()Lorg/gradle/api/provider/Property;
-	public abstract fun getDpi ()Lorg/gradle/api/provider/Property;
+	public abstract fun edge (Lorg/gradle/api/Action;)V
+	public abstract fun getEdge ()Lmodular/graphviz/EdgeAttributes;
 	public abstract fun getFileFormat ()Lorg/gradle/api/provider/Property;
-	public abstract fun getFontSize ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGraph ()Lmodular/graphviz/GraphAttributes;
 	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getNode ()Lmodular/graphviz/NodeAttributes;
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRankDir ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRankSep ()Lorg/gradle/api/provider/Property;
+	public abstract fun graph (Lorg/gradle/api/Action;)V
+	public abstract fun node (Lorg/gradle/api/Action;)V
 }
 
 public final class modular/graphviz/ImagePos : java/lang/Enum, modular/core/internal/StringEnum {
@@ -817,7 +793,6 @@ public final class modular/graphviz/SmoothType : java/lang/Enum, modular/core/in
 public abstract class modular/graphviz/tasks/ExecGraphviz : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
-	public abstract fun getAdjustSvgViewBox ()Lorg/gradle/api/provider/Property;
 	public fun getDescription ()Ljava/lang/String;
 	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getEngine ()Lorg/gradle/api/provider/Property;
@@ -842,7 +817,6 @@ public abstract class modular/graphviz/tasks/WriteGraphvizChart : org/gradle/api
 public abstract class modular/graphviz/tasks/WriteGraphvizLegend : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public fun execute ()V
-	public abstract fun getDescription ()Ljava/lang/String;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
