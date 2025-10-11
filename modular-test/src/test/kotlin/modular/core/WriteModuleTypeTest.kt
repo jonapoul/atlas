@@ -25,9 +25,9 @@ import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
 import java.io.File
 import kotlin.test.Test
 
-class WriteModuleTypeTest : ScenarioTest() {
+internal class WriteModuleTypeTest : ScenarioTest() {
   @Test
-  fun `No module types declared`() = runScenario(NoModuleTypesDeclared) {
+  internal fun `No module types declared`() = runScenario(NoModuleTypesDeclared) {
     // when
     val result = runTask("writeModuleType").build()
 
@@ -37,7 +37,7 @@ class WriteModuleTypeTest : ScenarioTest() {
   }
 
   @Test
-  fun `Module types declared but none match`() = runScenario(ModuleTypesDeclaredButNoneMatch) {
+  internal fun `Module types declared but none match`() = runScenario(ModuleTypesDeclaredButNoneMatch) {
     // when
     val result = runTask("writeModuleType").build()
 
@@ -47,7 +47,7 @@ class WriteModuleTypeTest : ScenarioTest() {
   }
 
   @Test
-  fun `Write file if built-in type matches`() = runScenario(OneKotlinJvmModule) {
+  internal fun `Write file if built-in type matches`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("writeModuleType").build()
 
@@ -62,7 +62,7 @@ class WriteModuleTypeTest : ScenarioTest() {
   }
 
   @Test
-  fun `Write files if custom types match`() = runScenario(ThreeModulesWithCustomTypes) {
+  internal fun `Write files if custom types match`() = runScenario(ThreeModulesWithCustomTypes) {
     // when
     val result = buildRunner(androidHomeOrSkip())
       .runTask("writeModuleType")
@@ -82,7 +82,7 @@ class WriteModuleTypeTest : ScenarioTest() {
   }
 
   @Test
-  fun `Fall back to other if no types match`() = runScenario(ThreeModulesOnlyMatchingOther) {
+  internal fun `Fall back to other if no types match`() = runScenario(ThreeModulesOnlyMatchingOther) {
     // when
     runTask("writeModuleType", androidHomeOrSkip()).build()
 
@@ -93,7 +93,7 @@ class WriteModuleTypeTest : ScenarioTest() {
   }
 
   @Test
-  fun `No types match`() = runScenario(ThreeModulesNoMatchingType) {
+  internal fun `No types match`() = runScenario(ThreeModulesNoMatchingType) {
     // when
     val result = runTask("a:writeModuleType", androidHomeOrSkip()).build()
 

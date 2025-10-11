@@ -2,9 +2,10 @@
  * Copyright © 2025 Jon Poulton
  * SPDX-License-Identifier: Apache-2.0
  */
+@file:Suppress("SpellCheckingInspection")
+
 package modular.graphviz.internal
 
-import modular.core.InternalModularApi
 import modular.core.PropertiesSpec
 import modular.core.internal.PropertiesSpecImpl
 import modular.core.internal.bool
@@ -28,8 +29,7 @@ import modular.graphviz.Shape
 import modular.graphviz.SmoothType
 import org.gradle.api.model.ObjectFactory
 
-@InternalModularApi
-class NodeAttributesImpl(
+internal class NodeAttributesImpl(
   objects: ObjectFactory,
 ) : NodeAttributes, PropertiesSpec by PropertiesSpecImpl(objects) {
   // TODO: https://github.com/jonapoul/modular/issues/258
@@ -82,8 +82,7 @@ class NodeAttributesImpl(
   override var z by number("z")
 }
 
-@InternalModularApi
-class EdgeAttributesImpl(
+internal class EdgeAttributesImpl(
   objects: ObjectFactory,
 ) : EdgeAttributes, PropertiesSpec by PropertiesSpecImpl(objects) {
   override var arrowHead by enum<ArrowType>("arrowhead")
@@ -153,8 +152,7 @@ class EdgeAttributesImpl(
   override var xlp by string("xlp")
 }
 
-@InternalModularApi
-class GraphAttributesImpl(
+internal class GraphAttributesImpl(
   objects: ObjectFactory,
 ) : GraphAttributes, PropertiesSpec by PropertiesSpecImpl(objects) {
   override var background by string("_background")

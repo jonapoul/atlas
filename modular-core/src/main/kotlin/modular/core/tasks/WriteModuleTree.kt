@@ -25,10 +25,10 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class WriteModuleTree : DefaultTask(), TaskWithOutputFile {
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val collatedLinks: RegularFileProperty
-  @get:Input abstract val alsoTraverseUpwards: Property<Boolean>
-  @get:Input abstract val thisPath: Property<String>
+public abstract class WriteModuleTree : DefaultTask(), TaskWithOutputFile {
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val collatedLinks: RegularFileProperty
+  @get:Input public abstract val alsoTraverseUpwards: Property<Boolean>
+  @get:Input public abstract val thisPath: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -37,7 +37,7 @@ abstract class WriteModuleTree : DefaultTask(), TaskWithOutputFile {
   }
 
   @TaskAction
-  fun execute() {
+  public fun execute() {
     val thisPath = thisPath.get()
 
     val allLinks = readModuleLinks(collatedLinks.get().asFile)
@@ -85,15 +85,15 @@ abstract class WriteModuleTree : DefaultTask(), TaskWithOutputFile {
   }
 
   @InternalModularApi
-  companion object {
+  public companion object {
     private const val NAME = "writeModuleTree"
 
     @InternalModularApi
-    fun get(target: Project): TaskProvider<WriteModuleTree> =
+    public fun get(target: Project): TaskProvider<WriteModuleTree> =
       target.tasks.named(NAME, WriteModuleTree::class.java)
 
     @InternalModularApi
-    fun register(
+    public fun register(
       target: Project,
       extension: ModularExtension,
     ): TaskProvider<WriteModuleTree> = with(target) {

@@ -27,11 +27,11 @@ import org.gradle.api.provider.Property
  * ```
  */
 @ModularDsl
-interface GraphvizSpec : ModularSpec {
+public interface GraphvizSpec : ModularSpec {
   /**
    * Use this if you want to specify a "dot" command which isn't on the system path. This should be an absolute path.
    */
-  val pathToDotCommand: Property<String>
+  public val pathToDotCommand: Property<String>
 
   /**
    * Manually interact with output formats from Graphviz. Defaults to an empty set, meaning the only output will
@@ -40,7 +40,7 @@ interface GraphvizSpec : ModularSpec {
    * See [FileFormat] for some default options, but bear in mind your machine may not have them all
    * available (depending on your installed Graphviz version).
    */
-  val fileFormat: Property<FileFormat>
+  public val fileFormat: Property<FileFormat>
 
   /**
    * Customise the layout engine used to organise your module nodes in the chart. Defaults to [LayoutEngine.Dot].
@@ -48,14 +48,14 @@ interface GraphvizSpec : ModularSpec {
    * into [layoutEngine] as a string instead.
    * See https://graphviz.org/docs/layouts/
    */
-  val layoutEngine: Property<LayoutEngine>
+  public val layoutEngine: Property<LayoutEngine>
 
-  val node: NodeAttributes
-  fun node(action: Action<NodeAttributes>)
+  public val node: NodeAttributes
+  public fun node(action: Action<NodeAttributes>)
 
-  val edge: EdgeAttributes
-  fun edge(action: Action<EdgeAttributes>)
+  public val edge: EdgeAttributes
+  public fun edge(action: Action<EdgeAttributes>)
 
-  val graph: GraphAttributes
-  fun graph(action: Action<GraphAttributes>)
+  public val graph: GraphAttributes
+  public fun graph(action: Action<GraphAttributes>)
 }

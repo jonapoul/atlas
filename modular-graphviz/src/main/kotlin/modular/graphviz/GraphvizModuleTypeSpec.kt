@@ -10,4 +10,4 @@ import modular.core.ModuleTypeSpec
  * See https://graphviz.org/docs/nodes/ and [NodeAttributes] for custom attributes, which you can set using various
  * Kotlin vars.
  */
-interface GraphvizModuleTypeSpec : ModuleTypeSpec, NodeAttributes
+public interface GraphvizModuleTypeSpec : ModuleTypeSpec, NodeAttributes

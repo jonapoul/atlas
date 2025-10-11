@@ -27,7 +27,7 @@ annotation class RequiresWhereis
 @ExtendWith(RequiresCommandExtension::class)
 annotation class RequiresCommand(val command: String)
 
-class RequiresCommandExtension : ExecutionCondition {
+internal class RequiresCommandExtension : ExecutionCondition {
   override fun evaluateExecutionCondition(context: ExtensionContext): ConditionEvaluationResult {
     val allCommands = context
       .element

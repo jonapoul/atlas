@@ -32,20 +32,20 @@ import kotlinx.serialization.Serializable as KSerializable
  * above would match `api` but not reach `implementation` or `compileOnly`.
  */
 @ModularDsl
-interface NamedLinkTypeContainer : NamedDomainObjectContainer<LinkTypeSpec>
+public interface NamedLinkTypeContainer : NamedDomainObjectContainer<LinkTypeSpec>
 
 @ModularDsl
-interface LinkTypeSpec {
-  val name: String
-  val configuration: Property<String>
-  val style: Property<String>
-  val color: Property<String>
+public interface LinkTypeSpec {
+  public val name: String
+  public val configuration: Property<String>
+  public val style: Property<String>
+  public val color: Property<String>
 }
 
 @KSerializable
-data class LinkType(
-  val configuration: String,
-  val style: String? = null,
-  val color: String? = null,
-  val displayName: String = configuration,
+public data class LinkType(
+  public val configuration: String,
+  public val style: String? = null,
+  public val color: String? = null,
+  public val displayName: String = configuration,
 ) : JSerializable

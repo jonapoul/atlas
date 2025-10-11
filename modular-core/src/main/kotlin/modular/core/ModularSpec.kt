@@ -9,14 +9,14 @@ package modular.core
 import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
 
-interface ModularSpec {
-  val name: String
-  val fileExtension: Property<String>
+public interface ModularSpec {
+  public val name: String
+  public val fileExtension: Property<String>
 }
 
 @ModularDsl
-interface PropertiesSpec {
-  val properties: MapProperty<String, String>
-  fun put(key: String, value: Any) = properties.put(key, value.toString())
-  fun clear() = properties.set(emptyMap())
+public interface PropertiesSpec {
+  public val properties: MapProperty<String, String>
+  public fun put(key: String, value: Any): Unit = properties.put(key, value.toString())
+  public fun clear(): Unit = properties.set(emptyMap())
 }

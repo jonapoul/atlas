@@ -8,7 +8,7 @@ import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 import kotlin.text.trimIndent
 
-object GraphVizChartCustomConfig : Scenario by GraphvizBasic {
+internal object GraphVizChartCustomConfig : Scenario by GraphvizBasic {
   override val rootBuildFile = """
     import modular.graphviz.ArrowType
     import modular.graphviz.Dir

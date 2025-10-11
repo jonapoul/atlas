@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.GraphvizScenario
 
-object GroovyBasic : GraphvizScenario {
+internal object GroovyBasic : GraphvizScenario {
   override val isGroovy = true
 
   override val rootBuildFile = """

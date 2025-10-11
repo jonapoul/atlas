@@ -33,7 +33,7 @@ public final class modular/d2/D2GlobalPropsSpec$DefaultImpls {
 }
 
 public abstract interface class modular/d2/D2ModularExtension : modular/core/ModularExtension {
-	public abstract fun d2 (Lorg/gradle/api/Action;)Lmodular/d2/D2Spec;
+	public abstract fun d2 (Lorg/gradle/api/Action;)V
 	public abstract fun getD2 ()Lmodular/d2/D2Spec;
 	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
 	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
@@ -41,8 +41,6 @@ public abstract interface class modular/d2/D2ModularExtension : modular/core/Mod
 
 public final class modular/d2/D2ModularPlugin : modular/core/ModularPlugin {
 	public fun <init> ()V
-	public synthetic fun createExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
-	public synthetic fun getExtension (Lorg/gradle/api/Project;)Lmodular/core/internal/ModularExtensionImpl;
 }
 
 public abstract interface class modular/d2/D2ModuleTypeSpec : modular/core/ModuleTypeSpec {

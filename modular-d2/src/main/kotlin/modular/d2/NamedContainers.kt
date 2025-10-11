@@ -12,8 +12,8 @@ import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.kotlin.dsl.register
 
 @ModularDsl
-interface D2NamedLinkTypeContainer : NamedLinkTypeContainer {
-  operator fun String.invoke(
+public interface D2NamedLinkTypeContainer : NamedLinkTypeContainer {
+  public operator fun String.invoke(
     style: LinkStyle? = null,
     color: String? = null,
     displayName: String = this,
@@ -21,4 +21,4 @@ interface D2NamedLinkTypeContainer : NamedLinkTypeContainer {
 }
 
 @ModularDsl
-interface D2NamedModuleTypeContainer : NamedModuleTypeContainer<D2ModuleTypeSpec>
+public interface D2NamedModuleTypeContainer : NamedModuleTypeContainer<D2ModuleTypeSpec>

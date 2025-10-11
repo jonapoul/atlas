@@ -11,7 +11,7 @@ import modular.core.NamedModuleTypeContainer
 import org.gradle.api.NamedDomainObjectProvider
 
 @JvmOverloads
-fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidApp(
+public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidApp(
   name: String = "Android App",
   color: String = "limegreen",
   extraConfig: T.() -> Unit = {},
@@ -23,7 +23,7 @@ fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidApp(
 )
 
 @JvmOverloads
-fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidLibrary(
+public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidLibrary(
   name: String = "Android Library",
   color: String = "lightgreen",
   extraConfig: T.() -> Unit = {},
@@ -35,7 +35,7 @@ fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidLibrary(
 )
 
 @JvmOverloads
-fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.java(
+public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.java(
   name: String = "Java",
   color: String = "orange",
   extraConfig: T.() -> Unit = {},
@@ -47,7 +47,7 @@ fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.java(
 )
 
 @JvmOverloads
-fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinJvm(
+public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinJvm(
   name: String = "Kotlin JVM",
   color: String = "mediumorchid",
   extraConfig: T.() -> Unit = {},
@@ -59,7 +59,7 @@ fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinJvm(
 )
 
 @JvmOverloads
-fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinMultiplatform(
+public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinMultiplatform(
   name: String = "Kotlin Multiplatform",
   color: String = "mediumslateblue",
   extraConfig: T.() -> Unit = {},
@@ -71,7 +71,7 @@ fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinMultiplatform(
 )
 
 @JvmOverloads
-fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.other(
+public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.other(
   name: String = "Other",
   color: String = "gainsboro",
   extraConfig: T.() -> Unit = {},
@@ -82,7 +82,7 @@ fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.other(
   extraConfig = extraConfig,
 )
 
-fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.useDefaults() {
+public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.useDefaults() {
   // Highest priority ↓↓
   androidApp()
   kotlinMultiplatform()

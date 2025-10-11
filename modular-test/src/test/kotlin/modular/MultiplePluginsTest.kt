@@ -11,9 +11,9 @@ import modular.test.runTask
 import modular.test.scenarios.MultiplePluginsApplied
 import kotlin.test.Test
 
-class MultiplePluginsTest : ScenarioTest() {
+internal class MultiplePluginsTest : ScenarioTest() {
   @Test
-  fun `Fail when multiple modular plugins are applied`() = runScenario(MultiplePluginsApplied) {
+  internal fun `Fail when multiple modular plugins are applied`() = runScenario(MultiplePluginsApplied) {
     // when
     val result = runTask("modularGenerate").buildAndFail()
 

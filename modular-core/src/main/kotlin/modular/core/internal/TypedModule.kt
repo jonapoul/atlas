@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable as KSerializable
 
 @InternalModularApi
 @KSerializable
-data class TypedModule(
+public data class TypedModule(
   val projectPath: String,
   val type: ModuleType?,
 ) : JSerializable, Comparable<TypedModule> {
@@ -24,7 +24,7 @@ data class TypedModule(
 }
 
 @InternalModularApi
-fun readModuleTypes(inputFile: File): Set<TypedModule> = inputFile.inputStream().use { stream ->
+public fun readModuleTypes(inputFile: File): Set<TypedModule> = inputFile.inputStream().use { stream ->
   ModularJson.decodeFromStream(
     deserializer = SetSerializer(TypedModule.serializer()),
     stream = stream,
@@ -32,7 +32,7 @@ fun readModuleTypes(inputFile: File): Set<TypedModule> = inputFile.inputStream()
 }
 
 @InternalModularApi
-fun readModuleType(inputFile: File): TypedModule = inputFile.inputStream().use { stream ->
+public fun readModuleType(inputFile: File): TypedModule = inputFile.inputStream().use { stream ->
   ModularJson.decodeFromStream(
     deserializer = TypedModule.serializer(),
     stream = stream,

@@ -12,9 +12,9 @@ import modular.test.scenarios.D2AllModuleTypes
 import modular.test.taskWasSuccessful
 import kotlin.test.Test
 
-class WriteD2ClassesTest : ScenarioTest() {
+internal class WriteD2ClassesTest : ScenarioTest() {
   @Test
-  fun `Generate classes from all default types`() = runScenario(D2AllModuleTypes) {
+  internal fun `Generate classes from all default types`() = runScenario(D2AllModuleTypes) {
     // when
     val result = runTask("writeD2Classes").build()
 

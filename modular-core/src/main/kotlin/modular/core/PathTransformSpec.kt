@@ -29,17 +29,17 @@ import kotlinx.serialization.Serializable as KSerializable
  * Remember the declarations inside `pathTransforms` are called in descending order.
  */
 @ModularDsl
-interface PathTransformSpec {
-  val replacements: SetProperty<Replacement>
+public interface PathTransformSpec {
+  public val replacements: SetProperty<Replacement>
 
-  fun remove(@Language("RegExp") pattern: String)
-  fun remove(pattern: Regex)
-  fun replace(@Language("RegExp") pattern: String, replacement: String)
-  fun replace(pattern: Regex, replacement: String)
+  public fun remove(@Language("RegExp") pattern: String)
+  public fun remove(pattern: Regex)
+  public fun replace(@Language("RegExp") pattern: String, replacement: String)
+  public fun replace(pattern: Regex, replacement: String)
 }
 
 @KSerializable
-class Replacement(
-  @KSerializable(RegexSerializer::class) val pattern: Regex,
-  val replacement: String,
+public class Replacement(
+  @KSerializable(RegexSerializer::class) public val pattern: Regex,
+  public val replacement: String,
 ) : JSerializable

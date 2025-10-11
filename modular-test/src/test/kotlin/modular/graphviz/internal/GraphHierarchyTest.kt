@@ -15,9 +15,9 @@ import modular.test.TwoLevelsOfSubmodules
 import modular.test.node
 import kotlin.test.Test
 
-class GraphHierarchyTest {
+internal class GraphHierarchyTest {
   @Test
-  fun `Single-level groups`() {
+  internal fun `Single-level groups`() {
     val dataSubGraph = Subgraph(
       path = listOf("data"),
       elements = mutableListOf(
@@ -57,7 +57,7 @@ class GraphHierarchyTest {
   }
 
   @Test
-  fun `Multi-level groups`() {
+  internal fun `Multi-level groups`() {
     val dataSubGraph = Subgraph(
       path = listOf("data"),
       elements = mutableListOf(
@@ -104,7 +104,7 @@ class GraphHierarchyTest {
   }
 
   @Test
-  fun `Single nested module, no links, grouped`() {
+  internal fun `Single nested module, no links, grouped`() {
     val node = node(
       path = ":a:b",
       type = ModuleType(name = "red", color = "red"),

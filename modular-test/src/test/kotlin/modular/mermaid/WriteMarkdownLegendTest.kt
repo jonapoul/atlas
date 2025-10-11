@@ -15,9 +15,9 @@ import modular.test.scenarios.MermaidWithModuleTypes
 import org.junit.jupiter.api.Disabled
 import kotlin.test.Test
 
-class WriteMarkdownLegendTest : ScenarioTest() {
+internal class WriteMarkdownLegendTest : ScenarioTest() {
   @Test
-  fun `Write markdown legend with no link types`() = runScenario(MermaidWithModuleTypes) {
+  internal fun `Write markdown legend with no link types`() = runScenario(MermaidWithModuleTypes) {
     // when
     val result = runTask(":writeMermaidLegend").build()
 
@@ -37,7 +37,7 @@ class WriteMarkdownLegendTest : ScenarioTest() {
 
   @Disabled("https://github.com/jonapoul/modular/issues/247")
   @Test
-  fun `Write markdown legend with no module types`() = runScenario(MermaidWithLinkTypes) {
+  internal fun `Write markdown legend with no module types`() = runScenario(MermaidWithLinkTypes) {
     // when
     val result = runTask(":writeMermaidLegend").build()
 

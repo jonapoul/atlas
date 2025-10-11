@@ -22,8 +22,8 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class CollateModuleTypes : DefaultTask(), TaskWithOutputFile {
-  @get:[PathSensitive(ABSOLUTE) InputFiles] abstract val projectTypeFiles: ConfigurableFileCollection
+public abstract class CollateModuleTypes : DefaultTask(), TaskWithOutputFile {
+  @get:[PathSensitive(ABSOLUTE) InputFiles] public abstract val projectTypeFiles: ConfigurableFileCollection
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -32,7 +32,7 @@ abstract class CollateModuleTypes : DefaultTask(), TaskWithOutputFile {
   }
 
   @TaskAction
-  fun execute() {
+  public fun execute() {
     val outputFile = outputFile.get().asFile
     val typedModules = projectTypeFiles
       .filter { it.exists() }
@@ -51,15 +51,15 @@ abstract class CollateModuleTypes : DefaultTask(), TaskWithOutputFile {
   }
 
   @InternalModularApi
-  companion object {
+  public companion object {
     private const val NAME = "collateModuleTypes"
 
     @InternalModularApi
-    fun get(target: Project): TaskProvider<CollateModuleTypes> =
+    public fun get(target: Project): TaskProvider<CollateModuleTypes> =
       target.tasks.named(NAME, CollateModuleTypes::class.java)
 
     @InternalModularApi
-    fun register(target: Project): TaskProvider<CollateModuleTypes> = with(target) {
+    public fun register(target: Project): TaskProvider<CollateModuleTypes> = with(target) {
       val collateTypes = tasks.register(NAME, CollateModuleTypes::class.java) { task ->
         task.outputFile.convention(fileInBuildDirectory("module-types.json"))
       }

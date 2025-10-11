@@ -28,11 +28,11 @@ import java.io.File
 import kotlin.text.RegexOption.DOT_MATCHES_ALL
 
 @CacheableTask
-abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val chartFile: RegularFileProperty
-  @get:[PathSensitive(RELATIVE) InputFile Optional] abstract val legendFile: RegularFileProperty
-  @get:Internal abstract val readmeFile: RegularFileProperty
-  @get:Input abstract val projectPath: Property<String>
+public abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val chartFile: RegularFileProperty
+  @get:[PathSensitive(RELATIVE) InputFile Optional] public abstract val legendFile: RegularFileProperty
+  @get:Internal public abstract val readmeFile: RegularFileProperty
+  @get:Input public abstract val projectPath: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -41,7 +41,7 @@ abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutpu
   }
 
   @TaskAction
-  fun execute() {
+  public fun execute() {
     val readmeFile = readmeFile.asFile.get()
 
     val newContents = if (readmeFile.exists()) {
@@ -114,13 +114,13 @@ abstract class WriteReadme : DefaultTask(), ModularGenerationTask, TaskWithOutpu
   }.trim()
 
   @InternalModularApi
-  companion object {
+  public companion object {
     private const val REGION_START = "<!--region chart-->"
     private const val REGION_END = "<!--endregion-->"
     private val REGION_REGEX = "(.*$REGION_START)(.*?)($REGION_END.*)".toRegex(DOT_MATCHES_ALL)
 
     @InternalModularApi
-    fun register(
+    public fun register(
       target: Project,
       flavor: String,
       chartFile: Provider<RegularFile>,

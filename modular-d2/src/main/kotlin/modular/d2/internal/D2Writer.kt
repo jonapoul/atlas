@@ -19,7 +19,7 @@ import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
 
 @InternalModularApi
-class D2Writer(
+public class D2Writer(
   override val typedModules: Set<TypedModule>,
   override val links: Set<ModuleLink>,
   override val replacements: Set<Replacement>,

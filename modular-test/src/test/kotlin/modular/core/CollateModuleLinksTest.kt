@@ -22,9 +22,9 @@ import modular.test.taskWasSuccessful
 import java.io.File
 import kotlin.test.Test
 
-class CollateModuleLinksTest : ScenarioTest() {
+internal class CollateModuleLinksTest : ScenarioTest() {
   @Test
-  fun `Empty file for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
+  internal fun `Empty file for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("collateModuleLinks").build()
 
@@ -37,7 +37,7 @@ class CollateModuleLinksTest : ScenarioTest() {
   }
 
   @Test
-  fun `Empty file for three modules with no dependencies`() = runScenario(ThreeModulesWithBuiltInTypes) {
+  internal fun `Empty file for three modules with no dependencies`() = runScenario(ThreeModulesWithBuiltInTypes) {
     // when
     val result = runTask("collateModuleLinks").build()
 
@@ -49,7 +49,7 @@ class CollateModuleLinksTest : ScenarioTest() {
   }
 
   @Test
-  fun `Single links for diamond`() = runScenario(DiamondGraph) {
+  internal fun `Single links for diamond`() = runScenario(DiamondGraph) {
     // when
     val result = runTask("collateModuleLinks").build()
 
@@ -68,7 +68,7 @@ class CollateModuleLinksTest : ScenarioTest() {
   }
 
   @Test
-  fun `Multiple links for triangle`() = runScenario(TriangleGraph) {
+  internal fun `Multiple links for triangle`() = runScenario(TriangleGraph) {
     // when
     val result = runTask("collateModuleLinks").build()
 
@@ -89,7 +89,7 @@ class CollateModuleLinksTest : ScenarioTest() {
   }
 
   @Test
-  fun `Can override task conventions from build script`() = runScenario(OverrideModuleLinksFile) {
+  internal fun `Can override task conventions from build script`() = runScenario(OverrideModuleLinksFile) {
     // when
     runTask("collateModuleLinks").build()
 

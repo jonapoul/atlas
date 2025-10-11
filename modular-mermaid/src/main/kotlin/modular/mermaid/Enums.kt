@@ -17,28 +17,28 @@ import modular.mermaid.NodePlacementStrategy.BrandesKoepf
  * Default is [Basic].
  * See https://mermaid.js.org/syntax/flowchart.html#links-between-nodes
  */
-enum class LinkStyle(override val string: String) : StringEnum {
+public enum class LinkStyle(override val string: String) : StringEnum {
   Basic("basic"),
   Dashed("dashed"),
   Invisible("invisible"),
   Bold("bold"),
   ;
 
-  override fun toString() = string
+  override fun toString(): String = string
 }
 
 /**
  * Elk specific option affecting how nodes are placed. Default value is [BrandesKoepf].
  * See https://mermaid.js.org/config/schema-docs/config-properties-elk.html#nodeplacementstrategy
  */
-enum class NodePlacementStrategy(override val string: String) : StringEnum {
+public enum class NodePlacementStrategy(override val string: String) : StringEnum {
   Simple("SIMPLE"),
   NetworkSimplex("NETWORK_SIMPLEX"),
   LinearSegments("LINEAR_SEGMENTS"),
   BrandesKoepf("BRANDES_KOEPF"),
   ;
 
-  override fun toString() = string
+  override fun toString(): String = string
 }
 
 /**
@@ -46,7 +46,7 @@ enum class NodePlacementStrategy(override val string: String) : StringEnum {
  * Default value is [GreedyModelOrder].
  * See https://mermaid.js.org/config/schema-docs/config-properties-elk.html#cyclebreakingstrategy
  */
-enum class CycleBreakingStrategy(override val string: String) : StringEnum {
+public enum class CycleBreakingStrategy(override val string: String) : StringEnum {
   Greedy("GREEDY"),
   DepthFirst("DEPTH_FIRST"),
   Interactive("INTERACTIVE"),
@@ -54,7 +54,7 @@ enum class CycleBreakingStrategy(override val string: String) : StringEnum {
   GreedyModelOrder("GREEDY_MODEL_ORDER"),
   ;
 
-  override fun toString() = string
+  override fun toString(): String = string
 }
 
 /**
@@ -63,32 +63,32 @@ enum class CycleBreakingStrategy(override val string: String) : StringEnum {
  * Default value is [NodesAndEdges].
  * See https://mermaid.js.org/config/schema-docs/config-properties-elk.html#considermodelorder
  */
-enum class ConsiderModelOrder(override val string: String) : StringEnum {
+public enum class ConsiderModelOrder(override val string: String) : StringEnum {
   None("NONE"),
   NodesAndEdges("NODES_AND_EDGES"),
   PreferEdges("PREFER_EDGES"),
   PreferNodes("PREFER_NODES"),
   ;
 
-  override fun toString() = string
+  override fun toString(): String = string
 }
 
 /**
  * Defaults to [Classic].
  * See https://mermaid.js.org/intro/syntax-reference.html#layout-and-look
  */
-enum class Look(override val string: String) : StringEnum {
+public enum class Look(override val string: String) : StringEnum {
   Classic("classic"),
   HandDrawn("handDrawn"),
   ;
 
-  override fun toString() = string
+  override fun toString(): String = string
 }
 
 /**
  * See https://mermaid.js.org/config/theming.html
  */
-enum class Theme(override val string: String) : StringEnum {
+public enum class Theme(override val string: String) : StringEnum {
   Default("default"),
   Neutral("neutral"),
   Dark("dark"),
@@ -96,5 +96,5 @@ enum class Theme(override val string: String) : StringEnum {
   Base("base"),
   ;
 
-  override fun toString() = string
+  override fun toString(): String = string
 }

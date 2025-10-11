@@ -12,8 +12,8 @@ import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.kotlin.dsl.register
 
 @ModularDsl
-interface MermaidNamedLinkTypeContainer : NamedLinkTypeContainer {
-  operator fun String.invoke(
+public interface MermaidNamedLinkTypeContainer : NamedLinkTypeContainer {
+  public operator fun String.invoke(
     style: LinkStyle? = null,
     color: String? = null,
     displayName: String = this,
@@ -21,4 +21,4 @@ interface MermaidNamedLinkTypeContainer : NamedLinkTypeContainer {
 }
 
 @ModularDsl
-interface MermaidNamedModuleTypeContainer : NamedModuleTypeContainer<MermaidModuleTypeSpec>
+public interface MermaidNamedModuleTypeContainer : NamedModuleTypeContainer<MermaidModuleTypeSpec>

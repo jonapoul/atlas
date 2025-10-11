@@ -18,17 +18,17 @@ import modular.graphviz.tasks.WriteGraphvizChart
 import modular.graphviz.tasks.WriteGraphvizLegend
 import org.gradle.api.Project
 
-class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
-  override fun Project.createExtension() = extensions.create(
-    GraphvizModularExtension::class.java,
-    ModularExtensionImpl.NAME,
-    GraphvizModularExtensionImpl::class.java,
-  ) as GraphvizModularExtensionImpl
+public class GraphvizModularPlugin : ModularPlugin() {
+  private lateinit var graphVizExtension: GraphvizModularExtensionImpl
+  override val extension: ModularExtensionImpl by lazy { graphVizExtension }
 
-  override fun Project.getExtension() =
-    rootProject.extensions.getByType(GraphvizModularExtension::class.java) as GraphvizModularExtensionImpl
+  override fun applyToRoot(target: Project): Unit = with(target) {
+    graphVizExtension = extensions.create(
+      GraphvizModularExtension::class.java,
+      ModularExtensionImpl.NAME,
+      GraphvizModularExtensionImpl::class.java,
+    ) as GraphvizModularExtensionImpl
 
-  override fun applyToRoot(target: Project) = with(target) {
     super.applyToRoot(target)
 
     afterEvaluate {
@@ -36,8 +36,16 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
     }
   }
 
+  override fun applyToChild(target: Project) {
+    graphVizExtension = target.rootProject
+      .extensions
+      .getByType(GraphvizModularExtension::class.java) as GraphvizModularExtensionImpl
+
+    super.applyToChild(target)
+  }
+
   override fun Project.registerChildTasks() {
-    val graphvizSpec = extension.graphviz
+    val graphvizSpec = graphVizExtension.graphviz
 
     val chartTask = WriteGraphvizChart.real(
       target = project,
@@ -76,7 +84,7 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
   }
 
   override fun Project.registerRootTasks() {
-    val spec = extension.graphviz
+    val spec = graphVizExtension.graphviz
 
     val realTask = WriteGraphvizLegend.real(
       target = project,

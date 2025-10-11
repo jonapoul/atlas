@@ -9,10 +9,10 @@ import modular.core.ModularExtension
 import org.gradle.api.Action
 
 @ModularDsl
-interface MermaidModularExtension : ModularExtension {
-  val mermaid: MermaidSpec
-  fun mermaid(action: Action<MermaidSpec>): MermaidSpec
+public interface MermaidModularExtension : ModularExtension {
+  public val mermaid: MermaidSpec
+  public fun mermaid(action: Action<MermaidSpec>)
 
-  fun linkTypes(action: Action<MermaidNamedLinkTypeContainer>)
-  fun moduleTypes(action: Action<MermaidNamedModuleTypeContainer>)
+  public fun linkTypes(action: Action<MermaidNamedLinkTypeContainer>)
+  public fun moduleTypes(action: Action<MermaidNamedModuleTypeContainer>)
 }

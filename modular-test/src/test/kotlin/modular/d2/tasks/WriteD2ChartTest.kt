@@ -12,9 +12,9 @@ import modular.test.runTask
 import modular.test.scenarios.D2Basic
 import kotlin.test.Test
 
-class WriteD2ChartTest : ScenarioTest() {
+internal class WriteD2ChartTest : ScenarioTest() {
   @Test
-  fun `Generate charts from basic config`() = runScenario(D2Basic) {
+  internal fun `Generate charts from basic config`() = runScenario(D2Basic) {
     // when
     val result = runTask("writeD2Chart").build()
 

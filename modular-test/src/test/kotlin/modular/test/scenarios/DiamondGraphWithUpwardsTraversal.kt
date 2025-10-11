@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 
-object DiamondGraphWithUpwardsTraversal : Scenario by DiamondGraph {
+internal object DiamondGraphWithUpwardsTraversal : Scenario by DiamondGraph {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false

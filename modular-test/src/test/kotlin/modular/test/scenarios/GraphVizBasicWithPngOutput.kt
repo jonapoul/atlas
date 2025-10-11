@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 
-object GraphVizBasicWithPngOutput : Scenario by GraphvizBasic {
+internal object GraphVizBasicWithPngOutput : Scenario by GraphvizBasic {
   override val rootBuildFile = """
     import modular.graphviz.FileFormat
 

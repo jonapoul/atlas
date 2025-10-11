@@ -12,7 +12,7 @@ import modular.mermaid.MermaidNamedLinkTypeContainer
 import org.gradle.api.NamedDomainObjectProvider
 
 @JvmOverloads
-fun MermaidNamedLinkTypeContainer.register(
+public fun MermaidNamedLinkTypeContainer.register(
   configuration: String,
   style: LinkStyle? = null,
   color: String? = null,
@@ -24,7 +24,7 @@ fun MermaidNamedLinkTypeContainer.register(
 }
 
 @JvmOverloads
-fun MermaidNamedLinkTypeContainer.api(
+public fun MermaidNamedLinkTypeContainer.api(
   style: LinkStyle? = null,
   color: String? = null,
   displayName: String = "api",
@@ -36,7 +36,7 @@ fun MermaidNamedLinkTypeContainer.api(
 )
 
 @JvmOverloads
-fun MermaidNamedLinkTypeContainer.implementation(
+public fun MermaidNamedLinkTypeContainer.implementation(
   style: LinkStyle? = null,
   color: String? = null,
   displayName: String = "implementation",

@@ -18,9 +18,9 @@ import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.junit.jupiter.api.Disabled
 import kotlin.test.Test
 
-class WriteReadmeTest : ScenarioTest() {
+internal class WriteReadmeTest : ScenarioTest() {
   @Test
-  fun `Mermaid readme links correctly with default outputs`() = runScenario(MermaidBasic) {
+  internal fun `Mermaid readme links correctly with default outputs`() = runScenario(MermaidBasic) {
     // when
     val result = runTask("modularGenerate").build()
     assertThat(result.tasks).allSuccessful()
@@ -49,7 +49,7 @@ class WriteReadmeTest : ScenarioTest() {
 
   @Disabled("https://github.com/jonapoul/modular/issues/247")
   @Test
-  fun `Write mermaid readme with link types`() = runScenario(MermaidWithLinkTypes) {
+  internal fun `Write mermaid readme with link types`() = runScenario(MermaidWithLinkTypes) {
     // when
     val result = runTask("modularGenerate").build()
     assertThat(result.tasks).allSuccessful()
@@ -89,7 +89,7 @@ class WriteReadmeTest : ScenarioTest() {
 
   @Disabled("https://github.com/jonapoul/modular/issues/247")
   @Test
-  fun `Inject mermaid into existing readme`() = runScenario(MermaidWithLinkTypes) {
+  internal fun `Inject mermaid into existing readme`() = runScenario(MermaidWithLinkTypes) {
     // given
     val readme = resolve("a/README.md")
     assertThat(readme).doesNotExist()

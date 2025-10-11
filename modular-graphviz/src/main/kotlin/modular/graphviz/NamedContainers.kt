@@ -12,8 +12,8 @@ import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.kotlin.dsl.register
 
 @ModularDsl
-interface GraphvizNamedLinkTypeContainer : NamedLinkTypeContainer {
-  operator fun String.invoke(
+public interface GraphvizNamedLinkTypeContainer : NamedLinkTypeContainer {
+  public operator fun String.invoke(
     style: LinkStyle? = null,
     color: String? = null,
     displayName: String = this,
@@ -21,4 +21,4 @@ interface GraphvizNamedLinkTypeContainer : NamedLinkTypeContainer {
 }
 
 @ModularDsl
-interface GraphvizNamedModuleTypeContainer : NamedModuleTypeContainer<GraphvizModuleTypeSpec>
+public interface GraphvizNamedModuleTypeContainer : NamedModuleTypeContainer<GraphvizModuleTypeSpec>

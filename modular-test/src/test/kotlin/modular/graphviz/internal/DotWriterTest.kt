@@ -12,9 +12,9 @@ import modular.test.TwoLevelsOfSubmodules
 import modular.test.equalsDiffed
 import kotlin.test.Test
 
-class DotWriterTest {
+internal class DotWriterTest {
   @Test
-  fun `Base config with no module types`() {
+  internal fun `Base config with no module types`() {
     val writer = dotWriter(
       typedModules = OneLevelOfSubmodules.modules,
       links = OneLevelOfSubmodules.links,
@@ -47,7 +47,7 @@ class DotWriterTest {
   }
 
   @Test
-  fun `Grouping modules`() {
+  internal fun `Grouping modules`() {
     val writer = dotWriter(
       typedModules = OneLevelOfSubmodules.modules,
       links = OneLevelOfSubmodules.links,
@@ -90,7 +90,7 @@ class DotWriterTest {
   }
 
   @Test
-  fun `Grouping modules with sub-subgraphs`() {
+  internal fun `Grouping modules with sub-subgraphs`() {
     val writer = dotWriter(
       typedModules = TwoLevelsOfSubmodules.modules,
       links = TwoLevelsOfSubmodules.links,
@@ -140,7 +140,7 @@ class DotWriterTest {
   }
 
   @Test
-  fun `Single module with no links`() {
+  internal fun `Single module with no links`() {
     val writer = dotWriter(
       typedModules = ModuleWithNoLinks.modules,
       links = ModuleWithNoLinks.links,

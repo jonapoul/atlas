@@ -7,7 +7,7 @@ package modular.core.internal
 import modular.core.InternalModularApi
 
 @InternalModularApi
-enum class Variant {
+public enum class Variant {
   Chart,
   Legend,
 }

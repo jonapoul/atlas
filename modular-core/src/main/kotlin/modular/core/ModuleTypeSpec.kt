@@ -58,8 +58,8 @@ import org.gradle.api.provider.Property
  * - fail when running any tasks which reference them.
  */
 @ModularDsl
-interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContainer<T> {
-  fun registerByPluginId(
+public interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContainer<T> {
+  public fun registerByPluginId(
     name: String,
     color: String,
     pluginId: String,
@@ -70,7 +70,7 @@ interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContai
     type.extraConfig()
   }
 
-  fun registerByPathMatches(
+  public fun registerByPathMatches(
     name: String,
     color: String,
     pathMatches: Regex,
@@ -81,7 +81,7 @@ interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContai
     type.extraConfig()
   }
 
-  fun registerByPathContains(
+  public fun registerByPathContains(
     name: String,
     color: String,
     pathContains: String,
@@ -93,29 +93,29 @@ interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContai
   }
 }
 
-interface ModuleTypeSpec : PropertiesSpec {
+public interface ModuleTypeSpec : PropertiesSpec {
   /**
    * Required - this will be shown on your generated legend files.
    */
-  val name: String
+  public val name: String
 
   /**
    * Optional - defaults to #FFFFFF (white). Must be prefixed with a # followed by a 6-character hexadecimal string.
    */
-  val color: Property<String>
+  public val color: Property<String>
 
   /**
    * Checks against the path string of your module, e.g. ":path:to:my:module". This is case-sensitive.
    */
-  val pathContains: Property<String>
+  public val pathContains: Property<String>
 
   /**
    * Similar to [pathContains] but more flexible with [Regex] pattern checking instead of straight string comparison.
    */
-  val pathMatches: Property<String>
+  public val pathMatches: Property<String>
 
   /**
    * Checks whether the given plugin ID string has been applied to your module.
    */
-  val hasPluginId: Property<String>
+  public val hasPluginId: Property<String>
 }

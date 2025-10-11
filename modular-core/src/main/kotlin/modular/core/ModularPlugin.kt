@@ -19,15 +19,11 @@ import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.TaskProvider
 
-abstract class ModularPlugin<Impl : ModularExtensionImpl> : Plugin<Project> {
-  @InternalModularApi
-  lateinit var extension: Impl
+public abstract class ModularPlugin : Plugin<Project> {
+  protected abstract val extension: ModularExtensionImpl
 
   protected abstract fun Project.registerRootTasks()
   protected abstract fun Project.registerChildTasks()
-
-  protected abstract fun Project.getExtension(): Impl
-  protected abstract fun Project.createExtension(): Impl
 
   override fun apply(target: Project): Unit = with(target) {
     // This only happens if you have nested modules where the group modules don't have a build file. In that
@@ -45,12 +41,7 @@ abstract class ModularPlugin<Impl : ModularExtensionImpl> : Plugin<Project> {
     registerGenerationTaskOnSync(modularGenerate)
   }
 
-  protected open fun applyToRoot(target: Project) = with(target) {
-    require(target == rootProject) {
-      error("Modular should only be applied on the root project - you applied it to $path")
-    }
-
-    extension = createExtension()
+  protected open fun applyToRoot(target: Project): Unit = with(target) {
     CollateModuleTypes.register(project)
     CollateModuleLinks.register(project, extension)
     registerRootTasks()
@@ -64,9 +55,7 @@ abstract class ModularPlugin<Impl : ModularExtensionImpl> : Plugin<Project> {
     }
   }
 
-  protected open fun applyToChild(target: Project) = with(target) {
-    extension = getExtension()
-
+  protected open fun applyToChild(target: Project): Unit = with(target) {
     WriteModuleType.register(target, extension)
     WriteModuleLinks.register(target, extension)
     WriteModuleTree.register(target, extension)

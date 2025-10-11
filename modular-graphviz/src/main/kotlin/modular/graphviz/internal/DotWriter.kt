@@ -13,10 +13,9 @@ import modular.core.internal.Subgraph
 import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.graphviz.DotConfig
-import modular.graphviz.Shape
 
 @InternalModularApi
-data class DotWriter(
+public data class DotWriter(
   override val typedModules: Set<TypedModule>,
   override val links: Set<ModuleLink>,
   override val replacements: Set<Replacement>,
@@ -108,7 +107,7 @@ data class DotWriter(
       return " [$csv]"
     }
 
-    fun hasAnyValues() = values.any { it != null }
+    public fun hasAnyValues() = values.any { it != null }
 
     operator fun plus(other: Map<String, String>?): Attrs {
       other?.let(delegate::putAll)

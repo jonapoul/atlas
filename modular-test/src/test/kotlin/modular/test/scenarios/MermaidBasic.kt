@@ -9,7 +9,7 @@ import modular.test.MermaidScenario
 import modular.test.javaBuildScript
 import modular.test.kotlinJvmBuildScript
 
-object MermaidBasic : MermaidScenario {
+internal object MermaidBasic : MermaidScenario {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false

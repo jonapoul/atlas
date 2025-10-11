@@ -9,15 +9,15 @@ import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
-class DotConfig(
-  val layoutEngine: LayoutEngine? = null,
-  val nodeAttributes: Map<String, String>? = null,
-  val edgeAttributes: Map<String, String>? = null,
-  val graphAttributes: Map<String, String>? = null,
+public class DotConfig(
+  public val layoutEngine: LayoutEngine? = null,
+  public val nodeAttributes: Map<String, String>? = null,
+  public val edgeAttributes: Map<String, String>? = null,
+  public val graphAttributes: Map<String, String>? = null,
 ) : JSerializable
 
 @InternalModularApi
-fun DotConfig(spec: GraphvizSpec): DotConfig = DotConfig(
+public fun DotConfig(spec: GraphvizSpec): DotConfig = DotConfig(
   layoutEngine = spec.layoutEngine.orNull,
   nodeAttributes = spec.node.properties.orNull,
   edgeAttributes = spec.edge.properties.orNull,

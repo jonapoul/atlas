@@ -31,22 +31,22 @@ import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @CacheableTask
-abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val inputFile: RegularFileProperty
-  @get:Input abstract val outputFormat: Property<FileFormat>
-  @get:[Input Optional] abstract val pathToD2Command: Property<String>
+public abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val inputFile: RegularFileProperty
+  @get:Input public abstract val outputFormat: Property<FileFormat>
+  @get:[Input Optional] public abstract val pathToD2Command: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
-  @get:Inject abstract val execOperations: ExecOperations
+  @get:Inject public abstract val execOperations: ExecOperations
 
   init {
     group = MODULAR_TASK_GROUP
   }
 
   // Not using kotlin setter because this pulls a property value
-  override fun getDescription() = "Uses D2 to convert a text diagram into a ${outputFormat.get()} file"
+  override fun getDescription(): String = "Uses D2 to convert a text diagram into a ${outputFormat.get()} file"
 
   @TaskAction
-  fun execute() {
+  public fun execute() {
     val inputFile = inputFile.get().asFile.absolutePath
     val outputFile = outputFile.get().asFile
     val d2Executable = pathToD2Command.getOrElse("d2")
@@ -75,13 +75,13 @@ abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile
   }
 
   @InternalModularApi
-  companion object {
+  public companion object {
     @InternalModularApi
-    fun get(target: Project, name: String): TaskProvider<ExecD2> =
+    public fun get(target: Project, name: String): TaskProvider<ExecD2> =
       target.tasks.named(name, ExecD2::class.java)
 
     @InternalModularApi
-    fun <T : TaskWithOutputFile> register(
+    public fun <T : TaskWithOutputFile> register(
       target: Project,
       spec: D2Spec,
       variant: Variant,

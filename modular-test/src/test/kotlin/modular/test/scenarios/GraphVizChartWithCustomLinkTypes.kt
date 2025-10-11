@@ -9,7 +9,7 @@ import modular.test.KOTLIN_VERSION
 import modular.test.javaBuildScript
 import modular.test.kotlinJvmBuildScript
 
-object GraphVizChartWithCustomLinkTypes : GraphvizScenario {
+internal object GraphVizChartWithCustomLinkTypes : GraphvizScenario {
   override val rootBuildFile = """
     import modular.graphviz.ArrowType
     import modular.graphviz.RankDir

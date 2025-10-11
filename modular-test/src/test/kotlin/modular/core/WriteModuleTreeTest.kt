@@ -20,9 +20,9 @@ import modular.test.scenarios.TriangleGraph
 import modular.test.scenarios.TriangleGraphWithUpwardsTraversal
 import kotlin.test.Test
 
-class WriteModuleTreeTest : ScenarioTest() {
+internal class WriteModuleTreeTest : ScenarioTest() {
   @Test
-  fun `Empty files for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
+  internal fun `Empty files for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when
     val result = runTask("writeModuleTree")
       .withPluginClasspath()
@@ -36,7 +36,7 @@ class WriteModuleTreeTest : ScenarioTest() {
   }
 
   @Test
-  fun `Empty files for three modules with no dependencies`() = runScenario(ThreeModulesWithBuiltInTypes) {
+  internal fun `Empty files for three modules with no dependencies`() = runScenario(ThreeModulesWithBuiltInTypes) {
     // when
     val result = runTask("writeModuleTree").build()
 
@@ -50,7 +50,7 @@ class WriteModuleTreeTest : ScenarioTest() {
   }
 
   @Test
-  fun `Single links for diamond`() = runScenario(DiamondGraph) {
+  internal fun `Single links for diamond`() = runScenario(DiamondGraph) {
     // when
     val result = runTask("writeModuleTree").build()
 
@@ -85,7 +85,7 @@ class WriteModuleTreeTest : ScenarioTest() {
   }
 
   @Test
-  fun `Single links for diamond with upwards traversal`() = runScenario(DiamondGraphWithUpwardsTraversal) {
+  internal fun `Single links for diamond with upwards traversal`() = runScenario(DiamondGraphWithUpwardsTraversal) {
     // when
     val result = runTask("writeModuleTree").build()
 
@@ -129,7 +129,7 @@ class WriteModuleTreeTest : ScenarioTest() {
   }
 
   @Test
-  fun `Multiple links for triangle`() = runScenario(TriangleGraph) {
+  internal fun `Multiple links for triangle`() = runScenario(TriangleGraph) {
     // when
     val result = runTask("writeModuleTree").build()
 
@@ -165,7 +165,7 @@ class WriteModuleTreeTest : ScenarioTest() {
   }
 
   @Test
-  fun `Multiple links for triangle with upwards traversal`() = runScenario(TriangleGraphWithUpwardsTraversal) {
+  internal fun `Multiple links for triangle with upwards traversal`() = runScenario(TriangleGraphWithUpwardsTraversal) {
     // when
     val result = runTask("writeModuleTree").build()
 
