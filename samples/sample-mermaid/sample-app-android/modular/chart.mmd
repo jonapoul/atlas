@@ -31,9 +31,14 @@ graph TD
   style lib_kotlin_jvm fill:mediumorchid,fillcolor:mediumorchid
   style lib_kotlin_mp fill:mediumslateblue,color:white,stroke-dasharray:4 3 2 1,font-size:20px,fillcolor:mediumslateblue
   app_android -.-> lib_android
+  linkStyle 0 stroke:aqua
   app_android -.-> lib_kotlin_mp
+  linkStyle 1 stroke:aqua
   lib_android -.-> lib_kotlin_jvm
+  linkStyle 2 stroke:aqua
   lib_kotlin_mp --> lib_android
+  linkStyle 3 stroke-width:5px
   lib_kotlin_mp ==> lib_java
   linkStyle 4 stroke:orange
   lib_kotlin_mp --> lib_kotlin_jvm
+  linkStyle 5 stroke-width:5px

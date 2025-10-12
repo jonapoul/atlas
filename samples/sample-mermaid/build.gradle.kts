@@ -1,6 +1,5 @@
 import modular.mermaid.ConsiderModelOrder.PreferEdges
 import modular.mermaid.CycleBreakingStrategy.Interactive
-import modular.mermaid.LinkStyle
 import modular.mermaid.LinkStyle.Basic
 import modular.mermaid.LinkStyle.Bold
 import modular.mermaid.LinkStyle.Dashed
@@ -38,8 +37,8 @@ modular {
 
   linkTypes {
     "jvmMainImplementation"(style = Bold, color = "orange")
-    api(Basic)
-    implementation(Dashed)
+    api(Basic) { strokeWidth = "5px" }
+    implementation(Dashed) { stroke = "aqua" }
   }
 
   pathTransforms {

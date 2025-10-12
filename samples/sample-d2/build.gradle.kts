@@ -10,6 +10,7 @@ import modular.d2.LinkStyle
 import modular.d2.Location
 import modular.d2.Position
 import modular.d2.Shape
+import modular.d2.TextTransform
 import modular.d2.Theme
 
 plugins {
@@ -33,25 +34,26 @@ modular {
       stroke = "black"
       fontColor = "black"
     }
-
     kotlinMultiplatform()
-
     androidLibrary {
       fontColor = "red"
       multiple = true
       italic = true
     }
-
     kotlinJvm { fillPattern = FillPattern.Lines }
-
     java { animated = true }
-
     other()
   }
 
   linkTypes {
-    "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange")
-    api(style = LinkStyle.Basic, color = "greenyellow")
+    "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange") {
+      opacity = 0.5f
+      strokeDash = 3
+    }
+    api(LinkStyle.Basic, "greenyellow") {
+      textTransform = TextTransform.Uppercase
+      strokeWidth = 3
+    }
     implementation(style = LinkStyle.Dotted, color = "fuchsia")
   }
 

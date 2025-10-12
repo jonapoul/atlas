@@ -5,6 +5,6 @@ digraph {
   ":sample-app-android" [shape="rarrow",style="radial",fillcolor="limegreen"]
   ":sample-lib-java" [fillcolor="orange"]
   ":sample-lib-kotlin-mp" [fontcolor="white",fillcolor="mediumslateblue"]
-  ":sample-app-android" -> ":sample-lib-kotlin-mp" [style="dotted"]
-  ":sample-lib-kotlin-mp" -> ":sample-lib-java" [style="bold",color="orange"]
+  ":sample-app-android" -> ":sample-lib-kotlin-mp" [style="dotted",dir="both",arrowtail="ediamond"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-java" [style="bold",color="orange",arrowhead="crow"]
 }
