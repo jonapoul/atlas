@@ -66,7 +66,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
 
   @Test
   @RequiresGraphviz
-  fun `Generate png, svg and eps files`() = runScenario(GraphVizBasicWithPngOutput) {
+  fun `Generate png file`() = runScenario(GraphVizBasicWithPngOutput) {
     // when
     val result = runTask("modularGenerate").build()
 
