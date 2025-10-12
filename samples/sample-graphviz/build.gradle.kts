@@ -1,5 +1,7 @@
+import modular.graphviz.ArrowType.Crow
 import modular.graphviz.ArrowType.Ediamond
 import modular.graphviz.ArrowType.None
+import modular.graphviz.Dir.Both
 import modular.graphviz.FileFormat.Svg
 import modular.graphviz.LayoutEngine.Dot
 import modular.graphviz.LinkStyle.Bold
@@ -41,9 +43,12 @@ modular {
   }
 
   linkTypes {
-    "jvmMainImplementation"(style = Bold, color = "orange")
-    api(Solid)
-    implementation(Dotted)
+    "jvmMainImplementation"(style = Bold, color = "orange") { arrowHead = Crow }
+    api(Solid) { weight = 5 }
+    implementation(Dotted) {
+      dir = Both
+      arrowTail = Ediamond
+    }
   }
 
   graphviz {
@@ -68,7 +73,7 @@ modular {
     edge {
       arrowHead = Ediamond
       arrowTail = None
-      color = "red"
+      linkColor = "red"
       labelFloat = true
       fontColor = "lime"
     }

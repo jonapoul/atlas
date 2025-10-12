@@ -28,7 +28,8 @@
 <!-- :sample&#45;app&#45;android&#45;&gt;:sample&#45;lib&#45;kotlin&#45;mp -->
 <g id="edge1" class="edge">
 <title>:sample&#45;app&#45;android&#45;&gt;:sample&#45;lib&#45;kotlin&#45;mp</title>
-<path fill="none" stroke="red" stroke-dasharray="1,5" d="M103,-319.96C103,-294.27 103,-253.98 103,-224.48"/>
+<path fill="none" stroke="red" stroke-dasharray="1,5" d="M103,-307.68C103,-282.6 103,-249.65 103,-224.52"/>
+<polygon fill="none" stroke="red" points="103,-307.96 107,-313.96 103,-319.96 99,-313.96 103,-307.96"/>
 <polygon fill="none" stroke="red" points="103,-224.18 99,-218.18 103,-212.18 107,-218.18 103,-224.18"/>
 </g>
 <!-- :sample&#45;lib&#45;java -->
@@ -42,8 +43,8 @@
 <!-- :sample&#45;lib&#45;kotlin&#45;mp&#45;&gt;:sample&#45;lib&#45;java -->
 <g id="edge2" class="edge">
 <title>:sample&#45;lib&#45;kotlin&#45;mp&#45;&gt;:sample&#45;lib&#45;java</title>
-<path fill="none" stroke="orange" stroke-width="2" d="M103,-159.96C103,-134.27 103,-93.98 103,-64.48"/>
-<polygon fill="none" stroke="orange" stroke-width="2" points="103,-64.18 99,-58.18 103,-52.18 107,-58.18 103,-64.18"/>
+<path fill="none" stroke="orange" stroke-width="2" d="M103,-159.96C103,-133.69 103,-92.17 103,-62.52"/>
+<polygon fill="orange" stroke="orange" stroke-width="2" points="103,-62.18 107.5,-52.18 103,-57.18 103,-52.18 103,-52.18 103,-52.18 103,-57.18 98.5,-52.18 103,-62.18 103,-62.18"/>
 </g>
 </g>
 </svg>

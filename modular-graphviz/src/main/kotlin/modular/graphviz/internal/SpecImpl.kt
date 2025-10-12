@@ -12,6 +12,7 @@ import modular.core.internal.string
 import modular.graphviz.EdgeAttributes
 import modular.graphviz.FileFormat
 import modular.graphviz.GraphAttributes
+import modular.graphviz.GraphvizLinkTypeSpec
 import modular.graphviz.GraphvizModuleTypeSpec
 import modular.graphviz.GraphvizNamedLinkTypeContainer
 import modular.graphviz.GraphvizNamedModuleTypeContainer
@@ -46,19 +47,29 @@ internal class GraphvizSpecImpl(
   override fun graph(action: Action<GraphAttributes>) = action.execute(graph)
 }
 
-internal class GraphvizLinkTypeContainer(
-  objects: ObjectFactory,
-) : LinkTypeContainer(objects), GraphvizNamedLinkTypeContainer
-
 internal abstract class GraphvizModuleTypeSpecImpl @Inject constructor(
   override val name: String,
   objects: ObjectFactory,
 ) : ModuleTypeSpecImpl(name), GraphvizModuleTypeSpec, NodeAttributes by NodeAttributesImpl(objects)
 
-internal class GraphvizModuleTypeContainer(objects: ObjectFactory) :
+internal class GraphvizNamedModuleTypeContainerImpl(objects: ObjectFactory) :
   ModuleTypeContainer<GraphvizModuleTypeSpec>(
     delegate = objects.domainObjectContainer(GraphvizModuleTypeSpec::class.java) { name ->
       objects.newInstance(GraphvizModuleTypeSpecImpl::class.java, name)
     },
   ),
   GraphvizNamedModuleTypeContainer
+
+internal abstract class GraphvizLinkTypeSpecImpl @Inject constructor(
+  override val name: String,
+  objects: ObjectFactory,
+) : ModuleTypeSpecImpl(name), GraphvizLinkTypeSpec, EdgeAttributes by EdgeAttributesImpl(objects)
+
+internal class GraphvizNamedLinkTypeContainerImpl(
+  objects: ObjectFactory,
+) : LinkTypeContainer<GraphvizLinkTypeSpec>(
+    delegate = objects.domainObjectContainer(GraphvizLinkTypeSpec::class.java) { name ->
+      objects.newInstance(GraphvizLinkTypeSpecImpl::class.java, name)
+    },
+  ),
+  GraphvizNamedLinkTypeContainer

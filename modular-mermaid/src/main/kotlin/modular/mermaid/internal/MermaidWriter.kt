@@ -14,6 +14,7 @@ import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
 import modular.core.internal.parseEnum
+import modular.core.internal.sortedByKeys
 import modular.mermaid.LinkStyle
 import modular.mermaid.MermaidConfig
 
@@ -116,7 +117,16 @@ public class MermaidWriter(
       val from = typedModules.first { it.projectPath == link.fromPath }.cleaned().label
       val to = typedModules.first { it.projectPath == link.toPath }.cleaned().label
       appendLine("$from $arrowPrefix$arrow $to")
-      link.type?.color?.let { color -> appendLine("linkStyle $i stroke:$color") }
+
+      link.type?.let { type ->
+        val attrs = mutableMapOf<String, String>()
+        type.color?.let { attrs["stroke"] = it }
+        attrs.putAll(type.properties)
+        if (attrs.isNotEmpty()) {
+          val attrString = attrs.sortedByKeys().joinToString(separator = ",") { (k, v) -> "$k:$v" }
+          appendLine("linkStyle $i $attrString")
+        }
+      }
     }
 
     if (animateLinks) {

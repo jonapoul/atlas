@@ -8,6 +8,7 @@ package modular.d2
 
 import modular.core.internal.IntEnum
 import modular.core.internal.StringEnum
+import modular.core.LinkStyle as CoreLinkStyle
 
 /**
  * https://d2lang.com/tour/shapes/
@@ -39,7 +40,7 @@ public enum class Shape(override val string: String) : StringEnum {
 /**
  * https://d2lang.com/tour/connections/
  */
-public enum class LinkStyle(override val string: String) : StringEnum {
+public enum class LinkStyle(override val string: String) : CoreLinkStyle {
   Basic("basic"),
   Dashed("dashed"),
   Dotted("dotted"),

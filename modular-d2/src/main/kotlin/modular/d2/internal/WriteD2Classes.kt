@@ -15,6 +15,7 @@ import modular.core.internal.moduleType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.orderedModuleTypes
 import modular.core.internal.parseEnum
+import modular.core.internal.sortedByKeys
 import modular.d2.Direction
 import modular.d2.LayoutEngine
 import modular.d2.LinkStyle
@@ -128,6 +129,8 @@ private fun linkAttributes(config: D2ClassesConfig, link: LinkType): List<Pair<S
   if (config.animateLinks == true && style in ANIMATABLE_LINK_TYPES) {
     attrs["style.animated"] = "true"
   }
+
+  attrs.putAll(link.properties)
 
   return attrs.sortedByKeys()
 }

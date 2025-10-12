@@ -64,14 +64,15 @@ public interface NodeAttributes : PropertiesSpec {
 }
 
 /**
- * See https://graphviz.org/docs/edges/
+ * See https://graphviz.org/docs/edges/. [linkColor] and [linkStyle] have been renamed from "color" and "style" to avoid
+ * clashes with [modular.core.LinkTypeSpec] attributes.
  */
 @ModularDsl
 public interface EdgeAttributes : PropertiesSpec {
   public var arrowHead: ArrowType?
   public var arrowSize: Number?
   public var arrowTail: ArrowType?
-  public var color: String?
+  public var linkColor: String?
   public var colorScheme: String?
   public var comment: String?
   public var constraint: Boolean?
@@ -118,7 +119,7 @@ public interface EdgeAttributes : PropertiesSpec {
   public var sameHead: String?
   public var sameTail: String?
   public var showBoxes: Int?
-  public var style: LinkStyle?
+  public var linkStyle: LinkStyle?
   public var tailLp: String?
   public var tailClip: Boolean?
   public var tailHref: String?

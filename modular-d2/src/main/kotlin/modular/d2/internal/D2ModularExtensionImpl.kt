@@ -18,12 +18,12 @@ internal open class D2ModularExtensionImpl @Inject constructor(
   objects: ObjectFactory,
   project: Project,
 ) : ModularExtensionImpl(objects, project), D2ModularExtension {
-  override val d2: D2SpecImpl = D2SpecImpl(objects, project)
+  override val d2 = D2SpecImpl(objects, project)
   override fun d2(action: Action<D2Spec>) = action.execute(d2)
 
-  override val linkTypes: D2LinkTypeContainer = D2LinkTypeContainer(objects)
+  override val linkTypes = D2NamedLinkTypeContainerImpl(objects)
   override fun linkTypes(action: Action<D2NamedLinkTypeContainer>) = action.execute(linkTypes)
 
-  override val moduleTypes: D2ModuleTypeContainer = D2ModuleTypeContainer(objects)
+  override val moduleTypes = D2NamedModuleTypeContainerImpl(objects)
   override fun moduleTypes(action: Action<D2NamedModuleTypeContainer>) = action.execute(moduleTypes)
 }

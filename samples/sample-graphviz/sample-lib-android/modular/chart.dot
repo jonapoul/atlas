@@ -6,8 +6,8 @@ digraph {
   ":sample-lib-android" [gradientangle="90",fillcolor="crimson:cyan4"]
   ":sample-lib-kotlin-jvm" [fillcolor="mediumorchid"]
   ":sample-lib-kotlin-mp" [fontcolor="white",fillcolor="mediumslateblue"]
-  ":sample-app-android" -> ":sample-lib-android" [style="dotted"]
-  ":sample-app-android" -> ":sample-lib-kotlin-mp" [style="dotted"]
-  ":sample-lib-android" -> ":sample-lib-kotlin-jvm" [style="dotted"]
-  ":sample-lib-kotlin-mp" -> ":sample-lib-android" [style="solid"]
+  ":sample-app-android" -> ":sample-lib-android" [style="dotted",dir="both",arrowtail="ediamond"]
+  ":sample-app-android" -> ":sample-lib-kotlin-mp" [style="dotted",dir="both",arrowtail="ediamond"]
+  ":sample-lib-android" -> ":sample-lib-kotlin-jvm" [style="dotted",dir="both",arrowtail="ediamond"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-android" [style="solid",weight="5"]
 }

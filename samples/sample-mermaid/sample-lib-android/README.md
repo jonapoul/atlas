@@ -29,6 +29,7 @@ graph TD
   style lib_android fill:lightgreen,fillcolor:lightgreen
   style lib_kotlin_jvm fill:mediumorchid,fillcolor:mediumorchid
   lib_android -.-> lib_kotlin_jvm
+  linkStyle 0 stroke:aqua
 ```
 
 | Module Types | Color |

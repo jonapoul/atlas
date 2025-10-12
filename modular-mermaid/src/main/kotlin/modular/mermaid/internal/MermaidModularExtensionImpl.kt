@@ -21,9 +21,9 @@ internal open class MermaidModularExtensionImpl @Inject constructor(
   override val mermaid = MermaidSpecImpl(objects, project)
   override fun mermaid(action: Action<MermaidSpec>) = action.execute(mermaid)
 
-  override val linkTypes = MermaidLinkTypeContainer(objects)
+  override val linkTypes = MermaidNamedLinkTypeContainerImpl(objects)
   override fun linkTypes(action: Action<MermaidNamedLinkTypeContainer>) = action.execute(linkTypes)
 
-  override val moduleTypes = MermaidModuleTypeContainer(objects)
+  override val moduleTypes = MermaidNamedModuleTypeContainerImpl(objects)
   override fun moduleTypes(action: Action<MermaidNamedModuleTypeContainer>) = action.execute(moduleTypes)
 }

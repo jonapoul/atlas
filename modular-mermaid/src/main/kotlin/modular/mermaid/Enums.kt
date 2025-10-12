@@ -12,12 +12,13 @@ import modular.mermaid.CycleBreakingStrategy.GreedyModelOrder
 import modular.mermaid.LinkStyle.Basic
 import modular.mermaid.Look.Classic
 import modular.mermaid.NodePlacementStrategy.BrandesKoepf
+import modular.core.LinkStyle as CoreLinkStyle
 
 /**
  * Default is [Basic].
  * See https://mermaid.js.org/syntax/flowchart.html#links-between-nodes
  */
-public enum class LinkStyle(override val string: String) : StringEnum {
+public enum class LinkStyle(override val string: String) : CoreLinkStyle {
   Basic("basic"),
   Dashed("dashed"),
   Invisible("invisible"),
