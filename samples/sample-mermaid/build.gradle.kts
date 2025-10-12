@@ -18,6 +18,7 @@ plugins {
 
 modular {
   alsoTraverseUpwards = false
+  displayLinkLabels = true
   generateOnSync = true
 
   moduleTypes {
@@ -48,7 +49,6 @@ modular {
 
   mermaid {
     animateLinks = false
-
     look = HandDrawn
     theme = Forest
 

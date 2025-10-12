@@ -21,8 +21,10 @@ import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
 import modular.core.tasks.WriteModuleTree
 import modular.graphviz.DotConfig
+import modular.graphviz.GraphvizModularExtension
 import modular.graphviz.GraphvizSpec
 import modular.graphviz.internal.DotWriter
+import modular.graphviz.internal.GraphvizModularExtensionImpl
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -126,7 +128,7 @@ public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, Mo
       writeChart.configure { task ->
         task.groupModules.convention(extension.groupModules)
         task.replacements.convention(extension.pathTransforms.replacements)
-        task.config.convention(DotConfig(spec))
+        task.config.convention(DotConfig(extension, spec))
       }
 
       return writeChart

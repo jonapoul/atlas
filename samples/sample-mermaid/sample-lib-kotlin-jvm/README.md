@@ -20,7 +20,7 @@ config:
     primaryBorderColor: #FF5555
     primaryColor: #ABC123
     darkMode: true
-    fontSize: 30px
+    fontSize: 20px
     defaultLinkColor: #5555FF
 ---
 graph TD

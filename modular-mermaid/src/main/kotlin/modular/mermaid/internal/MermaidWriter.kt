@@ -5,6 +5,7 @@
 package modular.mermaid.internal
 
 import modular.core.InternalModularApi
+import modular.core.LinkType
 import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
@@ -108,12 +109,7 @@ public class MermaidWriter(
         ?.let { parseEnum<LinkStyle>(it) }
         ?: LinkStyle.Basic
 
-      val arrow = when (style) {
-        LinkStyle.Basic -> "-->"
-        LinkStyle.Bold -> "==>"
-        LinkStyle.Dashed -> "-.->"
-        LinkStyle.Invisible -> "~~~"
-      }
+      val arrow = getArrow(link.type, style)
       val from = typedModules.first { it.projectPath == link.fromPath }.cleaned().label
       val to = typedModules.first { it.projectPath == link.toPath }.cleaned().label
       appendLine("$from $arrowPrefix$arrow $to")
@@ -132,6 +128,26 @@ public class MermaidWriter(
     if (animateLinks) {
       for (i in links.indices) {
         appendLine("link$i@{ animate: true }")
+      }
+    }
+  }
+
+  private fun getArrow(type: LinkType?, style: LinkStyle): String {
+    val showLabels = config.displayLinkLabels == true
+    val name = type?.displayName
+    return if (showLabels && name != null) {
+      when (style) {
+        LinkStyle.Basic -> "--$name-->"
+        LinkStyle.Bold -> "==$name==>"
+        LinkStyle.Dashed -> "-.$name.->"
+        LinkStyle.Invisible -> "~~~|$name|"
+      }
+    } else {
+      when (style) {
+        LinkStyle.Basic -> "-->"
+        LinkStyle.Bold -> "==>"
+        LinkStyle.Dashed -> "-.->"
+        LinkStyle.Invisible -> "~~~"
       }
     }
   }

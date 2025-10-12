@@ -112,6 +112,7 @@ internal abstract class MermaidLinkTypeSpecImpl @Inject constructor(
   override val name: String,
   objects: ObjectFactory,
 ) : ModuleTypeSpecImpl(name), MermaidLinkTypeSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+  override var fontColor by string("color")
   override var stroke by string("stroke")
   override var strokeWidth by string("stroke-width")
   override var strokeDashArray by string("stroke-dasharray")

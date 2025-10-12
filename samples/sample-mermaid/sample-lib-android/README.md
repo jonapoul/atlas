@@ -20,7 +20,7 @@ config:
     primaryBorderColor: #FF5555
     primaryColor: #ABC123
     darkMode: true
-    fontSize: 30px
+    fontSize: 20px
     defaultLinkColor: #5555FF
 ---
 graph TD
@@ -28,7 +28,7 @@ graph TD
   lib_kotlin_jvm["lib kotlin jvm"]
   style lib_android fill:lightgreen,fillcolor:lightgreen
   style lib_kotlin_jvm fill:mediumorchid,fillcolor:mediumorchid
-  lib_android -.-> lib_kotlin_jvm
+  lib_android -.implementation.-> lib_kotlin_jvm
   linkStyle 0 stroke:aqua
 ```
 

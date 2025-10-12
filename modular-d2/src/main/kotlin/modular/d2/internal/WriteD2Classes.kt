@@ -50,6 +50,7 @@ public class D2ClassesConfig(
   public val center: Boolean? = null,
   public val darkTheme: Theme? = null,
   public val direction: Direction? = null,
+  public val displayLinkLabels: Boolean? = null,
   public val globalProps: Map<String, String>? = null,
   public val layoutEngine: LayoutEngine? = null,
   public val linkTypes: List<LinkType> = emptyList(),
@@ -67,6 +68,7 @@ internal fun D2ModularExtensionImpl.toConfig() = D2ClassesConfig(
   center = d2.center.orNull,
   darkTheme = d2.themeDark.orNull,
   direction = d2.direction.orNull,
+  displayLinkLabels = displayLinkLabels.orNull,
   globalProps = d2.globalProps.properties.orNull,
   layoutEngine = d2.layoutEngine.orNull,
   linkTypes = orderedLinkTypes(),
@@ -128,6 +130,10 @@ private fun linkAttributes(config: D2ClassesConfig, link: LinkType): List<Pair<S
 
   if (config.animateLinks == true && style in ANIMATABLE_LINK_TYPES) {
     attrs["style.animated"] = "true"
+  }
+
+  if (config.displayLinkLabels == true) {
+    attrs["label"] = link.displayName
   }
 
   attrs.putAll(link.properties)

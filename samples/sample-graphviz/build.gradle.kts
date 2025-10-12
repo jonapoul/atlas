@@ -24,6 +24,7 @@ plugins {
 
 modular {
   alsoTraverseUpwards = true
+  displayLinkLabels = true
   generateOnSync = true
   checkOutputs = true
 
@@ -73,9 +74,9 @@ modular {
     edge {
       arrowHead = Ediamond
       arrowTail = None
+      fontColor = "white"
+      labelFloat = false
       linkColor = "red"
-      labelFloat = true
-      fontColor = "lime"
     }
   }
 }

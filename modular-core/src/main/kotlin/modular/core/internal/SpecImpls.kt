@@ -26,13 +26,14 @@ public abstract class ModularExtensionImpl(
 ) : ModularExtension {
   private val coreProperties = CoreGradleProperties(project)
 
+  override val alsoTraverseUpwards: Property<Boolean> = objects.bool(coreProperties.alsoTraverseUpwards)
+  override val checkOutputs: Property<Boolean> = objects.bool(coreProperties.checkOutputs)
+  override val displayLinkLabels: Property<Boolean> = objects.bool(coreProperties.displayLinkLabels)
   override val generateOnSync: Property<Boolean> = objects.bool(coreProperties.generateOnSync)
   override val groupModules: Property<Boolean> = objects.bool(coreProperties.groupModules)
   override val ignoredConfigs: SetProperty<String> = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
   override val ignoredModules: SetProperty<Regex> = objects.set(convention = emptySet())
-  override val alsoTraverseUpwards: Property<Boolean> = objects.bool(coreProperties.alsoTraverseUpwards)
   override val printFilesToConsole: Property<Boolean> = objects.bool(coreProperties.printFilesToConsole)
-  override val checkOutputs: Property<Boolean> = objects.bool(coreProperties.checkOutputs)
 
   override val pathTransforms: PathTransformSpecImpl = PathTransformSpecImpl(objects)
   override fun pathTransforms(action: Action<PathTransformSpec>): Unit = action.execute(pathTransforms)
