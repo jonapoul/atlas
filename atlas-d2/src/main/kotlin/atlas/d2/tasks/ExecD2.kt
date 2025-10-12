@@ -16,6 +16,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
@@ -39,6 +40,7 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
   @get:[PathSensitive(RELATIVE) InputFile] public abstract val classesFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] public abstract val inputFile: RegularFileProperty
   @get:Input public abstract val outputFormat: Property<FileFormat>
+  @get:[Input Optional] public abstract val cliArguments: MapProperty<String, String>
   @get:[Input Optional] public abstract val pathToD2Command: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
   @get:Inject public abstract val execOperations: ExecOperations
@@ -55,12 +57,14 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
     val inputFile = inputFile.get().asFile.absolutePath
     val outputFile = outputFile.get().asFile
     val d2Executable = pathToD2Command.getOrElse("d2")
+    val cliArguments = cliArguments.getOrElse(mutableMapOf())
 
     val errorBuffer = ByteArrayOutputStream()
     val command = buildList {
       add(d2Executable)
       add(inputFile)
       add(outputFile)
+      cliArguments.forEach { (key, value) -> add("--$key=$value") }
     }
 
     logger.info("Starting d2: '$command'")
@@ -108,6 +112,7 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
         task.pathToD2Command.convention(spec.pathToD2Command)
         task.outputFormat.convention(spec.fileFormat)
         task.outputFile.convention(outputFile)
+        task.cliArguments.convention(spec.layoutEngine.properties)
       }
 
       return execGraphviz

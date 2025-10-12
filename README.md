@@ -1,4 +1,4 @@
-# Modular
+# Atlas
 
 ### [jonapoul.github.io/atlas](https://jonapoul.github.io/atlas)
 

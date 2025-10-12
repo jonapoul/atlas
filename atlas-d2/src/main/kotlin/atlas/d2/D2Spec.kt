@@ -39,6 +39,10 @@ import org.gradle.api.provider.Property
  *     globalProps {
  *       ...
  *     }
+ *
+ *     layoutEngine {
+ *       ...
+ *     }
  *   }
  * }
  * ```
@@ -51,12 +55,14 @@ public interface D2Spec : AtlasSpec {
   public val fileFormat: Property<FileFormat>
   public val groupLabelLocation: Property<Location>
   public val groupLabelPosition: Property<Position>
-  public val layoutEngine: Property<LayoutEngine>
   public val pad: Property<Int>
   public val pathToD2Command: Property<String>
   public val sketch: Property<Boolean>
   public val theme: Property<Theme>
   public val themeDark: Property<Theme>
+
+  public val layoutEngine: D2LayoutEngineSpec
+  public fun layoutEngine(action: Action<D2LayoutEngineSpec>)
 
   public val rootStyle: D2RootStyleSpec
   public fun rootStyle(action: Action<D2RootStyleSpec>)

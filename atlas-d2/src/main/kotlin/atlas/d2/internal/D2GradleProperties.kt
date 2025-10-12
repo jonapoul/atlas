@@ -12,7 +12,6 @@ import atlas.core.internal.intEnum
 import atlas.core.internal.string
 import atlas.d2.Direction
 import atlas.d2.FileFormat
-import atlas.d2.LayoutEngine
 import atlas.d2.Location
 import atlas.d2.Position
 import atlas.d2.Theme
@@ -28,7 +27,6 @@ internal class D2GradleProperties(override val project: Project) : IGradleProper
   val fileFormat: Provider<FileFormat> = enum("atlas.d2.fileFormat", default = FileFormat.Svg)
   val groupLabelLocation: Provider<Location> = enum("fontSize.d2.groupLabelLocation", default = null)
   val groupLabelPosition: Provider<Position> = enum("atlas.d2.groupLabelPosition", default = null)
-  val layoutEngine: Provider<LayoutEngine> = enum("atlas.d2.layoutEngine", default = null)
   val pad: Provider<Int> = int("atlas.d2.pad", default = null)
   val pathToD2Command: Provider<String> = string("atlas.d2.pathToD2Command", default = null)
   val sketch: Provider<Boolean> = bool("atlas.d2.sketch", default = null)

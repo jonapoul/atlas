@@ -16,7 +16,10 @@ import atlas.core.internal.int
 import atlas.core.internal.intEnum
 import atlas.core.internal.string
 import atlas.d2.ArrowType
+import atlas.d2.D2DagreSpec
+import atlas.d2.D2ElkSpec
 import atlas.d2.D2GlobalPropsSpec
+import atlas.d2.D2LayoutEngineSpec
 import atlas.d2.D2LinkTypeSpec
 import atlas.d2.D2ModuleTypeSpec
 import atlas.d2.D2NamedLinkTypeContainer
@@ -24,8 +27,11 @@ import atlas.d2.D2NamedModuleTypeContainer
 import atlas.d2.D2PropertiesSpec
 import atlas.d2.D2RootStyleSpec
 import atlas.d2.D2Spec
+import atlas.d2.D2TalaSpec
+import atlas.d2.ElkAlgorithm
 import atlas.d2.FillPattern
 import atlas.d2.Font
+import atlas.d2.LayoutEngine
 import atlas.d2.Shape
 import atlas.d2.TextTransform
 import org.gradle.api.Action
@@ -48,12 +54,14 @@ internal class D2SpecImpl(
   override val fileFormat = objects.enum(properties.fileFormat)
   override val groupLabelLocation = objects.enum(properties.groupLabelLocation)
   override val groupLabelPosition = objects.enum(properties.groupLabelPosition)
-  override val layoutEngine = objects.enum(properties.layoutEngine)
   override val pad = objects.int(properties.pad)
   override val pathToD2Command = objects.string(properties.pathToD2Command)
   override val sketch = objects.bool(properties.sketch)
   override val theme = objects.intEnum(properties.theme)
   override val themeDark = objects.intEnum(properties.darkTheme)
+
+  override val layoutEngine = D2LayoutEngineSpecImpl(objects)
+  override fun layoutEngine(action: Action<D2LayoutEngineSpec>) = action.execute(layoutEngine)
 
   override val rootStyle = D2RootStyleSpecImpl(objects)
   override fun rootStyle(action: Action<D2RootStyleSpec>) = action.execute(rootStyle)
@@ -134,3 +142,39 @@ internal class D2NamedLinkTypeContainerImpl(
     },
   ),
   D2NamedLinkTypeContainer
+
+internal class D2LayoutEngineSpecImpl(
+  objects: ObjectFactory,
+) : D2LayoutEngineSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+  override val layoutEngine = objects.enum<LayoutEngine>(convention = null)
+  override val dagre = D2DagreSpecImpl(this)
+  override val elk = D2ElkSpecImpl(this)
+  override val tala = D2TalaSpecImpl(this)
+
+  override fun dagre(config: Action<D2DagreSpec>?) {
+    layoutEngine.set(LayoutEngine.Dagre)
+    config?.execute(dagre)
+  }
+
+  override fun elk(config: Action<D2ElkSpec>?) {
+    layoutEngine.set(LayoutEngine.Elk)
+    config?.execute(elk)
+  }
+
+  override fun tala(config: Action<D2TalaSpec>?) {
+    layoutEngine.set(LayoutEngine.Tala)
+    config?.execute(tala)
+  }
+}
+
+internal class D2ElkSpecImpl(parent: PropertiesSpec) : D2ElkSpec, PropertiesSpec by parent {
+  override var algorithm by enum<ElkAlgorithm>("elk-algorithm")
+  override var edgeNodeBetweenLayers by int("elk-edgeNodeBetweenLayers")
+  override var nodeNodeBetweenLayers by int("elk-nodeNodeBetweenLayers")
+  override var nodeSelfLoop by int("elk-nodeSelfLoop")
+  override var padding by string("elk-padding")
+}
+
+internal class D2DagreSpecImpl(parent: PropertiesSpec) : D2DagreSpec, PropertiesSpec by parent
+
+internal class D2TalaSpecImpl(parent: PropertiesSpec) : D2TalaSpec, PropertiesSpec by parent
