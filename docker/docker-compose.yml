@@ -18,7 +18,3 @@ services:
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-graphviz &&
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-mermaid
       "
-
-  build:
-    extends: base
-    command: gradle -Dorg.gradle.java.home=/opt/java/openjdk/ build

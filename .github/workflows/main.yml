@@ -1,4 +1,4 @@
-name: Main
+name: Publish Snapshot
 
 on:
   push:
@@ -13,8 +13,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  main-check:
+  publish-snapshot:
     runs-on: ubuntu-latest
+    container:
+      image: gradle:9.1.0-jdk21
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
@@ -22,17 +24,24 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v5
-        with:
-          add-job-summary: on-failure
+      - name: Get version
+        id: version
+        run: |
+          GRADLE_VERSION="$(grep VERSION_NAME gradle.properties | cut -d "=" -f 2)"
+          echo "GRADLE_VERSION=$GRADLE_VERSION"
+          echo "value=$GRADLE_VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Login to registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Exit if version isn't a snapshot
+        if: "!contains(steps.version.outputs.value, '-SNAPSHOT')"
+        run: |
+          echo "Not a snapshot version, backing out"
+          exit 1
 
-      - name: Build
-        run: docker compose -f docker/docker-compose.yml run --rm build
+      - name: Publish snapshot
+        if: github.repository == 'jonapoul/atlas' && github.ref == 'refs/heads/main'
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_IN_MEMORY_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_KEY_PASSWORD }}
+        run: ./gradlew publishToMavenCentral -x dokkaGeneratePublicationHtml
