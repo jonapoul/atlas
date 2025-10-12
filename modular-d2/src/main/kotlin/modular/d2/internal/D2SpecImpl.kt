@@ -17,9 +17,11 @@ import modular.core.internal.intEnum
 import modular.core.internal.string
 import modular.d2.ArrowType
 import modular.d2.D2GlobalPropsSpec
+import modular.d2.D2LinkTypeSpec
 import modular.d2.D2ModuleTypeSpec
 import modular.d2.D2NamedLinkTypeContainer
 import modular.d2.D2NamedModuleTypeContainer
+import modular.d2.D2PropertiesSpec
 import modular.d2.D2RootStyleSpec
 import modular.d2.D2Spec
 import modular.d2.FillPattern
@@ -80,27 +82,17 @@ internal open class D2GlobalPropsSpecImpl(
   override var fontSize by int("***.style.font-size")
 }
 
-internal class D2LinkTypeContainer(
+internal class D2PropertiesSpecImpl(
   objects: ObjectFactory,
-) : LinkTypeContainer(objects), D2NamedLinkTypeContainer
-
-internal abstract class D2ModuleTypeSpecImpl @Inject constructor(
-  override val name: String,
-) : ModuleTypeSpecImpl(name), D2ModuleTypeSpec {
+) : D2PropertiesSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
   override var animated by bool("style.animated")
   override var bold by bool("style.bold")
   override var borderRadius by int("style.border-radius")
-  override var doubleBorder by string("style.double-border")
-  override var fillPattern by enum<FillPattern>("style.fill-pattern")
   override var font by enum<Font>("style.font")
   override var fontColor by string("style.font-color")
   override var fontSize by int("style.font-size")
   override var italic by bool("style.italic")
-  override var multiple by bool("style.multiple")
   override var opacity by float("style.opacity")
-  override var render3D by bool("style.3d")
-  override var shadow by bool("style.shadow")
-  override var shape by enum<Shape>("shape")
   override var stroke by string("style.stroke")
   override var strokeDash by int("style.stroke-dash")
   override var strokeWidth by int("style.stroke-width")
@@ -108,10 +100,37 @@ internal abstract class D2ModuleTypeSpecImpl @Inject constructor(
   override var underline by bool("style.underline")
 }
 
-internal class D2ModuleTypeContainer(objects: ObjectFactory) :
+internal abstract class D2ModuleTypeSpecImpl @Inject constructor(
+  override val name: String,
+  objects: ObjectFactory,
+) : ModuleTypeSpecImpl(name), D2ModuleTypeSpec, D2PropertiesSpec by D2PropertiesSpecImpl(objects) {
+  override var doubleBorder by string("style.double-border")
+  override var fill by string("style.fill")
+  override var fillPattern by enum<FillPattern>("style.fill-pattern")
+  override var multiple by bool("style.multiple")
+  override var render3D by bool("style.3d")
+  override var shadow by bool("style.shadow")
+  override var shape by enum<Shape>("shape")
+}
+
+internal class D2NamedModuleTypeContainerImpl(objects: ObjectFactory) :
   ModuleTypeContainer<D2ModuleTypeSpec>(
     delegate = objects.domainObjectContainer(D2ModuleTypeSpec::class.java) { name ->
       objects.newInstance(D2ModuleTypeSpecImpl::class.java, name)
     },
   ),
   D2NamedModuleTypeContainer
+
+internal abstract class D2LinkTypeSpecImpl @Inject constructor(
+  override val name: String,
+  objects: ObjectFactory,
+) : ModuleTypeSpecImpl(name), D2LinkTypeSpec, D2PropertiesSpec by D2PropertiesSpecImpl(objects)
+
+internal class D2NamedLinkTypeContainerImpl(
+  objects: ObjectFactory,
+) : LinkTypeContainer<D2LinkTypeSpec>(
+    delegate = objects.domainObjectContainer(D2LinkTypeSpec::class.java) { name ->
+      objects.newInstance(D2LinkTypeSpecImpl::class.java, name)
+    },
+  ),
+  D2NamedLinkTypeContainer

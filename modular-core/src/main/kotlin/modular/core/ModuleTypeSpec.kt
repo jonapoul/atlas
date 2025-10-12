@@ -105,7 +105,7 @@ public interface ModuleTypeSpec : PropertiesSpec {
   public val name: String
 
   /**
-   * Optional - defaults to #FFFFFF (white). Must be prefixed with a # followed by a 6-character hexadecimal string.
+   * Optional. Must be a valid CSS color string.
    */
   public val color: Property<String>
 
@@ -116,9 +116,13 @@ public interface ModuleTypeSpec : PropertiesSpec {
 
   /**
    * Similar to [pathContains] but more flexible with [Regex] pattern checking instead of straight string comparison.
-   * Specify [regexOptions] if you want to get technical about it.
    */
   public val pathMatches: Property<String>
+
+  /**
+   * Options to use when matching [pathMatches]. Defaults to empty set, which is case-sensitive matching. Unused
+   * unless [pathMatches] is set.
+   */
   public val regexOptions: SetProperty<RegexOption>
 
   /**

@@ -38,7 +38,7 @@ public abstract class ModularExtensionImpl(
   override fun pathTransforms(action: Action<PathTransformSpec>): Unit = action.execute(pathTransforms)
 
   abstract override val moduleTypes: ModuleTypeContainer<*>
-  abstract override val linkTypes: LinkTypeContainer
+  abstract override val linkTypes: LinkTypeContainer<*>
 
   @InternalModularApi
   public companion object {

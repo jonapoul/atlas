@@ -16,6 +16,7 @@ import modular.mermaid.ConsiderModelOrder
 import modular.mermaid.CycleBreakingStrategy
 import modular.mermaid.ElkLayoutSpec
 import modular.mermaid.MermaidLayoutSpec
+import modular.mermaid.MermaidLinkTypeSpec
 import modular.mermaid.MermaidModuleTypeSpec
 import modular.mermaid.MermaidNamedLinkTypeContainer
 import modular.mermaid.MermaidNamedModuleTypeContainer
@@ -26,6 +27,7 @@ import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import javax.inject.Inject
+import kotlin.jvm.java
 
 internal class MermaidSpecImpl(
   private val objects: ObjectFactory,
@@ -88,10 +90,6 @@ internal class MermaidThemeVariablesSpecImpl(
   override var tertiaryColor by string(key = "tertiaryColor")
 }
 
-internal class MermaidLinkTypeContainer(
-  objects: ObjectFactory,
-) : LinkTypeContainer(objects), MermaidNamedLinkTypeContainer
-
 internal abstract class MermaidModuleTypeSpecImpl @Inject constructor(
   override val name: String,
 ) : ModuleTypeSpecImpl(name), MermaidModuleTypeSpec {
@@ -102,10 +100,28 @@ internal abstract class MermaidModuleTypeSpecImpl @Inject constructor(
   override var strokeWidth by string("stroke-width")
 }
 
-internal class MermaidModuleTypeContainer(objects: ObjectFactory) :
+internal class MermaidNamedModuleTypeContainerImpl(objects: ObjectFactory) :
   ModuleTypeContainer<MermaidModuleTypeSpec>(
     delegate = objects.domainObjectContainer(MermaidModuleTypeSpec::class.java) { name ->
       objects.newInstance(MermaidModuleTypeSpecImpl::class.java, name)
     },
   ),
   MermaidNamedModuleTypeContainer
+
+internal abstract class MermaidLinkTypeSpecImpl @Inject constructor(
+  override val name: String,
+  objects: ObjectFactory,
+) : ModuleTypeSpecImpl(name), MermaidLinkTypeSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+  override var stroke by string("stroke")
+  override var strokeWidth by string("stroke-width")
+  override var strokeDashArray by string("stroke-dasharray")
+}
+
+internal class MermaidNamedLinkTypeContainerImpl(
+  objects: ObjectFactory,
+) : LinkTypeContainer<MermaidLinkTypeSpec>(
+    delegate = objects.domainObjectContainer(MermaidLinkTypeSpec::class.java) { name ->
+      objects.newInstance(MermaidLinkTypeSpecImpl::class.java, name)
+    },
+  ),
+  MermaidNamedLinkTypeContainer

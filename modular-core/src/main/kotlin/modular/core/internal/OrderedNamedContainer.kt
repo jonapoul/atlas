@@ -13,7 +13,6 @@ import modular.core.NamedModuleTypeContainer
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
-import org.gradle.api.model.ObjectFactory
 import java.util.function.IntFunction
 
 @InternalModularApi
@@ -22,13 +21,9 @@ public open class ModuleTypeContainer<T : ModuleTypeSpec>(
 ) : OrderedNamedContainer<T>(delegate), NamedModuleTypeContainer<T>
 
 @InternalModularApi
-public open class LinkTypeContainer(objects: ObjectFactory) :
-  OrderedNamedContainer<LinkTypeSpec>(
-    container = objects.domainObjectContainer(LinkTypeSpec::class.java) { name ->
-      objects.newInstance(LinkTypeSpecImpl::class.java, name)
-    },
-  ),
-  NamedLinkTypeContainer
+public open class LinkTypeContainer<T : LinkTypeSpec>(
+  delegate: NamedDomainObjectContainer<T>,
+) : OrderedNamedContainer<T>(delegate), NamedLinkTypeContainer<T>
 
 @InternalModularApi
 public open class OrderedNamedContainer<T : Any>(

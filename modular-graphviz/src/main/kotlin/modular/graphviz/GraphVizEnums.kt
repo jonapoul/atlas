@@ -8,11 +8,12 @@ package modular.graphviz
 
 import modular.core.internal.StringEnum
 import modular.graphviz.LayoutEngine.Dot
+import modular.core.LinkStyle as CoreLinkStyle
 
 /**
  * See https://graphviz.org/docs/attr-types/style/
  */
-public enum class LinkStyle(override val string: String) : StringEnum {
+public enum class LinkStyle(override val string: String) : CoreLinkStyle {
   Dashed("dashed"),
   Dotted("dotted"),
   Solid("solid"),

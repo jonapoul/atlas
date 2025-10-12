@@ -61,7 +61,7 @@ public data class DotWriter(
         val attrs = Attrs(
           "style" to type?.style,
           "color" to type?.color,
-        )
+        ) + type?.properties
         appendLine("\"$fromPath\" -> \"$toPath\"$attrs")
       }
   }
@@ -102,7 +102,7 @@ public data class DotWriter(
       return " [$csv]"
     }
 
-    public fun hasAnyValues() = values.any { it != null }
+    fun hasAnyValues() = values.any { it != null }
 
     operator fun plus(other: Map<String, String>?): Attrs {
       other?.let(delegate::putAll)

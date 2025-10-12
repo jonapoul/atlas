@@ -68,7 +68,7 @@ modular {
     edge {
       arrowHead = Ediamond
       arrowTail = None
-      color = "red"
+      linkColor = "red"
       labelFloat = true
       fontColor = "lime"
     }
