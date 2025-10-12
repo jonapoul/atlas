@@ -9,9 +9,7 @@ plugins {
   alias(libs.plugins.buildConfig)
 }
 
-tasks.withType<AbstractPublishToMaven>().configureEach {
-  enabled = false
-}
+tasks.withType<AbstractPublishToMaven>().configureEach { enabled = false }
 
 buildConfig {
   generateAtSync = true

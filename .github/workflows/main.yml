@@ -26,7 +26,7 @@ jobs:
       - name: Get version
         id: version
         run: |
-          GRADLE_VERSION=$(grep VERSION_NAME gradle.properties | cut -d "=" -f 2)
+          GRADLE_VERSION="$(grep VERSION_NAME gradle.properties | cut -d "=" -f 2)"
           echo "GRADLE_VERSION=$GRADLE_VERSION"
           echo "value=$GRADLE_VERSION" >> $GITHUB_OUTPUT
 
