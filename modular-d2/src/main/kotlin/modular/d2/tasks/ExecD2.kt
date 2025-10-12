@@ -30,8 +30,13 @@ import org.gradle.process.ExecOperations
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
+/**
+ * Just so I don't forget, [classesFile] is only used to force regeneration if the classes file updates, since we don't
+ * directly read it in this task.
+ */
 @CacheableTask
 public abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val classesFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] public abstract val inputFile: RegularFileProperty
   @get:Input public abstract val outputFormat: Property<FileFormat>
   @get:[Input Optional] public abstract val pathToD2Command: Property<String>
@@ -75,13 +80,13 @@ public abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOut
   }
 
   @InternalModularApi
-  public companion object {
+  internal companion object {
     @InternalModularApi
-    public fun get(target: Project, name: String): TaskProvider<ExecD2> =
+    internal fun get(target: Project, name: String): TaskProvider<ExecD2> =
       target.tasks.named(name, ExecD2::class.java)
 
     @InternalModularApi
-    public fun <T : TaskWithOutputFile> register(
+    internal fun <T : TaskWithOutputFile> register(
       target: Project,
       spec: D2Spec,
       variant: Variant,
@@ -89,15 +94,17 @@ public abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOut
     ): TaskProvider<ExecD2> = with(target) {
       val name = "execD2$variant"
       val execGraphviz = tasks.register(name, ExecD2::class.java)
+      val d2Classes = WriteD2Classes.get(rootProject)
 
       execGraphviz.configure { task ->
-        val dotFile = dotFileTask.map { it.outputFile.get() }
-        val outputFile = dotFile.map { f ->
+        val d2File = dotFileTask.map { it.outputFile.get() }
+        val outputFile = d2File.map { f ->
           val newFile = f.asFile.resolveSibling("${f.asFile.nameWithoutExtension}.${spec.fileFormat.get()}")
           project.layout.projectDirectory.file(newFile.relativeTo(projectDir).path)
         }
 
-        task.inputFile.convention(dotFile)
+        task.classesFile.convention(d2Classes.map { it.outputFile.get() })
+        task.inputFile.convention(d2File)
         task.pathToD2Command.convention(spec.pathToD2Command)
         task.outputFormat.convention(spec.fileFormat)
         task.outputFile.convention(outputFile)

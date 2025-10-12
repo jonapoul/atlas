@@ -349,6 +349,7 @@ public final class modular/d2/internal/D2ClassesConfig$Companion {
 public abstract class modular/d2/tasks/ExecD2 : org/gradle/api/DefaultTask, modular/core/tasks/ModularGenerationTask, modular/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
+	public abstract fun getClassesFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public fun getDescription ()Ljava/lang/String;
 	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
 	public abstract fun getInputFile ()Lorg/gradle/api/file/RegularFileProperty;
