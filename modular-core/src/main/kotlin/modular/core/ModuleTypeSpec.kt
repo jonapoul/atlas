@@ -6,10 +6,11 @@
 
 package modular.core
 
-import modular.core.internal.PropertiesSpec
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.SetProperty
+import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 
 /**
  * Represents a category of module that you can use to match against those in your project. You can use some of the
@@ -25,7 +26,7 @@ import org.gradle.api.provider.Property
  *     kotlinMultiplatform()
  *     other()
  *
- *     // or use builtIns() to include all of the above
+ *     // or use useDefaults() to include all of the above
  *   }
  * }
  * ```
@@ -45,7 +46,7 @@ import org.gradle.api.provider.Property
  *     // plus some manually-defined ones
  *     registerByPluginId(name = "UI", color = "#ABC123", pluginId = "org.jetbrains.kotlin.plugin.compose")
  *     registerByPathMatches(name = "Data", color = "#ABCDEF", pathMatches = ".*data$".toRegex())
- *     registerByPathContains(name = "Domain", color = "#123ABC", pathContains = "domain")
+ *     registerByPathContains(name = "Domain", pathContains = "domain")
  *   }
  * }
  * ```
@@ -59,11 +60,11 @@ import org.gradle.api.provider.Property
  * - fail when running any tasks which reference them.
  */
 @ModularDsl
-interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContainer<T> {
-  fun registerByPluginId(
+public interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContainer<T> {
+  public fun registerByPluginId(
     name: String,
-    color: String,
     pluginId: String,
+    color: String? = null,
     extraConfig: T.() -> Unit = {},
   ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
@@ -71,21 +72,23 @@ interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContai
     type.extraConfig()
   }
 
-  fun registerByPathMatches(
+  public fun registerByPathMatches(
     name: String,
-    color: String,
-    pathMatches: Regex,
+    @Language("RegExp") pathMatches: String,
+    options: Set<RegexOption> = emptySet(),
+    color: String? = null,
     extraConfig: T.() -> Unit = {},
   ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
-    type.pathMatches.convention(pathMatches.toString())
+    type.pathMatches.convention(pathMatches)
+    type.regexOptions.convention(options)
     type.extraConfig()
   }
 
-  fun registerByPathContains(
+  public fun registerByPathContains(
     name: String,
-    color: String,
     pathContains: String,
+    color: String? = null,
     extraConfig: T.() -> Unit = {},
   ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
@@ -94,29 +97,36 @@ interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContai
   }
 }
 
-interface ModuleTypeSpec : PropertiesSpec {
+@ModularDsl
+public interface ModuleTypeSpec : PropertiesSpec {
   /**
    * Required - this will be shown on your generated legend files.
    */
-  val name: String
+  public val name: String
 
   /**
-   * Optional - defaults to #FFFFFF (white). Must be prefixed with a # followed by a 6-character hexadecimal string.
+   * Optional. Must be a valid CSS color string.
    */
-  val color: Property<String>
+  public val color: Property<String>
 
   /**
    * Checks against the path string of your module, e.g. ":path:to:my:module". This is case-sensitive.
    */
-  val pathContains: Property<String>
+  public val pathContains: Property<String>
 
   /**
    * Similar to [pathContains] but more flexible with [Regex] pattern checking instead of straight string comparison.
    */
-  val pathMatches: Property<String>
+  public val pathMatches: Property<String>
+
+  /**
+   * Options to use when matching [pathMatches]. Defaults to empty set, which is case-sensitive matching. Unused
+   * unless [pathMatches] is set.
+   */
+  public val regexOptions: SetProperty<RegexOption>
 
   /**
    * Checks whether the given plugin ID string has been applied to your module.
    */
-  val hasPluginId: Property<String>
+  public val hasPluginId: Property<String>
 }

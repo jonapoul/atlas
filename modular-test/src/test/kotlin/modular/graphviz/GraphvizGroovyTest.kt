@@ -13,7 +13,7 @@ import modular.test.scenarios.GroovyGraphVizModuleTypes
 import modular.test.taskWasSuccessful
 import org.junit.jupiter.api.Test
 
-class GraphvizGroovyTest : ScenarioTest() {
+internal class GraphvizGroovyTest : ScenarioTest() {
   @Test
   @RequiresGraphviz
   fun `Configure graphviz`() = runScenario(GroovyGraphVizBasic) {

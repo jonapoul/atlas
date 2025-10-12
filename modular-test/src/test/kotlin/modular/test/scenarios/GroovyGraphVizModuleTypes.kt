@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object GroovyGraphVizModuleTypes : Scenario by GroovyBasic {
+internal object GroovyGraphVizModuleTypes : Scenario by GroovyBasic {
   override val rootBuildFile = """
     plugins {
       id 'org.jetbrains.kotlin.jvm'

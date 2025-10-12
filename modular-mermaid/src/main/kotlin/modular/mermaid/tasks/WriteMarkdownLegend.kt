@@ -5,14 +5,18 @@
 package modular.mermaid.tasks
 
 import modular.core.LinkType
-import modular.core.ModularSpec
 import modular.core.ModuleType
+import modular.core.internal.DummyModularGenerationTask
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
+import modular.core.internal.Variant.Legend
 import modular.core.internal.logIfConfigured
+import modular.core.internal.modularBuildDirectory
 import modular.core.internal.moduleType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.orderedModuleTypes
+import modular.core.internal.outputFile
+import modular.core.internal.qualifier
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
 import org.gradle.api.DefaultTask
@@ -30,28 +34,9 @@ import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 @CacheableTask
-abstract class WriteMarkdownLegend : WriteMarkdownLegendBase(), ModularGenerationTask {
-  override fun getDescription() = "Generates the legend for a project dependency graph"
-
-  @TaskAction
-  override fun execute() {
-    super.execute()
-    logIfConfigured(outputFile.get().asFile)
-  }
-}
-
-@DisableCachingByDefault
-internal abstract class WriteDummyMarkdownLegend : WriteMarkdownLegendBase() {
-  override fun getDescription() = "Generates a dummy legend for comparison against the golden"
-
-  @TaskAction
-  override fun execute() = super.execute()
-}
-
-@CacheableTask
-sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithOutputFile {
-  @get:Input abstract val moduleTypes: ListProperty<ModuleType>
-  @get:Input abstract val linkTypes: SetProperty<LinkType>
+public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, ModularGenerationTask {
+  @get:Input public abstract val moduleTypes: ListProperty<ModuleType>
+  @get:Input public abstract val linkTypes: SetProperty<LinkType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -60,7 +45,7 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithOutputFile {
   }
 
   @TaskAction
-  open fun execute() {
+  public open fun execute() {
     val moduleTypes = moduleTypes.get()
     val linkTypes = linkTypes.get()
     val outputFile = outputFile.get().asFile
@@ -71,16 +56,16 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithOutputFile {
     val contents = buildString {
       if (hasModuleTypes) {
         appendModuleTypesTable(moduleTypes)
-        appendLine()
       }
 
       if (hasLinkTypes) {
+        if (hasModuleTypes) appendLine()
         appendLinkTypesTable(linkTypes)
-        appendLine()
       }
     }
 
     outputFile.writeText(contents)
+    logIfConfigured(outputFile)
   }
 
   private fun StringBuilder.appendModuleTypesTable(moduleTypes: List<ModuleType>) {
@@ -88,9 +73,12 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithOutputFile {
     appendLine("|:--:|:--:|")
 
     for (type in moduleTypes) {
-      val url = "https://img.shields.io/badge/-%20-${parseColor(type.color)}?style=flat-square"
-      val img = "<img src=\"$url\" height=\"30\" width=\"100\">"
-      appendLine("| ${type.name} | $img |")
+      val value = type.color?.let { color ->
+        val url = "https://img.shields.io/badge/-%20-${parseColor(color)}?style=flat-square"
+        "<img src=\"$url\" height=\"30\" width=\"100\">"
+      } ?: "<no color>"
+
+      appendLine("| ${type.name} | $value |")
     }
   }
 
@@ -112,21 +100,42 @@ sealed class WriteMarkdownLegendBase : DefaultTask(), TaskWithOutputFile {
     color
   }
 
-  internal companion object {
-    internal fun get(target: Project): TaskProvider<WriteMarkdownLegendBase> =
-      target.tasks.named(TASK_NAME, WriteMarkdownLegendBase::class.java)
+  @DisableCachingByDefault
+  internal abstract class WriteMarkdownLegendDummy : WriteMarkdownLegend(), DummyModularGenerationTask
 
-    internal inline fun <reified T : WriteMarkdownLegendBase> register(
+  internal companion object {
+    private const val TASK_NAME = "writeMermaidLegend"
+
+    internal fun get(target: Project): TaskProvider<WriteMarkdownLegend> =
+      target.tasks.named(TASK_NAME, WriteMarkdownLegend::class.java)
+
+    internal fun real(
       target: Project,
-      spec: ModularSpec,
+      extension: ModularExtensionImpl,
+    ) = register<WriteMarkdownLegend>(
+      target,
+      extension,
+      outputFile = target.outputFile(Legend, fileExtension = "md"),
+    )
+
+    internal fun dummy(
+      target: Project,
+      extension: ModularExtensionImpl,
+    ) = register<WriteMarkdownLegendDummy>(
+      target = target,
+      extension = extension,
+      outputFile = target.modularBuildDirectory
+        .get()
+        .file("legend-temp.md")
+        .asFile,
+    )
+
+    private inline fun <reified T : WriteMarkdownLegend> register(
+      target: Project,
       extension: ModularExtensionImpl,
       outputFile: File,
     ): TaskProvider<T> = with(target) {
-      val qualifier = when (T::class) {
-        WriteDummyMarkdownLegend::class -> "Dummy"
-        else -> ""
-      }
-      val name = "write$qualifier${spec.name.capitalized()}Legend"
+      val name = "write${T::class.qualifier}MermaidLegend"
       val writeLegend = tasks.register(name, T::class.java) { task ->
         task.outputFile.set(outputFile)
       }

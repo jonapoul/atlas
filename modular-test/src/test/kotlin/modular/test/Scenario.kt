@@ -4,7 +4,7 @@
  */
 package modular.test
 
-interface Scenario {
+internal interface Scenario {
   val rootBuildFile: String
   val submoduleBuildFiles: Map<String, String> get() = emptyMap()
   val gradlePropertiesFile: String get() = ""
@@ -13,28 +13,28 @@ interface Scenario {
   val pluginId get() = "dev.jonpoulton.modular.$variant"
 }
 
-interface D2Scenario : Scenario {
+internal interface D2Scenario : Scenario {
   override val variant get() = PluginVariant.D2
 }
 
-interface GraphvizScenario : Scenario {
+internal interface GraphvizScenario : Scenario {
   override val variant get() = PluginVariant.Graphviz
 }
 
-interface MermaidScenario : Scenario {
+internal interface MermaidScenario : Scenario {
   override val variant get() = PluginVariant.Mermaid
 }
 
-enum class PluginVariant(val string: String) {
+internal enum class PluginVariant(val string: String) {
   D2("d2"),
   Graphviz("graphviz"),
   Mermaid("mermaid"),
   ;
 
-  override fun toString() = string
+  override fun toString(): String = string
 }
 
-val Scenario.javaBuildScript
+internal val Scenario.javaBuildScript
   get() = """
   plugins {
     id("java")
@@ -42,7 +42,7 @@ val Scenario.javaBuildScript
   }
   """.trimIndent()
 
-val Scenario.kotlinJvmBuildScript
+internal val Scenario.kotlinJvmBuildScript
   get() = """
   plugins {
     kotlin("jvm")
@@ -50,7 +50,7 @@ val Scenario.kotlinJvmBuildScript
   }
   """.trimIndent()
 
-val Scenario.androidBuildScript
+internal val Scenario.androidBuildScript
   get() = """
   plugins {
     kotlin("android")

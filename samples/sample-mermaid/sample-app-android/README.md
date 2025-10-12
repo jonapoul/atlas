@@ -1,7 +1,6 @@
 # sample-app-android
 
 <!--region chart-->
-
 ```mermaid
 ---
 config:
@@ -30,18 +29,23 @@ graph TD
   lib_java["lib java"]
   lib_kotlin_jvm["lib kotlin jvm"]
   lib_kotlin_mp["lib kotlin mp"]
-  style _sample_app_android fill:limegreen,color:black,font-weight:bold,stroke:black,stroke-width:2px
-  style _sample_lib_android fill:lightgreen,color:black
-  style _sample_lib_java fill:orange,color:black
-  style _sample_lib_kotlin_jvm fill:mediumorchid,color:black
-  style _sample_lib_kotlin_mp fill:mediumslateblue,color:black
-  _sample_app_android -.-> _sample_lib_android
-  _sample_app_android -.-> _sample_lib_kotlin_mp
-  _sample_lib_android -.-> _sample_lib_kotlin_jvm
-  _sample_lib_kotlin_mp --> _sample_lib_android
-  _sample_lib_kotlin_mp ==> _sample_lib_java
+  style app_android fill:limegreen,fillcolor:limegreen
+  style lib_android fill:lightgreen,fillcolor:lightgreen
+  style lib_java fill:orange,fillcolor:orange
+  style lib_kotlin_jvm fill:mediumorchid,fillcolor:mediumorchid
+  style lib_kotlin_mp fill:mediumslateblue,color:white,stroke-dasharray:4 3 2 1,font-size:20px,fillcolor:mediumslateblue
+  app_android -.implementation.-> lib_android
+  linkStyle 0 stroke:aqua
+  app_android -.implementation.-> lib_kotlin_mp
+  linkStyle 1 stroke:aqua
+  lib_android -.implementation.-> lib_kotlin_jvm
+  linkStyle 2 stroke:aqua
+  lib_kotlin_mp --api--> lib_android
+  linkStyle 3 stroke-width:5px
+  lib_kotlin_mp ==jvmMainImplementation==> lib_java
   linkStyle 4 stroke:orange
-  _sample_lib_kotlin_mp --> _sample_lib_kotlin_jvm
+  lib_kotlin_mp --api--> lib_kotlin_jvm
+  linkStyle 5 stroke-width:5px
 ```
 
 | Module Types | Color |
@@ -52,10 +56,10 @@ graph TD
 | Kotlin JVM | <img src="https://img.shields.io/badge/-%20-mediumorchid?style=flat-square" height="30" width="100"> |
 | Java | <img src="https://img.shields.io/badge/-%20-orange?style=flat-square" height="30" width="100"> |
 | Other | <img src="https://img.shields.io/badge/-%20-gainsboro?style=flat-square" height="30" width="100"> |
+
 | Link Types | Style |
 |:--:|:--:|
 | jvmMainImplementation | Orange Bold |
 | api | Basic |
 | implementation | Dashed |
-
 <!--endregion-->

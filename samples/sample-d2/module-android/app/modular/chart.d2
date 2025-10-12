@@ -10,7 +10,6 @@ module-kotlin: :module-kotlin {
   jvm: :jvm { class: module-KotlinJVM }
   kmp: :kmp { class: module-KotlinMultiplatform }
 }
-module-android.app.class: thisProject
 module-android.app -> module-android.lib { class: link-implementation }
 module-android.app -> module-kotlin.kmp { class: link-implementation }
 module-android.lib -> module-kotlin.jvm { class: link-implementation }

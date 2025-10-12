@@ -1,6 +1,5 @@
 import modular.mermaid.ConsiderModelOrder.PreferEdges
 import modular.mermaid.CycleBreakingStrategy.Interactive
-import modular.mermaid.LinkStyle
 import modular.mermaid.LinkStyle.Basic
 import modular.mermaid.LinkStyle.Bold
 import modular.mermaid.LinkStyle.Dashed
@@ -19,16 +18,28 @@ plugins {
 
 modular {
   alsoTraverseUpwards = false
+  displayLinkLabels = true
   generateOnSync = true
 
   moduleTypes {
-    builtIns()
+    androidApp()
+
+    kotlinMultiplatform {
+      fontColor = "white"
+      strokeDashArray = "4 3 2 1"
+      fontSize = "20px"
+    }
+
+    androidLibrary()
+    kotlinJvm()
+    java()
+    other()
   }
 
   linkTypes {
     "jvmMainImplementation"(style = Bold, color = "orange")
-    api(Basic)
-    implementation(Dashed)
+    api(Basic) { strokeWidth = "5px" }
+    implementation(Dashed) { stroke = "aqua" }
   }
 
   pathTransforms {
@@ -38,7 +49,6 @@ modular {
 
   mermaid {
     animateLinks = false
-
     look = HandDrawn
     theme = Forest
 

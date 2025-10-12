@@ -22,7 +22,7 @@ import modular.test.scenarios.TriangleGraph
 import modular.test.taskWasSuccessful
 import kotlin.test.Test
 
-class WriteModuleLinksTest : ScenarioTest() {
+internal class WriteModuleLinksTest : ScenarioTest() {
   @Test
   fun `Empty file for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when

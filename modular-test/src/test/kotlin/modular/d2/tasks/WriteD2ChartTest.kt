@@ -12,7 +12,7 @@ import modular.test.runTask
 import modular.test.scenarios.D2Basic
 import kotlin.test.Test
 
-class WriteD2ChartTest : ScenarioTest() {
+internal class WriteD2ChartTest : ScenarioTest() {
   @Test
   fun `Generate charts from basic config`() = runScenario(D2Basic) {
     // when
@@ -33,7 +33,6 @@ class WriteD2ChartTest : ScenarioTest() {
         a: :a { class: module-KotlinJVM }
         b: :b { class: module-Java }
         c: :c { class: module-Java }
-        a.class: thisProject
         a -> b
         a -> c
         vars: {
@@ -49,7 +48,6 @@ class WriteD2ChartTest : ScenarioTest() {
       """
         ...@../../modular/classes.d2
         b: :b { class: module-Java }
-        b.class: thisProject
         vars: {
           d2-legend: {
             module-Java: Java { class: module-Java }
@@ -62,7 +60,6 @@ class WriteD2ChartTest : ScenarioTest() {
       """
         ...@../../modular/classes.d2
         c: :c { class: module-Java }
-        c.class: thisProject
         vars: {
           d2-legend: {
             module-Java: Java { class: module-Java }

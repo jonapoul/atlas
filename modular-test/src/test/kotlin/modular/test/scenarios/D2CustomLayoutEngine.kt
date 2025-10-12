@@ -4,13 +4,13 @@
  */
 package modular.test.scenarios
 
+import modular.test.D2Scenario
 import modular.test.KOTLIN_VERSION
-import modular.test.Scenario
-import kotlin.text.trimIndent
 
-object GraphVizBigGraph100DpiSvg : Scenario by GraphVizBigGraph {
+internal object D2CustomLayoutEngine : D2Scenario by D2Basic {
   override val rootBuildFile = """
-    import modular.graphviz.FileFormat
+    import modular.d2.FileFormat
+    import modular.d2.LayoutEngine
 
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
@@ -18,12 +18,10 @@ object GraphVizBigGraph100DpiSvg : Scenario by GraphVizBigGraph {
     }
 
     modular {
-      moduleTypes {
-        kotlinJvm()
-      }
+      moduleTypes.useDefaults()
 
-      graphviz {
-        dpi = 100
+      d2 {
+        layoutEngine = LayoutEngine.Elk
         fileFormat = FileFormat.Svg
       }
     }

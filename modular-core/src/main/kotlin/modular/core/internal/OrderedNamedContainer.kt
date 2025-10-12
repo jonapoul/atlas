@@ -13,25 +13,20 @@ import modular.core.NamedModuleTypeContainer
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
-import org.gradle.api.model.ObjectFactory
 import java.util.function.IntFunction
 
 @InternalModularApi
-open class ModuleTypeContainer<T : ModuleTypeSpec>(
+public open class ModuleTypeContainer<T : ModuleTypeSpec>(
   delegate: NamedDomainObjectContainer<T>,
 ) : OrderedNamedContainer<T>(delegate), NamedModuleTypeContainer<T>
 
 @InternalModularApi
-open class LinkTypeContainer(objects: ObjectFactory) :
-  OrderedNamedContainer<LinkTypeSpec>(
-    container = objects.domainObjectContainer(LinkTypeSpec::class.java) { name ->
-      objects.newInstance(LinkTypeSpecImpl::class.java, name)
-    },
-  ),
-  NamedLinkTypeContainer
+public open class LinkTypeContainer<T : LinkTypeSpec>(
+  delegate: NamedDomainObjectContainer<T>,
+) : OrderedNamedContainer<T>(delegate), NamedLinkTypeContainer<T>
 
 @InternalModularApi
-open class OrderedNamedContainer<T : Any>(
+public open class OrderedNamedContainer<T : Any>(
   private val container: NamedDomainObjectContainer<T>,
 ) : NamedDomainObjectContainer<T> by container {
   private val orderedNames = mutableSetOf<String>()
@@ -66,7 +61,7 @@ open class OrderedNamedContainer<T : Any>(
     return container.maybeCreate(name)
   }
 
-  fun getInOrder(): List<T> = orderedNames.map(container::getByName)
+  public fun getInOrder(): List<T> = orderedNames.map(container::getByName)
 
   // No idea what this is for but if I don't have it I get a linting warning on the interface delegation at the top
   @Suppress("OVERRIDE_DEPRECATION", "RedundantOverride", "DEPRECATION")

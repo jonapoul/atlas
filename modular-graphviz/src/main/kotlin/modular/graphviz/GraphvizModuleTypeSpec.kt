@@ -7,13 +7,7 @@ package modular.graphviz
 import modular.core.ModuleTypeSpec
 
 /**
- * See https://graphviz.org/docs/nodes/ for custom attributes, which you can set using [put] from this interface.
- * Some of the more common options are included as vars below.
- *
- * Not all properties from the above link will be valid, you specifically want the ones for nodes. The plugin won't
- * validate them, but graphviz will (probably?) fail compilation when you generate the chart file.
+ * See https://graphviz.org/docs/nodes/ and [NodeAttributes] for custom attributes, which you can set using various
+ * Kotlin vars.
  */
-interface GraphvizModuleTypeSpec : ModuleTypeSpec {
-  override fun put(key: String, value: Any)
-  var shape: Shape?
-}
+public interface GraphvizModuleTypeSpec : ModuleTypeSpec, NodeAttributes

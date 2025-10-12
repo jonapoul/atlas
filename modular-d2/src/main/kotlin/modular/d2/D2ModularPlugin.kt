@@ -9,28 +9,28 @@ package modular.d2
 import modular.core.ModularPlugin
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant.Chart
+import modular.core.internal.Variant.Legend
 import modular.core.internal.modularBuildDirectory
 import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
+import modular.core.tasks.WriteReadme
 import modular.d2.internal.D2ModularExtensionImpl
 import modular.d2.tasks.ExecD2
 import modular.d2.tasks.WriteD2Chart
-import modular.d2.tasks.WriteD2ChartBase
 import modular.d2.tasks.WriteD2Classes
-import modular.d2.tasks.WriteDummyD2Chart
 import org.gradle.api.Project
 
-class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
-  override fun Project.createExtension() = extensions.create(
-    D2ModularExtension::class.java,
-    ModularExtensionImpl.NAME,
-    D2ModularExtensionImpl::class.java,
-  ) as D2ModularExtensionImpl
+public class D2ModularPlugin : ModularPlugin() {
+  private lateinit var d2Extension: D2ModularExtensionImpl
+  override val extension: ModularExtensionImpl by lazy { d2Extension }
 
-  override fun Project.getExtension() =
-    rootProject.extensions.getByType(D2ModularExtension::class.java) as D2ModularExtensionImpl
+  override fun applyToRoot(target: Project): Unit = with(target) {
+    d2Extension = extensions.create(
+      D2ModularExtension::class.java,
+      ModularExtensionImpl.NAME,
+      D2ModularExtensionImpl::class.java,
+    ) as D2ModularExtensionImpl
 
-  override fun applyToRoot(target: Project) = with(target) {
     super.applyToRoot(target)
 
     afterEvaluate {
@@ -40,20 +40,26 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
     }
   }
 
-  override fun Project.registerChildTasks() {
-    val d2Spec = extension.d2
+  override fun applyToChild(target: Project) {
+    d2Extension = target.rootProject
+      .extensions
+      .getByType(D2ModularExtension::class.java) as D2ModularExtensionImpl
 
-    val chartTask = WriteD2ChartBase.register<WriteD2Chart>(
+    super.applyToChild(target)
+  }
+
+  override fun Project.registerChildTasks() {
+    val d2Spec = d2Extension.d2
+
+    val chartTask = WriteD2Chart.real(
       target = project,
       extension = extension,
-      spec = d2Spec,
       outputFile = outputFile(Chart, d2Spec.fileExtension.get()),
     )
 
-    val dummyChartTask = WriteD2ChartBase.register<WriteDummyD2Chart>(
+    val dummyChartTask = WriteD2Chart.dummy(
       target = project,
       extension = extension,
-      spec = d2Spec,
       outputFile = modularBuildDirectory.get().file("chart-temp.d2").asFile,
     )
 
@@ -66,30 +72,48 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
       dummyTask = dummyChartTask,
     )
 
-    ExecD2.register(
+    val d2Task = ExecD2.register(
       target = project,
       spec = d2Spec,
       variant = Chart,
       dotFileTask = chartTask,
     )
 
-    //    WriteReadme.register(
-    //      target = project,
-    //      flavor = "D2",
-    //      chartFile = d2Task.map { it.outputFile.get() },
-    //      legendTask = rootProject.tasks.named("execD2Legend", ExecD2::class.java),
-    //    )
+    WriteReadme.register(
+      target = project,
+      flavor = "D2",
+      chartFile = d2Task.map { it.outputFile.get() },
+      legendTask = null,
+    )
   }
 
   override fun Project.registerRootTasks() {
-    WriteD2Classes.register(
+    val d2 = d2Extension.d2
+
+    val classes = WriteD2Classes.real(
       target = this,
+      extension = d2Extension,
+      outputFile = outputFile(variant = Legend, fileExtension = "d2", filename = "classes"),
+    )
+
+    val dummyClasses = WriteD2Classes.dummy(
+      target = project,
+      extension = d2Extension,
+      outputFile = modularBuildDirectory.get().file("classes-temp.d2").asFile,
+    )
+
+    CheckFileDiff.register(
+      target = project,
       extension = extension,
+      spec = d2,
+      variant = Chart,
+      realTask = classes,
+      dummyTask = dummyClasses,
     )
   }
 
   private fun Project.warnIfFileFormatRequiresPlaywright() {
-    val d2 = extension.d2
+    val d2 = d2Extension.d2
     val format = d2.fileFormat.get()
     val shouldSuppress = d2.properties.suppressPlaywrightWarning.get()
     val simpleFormats = setOf(FileFormat.Svg, FileFormat.Ascii)
@@ -105,7 +129,7 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
   }
 
   private fun Project.warnIfLabelLocationSpecifiedButNotPosition() {
-    val d2 = extension.d2
+    val d2 = d2Extension.d2
     val position = d2.groupLabelPosition.orNull
     val location = d2.groupLabelLocation.orNull
     val shouldSuppress = d2.properties.suppressLabelLocationWarning.get()
@@ -119,7 +143,7 @@ class D2ModularPlugin : ModularPlugin<D2ModularExtensionImpl>() {
   }
 
   private fun Project.warnIfAnimationSelectedWithNonAnimatedFileFormat() {
-    val d2 = extension.d2
+    val d2 = d2Extension.d2
     val format = d2.fileFormat.get()
     val animatedFormats = setOf(FileFormat.Svg, FileFormat.Gif)
     val animated = d2.animateLinks.orNull

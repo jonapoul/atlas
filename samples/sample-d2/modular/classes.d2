@@ -17,34 +17,51 @@ vars: {
 }
 classes: {
   module-AndroidApp {
+    shape: "hexagon"
     style.fill: "limegreen"
+    style.font-color: "black"
+    style.stroke: "black"
+    style.stroke-width: "10"
   }
   module-KotlinMultiplatform {
     style.fill: "mediumslateblue"
   }
   module-AndroidLibrary {
     style.fill: "lightgreen"
+    style.font-color: "red"
+    style.italic: "true"
+    style.multiple: "true"
   }
   module-KotlinJVM {
     style.fill: "mediumorchid"
+    style.fill-pattern: "lines"
   }
   module-Java {
+    style.animated: "true"
     style.fill: "orange"
   }
   module-Other {
     style.fill: "gainsboro"
   }
   link-jvmMainImplementation {
+    label: "jvmMainImplementation"
+    style.font-color: "orange"
+    style.opacity: "0.5"
     style.stroke: "orange"
+    style.stroke-dash: "3"
     style.stroke-width: "3"
   }
   link-api {
+    label: "api"
     style.stroke: "greenyellow"
+    style.stroke-width: "5"
   }
   link-implementation {
+    label: "implementation"
     style.animated: "true"
     style.stroke: "fuchsia"
     style.stroke-dash: "2"
+    style.text-transform: "uppercase"
   }
   container {
     label.near: border-bottom-center
@@ -52,10 +69,8 @@ classes: {
   hidden {
     style.opacity: 0
   }
-  thisProject {
-    style.stroke-width: 8
-  }
 }
+(** -> **)[*].style.font-color: black
 (** -> **)[*].target-arrowhead.shape: box
 (** -> **)[*].target-arrowhead.style.filled: true
 ***.style.font: mono

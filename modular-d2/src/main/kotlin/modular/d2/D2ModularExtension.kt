@@ -9,10 +9,10 @@ import modular.core.ModularExtension
 import org.gradle.api.Action
 
 @ModularDsl
-interface D2ModularExtension : ModularExtension {
-  val d2: D2Spec
-  fun d2(action: Action<D2Spec>): D2Spec
+public interface D2ModularExtension : ModularExtension {
+  public val d2: D2Spec
+  public fun d2(action: Action<D2Spec>)
 
-  fun linkTypes(action: Action<D2NamedLinkTypeContainer>)
-  fun moduleTypes(action: Action<D2NamedModuleTypeContainer>)
+  public fun linkTypes(action: Action<D2NamedLinkTypeContainer>)
+  public fun moduleTypes(action: Action<D2NamedModuleTypeContainer>)
 }

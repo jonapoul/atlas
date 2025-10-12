@@ -15,6 +15,7 @@ import modular.core.internal.moduleType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.orderedModuleTypes
 import modular.core.internal.parseEnum
+import modular.core.internal.sortedByKeys
 import modular.d2.Direction
 import modular.d2.LayoutEngine
 import modular.d2.LinkStyle
@@ -27,7 +28,7 @@ import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
 @InternalModularApi
-fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString {
+public fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString {
   appendStyles(config)
   appendVars(config)
 
@@ -37,7 +38,6 @@ fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString {
     for (type in config.linkTypes) appendLink(config, type)
     appendContainer(config)
     appendHidden()
-    appendThisProject()
   }
   appendLine("}")
 
@@ -45,21 +45,22 @@ fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString {
 }
 
 @KSerializable
-class D2ClassesConfig(
-  val animateLinks: Boolean? = null,
-  val center: Boolean? = null,
-  val darkTheme: Theme? = null,
-  val direction: Direction? = null,
-  val globalProps: Map<String, String>? = null,
-  val layoutEngine: LayoutEngine? = null,
-  val linkTypes: List<LinkType> = emptyList(),
-  val location: Location? = null,
-  val moduleTypes: List<ModuleType> = emptyList(),
-  val pad: Int? = null,
-  val position: Position? = null,
-  val rootStyle: Map<String, String> = emptyMap(),
-  val sketch: Boolean? = null,
-  val theme: Theme? = null,
+public class D2ClassesConfig(
+  public val animateLinks: Boolean? = null,
+  public val center: Boolean? = null,
+  public val darkTheme: Theme? = null,
+  public val direction: Direction? = null,
+  public val displayLinkLabels: Boolean? = null,
+  public val globalProps: Map<String, String>? = null,
+  public val layoutEngine: LayoutEngine? = null,
+  public val linkTypes: List<LinkType> = emptyList(),
+  public val location: Location? = null,
+  public val moduleTypes: List<ModuleType> = emptyList(),
+  public val pad: Int? = null,
+  public val position: Position? = null,
+  public val rootStyle: Map<String, String> = emptyMap(),
+  public val sketch: Boolean? = null,
+  public val theme: Theme? = null,
 ) : JSerializable
 
 internal fun D2ModularExtensionImpl.toConfig() = D2ClassesConfig(
@@ -67,6 +68,7 @@ internal fun D2ModularExtensionImpl.toConfig() = D2ClassesConfig(
   center = d2.center.orNull,
   darkTheme = d2.themeDark.orNull,
   direction = d2.direction.orNull,
+  displayLinkLabels = displayLinkLabels.orNull,
   globalProps = d2.globalProps.properties.orNull,
   layoutEngine = d2.layoutEngine.orNull,
   linkTypes = orderedLinkTypes(),
@@ -81,7 +83,6 @@ internal fun D2ModularExtensionImpl.toConfig() = D2ClassesConfig(
 
 internal const val CONTAINER_CLASS = "container"
 internal const val HIDDEN_CLASS = "hidden"
-internal const val THIS_PROJECT_CLASS = "thisProject"
 
 internal val LinkType.classId get() = "link-$key"
 internal val ModuleType.classId get() = "module-$key"
@@ -131,6 +132,12 @@ private fun linkAttributes(config: D2ClassesConfig, link: LinkType): List<Pair<S
     attrs["style.animated"] = "true"
   }
 
+  if (config.displayLinkLabels == true) {
+    attrs["label"] = link.displayName
+  }
+
+  attrs.putAll(link.properties)
+
   return attrs.sortedByKeys()
 }
 
@@ -143,12 +150,6 @@ private fun IndentedStringBuilder.appendContainer(config: D2ClassesConfig) {
 private fun IndentedStringBuilder.appendHidden() {
   appendLine("$HIDDEN_CLASS {")
   indent { appendLine("style.opacity: 0") }
-  appendLine("}")
-}
-
-private fun IndentedStringBuilder.appendThisProject() {
-  appendLine("$THIS_PROJECT_CLASS {")
-  indent { appendLine("style.stroke-width: 8") }
   appendLine("}")
 }
 

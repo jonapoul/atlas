@@ -13,7 +13,7 @@ import kotlinx.serialization.json.Json
 import modular.core.InternalModularApi
 
 @InternalModularApi
-val ModularJson = Json {
+public val ModularJson: Json = Json {
   encodeDefaults = false
   explicitNulls = false
   ignoreUnknownKeys = false

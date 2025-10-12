@@ -8,24 +8,27 @@ import modular.core.ModuleTypeSpec
 
 /**
  * Style specs from https://d2lang.com/tour/style, applied to the shape matching this module type.
+ *
+ * You can use any of the below properties, plus those in [D2PropertiesSpec] shared between links and modules.
  */
-interface D2ModuleTypeSpec : ModuleTypeSpec {
-  var animated: Boolean?
-  var bold: Boolean?
-  var borderRadius: Int?
-  var doubleBorder: String?
-  var fillPattern: FillPattern?
-  var font: Font?
-  var fontColor: String?
-  var fontSize: Int?
-  var italic: Boolean?
-  var multiple: Boolean?
-  var opacity: Float?
-  var render3D: Boolean?
-  var shadow: Boolean?
-  var stroke: String?
-  var strokeDash: Int?
-  var strokeWidth: Int?
-  var textTransform: TextTransform?
-  var underline: Boolean?
+public interface D2ModuleTypeSpec : ModuleTypeSpec, D2PropertiesSpec {
+  /**
+   * Only applicable to [Shape.Rectangle] and [Shape.Oval]
+   */
+  public var doubleBorder: String?
+
+  public var fill: String?
+
+  public var fillPattern: FillPattern?
+
+  public var multiple: Boolean?
+
+  /**
+   * Only applicable to [Shape.Rectangle] and [Shape.Square]
+   */
+  public var render3D: Boolean?
+
+  public var shadow: Boolean?
+
+  public var shape: Shape?
 }

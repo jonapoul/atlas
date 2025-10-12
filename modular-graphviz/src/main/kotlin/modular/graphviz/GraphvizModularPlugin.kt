@@ -10,53 +10,53 @@ import modular.core.ModularPlugin
 import modular.core.internal.ModularExtensionImpl
 import modular.core.internal.Variant.Chart
 import modular.core.internal.Variant.Legend
-import modular.core.internal.modularBuildDirectory
-import modular.core.internal.outputFile
 import modular.core.tasks.CheckFileDiff
 import modular.core.tasks.WriteReadme
 import modular.graphviz.internal.GraphvizModularExtensionImpl
 import modular.graphviz.tasks.ExecGraphviz
-import modular.graphviz.tasks.WriteDummyGraphvizChart
-import modular.graphviz.tasks.WriteDummyGraphvizLegend
 import modular.graphviz.tasks.WriteGraphvizChart
-import modular.graphviz.tasks.WriteGraphvizChartBase
 import modular.graphviz.tasks.WriteGraphvizLegend
-import modular.graphviz.tasks.WriteGraphvizLegendBase
 import org.gradle.api.Project
 
-class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
-  override fun Project.createExtension() = extensions.create(
-    GraphvizModularExtension::class.java,
-    ModularExtensionImpl.NAME,
-    GraphvizModularExtensionImpl::class.java,
-  ) as GraphvizModularExtensionImpl
+public class GraphvizModularPlugin : ModularPlugin() {
+  private lateinit var graphVizExtension: GraphvizModularExtensionImpl
+  override val extension: ModularExtensionImpl by lazy { graphVizExtension }
 
-  override fun Project.getExtension() =
-    rootProject.extensions.getByType(GraphvizModularExtension::class.java) as GraphvizModularExtensionImpl
+  override fun applyToRoot(target: Project): Unit = with(target) {
+    graphVizExtension = extensions.create(
+      GraphvizModularExtension::class.java,
+      ModularExtensionImpl.NAME,
+      GraphvizModularExtensionImpl::class.java,
+    ) as GraphvizModularExtensionImpl
 
-  override fun applyToRoot(target: Project) = with(target) {
     super.applyToRoot(target)
 
     afterEvaluate {
-      warnIfSvgSelectedWithCustomDpi()
+      // Validation TBC
     }
   }
 
-  override fun Project.registerChildTasks() {
-    val graphvizSpec = extension.graphviz
+  override fun applyToChild(target: Project) {
+    graphVizExtension = target.rootProject
+      .extensions
+      .getByType(GraphvizModularExtension::class.java) as GraphvizModularExtensionImpl
 
-    val chartTask = WriteGraphvizChartBase.register<WriteGraphvizChart>(
+    super.applyToChild(target)
+  }
+
+  override fun Project.registerChildTasks() {
+    val graphvizSpec = graphVizExtension.graphviz
+
+    val chartTask = WriteGraphvizChart.real(
       target = project,
       extension = extension,
       spec = graphvizSpec,
-      outputFile = outputFile(Chart, graphvizSpec.fileExtension.get()),
     )
 
-    val dummyChartTask = WriteGraphvizChartBase.register<WriteDummyGraphvizChart>(
+    val dummyChartTask = WriteGraphvizChart.dummy(
       target = project,
       extension = extension,
       spec = graphvizSpec,
-      outputFile = modularBuildDirectory.get().file("chart-temp.dot").asFile,
     )
 
     CheckFileDiff.register(
@@ -84,13 +84,12 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
   }
 
   override fun Project.registerRootTasks() {
-    val spec = extension.graphviz
+    val spec = graphVizExtension.graphviz
 
-    val realTask = WriteGraphvizLegendBase.register<WriteGraphvizLegend>(
+    val realTask = WriteGraphvizLegend.real(
       target = project,
       spec = spec,
       extension = extension,
-      outputFile = outputFile(Legend, spec.fileExtension.get()),
     )
 
     ExecGraphviz.register(
@@ -101,11 +100,9 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
     )
 
     // Also validate the legend's dotfile when we call gradle check
-    val dummyTask = WriteGraphvizLegendBase.register<WriteDummyGraphvizLegend>(
+    val dummyTask = WriteGraphvizLegend.dummy(
       target = project,
-      spec = spec,
       extension = extension,
-      outputFile = modularBuildDirectory.get().file("legend-temp.dot").asFile,
     )
 
     CheckFileDiff.register(
@@ -116,27 +113,5 @@ class GraphvizModularPlugin : ModularPlugin<GraphvizModularExtensionImpl>() {
       realTask = realTask,
       dummyTask = dummyTask,
     )
-  }
-
-  private fun Project.warnIfSvgSelectedWithCustomDpi() {
-    val adjustSvgViewBox = extension.graphviz.adjustSvgViewBox.get()
-    val warningIsSuppressed = extension.graphviz.properties.suppressSvgViewBoxWarning
-    if (!adjustSvgViewBox && extension.graphviz.dpi.isPresent && !warningIsSuppressed.get()) {
-      val msg = "Warning: Configuring a custom DPI with SVG output enabled will likely cause a misaligned " +
-        "viewBox. Try adding the following property to your build file to automatically attempt a fix:"
-      logger.warn(
-        """
-        $msg
-
-          modular {
-            graphviz {
-              adjustSvgViewBox = true
-            }
-          }
-
-        or add "modular.graphviz.suppressAdjustSvgViewBox=true" to your gradle.properties file to suppress this warning.
-        """.trimIndent(),
-      )
-    }
   }
 }

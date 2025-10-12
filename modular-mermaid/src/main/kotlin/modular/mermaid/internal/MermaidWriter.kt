@@ -4,6 +4,8 @@
  */
 package modular.mermaid.internal
 
+import modular.core.InternalModularApi
+import modular.core.LinkType
 import modular.core.Replacement
 import modular.core.internal.ChartWriter
 import modular.core.internal.IndentedStringBuilder
@@ -13,10 +15,12 @@ import modular.core.internal.TypedModule
 import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
 import modular.core.internal.parseEnum
+import modular.core.internal.sortedByKeys
 import modular.mermaid.LinkStyle
 import modular.mermaid.MermaidConfig
 
-internal class MermaidWriter(
+@InternalModularApi
+public class MermaidWriter(
   override val typedModules: Set<TypedModule>,
   override val links: Set<ModuleLink>,
   override val replacements: Set<Replacement>,
@@ -35,15 +39,20 @@ internal class MermaidWriter(
   }
 
   private fun IndentedStringBuilder.appendConfig() {
+    val layout = config.layout
+    val look = config.look
+    val theme = config.theme
+    val themeVariables = config.themeVariables
+    if (listOfNotNull(layout, look, theme, themeVariables).isEmpty()) return
+
     appendLine("---")
     appendLine("config:")
     indent {
-      val layout = config.layout
       layout?.let { appendLine("layout: $it") }
-      config.look?.let { appendLine("look: $it") }
-      config.theme?.let { appendLine("theme: $it") }
+      look?.let { appendLine("look: $it") }
+      theme?.let { appendLine("theme: $it") }
       if (layout != null) appendProperties(name = layout, config.layoutProperties)
-      appendProperties(name = "themeVariables", config.themeVariables)
+      appendProperties(name = "themeVariables", themeVariables)
     }
     appendLine("---")
   }
@@ -60,7 +69,7 @@ internal class MermaidWriter(
 
   override fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph) {
     val cleanedModuleName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
-    appendLine("subgraph $cleanedModuleName[\"${graph.name}\"]")
+    appendLine("subgraph $cleanedModuleName[\":${graph.name}\"]")
   }
 
   override fun IndentedStringBuilder.appendSubgraphFooter() {
@@ -77,40 +86,68 @@ internal class MermaidWriter(
 
       val attrs = Attrs(
         "fill" to module.type?.color,
-        "color" to "black",
       )
 
-      if (thisPath == module.projectPath) {
-        attrs["font-weight"] = "bold"
-        attrs["stroke"] = "black"
-        attrs["stroke-width"] = "2px"
+      module.type?.let { type ->
+        val properties = type.properties + ("fillcolor" to type.color)
+        properties.forEach { (key, value) -> attrs[key] = value }
       }
-      appendLine("style ${module.label} $attrs")
+
+      if (attrs.isNotEmpty()) {
+        appendLine("style ${module.cleaned().label} $attrs")
+      }
     }
   }
 
   // See https://mermaid.js.org/syntax/flowchart.html#links-between-nodes
   private fun IndentedStringBuilder.appendLinks() {
+    val animateLinks = config.animateLinks == true
     links.forEachIndexed { i, link ->
-      val arrowPrefix = if (config.animateLinks) "link$i@" else ""
+      val arrowPrefix = if (animateLinks) "link$i@" else ""
       val style = link.type
         ?.style
         ?.let { parseEnum<LinkStyle>(it) }
         ?: LinkStyle.Basic
 
-      val arrow = when (style) {
+      val arrow = getArrow(link.type, style)
+      val from = typedModules.first { it.projectPath == link.fromPath }.cleaned().label
+      val to = typedModules.first { it.projectPath == link.toPath }.cleaned().label
+      appendLine("$from $arrowPrefix$arrow $to")
+
+      link.type?.let { type ->
+        val attrs = mutableMapOf<String, String>()
+        type.color?.let { attrs["stroke"] = it }
+        attrs.putAll(type.properties)
+        if (attrs.isNotEmpty()) {
+          val attrString = attrs.sortedByKeys().joinToString(separator = ",") { (k, v) -> "$k:$v" }
+          appendLine("linkStyle $i $attrString")
+        }
+      }
+    }
+
+    if (animateLinks) {
+      for (i in links.indices) {
+        appendLine("link$i@{ animate: true }")
+      }
+    }
+  }
+
+  private fun getArrow(type: LinkType?, style: LinkStyle): String {
+    val showLabels = config.displayLinkLabels == true
+    val name = type?.displayName
+    return if (showLabels && name != null) {
+      when (style) {
+        LinkStyle.Basic -> "--$name-->"
+        LinkStyle.Bold -> "==$name==>"
+        LinkStyle.Dashed -> "-.$name.->"
+        LinkStyle.Invisible -> "~~~|$name|"
+      }
+    } else {
+      when (style) {
         LinkStyle.Basic -> "-->"
         LinkStyle.Bold -> "==>"
         LinkStyle.Dashed -> "-.->"
         LinkStyle.Invisible -> "~~~"
-      }
-      appendLine("${link.fromPath.label} $arrowPrefix$arrow ${link.toPath.label}")
-      link.type?.color?.let { color -> appendLine("linkStyle $i stroke:$color") }
-    }
-
-    if (config.animateLinks) {
-      for (i in links.indices) {
-        appendLine("link$i@{ animate: true }")
       }
     }
   }
@@ -126,6 +163,12 @@ internal class MermaidWriter(
     private val delegate: MutableMap<String, Any?>,
   ) : MutableMap<String, Any?> by delegate {
     constructor(vararg entries: Pair<String, Any?>) : this(mutableMapOf(*entries))
+
+    init {
+      delegate.toList().forEach { (key, value) ->
+        if (value == null) delegate.remove(key)
+      }
+    }
 
     override fun toString(): String {
       if (values.filterNotNull().isEmpty()) return ""

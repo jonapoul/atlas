@@ -11,12 +11,12 @@ import modular.core.internal.Node
 import modular.core.internal.StringEnum
 import modular.core.internal.TypedModule
 
-fun node(
+internal fun node(
   path: String,
   type: ModuleType? = null,
 ) = Node(typedModule(path, type))
 
-fun typedModule(
+internal fun typedModule(
   path: String,
   type: ModuleType? = null,
 ) = TypedModule(
@@ -24,7 +24,7 @@ fun typedModule(
   type = type,
 )
 
-fun moduleLink(
+internal fun moduleLink(
   fromPath: String,
   toPath: String,
   configuration: String = "implementation",

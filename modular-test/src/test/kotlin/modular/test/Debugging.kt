@@ -8,7 +8,7 @@ package modular.test
 
 import java.io.File
 
-fun File.allFilesSorted() = walkTopDown()
+internal fun File.allFilesSorted() = walkTopDown()
   .filter { it.isFile }
   .sorted()
   .toList()

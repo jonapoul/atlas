@@ -4,22 +4,19 @@
  */
 package modular.mermaid.internal
 
-import modular.core.InternalModularApi
+import modular.core.PropertiesSpec
 import modular.core.internal.LinkTypeContainer
 import modular.core.internal.ModuleTypeContainer
 import modular.core.internal.ModuleTypeSpecImpl
-import modular.core.internal.PropertiesSpec
 import modular.core.internal.PropertiesSpecImpl
 import modular.core.internal.bool
-import modular.core.internal.boolDelegate
 import modular.core.internal.enum
-import modular.core.internal.enumDelegate
 import modular.core.internal.string
-import modular.core.internal.stringDelegate
 import modular.mermaid.ConsiderModelOrder
 import modular.mermaid.CycleBreakingStrategy
 import modular.mermaid.ElkLayoutSpec
 import modular.mermaid.MermaidLayoutSpec
+import modular.mermaid.MermaidLinkTypeSpec
 import modular.mermaid.MermaidModuleTypeSpec
 import modular.mermaid.MermaidNamedLinkTypeContainer
 import modular.mermaid.MermaidNamedModuleTypeContainer
@@ -29,14 +26,10 @@ import modular.mermaid.NodePlacementStrategy
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
-import org.gradle.api.provider.MapProperty
-import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Input
 import javax.inject.Inject
 import kotlin.jvm.java
 
-@InternalModularApi
-class MermaidSpecImpl(
+internal class MermaidSpecImpl(
   private val objects: ObjectFactory,
   project: Project,
 ) : MermaidSpec {
@@ -61,72 +54,75 @@ class MermaidSpecImpl(
   override val theme = objects.enum(properties.theme)
 }
 
-@InternalModularApi
-open class MermaidLayoutSpecImpl(
+internal open class MermaidLayoutSpecImpl(
   objects: ObjectFactory,
 ) : MermaidLayoutSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
-  override val name: Property<String> = objects
+  override val name = objects
     .property(String::class.java)
     .unsetConvention()
 }
 
-@InternalModularApi
-class ElkLayoutSpecImpl(objects: ObjectFactory) : MermaidLayoutSpecImpl(objects), ElkLayoutSpec {
+internal class ElkLayoutSpecImpl(objects: ObjectFactory) : MermaidLayoutSpecImpl(objects), ElkLayoutSpec {
   init {
     name.set("elk")
     name.finalizeValue()
   }
 
-  override var considerModelOrder by enumDelegate<ConsiderModelOrder>("considerModelOrder")
-  override var cycleBreakingStrategy by enumDelegate<CycleBreakingStrategy>("cycleBreakingStrategy")
-  override var forceNodeModelOrder by boolDelegate("forceNodeModelOrder")
-  override var mergeEdges by boolDelegate("mergeEdges")
-  override var nodePlacementStrategy by enumDelegate<NodePlacementStrategy>("nodePlacementStrategy")
+  override var considerModelOrder by enum<ConsiderModelOrder>("considerModelOrder")
+  override var cycleBreakingStrategy by enum<CycleBreakingStrategy>("cycleBreakingStrategy")
+  override var forceNodeModelOrder by bool("forceNodeModelOrder")
+  override var mergeEdges by bool("mergeEdges")
+  override var nodePlacementStrategy by enum<NodePlacementStrategy>("nodePlacementStrategy")
 }
 
-@InternalModularApi
-class MermaidThemeVariablesSpecImpl(
+internal class MermaidThemeVariablesSpecImpl(
   objects: ObjectFactory,
 ) : MermaidThemeVariablesSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
-  override var background by stringDelegate(key = "background")
-  override var darkMode by boolDelegate(key = "darkMode")
-  override var fontFamily by stringDelegate(key = "fontFamily")
-  override var fontSize by stringDelegate(key = "fontSize")
-  override var lineColor by stringDelegate(key = "lineColor")
-  override var primaryBorderColor by stringDelegate(key = "primaryBorderColor")
-  override var primaryColor by stringDelegate(key = "primaryColor")
-  override var primaryTextColor by stringDelegate(key = "primaryTextColor")
-  override var secondaryColor by stringDelegate(key = "secondaryColor")
-  override var tertiaryColor by stringDelegate(key = "tertiaryColor")
+  override var background by string(key = "background")
+  override var darkMode by bool(key = "darkMode")
+  override var fontFamily by string(key = "fontFamily")
+  override var fontSize by string(key = "fontSize")
+  override var lineColor by string(key = "lineColor")
+  override var primaryBorderColor by string(key = "primaryBorderColor")
+  override var primaryColor by string(key = "primaryColor")
+  override var primaryTextColor by string(key = "primaryTextColor")
+  override var secondaryColor by string(key = "secondaryColor")
+  override var tertiaryColor by string(key = "tertiaryColor")
 }
 
-@InternalModularApi
-class MermaidLinkTypeContainer(objects: ObjectFactory) : LinkTypeContainer(objects), MermaidNamedLinkTypeContainer
-
-@InternalModularApi
-abstract class MermaidModuleTypeSpecImpl @Inject constructor(
+internal abstract class MermaidModuleTypeSpecImpl @Inject constructor(
   override val name: String,
 ) : ModuleTypeSpecImpl(name), MermaidModuleTypeSpec {
-  @get:Input abstract override val properties: MapProperty<String, String>
-
-  override fun put(key: String, value: Any) = properties.put(key, value.toString())
-
-  override var fontColor by stringDelegate("color")
-  override var fontSize by stringDelegate("font-size")
-  override var stroke by stringDelegate("stroke")
-  override var strokeDashArray by stringDelegate("stroke-dasharray")
-  override var strokeWidth by stringDelegate("stroke-width")
-
-  init {
-    properties.convention(emptyMap())
-  }
+  override var fontColor by string("color")
+  override var fontSize by string("font-size")
+  override var stroke by string("stroke")
+  override var strokeDashArray by string("stroke-dasharray")
+  override var strokeWidth by string("stroke-width")
 }
 
-@InternalModularApi
-class MermaidModuleTypeContainer(objects: ObjectFactory) :
+internal class MermaidNamedModuleTypeContainerImpl(objects: ObjectFactory) :
   ModuleTypeContainer<MermaidModuleTypeSpec>(
     delegate = objects.domainObjectContainer(MermaidModuleTypeSpec::class.java) { name ->
       objects.newInstance(MermaidModuleTypeSpecImpl::class.java, name)
     },
   ),
   MermaidNamedModuleTypeContainer
+
+internal abstract class MermaidLinkTypeSpecImpl @Inject constructor(
+  override val name: String,
+  objects: ObjectFactory,
+) : ModuleTypeSpecImpl(name), MermaidLinkTypeSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+  override var fontColor by string("color")
+  override var stroke by string("stroke")
+  override var strokeWidth by string("stroke-width")
+  override var strokeDashArray by string("stroke-dasharray")
+}
+
+internal class MermaidNamedLinkTypeContainerImpl(
+  objects: ObjectFactory,
+) : LinkTypeContainer<MermaidLinkTypeSpec>(
+    delegate = objects.domainObjectContainer(MermaidLinkTypeSpec::class.java) { name ->
+      objects.newInstance(MermaidLinkTypeSpecImpl::class.java, name)
+    },
+  ),
+  MermaidNamedLinkTypeContainer

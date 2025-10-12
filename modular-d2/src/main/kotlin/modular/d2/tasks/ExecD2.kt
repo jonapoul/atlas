@@ -26,28 +26,32 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.process.ExecOperations
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
+/**
+ * Just so I don't forget, [classesFile] is only used to force regeneration if the classes file updates, since we don't
+ * directly read it in this task.
+ */
 @CacheableTask
-abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val inputFile: RegularFileProperty
-  @get:Input abstract val outputFormat: Property<FileFormat>
-  @get:[Input Optional] abstract val pathToD2Command: Property<String>
+public abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile {
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val classesFile: RegularFileProperty
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val inputFile: RegularFileProperty
+  @get:Input public abstract val outputFormat: Property<FileFormat>
+  @get:[Input Optional] public abstract val pathToD2Command: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
-  @get:Inject abstract val execOperations: ExecOperations
+  @get:Inject public abstract val execOperations: ExecOperations
 
   init {
     group = MODULAR_TASK_GROUP
   }
 
   // Not using kotlin setter because this pulls a property value
-  override fun getDescription() = "Uses D2 to convert a text diagram into a ${outputFormat.get()} file"
+  override fun getDescription(): String = "Uses D2 to convert a text diagram into a ${outputFormat.get()} file"
 
   @TaskAction
-  fun execute() {
+  public fun execute() {
     val inputFile = inputFile.get().asFile.absolutePath
     val outputFile = outputFile.get().asFile
     val d2Executable = pathToD2Command.getOrElse("d2")
@@ -76,29 +80,31 @@ abstract class ExecD2 : DefaultTask(), ModularGenerationTask, TaskWithOutputFile
   }
 
   @InternalModularApi
-  companion object {
+  internal companion object {
     @InternalModularApi
-    fun get(target: Project, name: String): TaskProvider<ExecD2> =
+    internal fun get(target: Project, name: String): TaskProvider<ExecD2> =
       target.tasks.named(name, ExecD2::class.java)
 
     @InternalModularApi
-    fun <T : TaskWithOutputFile> register(
+    internal fun <T : TaskWithOutputFile> register(
       target: Project,
       spec: D2Spec,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
     ): TaskProvider<ExecD2> = with(target) {
-      val name = "exec${spec.name.capitalized()}$variant"
+      val name = "execD2$variant"
       val execGraphviz = tasks.register(name, ExecD2::class.java)
+      val d2Classes = WriteD2Classes.get(rootProject)
 
       execGraphviz.configure { task ->
-        val dotFile = dotFileTask.map { it.outputFile.get() }
-        val outputFile = dotFile.map { f ->
+        val d2File = dotFileTask.map { it.outputFile.get() }
+        val outputFile = d2File.map { f ->
           val newFile = f.asFile.resolveSibling("${f.asFile.nameWithoutExtension}.${spec.fileFormat.get()}")
           project.layout.projectDirectory.file(newFile.relativeTo(projectDir).path)
         }
 
-        task.inputFile.convention(dotFile)
+        task.classesFile.convention(d2Classes.map { it.outputFile.get() })
+        task.inputFile.convention(d2File)
         task.pathToD2Command.convention(spec.pathToD2Command)
         task.outputFormat.convention(spec.fileFormat)
         task.outputFile.convention(outputFile)

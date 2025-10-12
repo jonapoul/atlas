@@ -13,13 +13,14 @@ import modular.test.ScenarioTest
 import modular.test.isEqualToSet
 import modular.test.runTask
 import modular.test.scenarios.NoSubmodules
+import modular.test.scenarios.PathMatches
 import modular.test.scenarios.ThreeModulesWithBuiltInTypes
 import modular.test.scenarios.ThreeModulesWithCustomTypes
 import modular.test.taskWasSuccessful
 import java.io.File
 import kotlin.test.Test
 
-class CollateModuleTypesTest : ScenarioTest() {
+internal class CollateModuleTypesTest : ScenarioTest() {
   @Test
   fun `Collate three custom types`() = runScenario(ThreeModulesWithCustomTypes) {
     // when
@@ -74,6 +75,21 @@ class CollateModuleTypesTest : ScenarioTest() {
     // and no types were collated, but the task still passed
     assertThat(result).taskWasSuccessful(":collateModuleTypes")
     assertThat(moduleTypes).isEmpty()
+  }
+
+  @Test
+  fun `Match with regex options`() = runScenario(PathMatches) {
+    // when
+    runTask("collateModuleTypes").build()
+
+    // then
+    assertThat(moduleTypes).isEqualToSet(
+      TypedModule(projectPath = ":Test-X", type = ModuleType(name = "B", color = "limegreen")),
+      TypedModule(projectPath = ":a1-B2-C3", type = ModuleType(name = "D", color = "gainsboro")),
+      TypedModule(projectPath = ":abc123", type = ModuleType(name = "A", color = "orange")),
+      TypedModule(projectPath = ":foo-bar", type = ModuleType(name = "E", color = "mediumorchid")),
+      TypedModule(projectPath = ":hello", type = ModuleType(name = "C", color = "mediumslateblue")),
+    )
   }
 
   private val File.moduleTypes get() = resolve("build/modular/module-types.json").let(::readModuleTypes)

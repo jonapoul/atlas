@@ -6,7 +6,7 @@ package modular.test.scenarios
 
 import modular.test.Scenario
 
-object OverrideModuleLinksFile : Scenario by DiamondGraph {
+internal object OverrideModuleLinksFile : Scenario by DiamondGraph {
   override val rootBuildFile = """
       import modular.core.tasks.CollateModuleLinks
 

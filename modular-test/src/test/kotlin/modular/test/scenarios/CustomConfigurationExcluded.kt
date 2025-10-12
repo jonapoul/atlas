@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.Scenario
 import modular.test.kotlinJvmBuildScript
 
-object CustomConfigurationExcluded : Scenario by CustomConfigurations {
+internal object CustomConfigurationExcluded : Scenario by CustomConfigurations {
   override val rootBuildFile: String
     get() = """
       ${CustomConfigurations.rootBuildFile}

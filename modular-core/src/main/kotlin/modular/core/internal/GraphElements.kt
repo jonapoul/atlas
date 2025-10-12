@@ -8,23 +8,23 @@ import modular.core.InternalModularApi
 import modular.core.Replacement
 
 @InternalModularApi
-sealed interface GraphElement
+public sealed interface GraphElement
 
 @InternalModularApi
-data class Node(
+public data class Node(
   val typedModule: TypedModule,
 ) : GraphElement
 
 @InternalModularApi
-data class Subgraph(
+public data class Subgraph(
   val path: List<String>,
   val elements: List<GraphElement>,
 ) : GraphElement {
-  val name = path.last()
+  public val name: String = path.last()
 }
 
 @InternalModularApi
-fun buildGraphElements(
+public fun buildGraphElements(
   typedModules: Set<TypedModule>,
   links: Set<ModuleLink>,
   thisPath: String,
@@ -79,8 +79,8 @@ private fun buildSubgraphElements(nodeData: List<Pair<TypedModule, List<String>>
 }
 
 @InternalModularApi
-abstract class ChartWriter {
-  abstract operator fun invoke(): String
+public abstract class ChartWriter {
+  public abstract operator fun invoke(): String
 
   protected abstract val typedModules: Set<TypedModule>
   protected abstract val links: Set<ModuleLink>
@@ -141,11 +141,11 @@ abstract class ChartWriter {
     return string
   }
 
-  protected fun TypedModule.cleaned() = copy(projectPath = projectPath.cleaned())
+  protected fun TypedModule.cleaned(): TypedModule = copy(projectPath = projectPath.cleaned())
 
   @InternalModularApi
-  companion object {
+  public companion object {
     @InternalModularApi
-    val SUPPORTED_CHAR_REGEX = "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()
+    public val SUPPORTED_CHAR_REGEX: Regex = "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()
   }
 }

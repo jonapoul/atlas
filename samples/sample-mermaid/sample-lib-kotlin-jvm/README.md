@@ -1,7 +1,6 @@
 # sample-lib-kotlin-jvm
 
 <!--region chart-->
-
 ```mermaid
 ---
 config:
@@ -26,7 +25,7 @@ config:
 ---
 graph TD
   lib_kotlin_jvm["lib kotlin jvm"]
-  style _sample_lib_kotlin_jvm fill:mediumorchid,color:black,font-weight:bold,stroke:black,stroke-width:2px
+  style lib_kotlin_jvm fill:mediumorchid,fillcolor:mediumorchid
 ```
 
 | Module Types | Color |
@@ -37,10 +36,10 @@ graph TD
 | Kotlin JVM | <img src="https://img.shields.io/badge/-%20-mediumorchid?style=flat-square" height="30" width="100"> |
 | Java | <img src="https://img.shields.io/badge/-%20-orange?style=flat-square" height="30" width="100"> |
 | Other | <img src="https://img.shields.io/badge/-%20-gainsboro?style=flat-square" height="30" width="100"> |
+
 | Link Types | Style |
 |:--:|:--:|
 | jvmMainImplementation | Orange Bold |
 | api | Basic |
 | implementation | Dashed |
-
 <!--endregion-->

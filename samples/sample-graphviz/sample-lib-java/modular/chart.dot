@@ -1,10 +1,10 @@
 digraph {
-  edge [arrowhead="normal",arrowtail="none"]
-  graph [bgcolor="transparent",dpi="100",fontsize="30",layout="dot",ranksep="1.5",rankdir="TB"]
-  node [style="filled"]
-  ":sample-app-android" [shape="none",fillcolor="limegreen"]
-  ":sample-lib-java" [shape="box",penwidth="3",fillcolor="orange"]
-  ":sample-lib-kotlin-mp" [shape="none",fillcolor="mediumslateblue"]
-  ":sample-app-android" -> ":sample-lib-kotlin-mp" [style="dotted"]
-  ":sample-lib-kotlin-mp" -> ":sample-lib-java" [style="bold",color="orange"]
+  edge [arrowhead="ediamond",arrowtail="none",fontcolor="white",labelfloat="false",color="red"]
+  graph [layout="dot",bgcolor="MidnightBlue",fontsize="30",rankdir="TB",ranksep="1.5"]
+  node [fontname="Courier New",peripheries="3",style="filled",shape="box",color="#4C0000"]
+  ":sample-app-android" [shape="rarrow",style="radial",fillcolor="limegreen"]
+  ":sample-lib-java" [fillcolor="orange"]
+  ":sample-lib-kotlin-mp" [fontcolor="white",fillcolor="mediumslateblue"]
+  ":sample-app-android" -> ":sample-lib-kotlin-mp" [style="dotted",label="implementation",dir="both",arrowtail="ediamond"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-java" [style="bold",color="orange",label="jvmMainImplementation",arrowhead="crow"]
 }

@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 
-object MermaidWithGroupsNotNested : Scenario by MermaidBasic {
+internal object MermaidWithGroupsNotNested : Scenario by MermaidBasic {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false

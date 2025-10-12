@@ -19,7 +19,7 @@ import modular.core.internal.buildIndentedString
 import modular.core.internal.contains
 
 @InternalModularApi
-class D2Writer(
+public class D2Writer(
   override val typedModules: Set<TypedModule>,
   override val links: Set<ModuleLink>,
   override val replacements: Set<Replacement>,
@@ -32,7 +32,6 @@ class D2Writer(
   override fun invoke(): String = buildIndentedString {
     appendImports()
     appendModules()
-    appendLine("${thisPath.fullKey()}.class: $THIS_PROJECT_CLASS")
     appendLinks()
     appendLegend()
   }

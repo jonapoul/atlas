@@ -17,7 +17,7 @@ import modular.test.equalsDiffed
 import modular.test.moduleLink
 import kotlin.test.Test
 
-class D2WriterTest {
+internal class D2WriterTest {
   @Test
   fun `Base config with no module types`() {
     val writer = d2Writer(
@@ -36,7 +36,6 @@ class D2WriterTest {
         ui_a: :ui:a
         ui_b: :ui:b
         ui_c: :ui:c
-        app.class: thisProject
         app -> ui_a { class: link-implementation }
         app -> ui_b { class: link-implementation }
         app -> ui_c { class: link-implementation }
@@ -85,7 +84,6 @@ class D2WriterTest {
           b: :b
           c: :c
         }
-        app.class: thisProject
         app -> ui.a { class: link-implementation }
         app -> ui.b { class: link-implementation }
         app -> ui.c { class: link-implementation }
@@ -139,7 +137,6 @@ class D2WriterTest {
           b: :b
           c: :c
         }
-        app.class: thisProject
         app -> ui.a { class: link-implementation }
         app -> ui.b { class: link-implementation }
         app -> ui.c { class: link-implementation }
@@ -171,7 +168,6 @@ class D2WriterTest {
       """
         ...@../classes.d2
         app: :app { class: module-red }
-        app.class: thisProject
         vars: {
           d2-legend: {
             module-red: red { class: module-red }
@@ -196,7 +192,6 @@ class D2WriterTest {
           class: container
           b: :b { class: module-red }
         }
-        a.b.class: thisProject
         vars: {
           d2-legend: {
             module-red: red { class: module-red }
@@ -219,7 +214,6 @@ class D2WriterTest {
         a: :a
         b: :b
         c: :c
-        a.class: thisProject
         a -> b { class: link-implementation }
         a -> c { class: link-implementation }
         vars: {

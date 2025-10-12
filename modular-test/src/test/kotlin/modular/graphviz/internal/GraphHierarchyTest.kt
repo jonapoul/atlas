@@ -15,7 +15,7 @@ import modular.test.TwoLevelsOfSubmodules
 import modular.test.node
 import kotlin.test.Test
 
-class GraphHierarchyTest {
+internal class GraphHierarchyTest {
   @Test
   fun `Single-level groups`() {
     val dataSubGraph = Subgraph(

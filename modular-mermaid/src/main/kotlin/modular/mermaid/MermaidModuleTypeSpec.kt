@@ -13,11 +13,10 @@ import modular.core.ModuleTypeSpec
  *
  * Use [put] to insert any custom properties, but the below ones are all the available ones (AFAIK) as of writing this.
  */
-interface MermaidModuleTypeSpec : ModuleTypeSpec {
-  override fun put(key: String, value: Any)
-  var fontColor: String?
-  var fontSize: String?
-  var stroke: String?
-  var strokeDashArray: String?
-  var strokeWidth: String?
+public interface MermaidModuleTypeSpec : ModuleTypeSpec {
+  public var fontColor: String?
+  public var fontSize: String?
+  public var stroke: String?
+  public var strokeDashArray: String?
+  public var strokeWidth: String?
 }

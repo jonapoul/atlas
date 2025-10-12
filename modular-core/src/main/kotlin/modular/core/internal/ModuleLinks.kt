@@ -20,7 +20,7 @@ import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
 @InternalModularApi
-fun readModuleLinks(inputFile: File): Set<ModuleLink> = inputFile.inputStream().use { stream ->
+public fun readModuleLinks(inputFile: File): Set<ModuleLink> = inputFile.inputStream().use { stream ->
   ModularJson.decodeFromStream(
     deserializer = SetSerializer(ModuleLink.serializer()),
     stream = stream,
@@ -80,7 +80,7 @@ internal fun createModuleLinks(
 
 @InternalModularApi
 @KSerializable
-data class ModuleLink(
+public data class ModuleLink(
   val fromPath: String,
   val toPath: String,
   val configuration: String,
@@ -93,7 +93,7 @@ data class ModuleLink(
 }
 
 @InternalModularApi
-operator fun Iterable<ModuleLink>.contains(module: TypedModule): Boolean =
+public operator fun Iterable<ModuleLink>.contains(module: TypedModule): Boolean =
   any { (from, to, _) -> from == module.projectPath || to == module.projectPath }
 
 private fun ConfigurationContainer.filterUseful(ignoredConfigs: Iterable<String>) = filter { c ->

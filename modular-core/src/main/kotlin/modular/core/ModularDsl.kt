@@ -5,4 +5,4 @@
 package modular.core
 
 @DslMarker
-annotation class ModularDsl
+public annotation class ModularDsl

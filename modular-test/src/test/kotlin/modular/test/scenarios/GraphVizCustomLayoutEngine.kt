@@ -8,7 +8,7 @@ import modular.test.KOTLIN_VERSION
 import modular.test.Scenario
 import kotlin.text.trimIndent
 
-object GraphVizCustomLayoutEngine : Scenario by GraphVizBigGraph {
+internal object GraphVizCustomLayoutEngine : Scenario by GraphVizBigGraph {
   override val rootBuildFile = """
     import modular.graphviz.FileFormat
     import modular.graphviz.LayoutEngine.Neato

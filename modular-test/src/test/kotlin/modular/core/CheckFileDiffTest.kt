@@ -20,7 +20,7 @@ import org.gradle.testkit.runner.TaskOutcome.FAILED
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.junit.jupiter.api.Test
 
-class CheckFileDiffTest : ScenarioTest() {
+internal class CheckFileDiffTest : ScenarioTest() {
   @Test
   fun `Write doesn't run as a dependency of check for graphviz`() = runScenario(GraphvizBasic) {
     // when
@@ -80,7 +80,7 @@ class CheckFileDiffTest : ScenarioTest() {
     assertThat(check1.task(":a:checkGraphvizChart")?.outcome).isEqualTo(SUCCESS)
 
     // given we set a custom property set to adjust the output
-    resolve("gradle.properties").writeText("modular.graphviz.chart.layoutEngine=circo")
+    resolve("gradle.properties").writeText("modular.graphviz.layoutEngine=circo")
 
     // when we run a check again
     val check2 = runTask(":a:checkGraphvizChart").buildAndFail()
@@ -93,10 +93,9 @@ class CheckFileDiffTest : ScenarioTest() {
       """
       |          digraph {
       |      ---   graph [layout="circo"]
-      |            node [style="filled"]
-      |            ":a" [shape="box",penwidth="3",fillcolor="mediumorchid"]
-      |            ":b" [shape="none",fillcolor="orange"]
-      |            ":c" [shape="none",fillcolor="orange"]
+      |            ":a" [fillcolor="mediumorchid"]
+      |            ":b" [fillcolor="orange"]
+      |            ":c" [fillcolor="orange"]
       |            ":a" -> ":b"
       |            ":a" -> ":c"
       |          }
@@ -169,11 +168,6 @@ class CheckFileDiffTest : ScenarioTest() {
     val result = runTask("check", extras = listOf("--dry-run")).build()
 
     // then
-    assertThat(result.output).doesNotContain(
-      ":checkGraphvizLegend",
-      ":a:checkGraphvizChart",
-      ":b:checkGraphvizChart",
-      ":c:checkGraphvizChart",
-    )
+    assertThat(result.output).doesNotContain("checkGraphvizLegend")
   }
 }

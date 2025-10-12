@@ -22,7 +22,7 @@ import modular.test.taskWasSuccessful
 import java.io.File
 import kotlin.test.Test
 
-class CollateModuleLinksTest : ScenarioTest() {
+internal class CollateModuleLinksTest : ScenarioTest() {
   @Test
   fun `Empty file for single module with no dependencies`() = runScenario(OneKotlinJvmModule) {
     // when

@@ -9,13 +9,13 @@ import assertk.assertions.contains
 import assertk.assertions.exists
 import modular.test.ScenarioTest
 import modular.test.allSuccessful
+import modular.test.equalsDiffed
 import modular.test.runTask
 import modular.test.scenarios.MermaidWithLinkTypes
 import modular.test.scenarios.MermaidWithModuleTypes
-import org.junit.jupiter.api.Disabled
 import kotlin.test.Test
 
-class WriteMarkdownLegendTest : ScenarioTest() {
+internal class WriteMarkdownLegendTest : ScenarioTest() {
   @Test
   fun `Write markdown legend with no link types`() = runScenario(MermaidWithModuleTypes) {
     // when
@@ -35,7 +35,6 @@ class WriteMarkdownLegendTest : ScenarioTest() {
     )
   }
 
-  @Disabled("https://github.com/jonapoul/modular/issues/247")
   @Test
   fun `Write markdown legend with no module types`() = runScenario(MermaidWithLinkTypes) {
     // when
@@ -45,13 +44,13 @@ class WriteMarkdownLegendTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
     val legend = resolve("modular/legend.md")
     assertThat(legend).exists()
-    assertThat(legend.readText()).contains(
+    assertThat(legend.readText()).equalsDiffed(
       """
         | Link Types | Style |
         |:--:|:--:|
         | api | Green |
         | implementation | #5555FF |
-        | compileOnly | Yellow Dotted |
+        | compileOnly | Yellow Dashed |
       """.trimIndent(),
     )
   }

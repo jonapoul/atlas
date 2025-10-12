@@ -8,7 +8,7 @@ import org.junit.jupiter.api.io.TempDir
 import java.io.File
 
 @Suppress("AbstractClassCanBeConcreteClass")
-abstract class ScenarioTest {
+internal abstract class ScenarioTest {
   @TempDir lateinit var projectRoot: File
 
   protected fun <T> runScenario(scenario: Scenario, test: File.() -> T) {

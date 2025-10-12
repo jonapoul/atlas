@@ -12,30 +12,30 @@ import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
 @ModularDsl
-interface MermaidSpec : ModularSpec {
+public interface MermaidSpec : ModularSpec {
   /**
    * Set a custom layout engine for the diagram. Unset by default, but mermaid will fall back to "dagre".
    * Use [MermaidLayoutSpec.properties] to set any custom key/value properties.
    * See https://mermaid.js.org/config/layouts.html
    */
-  val layout: MermaidLayoutSpec
-  fun layout(action: Action<MermaidLayoutSpec>)
-  fun elk(action: Action<ElkLayoutSpec>? = null)
+  public val layout: MermaidLayoutSpec
+  public fun layout(action: Action<MermaidLayoutSpec>)
+  public fun elk(action: Action<ElkLayoutSpec>? = null)
 
   /**
    * Also controlled by the `modular.mermaid.chart.look` Gradle property. Defaults to unset.
    * See https://mermaid.js.org/intro/syntax-reference.html#layout-and-look
    */
-  val look: Property<Look>
+  public val look: Property<Look>
 
   /**
    * Also controlled by the `modular.mermaid.chart.theme` Gradle property. Defaults to unset.
    * See https://mermaid.js.org/config/theming.html
    */
-  val theme: Property<Theme>
+  public val theme: Property<Theme>
 
-  val themeVariables: MermaidThemeVariablesSpec
-  fun themeVariables(action: Action<MermaidThemeVariablesSpec>)
+  public val themeVariables: MermaidThemeVariablesSpec
+  public fun themeVariables(action: Action<MermaidThemeVariablesSpec>)
 
   /**
    * When set to true, all links between modules will have a pretty animation applied to them.
@@ -47,5 +47,5 @@ interface MermaidSpec : ModularSpec {
    * Also controlled by the `modular.mermaid.chart.animateLinks` Gradle property. Defaults to false.
    * See https://mermaid.js.org/syntax/flowchart.html#turning-an-animation-on
    */
-  val animateLinks: Property<Boolean>
+  public val animateLinks: Property<Boolean>
 }

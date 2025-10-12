@@ -25,10 +25,10 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class WriteModuleLinks : DefaultTask(), TaskWithOutputFile {
-  @get:Input abstract val moduleLinks: MapProperty<String, List<String>>
-  @get:Input abstract val linkTypes: SetProperty<LinkType>
-  @get:Input abstract val thisPath: Property<String>
+public abstract class WriteModuleLinks : DefaultTask(), TaskWithOutputFile {
+  @get:Input public abstract val moduleLinks: MapProperty<String, List<String>>
+  @get:Input public abstract val linkTypes: SetProperty<LinkType>
+  @get:Input public abstract val thisPath: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -37,7 +37,7 @@ abstract class WriteModuleLinks : DefaultTask(), TaskWithOutputFile {
   }
 
   @TaskAction
-  fun execute() {
+  public fun execute() {
     val links = writeModuleLinks(
       outputFile = outputFile.get().asFile,
       fromPath = thisPath.get(),

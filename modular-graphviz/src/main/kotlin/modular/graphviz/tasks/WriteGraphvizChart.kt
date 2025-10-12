@@ -6,8 +6,14 @@ package modular.graphviz.tasks
 
 import modular.core.ModularExtension
 import modular.core.Replacement
+import modular.core.internal.DummyModularGenerationTask
 import modular.core.internal.MODULAR_TASK_GROUP
+import modular.core.internal.ModularExtensionImpl
+import modular.core.internal.Variant.Chart
 import modular.core.internal.logIfConfigured
+import modular.core.internal.modularBuildDirectory
+import modular.core.internal.outputFile
+import modular.core.internal.qualifier
 import modular.core.internal.readModuleLinks
 import modular.core.internal.readModuleTypes
 import modular.core.tasks.CollateModuleTypes
@@ -15,8 +21,10 @@ import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
 import modular.core.tasks.WriteModuleTree
 import modular.graphviz.DotConfig
+import modular.graphviz.GraphvizModularExtension
 import modular.graphviz.GraphvizSpec
 import modular.graphviz.internal.DotWriter
+import modular.graphviz.internal.GraphvizModularExtensionImpl
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -30,43 +38,23 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 @CacheableTask
-abstract class WriteGraphvizChart : WriteGraphvizChartBase(), ModularGenerationTask {
-  override fun getDescription() = "Generates a project dependency graph in dotfile format"
-
-  @TaskAction
-  override fun execute() {
-    super.execute()
-    logIfConfigured(outputFile.get().asFile)
-  }
-}
-
-@DisableCachingByDefault
-internal abstract class WriteDummyGraphvizChart : WriteGraphvizChartBase() {
-  override fun getDescription() = "Generates a dummy graphviz chart for comparison against the golden"
-
-  @TaskAction
-  override fun execute() = super.execute()
-}
-
-@CacheableTask
-abstract class WriteGraphvizChartBase : DefaultTask(), TaskWithOutputFile {
+public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, ModularGenerationTask {
   // Files
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val linksFile: RegularFileProperty
-  @get:[PathSensitive(RELATIVE) InputFile] abstract val moduleTypesFile: RegularFileProperty
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val linksFile: RegularFileProperty
+  @get:[PathSensitive(RELATIVE) InputFile] public abstract val moduleTypesFile: RegularFileProperty
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General
-  @get:Input abstract val groupModules: Property<Boolean>
-  @get:Input abstract val replacements: SetProperty<Replacement>
-  @get:Input abstract val thisPath: Property<String>
+  @get:Input public abstract val groupModules: Property<Boolean>
+  @get:Input public abstract val replacements: SetProperty<Replacement>
+  @get:Input public abstract val thisPath: Property<String>
 
   // Dotfile config
-  @get:Input abstract val config: Property<DotConfig>
+  @get:Input public abstract val config: Property<DotConfig>
 
   init {
     group = MODULAR_TASK_GROUP
@@ -74,7 +62,7 @@ abstract class WriteGraphvizChartBase : DefaultTask(), TaskWithOutputFile {
   }
 
   @TaskAction
-  open fun execute() {
+  public open fun execute() {
     val linksFile = linksFile.get().asFile
     val moduleTypesFile = moduleTypesFile.get().asFile
 
@@ -89,10 +77,39 @@ abstract class WriteGraphvizChartBase : DefaultTask(), TaskWithOutputFile {
 
     val outputFile = outputFile.get().asFile
     outputFile.writeText(writer())
+    logIfConfigured(outputFile)
   }
 
+  @DisableCachingByDefault
+  internal abstract class WriteGraphvizChartDummy : WriteGraphvizChart(), DummyModularGenerationTask
+
   internal companion object {
-    internal inline fun <reified T : WriteGraphvizChartBase> register(
+    internal fun real(
+      target: Project,
+      spec: GraphvizSpec,
+      extension: ModularExtensionImpl,
+    ) = register<WriteGraphvizChart>(
+      target = target,
+      extension = extension,
+      spec = spec,
+      outputFile = target.outputFile(Chart, spec.fileExtension.get()),
+    )
+
+    internal fun dummy(
+      target: Project,
+      spec: GraphvizSpec,
+      extension: ModularExtensionImpl,
+    ) = register<WriteGraphvizChartDummy>(
+      target = target,
+      extension = extension,
+      spec = spec,
+      outputFile = target.modularBuildDirectory
+        .get()
+        .file("chart-temp.dot")
+        .asFile,
+    )
+
+    private inline fun <reified T : WriteGraphvizChart> register(
       target: Project,
       extension: ModularExtension,
       spec: GraphvizSpec,
@@ -100,12 +117,7 @@ abstract class WriteGraphvizChartBase : DefaultTask(), TaskWithOutputFile {
     ): TaskProvider<T> = with(target) {
       val collateModuleTypes = CollateModuleTypes.get(rootProject)
       val calculateProjectTree = WriteModuleTree.get(target)
-
-      val qualifier = when (T::class) {
-        WriteDummyGraphvizChart::class -> "Dummy"
-        else -> ""
-      }
-      val name = "write$qualifier${spec.name.capitalized()}Chart"
+      val name = "write${T::class.qualifier}GraphvizChart"
       val writeChart = tasks.register(name, T::class.java) { task ->
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
@@ -116,7 +128,7 @@ abstract class WriteGraphvizChartBase : DefaultTask(), TaskWithOutputFile {
       writeChart.configure { task ->
         task.groupModules.convention(extension.groupModules)
         task.replacements.convention(extension.pathTransforms.replacements)
-        task.config.convention(DotConfig(spec))
+        task.config.convention(DotConfig(extension, spec))
       }
 
       return writeChart

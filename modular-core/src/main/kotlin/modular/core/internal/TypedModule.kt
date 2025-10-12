@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable as KSerializable
 
 @InternalModularApi
 @KSerializable
-data class TypedModule(
+public data class TypedModule(
   val projectPath: String,
   val type: ModuleType?,
 ) : JSerializable, Comparable<TypedModule> {
@@ -24,7 +24,7 @@ data class TypedModule(
 }
 
 @InternalModularApi
-fun readModuleTypes(inputFile: File): Set<TypedModule> = inputFile.inputStream().use { stream ->
+public fun readModuleTypes(inputFile: File): Set<TypedModule> = inputFile.inputStream().use { stream ->
   ModularJson.decodeFromStream(
     deserializer = SetSerializer(TypedModule.serializer()),
     stream = stream,
@@ -32,7 +32,7 @@ fun readModuleTypes(inputFile: File): Set<TypedModule> = inputFile.inputStream()
 }
 
 @InternalModularApi
-fun readModuleType(inputFile: File): TypedModule = inputFile.inputStream().use { stream ->
+public fun readModuleType(inputFile: File): TypedModule = inputFile.inputStream().use { stream ->
   ModularJson.decodeFromStream(
     deserializer = TypedModule.serializer(),
     stream = stream,
@@ -57,4 +57,20 @@ internal fun writeModuleType(module: TypedModule, outputFile: File) {
       stream = stream,
     )
   }
+}
+
+@InternalModularApi
+public object DefaultModuleTypes {
+  public const val ANDROID_APP_NAME: String = "Android App"
+  public const val ANDROID_APP_COLOR: String = "limegreen"
+  public const val ANDROID_LIB_NAME: String = "Android Library"
+  public const val ANDROID_LIB_COLOR: String = "lightgreen"
+  public const val JAVA_NAME: String = "Java"
+  public const val JAVA_COLOR: String = "orange"
+  public const val KOTLIN_JVM_NAME: String = "Kotlin JVM"
+  public const val KOTLIN_JVM_COLOR: String = "mediumorchid"
+  public const val KOTLIN_MP_NAME: String = "Kotlin Multiplatform"
+  public const val KOTLIN_MP_COLOR: String = "mediumslateblue"
+  public const val OTHER_NAME: String = "Other"
+  public const val OTHER_COLOR: String = "gainsboro"
 }

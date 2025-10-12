@@ -5,17 +5,22 @@
 package modular.graphviz.tasks
 
 import modular.core.LinkType
-import modular.core.ModularSpec
 import modular.core.ModuleType
+import modular.core.internal.DummyModularGenerationTask
 import modular.core.internal.MODULAR_TASK_GROUP
 import modular.core.internal.ModularExtensionImpl
+import modular.core.internal.Variant.Legend
 import modular.core.internal.buildIndentedString
 import modular.core.internal.logIfConfigured
+import modular.core.internal.modularBuildDirectory
 import modular.core.internal.moduleType
 import modular.core.internal.orderedLinkTypes
 import modular.core.internal.orderedModuleTypes
+import modular.core.internal.outputFile
+import modular.core.internal.qualifier
 import modular.core.tasks.ModularGenerationTask
 import modular.core.tasks.TaskWithOutputFile
+import modular.graphviz.GraphvizSpec
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -30,38 +35,18 @@ import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 @CacheableTask
-abstract class WriteGraphvizLegend : WriteGraphvizLegendBase(), ModularGenerationTask {
-  override fun getDescription() = "Generates the legend for a project dependency graph"
-
-  @TaskAction
-  override fun execute() {
-    super.execute()
-    logIfConfigured(outputFile.get().asFile)
-  }
-}
-
-@DisableCachingByDefault
-internal abstract class WriteDummyGraphvizLegend : WriteGraphvizLegendBase() {
-  override fun getDescription() = "Generates a dummy legend for comparison against the golden"
-
-  @TaskAction
-  override fun execute() = super.execute()
-}
-
-@CacheableTask
-sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithOutputFile {
-  @get:Input abstract val moduleTypes: ListProperty<ModuleType>
-  @get:Input abstract val linkTypes: ListProperty<LinkType>
+public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, ModularGenerationTask {
+  @get:Input public abstract val moduleTypes: ListProperty<ModuleType>
+  @get:Input public abstract val linkTypes: ListProperty<LinkType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
     group = MODULAR_TASK_GROUP
+    description = "Generates the legend for a project dependency graph"
   }
 
-  abstract override fun getDescription(): String
-
   @TaskAction
-  open fun execute() {
+  public open fun execute() {
     val moduleTypes = moduleTypes.get()
     val linkTypes = linkTypes.get()
     val outputFile = outputFile.get().asFile
@@ -105,23 +90,41 @@ sealed class WriteGraphvizLegendBase : DefaultTask(), TaskWithOutputFile {
     }
 
     outputFile.writeText(dotFileContents)
+    logIfConfigured(outputFile)
   }
 
-  internal companion object {
-    internal fun get(target: Project): TaskProvider<WriteGraphvizLegend> =
-      target.tasks.named(TASK_NAME, WriteGraphvizLegend::class.java)
+  @DisableCachingByDefault
+  internal abstract class WriteGraphvizLegendDummy : WriteGraphvizLegend(), DummyModularGenerationTask
 
-    internal inline fun <reified T : WriteGraphvizLegendBase> register(
+  internal companion object {
+    internal fun real(
       target: Project,
-      spec: ModularSpec,
+      spec: GraphvizSpec,
+      extension: ModularExtensionImpl,
+    ) = register<WriteGraphvizLegend>(
+      target = target,
+      extension = extension,
+      outputFile = target.outputFile(Legend, spec.fileExtension.get()),
+    )
+
+    internal fun dummy(
+      target: Project,
+      extension: ModularExtensionImpl,
+    ) = register<WriteGraphvizLegendDummy>(
+      target = target,
+      extension = extension,
+      outputFile = target.modularBuildDirectory
+        .get()
+        .file("legend-temp.dot")
+        .asFile,
+    )
+
+    internal inline fun <reified T : WriteGraphvizLegend> register(
+      target: Project,
       extension: ModularExtensionImpl,
       outputFile: File,
     ): TaskProvider<T> = with(target) {
-      val qualifier = when (T::class) {
-        WriteDummyGraphvizLegend::class -> "Dummy"
-        else -> ""
-      }
-      val name = "write$qualifier${spec.name.capitalized()}Legend"
+      val name = "write${T::class.qualifier}GraphvizLegend"
       val writeLegend = tasks.register(name, T::class.java) { task ->
         task.outputFile.set(outputFile)
       }

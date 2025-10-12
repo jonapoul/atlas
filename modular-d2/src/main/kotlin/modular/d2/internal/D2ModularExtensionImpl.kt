@@ -4,7 +4,6 @@
  */
 package modular.d2.internal
 
-import modular.core.InternalModularApi
 import modular.core.internal.ModularExtensionImpl
 import modular.d2.D2ModularExtension
 import modular.d2.D2NamedLinkTypeContainer
@@ -15,17 +14,16 @@ import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import javax.inject.Inject
 
-@InternalModularApi
-open class D2ModularExtensionImpl @Inject constructor(
+internal open class D2ModularExtensionImpl @Inject constructor(
   objects: ObjectFactory,
   project: Project,
 ) : ModularExtensionImpl(objects, project), D2ModularExtension {
   override val d2 = D2SpecImpl(objects, project)
-  override fun d2(action: Action<D2Spec>): D2Spec = d2.also { action.execute(it) }
+  override fun d2(action: Action<D2Spec>) = action.execute(d2)
 
-  override val linkTypes = D2LinkTypeContainer(objects)
+  override val linkTypes = D2NamedLinkTypeContainerImpl(objects)
   override fun linkTypes(action: Action<D2NamedLinkTypeContainer>) = action.execute(linkTypes)
 
-  override val moduleTypes = D2ModuleTypeContainer(objects)
+  override val moduleTypes = D2NamedModuleTypeContainerImpl(objects)
   override fun moduleTypes(action: Action<D2NamedModuleTypeContainer>) = action.execute(moduleTypes)
 }

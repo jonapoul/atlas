@@ -7,7 +7,7 @@ package modular.test.scenarios
 import modular.test.D2Scenario
 import modular.test.KOTLIN_VERSION
 
-object D2AllModuleTypes : D2Scenario by D2Basic {
+internal object D2AllModuleTypes : D2Scenario by D2Basic {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false

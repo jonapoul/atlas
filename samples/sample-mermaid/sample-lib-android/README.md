@@ -1,7 +1,6 @@
 # sample-lib-android
 
 <!--region chart-->
-
 ```mermaid
 ---
 config:
@@ -27,9 +26,10 @@ config:
 graph TD
   lib_android["lib android"]
   lib_kotlin_jvm["lib kotlin jvm"]
-  style _sample_lib_android fill:lightgreen,color:black,font-weight:bold,stroke:black,stroke-width:2px
-  style _sample_lib_kotlin_jvm fill:mediumorchid,color:black
-  _sample_lib_android -.-> _sample_lib_kotlin_jvm
+  style lib_android fill:lightgreen,fillcolor:lightgreen
+  style lib_kotlin_jvm fill:mediumorchid,fillcolor:mediumorchid
+  lib_android -.implementation.-> lib_kotlin_jvm
+  linkStyle 0 stroke:aqua
 ```
 
 | Module Types | Color |
@@ -40,10 +40,10 @@ graph TD
 | Kotlin JVM | <img src="https://img.shields.io/badge/-%20-mediumorchid?style=flat-square" height="30" width="100"> |
 | Java | <img src="https://img.shields.io/badge/-%20-orange?style=flat-square" height="30" width="100"> |
 | Other | <img src="https://img.shields.io/badge/-%20-gainsboro?style=flat-square" height="30" width="100"> |
+
 | Link Types | Style |
 |:--:|:--:|
 | jvmMainImplementation | Orange Bold |
 | api | Basic |
 | implementation | Dashed |
-
 <!--endregion-->

@@ -5,7 +5,7 @@
  -->
 <!-- Title: %3 Pages: 1 -->
 <svg width="592pt" height="191pt"
- viewBox="0.00 0.00 592.00 191.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ viewBox="0.00 0.00 591.50 191.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 187)">
 <title>%3</title>
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-187 587.5,-187 587.5,4 -4,4"/>
@@ -27,7 +27,13 @@
 <text text-anchor="start" x="170" y="-112.3" font-family="Times,serif" font-size="14.00">&lt;module&#45;name&gt;</text>
 <polygon fill="none" stroke="black" points="8,-78.5 8,-103.5 165,-103.5 165,-78.5 8,-78.5"/>
 <text text-anchor="start" x="29.5" y="-87.3" font-family="Times,serif" font-size="14.00">Android Library</text>
-<polygon fill="lightgreen" stroke="transparent" points="165,-78.5 165,-103.5 296,-103.5 296,-78.5 165,-78.5"/>
+<defs>
+<linearGradient id="l_0" gradientUnits="userSpaceOnUse" x1="165" y1="-91" x2="296" y2="-91" >
+<stop offset="0" style="stop-color:crimson;stop-opacity:1.;"/>
+<stop offset="1" style="stop-color:#008b8b;stop-opacity:1.;"/>
+</linearGradient>
+</defs>
+<polygon fill="url(#l_0)" stroke="transparent" points="165,-78.5 165,-103.5 296,-103.5 296,-78.5 165,-78.5"/>
 <polygon fill="none" stroke="black" points="165,-78.5 165,-103.5 296,-103.5 296,-78.5 165,-78.5"/>
 <text text-anchor="start" x="170" y="-87.3" font-family="Times,serif" font-size="14.00">&lt;module&#45;name&gt;</text>
 <polygon fill="none" stroke="black" points="8,-53.5 8,-78.5 165,-78.5 165,-53.5 8,-53.5"/>

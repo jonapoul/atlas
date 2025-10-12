@@ -15,7 +15,7 @@ import modular.core.internal.buildIndentedString
 import modular.graphviz.DotConfig
 
 @InternalModularApi
-data class DotWriter(
+public data class DotWriter(
   override val typedModules: Set<TypedModule>,
   override val links: Set<ModuleLink>,
   override val replacements: Set<Replacement>,
@@ -36,28 +36,15 @@ data class DotWriter(
   private fun IndentedStringBuilder.appendHeader() {
     appendHeaderGroup(
       name = "edge",
-      attrs = Attrs(
-        "dir" to config.dir,
-        "arrowhead" to config.arrowHead,
-        "arrowtail" to config.arrowTail,
-      ),
+      attrs = attrs(config.edgeAttributes),
     )
     appendHeaderGroup(
       name = "graph",
-      attrs = Attrs(
-        "bgcolor" to config.backgroundColor,
-        "dpi" to config.dpi,
-        "fontsize" to config.fontSize,
-        "layout" to config.layoutEngine,
-        "ranksep" to config.rankSep,
-        "rankdir" to config.rankDir,
-      ),
+      attrs = Attrs("layout" to config.layoutEngine) + config.graphAttributes,
     )
     appendHeaderGroup(
       name = "node",
-      attrs = Attrs(
-        "style" to "filled",
-      ),
+      attrs = attrs(config.nodeAttributes),
     )
   }
 
@@ -67,6 +54,8 @@ data class DotWriter(
   }
 
   private fun IndentedStringBuilder.appendLinks() {
+    val displayLinkLabels = config.displayLinkLabels == true
+
     links
       .map { link -> link.copy(fromPath = link.fromPath.cleaned(), toPath = link.toPath.cleaned()) }
       .sortedWith(compareBy({ it.fromPath }, { it.toPath }))
@@ -74,7 +63,8 @@ data class DotWriter(
         val attrs = Attrs(
           "style" to type?.style,
           "color" to type?.color,
-        )
+          "label" to if (displayLinkLabels) type?.displayName else null,
+        ) + type?.properties
         appendLine("\"$fromPath\" -> \"$toPath\"$attrs")
       }
   }
@@ -95,15 +85,6 @@ data class DotWriter(
     val nodePath = module.projectPath.cleaned()
     val attrs = Attrs()
 
-    // default, overridden by type.properties if configured
-    attrs["shape"] = "none"
-
-    // Make "target" nodes more prominent with a thick black border
-    if (thisPath.cleaned() == nodePath) {
-      attrs["penwidth"] = "3"
-      attrs["shape"] = "box"
-    }
-
     module.type?.let { type ->
       val properties = type.properties + ("fillcolor" to type.color)
       properties.forEach { (key, value) -> attrs[key] = value }
@@ -111,6 +92,8 @@ data class DotWriter(
 
     appendLine("\"$nodePath\"$attrs")
   }
+
+  private fun attrs(map: Map<String, String>?) = Attrs(map.orEmpty().toMutableMap())
 
   @Suppress("SpreadOperator")
   private class Attrs(private val delegate: MutableMap<String, Any?>) : MutableMap<String, Any?> by delegate {
@@ -123,5 +106,10 @@ data class DotWriter(
     }
 
     fun hasAnyValues() = values.any { it != null }
+
+    operator fun plus(other: Map<String, String>?): Attrs {
+      other?.let(delegate::putAll)
+      return Attrs(delegate)
+    }
   }
 }

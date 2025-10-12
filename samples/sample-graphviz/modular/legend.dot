@@ -5,7 +5,7 @@ digraph {
     <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
     <TR><TD>Android App</TD><TD BGCOLOR="limegreen">&lt;module-name&gt;</TD></TR>
     <TR><TD>Kotlin Multiplatform</TD><TD BGCOLOR="mediumslateblue">&lt;module-name&gt;</TD></TR>
-    <TR><TD>Android Library</TD><TD BGCOLOR="lightgreen">&lt;module-name&gt;</TD></TR>
+    <TR><TD>Android Library</TD><TD BGCOLOR="crimson:cyan4">&lt;module-name&gt;</TD></TR>
     <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
     <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
     <TR><TD>Other</TD><TD BGCOLOR="gainsboro">&lt;module-name&gt;</TD></TR>

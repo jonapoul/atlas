@@ -25,7 +25,7 @@ import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
 import java.io.File
 import kotlin.test.Test
 
-class WriteModuleTypeTest : ScenarioTest() {
+internal class WriteModuleTypeTest : ScenarioTest() {
   @Test
   fun `No module types declared`() = runScenario(NoModuleTypesDeclared) {
     // when

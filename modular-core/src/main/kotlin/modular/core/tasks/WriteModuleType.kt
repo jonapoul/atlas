@@ -26,9 +26,9 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-abstract class WriteModuleType : DefaultTask(), TaskWithOutputFile {
-  @get:Input abstract val projectPath: Property<String>
-  @get:[Input Optional] abstract val moduleType: Property<ModuleType>
+public abstract class WriteModuleType : DefaultTask(), TaskWithOutputFile {
+  @get:Input public abstract val projectPath: Property<String>
+  @get:[Input Optional] public abstract val moduleType: Property<ModuleType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -37,7 +37,7 @@ abstract class WriteModuleType : DefaultTask(), TaskWithOutputFile {
   }
 
   @TaskAction
-  fun execute() {
+  public fun execute() {
     val projectPath = projectPath.get()
     val moduleType = moduleType.orNull
     val outputFile = outputFile.get().asFile
@@ -81,7 +81,7 @@ abstract class WriteModuleType : DefaultTask(), TaskWithOutputFile {
 
     private fun ModuleTypeSpec.matches(project: Project): Boolean = with(project) {
       pathContains.map { path.contains(it) }.orNull
-        ?: pathMatches.map { path.matches(it.toRegex()) }.orNull
+        ?: pathMatches.map { path.matches(it.toRegex(regexOptions.orNull.orEmpty())) }.orNull
         ?: hasPluginId.map { pluginManager.hasPlugin(it) }.orNull
         ?: false
     }

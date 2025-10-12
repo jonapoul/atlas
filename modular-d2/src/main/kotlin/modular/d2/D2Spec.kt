@@ -6,7 +6,7 @@ package modular.d2
 
 import modular.core.ModularDsl
 import modular.core.ModularSpec
-import modular.core.internal.PropertiesSpec
+import modular.core.PropertiesSpec
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
@@ -44,38 +44,38 @@ import org.gradle.api.provider.Property
  * ```
  */
 @ModularDsl
-interface D2Spec : ModularSpec {
-  val animateLinks: Property<Boolean>
-  val center: Property<Boolean>
-  val direction: Property<Direction>
-  val fileFormat: Property<FileFormat>
-  val groupLabelLocation: Property<Location>
-  val groupLabelPosition: Property<Position>
-  val layoutEngine: Property<LayoutEngine>
-  val pad: Property<Int>
-  val pathToD2Command: Property<String>
-  val sketch: Property<Boolean>
-  val theme: Property<Theme>
-  val themeDark: Property<Theme>
+public interface D2Spec : ModularSpec {
+  public val animateLinks: Property<Boolean>
+  public val center: Property<Boolean>
+  public val direction: Property<Direction>
+  public val fileFormat: Property<FileFormat>
+  public val groupLabelLocation: Property<Location>
+  public val groupLabelPosition: Property<Position>
+  public val layoutEngine: Property<LayoutEngine>
+  public val pad: Property<Int>
+  public val pathToD2Command: Property<String>
+  public val sketch: Property<Boolean>
+  public val theme: Property<Theme>
+  public val themeDark: Property<Theme>
 
-  val rootStyle: D2RootStyleSpec
-  fun rootStyle(action: Action<D2RootStyleSpec>)
+  public val rootStyle: D2RootStyleSpec
+  public fun rootStyle(action: Action<D2RootStyleSpec>)
 
-  val globalProps: D2GlobalPropsSpec
-  fun globalProps(action: Action<D2GlobalPropsSpec>)
+  public val globalProps: D2GlobalPropsSpec
+  public fun globalProps(action: Action<D2GlobalPropsSpec>)
 }
 
 /**
  * https://d2lang.com/tour/style/#root
  */
 @ModularDsl
-interface D2RootStyleSpec : PropertiesSpec {
-  var fill: String?
-  var fillPattern: FillPattern?
-  var stroke: String?
-  var strokeWidth: Int?
-  var strokeDash: Int?
-  var doubleBorder: Boolean?
+public interface D2RootStyleSpec : PropertiesSpec {
+  public var fill: String?
+  public var fillPattern: FillPattern?
+  public var stroke: String?
+  public var strokeWidth: Int?
+  public var strokeDash: Int?
+  public var doubleBorder: Boolean?
 }
 
 /**
@@ -84,10 +84,9 @@ interface D2RootStyleSpec : PropertiesSpec {
  * so make sure to read the D2 docs on those.
  */
 @ModularDsl
-interface D2GlobalPropsSpec : PropertiesSpec {
-  override fun put(key: String, value: Any)
-  var arrowType: ArrowType?
-  var fillArrowHeads: Boolean?
-  var font: Font?
-  var fontSize: Int?
+public interface D2GlobalPropsSpec : PropertiesSpec {
+  public var arrowType: ArrowType?
+  public var fillArrowHeads: Boolean?
+  public var font: Font?
+  public var fontSize: Int?
 }

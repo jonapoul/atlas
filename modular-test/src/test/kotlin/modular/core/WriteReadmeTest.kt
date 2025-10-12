@@ -15,10 +15,9 @@ import modular.test.scenarios.MermaidBasic
 import modular.test.scenarios.MermaidWithLinkTypes
 import modular.test.taskHadResult
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
-import org.junit.jupiter.api.Disabled
 import kotlin.test.Test
 
-class WriteReadmeTest : ScenarioTest() {
+internal class WriteReadmeTest : ScenarioTest() {
   @Test
   fun `Mermaid readme links correctly with default outputs`() = runScenario(MermaidBasic) {
     // when
@@ -33,28 +32,19 @@ class WriteReadmeTest : ScenarioTest() {
         # a
 
         <!--region chart-->
-
         ```mermaid
-        ---
-        config:
-        ---
         graph TD
           _a[":a"]
           _b[":b"]
           _c[":c"]
-          style _a color:black,font-weight:bold,stroke:black,stroke-width:2px
-          style _b color:black
-          style _c color:black
           _a --> _b
           _a --> _c
         ```
-
         <!--endregion-->
       """.trimIndent(),
     )
   }
 
-  @Disabled("https://github.com/jonapoul/modular/issues/247")
   @Test
   fun `Write mermaid readme with link types`() = runScenario(MermaidWithLinkTypes) {
     // when
@@ -69,18 +59,11 @@ class WriteReadmeTest : ScenarioTest() {
         # a
 
         <!--region chart-->
-
         ```mermaid
-        ---
-        config:
-        ---
         graph TD
           _a[":a"]
           _b[":b"]
           _c[":c"]
-          style _a color:black,font-weight:bold,stroke:black,stroke-width:2px
-          style _b color:black
-          style _c color:black
           _a --> _b
           linkStyle 0 stroke:green
           _a --> _c
@@ -91,14 +74,12 @@ class WriteReadmeTest : ScenarioTest() {
         |:--:|:--:|
         | api | Green |
         | implementation | #5555FF |
-        | compileOnly | Yellow Dotted |
-
+        | compileOnly | Yellow Dashed |
         <!--endregion-->
       """.trimIndent(),
     )
   }
 
-  @Disabled("https://github.com/jonapoul/modular/issues/247")
   @Test
   fun `Inject mermaid into existing readme`() = runScenario(MermaidWithLinkTypes) {
     // given
@@ -129,18 +110,11 @@ class WriteReadmeTest : ScenarioTest() {
       Some prefix
 
       <!--region chart-->
-
       ```mermaid
-      ---
-      config:
-      ---
       graph TD
         _a[":a"]
         _b[":b"]
         _c[":c"]
-        style _a color:black,font-weight:bold,stroke:black,stroke-width:2px
-        style _b color:black
-        style _c color:black
         _a --> _b
         linkStyle 0 stroke:green
         _a --> _c
@@ -151,8 +125,7 @@ class WriteReadmeTest : ScenarioTest() {
       |:--:|:--:|
       | api | Green |
       | implementation | #5555FF |
-      | compileOnly | Yellow Dotted |
-
+      | compileOnly | Yellow Dashed |
       <!--endregion-->
 
       Some suffix

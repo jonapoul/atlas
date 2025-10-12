@@ -9,10 +9,10 @@ import modular.core.ModularExtension
 import org.gradle.api.Action
 
 @ModularDsl
-interface GraphvizModularExtension : ModularExtension {
-  val graphviz: GraphvizSpec
-  fun graphviz(action: Action<GraphvizSpec>): GraphvizSpec
+public interface GraphvizModularExtension : ModularExtension {
+  public val graphviz: GraphvizSpec
+  public fun graphviz(action: Action<GraphvizSpec>)
 
-  fun linkTypes(action: Action<GraphvizNamedLinkTypeContainer>)
-  fun moduleTypes(action: Action<GraphvizNamedModuleTypeContainer>)
+  public fun linkTypes(action: Action<GraphvizNamedLinkTypeContainer>)
+  public fun moduleTypes(action: Action<GraphvizNamedModuleTypeContainer>)
 }
