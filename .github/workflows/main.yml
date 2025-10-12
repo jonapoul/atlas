@@ -31,7 +31,7 @@ jobs:
           echo "value=$GRADLE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Make sure version is a snapshot
-        if: !contains(steps.version.outputs.value, '-SNAPSHOT')
+        if: "!contains(steps.version.outputs.value, '-SNAPSHOT')"
         run: |
           echo "Not a snapshot version, skipping publish"
           exit 0
