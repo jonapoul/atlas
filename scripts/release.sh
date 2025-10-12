@@ -86,8 +86,7 @@ git commit -am "Prepare for release $NEW_VERSION."
 git tag -a "$NEW_VERSION" -m "Version $NEW_VERSION"
 
 # Publish
-./gradlew publishToMavenLocal --dry-run
-#./gradlew publish
+./gradlew publish
 
 # Prepare next snapshot
 echo "Setting next snapshot version $NEXT_SNAPSHOT_VERSION"
