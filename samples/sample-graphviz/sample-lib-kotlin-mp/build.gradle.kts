@@ -15,6 +15,6 @@ kotlin {
 }
 
 android {
-  namespace = "dev.jonpoulton.modular.sample.kmp"
+  namespace = "dev.jonpoulton.atlas.sample.kmp"
   compileSdk = 36
 }

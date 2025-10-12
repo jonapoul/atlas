@@ -1,5 +1,5 @@
 # sample-app-android
 
 <!--region chart-->
-![chart](modular/chart.svg)
+![chart](atlas/chart.svg)
 <!--endregion-->

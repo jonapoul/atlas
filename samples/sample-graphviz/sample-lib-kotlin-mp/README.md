@@ -1,7 +1,7 @@
 # sample-lib-kotlin-mp
 
 <!--region chart-->
-![chart](modular/chart.svg)
+![chart](atlas/chart.svg)
 
-![legend](../modular/legend.svg)
+![legend](../atlas/legend.svg)
 <!--endregion-->
