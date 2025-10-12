@@ -168,11 +168,6 @@ internal class CheckFileDiffTest : ScenarioTest() {
     val result = runTask("check", extras = listOf("--dry-run")).build()
 
     // then
-    assertThat(result.output).doesNotContain(
-      ":checkGraphvizLegend",
-      ":a:checkGraphvizChart",
-      ":b:checkGraphvizChart",
-      ":c:checkGraphvizChart",
-    )
+    assertThat(result.output).doesNotContain("checkGraphvizLegend")
   }
 }

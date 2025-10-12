@@ -15,11 +15,6 @@ internal object CheckExplicitlyDisabled : Scenario by GraphvizBasic {
     }
 
     modular {
-      moduleTypes {
-        kotlinJvm()
-        java()
-      }
-
       checkOutputs = false
     }
   """.trimIndent()
