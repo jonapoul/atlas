@@ -24,14 +24,14 @@ jobs:
       - name: Get Git tag
         id: git-tag
         run: |
-          GIT_TAG=$(git describe --tags --abbrev=0)
+          GIT_TAG="$(git describe --tags --abbrev=0)"
           echo "GIT_TAG=$GIT_TAG"
           echo "version=$GIT_TAG" >> $GITHUB_OUTPUT
 
       - name: Get Gradle version
         id: gradle-version
         run: |
-          GRADLE_VERSION=$(cat gradle.properties | grep VERSION_NAME | cut -d "=" -f 2)
+          GRADLE_VERSION=$(grep VERSION_NAME gradle.properties | cut -d "=" -f 2)
           echo "GRADLE_VERSION=$GRADLE_VERSION"
           echo "version=$GRADLE_VERSION" >> $GITHUB_OUTPUT
 
