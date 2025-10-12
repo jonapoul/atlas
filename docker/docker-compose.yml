@@ -21,4 +21,4 @@ services:
 
   publish:
     extends: base
-    command: gradle -Dorg.gradle.java.home=/opt/java/openjdk/ publish -x dokkaGeneratePublicationHtml
+    command: gradle -Dorg.gradle.java.home=/opt/java/openjdk/ clean publish -x dokkaGeneratePublicationHtml
