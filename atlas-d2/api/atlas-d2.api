@@ -27,6 +27,32 @@ public final class atlas/d2/D2AtlasPlugin : atlas/core/AtlasPlugin {
 	public fun <init> ()V
 }
 
+public abstract interface class atlas/d2/D2DagreSpec : atlas/core/PropertiesSpec {
+}
+
+public final class atlas/d2/D2DagreSpec$DefaultImpls {
+	public static fun clear (Latlas/d2/D2DagreSpec;)V
+	public static fun put (Latlas/d2/D2DagreSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/d2/D2ElkSpec : atlas/core/PropertiesSpec {
+	public abstract fun getAlgorithm ()Latlas/d2/ElkAlgorithm;
+	public abstract fun getEdgeNodeBetweenLayers ()Ljava/lang/Integer;
+	public abstract fun getNodeNodeBetweenLayers ()Ljava/lang/Integer;
+	public abstract fun getNodeSelfLoop ()Ljava/lang/Integer;
+	public abstract fun getPadding ()Ljava/lang/String;
+	public abstract fun setAlgorithm (Latlas/d2/ElkAlgorithm;)V
+	public abstract fun setEdgeNodeBetweenLayers (Ljava/lang/Integer;)V
+	public abstract fun setNodeNodeBetweenLayers (Ljava/lang/Integer;)V
+	public abstract fun setNodeSelfLoop (Ljava/lang/Integer;)V
+	public abstract fun setPadding (Ljava/lang/String;)V
+}
+
+public final class atlas/d2/D2ElkSpec$DefaultImpls {
+	public static fun clear (Latlas/d2/D2ElkSpec;)V
+	public static fun put (Latlas/d2/D2ElkSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
 public abstract interface class atlas/d2/D2GlobalPropsSpec : atlas/core/PropertiesSpec {
 	public abstract fun getArrowType ()Latlas/d2/ArrowType;
 	public abstract fun getFillArrowHeads ()Ljava/lang/Boolean;
@@ -41,6 +67,27 @@ public abstract interface class atlas/d2/D2GlobalPropsSpec : atlas/core/Properti
 public final class atlas/d2/D2GlobalPropsSpec$DefaultImpls {
 	public static fun clear (Latlas/d2/D2GlobalPropsSpec;)V
 	public static fun put (Latlas/d2/D2GlobalPropsSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/d2/D2LayoutEngineSpec : atlas/core/PropertiesSpec {
+	public abstract fun dagre (Lorg/gradle/api/Action;)V
+	public static synthetic fun dagre$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public abstract fun elk (Lorg/gradle/api/Action;)V
+	public static synthetic fun elk$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public abstract fun getDagre ()Latlas/d2/D2DagreSpec;
+	public abstract fun getElk ()Latlas/d2/D2ElkSpec;
+	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTala ()Latlas/d2/D2TalaSpec;
+	public abstract fun tala (Lorg/gradle/api/Action;)V
+	public static synthetic fun tala$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+}
+
+public final class atlas/d2/D2LayoutEngineSpec$DefaultImpls {
+	public static fun clear (Latlas/d2/D2LayoutEngineSpec;)V
+	public static synthetic fun dagre$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public static synthetic fun elk$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public static fun put (Latlas/d2/D2LayoutEngineSpec;Ljava/lang/String;Ljava/lang/Object;)V
+	public static synthetic fun tala$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
 }
 
 public abstract interface class atlas/d2/D2LinkTypeSpec : atlas/core/LinkTypeSpec, atlas/d2/D2PropertiesSpec {
@@ -154,7 +201,7 @@ public abstract interface class atlas/d2/D2Spec : atlas/core/AtlasSpec {
 	public abstract fun getGlobalProps ()Latlas/d2/D2GlobalPropsSpec;
 	public abstract fun getGroupLabelLocation ()Lorg/gradle/api/provider/Property;
 	public abstract fun getGroupLabelPosition ()Lorg/gradle/api/provider/Property;
-	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLayoutEngine ()Latlas/d2/D2LayoutEngineSpec;
 	public abstract fun getPad ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathToD2Command ()Lorg/gradle/api/provider/Property;
 	public abstract fun getRootStyle ()Latlas/d2/D2RootStyleSpec;
@@ -162,7 +209,16 @@ public abstract interface class atlas/d2/D2Spec : atlas/core/AtlasSpec {
 	public abstract fun getTheme ()Lorg/gradle/api/provider/Property;
 	public abstract fun getThemeDark ()Lorg/gradle/api/provider/Property;
 	public abstract fun globalProps (Lorg/gradle/api/Action;)V
+	public abstract fun layoutEngine (Lorg/gradle/api/Action;)V
 	public abstract fun rootStyle (Lorg/gradle/api/Action;)V
+}
+
+public abstract interface class atlas/d2/D2TalaSpec : atlas/core/PropertiesSpec {
+}
+
+public final class atlas/d2/D2TalaSpec$DefaultImpls {
+	public static fun clear (Latlas/d2/D2TalaSpec;)V
+	public static fun put (Latlas/d2/D2TalaSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public final class atlas/d2/Direction : java/lang/Enum, atlas/core/internal/StringEnum {
@@ -175,6 +231,33 @@ public final class atlas/d2/Direction : java/lang/Enum, atlas/core/internal/Stri
 	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Latlas/d2/Direction;
 	public static fun values ()[Latlas/d2/Direction;
+}
+
+public final class atlas/d2/ElkAlgorithm : java/lang/Enum, atlas/core/internal/StringEnum {
+	public static final field Box Latlas/d2/ElkAlgorithm;
+	public static final field Disco Latlas/d2/ElkAlgorithm;
+	public static final field Fixed Latlas/d2/ElkAlgorithm;
+	public static final field Force Latlas/d2/ElkAlgorithm;
+	public static final field GraphvizCirco Latlas/d2/ElkAlgorithm;
+	public static final field GraphvizDot Latlas/d2/ElkAlgorithm;
+	public static final field GraphvizFdp Latlas/d2/ElkAlgorithm;
+	public static final field GraphvizNeato Latlas/d2/ElkAlgorithm;
+	public static final field GraphvizTwopi Latlas/d2/ElkAlgorithm;
+	public static final field Layered Latlas/d2/ElkAlgorithm;
+	public static final field MrTree Latlas/d2/ElkAlgorithm;
+	public static final field Radial Latlas/d2/ElkAlgorithm;
+	public static final field Random Latlas/d2/ElkAlgorithm;
+	public static final field RectPacking Latlas/d2/ElkAlgorithm;
+	public static final field SporeCompaction Latlas/d2/ElkAlgorithm;
+	public static final field SporeOverlap Latlas/d2/ElkAlgorithm;
+	public static final field Stress Latlas/d2/ElkAlgorithm;
+	public static final field TopDownPacking Latlas/d2/ElkAlgorithm;
+	public static final field VertiFlex Latlas/d2/ElkAlgorithm;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/ElkAlgorithm;
+	public static fun values ()[Latlas/d2/ElkAlgorithm;
 }
 
 public final class atlas/d2/FileFormat : java/lang/Enum, atlas/core/internal/StringEnum {
@@ -369,6 +452,7 @@ public abstract class atlas/d2/tasks/ExecD2 : org/gradle/api/DefaultTask, atlas/
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getClassesFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getCliArguments ()Lorg/gradle/api/provider/MapProperty;
 	public fun getDescription ()Ljava/lang/String;
 	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
 	public abstract fun getInputFile ()Lorg/gradle/api/file/RegularFileProperty;
