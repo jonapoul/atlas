@@ -12,6 +12,7 @@ import org.gradle.api.provider.Provider
 public class CoreGradleProperties(override val project: Project) : IGradleProperties {
   public val alsoTraverseUpwards: Provider<Boolean> = bool("modular.alsoTraverseUpwards", default = false)
   public val checkOutputs: Provider<Boolean> = bool(key = "modular.checkOutputs", default = true)
+  public val displayLinkLabels: Provider<Boolean> = bool(key = "modular.addLinkLabels", default = false)
   public val generateOnSync: Provider<Boolean> = bool(key = "modular.generateOnSync", default = false)
   public val groupModules: Provider<Boolean> = bool(key = "modular.groupModules", default = false)
   public val printFilesToConsole: Provider<Boolean> = bool(key = "modular.printFilesToConsole", default = false)

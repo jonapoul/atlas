@@ -24,6 +24,7 @@ plugins {
 
 modular {
   alsoTraverseUpwards = false
+  displayLinkLabels = true
   generateOnSync = true
   groupModules = true
 
@@ -48,13 +49,15 @@ modular {
   linkTypes {
     "jvmMainImplementation"(style = LinkStyle.Bold, color = "orange") {
       opacity = 0.5f
+      fontColor = "orange"
       strokeDash = 3
     }
-    api(LinkStyle.Basic, "greenyellow") {
-      textTransform = TextTransform.Uppercase
-      strokeWidth = 3
+    api(style = LinkStyle.Basic, color = "greenyellow") {
+      strokeWidth = 5
     }
-    implementation(style = LinkStyle.Dotted, color = "fuchsia")
+    implementation(style = LinkStyle.Dotted, color = "fuchsia") {
+      textTransform = TextTransform.Uppercase
+    }
   }
 
   d2 {
@@ -82,6 +85,7 @@ modular {
       fillArrowHeads = true
       font = Font.Mono
       fontSize = 32
+      put("(** -> **)[*].style.font-color", "black")
     }
   }
 }

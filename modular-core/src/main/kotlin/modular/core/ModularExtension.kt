@@ -55,6 +55,12 @@ public interface ModularExtension {
    */
   public val checkOutputs: Property<Boolean>
 
+  /**
+   * Set to true to attach a string label on each module link, showing which configuration(s) caused the link to be
+   * created. Defaults to false. When true, the [LinkTypeSpec.name] property will be shown.
+   */
+  public val displayLinkLabels: Property<Boolean>
+
   public val pathTransforms: PathTransformSpec
   public fun pathTransforms(action: Action<PathTransformSpec>)
 

@@ -5,11 +5,13 @@
 package modular.graphviz
 
 import modular.core.InternalModularApi
+import modular.core.ModularExtension
 import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
 @KSerializable
 public class DotConfig(
+  public val displayLinkLabels: Boolean? = null,
   public val layoutEngine: LayoutEngine? = null,
   public val nodeAttributes: Map<String, String>? = null,
   public val edgeAttributes: Map<String, String>? = null,
@@ -17,7 +19,11 @@ public class DotConfig(
 ) : JSerializable
 
 @InternalModularApi
-public fun DotConfig(spec: GraphvizSpec): DotConfig = DotConfig(
+public fun DotConfig(
+  extension: ModularExtension,
+  spec: GraphvizSpec,
+): DotConfig = DotConfig(
+  displayLinkLabels = extension.displayLinkLabels.orNull,
   layoutEngine = spec.layoutEngine.orNull,
   nodeAttributes = spec.node.properties.orNull,
   edgeAttributes = spec.edge.properties.orNull,

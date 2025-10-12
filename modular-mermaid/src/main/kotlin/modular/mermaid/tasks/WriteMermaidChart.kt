@@ -127,7 +127,7 @@ public abstract class WriteMermaidChart : DefaultTask(), ModularGenerationTask, 
         task.replacements.convention(extension.pathTransforms.replacements)
         task.thisPath.convention(target.path)
 
-        task.config.convention(provider { MermaidConfig(spec) })
+        task.config.convention(provider { MermaidConfig(extension, spec) })
       }
 
       return writeChart

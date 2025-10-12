@@ -54,6 +54,8 @@ public data class DotWriter(
   }
 
   private fun IndentedStringBuilder.appendLinks() {
+    val displayLinkLabels = config.displayLinkLabels == true
+
     links
       .map { link -> link.copy(fromPath = link.fromPath.cleaned(), toPath = link.toPath.cleaned()) }
       .sortedWith(compareBy({ it.fromPath }, { it.toPath }))
@@ -61,6 +63,7 @@ public data class DotWriter(
         val attrs = Attrs(
           "style" to type?.style,
           "color" to type?.color,
+          "label" to if (displayLinkLabels) type?.displayName else null,
         ) + type?.properties
         appendLine("\"$fromPath\" -> \"$toPath\"$attrs")
       }
