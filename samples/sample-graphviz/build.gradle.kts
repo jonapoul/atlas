@@ -45,7 +45,10 @@ modular {
   linkTypes {
     "jvmMainImplementation"(style = Bold, color = "orange") { arrowHead = Crow }
     api(Solid) { weight = 5 }
-    implementation(Dotted) { dir = Both; arrowTail = Ediamond }
+    implementation(Dotted) {
+      dir = Both
+      arrowTail = Ediamond
+    }
   }
 
   graphviz {
