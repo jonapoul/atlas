@@ -16,7 +16,6 @@ import modular.test.scenarios.GraphVizChartWithReplacements
 import modular.test.scenarios.GraphvizBasic
 import modular.test.scenarios.GraphvizNestedModules
 import modular.test.scenarios.GraphvizNestedModulesNoModuleTypes
-import org.junit.jupiter.api.Disabled
 import kotlin.test.Test
 
 internal class WriteGraphvizChartTest : ScenarioTest() {
@@ -165,7 +164,6 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
   }
 
   @Test
-  @Disabled("https://github.com/jonapoul/modular/issues/247")
   fun `Handle custom link types`() = runScenario(GraphVizChartWithCustomLinkTypes) {
     // when
     runTask("writeGraphvizChart").build()
@@ -178,10 +176,10 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
     assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
-          ":a" [fillcolor="mediumorchid",penwidth="3"]
-          ":b" [fillcolor="mediumorchid",shape="none"]
-          ":c" [fillcolor="orange",shape="none"]
-          ":d" [fillcolor="orange",shape="none"]
+          ":a" [fillcolor="mediumorchid"]
+          ":b" [fillcolor="mediumorchid"]
+          ":c" [fillcolor="orange"]
+          ":d" [fillcolor="orange"]
           ":a" -> ":b" [style="bold"]
           ":a" -> ":c" [color="blue"]
           ":a" -> ":d" [style="dotted",color="#FF55FF"]

@@ -10,7 +10,7 @@ import java.io.File
 internal fun File.buildRunner(androidHome: File? = null): GradleRunner = GradleRunner
   .create()
   .withPluginClasspath()
-  // .withDebug(true)
+  .withDebug(false)
   .withGradleVersion(System.getProperty("test.version.gradle"))
   .withProjectDir(this)
   .apply {
