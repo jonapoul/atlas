@@ -27,6 +27,7 @@ import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.internal.extensions.stdlib.capitalized
+import org.gradle.language.base.plugins.LifecycleBasePlugin.CHECK_TASK_NAME
 import org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
 import java.io.File
 import java.io.FileNotFoundException
@@ -117,9 +118,9 @@ public abstract class CheckFileDiff : DefaultTask() {
         task.expectedFilename.set(expectedFile.name)
       }
 
-      gradle.projectsEvaluated {
+      tasks.named(CHECK_TASK_NAME).configure { check ->
         if (extension.checkOutputs.get()) {
-          tasks.maybeCreate("check").dependsOn(checkDiff)
+          check.dependsOn(checkDiff)
         }
       }
 
