@@ -19,6 +19,6 @@ services:
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-mermaid
       "
 
-  build:
+  publish:
     extends: base
-    command: gradle -Dorg.gradle.java.home=/opt/java/openjdk/ build
+    command: gradle -Dorg.gradle.java.home=/opt/java/openjdk/ publish -x dokkaGeneratePublicationHtml
