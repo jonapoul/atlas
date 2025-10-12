@@ -1,7 +1,16 @@
 @file:Suppress("ktlint:standard:no-wildcard-imports")
 
-import modular.core.*
-import modular.d2.*
+import modular.d2.ArrowType
+import modular.d2.Direction
+import modular.d2.FileFormat
+import modular.d2.FillPattern
+import modular.d2.Font
+import modular.d2.LayoutEngine
+import modular.d2.LinkStyle
+import modular.d2.Location
+import modular.d2.Position
+import modular.d2.Shape
+import modular.d2.Theme
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -18,7 +27,26 @@ modular {
   groupModules = true
 
   moduleTypes {
-    useDefaults()
+    androidApp {
+      shape = Shape.Hexagon
+      strokeWidth = 10
+      stroke = "black"
+      fontColor = "black"
+    }
+
+    kotlinMultiplatform()
+
+    androidLibrary {
+      fontColor = "red"
+      multiple = true
+      italic = true
+    }
+
+    kotlinJvm { fillPattern = FillPattern.Lines }
+
+    java { animated = true }
+
+    other()
   }
 
   linkTypes {

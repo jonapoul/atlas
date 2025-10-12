@@ -10,6 +10,33 @@ import modular.core.internal.IntEnum
 import modular.core.internal.StringEnum
 
 /**
+ * https://d2lang.com/tour/shapes/
+ */
+public enum class Shape(override val string: String) : StringEnum {
+  Rectangle("rectangle"),
+  Square("square"),
+  Page("page"),
+  Parallelogram("parallelogram"),
+  Document("document"),
+  Cylinder("cylinder"),
+  Queue("queue"),
+  Package("package"),
+  Step("step"),
+  Callout("callout"),
+  StoredData("stored_data"),
+  Person("person"),
+  Diamond("diamond"),
+  Oval("oval"),
+  Circle("circle"),
+  Hexagon("hexagon"),
+  Cloud("cloud"),
+  C4Person("c4-person"),
+  ;
+
+  override fun toString(): String = string
+}
+
+/**
  * https://d2lang.com/tour/connections/
  */
 public enum class LinkStyle(override val string: String) : StringEnum {
