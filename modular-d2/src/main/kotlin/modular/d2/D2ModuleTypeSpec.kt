@@ -23,6 +23,7 @@ public interface D2ModuleTypeSpec : ModuleTypeSpec {
   public var opacity: Float?
   public var render3D: Boolean?
   public var shadow: Boolean?
+  public var shape: Shape?
   public var stroke: String?
   public var strokeDash: Int?
   public var strokeWidth: Int?

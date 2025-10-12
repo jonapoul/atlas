@@ -24,6 +24,7 @@ import modular.d2.D2RootStyleSpec
 import modular.d2.D2Spec
 import modular.d2.FillPattern
 import modular.d2.Font
+import modular.d2.Shape
 import modular.d2.TextTransform
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -99,6 +100,7 @@ internal abstract class D2ModuleTypeSpecImpl @Inject constructor(
   override var opacity by float("style.opacity")
   override var render3D by bool("style.3d")
   override var shadow by bool("style.shadow")
+  override var shape by enum<Shape>("shape")
   override var stroke by string("style.stroke")
   override var strokeDash by int("style.stroke-dash")
   override var strokeWidth by int("style.stroke-width")
