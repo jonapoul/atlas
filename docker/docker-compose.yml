@@ -3,20 +3,20 @@ services:
 #    build:
 #      context: ..
 #      dockerfile: docker/Dockerfile
-    image: ghcr.io/jonapoul/modular:latest
+    image: ghcr.io/jonapoul/atlas:latest
     volumes:
       - $HOME/.gradle:/home/gradle/.gradle
-      - ..:/modular
-    working_dir: /modular
+      - ..:/atlas
+    working_dir: /atlas
 
   check:
     extends: base
     command: >
       /bin/bash -c "
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ check &&
-      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-d2 &&
-      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-graphviz &&
-      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ modularGenerate -p samples/sample-mermaid
+      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-d2 &&
+      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-graphviz &&
+      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-mermaid
       "
 
   build:

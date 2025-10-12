@@ -7,5 +7,5 @@ RUN rm -rf /var/lib/apt/lists/*
 # https://d2lang.com/tour/install/
 RUN curl -fsSL https://d2lang.com/install.sh | sh -s --
 
-WORKDIR /modular
+WORKDIR /atlas
 CMD ["/bin/bash"]

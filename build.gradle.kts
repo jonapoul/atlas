@@ -9,5 +9,5 @@ plugins {
 
   alias(libs.plugins.publishReport)
   alias(libs.plugins.spotless)
-  id("modular.convention.spotless")
+  id("atlas.convention.spotless")
 }

@@ -14,7 +14,7 @@ idea {
 
 // Pull java version property from project's root properties file, since build-logic doesn't have access to it
 val props = Properties().also { it.load(file("../gradle.properties").reader()) }
-val javaInt = props["modular.javaVersion"]?.toString()?.toInt() ?: error("Failed getting java version from $props")
+val javaInt = props["atlas.javaVersion"]?.toString()?.toInt() ?: error("Failed getting java version from $props")
 val javaVersion = JavaVersion.toVersion(javaInt)
 
 java {
@@ -27,15 +27,16 @@ kotlin {
 }
 
 dependencies {
-  compileOnly(libs.plugins.detekt.plugin())
-  compileOnly(libs.plugins.dokka.plugin())
-  compileOnly(libs.plugins.kotlinJvm.plugin())
-  compileOnly(libs.plugins.licensee.plugin())
-  compileOnly(libs.plugins.publish.plugin())
-  compileOnly(libs.plugins.spotless.plugin())
-}
+  fun compileOnly(plugin: Provider<PluginDependency>) =
+    with(plugin.get()) { compileOnly("$pluginId:$pluginId.gradle.plugin:$version") }
 
-fun Provider<PluginDependency>.plugin() = get().run { "$pluginId:$pluginId.gradle.plugin:$version" }
+  compileOnly(libs.plugins.detekt)
+  compileOnly(libs.plugins.dokka)
+  compileOnly(libs.plugins.kotlinJvm)
+  compileOnly(libs.plugins.licensee)
+  compileOnly(libs.plugins.publish)
+  compileOnly(libs.plugins.spotless)
+}
 
 tasks.validatePlugins {
   enableStricterValidation = true
@@ -44,18 +45,15 @@ tasks.validatePlugins {
 
 gradlePlugin {
   plugins {
-    create(id = "modular.convention.detekt", impl = "modular.gradle.ConventionDetekt")
-    create(id = "modular.convention.kotlin", impl = "modular.gradle.ConventionKotlin")
-    create(id = "modular.convention.plugin", impl = "modular.gradle.ConventionGradlePlugin")
-    create(id = "modular.convention.publish", impl = "modular.gradle.ConventionPublish")
-    create(id = "modular.convention.spotless", impl = "modular.gradle.ConventionSpotless")
-  }
-}
+    operator fun String.invoke(impl: String) = register(this) {
+      id = this@invoke
+      implementationClass = impl
+    }
 
-fun NamedDomainObjectContainer<PluginDeclaration>.create(
-  id: String,
-  impl: String,
-): PluginDeclaration = create(id) {
-  this.id = id
-  implementationClass = impl
+    "atlas.convention.detekt"(impl = "atlas.gradle.ConventionDetekt")
+    "atlas.convention.kotlin"(impl = "atlas.gradle.ConventionKotlin")
+    "atlas.convention.plugin"(impl = "atlas.gradle.ConventionGradlePlugin")
+    "atlas.convention.publish"(impl = "atlas.gradle.ConventionPublish")
+    "atlas.convention.spotless"(impl = "atlas.gradle.ConventionSpotless")
+  }
 }
