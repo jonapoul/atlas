@@ -28,7 +28,7 @@ jobs:
         run: |
           GRADLE_VERSION="$(grep VERSION_NAME gradle.properties | cut -d "=" -f 2)"
           echo "GRADLE_VERSION=$GRADLE_VERSION"
-          echo "value=$GRADLE_VERSION" >> $GITHUB_OUTPUT
+          echo "value=$GRADLE_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Exit if version isn't a snapshot
         if: "!contains(steps.version.outputs.value, '-SNAPSHOT')"
