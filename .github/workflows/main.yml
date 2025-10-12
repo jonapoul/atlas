@@ -1,7 +1,6 @@
-name: Main
+name: Publish Snapshot
 
 on:
-  pull_request:
   push:
     branches: [ "main" ]
 
@@ -14,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  main-check:
+  publish-snapshot:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -31,9 +30,9 @@ jobs:
           echo "value=$GRADLE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Make sure version is a snapshot
-        if: contains(steps.version.outputs.value, '-SNAPSHOT')
+        if: !contains(steps.version.outputs.value, '-SNAPSHOT')
         run: |
-          echo "Snapshot version, skipping publish"
+          echo "Not a snapshot version, skipping publish"
           exit 0
 
       - name: Login to registry
