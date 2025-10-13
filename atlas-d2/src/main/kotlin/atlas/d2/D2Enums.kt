@@ -202,3 +202,31 @@ public enum class TextTransform(override val string: String) : StringEnum {
 
   override fun toString(): String = string
 }
+
+/**
+ * https://eclipse.dev/elk/reference/algorithms.html
+ */
+public enum class ElkAlgorithm(override val string: String) : StringEnum {
+  Box("box"),
+  Disco("disco"),
+  Fixed("fixed"),
+  Force("force"),
+  Layered("layered"),
+  MrTree("mrtree"),
+  Radial("radial"),
+  Random("random"),
+  RectPacking("rectpacking"),
+  SporeCompaction("sporeCompaction"),
+  SporeOverlap("sporeOverlap"),
+  Stress("stress"),
+  TopDownPacking("topdownpacking"),
+  VertiFlex("vertiflex"),
+  GraphvizCirco("graphviz.circo"),
+  GraphvizDot("graphviz.dot"),
+  GraphvizFdp("graphviz.fdp"),
+  GraphvizNeato("graphviz.neato"),
+  GraphvizTwopi("graphviz.twopi"),
+  ;
+
+  override fun toString(): String = string
+}

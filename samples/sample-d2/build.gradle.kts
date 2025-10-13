@@ -2,6 +2,7 @@
 
 import atlas.d2.ArrowType
 import atlas.d2.Direction
+import atlas.d2.ElkAlgorithm
 import atlas.d2.FileFormat
 import atlas.d2.FillPattern
 import atlas.d2.Font
@@ -67,11 +68,17 @@ atlas {
     fileFormat = FileFormat.Svg
     groupLabelLocation = Location.Border
     groupLabelPosition = Position.BottomCenter
-    layoutEngine = LayoutEngine.Elk
     pad = 100
     sketch = true
     theme = Theme.ShirleyTemple
     themeDark = Theme.DarkMauve
+
+    layoutEngine.elk {
+      algorithm = ElkAlgorithm.Layered
+      edgeNodeBetweenLayers = 20
+      nodeNodeBetweenLayers = 10
+      nodeSelfLoop = 50
+    }
 
     rootStyle {
       stroke = "floralwhite"
