@@ -20,7 +20,7 @@ class ConventionPublish : Plugin<Project> {
     }
 
     extensions.configure<MavenPublishBaseExtension> {
-      publishToMavenCentral()
+      publishToMavenCentral(automaticRelease = true)
       signAllPublications()
     }
 
