@@ -21,7 +21,7 @@ internal object D2CustomLayoutEngine : D2Scenario by D2Basic {
       moduleTypes.useDefaults()
 
       d2 {
-        layoutEngine = LayoutEngine.Elk
+        layoutEngine.elk()
         fileFormat = FileFormat.Svg
       }
     }
