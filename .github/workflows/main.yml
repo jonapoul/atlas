@@ -31,14 +31,11 @@ jobs:
           echo "GRADLE_VERSION=$GRADLE_VERSION"
           echo "value=$GRADLE_VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Exit if version isn't a snapshot
-        if: "!contains(steps.version.outputs.value, '-SNAPSHOT')"
-        run: |
-          echo "Not a snapshot version, backing out"
-          exit 1
-
       - name: Publish snapshot
-        if: github.repository == 'jonapoul/atlas' && github.ref == 'refs/heads/main'
+        if: |
+          github.repository == 'jonapoul/atlas' &&
+          github.ref == 'refs/heads/main' &&
+          contains(steps.version.outputs.value, '-SNAPSHOT')
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
