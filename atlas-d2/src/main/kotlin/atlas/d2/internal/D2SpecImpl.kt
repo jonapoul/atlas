@@ -175,6 +175,9 @@ internal class D2ElkSpecImpl(parent: PropertiesSpec) : D2ElkSpec, PropertiesSpec
   override var padding by string("elk-padding")
 }
 
-internal class D2DagreSpecImpl(parent: PropertiesSpec) : D2DagreSpec, PropertiesSpec by parent
+internal class D2DagreSpecImpl(parent: PropertiesSpec) : D2DagreSpec, PropertiesSpec by parent {
+  override var nodeSep by int("dagre-nodesep")
+  override var edgeSep by int("dagre-edgesep")
+}
 
 internal class D2TalaSpecImpl(parent: PropertiesSpec) : D2TalaSpec, PropertiesSpec by parent

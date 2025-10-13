@@ -55,9 +55,20 @@ public interface D2ElkSpec : PropertiesSpec {
   public var padding: String?
 }
 
+/**
+ * From running `d2 layout dagre` in the CLI
+ */
 @AtlasDsl
 public interface D2DagreSpec : PropertiesSpec {
-  // TBC?
+  /**
+   * number of pixels that separate nodes horizontally. (default 60)
+   */
+  public var nodeSep: Int?
+
+  /**
+   * number of pixels that separate edges horizontally. (default 20)
+   */
+  public var edgeSep: Int?
 }
 
 @AtlasDsl
