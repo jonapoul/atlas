@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - '**'
 
 env:
   CI: true
@@ -55,7 +55,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    if: github.repository == 'jonapoul/atlas' && github.ref == 'refs/heads/main'
+    if: github.repository == 'jonapoul/atlas'
     container:
       image: gradle:9.1.0-jdk21
     permissions:
