@@ -20,5 +20,5 @@ internal fun d2Writer(
   replacements = replacements,
   thisPath = thisPath,
   groupModules = groupModules,
-  globalRelativePath = classesRelativePath,
+  pathToClassesFile = classesRelativePath,
 )

@@ -21,6 +21,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.Provider
 import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
@@ -36,9 +37,9 @@ import java.io.File
 @CacheableTask
 public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
   // Files
-  @get:[PathSensitive(RELATIVE) InputFile] public abstract val globalFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] public abstract val linksFile: RegularFileProperty
   @get:[PathSensitive(RELATIVE) InputFile] public abstract val moduleTypesFile: RegularFileProperty
+  @get:Input public abstract val pathToClassesFile: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General
@@ -53,10 +54,10 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
 
   @TaskAction
   public open fun execute() {
-    val globalFile = globalFile.get().asFile
     val linksFile = linksFile.get().asFile
     val moduleTypesFile = moduleTypesFile.get().asFile
     val outputFile = outputFile.get().asFile
+    val pathToClassesFile = pathToClassesFile.get()
 
     val writer = D2Writer(
       typedModules = readModuleTypes(moduleTypesFile),
@@ -64,7 +65,7 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
       replacements = replacements.get(),
       thisPath = thisPath.get(),
       groupModules = groupModules.get(),
-      globalRelativePath = globalFile.relativeTo(outputFile.parentFile).path,
+      pathToClassesFile = pathToClassesFile,
     )
 
     outputFile.writeText(writer())
@@ -79,28 +80,30 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
       target: Project,
       extension: AtlasExtension,
       outputFile: File,
-    ) = register<WriteD2Chart>(target, extension, outputFile)
+      pathToClassesFile: Provider<String>,
+    ) = register<WriteD2Chart>(target, extension, outputFile, pathToClassesFile)
 
     internal fun dummy(
       target: Project,
       extension: AtlasExtension,
       outputFile: File,
-    ) = register<WriteD2ChartDummy>(target, extension, outputFile)
+      pathToClassesFile: Provider<String>,
+    ) = register<WriteD2ChartDummy>(target, extension, outputFile, pathToClassesFile)
 
-    internal inline fun <reified T : WriteD2Chart> register(
+    private inline fun <reified T : WriteD2Chart> register(
       target: Project,
       extension: AtlasExtension,
       outputFile: File,
+      pathToClassesFile: Provider<String>,
     ): TaskProvider<T> = with(target) {
       val collateModuleTypes = CollateModuleTypes.get(rootProject)
       val calculateProjectTree = WriteModuleTree.get(target)
-      val writeD2Classes = WriteD2Classes.get(rootProject)
       val name = "write${T::class.qualifier}D2Chart"
       val writeChart = tasks.register(name, T::class.java) { task ->
-        task.globalFile.convention(writeD2Classes.map { it.outputFile.get() })
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.set(outputFile)
+        task.pathToClassesFile.convention(pathToClassesFile)
         task.thisPath.convention(target.path)
       }
 

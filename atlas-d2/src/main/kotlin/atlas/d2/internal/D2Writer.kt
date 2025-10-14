@@ -25,7 +25,7 @@ public class D2Writer(
   override val replacements: Set<Replacement>,
   override val thisPath: String,
   override val groupModules: Boolean,
-  private val globalRelativePath: String,
+  private val pathToClassesFile: String,
 ) : ChartWriter() {
   private var subgraphNestingLevel = 0
 
@@ -37,7 +37,7 @@ public class D2Writer(
   }
 
   private fun IndentedStringBuilder.appendImports() {
-    appendLine("...@$globalRelativePath")
+    appendLine("...@$pathToClassesFile")
   }
 
   override fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph) {

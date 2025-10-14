@@ -51,16 +51,25 @@ public class D2AtlasPlugin : AtlasPlugin() {
   override fun Project.registerChildTasks() {
     val d2Spec = d2Extension.d2
 
+    // need to use the same pathToClassesFile string for real and dummy tasks, otherwise the check operation might
+    // fail if the module and the build directory have different relative paths.
+    val writeD2Classes = WriteD2Classes.get(rootProject)
+    val classesFile = writeD2Classes.map { it.outputFile.get() }
+    val outputFile = outputFile(Chart, d2Spec.fileExtension.get())
+    val pathToClassesFile = classesFile.map { it.asFile.relativeTo(outputFile.parentFile).path }
+
     val chartTask = WriteD2Chart.real(
       target = project,
       extension = extension,
-      outputFile = outputFile(Chart, d2Spec.fileExtension.get()),
+      outputFile = outputFile,
+      pathToClassesFile = pathToClassesFile,
     )
 
     val dummyChartTask = WriteD2Chart.dummy(
       target = project,
       extension = extension,
       outputFile = atlasBuildDirectory.get().file("chart-temp.d2").asFile,
+      pathToClassesFile = pathToClassesFile,
     )
 
     CheckFileDiff.register(
