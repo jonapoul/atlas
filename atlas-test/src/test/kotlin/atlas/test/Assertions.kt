@@ -39,7 +39,9 @@ internal fun Assert<BuildTask?>.hadResult(expected: TaskOutcome) = given { resul
 internal fun Assert<File>.contentEquals(expected: String) = given { file ->
   val contents = file.readText().removeSuffix("\n")
   if (contents == expected) return@given
-  fail("Failed contentEquals: expected='$expected', actual='$contents'")
+  expected(
+    "Unequal strings between expected{${expected.length}} and actual{${contents.length}}:\n" + diff(expected, contents),
+  )
 }
 
 // Copied from assertk repo but they haven't published in ages
