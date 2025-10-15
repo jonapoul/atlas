@@ -9,6 +9,7 @@ import atlas.core.internal.AtlasExtensionImpl
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.internal.orderedModuleTypes
 import atlas.core.tasks.AtlasGenerationTask
+import atlas.core.tasks.CheckFileDiff
 import atlas.core.tasks.CollateModuleLinks
 import atlas.core.tasks.CollateModuleTypes
 import atlas.core.tasks.WriteModuleLinks
@@ -41,16 +42,22 @@ public abstract class AtlasPlugin : Plugin<Project> {
 
     configurePrintFilesToConsole()
     val atlasGenerate = registerAtlasGenerateTask()
+    registerAtlasCheckTask()
     registerGenerationTaskOnSync(atlasGenerate)
   }
 
   protected open fun applyToRoot(target: Project): Unit = with(target) {
     CollateModuleTypes.register(project)
-    CollateModuleLinks.register(project, extension)
+    val collateModuleLinks = CollateModuleLinks.register(project, extension)
     registerRootTasks()
 
     subprojects { child ->
       child.pluginManager.apply(this@AtlasPlugin::class.java)
+      child.afterEvaluate {
+        child.tasks.withType(WriteModuleTree::class.java).configureEach { t ->
+          t.collatedLinks.convention(collateModuleLinks.flatMap { it.outputFile })
+        }
+      }
     }
 
     afterEvaluate {
@@ -59,10 +66,18 @@ public abstract class AtlasPlugin : Plugin<Project> {
   }
 
   protected open fun applyToChild(target: Project): Unit = with(target) {
-    WriteModuleType.register(target, extension)
-    WriteModuleLinks.register(target, extension)
+    val writeType = WriteModuleType.register(target, extension)
+    val writeLinks = WriteModuleLinks.register(target, extension)
     WriteModuleTree.register(target, extension)
     registerChildTasks()
+
+    CollateModuleTypes.get(rootProject).configure { task ->
+      task.projectTypeFiles.from(writeType.flatMap { it.outputFile })
+    }
+
+    CollateModuleLinks.get(rootProject).configure { task ->
+      task.moduleLinkFiles.from(writeLinks.flatMap { it.outputFile })
+    }
   }
 
   private fun Project.warnIfModuleTypesSpecifyNothing() {
@@ -90,6 +105,12 @@ public abstract class AtlasPlugin : Plugin<Project> {
         .withType(AtlasGenerationTask::class.java)
         .matching { it !is DummyAtlasGenerationTask },
     )
+  }
+
+  private fun Project.registerAtlasCheckTask() = tasks.register("atlasCheck") { t ->
+    t.group = LifecycleBasePlugin.VERIFICATION_GROUP
+    t.description = "Aggregates all Atlas verification tasks"
+    t.dependsOn(tasks.withType(CheckFileDiff::class.java))
   }
 
   private fun Project.registerGenerationTaskOnSync(atlasGenerate: TaskProvider<Task>) {

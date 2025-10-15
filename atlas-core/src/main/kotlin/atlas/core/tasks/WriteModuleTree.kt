@@ -97,24 +97,11 @@ public abstract class WriteModuleTree : DefaultTask(), TaskWithOutputFile {
       target: Project,
       extension: AtlasExtension,
     ): TaskProvider<WriteModuleTree> = with(target) {
-      val calculateTree = tasks.register(NAME, WriteModuleTree::class.java) { task ->
+      tasks.register(NAME, WriteModuleTree::class.java) { task ->
         task.thisPath.convention(target.path)
         task.outputFile.convention(fileInBuildDirectory("module-tree.json"))
-      }
-
-      calculateTree.configure { task ->
         task.alsoTraverseUpwards.convention(extension.alsoTraverseUpwards)
       }
-
-      gradle.projectsEvaluated {
-        val collateProjectLinks = CollateModuleLinks.get(rootProject)
-        calculateTree.configure { t ->
-          t.collatedLinks.convention(collateProjectLinks.map { it.outputFile.get() })
-          t.dependsOn(collateProjectLinks)
-        }
-      }
-
-      calculateTree
     }
   }
 }

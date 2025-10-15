@@ -5,6 +5,7 @@
 package atlas.core.tasks
 
 import atlas.core.AtlasExtension
+import atlas.core.AtlasPlugin
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.ModuleLink
 import atlas.core.internal.fileInBuildDirectory
@@ -74,25 +75,10 @@ public abstract class CollateModuleLinks : DefaultTask(), TaskWithOutputFile {
       target: Project,
       extension: AtlasExtension,
     ): TaskProvider<CollateModuleLinks> = with(target) {
-      val collateLinks = tasks.register(NAME, CollateModuleLinks::class.java) { task ->
+      tasks.register(NAME, CollateModuleLinks::class.java) { task ->
         task.outputFile.convention(fileInBuildDirectory("module-links.json"))
         task.ignoredModules.convention(extension.ignoredModules)
       }
-
-      gradle.projectsEvaluated {
-        collateLinks.configure { t ->
-          val writeTasks = rootProject
-            .subprojects
-            .toList()
-            .mapNotNull(WriteModuleLinks::get)
-          t.dependsOn(writeTasks)
-
-          val linkFiles = writeTasks.map { provider -> provider.map { it.outputFile.get() } }
-          t.moduleLinkFiles.from(linkFiles)
-        }
-      }
-
-      collateLinks
     }
   }
 }

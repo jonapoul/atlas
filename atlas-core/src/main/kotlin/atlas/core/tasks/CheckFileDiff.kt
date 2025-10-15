@@ -68,7 +68,7 @@ public abstract class CheckFileDiff : DefaultTask() {
     val actualContents = actualFile.readText()
 
     if (expectedContents != actualContents) {
-      val exception = GradleException("Generated chart file differs from the golden badging file!")
+      val exception = GradleException("Expected chart file differs from the actual!")
       problems.reporter.throwing(exception, PROBLEM_NEEDS_REGENERATION) { spec ->
         with(spec) {
           details(diff(expectedContents, actualContents))
