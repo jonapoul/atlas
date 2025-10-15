@@ -9,6 +9,7 @@ import atlas.core.internal.AtlasExtensionImpl
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.internal.orderedModuleTypes
 import atlas.core.tasks.AtlasGenerationTask
+import atlas.core.tasks.CheckFileDiff
 import atlas.core.tasks.CollateModuleLinks
 import atlas.core.tasks.CollateModuleTypes
 import atlas.core.tasks.WriteModuleLinks
@@ -41,6 +42,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
 
     configurePrintFilesToConsole()
     val atlasGenerate = registerAtlasGenerateTask()
+    registerAtlasCheckTask()
     registerGenerationTaskOnSync(atlasGenerate)
   }
 
@@ -90,6 +92,12 @@ public abstract class AtlasPlugin : Plugin<Project> {
         .withType(AtlasGenerationTask::class.java)
         .matching { it !is DummyAtlasGenerationTask },
     )
+  }
+
+  private fun Project.registerAtlasCheckTask() = tasks.register("atlasCheck") { t ->
+    t.group = LifecycleBasePlugin.VERIFICATION_GROUP
+    t.description = "Aggregates all Atlas verification tasks"
+    t.dependsOn(tasks.withType(CheckFileDiff::class.java))
   }
 
   private fun Project.registerGenerationTaskOnSync(atlasGenerate: TaskProvider<Task>) {

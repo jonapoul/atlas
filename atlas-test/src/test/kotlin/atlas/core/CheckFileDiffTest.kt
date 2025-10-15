@@ -10,12 +10,14 @@ import assertk.assertions.containsAtLeast
 import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
 import atlas.test.ScenarioTest
+import atlas.test.allTasksSuccessful
 import atlas.test.runTask
 import atlas.test.scenarios.CheckExplicitlyDisabled
 import atlas.test.scenarios.CheckExplicitlyEnabled
 import atlas.test.scenarios.D2Basic
 import atlas.test.scenarios.GraphVizBasicWithPngOutput
 import atlas.test.scenarios.GraphvizBasic
+import atlas.test.taskWasSuccessful
 import org.gradle.testkit.runner.TaskOutcome.FAILED
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.junit.jupiter.api.Test
@@ -169,5 +171,21 @@ internal class CheckFileDiffTest : ScenarioTest() {
 
     // then
     assertThat(result.output).doesNotContain("checkGraphvizLegend")
+  }
+
+  @Test
+  fun `Run aggregated check task`() = runScenario(GraphvizBasic) {
+    // given
+    runTask("atlasGenerate").build()
+
+    // when
+    val result = runTask("atlasCheck").build()
+
+    // then
+    assertThat(result).taskWasSuccessful(":checkGraphvizLegend")
+    assertThat(result).taskWasSuccessful(":a:checkGraphvizChart")
+    assertThat(result).taskWasSuccessful(":b:checkGraphvizChart")
+    assertThat(result).taskWasSuccessful(":c:checkGraphvizChart")
+    assertThat(result).taskWasSuccessful(":atlasCheck")
   }
 }
