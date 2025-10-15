@@ -68,7 +68,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
   protected open fun applyToChild(target: Project): Unit = with(target) {
     val writeType = WriteModuleType.register(target, extension)
     val writeLinks = WriteModuleLinks.register(target, extension)
-    val writeTree = WriteModuleTree.register(target, extension)
+    WriteModuleTree.register(target, extension)
     registerChildTasks()
 
     CollateModuleTypes.get(rootProject).configure { task ->
