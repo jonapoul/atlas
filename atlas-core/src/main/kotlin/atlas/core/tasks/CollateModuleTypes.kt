@@ -60,29 +60,9 @@ public abstract class CollateModuleTypes : DefaultTask(), TaskWithOutputFile {
 
     @InternalAtlasApi
     public fun register(target: Project): TaskProvider<CollateModuleTypes> = with(target) {
-      val collateTypes = tasks.register(NAME, CollateModuleTypes::class.java) { task ->
+      tasks.register(NAME, CollateModuleTypes::class.java) { task ->
         task.outputFile.convention(fileInBuildDirectory("module-types.json"))
       }
-
-      gradle.projectsEvaluated {
-        collateTypes.configure { t ->
-          val writeTasks = rootProject
-            .subprojects
-            .toList()
-            .mapNotNull(WriteModuleType::get)
-
-          t.dependsOn(writeTasks)
-
-          @Suppress("UnstableApiUsage")
-          t.projectTypeFiles.convention(
-            writeTasks.map { taskProvider ->
-              taskProvider.map { it.outputFile.get() }
-            },
-          )
-        }
-      }
-
-      collateTypes
     }
   }
 }

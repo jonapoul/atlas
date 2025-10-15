@@ -48,11 +48,16 @@ public abstract class AtlasPlugin : Plugin<Project> {
 
   protected open fun applyToRoot(target: Project): Unit = with(target) {
     CollateModuleTypes.register(project)
-    CollateModuleLinks.register(project, extension)
+    val collateModuleLinks = CollateModuleLinks.register(project, extension)
     registerRootTasks()
 
     subprojects { child ->
       child.pluginManager.apply(this@AtlasPlugin::class.java)
+      child.afterEvaluate {
+        child.tasks.withType(WriteModuleTree::class.java).configureEach { t ->
+          t.collatedLinks.convention(collateModuleLinks.flatMap { it.outputFile })
+        }
+      }
     }
 
     afterEvaluate {
@@ -61,10 +66,18 @@ public abstract class AtlasPlugin : Plugin<Project> {
   }
 
   protected open fun applyToChild(target: Project): Unit = with(target) {
-    WriteModuleType.register(target, extension)
-    WriteModuleLinks.register(target, extension)
-    WriteModuleTree.register(target, extension)
+    val writeType = WriteModuleType.register(target, extension)
+    val writeLinks = WriteModuleLinks.register(target, extension)
+    val writeTree = WriteModuleTree.register(target, extension)
     registerChildTasks()
+
+    CollateModuleTypes.get(rootProject).configure { task ->
+      task.projectTypeFiles.from(writeType.flatMap { it.outputFile })
+    }
+
+    CollateModuleLinks.get(rootProject).configure { task ->
+      task.moduleLinkFiles.from(writeLinks.flatMap { it.outputFile })
+    }
   }
 
   private fun Project.warnIfModuleTypesSpecifyNothing() {
