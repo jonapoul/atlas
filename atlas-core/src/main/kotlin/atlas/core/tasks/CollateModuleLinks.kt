@@ -5,7 +5,6 @@
 package atlas.core.tasks
 
 import atlas.core.AtlasExtension
-import atlas.core.AtlasPlugin
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.ModuleLink
 import atlas.core.internal.fileInBuildDirectory
@@ -25,6 +24,10 @@ import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
+/**
+ * Registered on the root project to aggregate the results of [WriteModuleLinks] tasks. This will then be referenced
+ * from [WriteModuleTree] to draw up the full project picture. This will then be sub-charted for each module in turn.
+ */
 @CacheableTask
 public abstract class CollateModuleLinks : DefaultTask(), TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFiles] public abstract val moduleLinkFiles: ConfigurableFileCollection

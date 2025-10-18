@@ -6,6 +6,7 @@
 
 package atlas.core
 
+import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.provider.Property
@@ -65,11 +66,11 @@ public interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjec
     name: String,
     pluginId: String,
     color: String? = null,
-    extraConfig: T.() -> Unit = {},
+    action: Action<T>? = null,
   ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
     type.hasPluginId.convention(pluginId)
-    type.extraConfig()
+    action?.execute(type)
   }
 
   public fun registerByPathMatches(
@@ -77,23 +78,23 @@ public interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjec
     @Language("RegExp") pathMatches: String,
     options: Set<RegexOption> = emptySet(),
     color: String? = null,
-    extraConfig: T.() -> Unit = {},
+    action: Action<T>? = null,
   ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
     type.pathMatches.convention(pathMatches)
     type.regexOptions.convention(options)
-    type.extraConfig()
+    action?.execute(type)
   }
 
   public fun registerByPathContains(
     name: String,
     pathContains: String,
     color: String? = null,
-    extraConfig: T.() -> Unit = {},
+    action: Action<T>? = null,
   ): NamedDomainObjectProvider<T> = register(name) { type ->
     type.color.convention(color)
     type.pathContains.convention(pathContains)
-    type.extraConfig()
+    action?.execute(type)
   }
 }
 

@@ -7,6 +7,7 @@
 package atlas.core
 
 import atlas.core.internal.StringEnum
+import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.provider.Property
@@ -41,51 +42,51 @@ public interface NamedLinkTypeContainer<T : LinkTypeSpec> : NamedDomainObjectCon
     style: LinkStyle? = null,
     color: String? = null,
     displayName: String = configuration,
-    extraConfig: T.() -> Unit = {},
+    action: Action<T>? = null,
   ): NamedDomainObjectProvider<T> = register(displayName) { spec ->
     spec.configuration.set(configuration)
     spec.style.set(style?.string)
     spec.color.set(color)
-    spec.extraConfig()
+    action?.execute(spec)
   }
 
   public fun api(
     style: LinkStyle? = null,
     color: String? = null,
     displayName: String = "api",
-    extraConfig: T.() -> Unit = {},
+    action: Action<T>? = null,
   ): NamedDomainObjectProvider<T> = register(
     configuration = ".*?api",
     style = style,
     color = color,
     displayName = displayName,
-    extraConfig = extraConfig,
+    action = action,
   )
 
   public fun implementation(
     style: LinkStyle? = null,
     color: String? = null,
     displayName: String = "implementation",
-    extraConfig: T.() -> Unit = {},
+    action: Action<T>? = null,
   ): NamedDomainObjectProvider<T> = register(
     configuration = ".*?implementation",
     style = style,
     color = color,
     displayName = displayName,
-    extraConfig = extraConfig,
+    action = action,
   )
 
   public operator fun String.invoke(
     style: LinkStyle? = null,
     color: String? = null,
     displayName: String = this,
-    extraConfig: T.() -> Unit = {},
+    action: Action<T>? = null,
   ): NamedDomainObjectProvider<T> = register(
     configuration = this,
     style = style,
     color = color,
     displayName = displayName,
-    extraConfig = extraConfig,
+    action = action,
   )
 }
 

@@ -15,7 +15,7 @@ import org.gradle.api.provider.SetProperty
 public interface AtlasExtension {
   /**
    * When set to true, syncing the IDE (IntelliJ or Android Studio) will automatically trigger regeneration of your
-   * module diagrams. Defaults to false.
+   * module diagrams. Defaults to false. Be careful enabling this on large projects, sync time might extend quite a bit.
    */
   public val generateOnSync: Property<Boolean>
 
@@ -40,7 +40,7 @@ public interface AtlasExtension {
 
   /**
    * Set to true if you want module charts to also show modules that depend on the one in question. This will traverse
-   * all the way upwards and downwards. Defaults to false.
+   * the graph both directions and show all upstream and downstream modules. Defaults to false.
    */
   public val alsoTraverseUpwards: Property<Boolean>
 
@@ -50,20 +50,30 @@ public interface AtlasExtension {
   public val printFilesToConsole: Property<Boolean>
 
   /**
-   * Set to true to attach a diffing task to `gradle check` - which will verify that your generated charts match the
-   * current state of the project layout. Defaults to true.
+   * Set to true to attach a diffing task to `gradle check`. It will verify that your generated charts match the
+   * current state of the project layout, failing if not with a useful error message. Defaults to true.
    */
   public val checkOutputs: Property<Boolean>
 
   /**
-   * Set to true to attach a string label on each module link, showing which configuration(s) caused the link to be
+   * Set to true to attach a string label on each module link, showing which configuration caused the link to be
    * created. Defaults to false. When true, the [LinkTypeSpec.name] property will be shown.
    */
   public val displayLinkLabels: Property<Boolean>
 
+  /**
+   * Configures any string transformations to apply to module paths when displaying them in the generated charts.
+   */
   public val pathTransforms: PathTransformSpec
   public fun pathTransforms(action: Action<PathTransformSpec>)
 
+  /**
+   * Configure the set of [ModuleTypeSpec]s to use when identifying modules in your project.
+   */
   public val moduleTypes: NamedModuleTypeContainer<*>
+
+  /**
+   * Configure the set of [LinkTypeSpec]s to use when identifying links between your modules.
+   */
   public val linkTypes: NamedLinkTypeContainer<*>
 }

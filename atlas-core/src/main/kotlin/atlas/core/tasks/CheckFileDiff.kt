@@ -33,6 +33,12 @@ import java.io.File
 import java.io.FileNotFoundException
 import javax.inject.Inject
 
+/**
+ * Registered on each chart file generation task to confirm that its configuration hasn't changed since the last
+ * `gradle atlasGenerate` task run. Will throw an exception if a difference is found.
+ *
+ * This will auto-attach to `gradle check` if [AtlasExtension.checkOutputs] is enabled, which it is by default.
+ */
 @CacheableTask
 public abstract class CheckFileDiff : DefaultTask() {
   @get:[PathSensitive(RELATIVE) InputFile] public abstract val actualFile: RegularFileProperty

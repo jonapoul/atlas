@@ -21,6 +21,10 @@ import org.gradle.api.tasks.PathSensitivity.ABSOLUTE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
+/**
+ * Registered on the root project to aggregate the results of [WriteModuleType] tasks. This will then be referenced
+ * from the various Write*Chart tasks to identify and customize nodes in the chart.
+ */
 @CacheableTask
 public abstract class CollateModuleTypes : DefaultTask(), TaskWithOutputFile {
   @get:[PathSensitive(ABSOLUTE) InputFiles] public abstract val projectTypeFiles: ConfigurableFileCollection

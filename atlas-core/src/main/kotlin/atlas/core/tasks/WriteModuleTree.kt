@@ -24,6 +24,10 @@ import org.gradle.api.tasks.PathSensitivity.RELATIVE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
+/**
+ * Gathers a snapshot of the whole-project [collatedLinks] data to only find those modules and links relevant to
+ * [thisPath]. If [alsoTraverseUpwards] is enabled, upstream modules will be included too.
+ */
 @CacheableTask
 public abstract class WriteModuleTree : DefaultTask(), TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] public abstract val collatedLinks: RegularFileProperty

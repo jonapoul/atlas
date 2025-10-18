@@ -21,6 +21,10 @@ import org.gradle.api.Task
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
+/**
+ * Base plugin, implemented by the framework modules. This plugin will be applied to the root module by the user, then
+ * it will auto-apply itself to all child subprojects internally.
+ */
 public abstract class AtlasPlugin : Plugin<Project> {
   protected abstract val extension: AtlasExtensionImpl
 

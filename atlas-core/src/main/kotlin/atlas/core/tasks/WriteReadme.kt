@@ -27,6 +27,33 @@ import org.gradle.internal.extensions.stdlib.capitalized
 import java.io.File
 import kotlin.text.RegexOption.DOT_MATCHES_ALL
 
+/**
+ * Creates or updates a README.md file to inject the generated chart/legend files. If the readme contains a block like
+ * below:
+ *
+ * ```markdown
+ * Something above
+ *
+ * <!--region chart-->
+ * Anything in between
+ * <!--endregion-->
+ *
+ * Something below
+ * ```
+ *
+ * then the text in between will be replaced with the generated images. Anything else will be left as-is.
+ *
+ * If generating a new README, the output will look like below:
+ *
+ * ```markdown
+ * # :path:to:my:module
+ *
+ * <!--region chart-->
+ * ![](atlas/chart.png)
+ * ![](../atlas/legend.png)
+ * <!--endregion-->
+ * ```
+ */
 @CacheableTask
 public abstract class WriteReadme : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] public abstract val chartFile: RegularFileProperty
