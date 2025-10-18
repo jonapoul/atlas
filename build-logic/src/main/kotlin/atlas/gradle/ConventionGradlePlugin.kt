@@ -16,12 +16,14 @@ import org.gradle.plugin.devel.tasks.PluginUnderTestMetadata
 import org.gradle.plugin.devel.tasks.ValidatePlugins
 
 class ConventionGradlePlugin : Plugin<Project> {
+  private val Project.skipPublish get() = properties["atlas.skipPublish"]?.toString()?.toBoolean() ?: false
+
   override fun apply(target: Project): Unit = with(target) {
     pluginsInternal {
       apply(ConventionKotlin::class)
       apply(ConventionSpotless::class)
       apply(ConventionLicensee::class)
-      apply(ConventionPublish::class)
+      if (!skipPublish) apply(ConventionPublish::class)
       apply(JavaGradlePluginPlugin::class)
       apply("org.jetbrains.kotlin.plugin.serialization")
     }
