@@ -111,6 +111,7 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
     return "<FONT COLOR=\"$fontColor\">$text</FONT>"
   }
 
+  @Suppress("MagicNumber")
   private fun tableAttributes(config: DotConfig) = listOf(
     "BORDER" to 0,
     "CELLBORDER" to 1,
