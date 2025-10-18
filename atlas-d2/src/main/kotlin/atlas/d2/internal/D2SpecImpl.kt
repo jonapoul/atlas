@@ -4,6 +4,7 @@
  */
 package atlas.d2.internal
 
+import atlas.core.IntEnum
 import atlas.core.PropertiesSpec
 import atlas.core.internal.LinkTypeContainer
 import atlas.core.internal.ModuleTypeContainer
@@ -13,7 +14,6 @@ import atlas.core.internal.bool
 import atlas.core.internal.enum
 import atlas.core.internal.float
 import atlas.core.internal.int
-import atlas.core.IntEnum
 import atlas.core.internal.string
 import atlas.d2.ArrowType
 import atlas.d2.D2DagreSpec
