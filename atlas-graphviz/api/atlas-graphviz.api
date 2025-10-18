@@ -1,4 +1,4 @@
-public final class atlas/graphviz/ArrowType : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/graphviz/ArrowType : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Box Latlas/graphviz/ArrowType;
 	public static final field Crow Latlas/graphviz/ArrowType;
 	public static final field Diamond Latlas/graphviz/ArrowType;
@@ -25,7 +25,7 @@ public final class atlas/graphviz/ArrowType : java/lang/Enum, atlas/core/interna
 	public static fun values ()[Latlas/graphviz/ArrowType;
 }
 
-public final class atlas/graphviz/ClusterMode : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/graphviz/ClusterMode : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Global Latlas/graphviz/ClusterMode;
 	public static final field Local Latlas/graphviz/ClusterMode;
 	public static final field None Latlas/graphviz/ClusterMode;
@@ -36,7 +36,7 @@ public final class atlas/graphviz/ClusterMode : java/lang/Enum, atlas/core/inter
 	public static fun values ()[Latlas/graphviz/ClusterMode;
 }
 
-public final class atlas/graphviz/Dir : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/graphviz/Dir : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Back Latlas/graphviz/Dir;
 	public static final field Both Latlas/graphviz/Dir;
 	public static final field Forward Latlas/graphviz/Dir;
@@ -213,7 +213,7 @@ public final class atlas/graphviz/EdgeAttributes$DefaultImpls {
 	public static fun put (Latlas/graphviz/EdgeAttributes;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
-public final class atlas/graphviz/FileFormat : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/graphviz/FileFormat : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Canon Latlas/graphviz/FileFormat;
 	public static final field Cmap Latlas/graphviz/FileFormat;
 	public static final field Cmapx Latlas/graphviz/FileFormat;
@@ -508,19 +508,19 @@ public abstract interface class atlas/graphviz/GraphvizNamedLinkTypeContainer : 
 }
 
 public final class atlas/graphviz/GraphvizNamedLinkTypeContainer$DefaultImpls {
-	public static fun api (Latlas/graphviz/GraphvizNamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun implementation (Latlas/graphviz/GraphvizNamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun invoke (Latlas/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun register (Latlas/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun api (Latlas/graphviz/GraphvizNamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun implementation (Latlas/graphviz/GraphvizNamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun invoke (Latlas/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun register (Latlas/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class atlas/graphviz/GraphvizNamedModuleTypeContainer : atlas/core/NamedModuleTypeContainer {
 }
 
 public final class atlas/graphviz/GraphvizNamedModuleTypeContainer$DefaultImpls {
-	public static fun registerByPathContains (Latlas/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun registerByPathMatches (Latlas/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun registerByPluginId (Latlas/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathContains (Latlas/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Latlas/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPluginId (Latlas/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class atlas/graphviz/GraphvizSpec : atlas/core/AtlasSpec {
@@ -535,7 +535,7 @@ public abstract interface class atlas/graphviz/GraphvizSpec : atlas/core/AtlasSp
 	public abstract fun node (Lorg/gradle/api/Action;)V
 }
 
-public final class atlas/graphviz/ImagePos : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/graphviz/ImagePos : java/lang/Enum, atlas/core/StringEnum {
 	public static final field BottomCenter Latlas/graphviz/ImagePos;
 	public static final field BottomLeft Latlas/graphviz/ImagePos;
 	public static final field BottomRight Latlas/graphviz/ImagePos;
@@ -552,7 +552,7 @@ public final class atlas/graphviz/ImagePos : java/lang/Enum, atlas/core/internal
 	public static fun values ()[Latlas/graphviz/ImagePos;
 }
 
-public final class atlas/graphviz/LayoutEngine : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/graphviz/LayoutEngine : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Circo Latlas/graphviz/LayoutEngine;
 	public static final field Dot Latlas/graphviz/LayoutEngine;
 	public static final field Fdp Latlas/graphviz/LayoutEngine;
@@ -686,7 +686,7 @@ public final class atlas/graphviz/NodeAttributes$DefaultImpls {
 	public static fun put (Latlas/graphviz/NodeAttributes;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
-public final class atlas/graphviz/NodeStyle : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/graphviz/NodeStyle : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Bold Latlas/graphviz/NodeStyle;
 	public static final field Dashed Latlas/graphviz/NodeStyle;
 	public static final field Diagonals Latlas/graphviz/NodeStyle;
@@ -705,7 +705,7 @@ public final class atlas/graphviz/NodeStyle : java/lang/Enum, atlas/core/interna
 	public static fun values ()[Latlas/graphviz/NodeStyle;
 }
 
-public final class atlas/graphviz/RankDir : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/graphviz/RankDir : java/lang/Enum, atlas/core/StringEnum {
 	public static final field BottomToTop Latlas/graphviz/RankDir;
 	public static final field LeftToRight Latlas/graphviz/RankDir;
 	public static final field RightToLeft Latlas/graphviz/RankDir;
@@ -717,7 +717,7 @@ public final class atlas/graphviz/RankDir : java/lang/Enum, atlas/core/internal/
 	public static fun values ()[Latlas/graphviz/RankDir;
 }
 
-public final class atlas/graphviz/Shape : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/graphviz/Shape : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Assembly Latlas/graphviz/Shape;
 	public static final field Box Latlas/graphviz/Shape;
 	public static final field Box3d Latlas/graphviz/Shape;
@@ -784,7 +784,7 @@ public final class atlas/graphviz/Shape : java/lang/Enum, atlas/core/internal/St
 	public static fun values ()[Latlas/graphviz/Shape;
 }
 
-public final class atlas/graphviz/SmoothType : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/graphviz/SmoothType : java/lang/Enum, atlas/core/StringEnum {
 	public static final field AvgDist Latlas/graphviz/SmoothType;
 	public static final field GraphDist Latlas/graphviz/SmoothType;
 	public static final field None Latlas/graphviz/SmoothType;

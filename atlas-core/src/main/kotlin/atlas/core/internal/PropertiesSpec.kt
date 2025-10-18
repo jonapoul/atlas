@@ -6,6 +6,7 @@ package atlas.core.internal
 
 import atlas.core.InternalAtlasApi
 import atlas.core.PropertiesSpec
+import atlas.core.StringEnum
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.MapProperty
 import kotlin.reflect.KProperty

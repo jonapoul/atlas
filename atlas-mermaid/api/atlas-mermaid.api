@@ -1,4 +1,4 @@
-public final class atlas/mermaid/ConsiderModelOrder : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/mermaid/ConsiderModelOrder : java/lang/Enum, atlas/core/StringEnum {
 	public static final field NodesAndEdges Latlas/mermaid/ConsiderModelOrder;
 	public static final field None Latlas/mermaid/ConsiderModelOrder;
 	public static final field PreferEdges Latlas/mermaid/ConsiderModelOrder;
@@ -10,7 +10,7 @@ public final class atlas/mermaid/ConsiderModelOrder : java/lang/Enum, atlas/core
 	public static fun values ()[Latlas/mermaid/ConsiderModelOrder;
 }
 
-public final class atlas/mermaid/CycleBreakingStrategy : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/mermaid/CycleBreakingStrategy : java/lang/Enum, atlas/core/StringEnum {
 	public static final field DepthFirst Latlas/mermaid/CycleBreakingStrategy;
 	public static final field Greedy Latlas/mermaid/CycleBreakingStrategy;
 	public static final field GreedyModelOrder Latlas/mermaid/CycleBreakingStrategy;
@@ -53,7 +53,7 @@ public final class atlas/mermaid/LinkStyle : java/lang/Enum, atlas/core/LinkStyl
 	public static fun values ()[Latlas/mermaid/LinkStyle;
 }
 
-public final class atlas/mermaid/Look : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/mermaid/Look : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Classic Latlas/mermaid/Look;
 	public static final field HandDrawn Latlas/mermaid/Look;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
@@ -150,19 +150,19 @@ public abstract interface class atlas/mermaid/MermaidNamedLinkTypeContainer : at
 }
 
 public final class atlas/mermaid/MermaidNamedLinkTypeContainer$DefaultImpls {
-	public static fun api (Latlas/mermaid/MermaidNamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun implementation (Latlas/mermaid/MermaidNamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun invoke (Latlas/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun register (Latlas/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun api (Latlas/mermaid/MermaidNamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun implementation (Latlas/mermaid/MermaidNamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun invoke (Latlas/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun register (Latlas/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class atlas/mermaid/MermaidNamedModuleTypeContainer : atlas/core/NamedModuleTypeContainer {
 }
 
 public final class atlas/mermaid/MermaidNamedModuleTypeContainer$DefaultImpls {
-	public static fun registerByPathContains (Latlas/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun registerByPathMatches (Latlas/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun registerByPluginId (Latlas/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathContains (Latlas/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Latlas/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPluginId (Latlas/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class atlas/mermaid/MermaidSpec : atlas/core/AtlasSpec {
@@ -209,7 +209,7 @@ public final class atlas/mermaid/MermaidThemeVariablesSpec$DefaultImpls {
 	public static fun put (Latlas/mermaid/MermaidThemeVariablesSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
-public final class atlas/mermaid/NodePlacementStrategy : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/mermaid/NodePlacementStrategy : java/lang/Enum, atlas/core/StringEnum {
 	public static final field BrandesKoepf Latlas/mermaid/NodePlacementStrategy;
 	public static final field LinearSegments Latlas/mermaid/NodePlacementStrategy;
 	public static final field NetworkSimplex Latlas/mermaid/NodePlacementStrategy;
@@ -221,7 +221,7 @@ public final class atlas/mermaid/NodePlacementStrategy : java/lang/Enum, atlas/c
 	public static fun values ()[Latlas/mermaid/NodePlacementStrategy;
 }
 
-public final class atlas/mermaid/Theme : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/mermaid/Theme : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Base Latlas/mermaid/Theme;
 	public static final field Dark Latlas/mermaid/Theme;
 	public static final field Default Latlas/mermaid/Theme;

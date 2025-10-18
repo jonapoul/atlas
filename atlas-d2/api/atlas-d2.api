@@ -1,4 +1,4 @@
-public final class atlas/d2/ArrowType : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/ArrowType : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Arrow Latlas/d2/ArrowType;
 	public static final field Box Latlas/d2/ArrowType;
 	public static final field Circle Latlas/d2/ArrowType;
@@ -128,19 +128,19 @@ public abstract interface class atlas/d2/D2NamedLinkTypeContainer : atlas/core/N
 }
 
 public final class atlas/d2/D2NamedLinkTypeContainer$DefaultImpls {
-	public static fun api (Latlas/d2/D2NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun implementation (Latlas/d2/D2NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun invoke (Latlas/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun register (Latlas/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun api (Latlas/d2/D2NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun implementation (Latlas/d2/D2NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun invoke (Latlas/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun register (Latlas/d2/D2NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class atlas/d2/D2NamedModuleTypeContainer : atlas/core/NamedModuleTypeContainer {
 }
 
 public final class atlas/d2/D2NamedModuleTypeContainer$DefaultImpls {
-	public static fun registerByPathContains (Latlas/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun registerByPathMatches (Latlas/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun registerByPluginId (Latlas/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathContains (Latlas/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Latlas/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPluginId (Latlas/d2/D2NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class atlas/d2/D2PropertiesSpec : atlas/core/PropertiesSpec {
@@ -225,7 +225,7 @@ public final class atlas/d2/D2TalaSpec$DefaultImpls {
 	public static fun put (Latlas/d2/D2TalaSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
-public final class atlas/d2/Direction : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/Direction : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Down Latlas/d2/Direction;
 	public static final field Left Latlas/d2/Direction;
 	public static final field Right Latlas/d2/Direction;
@@ -237,7 +237,7 @@ public final class atlas/d2/Direction : java/lang/Enum, atlas/core/internal/Stri
 	public static fun values ()[Latlas/d2/Direction;
 }
 
-public final class atlas/d2/ElkAlgorithm : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/ElkAlgorithm : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Box Latlas/d2/ElkAlgorithm;
 	public static final field Disco Latlas/d2/ElkAlgorithm;
 	public static final field Fixed Latlas/d2/ElkAlgorithm;
@@ -264,7 +264,7 @@ public final class atlas/d2/ElkAlgorithm : java/lang/Enum, atlas/core/internal/S
 	public static fun values ()[Latlas/d2/ElkAlgorithm;
 }
 
-public final class atlas/d2/FileFormat : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/FileFormat : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Ascii Latlas/d2/FileFormat;
 	public static final field Gif Latlas/d2/FileFormat;
 	public static final field Pdf Latlas/d2/FileFormat;
@@ -278,7 +278,7 @@ public final class atlas/d2/FileFormat : java/lang/Enum, atlas/core/internal/Str
 	public static fun values ()[Latlas/d2/FileFormat;
 }
 
-public final class atlas/d2/FillPattern : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/FillPattern : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Dots Latlas/d2/FillPattern;
 	public static final field Grain Latlas/d2/FillPattern;
 	public static final field Lines Latlas/d2/FillPattern;
@@ -290,7 +290,7 @@ public final class atlas/d2/FillPattern : java/lang/Enum, atlas/core/internal/St
 	public static fun values ()[Latlas/d2/FillPattern;
 }
 
-public final class atlas/d2/Font : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/Font : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Mono Latlas/d2/Font;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
@@ -299,7 +299,7 @@ public final class atlas/d2/Font : java/lang/Enum, atlas/core/internal/StringEnu
 	public static fun values ()[Latlas/d2/Font;
 }
 
-public final class atlas/d2/LayoutEngine : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/LayoutEngine : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Dagre Latlas/d2/LayoutEngine;
 	public static final field Elk Latlas/d2/LayoutEngine;
 	public static final field Tala Latlas/d2/LayoutEngine;
@@ -323,7 +323,7 @@ public final class atlas/d2/LinkStyle : java/lang/Enum, atlas/core/LinkStyle {
 	public static fun values ()[Latlas/d2/LinkStyle;
 }
 
-public final class atlas/d2/Location : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/Location : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Border Latlas/d2/Location;
 	public static final field Inside Latlas/d2/Location;
 	public static final field Outside Latlas/d2/Location;
@@ -334,7 +334,7 @@ public final class atlas/d2/Location : java/lang/Enum, atlas/core/internal/Strin
 	public static fun values ()[Latlas/d2/Location;
 }
 
-public final class atlas/d2/Position : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/Position : java/lang/Enum, atlas/core/StringEnum {
 	public static final field BottomCenter Latlas/d2/Position;
 	public static final field BottomLeft Latlas/d2/Position;
 	public static final field BottomRight Latlas/d2/Position;
@@ -350,7 +350,7 @@ public final class atlas/d2/Position : java/lang/Enum, atlas/core/internal/Strin
 	public static fun values ()[Latlas/d2/Position;
 }
 
-public final class atlas/d2/Shape : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/Shape : java/lang/Enum, atlas/core/StringEnum {
 	public static final field C4Person Latlas/d2/Shape;
 	public static final field Callout Latlas/d2/Shape;
 	public static final field Circle Latlas/d2/Shape;
@@ -376,7 +376,7 @@ public final class atlas/d2/Shape : java/lang/Enum, atlas/core/internal/StringEn
 	public static fun values ()[Latlas/d2/Shape;
 }
 
-public final class atlas/d2/TextTransform : java/lang/Enum, atlas/core/internal/StringEnum {
+public final class atlas/d2/TextTransform : java/lang/Enum, atlas/core/StringEnum {
 	public static final field Lowercase Latlas/d2/TextTransform;
 	public static final field None Latlas/d2/TextTransform;
 	public static final field Title Latlas/d2/TextTransform;
@@ -388,7 +388,7 @@ public final class atlas/d2/TextTransform : java/lang/Enum, atlas/core/internal/
 	public static fun values ()[Latlas/d2/TextTransform;
 }
 
-public final class atlas/d2/Theme : java/lang/Enum, atlas/core/internal/IntEnum {
+public final class atlas/d2/Theme : java/lang/Enum, atlas/core/IntEnum {
 	public static final field Aubergine Latlas/d2/Theme;
 	public static final field ButteredToast Latlas/d2/Theme;
 	public static final field C4 Latlas/d2/Theme;
