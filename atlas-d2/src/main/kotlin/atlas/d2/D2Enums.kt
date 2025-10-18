@@ -11,7 +11,7 @@ import atlas.core.StringEnum
 import atlas.core.LinkStyle as CoreLinkStyle
 
 /**
- * [https://d2lang.com/tour/shapes/](https://d2lang.com/tour/shapes/)
+ * See [https://d2lang.com/tour/shapes/](https://d2lang.com/tour/shapes/)
  */
 public enum class Shape(override val string: String) : StringEnum {
   Rectangle("rectangle"),
@@ -38,7 +38,7 @@ public enum class Shape(override val string: String) : StringEnum {
 }
 
 /**
- * [https://d2lang.com/tour/connections/](https://d2lang.com/tour/connections/)
+ * See [https://d2lang.com/tour/connections/](https://d2lang.com/tour/connections/)
  */
 public enum class LinkStyle(override val string: String) : CoreLinkStyle {
   Basic("basic"),
@@ -52,23 +52,23 @@ public enum class LinkStyle(override val string: String) : CoreLinkStyle {
 }
 
 /**
- * [https://d2lang.com/tour/layouts/](https://d2lang.com/tour/layouts/)
+ * See [https://d2lang.com/tour/layouts/](https://d2lang.com/tour/layouts/)
  */
 public enum class LayoutEngine(override val string: String) : StringEnum {
   /**
-   * See [https://d2lang.com/tour/dagre/](https://d2lang.com/tour/dagre/) for official documentation, and [D2DagreSpec]
+   * See [the D2 docs](https://d2lang.com/tour/dagre/) for official documentation, and [D2DagreSpec]
    * for Atlas configuration of it.
    */
   Dagre("dagre"),
 
   /**
-   * See [https://d2lang.com/tour/elk/](https://d2lang.com/tour/elk/) for official documentation, and [D2ElkSpec]
+   * See [the D2 docs](https://d2lang.com/tour/elk/) for official documentation, and [D2ElkSpec]
    * for Atlas configuration of it.
    */
   Elk("elk"),
 
   /**
-   * See [https://d2lang.com/tour/tala/](https://d2lang.com/tour/tala/) for official documentation, and [D2TalaSpec]
+   * See [the D2 docs](https://d2lang.com/tour/tala/) for official documentation, and [D2TalaSpec]
    * for Atlas configuration of it.
    */
   Tala("tala"),

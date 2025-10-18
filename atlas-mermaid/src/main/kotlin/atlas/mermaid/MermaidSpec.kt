@@ -16,7 +16,7 @@ public interface MermaidSpec : AtlasSpec {
   /**
    * Set a custom layout engine for the diagram. Unset by default, but mermaid will fall back to "dagre".
    * Use [MermaidLayoutSpec.properties] to set any custom key/value properties.
-   * See [https://mermaid.js.org/config/layouts.html](https://mermaid.js.org/config/layouts.html)
+   * See [the Mermaid docs](https://mermaid.js.org/config/layouts.html)
    */
   public val layout: MermaidLayoutSpec
   public fun layout(action: Action<MermaidLayoutSpec>)
@@ -28,13 +28,13 @@ public interface MermaidSpec : AtlasSpec {
 
   /**
    * Also controlled by the `atlas.mermaid.chart.look` Gradle property. Defaults to unset.
-   * See [https://mermaid.js.org/intro/syntax-reference.html#layout-and-look](https://mermaid.js.org/intro/syntax-reference.html#layout-and-look)
+   * See [the Mermaid docs](https://mermaid.js.org/intro/syntax-reference.html#layout-and-look)
    */
   public val look: Property<Look>
 
   /**
    * Also controlled by the `atlas.mermaid.chart.theme` Gradle property. Defaults to unset.
-   * See [https://mermaid.js.org/config/theming.html](https://mermaid.js.org/config/theming.html)
+   * See [the Mermaid docs](https://mermaid.js.org/config/theming.html)
    */
   public val theme: Property<Theme>
 
@@ -52,7 +52,7 @@ public interface MermaidSpec : AtlasSpec {
    * the animation. Not really recommended for practical use, but it does look cool when it works.
    *
    * Also controlled by the `atlas.mermaid.chart.animateLinks` Gradle property. Defaults to false.
-   * See [https://mermaid.js.org/syntax/flowchart.html#turning-an-animation-on](https://mermaid.js.org/syntax/flowchart.html#turning-an-animation-on)
+   * See [the Mermaid docs](https://mermaid.js.org/syntax/flowchart.html#turning-an-animation-on)
    */
   public val animateLinks: Property<Boolean>
 }

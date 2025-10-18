@@ -10,7 +10,7 @@ import atlas.core.PropertiesSpec
 /**
  * Global diagram configuration properties.
  *
- * See [https://mermaid.js.org/config/theming.html#theme-variables](https://mermaid.js.org/config/theming.html#theme-variables)
+ * See [the Mermaid docs](https://mermaid.js.org/config/theming.html#theme-variables)
  */
 @AtlasDsl
 public interface MermaidThemeVariablesSpec : PropertiesSpec {

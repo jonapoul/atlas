@@ -9,7 +9,7 @@ import atlas.core.AtlasDsl
 /**
  * Configures the ELK layout engine in Mermaid.
  *
- * See [https://mermaid.js.org/config/schema-docs/config-properties-elk.html](https://mermaid.js.org/config/schema-docs/config-properties-elk.html)
+ * See [the Mermaid docs](https://mermaid.js.org/config/schema-docs/config-properties-elk.html)
  */
 @AtlasDsl
 public interface ElkLayoutSpec : MermaidLayoutSpec {

@@ -13,7 +13,7 @@ import atlas.core.PropertiesSpec
  * These attributes will be applied by default to all module nodes, unless overridden by that node's
  * [GraphvizModuleTypeSpec].
  *
- * See [https://graphviz.org/docs/nodes/](https://graphviz.org/docs/nodes/) for any restrictions, this interface will
+ * See [the Graphviz docs](https://graphviz.org/docs/nodes/) for any restrictions, this interface will
  * just pass-through the attribute and let Graphviz handle validation.
  */
 @AtlasDsl
@@ -258,7 +258,7 @@ public interface NodeAttributes : PropertiesSpec {
  * These attributes will be applied by default to all module edges (AKA link lines), unless overridden by that link's
  * [GraphvizLinkTypeSpec].
  *
- * See [https://graphviz.org/docs/edges/](https://graphviz.org/docs/edges/) for any restrictions, this interface will
+ * See [the Graphviz docs](https://graphviz.org/docs/edges/) for any restrictions, this interface will
  * just pass-through the attribute and let Graphviz handle validation.
  *
  * [linkColor] and [linkStyle] have been renamed from "color" and "style" to avoid clashes with
