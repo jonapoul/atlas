@@ -94,7 +94,7 @@
   <div class="breadcrumbs"><a href="../../index.html">:atlas-graphviz</a><span class="delimiter">/</span><a href="../index.html">atlas.graphviz</a><span class="delimiter">/</span><span class="current">EdgeAttributes</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Edge</span><wbr><span><span>Attributes</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">EdgeAttributes</a> : <a href="../../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/jonapoul/atlas/tree/main/:atlas-graphviz/src/main/kotlin/atlas/graphviz/Attributes.kt#L71">source</a>)</span></span></div><p class="paragraph">See https://graphviz.org/docs/edges/. <a href="link-color.html">linkColor</a> and <a href="link-style.html">linkStyle</a> have been renamed from "color" and "style" to avoid clashes with <a href="../../../atlas-core/atlas.core/-link-type-spec/index.html">atlas.core.LinkTypeSpec</a> attributes.</p><h4 class="tableheader">Inheritors</h4><div class="table"><div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-graphviz-link-type-spec/index.html">GraphvizLinkTypeSpec</a></div></span></div><div></div></div></div></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">EdgeAttributes</a> : <a href="../../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/jonapoul/atlas/tree/main/:atlas-graphviz/src/main/kotlin/atlas/graphviz/Attributes.kt#L268">source</a>)</span></span></div><p class="paragraph">These attributes will be applied by default to all module edges (AKA link lines), unless overridden by that link's <a href="../-graphviz-link-type-spec/index.html">GraphvizLinkTypeSpec</a>.</p><p class="paragraph">See <a href="https://graphviz.org/docs/edges/">the Graphviz docs</a> for any restrictions, this interface will just pass-through the attribute and let Graphviz handle validation.</p><p class="paragraph"><a href="link-color.html">linkColor</a> and <a href="link-style.html">linkStyle</a> have been renamed from "color" and "style" to avoid clashes with <a href="../../../atlas-core/atlas.core/-link-type-spec/index.html">atlas.core.LinkTypeSpec</a> attributes.</p><h4 class="tableheader">Inheritors</h4><div class="table"><div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-graphviz-link-type-spec/index.html">GraphvizLinkTypeSpec</a></div></span></div><div></div></div></div></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
@@ -111,7 +111,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="arrow-head.html">arrowHead</a><span class="token operator">: </span><a href="../-arrow-type/index.html">ArrowType</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="arrow-head.html">arrowHead</a><span class="token operator">: </span><a href="../-arrow-type/index.html">ArrowType</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/arrowhead/">https://graphviz.org/docs/attrs/arrowhead/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="arrow-size.html">arrowSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="arrow-size.html">arrowSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/arrowsize/">https://graphviz.org/docs/attrs/arrowsize/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -141,7 +141,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="arrow-tail.html">arrowTail</a><span class="token operator">: </span><a href="../-arrow-type/index.html">ArrowType</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="arrow-tail.html">arrowTail</a><span class="token operator">: </span><a href="../-arrow-type/index.html">ArrowType</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/arrowtail/">https://graphviz.org/docs/attrs/arrowtail/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -156,7 +156,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="color-scheme.html">colorScheme</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="color-scheme.html">colorScheme</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/colorscheme/">https://graphviz.org/docs/attrs/colorscheme/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -171,7 +171,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="comment.html">comment</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="comment.html">comment</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/comment/">https://graphviz.org/docs/attrs/comment/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -186,7 +186,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="constraint.html">constraint</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="constraint.html">constraint</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/constraint/">https://graphviz.org/docs/attrs/constraint/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -201,7 +201,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="decorate.html">decorate</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="decorate.html">decorate</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/decorate/">https://graphviz.org/docs/attrs/decorate/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -216,7 +216,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="dir.html">dir</a><span class="token operator">: </span><a href="../-dir/index.html">Dir</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="dir.html">dir</a><span class="token operator">: </span><a href="../-dir/index.html">Dir</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/dir/">https://graphviz.org/docs/attrs/dir/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -231,7 +231,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="edge-href.html">edgeHref</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="edge-href.html">edgeHref</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/edgehref/">https://graphviz.org/docs/attrs/edgehref/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -246,7 +246,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="edge-target.html">edgeTarget</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="edge-target.html">edgeTarget</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/edgetarget/">https://graphviz.org/docs/attrs/edgetarget/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -261,7 +261,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="edge-tooltip.html">edgeTooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="edge-tooltip.html">edgeTooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/edgetooltip/">https://graphviz.org/docs/attrs/edgetooltip/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -276,7 +276,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="edge-url.html">edgeUrl</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="edge-url.html">edgeUrl</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/edgeURL/">https://graphviz.org/docs/attrs/edgeURL/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -291,7 +291,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="fill-color.html">fillColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="fill-color.html">fillColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/fillcolor/">https://graphviz.org/docs/attrs/fillcolor/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -306,7 +306,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-color.html">fontColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-color.html">fontColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/fontcolor/">https://graphviz.org/docs/attrs/fontcolor/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -321,7 +321,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-name.html">fontName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-name.html">fontName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/fontname/">https://graphviz.org/docs/attrs/fontname/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -336,7 +336,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-size.html">fontSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-size.html">fontSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/fontsize/">https://graphviz.org/docs/attrs/fontsize/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -351,7 +351,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-clip.html">headClip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-clip.html">headClip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/headclip/">https://graphviz.org/docs/attrs/headclip/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -366,7 +366,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-href.html">headHref</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-href.html">headHref</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/headhref/">https://graphviz.org/docs/attrs/headhref/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -381,7 +381,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-label.html">headLabel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-label.html">headLabel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/headlabel/">https://graphviz.org/docs/attrs/headlabel/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -396,7 +396,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-lp.html">headLp</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-lp.html">headLp</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/head_lp/">https://graphviz.org/docs/attrs/head_lp/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -411,7 +411,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-port.html">headPort</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-port.html">headPort</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/headport/">https://graphviz.org/docs/attrs/headport/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -426,7 +426,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-target.html">headTarget</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-target.html">headTarget</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/headtarget/">https://graphviz.org/docs/attrs/headtarget/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -441,7 +441,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-tooltip.html">headTooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-tooltip.html">headTooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/headtooltip/">https://graphviz.org/docs/attrs/headtooltip/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -456,7 +456,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-url.html">headUrl</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="head-url.html">headUrl</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/headURL/">https://graphviz.org/docs/attrs/headURL/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -471,7 +471,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="href.html">href</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="href.html">href</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/href/">https://graphviz.org/docs/attrs/href/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -486,7 +486,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="id.html">id</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="id.html">id</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/id/">https://graphviz.org/docs/attrs/id/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -501,7 +501,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label.html">label</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label.html">label</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/label/">https://graphviz.org/docs/attrs/label/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -516,7 +516,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-angle.html">labelAngle</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-angle.html">labelAngle</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/labelangle/">https://graphviz.org/docs/attrs/labelangle/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -531,7 +531,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-distance.html">labelDistance</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-distance.html">labelDistance</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/labeldistance/">https://graphviz.org/docs/attrs/labeldistance/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -546,7 +546,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-float.html">labelFloat</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-float.html">labelFloat</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/labelfloat/">https://graphviz.org/docs/attrs/labelfloat/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -561,7 +561,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-font-color.html">labelFontColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-font-color.html">labelFontColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/labelfontcolor/">https://graphviz.org/docs/attrs/labelfontcolor/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -576,7 +576,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-font-name.html">labelFontName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-font-name.html">labelFontName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/labelfontname/">https://graphviz.org/docs/attrs/labelfontname/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -591,7 +591,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-font-size.html">labelFontSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-font-size.html">labelFontSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/labelfontsize/">https://graphviz.org/docs/attrs/labelfontsize/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -606,7 +606,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-href.html">labelHref</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-href.html">labelHref</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/labelhref/">https://graphviz.org/docs/attrs/labelhref/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -621,7 +621,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-target.html">labelTarget</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-target.html">labelTarget</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/labeltarget/">https://graphviz.org/docs/attrs/labeltarget/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -636,7 +636,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-tooltip.html">labelTooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-tooltip.html">labelTooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/labeltooltip/">https://graphviz.org/docs/attrs/labeltooltip/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -651,7 +651,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-url.html">labelUrl</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-url.html">labelUrl</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/labelurl/">https://graphviz.org/docs/attrs/labelurl/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -666,7 +666,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="layer.html">layer</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="layer.html">layer</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/layer/">https://graphviz.org/docs/attrs/layer/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -681,7 +681,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="len.html">len</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="len.html">len</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/len/">https://graphviz.org/docs/attrs/len/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -696,7 +696,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="lhead.html">lhead</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="lhead.html">lhead</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/lhead/">https://graphviz.org/docs/attrs/lhead/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -711,7 +711,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="link-color.html">linkColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="link-color.html">linkColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/color/">https://graphviz.org/docs/attrs/color/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -726,7 +726,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="link-style.html">linkStyle</a><span class="token operator">: </span><a href="../-link-style/index.html">LinkStyle</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="link-style.html">linkStyle</a><span class="token operator">: </span><a href="../-link-style/index.html">LinkStyle</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/style/">https://graphviz.org/docs/attrs/style/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -741,7 +741,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="lp.html">lp</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="lp.html">lp</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/lp/">https://graphviz.org/docs/attrs/lp/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -756,7 +756,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="ltail.html">ltail</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="ltail.html">ltail</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/ltail/">https://graphviz.org/docs/attrs/ltail/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -771,7 +771,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="min-len.html">minLen</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="min-len.html">minLen</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/minlen/">https://graphviz.org/docs/attrs/minlen/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -786,7 +786,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="no-justify.html">noJustify</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="no-justify.html">noJustify</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/nojustify/">https://graphviz.org/docs/attrs/nojustify/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -801,7 +801,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="pen-width.html">penWidth</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="pen-width.html">penWidth</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/penwidth/">https://graphviz.org/docs/attrs/penwidth/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -816,7 +816,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="pos.html">pos</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="pos.html">pos</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/pos/">https://graphviz.org/docs/attrs/pos/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -831,7 +831,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="same-head.html">sameHead</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="same-head.html">sameHead</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/samehead/">https://graphviz.org/docs/attrs/samehead/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -846,7 +846,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="same-tail.html">sameTail</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="same-tail.html">sameTail</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/sametail/">https://graphviz.org/docs/attrs/sametail/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -861,7 +861,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="show-boxes.html">showBoxes</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="show-boxes.html">showBoxes</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/showboxes/">https://graphviz.org/docs/attrs/showboxes/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -876,7 +876,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-clip.html">tailClip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-clip.html">tailClip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/tailclip/">https://graphviz.org/docs/attrs/tailclip/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -891,7 +891,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-href.html">tailHref</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-href.html">tailHref</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/tailhref/">https://graphviz.org/docs/attrs/tailhref/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -906,7 +906,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-label.html">tailLabel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-label.html">tailLabel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/taillabel/">https://graphviz.org/docs/attrs/taillabel/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -921,7 +921,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-lp.html">tailLp</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-lp.html">tailLp</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/tail_lp/">https://graphviz.org/docs/attrs/tail_lp/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -936,7 +936,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-port.html">tailPort</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-port.html">tailPort</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/tailport/">https://graphviz.org/docs/attrs/tailport/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -951,7 +951,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-target.html">tailTarget</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-target.html">tailTarget</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/tailtarget/">https://graphviz.org/docs/attrs/tailtarget/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -966,7 +966,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-tooltip.html">tailTooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-tooltip.html">tailTooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/tailtooltip/">https://graphviz.org/docs/attrs/tailtooltip/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -981,7 +981,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-url.html">tailUrl</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tail-url.html">tailUrl</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/tailURL/">https://graphviz.org/docs/attrs/tailURL/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -996,7 +996,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="target.html">target</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="target.html">target</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/target/">https://graphviz.org/docs/attrs/target/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -1011,7 +1011,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tooltip.html">tooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tooltip.html">tooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/tooltip/">https://graphviz.org/docs/attrs/tooltip/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -1026,7 +1026,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="url.html">url</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="url.html">url</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/url/">https://graphviz.org/docs/attrs/url/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -1041,7 +1041,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="weight.html">weight</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="weight.html">weight</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/weight/">https://graphviz.org/docs/attrs/weight/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -1056,7 +1056,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="x-label.html">xLabel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="x-label.html">xLabel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/xlabel/">https://graphviz.org/docs/attrs/xlabel/</a></p></div></div></div>
                 </div>
               </div>
             </div>
@@ -1071,7 +1071,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="xlp.html">xlp</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="xlp.html">xlp</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="https://graphviz.org/docs/attrs/xlp/">https://graphviz.org/docs/attrs/xlp/</a></p></div></div></div>
                 </div>
               </div>
             </div>
