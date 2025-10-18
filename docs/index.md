@@ -11,7 +11,7 @@ Atlas is a Gradle plugin for auto-generating and curating diagrams of your proje
 
    1. Fully supports Gradle 9 and the configuration cache.
    2. Offers wide-ranging APIs for customizing your module charts.
-   3. Supports three separate charting frameworks as outputs:
+   3. Supports three separate diagram frameworks as outputs:
       - [**Graphviz**](https://graphviz.org/)
       - [**D2**](https://d2lang.com/)
       - [**Mermaid**](https://mermaid.js.org/)

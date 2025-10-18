@@ -39,6 +39,9 @@ import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
+/**
+ * Converts a [DotConfig] into a written legend table, generated once in the project root.
+ */
 @CacheableTask
 public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
   @get:Input public abstract val moduleTypes: ListProperty<ModuleType>

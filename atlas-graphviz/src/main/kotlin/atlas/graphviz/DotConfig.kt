@@ -5,10 +5,12 @@
 package atlas.graphviz
 
 import atlas.core.AtlasExtension
-import atlas.core.InternalAtlasApi
 import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
+/**
+ * Used to configure the [atlas.graphviz.tasks.WriteGraphvizChart] and [atlas.graphviz.tasks.WriteGraphvizLegend] tasks.
+ */
 @KSerializable
 public class DotConfig(
   public val displayLinkLabels: Boolean? = null,
@@ -18,8 +20,7 @@ public class DotConfig(
   public val graphAttributes: Map<String, String>? = null,
 ) : JSerializable
 
-@InternalAtlasApi
-public fun DotConfig(
+internal fun DotConfig(
   extension: AtlasExtension,
   spec: GraphvizSpec,
 ): DotConfig = DotConfig(

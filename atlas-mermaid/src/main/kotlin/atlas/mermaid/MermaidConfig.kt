@@ -8,6 +8,9 @@ import atlas.core.AtlasExtension
 import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
+/**
+ * Used to configure the [atlas.mermaid.tasks.WriteMermaidChart] tasks.
+ */
 @KSerializable
 public class MermaidConfig(
   public val displayLinkLabels: Boolean? = null,

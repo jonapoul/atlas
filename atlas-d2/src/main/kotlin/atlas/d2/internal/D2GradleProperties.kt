@@ -8,7 +8,7 @@ import atlas.core.internal.IGradleProperties
 import atlas.core.internal.bool
 import atlas.core.internal.enum
 import atlas.core.internal.int
-import atlas.core.internal.intEnum
+import atlas.core.IntEnum
 import atlas.core.internal.string
 import atlas.d2.Direction
 import atlas.d2.FileFormat

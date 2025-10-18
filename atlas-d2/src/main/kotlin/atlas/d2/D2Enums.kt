@@ -6,12 +6,12 @@
 
 package atlas.d2
 
-import atlas.core.internal.IntEnum
-import atlas.core.internal.StringEnum
+import atlas.core.IntEnum
+import atlas.core.StringEnum
 import atlas.core.LinkStyle as CoreLinkStyle
 
 /**
- * https://d2lang.com/tour/shapes/
+ * [https://d2lang.com/tour/shapes/](https://d2lang.com/tour/shapes/)
  */
 public enum class Shape(override val string: String) : StringEnum {
   Rectangle("rectangle"),
@@ -38,7 +38,7 @@ public enum class Shape(override val string: String) : StringEnum {
 }
 
 /**
- * https://d2lang.com/tour/connections/
+ * [https://d2lang.com/tour/connections/](https://d2lang.com/tour/connections/)
  */
 public enum class LinkStyle(override val string: String) : CoreLinkStyle {
   Basic("basic"),
@@ -52,19 +52,33 @@ public enum class LinkStyle(override val string: String) : CoreLinkStyle {
 }
 
 /**
- * https://d2lang.com/tour/layouts/
+ * [https://d2lang.com/tour/layouts/](https://d2lang.com/tour/layouts/)
  */
 public enum class LayoutEngine(override val string: String) : StringEnum {
-  Dagre("dagre"), // https://d2lang.com/tour/dagre/
-  Elk("elk"), // https://d2lang.com/tour/elk/
-  Tala("tala"), // https://d2lang.com/tour/tala/
+  /**
+   * See [https://d2lang.com/tour/dagre/](https://d2lang.com/tour/dagre/) for official documentation, and [D2DagreSpec]
+   * for Atlas configuration of it.
+   */
+  Dagre("dagre"),
+
+  /**
+   * See [https://d2lang.com/tour/elk/](https://d2lang.com/tour/elk/) for official documentation, and [D2ElkSpec]
+   * for Atlas configuration of it.
+   */
+  Elk("elk"),
+
+  /**
+   * See [https://d2lang.com/tour/tala/](https://d2lang.com/tour/tala/) for official documentation, and [D2TalaSpec]
+   * for Atlas configuration of it.
+   */
+  Tala("tala"),
   ;
 
   override fun toString(): String = string
 }
 
 /**
- * https://d2lang.com/tour/themes/
+ * [https://d2lang.com/tour/themes/](https://d2lang.com/tour/themes/)
  */
 public enum class Theme(override val value: Int) : IntEnum {
   Default(0),
@@ -92,7 +106,7 @@ public enum class Theme(override val value: Int) : IntEnum {
 }
 
 /**
- * https://d2lang.com/tour/exports/
+ * [https://d2lang.com/tour/exports/](https://d2lang.com/tour/exports/)
  */
 public enum class FileFormat(override val string: String) : StringEnum {
   Svg("svg"),
@@ -107,7 +121,7 @@ public enum class FileFormat(override val string: String) : StringEnum {
 }
 
 /**
- * https://d2lang.com/tour/layouts/#direction
+ * [https://d2lang.com/tour/layouts/#direction](https://d2lang.com/tour/layouts/#direction)
  */
 public enum class Direction(override val string: String) : StringEnum {
   Up("up"),
@@ -120,7 +134,7 @@ public enum class Direction(override val string: String) : StringEnum {
 }
 
 /**
- * https://d2lang.com/tour/style/#fill-pattern
+ * [https://d2lang.com/tour/style/#fill-pattern](https://d2lang.com/tour/style/#fill-pattern)
  */
 public enum class FillPattern(override val string: String) : StringEnum {
   Dots("dots"),
@@ -133,7 +147,7 @@ public enum class FillPattern(override val string: String) : StringEnum {
 }
 
 /**
- * https://d2lang.com/tour/connections/#arrowheads
+ * [https://d2lang.com/tour/connections/#arrowheads](https://d2lang.com/tour/connections/#arrowheads)
  */
 public enum class ArrowType(override val string: String) : StringEnum {
   Triangle("triangle"),
@@ -152,7 +166,7 @@ public enum class ArrowType(override val string: String) : StringEnum {
 }
 
 /**
- * https://d2lang.com/tour/positions/
+ * [https://d2lang.com/tour/positions/](https://d2lang.com/tour/positions/)
  */
 public enum class Position(override val string: String) : StringEnum {
   TopLeft("top-left"),
@@ -169,7 +183,7 @@ public enum class Position(override val string: String) : StringEnum {
 }
 
 /**
- * https://d2lang.com/tour/positions/#outside-and-border
+ * [https://d2lang.com/tour/positions/#outside-and-border](https://d2lang.com/tour/positions/#outside-and-border)
  */
 public enum class Location(override val string: String) : StringEnum {
   Border("border"),
@@ -181,7 +195,7 @@ public enum class Location(override val string: String) : StringEnum {
 }
 
 /**
- * https://d2lang.com/tour/style/#font
+ * [https://d2lang.com/tour/style/#font](https://d2lang.com/tour/style/#font)
  */
 public enum class Font(override val string: String) : StringEnum {
   Mono("mono"),
@@ -191,7 +205,7 @@ public enum class Font(override val string: String) : StringEnum {
 }
 
 /**
- * https://d2lang.com/tour/style/#text-transform
+ * [https://d2lang.com/tour/style/#text-transform](https://d2lang.com/tour/style/#text-transform)
  */
 public enum class TextTransform(override val string: String) : StringEnum {
   Uppercase("uppercase"),
@@ -204,7 +218,7 @@ public enum class TextTransform(override val string: String) : StringEnum {
 }
 
 /**
- * https://eclipse.dev/elk/reference/algorithms.html
+ * [https://eclipse.dev/elk/reference/algorithms.html](https://eclipse.dev/elk/reference/algorithms.html)
  */
 public enum class ElkAlgorithm(override val string: String) : StringEnum {
   Box("box"),

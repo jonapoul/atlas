@@ -6,7 +6,7 @@
 
 package atlas.core
 
-import atlas.core.internal.StringEnum
+import atlas.core.StringEnum
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider

@@ -20,8 +20,19 @@ import org.gradle.api.provider.Property
  *   graphviz {
  *     pathToDotCommand = "/custom/path/to/dot"
  *     fileFormat = FileFormat.Svg
+ *     layoutEngine = LayoutEngine.Dot
  *
- *     ...
+ *     node {
+ *       ...
+ *     }
+ *
+ *     edge {
+ *       ...
+ *     }
+ *
+ *     graph {
+ *       ...
+ *     }
  *   }
  * }
  * ```
@@ -50,12 +61,23 @@ public interface GraphvizSpec : AtlasSpec {
    */
   public val layoutEngine: Property<LayoutEngine>
 
+  /**
+   * Configure the attributes applied by default to all module nodes, unless overridden by that node's
+   * [GraphvizModuleTypeSpec].
+   */
   public val node: NodeAttributes
   public fun node(action: Action<NodeAttributes>)
 
+  /**
+   * Configure the attributes applied by default to all links between nodes, unless overridden by that link's
+   * [GraphvizLinkTypeSpec].
+   */
   public val edge: EdgeAttributes
   public fun edge(action: Action<EdgeAttributes>)
 
+  /**
+   * Configure the attributes applied to the root graph.
+   */
   public val graph: GraphAttributes
   public fun graph(action: Action<GraphAttributes>)
 }

@@ -6,12 +6,12 @@
 
 package atlas.graphviz
 
-import atlas.core.internal.StringEnum
+import atlas.core.StringEnum
 import atlas.graphviz.LayoutEngine.Dot
 import atlas.core.LinkStyle as CoreLinkStyle
 
 /**
- * See https://graphviz.org/docs/attr-types/style/
+ * See [https://graphviz.org/docs/attr-types/style/](https://graphviz.org/docs/attr-types/style/)
  */
 public enum class LinkStyle(override val string: String) : CoreLinkStyle {
   Dashed("dashed"),
@@ -26,7 +26,7 @@ public enum class LinkStyle(override val string: String) : CoreLinkStyle {
 }
 
 /**
- * See https://graphviz.org/docs/attr-types/style/
+ * See [https://graphviz.org/docs/attr-types/style/](https://graphviz.org/docs/attr-types/style/)
  */
 public enum class NodeStyle(override val string: String) : StringEnum {
   Dashed("dashed"),
@@ -46,7 +46,7 @@ public enum class NodeStyle(override val string: String) : StringEnum {
 }
 
 /**
- * https://graphviz.org/docs/attr-types/rankdir/
+ * See [https://graphviz.org/docs/attr-types/rankdir/](https://graphviz.org/docs/attr-types/rankdir/)
  */
 public enum class RankDir(override val string: String) : StringEnum {
   TopToBottom("TB"),
@@ -59,7 +59,7 @@ public enum class RankDir(override val string: String) : StringEnum {
 }
 
 /**
- * https://graphviz.org/docs/attr-types/arrowType/
+ * See [https://graphviz.org/docs/attr-types/arrowType/](https://graphviz.org/docs/attr-types/arrowType/)
  */
 public enum class ArrowType(override val string: String) : StringEnum {
   Box("box"),
@@ -87,12 +87,9 @@ public enum class ArrowType(override val string: String) : StringEnum {
 }
 
 /**
- * https://graphviz.org/docs/layouts/
+ * See [https://graphviz.org/docs/layouts/](https://graphviz.org/docs/layouts/)
  *
- * Your machine might not have some of these, or it might have more! Use [GraphvizSpec.layoutEngine]
- * with a string parameter to configure a custom layout engine. [Dot] is the implicit default.
- *
- * Run `dot -v` and check under "layout" to see what you have locally.
+ * [Dot] is the implicit default. Run `dot -v` and check under "layout" to see which of these you have locally.
  */
 public enum class LayoutEngine(override val string: String) : StringEnum {
   Dot("dot"),
@@ -111,7 +108,7 @@ public enum class LayoutEngine(override val string: String) : StringEnum {
 }
 
 /**
- * https://graphviz.org/docs/attrs/dir/
+ * See [https://graphviz.org/docs/attrs/dir/](https://graphviz.org/docs/attrs/dir/)
  */
 public enum class Dir(override val string: String) : StringEnum {
   Forward("forward"),
@@ -124,7 +121,7 @@ public enum class Dir(override val string: String) : StringEnum {
 }
 
 /**
- * https://graphviz.org/docs/attrs/imagepos/
+ * See [https://graphviz.org/docs/attrs/imagepos/](https://graphviz.org/docs/attrs/imagepos/)
  */
 public enum class ImagePos(override val string: String) : StringEnum {
   TopLeft("tl"),
@@ -142,7 +139,7 @@ public enum class ImagePos(override val string: String) : StringEnum {
 }
 
 /**
- * https://graphviz.org/docs/attr-types/clusterMode/
+ * See [https://graphviz.org/docs/attr-types/clusterMode/](https://graphviz.org/docs/attr-types/clusterMode/)
  */
 public enum class ClusterMode(override val string: String) : StringEnum {
   Local("local"),
@@ -154,7 +151,7 @@ public enum class ClusterMode(override val string: String) : StringEnum {
 }
 
 /**
- * https://graphviz.org/docs/attr-types/smoothType/
+ * See [https://graphviz.org/docs/attr-types/smoothType/](https://graphviz.org/docs/attr-types/smoothType/)
  */
 public enum class SmoothType(override val string: String) : StringEnum {
   None("none"),
@@ -171,7 +168,7 @@ public enum class SmoothType(override val string: String) : StringEnum {
 
 /**
  * The formats supported on your machine will depend on the version of Graphviz you use.
- * See https://graphviz.org/docs/outputs/
+ * See [https://graphviz.org/docs/outputs/](https://graphviz.org/docs/outputs/)
  */
 public enum class FileFormat(override val string: String) : StringEnum {
   Canon("canon"),
@@ -224,7 +221,7 @@ public enum class FileFormat(override val string: String) : StringEnum {
 }
 
 /**
- * https://graphviz.org/doc/info/shapes.html
+ * See [https://graphviz.org/doc/info/shapes.html](https://graphviz.org/doc/info/shapes.html)
  */
 public enum class Shape(override val string: String) : StringEnum {
   Box("box"),

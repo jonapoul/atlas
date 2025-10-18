@@ -6,7 +6,7 @@
 
 package atlas.mermaid
 
-import atlas.core.internal.StringEnum
+import atlas.core.StringEnum
 import atlas.mermaid.ConsiderModelOrder.NodesAndEdges
 import atlas.mermaid.CycleBreakingStrategy.GreedyModelOrder
 import atlas.mermaid.LinkStyle.Basic
@@ -16,7 +16,7 @@ import atlas.core.LinkStyle as CoreLinkStyle
 
 /**
  * Default is [Basic].
- * See https://mermaid.js.org/syntax/flowchart.html#links-between-nodes
+ * See [https://mermaid.js.org/syntax/flowchart.html#links-between-nodes](https://mermaid.js.org/syntax/flowchart.html#links-between-nodes)
  */
 public enum class LinkStyle(override val string: String) : CoreLinkStyle {
   Basic("basic"),
@@ -29,8 +29,8 @@ public enum class LinkStyle(override val string: String) : CoreLinkStyle {
 }
 
 /**
- * Elk specific option affecting how nodes are placed. Default value is [BrandesKoepf].
- * See https://mermaid.js.org/config/schema-docs/config-properties-elk.html#nodeplacementstrategy
+ * [ElkLayoutSpec]-specific option affecting how nodes are placed. Default value is [BrandesKoepf].
+ * See [https://mermaid.js.org/config/schema-docs/config-properties-elk.html#nodeplacementstrategy](https://mermaid.js.org/config/schema-docs/config-properties-elk.html#nodeplacementstrategy)
  */
 public enum class NodePlacementStrategy(override val string: String) : StringEnum {
   Simple("SIMPLE"),
@@ -45,7 +45,7 @@ public enum class NodePlacementStrategy(override val string: String) : StringEnu
 /**
  * This strategy decides how to find cycles in the graph and deciding which edges need adjustment to break loops.
  * Default value is [GreedyModelOrder].
- * See https://mermaid.js.org/config/schema-docs/config-properties-elk.html#cyclebreakingstrategy
+ * See [https://mermaid.js.org/config/schema-docs/config-properties-elk.html#cyclebreakingstrategy](https://mermaid.js.org/config/schema-docs/config-properties-elk.html#cyclebreakingstrategy)
  */
 public enum class CycleBreakingStrategy(override val string: String) : StringEnum {
   Greedy("GREEDY"),
@@ -62,7 +62,7 @@ public enum class CycleBreakingStrategy(override val string: String) : StringEnu
  * Preserves the order of nodes and edges in the model file if this does not lead to additional edge crossings.
  * Depending on the strategy this is not always possible since the node and edge order might be conflicting.
  * Default value is [NodesAndEdges].
- * See https://mermaid.js.org/config/schema-docs/config-properties-elk.html#considermodelorder
+ * See [https://mermaid.js.org/config/schema-docs/config-properties-elk.html#considermodelorder](https://mermaid.js.org/config/schema-docs/config-properties-elk.html#considermodelorder)
  */
 public enum class ConsiderModelOrder(override val string: String) : StringEnum {
   None("NONE"),
@@ -76,7 +76,7 @@ public enum class ConsiderModelOrder(override val string: String) : StringEnum {
 
 /**
  * Defaults to [Classic].
- * See https://mermaid.js.org/intro/syntax-reference.html#layout-and-look
+ * See [https://mermaid.js.org/intro/syntax-reference.html#layout-and-look](https://mermaid.js.org/intro/syntax-reference.html#layout-and-look)
  */
 public enum class Look(override val string: String) : StringEnum {
   Classic("classic"),
@@ -87,7 +87,7 @@ public enum class Look(override val string: String) : StringEnum {
 }
 
 /**
- * See https://mermaid.js.org/config/theming.html
+ * See [https://mermaid.js.org/config/theming.html](https://mermaid.js.org/config/theming.html)
  */
 public enum class Theme(override val string: String) : StringEnum {
   Default("default"),
