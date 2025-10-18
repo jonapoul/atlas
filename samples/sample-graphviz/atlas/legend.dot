@@ -1,19 +1,21 @@
 digraph {
-  node [shape=plaintext]
+  node [fontname="Courier New",peripheries="3",style="filled",shape="plaintext",color="#4C0000",fontcolor="white"]
+  edge [arrowhead="ediamond",arrowtail="none",fontcolor="white",labelfloat="false",color="red"]
+  graph [bgcolor="MidnightBlue",fontsize="30",rankdir="TB",ranksep="1.5"]
   modules [label=<
   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-    <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
+    <TR><TD COLSPAN="2"><B>Module Types</B></TD></TR>
     <TR><TD>Android App</TD><TD BGCOLOR="limegreen">&lt;module-name&gt;</TD></TR>
     <TR><TD>Kotlin Multiplatform</TD><TD BGCOLOR="mediumslateblue">&lt;module-name&gt;</TD></TR>
     <TR><TD>Android Library</TD><TD BGCOLOR="crimson:cyan4">&lt;module-name&gt;</TD></TR>
     <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
     <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
-    <TR><TD>Other</TD><TD BGCOLOR="gainsboro">&lt;module-name&gt;</TD></TR>
+    <TR><TD>Other</TD><TD BGCOLOR="#444444">&lt;module-name&gt;</TD></TR>
   </TABLE>
   >];
   links [label=<
   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-    <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Link Types</B></TD></TR>
+    <TR><TD COLSPAN="2"><B>Link Types</B></TD></TR>
     <TR><TD>jvmMainImplementation</TD><TD BGCOLOR="orange">Bold</TD></TR>
     <TR><TD>api</TD><TD>Solid</TD></TR>
     <TR><TD>implementation</TD><TD>Dotted</TD></TR>

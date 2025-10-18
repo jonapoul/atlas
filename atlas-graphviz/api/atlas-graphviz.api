@@ -826,6 +826,7 @@ public abstract class atlas/graphviz/tasks/WriteGraphvizChart : org/gradle/api/D
 public abstract class atlas/graphviz/tasks/WriteGraphvizLegend : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public fun execute ()V
+	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;

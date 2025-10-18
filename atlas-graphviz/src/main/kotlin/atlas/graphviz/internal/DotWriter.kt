@@ -48,11 +48,6 @@ public data class DotWriter(
     )
   }
 
-  private fun IndentedStringBuilder.appendHeaderGroup(name: String, attrs: Attrs) {
-    if (!attrs.hasAnyValues()) return
-    appendLine("$name$attrs")
-  }
-
   private fun IndentedStringBuilder.appendLinks() {
     val displayLinkLabels = config.displayLinkLabels == true
 
@@ -91,25 +86,5 @@ public data class DotWriter(
     }
 
     appendLine("\"$nodePath\"$attrs")
-  }
-
-  private fun attrs(map: Map<String, String>?) = Attrs(map.orEmpty().toMutableMap())
-
-  @Suppress("SpreadOperator")
-  private class Attrs(private val delegate: MutableMap<String, Any?>) : MutableMap<String, Any?> by delegate {
-    constructor(vararg entries: Pair<String, Any?>) : this(mutableMapOf(*entries))
-
-    override fun toString(): String {
-      if (isEmpty() || values.all { it == null }) return ""
-      val csv = mapNotNull { (k, v) -> if (v == null) null else "$k=\"$v\"" }.joinToString(separator = ",")
-      return " [$csv]"
-    }
-
-    fun hasAnyValues() = values.any { it != null }
-
-    operator fun plus(other: Map<String, String>?): Attrs {
-      other?.let(delegate::putAll)
-      return Attrs(delegate)
-    }
   }
 }

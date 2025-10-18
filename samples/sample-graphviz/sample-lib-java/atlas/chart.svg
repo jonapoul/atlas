@@ -15,7 +15,7 @@
 <polygon fill="limegreen" stroke="#4c0000" points="171.5,-388 16.5,-388 16.5,-364 171.5,-364 171.5,-358 189.5,-376 171.5,-394 171.5,-388"/>
 <polygon fill="none" stroke="#4c0000" points="175.5,-392 12.5,-392 12.5,-360 175.5,-360 175.5,-354 193.5,-376 175.5,-398 175.5,-392"/>
 <polygon fill="none" stroke="#4c0000" points="179.5,-396 8.5,-396 8.5,-356 179.5,-356 179.5,-350 197.5,-376 179.5,-402 179.5,-396"/>
-<text text-anchor="middle" x="103" y="-372.3" font-family="Courier New" font-size="14.00">:sample&#45;app&#45;android</text>
+<text text-anchor="middle" x="103" y="-372.3" font-family="Courier New" font-size="14.00" fill="white">:sample&#45;app&#45;android</text>
 </g>
 <!-- :sample&#45;lib&#45;kotlin&#45;mp -->
 <g id="node3" class="node">
@@ -23,7 +23,7 @@
 <polygon fill="mediumslateblue" stroke="#4c0000" points="198,-219 8,-219 8,-183 198,-183 198,-219"/>
 <polygon fill="none" stroke="#4c0000" points="202,-223 4,-223 4,-179 202,-179 202,-223"/>
 <polygon fill="none" stroke="#4c0000" points="206,-227 0,-227 0,-175 206,-175 206,-227"/>
-<text text-anchor="middle" x="103" y="-197.3" font-family="Courier New" font-size="14.00" fill="white">:sample&#45;lib&#45;kotlin&#45;mp</text>
+<text text-anchor="middle" x="103" y="-197.3" font-family="Courier New" font-size="14.00" fill="red">:sample&#45;lib&#45;kotlin&#45;mp</text>
 </g>
 <!-- :sample&#45;app&#45;android&#45;&gt;:sample&#45;lib&#45;kotlin&#45;mp -->
 <g id="edge1" class="edge">
@@ -39,7 +39,7 @@
 <polygon fill="orange" stroke="#4c0000" points="177.5,-44 28.5,-44 28.5,-8 177.5,-8 177.5,-44"/>
 <polygon fill="none" stroke="#4c0000" points="181.5,-48 24.5,-48 24.5,-4 181.5,-4 181.5,-48"/>
 <polygon fill="none" stroke="#4c0000" points="185.5,-52 20.5,-52 20.5,0 185.5,0 185.5,-52"/>
-<text text-anchor="middle" x="103" y="-22.3" font-family="Courier New" font-size="14.00">:sample&#45;lib&#45;java</text>
+<text text-anchor="middle" x="103" y="-22.3" font-family="Courier New" font-size="14.00" fill="white">:sample&#45;lib&#45;java</text>
 </g>
 <!-- :sample&#45;lib&#45;kotlin&#45;mp&#45;&gt;:sample&#45;lib&#45;java -->
 <g id="edge2" class="edge">

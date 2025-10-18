@@ -133,11 +133,11 @@ internal class CheckFileDiffTest : ScenarioTest() {
     assertThat(check2.output).contains(
       """
         |          digraph {
-        |            node [shape=plaintext]
+        |            node [shape="plaintext"]
         |            modules [label=<
         |      ---   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
         |      +++   <TABLE BORDER="0" CELLBORDER="100" CELLSPACING="0" CELLPADDING="4">
-        |              <TR><TD COLSPAN="2" BGCOLOR="#DDDDDD"><B>Module Types</B></TD></TR>
+        |              <TR><TD COLSPAN="2"><B>Module Types</B></TD></TR>
         |              <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
         |              <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
         |              <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
