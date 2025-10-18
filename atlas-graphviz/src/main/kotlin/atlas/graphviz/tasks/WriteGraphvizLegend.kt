@@ -68,13 +68,16 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
         appendHeaderGroup(name = "edge", attrs(config.edgeAttributes))
         appendHeaderGroup(name = "graph", attrs(config.graphAttributes))
 
+        val tableAttrs = tableAttributes(config).joinToString(separator = " ") { (k, v) -> "$k=\"$v\"" }
+
         if (hasModuleTypes) {
           appendLine("modules [label=<")
-          appendLine("<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">")
+          appendLine("<TABLE $tableAttrs>")
           appendLine("  <TR><TD COLSPAN=\"2\"><B>Module Types</B></TD></TR>")
           indent {
             moduleTypes.forEach { type ->
-              appendLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">&lt;module-name&gt;</TD></TR>")
+              val text = withFontColor(text = "&lt;module-name&gt;", properties = type.properties)
+              appendLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">$text</TD></TR>")
             }
           }
           appendLine("</TABLE>")
@@ -83,11 +86,12 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
 
         if (hasLinkTypes) {
           appendLine("links [label=<")
-          appendLine("<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">")
+          appendLine("<TABLE $tableAttrs>")
           appendLine("  <TR><TD COLSPAN=\"2\"><B>Link Types</B></TD></TR>")
           linkTypes.forEach { type ->
             val bgColor = if (type.color == null) "" else " BGCOLOR=\"${type.color}\""
-            val style = type.style?.capitalized() ?: "Solid"
+            val text = type.style?.capitalized() ?: "Solid"
+            val style = withFontColor(text, type.properties)
             appendLine("  <TR><TD>${type.displayName}</TD><TD$bgColor>$style</TD></TR>")
           }
           appendLine("</TABLE>")
@@ -101,6 +105,24 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
     outputFile.writeText(dotFileContents)
     logIfConfigured(outputFile)
   }
+
+  private fun withFontColor(text: String, properties: Map<String, String>): String {
+    val fontColor = properties["fontcolor"] ?: return text
+    return "<FONT COLOR=\"$fontColor\">$text</FONT>"
+  }
+
+  private fun tableAttributes(config: DotConfig) = listOf(
+    "BORDER" to 0,
+    "CELLBORDER" to 1,
+    "CELLSPACING" to 0,
+    "CELLPADDING" to 4,
+    "COLOR" to config.fontColor(),
+  ).mapNotNull { (k, v) ->
+    if (v == null) null else k to v.toString()
+  }
+
+  private fun DotConfig.fontColor(): String? =
+    listOf(nodeAttributes, graphAttributes).firstNotNullOfOrNull { it?.get("fontcolor") }
 
   @DisableCachingByDefault
   internal abstract class WriteGraphvizLegendDummy : WriteGraphvizLegend(), DummyAtlasGenerationTask
