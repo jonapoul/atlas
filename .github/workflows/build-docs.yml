@@ -1,0 +1,39 @@
+name: Build docs
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: 'ci-${{ github.event.merge_group.head_ref || github.head_ref }}-${{ github.workflow }}'
+  cancel-in-progress: true
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.13
+
+      - name: Install dependencies
+        run: pip install -r config/mkdocs-requirements.txt
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          add-job-summary: on-failure
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      - name: Build Dokka artifacts
+        run: ./gradlew dokkaGeneratePublicationHtml
+
+      - name: Deploy to GitHub Pages
+        run: mkdocs build --strict

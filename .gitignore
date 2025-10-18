@@ -2,8 +2,11 @@
 *.jks
 *.keystore
 *.sarif
+.cache/
 .gradle/
 .idea/
 .kotlin/
+.venv/
 build/
+docs/api/
 local.properties
