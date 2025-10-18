@@ -1,0 +1,1657 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>GraphAttributes</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../index.html" tabindex="1">
+                    atlas
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true" data-filter=":atlas-graphviz/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":atlas-graphviz/main" data-filter=":atlas-graphviz/main">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    atlas
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids=":atlas-graphviz::atlas.graphviz/GraphAttributes///PointingToDeclaration//908035547">
+  <div class="breadcrumbs"><a href="../../index.html">:atlas-graphviz</a><span class="delimiter">/</span><a href="../index.html">atlas.graphviz</a><span class="delimiter">/</span><span class="current">GraphAttributes</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Graph</span><wbr><span><span>Attributes</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">GraphAttributes</a> : <a href="../../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/jonapoul/atlas/tree/main/:atlas-graphviz/src/main/kotlin/atlas/graphviz/Attributes.kt#L140">source</a>)</span></span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="PROPERTY">
+        <h2 class="tableheader">Properties</h2>
+        <div class="table"><a data-name="1975367154%2FProperties%2F908035547" anchor-label="background" id="1975367154%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="background.html"><span><span>background</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1975367154%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="background.html">background</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-786363872%2FProperties%2F908035547" anchor-label="bb" id="-786363872%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="bb.html"><span><span>bb</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-786363872%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="bb.html">bb</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1364653375%2FProperties%2F908035547" anchor-label="beautify" id="-1364653375%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="beautify.html"><span><span>beautify</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1364653375%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="beautify.html">beautify</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1813311844%2FProperties%2F908035547" anchor-label="bgColor" id="-1813311844%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="bg-color.html"><span>bg</span><wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1813311844%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="bg-color.html">bgColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="221123115%2FProperties%2F908035547" anchor-label="center" id="221123115%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="center.html"><span><span>center</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="221123115%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="center.html">center</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="493818670%2FProperties%2F908035547" anchor-label="charset" id="493818670%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="charset.html"><span><span>charset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="493818670%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="charset.html">charset</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-463809036%2FProperties%2F908035547" anchor-label="clusterRank" id="-463809036%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="cluster-rank.html"><span>cluster</span><wbr><span><span>Rank</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-463809036%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="cluster-rank.html">clusterRank</a><span class="token operator">: </span><a href="../-cluster-mode/index.html">ClusterMode</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1950636690%2FProperties%2F908035547" anchor-label="colorScheme" id="1950636690%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="color-scheme.html"><span>color</span><wbr><span><span>Scheme</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1950636690%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="color-scheme.html">colorScheme</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1044360837%2FProperties%2F908035547" anchor-label="comment" id="-1044360837%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="comment.html"><span><span>comment</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1044360837%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="comment.html">comment</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1797331755%2FProperties%2F908035547" anchor-label="compound" id="-1797331755%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="compound.html"><span><span>compound</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1797331755%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="compound.html">compound</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-922051152%2FProperties%2F908035547" anchor-label="concentrate" id="-922051152%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="concentrate.html"><span><span>concentrate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-922051152%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="concentrate.html">concentrate</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1281372216%2FProperties%2F908035547" anchor-label="damping" id="1281372216%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="damping.html"><span><span>damping</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1281372216%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="damping.html">damping</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1443944749%2FProperties%2F908035547" anchor-label="defaultDist" id="-1443944749%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="default-dist.html"><span>default</span><wbr><span><span>Dist</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1443944749%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="default-dist.html">defaultDist</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="404550130%2FProperties%2F908035547" anchor-label="dim" id="404550130%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="dim.html"><span><span>dim</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="404550130%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="dim.html">dim</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="73370665%2FProperties%2F908035547" anchor-label="dimen" id="73370665%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="dimen.html"><span><span>dimen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="73370665%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="dimen.html">dimen</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-708711948%2FProperties%2F908035547" anchor-label="dirEdgeConstraints" id="-708711948%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="dir-edge-constraints.html"><span>dir</span><wbr><span>Edge</span><wbr><span><span>Constraints</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-708711948%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="dir-edge-constraints.html">dirEdgeConstraints</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1578165571%2FProperties%2F908035547" anchor-label="dpi" id="-1578165571%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="dpi.html"><span><span>dpi</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1578165571%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="dpi.html">dpi</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="163995344%2FProperties%2F908035547" anchor-label="epsilon" id="163995344%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="epsilon.html"><span><span>epsilon</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="163995344%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="epsilon.html">epsilon</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="172106215%2FProperties%2F908035547" anchor-label="esep" id="172106215%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="esep.html"><span><span>esep</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="172106215%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="esep.html">esep</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1962870246%2FProperties%2F908035547" anchor-label="fontColor" id="1962870246%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="font-color.html"><span>font</span><wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1962870246%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-color.html">fontColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-890713626%2FProperties%2F908035547" anchor-label="fontName" id="-890713626%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="font-name.html"><span>font</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-890713626%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-name.html">fontName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-276063839%2FProperties%2F908035547" anchor-label="fontNames" id="-276063839%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="font-names.html"><span>font</span><wbr><span><span>Names</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-276063839%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-names.html">fontNames</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1270087284%2FProperties%2F908035547" anchor-label="fontPath" id="-1270087284%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="font-path.html"><span>font</span><wbr><span><span>Path</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1270087284%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-path.html">fontPath</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="152982832%2FProperties%2F908035547" anchor-label="fontSize" id="152982832%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="font-size.html"><span>font</span><wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="152982832%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="font-size.html">fontSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1003758352%2FProperties%2F908035547" anchor-label="forceLabels" id="-1003758352%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="force-labels.html"><span>force</span><wbr><span><span>Labels</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1003758352%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="force-labels.html">forceLabels</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1171283735%2FProperties%2F908035547" anchor-label="gradientAngle" id="1171283735%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="gradient-angle.html"><span>gradient</span><wbr><span><span>Angle</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1171283735%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="gradient-angle.html">gradientAngle</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2099017515%2FProperties%2F908035547" anchor-label="href" id="-2099017515%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="href.html"><span><span>href</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2099017515%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="href.html">href</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1712006565%2FProperties%2F908035547" anchor-label="id" id="1712006565%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="id.html"><span><span>id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1712006565%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="id.html">id</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-3648614%2FProperties%2F908035547" anchor-label="imagePath" id="-3648614%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="image-path.html"><span>image</span><wbr><span><span>Path</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-3648614%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="image-path.html">imagePath</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-533971008%2FProperties%2F908035547" anchor-label="inputScale" id="-533971008%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="input-scale.html"><span>input</span><wbr><span><span>Scale</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-533971008%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="input-scale.html">inputScale</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1165175121%2FProperties%2F908035547" anchor-label="k" id="-1165175121%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="k.html"><span><span>k</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1165175121%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="k.html">k</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1654115782%2FProperties%2F908035547" anchor-label="label" id="1654115782%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="label.html"><span><span>label</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1654115782%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label.html">label</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-378126918%2FProperties%2F908035547" anchor-label="labelJust" id="-378126918%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="label-just.html"><span>label</span><wbr><span><span>Just</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-378126918%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-just.html">labelJust</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-881661452%2FProperties%2F908035547" anchor-label="labelLoc" id="-881661452%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="label-loc.html"><span>label</span><wbr><span><span>Loc</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-881661452%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-loc.html">labelLoc</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1809209569%2FProperties%2F908035547" anchor-label="labelScheme" id="1809209569%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="label-scheme.html"><span>label</span><wbr><span><span>Scheme</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1809209569%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="label-scheme.html">labelScheme</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1403858593%2FProperties%2F908035547" anchor-label="landscape" id="-1403858593%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="landscape.html"><span><span>landscape</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1403858593%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="landscape.html">landscape</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1498253617%2FProperties%2F908035547" anchor-label="layerListSep" id="1498253617%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="layer-list-sep.html"><span>layer</span><wbr><span>List</span><wbr><span><span>Sep</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1498253617%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="layer-list-sep.html">layerListSep</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1540423134%2FProperties%2F908035547" anchor-label="layers" id="1540423134%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="layers.html"><span><span>layers</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1540423134%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="layers.html">layers</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1610836115%2FProperties%2F908035547" anchor-label="layerSelect" id="-1610836115%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="layer-select.html"><span>layer</span><wbr><span><span>Select</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1610836115%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="layer-select.html">layerSelect</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="349308787%2FProperties%2F908035547" anchor-label="layerSep" id="349308787%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="layer-sep.html"><span>layer</span><wbr><span><span>Sep</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="349308787%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="layer-sep.html">layerSep</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1908919542%2FProperties%2F908035547" anchor-label="layout" id="1908919542%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="layout.html"><span><span>layout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1908919542%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="layout.html">layout</a><span class="token operator">: </span><a href="../-layout-engine/index.html">LayoutEngine</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1968334255%2FProperties%2F908035547" anchor-label="levels" id="-1968334255%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="levels.html"><span><span>levels</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1968334255%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="levels.html">levels</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-843188557%2FProperties%2F908035547" anchor-label="levelsGap" id="-843188557%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="levels-gap.html"><span>levels</span><wbr><span><span>Gap</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-843188557%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="levels-gap.html">levelsGap</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-668216889%2FProperties%2F908035547" anchor-label="lheight" id="-668216889%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="lheight.html"><span><span>lheight</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-668216889%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="lheight.html">lheight</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1737652390%2FProperties%2F908035547" anchor-label="lineLength" id="1737652390%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="line-length.html"><span>line</span><wbr><span><span>Length</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1737652390%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="line-length.html">lineLength</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="674119004%2FProperties%2F908035547" anchor-label="lp" id="674119004%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="lp.html"><span><span>lp</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="674119004%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="lp.html">lp</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="764316006%2FProperties%2F908035547" anchor-label="lWidth" id="764316006%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="l-width.html"><span>l</span><wbr><span><span>Width</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="764316006%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="l-width.html">lWidth</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="605314802%2FProperties%2F908035547" anchor-label="margin" id="605314802%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="margin.html"><span><span>margin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="605314802%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="margin.html">margin</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1707531262%2FProperties%2F908035547" anchor-label="maxiter" id="1707531262%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="maxiter.html"><span><span>maxiter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1707531262%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="maxiter.html">maxiter</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-987061547%2FProperties%2F908035547" anchor-label="mcLimit" id="-987061547%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="mc-limit.html"><span>mc</span><wbr><span><span>Limit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-987061547%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="mc-limit.html">mcLimit</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-622288158%2FProperties%2F908035547" anchor-label="minDist" id="-622288158%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="min-dist.html"><span>min</span><wbr><span><span>Dist</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-622288158%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="min-dist.html">minDist</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1138066781%2FProperties%2F908035547" anchor-label="mode" id="1138066781%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="mode.html"><span><span>mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1138066781%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="mode.html">mode</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2025519311%2FProperties%2F908035547" anchor-label="model" id="-2025519311%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="model.html"><span><span>model</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2025519311%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="model.html">model</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1574646130%2FProperties%2F908035547" anchor-label="newRank" id="-1574646130%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="new-rank.html"><span>new</span><wbr><span><span>Rank</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1574646130%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="new-rank.html">newRank</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1364228990%2FProperties%2F908035547" anchor-label="nodeSep" id="1364228990%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="node-sep.html"><span>node</span><wbr><span><span>Sep</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1364228990%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="node-sep.html">nodeSep</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1907437835%2FProperties%2F908035547" anchor-label="noJustify" id="1907437835%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="no-justify.html"><span>no</span><wbr><span><span>Justify</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1907437835%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="no-justify.html">noJustify</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="279741773%2FProperties%2F908035547" anchor-label="normalize" id="279741773%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="normalize.html"><span><span>normalize</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="279741773%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="normalize.html">normalize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-656466803%2FProperties%2F908035547" anchor-label="noTranslate" id="-656466803%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="no-translate.html"><span>no</span><wbr><span><span>Translate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-656466803%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="no-translate.html">noTranslate</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1679333692%2FProperties%2F908035547" anchor-label="nsLimit" id="-1679333692%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ns-limit.html"><span>ns</span><wbr><span><span>Limit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1679333692%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="ns-limit.html">nsLimit</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1000789371%2FProperties%2F908035547" anchor-label="nsLimit1" id="-1000789371%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ns-limit1.html"><span>ns</span><wbr><span><span>Limit1</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1000789371%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="ns-limit1.html">nsLimit1</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1575088071%2FProperties%2F908035547" anchor-label="oneBlock" id="-1575088071%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="one-block.html"><span>one</span><wbr><span><span>Block</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1575088071%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="one-block.html">oneBlock</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2019469108%2FProperties%2F908035547" anchor-label="ordering" id="-2019469108%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ordering.html"><span><span>ordering</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2019469108%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="ordering.html">ordering</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1076425898%2FProperties%2F908035547" anchor-label="orientation" id="1076425898%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="orientation.html"><span><span>orientation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1076425898%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="orientation.html">orientation</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-301393331%2FProperties%2F908035547" anchor-label="outputOrder" id="-301393331%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="output-order.html"><span>output</span><wbr><span><span>Order</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-301393331%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="output-order.html">outputOrder</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="616493203%2FProperties%2F908035547" anchor-label="overlap" id="616493203%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="overlap.html"><span><span>overlap</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="616493203%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="overlap.html">overlap</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1637115744%2FProperties%2F908035547" anchor-label="overlapScaling" id="-1637115744%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="overlap-scaling.html"><span>overlap</span><wbr><span><span>Scaling</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1637115744%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="overlap-scaling.html">overlapScaling</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1294259722%2FProperties%2F908035547" anchor-label="overlapShrink" id="1294259722%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="overlap-shrink.html"><span>overlap</span><wbr><span><span>Shrink</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1294259722%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="overlap-shrink.html">overlapShrink</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1713221031%2FProperties%2F908035547" anchor-label="pack" id="1713221031%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pack.html"><span><span>pack</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1713221031%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="pack.html">pack</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1424288836%2FProperties%2F908035547" anchor-label="packMode" id="1424288836%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pack-mode.html"><span>pack</span><wbr><span><span>Mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1424288836%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="pack-mode.html">packMode</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2034444217%2FProperties%2F908035547" anchor-label="pad" id="-2034444217%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pad.html"><span><span>pad</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2034444217%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="pad.html">pad</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1078590961%2FProperties%2F908035547" anchor-label="page" id="1078590961%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="page.html"><span><span>page</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1078590961%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="page.html">page</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="196314428%2FProperties%2F908035547" anchor-label="pageDir" id="196314428%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="page-dir.html"><span>page</span><wbr><span><span>Dir</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="196314428%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="page-dir.html">pageDir</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1961544251%2FProperties%2F908035547" anchor-label="quadTree" id="1961544251%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="quad-tree.html"><span>quad</span><wbr><span><span>Tree</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1961544251%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="quad-tree.html">quadTree</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1939208255%2FProperties%2F908035547" anchor-label="quantum" id="1939208255%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="quantum.html"><span><span>quantum</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1939208255%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="quantum.html">quantum</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="413929817%2FProperties%2F908035547" anchor-label="rankDir" id="413929817%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="rank-dir.html"><span>rank</span><wbr><span><span>Dir</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="413929817%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="rank-dir.html">rankDir</a><span class="token operator">: </span><a href="../-rank-dir/index.html">RankDir</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1274320552%2FProperties%2F908035547" anchor-label="rankSep" id="1274320552%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="rank-sep.html"><span>rank</span><wbr><span><span>Sep</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1274320552%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="rank-sep.html">rankSep</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1076270223%2FProperties%2F908035547" anchor-label="ratio" id="1076270223%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ratio.html"><span><span>ratio</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1076270223%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="ratio.html">ratio</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="903497279%2FProperties%2F908035547" anchor-label="reminCross" id="903497279%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remin-cross.html"><span>remin</span><wbr><span><span>Cross</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="903497279%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="remin-cross.html">reminCross</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1031126738%2FProperties%2F908035547" anchor-label="repulsiveForce" id="-1031126738%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="repulsive-force.html"><span>repulsive</span><wbr><span><span>Force</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1031126738%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="repulsive-force.html">repulsiveForce</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="287890484%2FProperties%2F908035547" anchor-label="resolution" id="287890484%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="resolution.html"><span><span>resolution</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="287890484%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="resolution.html">resolution</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1533242626%2FProperties%2F908035547" anchor-label="root" id="-1533242626%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="root.html"><span><span>root</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1533242626%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="root.html">root</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1448930331%2FProperties%2F908035547" anchor-label="rotate" id="-1448930331%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="rotate.html"><span><span>rotate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1448930331%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="rotate.html">rotate</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1297334882%2FProperties%2F908035547" anchor-label="rotation" id="1297334882%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="rotation.html"><span><span>rotation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1297334882%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="rotation.html">rotation</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1298493488%2FProperties%2F908035547" anchor-label="scale" id="1298493488%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="scale.html"><span><span>scale</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1298493488%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="scale.html">scale</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2063681097%2FProperties%2F908035547" anchor-label="searchSize" id="-2063681097%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="search-size.html"><span>search</span><wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2063681097%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="search-size.html">searchSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1420039900%2FProperties%2F908035547" anchor-label="sep" id="1420039900%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sep.html"><span><span>sep</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1420039900%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="sep.html">sep</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-210843522%2FProperties%2F908035547" anchor-label="showBoxes" id="-210843522%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="show-boxes.html"><span>show</span><wbr><span><span>Boxes</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-210843522%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="show-boxes.html">showBoxes</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2084166465%2FProperties%2F908035547" anchor-label="size" id="-2084166465%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="size.html"><span><span>size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2084166465%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="size.html">size</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1823229242%2FProperties%2F908035547" anchor-label="smoothing" id="-1823229242%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="smoothing.html"><span><span>smoothing</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1823229242%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="smoothing.html">smoothing</a><span class="token operator">: </span><a href="../-smooth-type/index.html">SmoothType</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="620539554%2FProperties%2F908035547" anchor-label="sortv" id="620539554%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sortv.html"><span><span>sortv</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="620539554%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="sortv.html">sortv</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="627520120%2FProperties%2F908035547" anchor-label="splines" id="627520120%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="splines.html"><span><span>splines</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="627520120%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="splines.html">splines</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2136334360%2FProperties%2F908035547" anchor-label="start" id="2136334360%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="start.html"><span><span>start</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2136334360%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="start.html">start</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1622389335%2FProperties%2F908035547" anchor-label="style" id="-1622389335%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="style.html"><span><span>style</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1622389335%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="style.html">style</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-654707470%2FProperties%2F908035547" anchor-label="styleSheet" id="-654707470%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="style-sheet.html"><span>style</span><wbr><span><span>Sheet</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-654707470%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="style-sheet.html">styleSheet</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-599422865%2FProperties%2F908035547" anchor-label="target" id="-599422865%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="target.html"><span><span>target</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-599422865%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="target.html">target</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1716152044%2FProperties%2F908035547" anchor-label="tbBalance" id="1716152044%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="tb-balance.html"><span>tb</span><wbr><span><span>Balance</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1716152044%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tb-balance.html">tbBalance</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1690120105%2FProperties%2F908035547" anchor-label="tooltip" id="-1690120105%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="tooltip.html"><span><span>tooltip</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1690120105%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="tooltip.html">tooltip</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-974063899%2FProperties%2F908035547" anchor-label="trueColor" id="-974063899%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="true-color.html"><span>true</span><wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-974063899%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="true-color.html">trueColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="402567915%2FProperties%2F908035547" anchor-label="url" id="402567915%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="url.html"><span><span>url</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="402567915%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="url.html">url</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1970890266%2FProperties%2F908035547" anchor-label="viewPort" id="1970890266%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="view-port.html"><span>view</span><wbr><span><span>Port</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1970890266%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="view-port.html">viewPort</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1880875996%2FProperties%2F908035547" anchor-label="voroMargin" id="1880875996%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="voro-margin.html"><span>voro</span><wbr><span><span>Margin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1880875996%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="voro-margin.html">voroMargin</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1760024723%2FProperties%2F908035547" anchor-label="xdotVersion" id="1760024723%2FProperties%2F908035547" data-filterable-set=":atlas-graphviz/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-graphviz/main" data-filterable-set=":atlas-graphviz/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="xdot-version.html"><span>xdot</span><wbr><span><span>Version</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1760024723%2FProperties%2F908035547"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-graphviz/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="xdot-version.html">xdotVersion</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2025 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

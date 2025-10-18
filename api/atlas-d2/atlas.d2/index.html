@@ -1,0 +1,531 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>atlas.d2</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
+                    atlas
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true" data-filter=":atlas-d2/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":atlas-d2/main" data-filter=":atlas-d2/main">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    atlas
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="package" id="content" pageids=":atlas-d2::atlas.d2////PointingToDeclaration//2070217296">
+  <div class="breadcrumbs"><a href="../index.html">:atlas-d2</a><span class="delimiter">/</span><span class="current">atlas.d2</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="-1870660852%2FClasslikes%2F2070217296" anchor-label="ArrowType" id="-1870660852%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-arrow-type/index.html"><span>Arrow</span><wbr><span><span>Type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1870660852%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-arrow-type/index.html">ArrowType</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-arrow-type/index.html">ArrowType</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/connections/#arrowheads</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1903346575%2FClasslikes%2F2070217296" anchor-label="D2AtlasExtension" id="-1903346575%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-atlas-extension/index.html"><span>D2Atlas</span><wbr><span><span>Extension</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1903346575%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-atlas-extension/index.html">D2AtlasExtension</a> : <a href="../../atlas-core/atlas.core/-atlas-extension/index.html">AtlasExtension</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1519731999%2FClasslikes%2F2070217296" anchor-label="D2AtlasPlugin" id="1519731999%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-atlas-plugin/index.html"><span>D2Atlas</span><wbr><span><span>Plugin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1519731999%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-d2-atlas-plugin/index.html">D2AtlasPlugin</a> : <a href="../../atlas-core/atlas.core/-atlas-plugin/index.html">AtlasPlugin</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-328096667%2FClasslikes%2F2070217296" anchor-label="D2DagreSpec" id="-328096667%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-dagre-spec/index.html"><span>D2Dagre</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-328096667%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-dagre-spec/index.html">D2DagreSpec</a> : <a href="../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a></div><div class="brief "><p class="paragraph">From running <code class="lang-kotlin">d2 layout dagre</code> in the CLI</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2144019294%2FClasslikes%2F2070217296" anchor-label="D2ElkSpec" id="2144019294%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-elk-spec/index.html"><span>D2Elk</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2144019294%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-elk-spec/index.html">D2ElkSpec</a> : <a href="../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a></div><div class="brief "><p class="paragraph">From running <code class="lang-kotlin">d2 layout elk</code> in the CLI</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-323620587%2FClasslikes%2F2070217296" anchor-label="D2GlobalPropsSpec" id="-323620587%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-global-props-spec/index.html"><span>D2Global</span><wbr><span>Props</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-323620587%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-global-props-spec/index.html">D2GlobalPropsSpec</a> : <a href="../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a></div><div class="brief "><p class="paragraph">Use this for any arbitrary global properties that you want to apply to all charts. These properties will be appended to the bottom of the chart. Chances are, you'll want to use some <a href="https://d2lang.com/tour/globs/">globs</a> in here, so make sure to read the D2 docs on those.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="940600030%2FClasslikes%2F2070217296" anchor-label="D2LayoutEngineSpec" id="940600030%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-layout-engine-spec/index.html"><span>D2Layout</span><wbr><span>Engine</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="940600030%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-layout-engine-spec/index.html">D2LayoutEngineSpec</a> : <a href="../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="321445270%2FClasslikes%2F2070217296" anchor-label="D2LinkTypeSpec" id="321445270%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-link-type-spec/index.html"><span>D2Link</span><wbr><span>Type</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="321445270%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-link-type-spec/index.html">D2LinkTypeSpec</a> : <a href="../../atlas-core/atlas.core/-link-type-spec/index.html">LinkTypeSpec</a>, <a href="-d2-properties-spec/index.html">D2PropertiesSpec</a></div><div class="brief "><p class="paragraph">Style specs from https://d2lang.com/tour/style, applied to the link between two modules.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1350279268%2FClasslikes%2F2070217296" anchor-label="D2ModuleTypeSpec" id="1350279268%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-module-type-spec/index.html"><span>D2Module</span><wbr><span>Type</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1350279268%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-module-type-spec/index.html">D2ModuleTypeSpec</a> : <a href="../../atlas-core/atlas.core/-module-type-spec/index.html">ModuleTypeSpec</a>, <a href="-d2-properties-spec/index.html">D2PropertiesSpec</a></div><div class="brief "><p class="paragraph">Style specs from https://d2lang.com/tour/style, applied to the shape matching this module type.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1981361647%2FClasslikes%2F2070217296" anchor-label="D2NamedLinkTypeContainer" id="-1981361647%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-named-link-type-container/index.html"><span>D2Named</span><wbr><span>Link</span><wbr><span>Type</span><wbr><span><span>Container</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1981361647%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-named-link-type-container/index.html">D2NamedLinkTypeContainer</a> : <a href="../../atlas-core/atlas.core/-named-link-type-container/index.html">NamedLinkTypeContainer</a><span class="token operator">&lt;</span><a href="-d2-link-type-spec/index.html">D2LinkTypeSpec</a><span class="token operator">&gt; </span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-120675389%2FClasslikes%2F2070217296" anchor-label="D2NamedModuleTypeContainer" id="-120675389%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-named-module-type-container/index.html"><span>D2Named</span><wbr><span>Module</span><wbr><span>Type</span><wbr><span><span>Container</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-120675389%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-named-module-type-container/index.html">D2NamedModuleTypeContainer</a> : <a href="../../atlas-core/atlas.core/-named-module-type-container/index.html">NamedModuleTypeContainer</a><span class="token operator">&lt;</span><a href="-d2-module-type-spec/index.html">D2ModuleTypeSpec</a><span class="token operator">&gt; </span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="142891543%2FClasslikes%2F2070217296" anchor-label="D2PropertiesSpec" id="142891543%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-properties-spec/index.html"><span>D2Properties</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="142891543%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-properties-spec/index.html">D2PropertiesSpec</a> : <a href="../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a></div><div class="brief "><p class="paragraph">A set of properties from https://d2lang.com/tour/style - applicable to both <a href="-d2-module-type-spec/index.html">D2ModuleTypeSpec</a> and <a href="-d2-link-type-spec/index.html">D2LinkTypeSpec</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-760061709%2FClasslikes%2F2070217296" anchor-label="D2RootStyleSpec" id="-760061709%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-root-style-spec/index.html"><span>D2Root</span><wbr><span>Style</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-760061709%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-root-style-spec/index.html">D2RootStyleSpec</a> : <a href="../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/style/#root</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1227655286%2FClasslikes%2F2070217296" anchor-label="D2Spec" id="-1227655286%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-spec/index.html"><span><span>D2Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1227655286%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-spec/index.html">D2Spec</a> : <a href="../../atlas-core/atlas.core/-atlas-spec/index.html">AtlasSpec</a></div><div class="brief "><p class="paragraph">Used to configure D2 output from Atlas. For barebones output to a <code class="lang-kotlin">.d2</code> file, you can just add the <code class="lang-kotlin">"dev.jonpoulton.atlas.d2"</code> gradle plugin. Or for a more fleshed-out config:</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="413815816%2FClasslikes%2F2070217296" anchor-label="D2TalaSpec" id="413815816%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d2-tala-spec/index.html"><span>D2Tala</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="413815816%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-d2-tala-spec/index.html">D2TalaSpec</a> : <a href="../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-252484112%2FClasslikes%2F2070217296" anchor-label="Direction" id="-252484112%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-direction/index.html"><span><span>Direction</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-252484112%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-direction/index.html">Direction</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-direction/index.html">Direction</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/layouts/#direction</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1650030264%2FClasslikes%2F2070217296" anchor-label="ElkAlgorithm" id="-1650030264%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-elk-algorithm/index.html"><span>Elk</span><wbr><span><span>Algorithm</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1650030264%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-elk-algorithm/index.html">ElkAlgorithm</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-elk-algorithm/index.html">ElkAlgorithm</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://eclipse.dev/elk/reference/algorithms.html</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1282479712%2FClasslikes%2F2070217296" anchor-label="FileFormat" id="1282479712%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-file-format/index.html"><span>File</span><wbr><span><span>Format</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1282479712%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-file-format/index.html">FileFormat</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-file-format/index.html">FileFormat</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/exports/</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1154848034%2FClasslikes%2F2070217296" anchor-label="FillPattern" id="1154848034%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-fill-pattern/index.html"><span>Fill</span><wbr><span><span>Pattern</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1154848034%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-fill-pattern/index.html">FillPattern</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-fill-pattern/index.html">FillPattern</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/style/#fill-pattern</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1528433756%2FClasslikes%2F2070217296" anchor-label="Font" id="-1528433756%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-font/index.html"><span><span>Font</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1528433756%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-font/index.html">Font</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-font/index.html">Font</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/style/#font</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1203479175%2FClasslikes%2F2070217296" anchor-label="LayoutEngine" id="1203479175%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-layout-engine/index.html"><span>Layout</span><wbr><span><span>Engine</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1203479175%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-layout-engine/index.html">LayoutEngine</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-layout-engine/index.html">LayoutEngine</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/layouts/</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2085869208%2FClasslikes%2F2070217296" anchor-label="LinkStyle" id="2085869208%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-link-style/index.html"><span>Link</span><wbr><span><span>Style</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2085869208%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-link-style/index.html">LinkStyle</a> : <a href="../../atlas-core/atlas.core/-link-style/index.html">LinkStyle</a>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-link-style/index.html">LinkStyle</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/connections/</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2111348222%2FClasslikes%2F2070217296" anchor-label="Location" id="2111348222%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-location/index.html"><span><span>Location</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2111348222%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-location/index.html">Location</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-location/index.html">Location</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/positions/#outside-and-border</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-920031478%2FClasslikes%2F2070217296" anchor-label="Position" id="-920031478%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-position/index.html"><span><span>Position</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-920031478%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-position/index.html">Position</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-position/index.html">Position</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/positions/</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1596717298%2FClasslikes%2F2070217296" anchor-label="Shape" id="-1596717298%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-shape/index.html"><span><span>Shape</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1596717298%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-shape/index.html">Shape</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-shape/index.html">Shape</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/shapes/</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-174969424%2FClasslikes%2F2070217296" anchor-label="TextTransform" id="-174969424%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-text-transform/index.html"><span>Text</span><wbr><span><span>Transform</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-174969424%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-text-transform/index.html">TextTransform</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-text-transform/index.html">TextTransform</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/style/#text-transform</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1194222106%2FClasslikes%2F2070217296" anchor-label="Theme" id="-1194222106%2FClasslikes%2F2070217296" data-filterable-set=":atlas-d2/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-d2/main" data-filterable-set=":atlas-d2/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-theme/index.html"><span><span>Theme</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1194222106%2FClasslikes%2F2070217296"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-d2/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-theme/index.html">Theme</a> : <span data-unresolved-link="atlas.core.internal/IntEnum///PointingToDeclaration/">IntEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-theme/index.html">Theme</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">https://d2lang.com/tour/themes/</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2025 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,5 +1,0 @@
-[[allowlists]]
-paths = [
-  '''src/test/''',
-  '''src/.*Test/''',
-]

@@ -1,0 +1,16 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+module::atlas-core
+atlas.core
+atlas.core.tasks
+org.gradle.kotlin.dsl
+module::atlas-d2
+atlas.d2
+atlas.d2.tasks
+module::atlas-graphviz
+atlas.graphviz
+atlas.graphviz.tasks
+module::atlas-mermaid
+atlas.mermaid
+atlas.mermaid.tasks

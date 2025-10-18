@@ -1,0 +1,1 @@
+sourceset_dependencies = '{":atlas-core/main":[],":atlas-d2/main":[],":atlas-graphviz/main":[],":atlas-mermaid/main":[]}'

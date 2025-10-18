@@ -1,0 +1,381 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>atlas.mermaid</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
+                    atlas
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true" data-filter=":atlas-mermaid/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":atlas-mermaid/main" data-filter=":atlas-mermaid/main">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    atlas
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="package" id="content" pageids=":atlas-mermaid::atlas.mermaid////PointingToDeclaration//-842229195">
+  <div class="breadcrumbs"><a href="../index.html">:atlas-mermaid</a><span class="delimiter">/</span><span class="current">atlas.mermaid</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="1161116458%2FClasslikes%2F-842229195" anchor-label="ConsiderModelOrder" id="1161116458%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-consider-model-order/index.html"><span>Consider</span><wbr><span>Model</span><wbr><span><span>Order</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1161116458%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-consider-model-order/index.html">ConsiderModelOrder</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-consider-model-order/index.html">ConsiderModelOrder</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">Preserves the order of nodes and edges in the model file if this does not lead to additional edge crossings. Depending on the strategy this is not always possible since the node and edge order might be conflicting. Default value is <a href="-consider-model-order/-nodes-and-edges/index.html">NodesAndEdges</a>. See https://mermaid.js.org/config/schema-docs/config-properties-elk.html#considermodelorder</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2018529602%2FClasslikes%2F-842229195" anchor-label="CycleBreakingStrategy" id="-2018529602%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-cycle-breaking-strategy/index.html"><span>Cycle</span><wbr><span>Breaking</span><wbr><span><span>Strategy</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2018529602%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-cycle-breaking-strategy/index.html">CycleBreakingStrategy</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-cycle-breaking-strategy/index.html">CycleBreakingStrategy</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">This strategy decides how to find cycles in the graph and deciding which edges need adjustment to break loops. Default value is <a href="-cycle-breaking-strategy/-greedy-model-order/index.html">GreedyModelOrder</a>. See https://mermaid.js.org/config/schema-docs/config-properties-elk.html#cyclebreakingstrategy</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="417127089%2FClasslikes%2F-842229195" anchor-label="ElkLayoutSpec" id="417127089%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-elk-layout-spec/index.html"><span>Elk</span><wbr><span>Layout</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="417127089%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-elk-layout-spec/index.html">ElkLayoutSpec</a> : <a href="-mermaid-layout-spec/index.html">MermaidLayoutSpec</a></div><div class="brief "><p class="paragraph">https://mermaid.js.org/config/schema-docs/config-properties-elk.html</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-673242397%2FClasslikes%2F-842229195" anchor-label="LinkStyle" id="-673242397%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-link-style/index.html"><span>Link</span><wbr><span><span>Style</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-673242397%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-link-style/index.html">LinkStyle</a> : <a href="../../atlas-core/atlas.core/-link-style/index.html">LinkStyle</a>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-link-style/index.html">LinkStyle</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">Default is <a href="-link-style/-basic/index.html">Basic</a>. See https://mermaid.js.org/syntax/flowchart.html#links-between-nodes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1179294679%2FClasslikes%2F-842229195" anchor-label="Look" id="-1179294679%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-look/index.html"><span><span>Look</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1179294679%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-look/index.html">Look</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-look/index.html">Look</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">Defaults to <a href="-look/-classic/index.html">Classic</a>. See https://mermaid.js.org/intro/syntax-reference.html#layout-and-look</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1376628509%2FClasslikes%2F-842229195" anchor-label="MermaidAtlasExtension" id="1376628509%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mermaid-atlas-extension/index.html"><span>Mermaid</span><wbr><span>Atlas</span><wbr><span><span>Extension</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1376628509%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-mermaid-atlas-extension/index.html">MermaidAtlasExtension</a> : <a href="../../atlas-core/atlas.core/-atlas-extension/index.html">AtlasExtension</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1166914035%2FClasslikes%2F-842229195" anchor-label="MermaidAtlasPlugin" id="1166914035%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mermaid-atlas-plugin/index.html"><span>Mermaid</span><wbr><span>Atlas</span><wbr><span><span>Plugin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1166914035%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-mermaid-atlas-plugin/index.html">MermaidAtlasPlugin</a> : <a href="../../atlas-core/atlas.core/-atlas-plugin/index.html">AtlasPlugin</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="420324239%2FClasslikes%2F-842229195" anchor-label="MermaidConfig" id="420324239%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mermaid-config/index.html"><span>Mermaid</span><wbr><span><span>Config</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="420324239%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="kotlinx.serialization/Serializable///PointingToDeclaration/"><span class="token annotation builtin">Serializable</span></span></div></div><span class="token keyword">class </span><a href="-mermaid-config/index.html">MermaidConfig</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>displayLinkLabels<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>layout<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>layoutProperties<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>themeVariables<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>look<span class="token operator">: </span><a href="-look/index.html">Look</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>theme<span class="token operator">: </span><a href="-theme/index.html">Theme</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>animateLinks<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/Serializable.html">Serializable</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1582021076%2FClasslikes%2F-842229195" anchor-label="MermaidLayoutSpec" id="-1582021076%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mermaid-layout-spec/index.html"><span>Mermaid</span><wbr><span>Layout</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1582021076%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-mermaid-layout-spec/index.html">MermaidLayoutSpec</a> : <a href="../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2025977022%2FClasslikes%2F-842229195" anchor-label="MermaidLinkTypeSpec" id="-2025977022%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mermaid-link-type-spec/index.html"><span>Mermaid</span><wbr><span>Link</span><wbr><span>Type</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2025977022%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-mermaid-link-type-spec/index.html">MermaidLinkTypeSpec</a> : <a href="../../atlas-core/atlas.core/-link-type-spec/index.html">LinkTypeSpec</a>, <a href="../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a></div><div class="brief "><p class="paragraph">https://mermaid.js.org/syntax/flowchart.html#links-between-nodes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="335287056%2FClasslikes%2F-842229195" anchor-label="MermaidModuleTypeSpec" id="335287056%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mermaid-module-type-spec/index.html"><span>Mermaid</span><wbr><span>Module</span><wbr><span>Type</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="335287056%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-mermaid-module-type-spec/index.html">MermaidModuleTypeSpec</a> : <a href="../../atlas-core/atlas.core/-module-type-spec/index.html">ModuleTypeSpec</a></div><div class="brief "><p class="paragraph">From https://mermaid.js.org/syntax/flowchart.html#styling-a-node. Atlas won't validate any of these values, you need to make sure they're in the right format. E.g. <a href="-mermaid-module-type-spec/stroke-dash-array.html">strokeDashArray</a> as an array of integers ("5 5"), <a href="-mermaid-module-type-spec/stroke-width.html">strokeWidth</a> as a pixel size ("5px"). See the above link for the expected formats.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-456140611%2FClasslikes%2F-842229195" anchor-label="MermaidNamedLinkTypeContainer" id="-456140611%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mermaid-named-link-type-container/index.html"><span>Mermaid</span><wbr><span>Named</span><wbr><span>Link</span><wbr><span>Type</span><wbr><span><span>Container</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-456140611%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-mermaid-named-link-type-container/index.html">MermaidNamedLinkTypeContainer</a> : <a href="../../atlas-core/atlas.core/-named-link-type-container/index.html">NamedLinkTypeContainer</a><span class="token operator">&lt;</span><a href="-mermaid-link-type-spec/index.html">MermaidLinkTypeSpec</a><span class="token operator">&gt; </span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1032892271%2FClasslikes%2F-842229195" anchor-label="MermaidNamedModuleTypeContainer" id="1032892271%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mermaid-named-module-type-container/index.html"><span>Mermaid</span><wbr><span>Named</span><wbr><span>Module</span><wbr><span>Type</span><wbr><span><span>Container</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1032892271%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-mermaid-named-module-type-container/index.html">MermaidNamedModuleTypeContainer</a> : <a href="../../atlas-core/atlas.core/-named-module-type-container/index.html">NamedModuleTypeContainer</a><span class="token operator">&lt;</span><a href="-mermaid-module-type-spec/index.html">MermaidModuleTypeSpec</a><span class="token operator">&gt; </span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="429330742%2FClasslikes%2F-842229195" anchor-label="MermaidSpec" id="429330742%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mermaid-spec/index.html"><span>Mermaid</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="429330742%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-mermaid-spec/index.html">MermaidSpec</a> : <a href="../../atlas-core/atlas.core/-atlas-spec/index.html">AtlasSpec</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="642418216%2FClasslikes%2F-842229195" anchor-label="MermaidThemeVariablesSpec" id="642418216%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mermaid-theme-variables-spec/index.html"><span>Mermaid</span><wbr><span>Theme</span><wbr><span>Variables</span><wbr><span><span>Spec</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="642418216%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-mermaid-theme-variables-spec/index.html">MermaidThemeVariablesSpec</a> : <a href="../../atlas-core/atlas.core/-properties-spec/index.html">PropertiesSpec</a></div><div class="brief "><p class="paragraph">See https://mermaid.js.org/config/theming.html#theme-variables for all custom properties, any of which can be set with <a href="../../atlas-core/atlas.core/-properties-spec/put.html">put</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="98730116%2FClasslikes%2F-842229195" anchor-label="NodePlacementStrategy" id="98730116%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-node-placement-strategy/index.html"><span>Node</span><wbr><span>Placement</span><wbr><span><span>Strategy</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="98730116%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-node-placement-strategy/index.html">NodePlacementStrategy</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-node-placement-strategy/index.html">NodePlacementStrategy</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">Elk specific option affecting how nodes are placed. Default value is <a href="-node-placement-strategy/-brandes-koepf/index.html">BrandesKoepf</a>. See https://mermaid.js.org/config/schema-docs/config-properties-elk.html#nodeplacementstrategy</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1290586033%2FClasslikes%2F-842229195" anchor-label="Theme" id="1290586033%2FClasslikes%2F-842229195" data-filterable-set=":atlas-mermaid/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":atlas-mermaid/main" data-filterable-set=":atlas-mermaid/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-theme/index.html"><span><span>Theme</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1290586033%2FClasslikes%2F-842229195"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":atlas-mermaid/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-theme/index.html">Theme</a> : <span data-unresolved-link="atlas.core.internal/StringEnum///PointingToDeclaration/">StringEnum</span>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-theme/index.html">Theme</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">See https://mermaid.js.org/config/theming.html</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2025 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
