@@ -20,13 +20,15 @@ import kotlinx.serialization.Serializable as KSerializable
  * atlas {
  *   pathTransforms {
  *     remove("^:modules:")
- *     replace(":", " ")
+ *     replace(pattern = ":", replacement = " ")
  *   }
  * }
  * ```
  *
- * then a path of `":modules:path:to:module"` will be mapped to `"path to module"` for display in the charts.
+ * then a path of `":modules:path:to:something"` will be mapped to `"path to something"` for display in the charts.
  * Remember the declarations inside `pathTransforms` are called in descending order.
+ *
+ * It doesn't support Regex group replacement, just pattern identification.
  */
 @AtlasDsl
 public interface PathTransformSpec {
@@ -38,6 +40,9 @@ public interface PathTransformSpec {
   public fun replace(pattern: Regex, replacement: String)
 }
 
+/**
+ * Model class for a [PathTransformSpec].
+ */
 @KSerializable
 public class Replacement(
   @KSerializable(RegexSerializer::class) public val pattern: Regex,

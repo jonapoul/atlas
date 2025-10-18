@@ -24,6 +24,9 @@ import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
+/**
+ * Dumps all [atlas.core.internal.ModuleLink]s between this and any other modules to a file.
+ */
 @CacheableTask
 public abstract class WriteModuleLinks : DefaultTask(), TaskWithOutputFile {
   @get:Input public abstract val moduleLinks: MapProperty<String, List<String>>

@@ -21,6 +21,10 @@ import org.gradle.api.Task
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
+/**
+ * Base plugin, implemented by the framework modules. This plugin will be applied to the root module by the user, then
+ * it will auto-apply itself to all child subprojects internally.
+ */
 public abstract class AtlasPlugin : Plugin<Project> {
   protected abstract val extension: AtlasExtensionImpl
 
@@ -28,11 +32,11 @@ public abstract class AtlasPlugin : Plugin<Project> {
   protected abstract fun Project.registerChildTasks()
 
   override fun apply(target: Project): Unit = with(target) {
-    pluginManager.apply(LifecycleBasePlugin::class.java)
-
     // This only happens if you have nested modules where the group modules don't have a build file. In that
     // case you don't want the group to be its own node in the chart
     if (!target.buildFile.exists()) return@with
+
+    pluginManager.apply(LifecycleBasePlugin::class.java)
 
     if (target == rootProject) {
       applyToRoot(target)

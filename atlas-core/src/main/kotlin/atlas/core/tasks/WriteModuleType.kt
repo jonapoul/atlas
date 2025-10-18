@@ -25,6 +25,9 @@ import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
+/**
+ * Dumps the [ModuleTypeSpec] of this module to a file. This will then by aggregated in [CollateModuleTypes].
+ */
 @CacheableTask
 public abstract class WriteModuleType : DefaultTask(), TaskWithOutputFile {
   @get:Input public abstract val projectPath: Property<String>
