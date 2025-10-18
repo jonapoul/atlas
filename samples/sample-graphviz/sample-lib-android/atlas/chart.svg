@@ -15,7 +15,7 @@
 <polygon fill="limegreen" stroke="#4c0000" points="163,-563 8,-563 8,-539 163,-539 163,-533 181,-551 163,-569 163,-563"/>
 <polygon fill="none" stroke="#4c0000" points="167,-567 4,-567 4,-535 167,-535 167,-529 185,-551 167,-573 167,-567"/>
 <polygon fill="none" stroke="#4c0000" points="171,-571 0,-571 0,-531 171,-531 171,-525 189,-551 171,-577 171,-571"/>
-<text text-anchor="middle" x="94.5" y="-547.3" font-family="Courier New" font-size="14.00">:sample&#45;app&#45;android</text>
+<text text-anchor="middle" x="94.5" y="-547.3" font-family="Courier New" font-size="14.00" fill="white">:sample&#45;app&#45;android</text>
 </g>
 <!-- :sample&#45;lib&#45;android -->
 <g id="node2" class="node">
@@ -29,7 +29,7 @@
 <polygon fill="url(#l_0)" stroke="#4c0000" points="349,-219 176,-219 176,-183 349,-183 349,-219"/>
 <polygon fill="none" stroke="#4c0000" points="353,-223 172,-223 172,-179 353,-179 353,-223"/>
 <polygon fill="none" stroke="#4c0000" points="357,-227 168,-227 168,-175 357,-175 357,-227"/>
-<text text-anchor="middle" x="262.5" y="-197.3" font-family="Courier New" font-size="14.00">:sample&#45;lib&#45;android</text>
+<text text-anchor="middle" x="262.5" y="-197.3" font-family="Courier New" font-size="14.00" fill="white">:sample&#45;lib&#45;android</text>
 </g>
 <!-- :sample&#45;app&#45;android&#45;&gt;:sample&#45;lib&#45;android -->
 <g id="edge1" class="edge">
@@ -45,7 +45,7 @@
 <polygon fill="mediumslateblue" stroke="#4c0000" points="357.5,-394 167.5,-394 167.5,-358 357.5,-358 357.5,-394"/>
 <polygon fill="none" stroke="#4c0000" points="361.5,-398 163.5,-398 163.5,-354 361.5,-354 361.5,-398"/>
 <polygon fill="none" stroke="#4c0000" points="365.5,-402 159.5,-402 159.5,-350 365.5,-350 365.5,-402"/>
-<text text-anchor="middle" x="262.5" y="-372.3" font-family="Courier New" font-size="14.00" fill="white">:sample&#45;lib&#45;kotlin&#45;mp</text>
+<text text-anchor="middle" x="262.5" y="-372.3" font-family="Courier New" font-size="14.00" fill="red">:sample&#45;lib&#45;kotlin&#45;mp</text>
 </g>
 <!-- :sample&#45;app&#45;android&#45;&gt;:sample&#45;lib&#45;kotlin&#45;mp -->
 <g id="edge2" class="edge">
@@ -61,7 +61,7 @@
 <polygon fill="mediumorchid" stroke="#4c0000" points="361.5,-44 163.5,-44 163.5,-8 361.5,-8 361.5,-44"/>
 <polygon fill="none" stroke="#4c0000" points="365.5,-48 159.5,-48 159.5,-4 365.5,-4 365.5,-48"/>
 <polygon fill="none" stroke="#4c0000" points="369.5,-52 155.5,-52 155.5,0 369.5,0 369.5,-52"/>
-<text text-anchor="middle" x="262.5" y="-22.3" font-family="Courier New" font-size="14.00">:sample&#45;lib&#45;kotlin&#45;jvm</text>
+<text text-anchor="middle" x="262.5" y="-22.3" font-family="Courier New" font-size="14.00" fill="white">:sample&#45;lib&#45;kotlin&#45;jvm</text>
 </g>
 <!-- :sample&#45;lib&#45;android&#45;&gt;:sample&#45;lib&#45;kotlin&#45;jvm -->
 <g id="edge3" class="edge">

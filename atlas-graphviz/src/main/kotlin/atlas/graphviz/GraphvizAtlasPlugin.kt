@@ -102,6 +102,7 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
     // Also validate the legend's dotfile when we call gradle check
     val dummyTask = WriteGraphvizLegend.dummy(
       target = project,
+      spec = spec,
       extension = extension,
     )
 

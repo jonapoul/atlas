@@ -33,14 +33,14 @@ atlas {
       shape = Rarrow
       style = Radial
     }
-    kotlinMultiplatform { fontColor = "white" }
+    kotlinMultiplatform { fontColor = "red" }
     androidLibrary {
       color = "crimson:cyan4"
       gradientAngle = 90
     }
     kotlinJvm()
     java { color = null }
-    other()
+    other { color = "#444444" }
   }
 
   linkTypes {
@@ -62,6 +62,7 @@ atlas {
       style = Filled
       shape = Box
       lineColor = "#4C0000"
+      fontColor = "white"
     }
 
     graph {

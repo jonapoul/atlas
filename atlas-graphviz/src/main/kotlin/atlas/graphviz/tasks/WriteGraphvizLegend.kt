@@ -20,11 +20,16 @@ import atlas.core.internal.outputFile
 import atlas.core.internal.qualifier
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.TaskWithOutputFile
+import atlas.graphviz.DotConfig
 import atlas.graphviz.GraphvizSpec
+import atlas.graphviz.Shape.Plaintext
+import atlas.graphviz.internal.appendHeaderGroup
+import atlas.graphviz.internal.attrs
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.ListProperty
+import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
@@ -38,6 +43,7 @@ import java.io.File
 public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
   @get:Input public abstract val moduleTypes: ListProperty<ModuleType>
   @get:Input public abstract val linkTypes: ListProperty<LinkType>
+  @get:Input public abstract val config: Property<DotConfig>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -50,6 +56,7 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
     val moduleTypes = moduleTypes.get()
     val linkTypes = linkTypes.get()
     val outputFile = outputFile.get().asFile
+    val config = config.get()
 
     val hasModuleTypes = moduleTypes.isNotEmpty()
     val hasLinkTypes = linkTypes.isNotEmpty()
@@ -57,15 +64,20 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
     val dotFileContents = buildIndentedString {
       appendLine("digraph {")
       indent {
-        appendLine("node [shape=plaintext]")
+        appendHeaderGroup(name = "node", attrs(config.nodeAttributes) + mapOf("shape" to Plaintext))
+        appendHeaderGroup(name = "edge", attrs(config.edgeAttributes))
+        appendHeaderGroup(name = "graph", attrs(config.graphAttributes))
+
+        val tableAttrs = tableAttributes(config).joinToString(separator = " ") { (k, v) -> "$k=\"$v\"" }
 
         if (hasModuleTypes) {
           appendLine("modules [label=<")
-          appendLine("<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">")
-          appendLine("  <TR><TD COLSPAN=\"2\" BGCOLOR=\"#DDDDDD\"><B>Module Types</B></TD></TR>")
+          appendLine("<TABLE $tableAttrs>")
+          appendLine("  <TR><TD COLSPAN=\"2\"><B>Module Types</B></TD></TR>")
           indent {
             moduleTypes.forEach { type ->
-              appendLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">&lt;module-name&gt;</TD></TR>")
+              val text = withFontColor(text = "&lt;module-name&gt;", properties = type.properties)
+              appendLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">$text</TD></TR>")
             }
           }
           appendLine("</TABLE>")
@@ -74,11 +86,12 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
 
         if (hasLinkTypes) {
           appendLine("links [label=<")
-          appendLine("<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">")
-          appendLine("  <TR><TD COLSPAN=\"2\" BGCOLOR=\"#DDDDDD\"><B>Link Types</B></TD></TR>")
+          appendLine("<TABLE $tableAttrs>")
+          appendLine("  <TR><TD COLSPAN=\"2\"><B>Link Types</B></TD></TR>")
           linkTypes.forEach { type ->
             val bgColor = if (type.color == null) "" else " BGCOLOR=\"${type.color}\""
-            val style = type.style?.capitalized() ?: "Solid"
+            val text = type.style?.capitalized() ?: "Solid"
+            val style = withFontColor(text, type.properties)
             appendLine("  <TR><TD>${type.displayName}</TD><TD$bgColor>$style</TD></TR>")
           }
           appendLine("</TABLE>")
@@ -93,6 +106,25 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
     logIfConfigured(outputFile)
   }
 
+  private fun withFontColor(text: String, properties: Map<String, String>): String {
+    val fontColor = properties["fontcolor"] ?: return text
+    return "<FONT COLOR=\"$fontColor\">$text</FONT>"
+  }
+
+  @Suppress("MagicNumber")
+  private fun tableAttributes(config: DotConfig) = listOf(
+    "BORDER" to 0,
+    "CELLBORDER" to 1,
+    "CELLSPACING" to 0,
+    "CELLPADDING" to 4,
+    "COLOR" to config.fontColor(),
+  ).mapNotNull { (k, v) ->
+    if (v == null) null else k to v.toString()
+  }
+
+  private fun DotConfig.fontColor(): String? =
+    listOf(nodeAttributes, graphAttributes).firstNotNullOfOrNull { it?.get("fontcolor") }
+
   @DisableCachingByDefault
   internal abstract class WriteGraphvizLegendDummy : WriteGraphvizLegend(), DummyAtlasGenerationTask
 
@@ -104,14 +136,17 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
     ) = register<WriteGraphvizLegend>(
       target = target,
       extension = extension,
+      spec = spec,
       outputFile = target.outputFile(Legend, spec.fileExtension.get()),
     )
 
     internal fun dummy(
       target: Project,
+      spec: GraphvizSpec,
       extension: AtlasExtensionImpl,
     ) = register<WriteGraphvizLegendDummy>(
       target = target,
+      spec = spec,
       extension = extension,
       outputFile = target.atlasBuildDirectory
         .get()
@@ -121,6 +156,7 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
 
     internal inline fun <reified T : WriteGraphvizLegend> register(
       target: Project,
+      spec: GraphvizSpec,
       extension: AtlasExtensionImpl,
       outputFile: File,
     ): TaskProvider<T> = with(target) {
@@ -132,6 +168,7 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
       writeLegend.configure { task ->
         task.moduleTypes.convention(extension.orderedModuleTypes().map(::moduleType))
         task.linkTypes.convention(extension.orderedLinkTypes())
+        task.config.convention(DotConfig(extension, spec))
       }
 
       return writeLegend
