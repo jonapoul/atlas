@@ -21,10 +21,8 @@ import atlas.core.tasks.CollateModuleTypes
 import atlas.core.tasks.TaskWithOutputFile
 import atlas.core.tasks.WriteModuleTree
 import atlas.graphviz.DotConfig
-import atlas.graphviz.GraphvizAtlasExtension
 import atlas.graphviz.GraphvizSpec
 import atlas.graphviz.internal.DotWriter
-import atlas.graphviz.internal.GraphvizAtlasExtensionImpl
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -41,6 +39,9 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
+/**
+ * Converts a [DotConfig] into a written module chart file, generated once for each module.
+ */
 @CacheableTask
 public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
   // Files

@@ -6,9 +6,9 @@ package atlas.test
 
 import atlas.core.LinkType
 import atlas.core.ModuleType
+import atlas.core.StringEnum
 import atlas.core.internal.ModuleLink
 import atlas.core.internal.Node
-import atlas.core.internal.StringEnum
 import atlas.core.internal.TypedModule
 
 internal fun node(

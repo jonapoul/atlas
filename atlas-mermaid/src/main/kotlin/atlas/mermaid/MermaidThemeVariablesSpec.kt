@@ -8,8 +8,9 @@ import atlas.core.AtlasDsl
 import atlas.core.PropertiesSpec
 
 /**
- * See https://mermaid.js.org/config/theming.html#theme-variables for all custom properties, any of which can be set
- * with [put].
+ * Global diagram configuration properties.
+ *
+ * See [the Mermaid docs](https://mermaid.js.org/config/theming.html#theme-variables)
  */
 @AtlasDsl
 public interface MermaidThemeVariablesSpec : PropertiesSpec {

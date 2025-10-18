@@ -33,6 +33,9 @@ import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
+/**
+ * Generates a legend table in markdown format, since Mermaid itself doesn't support tables.
+ */
 @CacheableTask
 public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
   @get:Input public abstract val moduleTypes: ListProperty<ModuleType>

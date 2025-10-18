@@ -1,4 +1,4 @@
-# Atlas
+# Atlas Gradle Plugin
 
 ### [jonapoul.github.io/atlas](https://jonapoul.github.io/atlas)
 

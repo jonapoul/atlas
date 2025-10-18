@@ -38,6 +38,9 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
+/**
+ * Generates a `.mmd` file containing the Mermaid diagram, which will be then injected into the module's readme.
+ */
 @CacheableTask
 public abstract class WriteMermaidChart : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {
   // Files

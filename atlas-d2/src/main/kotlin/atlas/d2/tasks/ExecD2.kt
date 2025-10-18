@@ -32,6 +32,8 @@ import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 /**
+ * Executes `d2` with the configured inputs to generate an image file. Requires D2 to be pre-installed.
+ *
  * Just so I don't forget, [classesFile] is only used to force regeneration if the classes file updates, since we don't
  * directly read it in this task.
  */

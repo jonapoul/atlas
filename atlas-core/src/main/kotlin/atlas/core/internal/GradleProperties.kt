@@ -4,7 +4,9 @@
  */
 package atlas.core.internal
 
+import atlas.core.IntEnum
 import atlas.core.InternalAtlasApi
+import atlas.core.StringEnum
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
 

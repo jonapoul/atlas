@@ -4,19 +4,13 @@
  */
 package atlas.core.internal
 
+import atlas.core.IntEnum
 import atlas.core.InternalAtlasApi
-
-public interface StringEnum {
-  public val string: String
-}
+import atlas.core.StringEnum
 
 @InternalAtlasApi
 public inline fun <reified E> parseEnum(string: String): E where E : StringEnum, E : Enum<E> =
   enumValues<E>().firstOrNull { it.string == string } ?: error("No ${E::class.simpleName} matching '$string'")
-
-public interface IntEnum {
-  public val value: Int
-}
 
 @InternalAtlasApi
 public inline fun <reified E> parseEnum(value: Int): E where E : IntEnum, E : Enum<E> =

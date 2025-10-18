@@ -29,6 +29,9 @@ import org.gradle.process.ExecOperations
 import org.gradle.process.ExecSpec
 import javax.inject.Inject
 
+/**
+ * Executes `dot` with the configured inputs to generate an image file. Requires Graphviz to be pre-installed.
+ */
 @CacheableTask
 public abstract class ExecGraphviz : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {
   @get:[PathSensitive(RELATIVE) InputFile] public abstract val dotFile: RegularFileProperty

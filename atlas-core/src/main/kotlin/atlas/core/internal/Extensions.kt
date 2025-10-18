@@ -4,11 +4,13 @@
  */
 package atlas.core.internal
 
+import atlas.core.IntEnum
 import atlas.core.InternalAtlasApi
 import atlas.core.LinkType
 import atlas.core.LinkTypeSpec
 import atlas.core.ModuleType
 import atlas.core.ModuleTypeSpec
+import atlas.core.StringEnum
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
 import org.gradle.api.file.RegularFile

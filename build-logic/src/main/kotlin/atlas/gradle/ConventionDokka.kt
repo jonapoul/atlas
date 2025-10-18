@@ -24,7 +24,7 @@ class ConventionDokka : Plugin<Project> {
 
       dokkaSourceSets.configureEach {
         documentedVisibilities.add(Public)
-        // reportUndocumented.set(true) // TODO: https://github.com/jonapoul/atlas/issues/296
+        reportUndocumented.set(false)
         skipDeprecated.set(true)
         suppressGeneratedFiles.set(true)
 
