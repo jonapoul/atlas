@@ -14,8 +14,10 @@ import org.gradle.api.provider.SetProperty
 @AtlasDsl
 public interface AtlasExtension {
   /**
-   * When set to true, syncing the IDE (IntelliJ or Android Studio) will automatically trigger regeneration of your
-   * module diagrams. Defaults to false. Be careful enabling this on large projects, sync time might extend quite a bit.
+   * When enabled, syncing your IntelliJ IDE (including Android Studio) will automatically trigger regeneration of your
+   * module diagrams. Defaults to false.
+   *
+   * Be careful enabling this on large projects - sync time might extend quite a lot.
    */
   public val generateOnSync: Property<Boolean>
 

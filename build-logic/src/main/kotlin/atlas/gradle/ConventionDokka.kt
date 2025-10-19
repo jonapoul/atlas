@@ -20,6 +20,7 @@ class ConventionDokka : Plugin<Project> {
       dokkaPublications.configureEach {
         failOnWarning.set(true)
         suppressInheritedMembers.set(true)
+        suppressObviousFunctions.set(true)
       }
 
       dokkaSourceSets.configureEach {
@@ -35,8 +36,9 @@ class ConventionDokka : Plugin<Project> {
 
         sourceLink {
           localDirectory.set(layout.projectDirectory)
-          remoteUrl("https://github.com/jonapoul/atlas/tree/main/${project.path}")
           remoteLineSuffix.set("#L")
+          val path = project.path.replace(":", "")
+          remoteUrl("https://github.com/jonapoul/atlas/tree/main/$path")
         }
       }
     }

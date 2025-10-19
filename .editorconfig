@@ -9,6 +9,9 @@ indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
 
+[*.md]
+max_line_length = 999999
+
 # noinspection EditorConfigKeyCorrectness
 [*.{kt,kts}]
 ij_kotlin_class_annotation_wrap = split_into_lines
