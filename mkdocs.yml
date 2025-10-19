@@ -24,14 +24,14 @@ theme:
       primary: white
       accent: red
       toggle:
-        icon: material/weather-night
+        icon: material/weather-sunny
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: black
       accent: red
       toggle:
-        icon: material/weather-sunny
+        icon: material/weather-night
         name: Switch to light mode
   font:
     text: "Inter"
@@ -40,7 +40,15 @@ theme:
     - content.code.copy
     - content.code.select
     - content.code.view
+    - navigation.expand
+    - navigation.footer
+    - navigation.tracking
     - toc.follow
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/jonapoul
 
 plugins:
   - search
@@ -66,7 +74,11 @@ markdown_extensions:
       permalink: true
 
 nav:
-  - "Overview": index.md
-  - "Usage": usage.md
-  - "Samples": samples.md
-  - "API": api/index.html
+  - Overview: index.md
+  - Usage:
+      - "Common": usage-common.md
+      - "Graphviz": usage-graphviz.md
+      - "D2": usage-d2.md
+      - "Mermaid": usage-mermaid.md
+  - Samples: samples.md
+  - API: api/index.html
