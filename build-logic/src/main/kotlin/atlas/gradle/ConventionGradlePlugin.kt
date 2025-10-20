@@ -21,7 +21,6 @@ class ConventionGradlePlugin : Plugin<Project> {
   override fun apply(target: Project): Unit = with(target) {
     pluginsInternal {
       apply(ConventionKotlin::class)
-      apply(ConventionSpotless::class)
       apply(ConventionLicensee::class)
       if (!skipPublish) apply(ConventionPublish::class)
       apply(JavaGradlePluginPlugin::class)

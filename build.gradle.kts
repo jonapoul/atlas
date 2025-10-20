@@ -8,8 +8,6 @@ plugins {
 
   alias(libs.plugins.dokka)
   alias(libs.plugins.publishReport)
-  alias(libs.plugins.spotless)
-  id("atlas.convention.spotless")
 }
 
 dokka {
