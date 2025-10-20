@@ -1,6 +1,6 @@
 # Atlas Gradle Plugin
 
-### [jonapoul.github.io/atlas](https://jonapoul.github.io/atlas)
+### [jonapoul.github.io/atlas-gradle-plugin](https://jonapoul.github.io/atlas-gradle-plugin)
 
 ## License
 

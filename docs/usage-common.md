@@ -7,9 +7,7 @@ description: Common configuration steps across all Atlas Gradle plugins
 
 ## Overview
 
-Configuration is primarily done via the `atlas` Gradle extension function, accessible in your root build
-file. [See here for the KDoc](https://jonapoul.github.io/atlas/api/atlas-core/atlas.core/-atlas-extension),
-or [here for the source file](https://github.com/jonapoul/atlas/blob/main/atlas-core/src/main/kotlin/atlas/core/AtlasExtension.kt).
+Configuration is primarily done via the `atlas` Gradle extension function, accessible in your root build file. [See here for the KDoc](https://jonapoul.github.io/atlas-gradle-plugin/api/atlas-core/atlas.core/-atlas-extension), or [here for the source file](https://github.com/jonapoul/atlas-gradle-plugin/blob/main/atlas-core/src/main/kotlin/atlas/core/AtlasExtension.kt).
 
 ```kotlin
 // none of these are required - these values are the defaults

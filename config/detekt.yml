@@ -13,7 +13,7 @@ style:
   DestructuringDeclarationWithTooManyEntries:
     maxDestructuringEntries: 5
   ForbiddenComment:
-    allowedPatterns: 'TODO.? https://github\.com/jonapoul/atlas/issues/\d+'
+    allowedPatterns: 'TODO.? https://github\.com/jonapoul/atlas-gradle-plugin/issues/\d+'
   MaxLineLength:
     maxLineLength: 120
   ReturnCount:
