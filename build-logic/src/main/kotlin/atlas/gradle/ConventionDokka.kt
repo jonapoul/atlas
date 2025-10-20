@@ -38,7 +38,7 @@ class ConventionDokka : Plugin<Project> {
           localDirectory.set(layout.projectDirectory)
           remoteLineSuffix.set("#L")
           val path = project.path.replace(":", "")
-          remoteUrl("https://github.com/jonapoul/atlas/tree/main/$path")
+          remoteUrl("https://github.com/jonapoul/atlas-gradle-plugin/tree/main/$path")
         }
       }
     }
