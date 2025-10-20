@@ -1,16 +1,10 @@
 services:
-  base:
-#    build:
-#      context: ..
-#      dockerfile: docker/Dockerfile
+  check:
     image: ghcr.io/jonapoul/atlas:latest
     volumes:
       - $HOME/.gradle:/home/gradle/.gradle
       - ..:/atlas
     working_dir: /atlas
-
-  check:
-    extends: base
     command: >
       /bin/bash -c "
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ check &&
