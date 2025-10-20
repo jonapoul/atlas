@@ -1,12 +1,12 @@
 copyright: "Copyright &copy; 2025 Jon Poulton"
 
 site_name: Atlas
-site_url: https://jonapoul.github.io/atlas
+site_url: https://jonapoul.github.io/atlas-gradle-plugin
 site_author: Jon Poulton
 site_description: "A Gradle plugin for mapping and categorizing connections between modules"
 
-repo_name: jonapoul/atlas
-repo_url: https://github.com/jonapoul/atlas
+repo_name: jonapoul/atlas-gradle-plugin
+repo_url: https://github.com/jonapoul/atlas-gradle-plugin
 edit_uri: edit/main/docs/
 remote_branch: gh-pages
 
