@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-  namespace = "dev.jonpoulton.modular.sample.agp.app"
+  namespace = "dev.jonpoulton.atlas.sample.agp.app"
   compileSdk = 36
 }
 

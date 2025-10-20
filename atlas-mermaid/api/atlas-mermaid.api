@@ -1,0 +1,256 @@
+public final class atlas/mermaid/ConsiderModelOrder : java/lang/Enum, atlas/core/StringEnum {
+	public static final field NodesAndEdges Latlas/mermaid/ConsiderModelOrder;
+	public static final field None Latlas/mermaid/ConsiderModelOrder;
+	public static final field PreferEdges Latlas/mermaid/ConsiderModelOrder;
+	public static final field PreferNodes Latlas/mermaid/ConsiderModelOrder;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/ConsiderModelOrder;
+	public static fun values ()[Latlas/mermaid/ConsiderModelOrder;
+}
+
+public final class atlas/mermaid/CycleBreakingStrategy : java/lang/Enum, atlas/core/StringEnum {
+	public static final field DepthFirst Latlas/mermaid/CycleBreakingStrategy;
+	public static final field Greedy Latlas/mermaid/CycleBreakingStrategy;
+	public static final field GreedyModelOrder Latlas/mermaid/CycleBreakingStrategy;
+	public static final field Interactive Latlas/mermaid/CycleBreakingStrategy;
+	public static final field ModelOrder Latlas/mermaid/CycleBreakingStrategy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/CycleBreakingStrategy;
+	public static fun values ()[Latlas/mermaid/CycleBreakingStrategy;
+}
+
+public abstract interface class atlas/mermaid/ElkLayoutSpec : atlas/mermaid/MermaidLayoutSpec {
+	public abstract fun getConsiderModelOrder ()Latlas/mermaid/ConsiderModelOrder;
+	public abstract fun getCycleBreakingStrategy ()Latlas/mermaid/CycleBreakingStrategy;
+	public abstract fun getForceNodeModelOrder ()Ljava/lang/Boolean;
+	public abstract fun getMergeEdges ()Ljava/lang/Boolean;
+	public abstract fun getNodePlacementStrategy ()Latlas/mermaid/NodePlacementStrategy;
+	public abstract fun setConsiderModelOrder (Latlas/mermaid/ConsiderModelOrder;)V
+	public abstract fun setCycleBreakingStrategy (Latlas/mermaid/CycleBreakingStrategy;)V
+	public abstract fun setForceNodeModelOrder (Ljava/lang/Boolean;)V
+	public abstract fun setMergeEdges (Ljava/lang/Boolean;)V
+	public abstract fun setNodePlacementStrategy (Latlas/mermaid/NodePlacementStrategy;)V
+}
+
+public final class atlas/mermaid/ElkLayoutSpec$DefaultImpls {
+	public static fun clear (Latlas/mermaid/ElkLayoutSpec;)V
+	public static fun put (Latlas/mermaid/ElkLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class atlas/mermaid/LinkStyle : java/lang/Enum, atlas/core/LinkStyle {
+	public static final field Basic Latlas/mermaid/LinkStyle;
+	public static final field Bold Latlas/mermaid/LinkStyle;
+	public static final field Dashed Latlas/mermaid/LinkStyle;
+	public static final field Invisible Latlas/mermaid/LinkStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/LinkStyle;
+	public static fun values ()[Latlas/mermaid/LinkStyle;
+}
+
+public final class atlas/mermaid/Look : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Classic Latlas/mermaid/Look;
+	public static final field HandDrawn Latlas/mermaid/Look;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/Look;
+	public static fun values ()[Latlas/mermaid/Look;
+}
+
+public abstract interface class atlas/mermaid/MermaidAtlasExtension : atlas/core/AtlasExtension {
+	public abstract fun getMermaid ()Latlas/mermaid/MermaidSpec;
+	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
+	public abstract fun mermaid (Lorg/gradle/api/Action;)V
+	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
+}
+
+public final class atlas/mermaid/MermaidAtlasPlugin : atlas/core/AtlasPlugin {
+	public fun <init> ()V
+}
+
+public final class atlas/mermaid/MermaidConfig : java/io/Serializable {
+	public static final field Companion Latlas/mermaid/MermaidConfig$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Boolean;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Latlas/mermaid/Look;Latlas/mermaid/Theme;Ljava/lang/Boolean;)V
+	public synthetic fun <init> (Ljava/lang/Boolean;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Latlas/mermaid/Look;Latlas/mermaid/Theme;Ljava/lang/Boolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAnimateLinks ()Ljava/lang/Boolean;
+	public final fun getDisplayLinkLabels ()Ljava/lang/Boolean;
+	public final fun getLayout ()Ljava/lang/String;
+	public final fun getLayoutProperties ()Ljava/util/Map;
+	public final fun getLook ()Latlas/mermaid/Look;
+	public final fun getTheme ()Latlas/mermaid/Theme;
+	public final fun getThemeVariables ()Ljava/util/Map;
+}
+
+public final synthetic class atlas/mermaid/MermaidConfig$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Latlas/mermaid/MermaidConfig$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/mermaid/MermaidConfig;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/mermaid/MermaidConfig;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class atlas/mermaid/MermaidConfig$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class atlas/mermaid/MermaidLayoutSpec : atlas/core/PropertiesSpec {
+	public abstract fun getName ()Lorg/gradle/api/provider/Property;
+}
+
+public final class atlas/mermaid/MermaidLayoutSpec$DefaultImpls {
+	public static fun clear (Latlas/mermaid/MermaidLayoutSpec;)V
+	public static fun put (Latlas/mermaid/MermaidLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/mermaid/MermaidLinkTypeSpec : atlas/core/LinkTypeSpec, atlas/core/PropertiesSpec {
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getStroke ()Ljava/lang/String;
+	public abstract fun getStrokeDashArray ()Ljava/lang/String;
+	public abstract fun getStrokeWidth ()Ljava/lang/String;
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setStroke (Ljava/lang/String;)V
+	public abstract fun setStrokeDashArray (Ljava/lang/String;)V
+	public abstract fun setStrokeWidth (Ljava/lang/String;)V
+}
+
+public final class atlas/mermaid/MermaidLinkTypeSpec$DefaultImpls {
+	public static fun clear (Latlas/mermaid/MermaidLinkTypeSpec;)V
+	public static fun put (Latlas/mermaid/MermaidLinkTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/mermaid/MermaidModuleTypeSpec : atlas/core/ModuleTypeSpec {
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getStroke ()Ljava/lang/String;
+	public abstract fun getStrokeDashArray ()Ljava/lang/String;
+	public abstract fun getStrokeWidth ()Ljava/lang/String;
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setStroke (Ljava/lang/String;)V
+	public abstract fun setStrokeDashArray (Ljava/lang/String;)V
+	public abstract fun setStrokeWidth (Ljava/lang/String;)V
+}
+
+public final class atlas/mermaid/MermaidModuleTypeSpec$DefaultImpls {
+	public static fun clear (Latlas/mermaid/MermaidModuleTypeSpec;)V
+	public static fun put (Latlas/mermaid/MermaidModuleTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/mermaid/MermaidNamedLinkTypeContainer : atlas/core/NamedLinkTypeContainer {
+}
+
+public final class atlas/mermaid/MermaidNamedLinkTypeContainer$DefaultImpls {
+	public static fun api (Latlas/mermaid/MermaidNamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun implementation (Latlas/mermaid/MermaidNamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun invoke (Latlas/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun register (Latlas/mermaid/MermaidNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public abstract interface class atlas/mermaid/MermaidNamedModuleTypeContainer : atlas/core/NamedModuleTypeContainer {
+}
+
+public final class atlas/mermaid/MermaidNamedModuleTypeContainer$DefaultImpls {
+	public static fun registerByPathContains (Latlas/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPathMatches (Latlas/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun registerByPluginId (Latlas/mermaid/MermaidNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public abstract interface class atlas/mermaid/MermaidSpec : atlas/core/AtlasSpec {
+	public abstract fun elk (Lorg/gradle/api/Action;)V
+	public static synthetic fun elk$default (Latlas/mermaid/MermaidSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLayout ()Latlas/mermaid/MermaidLayoutSpec;
+	public abstract fun getLook ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTheme ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThemeVariables ()Latlas/mermaid/MermaidThemeVariablesSpec;
+	public abstract fun layout (Lorg/gradle/api/Action;)V
+	public abstract fun themeVariables (Lorg/gradle/api/Action;)V
+}
+
+public final class atlas/mermaid/MermaidSpec$DefaultImpls {
+	public static synthetic fun elk$default (Latlas/mermaid/MermaidSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+}
+
+public abstract interface class atlas/mermaid/MermaidThemeVariablesSpec : atlas/core/PropertiesSpec {
+	public abstract fun getBackground ()Ljava/lang/String;
+	public abstract fun getDarkMode ()Ljava/lang/Boolean;
+	public abstract fun getFontFamily ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getLineColor ()Ljava/lang/String;
+	public abstract fun getPrimaryBorderColor ()Ljava/lang/String;
+	public abstract fun getPrimaryColor ()Ljava/lang/String;
+	public abstract fun getPrimaryTextColor ()Ljava/lang/String;
+	public abstract fun getSecondaryColor ()Ljava/lang/String;
+	public abstract fun getTertiaryColor ()Ljava/lang/String;
+	public abstract fun setBackground (Ljava/lang/String;)V
+	public abstract fun setDarkMode (Ljava/lang/Boolean;)V
+	public abstract fun setFontFamily (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setLineColor (Ljava/lang/String;)V
+	public abstract fun setPrimaryBorderColor (Ljava/lang/String;)V
+	public abstract fun setPrimaryColor (Ljava/lang/String;)V
+	public abstract fun setPrimaryTextColor (Ljava/lang/String;)V
+	public abstract fun setSecondaryColor (Ljava/lang/String;)V
+	public abstract fun setTertiaryColor (Ljava/lang/String;)V
+}
+
+public final class atlas/mermaid/MermaidThemeVariablesSpec$DefaultImpls {
+	public static fun clear (Latlas/mermaid/MermaidThemeVariablesSpec;)V
+	public static fun put (Latlas/mermaid/MermaidThemeVariablesSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class atlas/mermaid/NodePlacementStrategy : java/lang/Enum, atlas/core/StringEnum {
+	public static final field BrandesKoepf Latlas/mermaid/NodePlacementStrategy;
+	public static final field LinearSegments Latlas/mermaid/NodePlacementStrategy;
+	public static final field NetworkSimplex Latlas/mermaid/NodePlacementStrategy;
+	public static final field Simple Latlas/mermaid/NodePlacementStrategy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/NodePlacementStrategy;
+	public static fun values ()[Latlas/mermaid/NodePlacementStrategy;
+}
+
+public final class atlas/mermaid/Theme : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Base Latlas/mermaid/Theme;
+	public static final field Dark Latlas/mermaid/Theme;
+	public static final field Default Latlas/mermaid/Theme;
+	public static final field Forest Latlas/mermaid/Theme;
+	public static final field Neutral Latlas/mermaid/Theme;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/Theme;
+	public static fun values ()[Latlas/mermaid/Theme;
+}
+
+public abstract class atlas/mermaid/tasks/WriteMarkdownLegend : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public fun execute ()V
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public abstract class atlas/mermaid/tasks/WriteMermaidChart : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public fun execute ()V
+	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+

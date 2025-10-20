@@ -1,4 +1,4 @@
-rootProject.name = "modular"
+rootProject.name = "atlas"
 
 apply("gradle/repositories.gradle.kts")
 
@@ -11,9 +11,9 @@ plugins {
 }
 
 include(
-  ":modular-core",
-  ":modular-d2",
-  ":modular-graphviz",
-  ":modular-mermaid",
-  ":modular-test",
+  ":atlas-core",
+  ":atlas-d2",
+  ":atlas-graphviz",
+  ":atlas-mermaid",
+  ":atlas-test",
 )

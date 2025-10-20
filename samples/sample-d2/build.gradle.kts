@@ -1,17 +1,18 @@
 @file:Suppress("ktlint:standard:no-wildcard-imports")
 
-import modular.d2.ArrowType
-import modular.d2.Direction
-import modular.d2.FileFormat
-import modular.d2.FillPattern
-import modular.d2.Font
-import modular.d2.LayoutEngine
-import modular.d2.LinkStyle
-import modular.d2.Location
-import modular.d2.Position
-import modular.d2.Shape
-import modular.d2.TextTransform
-import modular.d2.Theme
+import atlas.d2.ArrowType
+import atlas.d2.Direction
+import atlas.d2.ElkAlgorithm
+import atlas.d2.FileFormat
+import atlas.d2.FillPattern
+import atlas.d2.Font
+import atlas.d2.LayoutEngine
+import atlas.d2.LinkStyle
+import atlas.d2.Location
+import atlas.d2.Position
+import atlas.d2.Shape
+import atlas.d2.TextTransform
+import atlas.d2.Theme
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -19,10 +20,10 @@ plugins {
   alias(libs.plugins.kotlinAndroid) apply false
   alias(libs.plugins.kotlinJvm) apply false
   alias(libs.plugins.kotlinMultiplatform) apply false
-  id("dev.jonpoulton.modular.d2")
+  id("dev.jonpoulton.atlas.d2")
 }
 
-modular {
+atlas {
   alsoTraverseUpwards = false
   displayLinkLabels = true
   generateOnSync = true
@@ -67,11 +68,17 @@ modular {
     fileFormat = FileFormat.Svg
     groupLabelLocation = Location.Border
     groupLabelPosition = Position.BottomCenter
-    layoutEngine = LayoutEngine.Elk
     pad = 100
     sketch = true
     theme = Theme.ShirleyTemple
     themeDark = Theme.DarkMauve
+
+    layoutEngine.elk {
+      algorithm = ElkAlgorithm.Layered
+      edgeNodeBetweenLayers = 20
+      nodeNodeBetweenLayers = 10
+      nodeSelfLoop = 50
+    }
 
     rootStyle {
       stroke = "floralwhite"

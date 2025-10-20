@@ -1,11 +1,11 @@
-import modular.mermaid.ConsiderModelOrder.PreferEdges
-import modular.mermaid.CycleBreakingStrategy.Interactive
-import modular.mermaid.LinkStyle.Basic
-import modular.mermaid.LinkStyle.Bold
-import modular.mermaid.LinkStyle.Dashed
-import modular.mermaid.Look.HandDrawn
-import modular.mermaid.NodePlacementStrategy.LinearSegments
-import modular.mermaid.Theme.Forest
+import atlas.mermaid.ConsiderModelOrder.PreferEdges
+import atlas.mermaid.CycleBreakingStrategy.Interactive
+import atlas.mermaid.LinkStyle.Basic
+import atlas.mermaid.LinkStyle.Bold
+import atlas.mermaid.LinkStyle.Dashed
+import atlas.mermaid.Look.HandDrawn
+import atlas.mermaid.NodePlacementStrategy.LinearSegments
+import atlas.mermaid.Theme.Forest
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -13,10 +13,10 @@ plugins {
   alias(libs.plugins.kotlinAndroid) apply false
   alias(libs.plugins.kotlinJvm) apply false
   alias(libs.plugins.kotlinMultiplatform) apply false
-  id("dev.jonpoulton.modular.mermaid")
+  id("dev.jonpoulton.atlas.mermaid")
 }
 
-modular {
+atlas {
   alsoTraverseUpwards = false
   displayLinkLabels = true
   generateOnSync = true

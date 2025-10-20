@@ -1,17 +1,17 @@
-import modular.graphviz.ArrowType.Crow
-import modular.graphviz.ArrowType.Ediamond
-import modular.graphviz.ArrowType.None
-import modular.graphviz.Dir.Both
-import modular.graphviz.FileFormat.Svg
-import modular.graphviz.LayoutEngine.Dot
-import modular.graphviz.LinkStyle.Bold
-import modular.graphviz.LinkStyle.Dotted
-import modular.graphviz.LinkStyle.Solid
-import modular.graphviz.NodeStyle.Filled
-import modular.graphviz.NodeStyle.Radial
-import modular.graphviz.RankDir.TopToBottom
-import modular.graphviz.Shape.Box
-import modular.graphviz.Shape.Rarrow
+import atlas.graphviz.ArrowType.Crow
+import atlas.graphviz.ArrowType.Ediamond
+import atlas.graphviz.ArrowType.None
+import atlas.graphviz.Dir.Both
+import atlas.graphviz.FileFormat.Svg
+import atlas.graphviz.LayoutEngine.Dot
+import atlas.graphviz.LinkStyle.Bold
+import atlas.graphviz.LinkStyle.Dotted
+import atlas.graphviz.LinkStyle.Solid
+import atlas.graphviz.NodeStyle.Filled
+import atlas.graphviz.NodeStyle.Radial
+import atlas.graphviz.RankDir.TopToBottom
+import atlas.graphviz.Shape.Box
+import atlas.graphviz.Shape.Rarrow
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -19,10 +19,10 @@ plugins {
   alias(libs.plugins.kotlinAndroid) apply false
   alias(libs.plugins.kotlinJvm) apply false
   alias(libs.plugins.kotlinMultiplatform) apply false
-  id("dev.jonpoulton.modular.graphviz")
+  id("dev.jonpoulton.atlas.graphviz")
 }
 
-modular {
+atlas {
   alsoTraverseUpwards = true
   displayLinkLabels = true
   generateOnSync = true
@@ -33,14 +33,14 @@ modular {
       shape = Rarrow
       style = Radial
     }
-    kotlinMultiplatform { fontColor = "white" }
+    kotlinMultiplatform { fontColor = "red" }
     androidLibrary {
       color = "crimson:cyan4"
       gradientAngle = 90
     }
     kotlinJvm()
     java { color = null }
-    other()
+    other { color = "#444444" }
   }
 
   linkTypes {
@@ -62,6 +62,7 @@ modular {
       style = Filled
       shape = Box
       lineColor = "#4C0000"
+      fontColor = "white"
     }
 
     graph {

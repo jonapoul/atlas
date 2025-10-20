@@ -1,5 +1,7 @@
 #!/bin/sh
 
-./gradlew modularGenerate -p samples/sample-d2
-./gradlew modularGenerate -p samples/sample-graphviz
-./gradlew modularGenerate -p samples/sample-mermaid
+SCRIPT_DIR="$(dirname "$0")"
+cd "$SCRIPT_DIR/.." || exit
+./gradlew atlasGenerate -p samples/sample-d2
+./gradlew atlasGenerate -p samples/sample-graphviz
+./gradlew atlasGenerate -p samples/sample-mermaid

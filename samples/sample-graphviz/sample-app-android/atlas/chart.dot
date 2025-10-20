@@ -1,0 +1,16 @@
+digraph {
+  edge [arrowhead="ediamond",arrowtail="none",fontcolor="white",labelfloat="false",color="red"]
+  graph [layout="dot",bgcolor="MidnightBlue",fontsize="30",rankdir="TB",ranksep="1.5"]
+  node [fontname="Courier New",peripheries="3",style="filled",shape="box",color="#4C0000",fontcolor="white"]
+  ":sample-app-android" [shape="rarrow",style="radial",fillcolor="limegreen"]
+  ":sample-lib-android" [gradientangle="90",fillcolor="crimson:cyan4"]
+  ":sample-lib-java" [fillcolor="orange"]
+  ":sample-lib-kotlin-jvm" [fillcolor="mediumorchid"]
+  ":sample-lib-kotlin-mp" [fontcolor="red",fillcolor="mediumslateblue"]
+  ":sample-app-android" -> ":sample-lib-android" [style="dotted",label="implementation",dir="both",arrowtail="ediamond"]
+  ":sample-app-android" -> ":sample-lib-kotlin-mp" [style="dotted",label="implementation",dir="both",arrowtail="ediamond"]
+  ":sample-lib-android" -> ":sample-lib-kotlin-jvm" [style="dotted",label="implementation",dir="both",arrowtail="ediamond"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-android" [style="solid",label="api",weight="5"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-java" [style="bold",color="orange",label="jvmMainImplementation",arrowhead="crow"]
+  ":sample-lib-kotlin-mp" -> ":sample-lib-kotlin-jvm" [style="solid",label="api",weight="5"]
+}
