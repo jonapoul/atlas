@@ -1,4 +1,4 @@
-name: Publish Snapshot
+name: Publish snapshot
 
 on:
   push:
@@ -8,9 +8,10 @@ permissions:
   contents: write
   checks: write
 
+# This ensures publish jobs run sequentially instead of in parallel
 concurrency:
-  group: 'ci-${{ github.event.merge_group.head_ref || github.head_ref }}-${{ github.workflow }}'
-  cancel-in-progress: true
+  group: publish
+  cancel-in-progress: false
 
 jobs:
   publish-snapshot:
@@ -51,4 +52,4 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_IN_MEMORY_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_KEY_PASSWORD }}
-        run: ./gradlew publishToMavenCentral -x dokkaGeneratePublicationHtml
+        run: ./gradlew publishToMavenCentral -x dokkaGeneratePublicationHtml --no-configuration-cache
