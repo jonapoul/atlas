@@ -35,7 +35,6 @@ dependencies {
   compileOnly(libs.plugins.kotlinJvm)
   compileOnly(libs.plugins.licensee)
   compileOnly(libs.plugins.publish)
-  compileOnly(libs.plugins.spotless)
 }
 
 tasks.validatePlugins {
@@ -54,6 +53,5 @@ gradlePlugin {
     "atlas.convention.kotlin"(impl = "atlas.gradle.ConventionKotlin")
     "atlas.convention.plugin"(impl = "atlas.gradle.ConventionGradlePlugin")
     "atlas.convention.publish"(impl = "atlas.gradle.ConventionPublish")
-    "atlas.convention.spotless"(impl = "atlas.gradle.ConventionSpotless")
   }
 }
