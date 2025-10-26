@@ -33,9 +33,6 @@ theme:
       toggle:
         icon: material/weather-night
         name: Switch to light mode
-  font:
-    text: "Inter"
-    code: "IBM Plex Mono"
   features:
     - content.code.copy
     - content.code.select
