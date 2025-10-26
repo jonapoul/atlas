@@ -110,7 +110,7 @@ internal class D2WriterTest {
       groupModules = true,
       replacements = setOf(
         Replacement(pattern = "^:modules:".toRegex(), replacement = ":"),
-      )
+      ),
     )
 
     assertThat(writer()).equalsDiffed(
