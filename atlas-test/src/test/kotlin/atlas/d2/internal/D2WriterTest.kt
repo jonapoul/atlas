@@ -1,11 +1,13 @@
 package atlas.d2.internal
 
 import assertk.assertThat
+import atlas.core.Replacement
 import atlas.d2.LinkStyle
 import atlas.d2.d2Writer
 import atlas.test.Abc
 import atlas.test.ModuleWithNoLinks
 import atlas.test.OneLevelOfSubmodules
+import atlas.test.OneLevelOfSubmodulesWithReplacements
 import atlas.test.ProjectLayout
 import atlas.test.SingleNestedModuleWithNoLinks
 import atlas.test.TwoLevelsOfSubmodules
@@ -58,6 +60,57 @@ internal class D2WriterTest {
     val writer = d2Writer(
       layout = OneLevelOfSubmodules,
       groupModules = true,
+    )
+
+    assertThat(writer()).equalsDiffed(
+      """
+        ...@../classes.d2
+        app: :app
+        data: :data {
+          class: container
+          a: :a
+          b: :b
+        }
+        domain: :domain {
+          class: container
+          a: :a
+          b: :b
+        }
+        ui: :ui {
+          class: container
+          a: :a
+          b: :b
+          c: :c
+        }
+        app -> ui.a { class: link-implementation }
+        app -> ui.b { class: link-implementation }
+        app -> ui.c { class: link-implementation }
+        domain.a -> data.a { class: link-implementation }
+        domain.b -> data.a { class: link-implementation }
+        domain.b -> data.b { class: link-implementation }
+        ui.a -> domain.a { class: link-implementation }
+        ui.b -> domain.b { class: link-implementation }
+        ui.c -> domain.a { class: link-implementation }
+        ui.c -> domain.b { class: link-implementation }
+        vars: {
+          d2-legend: {
+            module-dummy1.class: hidden
+            module-dummy2.class: hidden
+            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+          }
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Grouping modules with replacements`() {
+    val writer = d2Writer(
+      layout = OneLevelOfSubmodulesWithReplacements,
+      groupModules = true,
+      replacements = setOf(
+        Replacement(pattern = "^:modules:".toRegex(), replacement = ":"),
+      )
     )
 
     assertThat(writer()).equalsDiffed(

@@ -10,4 +10,5 @@ android {
 
 dependencies {
   implementation(project(":module-kotlin:jvm"))
+  implementation(project(":module-other"))
 }

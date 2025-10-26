@@ -1,24 +1,28 @@
 ...@../../../atlas/classes.d2
-module-java: :module-java { class: module-Java }
-module-android: :module-android {
+java: :java { class: module-Java }
+other: :other { class: module-Other }
+android: :android {
   class: container
   lib: :lib { class: module-AndroidLibrary }
 }
-module-kotlin: :module-kotlin {
+kotlin: :kotlin {
   class: container
   jvm: :jvm { class: module-KotlinJVM }
   kmp: :kmp { class: module-KotlinMultiplatform }
 }
-module-android.lib -> module-kotlin.jvm { class: link-implementation }
-module-kotlin.kmp -> module-android.lib { class: link-api }
-module-kotlin.kmp -> module-java { class: link-jvmMainImplementation }
-module-kotlin.kmp -> module-kotlin.jvm { class: link-api }
+android.lib -> kotlin.jvm { class: link-implementation }
+android.lib -> other { class: link-implementation }
+java -> other { class: link-implementation }
+kotlin.kmp -> android.lib { class: link-api }
+kotlin.kmp -> java { class: link-jvmMainImplementation }
+kotlin.kmp -> kotlin.jvm { class: link-api }
 vars: {
   d2-legend: {
     module-AndroidLibrary: Android Library { class: module-AndroidLibrary }
     module-Java: Java { class: module-Java }
     module-KotlinJVM: Kotlin JVM { class: module-KotlinJVM }
     module-KotlinMultiplatform: Kotlin Multiplatform { class: module-KotlinMultiplatform }
+    module-Other: Other { class: module-Other }
     module-dummy1.class: hidden
     module-dummy2.class: hidden
     module-dummy1 -> module-dummy2: implementation { class: link-implementation }

@@ -18,4 +18,5 @@ include(
   "module-kotlin:kmp",
   "module-kotlin:jvm",
   "module-java",
+  "module-other",
 )

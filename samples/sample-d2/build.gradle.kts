@@ -1,18 +1,6 @@
 @file:Suppress("ktlint:standard:no-wildcard-imports")
 
-import atlas.d2.ArrowType
-import atlas.d2.Direction
-import atlas.d2.ElkAlgorithm
-import atlas.d2.FileFormat
-import atlas.d2.FillPattern
-import atlas.d2.Font
-import atlas.d2.LayoutEngine
-import atlas.d2.LinkStyle
-import atlas.d2.Location
-import atlas.d2.Position
-import atlas.d2.Shape
-import atlas.d2.TextTransform
-import atlas.d2.Theme
+import atlas.d2.*
 
 plugins {
   alias(libs.plugins.agp.app) apply false
@@ -28,6 +16,10 @@ atlas {
   displayLinkLabels = true
   generateOnSync = true
   groupModules = true
+
+  pathTransforms {
+    replace(":module-", replacement = ":")
+  }
 
   moduleTypes {
     androidApp {
