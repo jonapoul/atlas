@@ -10,11 +10,11 @@ import atlas.core.LinkStyle as CoreLinkStyle
  * See [https://graphviz.org/docs/attr-types/style/](https://graphviz.org/docs/attr-types/style/)
  */
 public enum class LinkStyle(override val string: String) : CoreLinkStyle {
+  Bold("bold"),
   Dashed("dashed"),
   Dotted("dotted"),
-  Solid("solid"),
   Invis("invis"),
-  Bold("bold"),
+  Solid("solid"),
   Tapered("tapered"),
   ;
 
