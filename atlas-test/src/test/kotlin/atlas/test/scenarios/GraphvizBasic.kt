@@ -16,7 +16,7 @@ internal object GraphvizBasic : GraphvizScenario {
       moduleTypes {
         kotlinJvm()
         java()
-        registerByPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
+        hasPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
     }
   """.trimIndent()

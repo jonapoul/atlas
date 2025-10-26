@@ -18,7 +18,7 @@ internal object ThreeModulesNoMatchingType : GraphvizScenario {
 
     atlas {
       moduleTypes {
-        registerByPluginId(name = "Won't match", color = "#123456", pluginId = "com.something.whatever")
+        hasPluginId(name = "Won't match", color = "#123456", pluginId = "com.something.whatever")
       }
     }
   """.trimIndent()

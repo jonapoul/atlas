@@ -16,34 +16,34 @@ internal object PathMatches : GraphvizScenario {
 
     atlas {
       moduleTypes {
-        registerByPathMatches(
+        pathMatches(
           name = "A",
           color = "orange",
           pathMatches = $THREE_QUOTES.*[a-z]+\d+$THREE_QUOTES,
         )
 
-        registerByPathMatches(
+        pathMatches(
           name = "B",
           color = "limegreen",
           pathMatches = $THREE_QUOTES.*[a-z]+-[a-z]$THREE_QUOTES,
           options = setOf(IGNORE_CASE),
         )
 
-        registerByPathMatches(
+        pathMatches(
           name = "C",
           color = "mediumslateblue",
           pathMatches = $THREE_QUOTES^:HELLO$$THREE_QUOTES,
           options = setOf(IGNORE_CASE),
         )
 
-        registerByPathMatches(
+        pathMatches(
           name = "D",
           color = "gainsboro",
           pathMatches = $THREE_QUOTES:[a-z]\d-.*$THREE_QUOTES,
           options = setOf(IGNORE_CASE),
         )
 
-        registerByPathMatches(
+        pathMatches(
           name = "E",
           color = "mediumorchid",
           pathMatches = $THREE_QUOTES.*\w+-\w+$THREE_QUOTES,
