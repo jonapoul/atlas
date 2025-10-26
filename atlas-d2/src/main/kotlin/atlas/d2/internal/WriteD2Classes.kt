@@ -160,7 +160,12 @@ private fun IndentedStringBuilder.appendGroupLabelSpecifier(config: D2ClassesCon
     } else {
       position.toString()
     }
-    appendLine("label.near: $location-$rejiggedPosition")
+    val position = when (location) {
+      Location.Inside -> ""
+      Location.Border -> "$location-"
+      Location.Outside -> "$location-"
+    }
+    appendLine("label.near: $position$rejiggedPosition")
   }
 }
 
