@@ -41,9 +41,11 @@ import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
  *     }
  *
  *     // plus some manually-defined ones
- *     registerByPluginId(name = "UI", color = "#ABC123", pluginId = "org.jetbrains.kotlin.plugin.compose")
- *     registerByPathMatches(name = "Data", color = "#ABCDEF", pathMatches = ".*data$".toRegex())
- *     registerByPathContains(name = "Domain", pathContains = "domain")
+ *     hasPluginId(name = "UI", color = "#ABC123", pluginId = "org.jetbrains.kotlin.plugin.compose")
+ *     pathMatches(name = "Data", color = "#ABCDEF", pathMatches = ".*data$".toRegex())
+ *     pathContains(name = "Domain", pathContains = "domain") {
+ *       // plus some custom properties, depending on the plugin you've applied
+ *     }
  *   }
  * }
  * ```
@@ -58,7 +60,7 @@ import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
  */
 @AtlasDsl
 public interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjectContainer<T> {
-  public fun registerByPluginId(
+  public fun hasPluginId(
     name: String,
     pluginId: String,
     color: String? = null,
@@ -69,7 +71,7 @@ public interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjec
     action?.execute(type)
   }
 
-  public fun registerByPathMatches(
+  public fun pathMatches(
     name: String,
     @Language("RegExp") pathMatches: String,
     options: Set<RegexOption> = emptySet(),
@@ -82,7 +84,7 @@ public interface NamedModuleTypeContainer<T : ModuleTypeSpec> : NamedDomainObjec
     action?.execute(type)
   }
 
-  public fun registerByPathContains(
+  public fun pathContains(
     name: String,
     pathContains: String,
     color: String? = null,

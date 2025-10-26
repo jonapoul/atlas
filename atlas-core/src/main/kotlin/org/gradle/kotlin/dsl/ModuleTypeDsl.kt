@@ -15,7 +15,7 @@ public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidApp(
   name: String = "Android App",
   color: String? = "limegreen",
   action: Action<T>? = null,
-): NamedDomainObjectProvider<T> = registerByPluginId(
+): NamedDomainObjectProvider<T> = hasPluginId(
   name = name,
   color = color,
   pluginId = "com.android.application",
@@ -30,7 +30,7 @@ public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.androidLibrary(
   name: String = "Android Library",
   color: String? = "lightgreen",
   action: Action<T>? = null,
-): NamedDomainObjectProvider<T> = registerByPluginId(
+): NamedDomainObjectProvider<T> = hasPluginId(
   name = name,
   color = color,
   pluginId = "com.android.library",
@@ -45,7 +45,7 @@ public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.java(
   name: String = "Java",
   color: String? = "orange",
   action: Action<T>? = null,
-): NamedDomainObjectProvider<T> = registerByPluginId(
+): NamedDomainObjectProvider<T> = hasPluginId(
   name = name,
   color = color,
   pluginId = "java",
@@ -60,7 +60,7 @@ public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinJvm(
   name: String = "Kotlin JVM",
   color: String? = "mediumorchid",
   action: Action<T>? = null,
-): NamedDomainObjectProvider<T> = registerByPluginId(
+): NamedDomainObjectProvider<T> = hasPluginId(
   name = name,
   color = color,
   pluginId = "org.jetbrains.kotlin.jvm",
@@ -75,7 +75,7 @@ public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.kotlinMultiplatform(
   name: String = "Kotlin Multiplatform",
   color: String? = "mediumslateblue",
   action: Action<T>? = null,
-): NamedDomainObjectProvider<T> = registerByPluginId(
+): NamedDomainObjectProvider<T> = hasPluginId(
   name = name,
   color = color,
   pluginId = "org.jetbrains.kotlin.multiplatform",
@@ -91,7 +91,7 @@ public fun <T : ModuleTypeSpec> NamedModuleTypeContainer<T>.other(
   name: String = "Other",
   color: String? = "gainsboro",
   action: Action<T>? = null,
-): NamedDomainObjectProvider<T> = registerByPathMatches(
+): NamedDomainObjectProvider<T> = pathMatches(
   name = name,
   color = color,
   pathMatches = ".*?", // match anything and everything - should always have this declared last
