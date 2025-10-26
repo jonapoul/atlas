@@ -16,9 +16,9 @@ import atlas.core.LinkStyle as CoreLinkStyle
  */
 public enum class LinkStyle(override val string: String) : CoreLinkStyle {
   Basic("basic"),
+  Bold("bold"),
   Dashed("dashed"),
   Invisible("invisible"),
-  Bold("bold"),
   ;
 
   override fun toString(): String = string

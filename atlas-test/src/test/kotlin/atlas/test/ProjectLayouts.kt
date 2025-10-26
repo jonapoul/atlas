@@ -35,6 +35,32 @@ internal object OneLevelOfSubmodules : ProjectLayout {
   )
 }
 
+internal object OneLevelOfSubmodulesWithReplacements : ProjectLayout {
+  override val modules = setOf(
+    typedModule(path = ":app"),
+    typedModule(path = ":modules:data:a"),
+    typedModule(path = ":modules:data:b"),
+    typedModule(path = ":modules:domain:a"),
+    typedModule(path = ":modules:domain:b"),
+    typedModule(path = ":modules:ui:a"),
+    typedModule(path = ":modules:ui:b"),
+    typedModule(path = ":modules:ui:c"),
+  )
+
+  override val links = setOf(
+    moduleLink(fromPath = ":app", toPath = ":modules:ui:a"),
+    moduleLink(fromPath = ":app", toPath = ":modules:ui:b"),
+    moduleLink(fromPath = ":app", toPath = ":modules:ui:c"),
+    moduleLink(fromPath = ":modules:domain:a", toPath = ":modules:data:a"),
+    moduleLink(fromPath = ":modules:domain:b", toPath = ":modules:data:a"),
+    moduleLink(fromPath = ":modules:domain:b", toPath = ":modules:data:b"),
+    moduleLink(fromPath = ":modules:ui:a", toPath = ":modules:domain:a"),
+    moduleLink(fromPath = ":modules:ui:b", toPath = ":modules:domain:b"),
+    moduleLink(fromPath = ":modules:ui:c", toPath = ":modules:domain:a"),
+    moduleLink(fromPath = ":modules:ui:c", toPath = ":modules:domain:b"),
+  )
+}
+
 internal object TwoLevelsOfSubmodules : ProjectLayout {
   override val modules = setOf(
     typedModule(path = ":app"),

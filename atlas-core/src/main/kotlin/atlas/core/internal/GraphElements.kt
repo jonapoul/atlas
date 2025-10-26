@@ -24,11 +24,16 @@ public fun buildGraphElements(
   typedModules: Set<TypedModule>,
   links: Set<ModuleLink>,
   thisPath: String,
-): List<GraphElement> = buildHierarchy(
-  nodeData = typedModules
-    .filter { module -> module in links || (links.isEmpty() && module.projectPath == thisPath) }
-    .map { module -> module to module.projectPath.split(":").filter { it.isNotEmpty() } },
-)
+  replacements: Set<Replacement> = emptySet(),
+): List<GraphElement> {
+  val cleanedModules = typedModules.map { it.cleaned(replacements) }
+  val cleanedLinks = links.map { it.cleaned(replacements) }
+  return buildHierarchy(
+    nodeData = cleanedModules
+      .filter { module -> module in cleanedLinks || (cleanedLinks.isEmpty() && module.projectPath == thisPath) }
+      .map { module -> module to module.projectPath.split(":").filter { it.isNotEmpty() } },
+  )
+}
 
 private fun buildHierarchy(nodeData: List<Pair<TypedModule, List<String>>>): List<GraphElement> {
   val elements = mutableListOf<GraphElement>()
@@ -75,6 +80,24 @@ private fun buildSubgraphElements(nodeData: List<Pair<TypedModule, List<String>>
 }
 
 @InternalAtlasApi
+public fun String.cleaned(replacements: Set<Replacement>): String {
+  var string = this
+  replacements.forEach { r -> string = string.replace(r.pattern, r.replacement) }
+  return string
+}
+
+@InternalAtlasApi
+public fun TypedModule.cleaned(replacements: Set<Replacement>): TypedModule =
+  copy(projectPath = projectPath.cleaned(replacements))
+
+private fun ModuleLink.cleaned(replacements: Set<Replacement>) = ModuleLink(
+  fromPath = fromPath.cleaned(replacements),
+  toPath = toPath.cleaned(replacements),
+  configuration = configuration,
+  type = type,
+)
+
+@InternalAtlasApi
 public abstract class ChartWriter {
   public abstract operator fun invoke(): String
 
@@ -90,7 +113,7 @@ public abstract class ChartWriter {
 
   protected fun IndentedStringBuilder.appendModules() {
     if (groupModules) {
-      val elements = buildGraphElements(typedModules, links, thisPath)
+      val elements = buildGraphElements(typedModules, links, thisPath, replacements)
       for (element in elements) {
         appendGraphNode(element)
       }
@@ -131,13 +154,9 @@ public abstract class ChartWriter {
     }
   }
 
-  protected fun String.cleaned(): String {
-    var string = this
-    replacements.forEach { r -> string = string.replace(r.pattern, r.replacement) }
-    return string
-  }
+  protected fun String.cleaned(): String = cleaned(replacements)
 
-  protected fun TypedModule.cleaned(): TypedModule = copy(projectPath = projectPath.cleaned())
+  protected fun TypedModule.cleaned(): TypedModule = cleaned(replacements)
 
   @InternalAtlasApi
   public companion object {

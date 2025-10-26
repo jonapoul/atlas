@@ -38,10 +38,10 @@ public enum class Shape(override val string: String) : StringEnum {
  */
 public enum class LinkStyle(override val string: String) : CoreLinkStyle {
   Basic("basic"),
+  Bold("bold"),
   Dashed("dashed"),
   Dotted("dotted"),
   Invisible("invisible"),
-  Bold("bold"),
   ;
 
   override fun toString(): String = string

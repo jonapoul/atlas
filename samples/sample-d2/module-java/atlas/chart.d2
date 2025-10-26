@@ -1,7 +1,13 @@
 ...@../../atlas/classes.d2
-module-java: :module-java { class: module-Java }
+java: :java { class: module-Java }
+other: :other { class: module-Other }
+java -> other { class: link-implementation }
 vars: {
   d2-legend: {
     module-Java: Java { class: module-Java }
+    module-Other: Other { class: module-Other }
+    module-dummy1.class: hidden
+    module-dummy2.class: hidden
+    module-dummy1 -> module-dummy2: implementation { class: link-implementation }
   }
 }
