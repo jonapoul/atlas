@@ -17,6 +17,7 @@ import org.gradle.api.provider.Provider
 internal class D2GradleProperties(override val project: Project) : IGradleProperties {
   // Actual config
   val animateLinks: Provider<Boolean> = bool("atlas.d2.animateLinks", default = null)
+  val animateInterval: Provider<Int> = int("atlas.d2.animateInterval", default = null)
   val center: Provider<Boolean> = bool("atlas.d2.center", default = null)
   val darkTheme: Provider<Theme> = intEnum("atlas.d2.darkTheme", default = null)
   val direction: Provider<Direction> = enum("atlas.d2.direction", default = null)

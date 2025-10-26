@@ -1,5 +1,3 @@
-@file:Suppress("unused") // public API
-
 package atlas.mermaid
 
 import atlas.core.AtlasDsl
