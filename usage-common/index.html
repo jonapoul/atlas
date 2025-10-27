@@ -52,6 +52,8 @@
       
     
     
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#configuration" class="md-skip">
+        <a href="#common-usage" class="md-skip">
           Skip to content
         </a>
       
@@ -379,6 +381,16 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Properties
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#alsotraverseupwards" class="md-nav__link">
     <span class="md-ellipsis">
       alsoTraverseUpwards
@@ -386,8 +398,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#checkoutputs" class="md-nav__link">
     <span class="md-ellipsis">
       checkOutputs
@@ -395,8 +407,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#displaylinklabels" class="md-nav__link">
     <span class="md-ellipsis">
       displayLinkLabels
@@ -404,8 +416,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#generateonsync" class="md-nav__link">
     <span class="md-ellipsis">
       generateOnSync
@@ -413,8 +425,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#groupmodules" class="md-nav__link">
     <span class="md-ellipsis">
       groupModules
@@ -422,8 +434,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#ignoredconfigs" class="md-nav__link">
     <span class="md-ellipsis">
       ignoredConfigs
@@ -431,8 +443,17 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
+  <a href="#ignoredmodules" class="md-nav__link">
+    <span class="md-ellipsis">
+      ignoredModules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#printfilestoconsole" class="md-nav__link">
     <span class="md-ellipsis">
       printFilesToConsole
@@ -440,8 +461,23 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#moduletypes" class="md-nav__link">
     <span class="md-ellipsis">
       moduleTypes
@@ -449,8 +485,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#linktypes" class="md-nav__link">
     <span class="md-ellipsis">
       linkTypes
@@ -458,11 +494,25 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#pathtransforms" class="md-nav__link">
     <span class="md-ellipsis">
       pathTransforms
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extra properties
     </span>
   </a>
   
@@ -633,6 +683,16 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Properties
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#alsotraverseupwards" class="md-nav__link">
     <span class="md-ellipsis">
       alsoTraverseUpwards
@@ -640,8 +700,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#checkoutputs" class="md-nav__link">
     <span class="md-ellipsis">
       checkOutputs
@@ -649,8 +709,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#displaylinklabels" class="md-nav__link">
     <span class="md-ellipsis">
       displayLinkLabels
@@ -658,8 +718,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#generateonsync" class="md-nav__link">
     <span class="md-ellipsis">
       generateOnSync
@@ -667,8 +727,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#groupmodules" class="md-nav__link">
     <span class="md-ellipsis">
       groupModules
@@ -676,8 +736,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#ignoredconfigs" class="md-nav__link">
     <span class="md-ellipsis">
       ignoredConfigs
@@ -685,8 +745,17 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
+  <a href="#ignoredmodules" class="md-nav__link">
+    <span class="md-ellipsis">
+      ignoredModules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#printfilestoconsole" class="md-nav__link">
     <span class="md-ellipsis">
       printFilesToConsole
@@ -694,8 +763,23 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#moduletypes" class="md-nav__link">
     <span class="md-ellipsis">
       moduleTypes
@@ -703,8 +787,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#linktypes" class="md-nav__link">
     <span class="md-ellipsis">
       linkTypes
@@ -712,11 +796,25 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#pathtransforms" class="md-nav__link">
     <span class="md-ellipsis">
       pathTransforms
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extra properties
     </span>
   </a>
   
@@ -741,9 +839,9 @@
   
 
 
-<h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
+<h1 id="common-usage">Common Usage<a class="headerlink" href="#common-usage" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>Configuration is primarily done via the <code>atlas</code> Gradle extension function, accessible in your root build file. <a href="https://jonapoul.github.io/atlas-gradle-plugin/api/atlas-core/atlas.core/-atlas-extension">See here for the KDoc</a>, or <a href="https://github.com/jonapoul/atlas-gradle-plugin/blob/main/atlas-core/src/main/kotlin/atlas/core/AtlasExtension.kt">here for the source file</a>.</p>
+<p>Configuration is primarily done via the <code>atlas</code> Gradle extension function, accessible in your root build file. <a href="../api/atlas-core/atlas.core/-atlas-extension/">See here for the KDoc</a>, or <a href="https://github.com/jonapoul/atlas-gradle-plugin/blob/main/atlas-core/src/main/kotlin/atlas/core/AtlasExtension.kt">here for the source file</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// none of these are required - these values are the defaults</span>
 <span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">alsoTraverseUpwards</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
@@ -755,15 +853,15 @@
 <span class="w">  </span><span class="n">ignoredModules</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">emptySet</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">()</span>
 <span class="w">  </span><span class="n">printFilesToConsole</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
 
-<span class="w">  </span><span class="n">pathTransforms</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// ...</span>
-<span class="w">  </span><span class="p">}</span>
-
 <span class="w">  </span><span class="n">moduleTypes</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// ...</span>
 <span class="w">  </span><span class="p">}</span>
 
 <span class="w">  </span><span class="n">linkTypes</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">pathTransforms</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// ...</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
@@ -779,28 +877,27 @@
 <li><a href="../usage-d2/">D2</a></li>
 <li><a href="../usage-mermaid/">Mermaid</a></li>
 </ul>
-<h2 id="alsotraverseupwards">alsoTraverseUpwards<a class="headerlink" href="#alsotraverseupwards" title="Permanent link">&para;</a></h2>
+<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
+<h3 id="alsotraverseupwards">alsoTraverseUpwards<a class="headerlink" href="#alsotraverseupwards" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">alsoTraverseUpwards</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>If enabled, the generated module graph will also go "upwards", showing modules consuming this one, as well as the default "downwards" - modules being consumed by this one.</p>
+<p>If enabled, the generated module graph will also go "upwards" (showing modules depending on this one) as well as the default "downwards"( modules being consumed by this one).</p>
 <p>Examples below from the perspective of <code>:android:lib</code>:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Disabled (default)</th>
-<th style="text-align: center;">Enabled</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><img alt="alsoTraverseUpwards-disabled.png" src="../img/alsoTraverseUpwards-disabled.png" /></td>
-<td style="text-align: center;"><img alt="alsoTraverseUpwards-enabled.png" src="../img/alsoTraverseUpwards-enabled.png" /></td>
-</tr>
-</tbody>
-</table>
-<h2 id="checkoutputs">checkOutputs<a class="headerlink" href="#checkoutputs" title="Permanent link">&para;</a></h2>
+<div class="side-by-side">
+  <figure>
+    <figcaption>Disabled</figcaption>
+    <img src="../img/alsoTraverseUpwards-disabled.svg" alt="Disabled">
+  </figure>
+
+  <figure>
+    <figcaption>Enabled</figcaption>
+    <img src="../img/alsoTraverseUpwards-enabled.svg" alt="Enabled">
+  </figure>
+</div>
+
+<h3 id="checkoutputs">checkOutputs<a class="headerlink" href="#checkoutputs" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">checkOutputs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 <span class="p">}</span>
@@ -808,7 +905,7 @@
 <p>If enabled, a diffing task will be attached to <code>gradle check</code>. It will verify that your generated charts match the current state of the project layout, failing if not with a useful error message. Enabled by default.</p>
 <p>The generated task name will depend on your chosen framework (<code>D2</code>, <code>Mermaid</code> or <code>Graphviz</code>) and the file type that you're checking (<code>Chart</code> or <code>Legend</code>), e.g. <code>checkD2Chart</code> or <code>checkGraphvizLegend</code>.</p>
 <p>Even if this option is disabled, the task will still be created, it just won't be attached to <code>gradle check</code>.</p>
-<h2 id="displaylinklabels">displayLinkLabels<a class="headerlink" href="#displaylinklabels" title="Permanent link">&para;</a></h2>
+<h3 id="displaylinklabels">displayLinkLabels<a class="headerlink" href="#displaylinklabels" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">displayLinkLabels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 
@@ -820,21 +917,19 @@
 </code></pre></div>
 <p>When enabled, a string label is attached on each module link, showing which configuration caused represents the link. When true, the <code>LinkTypeSpec.name</code> property will be used. Disabled by default.</p>
 <p>Requires some <code>linkTypes</code> to be declared - otherwise this will have no effect.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Disabled (default)</th>
-<th style="text-align: center;">Enabled</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><img alt="displayLinkLabels-disabled.png" src="../img/displayLinkLabels-disabled.png" /></td>
-<td style="text-align: center;"><img alt="displayLinkLabels-enabled.png" src="../img/displayLinkLabels-enabled.png" /></td>
-</tr>
-</tbody>
-</table>
-<h2 id="generateonsync">generateOnSync<a class="headerlink" href="#generateonsync" title="Permanent link">&para;</a></h2>
+<div class="side-by-side">
+  <figure>
+    <figcaption>Disabled</figcaption>
+    <img src="../img/displayLinkLabels-disabled.svg" alt="Disabled">
+  </figure>
+
+  <figure>
+    <figcaption>Enabled</figcaption>
+    <img src="../img/displayLinkLabels-enabled.svg" alt="Enabled">
+  </figure>
+</div>
+
+<h3 id="generateonsync">generateOnSync<a class="headerlink" href="#generateonsync" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">generateOnSync</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 <span class="p">}</span>
@@ -844,7 +939,7 @@
 <p class="admonition-title">Danger</p>
 <p>Be careful enabling this on larger projects - sync time might extend quite a bit.</p>
 </div>
-<h2 id="groupmodules">groupModules<a class="headerlink" href="#groupmodules" title="Permanent link">&para;</a></h2>
+<h3 id="groupmodules">groupModules<a class="headerlink" href="#groupmodules" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">groupModules</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 <span class="p">}</span>
@@ -858,21 +953,19 @@
 <p class="admonition-title">Warning</p>
 <p>Automatic layout generation will get a bit complicated for larger projects when using grouping.</p>
 </div>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Disabled (default)</th>
-<th style="text-align: center;">Enabled</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><img alt="groupModules-disabled.png" src="../img/groupModules-disabled.png" /></td>
-<td style="text-align: center;"><img alt="groupModules-enabled.png" src="../img/groupModules-enabled.png" /></td>
-</tr>
-</tbody>
-</table>
-<h2 id="ignoredconfigs">ignoredConfigs<a class="headerlink" href="#ignoredconfigs" title="Permanent link">&para;</a></h2>
+<div class="side-by-side">
+  <figure>
+    <figcaption>Disabled</figcaption>
+    <img src="../img/groupModules-disabled.svg" alt="Disabled">
+  </figure>
+
+  <figure>
+    <figcaption>Enabled</figcaption>
+    <img src="../img/groupModules-enabled.svg" alt="Enabled">
+  </figure>
+</div>
+
+<h3 id="ignoredconfigs">ignoredConfigs<a class="headerlink" href="#ignoredconfigs" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">ignoredConfigs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setOf</span><span class="p">(</span><span class="s">&quot;debug&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;kover&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ksp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="p">)</span>
 <span class="p">}</span>
@@ -883,14 +976,24 @@
 <p class="admonition-title">Remember</p>
 <p>If you don't ignore any configurations, you might end up with double links between modules - or broken builds</p>
 </div>
-<h2 id="printfilestoconsole">printFilesToConsole<a class="headerlink" href="#printfilestoconsole" title="Permanent link">&para;</a></h2>
+<h3 id="ignoredmodules">ignoredModules<a class="headerlink" href="#ignoredmodules" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">ignoredModules</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setOf</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;:path:to:some:module&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;.*:test:.*&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// uses regex patterns</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Defaults to an empty set.</p>
+<h3 id="printfilestoconsole">printFilesToConsole<a class="headerlink" href="#printfilestoconsole" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">printFilesToConsole</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>Set to true to print the absolute path of any generated files to the Gradle console output. You can use this to help with scripting, if you like.</p>
 <p>Disabled by default.</p>
-<h2 id="moduletypes">moduleTypes<a class="headerlink" href="#moduletypes" title="Permanent link">&para;</a></h2>
+<h2 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h2>
+<h3 id="moduletypes">moduleTypes<a class="headerlink" href="#moduletypes" title="Permanent link">&para;</a></h3>
 <p>Use the <code>moduleTypes</code> block to identify module categories, along with the styling to apply to each one in the output chart. These stylings will depend on your choice of plugin (see their docs for details), but at a minimum, each with support setting:</p>
 <ul>
 <li><strong>label</strong> string</li>
@@ -944,7 +1047,7 @@
 <p>Remember that the order of declaring module types does matter! When identifying a module, Atlas will use the first one and go down the list until it finds a match.</p>
 </div>
 <p>The below example shows one module of each of the built-in module types in a sample D2 project layout:</p>
-<p><img alt="Default module types" src="../img/module-types-default.png" /></p>
+<p><img class="rounded-corner" src="../img/module-types-default.png" alt="Default module types"></p>
 <p>Remember also that you can pass framework-specific configuration options into any module type declarations used above, with a trailing lambda. Example below comes from D2:</p>
 <div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">moduleTypes</span><span class="w"> </span><span class="p">{</span>
@@ -961,7 +1064,7 @@
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="linktypes">linkTypes<a class="headerlink" href="#linktypes" title="Permanent link">&para;</a></h2>
+<h3 id="linktypes">linkTypes<a class="headerlink" href="#linktypes" title="Permanent link">&para;</a></h3>
 <p>Use this block to configure categories of link to be detected in your project and drawn onto the modules chart. These are detected by Gradle's configuration names. In most cases you'll probably use <code>api</code> and <code>implementation</code> as your main link types, so these are available as quick-access config functions:</p>
 <div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">linkTypes</span><span class="w"> </span><span class="p">{</span>
@@ -998,7 +1101,7 @@
 <p class="admonition-title">Warning</p>
 <p>As with module types, remember that the order of declaration matters! Top takes priority. So if you define "implementation" before "testImplementation", you won't get any links matching the latter because they all also match the former.</p>
 </div>
-<h2 id="pathtransforms">pathTransforms<a class="headerlink" href="#pathtransforms" title="Permanent link">&para;</a></h2>
+<h3 id="pathtransforms">pathTransforms<a class="headerlink" href="#pathtransforms" title="Permanent link">&para;</a></h3>
 <p>This is a little API for modifying module paths when inserting them into any generated diagrams. For example if your modules are all within a <code>"modules"</code> directory in your project's root, you might want to call something like:</p>
 <div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">pathTransforms</span><span class="w"> </span><span class="p">{</span>
@@ -1011,6 +1114,58 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>Remember the declarations inside <code>pathTransforms</code> are called in descending order. It does not support regex group replacement (yet?) - regex is only used for pattern matching.</p>
+<h2 id="extra-properties">Extra properties<a class="headerlink" href="#extra-properties" title="Permanent link">&para;</a></h2>
+<p>Several components in Atlas make use of the <a href="../api/atlas-core/atlas.core/-properties-spec/?query=interface%20PropertiesSpec"><code>PropertiesSpec</code></a> interface, which allows you to apply arbitrary key-value pair properties to the interfaces that make use of it. Specifically, you can call <code>put("key", value)</code>.</p>
+<p>The intention with this is to let you pass in anything to the scope in question - allowing you to make use of any new APIs in that framework which haven't been explicitly implemented in Atlas. Any usage of these keys is up to you to validate - sometimes the diagram framework won't give you a warning if you pass in an invalid key. If you have some brand-spanking new attribute that you want to apply somewhere:</p>
+<div class="highlight"><pre><span></span><code><span class="n">atlas</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">moduleTypes</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// no custom config necessary</span>
+<span class="w">    </span><span class="n">androidApp</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// but if you want to, use a trailing lambda:</span>
+<span class="w">    </span><span class="n">hasPluginId</span><span class="p">(</span><span class="s">&quot;Custom&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pluginId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.custom.plugin&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// built-in setters for some known properties, depending on the context</span>
+<span class="w">      </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span>
+<span class="w">      </span><span class="n">render3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// standard colors/styles in the brackets, everything else in the lambda</span>
+<span class="w">    </span><span class="n">java</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// or custom setters for undefined properties</span>
+<span class="w">      </span><span class="n">put</span><span class="p">(</span><span class="s">&quot;insertKeyHere&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;some-value&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">linkTypes</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// no custom config necessary</span>
+<span class="w">    </span><span class="n">api</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// again with the trailing lambda:</span>
+<span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">animated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">      </span><span class="n">strokeWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">100</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">d2</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">layoutEngine</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">elk</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">algorithm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ElkAlgorithm</span><span class="p">.</span><span class="na">Layered</span>
+<span class="w">        </span><span class="n">put</span><span class="p">(</span><span class="s">&quot;anotherElkProperty&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">420</span><span class="p">)</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">rootStyle</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">strokeDash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span>
+<span class="w">      </span><span class="n">doubleBorder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">      </span><span class="n">put</span><span class="p">(</span><span class="s">&quot;somenewbool&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span>
+<span class="w">      </span><span class="n">put</span><span class="p">(</span><span class="s">&quot;somenewint&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">123</span><span class="p">)</span>
+<span class="w">      </span><span class="n">put</span><span class="p">(</span><span class="s">&quot;somenewstring&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yes&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>These examples are not exhaustive - you can do the same with many components in Mermand and Graphviz too. If you're using some API for customising styles - have a look at the API spec for that class to see what else is available.</p>
 
 
 
@@ -1033,7 +1188,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 26, 2025 10:10:36 UTC">October 26, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 27, 2025 21:33:15 UTC">October 27, 2025</span>
   </span>
 
     
