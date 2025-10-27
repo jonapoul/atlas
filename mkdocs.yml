@@ -42,6 +42,9 @@ theme:
     - navigation.tracking
     - toc.follow
 
+extra_css:
+  - stylesheets/extra.css
+
 extra:
   social:
     - icon: fontawesome/brands/github
