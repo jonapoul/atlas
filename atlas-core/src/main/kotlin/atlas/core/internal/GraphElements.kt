@@ -39,7 +39,7 @@ private fun shouldIncludeModule(
   module: TypedModule,
   links: List<ModuleLink>,
   thisPath: String,
-  replacements: Set<Replacement>
+  replacements: Set<Replacement>,
 ) = module in links || (links.isEmpty() && module.projectPath == thisPath.cleaned(replacements))
 
 private fun buildHierarchy(nodeData: List<Pair<TypedModule, List<String>>>): List<GraphElement> {
