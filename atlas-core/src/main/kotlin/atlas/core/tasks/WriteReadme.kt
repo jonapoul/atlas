@@ -37,7 +37,7 @@ import kotlin.text.RegexOption.DOT_MATCHES_ALL
  * Something below
  * ```
  *
- * then the text in between will be replaced with the generated images. Anything else will be left as-is.
+ * then the text in between will be replaced with the generated images. Anything outside will be left as-is.
  *
  * If generating a new README, the output will look like below:
  *
@@ -49,6 +49,8 @@ import kotlin.text.RegexOption.DOT_MATCHES_ALL
  * ![](../atlas/legend.png)
  * <!--endregion-->
  * ```
+ *
+ * Remember, this readme task will also be run when calling `gradle atlasGenerate`.
  */
 @CacheableTask
 public abstract class WriteReadme : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {

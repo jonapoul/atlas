@@ -45,6 +45,7 @@ internal class D2SpecImpl(
   override val fileExtension = objects.string(convention = "d2")
 
   override val animateLinks = objects.bool(properties.animateLinks)
+  override val animateInterval = objects.int(properties.animateInterval)
   override val center = objects.bool(properties.center)
   override val direction = objects.enum(properties.direction)
   override val fileFormat = objects.enum(properties.fileFormat)

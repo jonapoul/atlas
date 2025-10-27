@@ -46,6 +46,7 @@ import org.gradle.api.provider.Property
 @AtlasDsl
 public interface D2Spec : AtlasSpec {
   public val animateLinks: Property<Boolean>
+  public val animateInterval: Property<Int>
   public val center: Property<Boolean>
   public val direction: Property<Direction>
   public val fileFormat: Property<FileFormat>
