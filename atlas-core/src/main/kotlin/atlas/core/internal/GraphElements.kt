@@ -30,10 +30,17 @@ public fun buildGraphElements(
   val cleanedLinks = links.map { it.cleaned(replacements) }
   return buildHierarchy(
     nodeData = cleanedModules
-      .filter { module -> module in cleanedLinks || (cleanedLinks.isEmpty() && module.projectPath == thisPath) }
+      .filter { module -> shouldIncludeModule(module, cleanedLinks, thisPath, replacements) }
       .map { module -> module to module.projectPath.split(":").filter { it.isNotEmpty() } },
   )
 }
+
+private fun shouldIncludeModule(
+  module: TypedModule,
+  links: List<ModuleLink>,
+  thisPath: String,
+  replacements: Set<Replacement>
+) = module in links || (links.isEmpty() && module.projectPath == thisPath.cleaned(replacements))
 
 private fun buildHierarchy(nodeData: List<Pair<TypedModule, List<String>>>): List<GraphElement> {
   val elements = mutableListOf<GraphElement>()
@@ -144,9 +151,9 @@ public abstract class ChartWriter {
       .filter { it in links }
       .map { it.cleaned() }
       .sortedBy { it.projectPath }
-      .forEach { appendModule(it) }
+      .forEach { appendModule(it.cleaned()) }
 
-    if (links.isEmpty()) {
+    if (links.isEmpty() || typedModules.size == 1) {
       // Single-module case - we still want this module to be shown along with its type
       typedModules
         .firstOrNull { it.projectPath == thisPath }

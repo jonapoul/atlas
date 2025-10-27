@@ -35,6 +35,11 @@ internal object OneLevelOfSubmodules : ProjectLayout {
   )
 }
 
+internal object LowestLevelOfSubmodules : ProjectLayout {
+  override val modules = setOf(typedModule(path = ":ui:c"))
+  override val links = emptySet<ModuleLink>()
+}
+
 internal object OneLevelOfSubmodulesWithReplacements : ProjectLayout {
   override val modules = setOf(
     typedModule(path = ":app"),

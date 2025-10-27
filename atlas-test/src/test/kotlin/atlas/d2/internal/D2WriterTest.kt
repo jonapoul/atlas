@@ -5,6 +5,7 @@ import atlas.core.Replacement
 import atlas.d2.LinkStyle
 import atlas.d2.d2Writer
 import atlas.test.Abc
+import atlas.test.LowestLevelOfSubmodules
 import atlas.test.ModuleWithNoLinks
 import atlas.test.OneLevelOfSubmodules
 import atlas.test.OneLevelOfSubmodulesWithReplacements
@@ -51,6 +52,22 @@ internal class D2WriterTest {
             module-dummy1 -> module-dummy2: implementation { class: link-implementation }
           }
         }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `Lowest level of a multi-level hierarchy`() {
+    val writer = d2Writer(
+      layout = LowestLevelOfSubmodules,
+      thisPath = ":ui:c",
+    )
+
+    // then the single module is written to the chart on its lonesome
+    assertThat(writer()).equalsDiffed(
+      """
+        ...@../classes.d2
+        ui_c: :ui:c
       """.trimIndent(),
     )
   }
