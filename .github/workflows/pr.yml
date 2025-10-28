@@ -9,6 +9,7 @@ env:
 permissions:
   contents: read
   pull-requests: read
+  security-events: write
 
 concurrency:
   group: 'ci-${{ github.event.merge_group.head_ref || github.head_ref }}-${{ github.workflow }}'
@@ -56,3 +57,9 @@ jobs:
       - name: Report build results
         uses: gmazzo/publish-report-annotations@v1
         if: ${{ !cancelled() }}
+
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v4
+        if: success() || failure()
+        with:
+          sarif_file: build/reports/detekt/merge.sarif.json
