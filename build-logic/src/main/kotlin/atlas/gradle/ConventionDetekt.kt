@@ -29,7 +29,10 @@ class ConventionDetekt : Plugin<Project> {
     tasks.named(LifecycleBasePlugin.CHECK_TASK_NAME).configure { dependsOn(detektCheck) }
 
     detektTasks.configureEach {
-      reports.html.required.set(true)
+      reports {
+        html.required.set(true)
+        sarif.required.set(true)
+      }
       exclude { it.file.path.contains("generated") }
     }
   }
