@@ -1,4 +1,4 @@
-FROM gradle:9.2.0-jdk21-alpine
+FROM gradle:9.2.0-jdk21
 
 RUN apt-get update
 RUN apt-get install -y graphviz curl
