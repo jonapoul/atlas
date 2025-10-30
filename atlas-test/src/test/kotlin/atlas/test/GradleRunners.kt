@@ -31,5 +31,6 @@ internal fun GradleRunner.runTask(
     // "--info",
     // "--stacktrace",
     "-Pandroid.useAndroidX=true", // needed for android builds to work, unused otherwise
+    "--warning-mode=fail", // fail test if any non-failure warnings show up
   ) + extras,
 )
