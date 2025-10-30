@@ -1,6 +1,6 @@
 services:
   check:
-    image: ghcr.io/jonapoul/atlas:latest
+    image: ghcr.io/jonapoul/atlas-gradle-plugin:latest
     volumes:
       - $HOME/.gradle:/home/gradle/.gradle
       - ..:/atlas
