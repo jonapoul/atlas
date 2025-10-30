@@ -59,7 +59,9 @@ public abstract class AtlasPlugin : Plugin<Project> {
       }
     }
 
-    warnIfModuleTypesSpecifyNothing()
+    afterEvaluate {
+      warnIfModuleTypesSpecifyNothing()
+    }
   }
 
   protected open fun applyToChild(target: Project): Unit = with(target) {
