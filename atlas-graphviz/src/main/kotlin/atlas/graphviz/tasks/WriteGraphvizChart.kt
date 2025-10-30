@@ -29,7 +29,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.RELATIVE
+import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.work.DisableCachingByDefault
@@ -41,8 +41,8 @@ import java.io.File
 @CacheableTask
 public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
   // Files
-  @get:[PathSensitive(RELATIVE) InputFile] public abstract val linksFile: RegularFileProperty
-  @get:[PathSensitive(RELATIVE) InputFile] public abstract val moduleTypesFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile] public abstract val linksFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile] public abstract val moduleTypesFile: RegularFileProperty
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General

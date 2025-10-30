@@ -16,7 +16,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.RELATIVE
+import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
@@ -26,7 +26,7 @@ import org.gradle.api.tasks.TaskProvider
  */
 @CacheableTask
 public abstract class WriteModuleTree : DefaultTask(), TaskWithOutputFile {
-  @get:[PathSensitive(RELATIVE) InputFile] public abstract val collatedLinks: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile] public abstract val collatedLinks: RegularFileProperty
   @get:Input public abstract val alsoTraverseUpwards: Property<Boolean>
   @get:Input public abstract val thisPath: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty

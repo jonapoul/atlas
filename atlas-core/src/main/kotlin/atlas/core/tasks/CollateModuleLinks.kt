@@ -16,7 +16,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.RELATIVE
+import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
@@ -26,7 +26,7 @@ import org.gradle.api.tasks.TaskProvider
  */
 @CacheableTask
 public abstract class CollateModuleLinks : DefaultTask(), TaskWithOutputFile {
-  @get:[PathSensitive(RELATIVE) InputFiles] public abstract val moduleLinkFiles: ConfigurableFileCollection
+  @get:[PathSensitive(NONE) InputFiles] public abstract val moduleLinkFiles: ConfigurableFileCollection
   @get:Input public abstract val ignoredModules: SetProperty<Regex>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
