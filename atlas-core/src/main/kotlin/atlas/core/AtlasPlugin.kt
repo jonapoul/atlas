@@ -3,7 +3,6 @@ package atlas.core
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.AtlasExtensionImpl
 import atlas.core.internal.DummyAtlasGenerationTask
-import atlas.core.internal.orderedModuleTypes
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.CheckFileDiff
 import atlas.core.tasks.CollateModuleLinks
@@ -60,9 +59,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
       }
     }
 
-    afterEvaluate {
-      warnIfModuleTypesSpecifyNothing()
-    }
+    warnIfModuleTypesSpecifyNothing()
   }
 
   protected open fun applyToChild(target: Project): Unit = with(target) {
@@ -81,7 +78,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
   }
 
   private fun Project.warnIfModuleTypesSpecifyNothing() {
-    extension.orderedModuleTypes().forEach { type ->
+    extension.moduleTypes.configureEach { type ->
       if (!type.pathContains.isPresent && !type.pathMatches.isPresent && !type.hasPluginId.isPresent) {
         logger.warn(
           "Warning: Module type '${type.name}' will be ignored - you need to set one of " +

@@ -26,10 +26,6 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
     ) as GraphvizAtlasExtensionImpl
 
     super.applyToRoot(target)
-
-    afterEvaluate {
-      // Validation TBC
-    }
   }
 
   override fun applyToChild(target: Project) {

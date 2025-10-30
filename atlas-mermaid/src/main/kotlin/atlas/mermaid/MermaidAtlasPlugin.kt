@@ -25,10 +25,6 @@ public class MermaidAtlasPlugin : AtlasPlugin() {
     ) as MermaidAtlasExtensionImpl
 
     super.applyToRoot(target)
-
-    afterEvaluate {
-      // Validation TBC
-    }
   }
 
   override fun applyToChild(target: Project) {
