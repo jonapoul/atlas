@@ -20,7 +20,7 @@ import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.RELATIVE
+import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.process.ExecOperations
@@ -35,8 +35,8 @@ import javax.inject.Inject
  */
 @CacheableTask
 public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {
-  @get:[PathSensitive(RELATIVE) InputFile] public abstract val classesFile: RegularFileProperty
-  @get:[PathSensitive(RELATIVE) InputFile] public abstract val inputFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile] public abstract val classesFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile] public abstract val inputFile: RegularFileProperty
   @get:Input public abstract val outputFormat: Property<FileFormat>
   @get:[Input Optional] public abstract val animateInterval: Property<Int>
   @get:[Input Optional] public abstract val cliArguments: MapProperty<String, String>

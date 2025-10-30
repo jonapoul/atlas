@@ -19,7 +19,7 @@ import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.RELATIVE
+import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.internal.extensions.stdlib.capitalized
@@ -37,7 +37,7 @@ import javax.inject.Inject
  */
 @CacheableTask
 public abstract class CheckFileDiff : DefaultTask() {
-  @get:[PathSensitive(RELATIVE) InputFile] public abstract val actualFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile] public abstract val actualFile: RegularFileProperty
   @get:Input public abstract val expectedDirectory: Property<String>
   @get:Input public abstract val expectedFilename: Property<String>
   @get:Input public abstract val taskPath: Property<String>

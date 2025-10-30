@@ -16,7 +16,7 @@ import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.RELATIVE
+import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.internal.extensions.stdlib.capitalized
@@ -54,8 +54,8 @@ import kotlin.text.RegexOption.DOT_MATCHES_ALL
  */
 @CacheableTask
 public abstract class WriteReadme : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {
-  @get:[PathSensitive(RELATIVE) InputFile] public abstract val chartFile: RegularFileProperty
-  @get:[PathSensitive(RELATIVE) InputFile Optional] public abstract val legendFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile] public abstract val chartFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile Optional] public abstract val legendFile: RegularFileProperty
   @get:Internal public abstract val readmeFile: RegularFileProperty
   @get:Input public abstract val projectPath: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
