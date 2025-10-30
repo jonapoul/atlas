@@ -41,19 +41,12 @@ public interface GraphvizSpec : AtlasSpec {
   public val pathToDotCommand: Property<String>
 
   /**
-   * Manually interact with output formats from Graphviz. Defaults to an empty set, meaning the only output will
-   * be a `.dot` file.
-   *
-   * See [FileFormat] for some default options, but bear in mind your machine may not have them all
-   * available (depending on your installed Graphviz version).
+   * Manually interact with output formats from Graphviz. Defaults to [FileFormat.Svg].
    */
   public val fileFormat: Property<FileFormat>
 
   /**
    * Customise the layout engine used to organise your module nodes in the chart. Defaults to [LayoutEngine.Dot].
-   * Default engines are specified in the [LayoutEngine] enum, but if you have any extras available you can pass them
-   * into [layoutEngine] as a string instead.
-   * See https://graphviz.org/docs/layouts/
    */
   public val layoutEngine: Property<LayoutEngine>
 
