@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'jonapoul/atlas'
     container:
-      image: gradle:9.1.0-jdk21
+      image: gradle:9.2.0-jdk21
     permissions:
       contents: write
     needs: verify-version
