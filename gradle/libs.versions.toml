@@ -13,7 +13,7 @@ kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-
 [plugins]
 agp-app = { id = "com.android.application", version.ref = "agp" }
 agp-lib = { id = "com.android.library", version.ref = "agp" }
-buildConfig = { id = "com.github.gmazzo.buildconfig", version = "5.7.0" }
+buildConfig = { id = "com.github.gmazzo.buildconfig", version = "5.7.1" }
 detekt = { id = "dev.detekt", version = "2.0.0-alpha.1" }
 dokka = { id = "org.jetbrains.dokka", version = "2.1.0" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
