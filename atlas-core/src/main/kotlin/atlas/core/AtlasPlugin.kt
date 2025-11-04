@@ -41,9 +41,6 @@ public abstract class AtlasPlugin : Plugin<Project> {
     }
 
     configurePrintFilesToConsole()
-    val atlasGenerate = registerAtlasGenerateTask()
-    registerAtlasCheckTask()
-    registerGenerationTaskOnSync(atlasGenerate)
   }
 
   protected open fun applyToRoot(target: Project): Unit = with(target) {
@@ -70,6 +67,10 @@ public abstract class AtlasPlugin : Plugin<Project> {
     val writeLinks = WriteModuleLinks.register(target, extension)
     WriteModuleTree.register(target, extension)
     registerChildTasks()
+
+    val atlasGenerate = registerAtlasGenerateTask()
+    registerAtlasCheckTask()
+    registerGenerationTaskOnSync(atlasGenerate)
 
     CollateModuleTypes.get(rootProject).configure { task ->
       task.projectTypeFiles.from(writeType.flatMap { it.outputFile })

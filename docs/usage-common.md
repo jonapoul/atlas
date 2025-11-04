@@ -67,8 +67,8 @@ Running on the root project:
 
 ```shell
 # Run from root project
-./gradlew :atlasGenerate
-./gradlew :atlasCheck
+./gradlew atlasGenerate
+./gradlew atlasCheck
 ```
 
 **What doesn't work:**
@@ -84,13 +84,13 @@ Running directly on a subproject:
 # check anything - for the same reasons as above.
 # To disable check task registration entirely (and therefore hide the warning),
 # set atlas.checkOutputs = false in your build script.
-./gradlew :module:atlasCheck
+./gradlew :path:to:atlasCheck
 ```
 
 If you want to generate diagrams for a specific module, your options are to either:
 
 1. disable `org.gradle.configureondemand`, or
-2. run `gradle :atlasGenerate` on the root module, meaning all generation tasks are executed. This doesn't mean everything is run from scratch - any unchanged diagrams will be pulled from cache.
+2. run `gradle atlasGenerate` on the root module, meaning all generation tasks are executed. This doesn't mean everything is run from scratch - any unchanged diagrams will be pulled from cache.
 
 So far as I'm aware, there are no easy ways around this in modern Gradle.
 
