@@ -10,6 +10,7 @@ import atlas.core.tasks.CollateModuleTypes
 import atlas.core.tasks.WriteModuleLinks
 import atlas.core.tasks.WriteModuleTree
 import atlas.core.tasks.WriteModuleType
+import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -96,20 +97,56 @@ public abstract class AtlasPlugin : Plugin<Project> {
     }
   }
 
+  private fun Project.configureOnDemand() = providers
+    .gradleProperty("org.gradle.configureondemand")
+    .map { it.toBoolean() }
+    .getOrElse(false)
+
   private fun Project.registerAtlasGenerateTask() = tasks.register("atlasGenerate") { t ->
     t.group = ATLAS_TASK_GROUP
     t.description = "Aggregates all Atlas generation tasks"
+
+    // Always add dependencies first
     t.dependsOn(
       tasks
         .withType(AtlasGenerationTask::class.java)
         .matching { it !is DummyAtlasGenerationTask },
     )
+
+    // Only fail if configureondemand is enabled, this is a subproject, and this specific task was directly called
+    // (eg :path:to:atlasGenerate)
+    if (configureOnDemand() && project != rootProject) {
+      val projectPath = path
+      val wasDirectlyInvoked = gradle.startParameter.taskNames.any { it == "$projectPath:atlasGenerate" }
+      if (wasDirectlyInvoked) {
+        t.doFirst {
+          throw GradleException(
+            "Warning: atlasGenerate is disabled because org.gradle.configureondemand is enabled. " +
+              "With this property set, you can only run atlasGenerate on the root project, not on $projectPath.",
+          )
+        }
+      }
+    }
   }
 
   private fun Project.registerAtlasCheckTask() = tasks.register("atlasCheck") { t ->
     t.group = LifecycleBasePlugin.VERIFICATION_GROUP
     t.description = "Aggregates all Atlas verification tasks"
-    t.dependsOn(tasks.withType(CheckFileDiff::class.java))
+
+    // Warn if configureondemand is enabled and this is a subproject
+    val projectPath = path
+    if (configureOnDemand() && project != rootProject) {
+      t.doFirst {
+        it.logger.warn(
+          "Warning: Nothing was checked because org.gradle.configureondemand is enabled. " +
+            "With this property set, you can only run atlasCheck on the root project, not on $projectPath. " +
+            "To disable check task registration entirely, set atlas.checkOutputs = false in your build script.",
+        )
+      }
+    } else {
+      // Only add dependencies if we're actually going to check
+      t.dependsOn(tasks.withType(CheckFileDiff::class.java))
+    }
   }
 
   private fun Project.registerGenerationTaskOnSync(atlasGenerate: TaskProvider<Task>) {
