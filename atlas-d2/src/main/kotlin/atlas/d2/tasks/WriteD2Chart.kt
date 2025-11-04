@@ -93,10 +93,10 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
       pathToClassesFile: Provider<String>,
     ): TaskProvider<T> = with(target) {
       val collateModuleTypes = CollateModuleTypes.get(rootProject)
-      val calculateProjectTree = WriteModuleTree.get(target)
+      val writeModuleTree = WriteModuleTree.get(target)
       val name = "write${T::class.qualifier}D2Chart"
       val writeChart = tasks.register(name, T::class.java) { task ->
-        task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
+        task.linksFile.convention(writeModuleTree.map { it.outputFile.get() })
         task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
         task.outputFile.set(outputFile)
         task.pathToClassesFile.convention(pathToClassesFile)
