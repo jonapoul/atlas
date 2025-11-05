@@ -8,12 +8,12 @@ import atlas.test.ScenarioTest
 import atlas.test.androidHomeOrSkip
 import atlas.test.buildRunner
 import atlas.test.runTask
-import atlas.test.scenarios.ProjectTypesDeclaredButNoneMatch
 import atlas.test.scenarios.NoProjectTypesDeclared
 import atlas.test.scenarios.OneKotlinJvmProject
+import atlas.test.scenarios.ProjectTypesDeclaredButNoneMatch
+import atlas.test.scenarios.ThreeProjectWithCustomTypes
 import atlas.test.scenarios.ThreeProjectsNoMatchingType
 import atlas.test.scenarios.ThreeProjectsOnlyMatchingOther
-import atlas.test.scenarios.ThreeProjectWithCustomTypes
 import atlas.test.taskHadResult
 import atlas.test.taskWasSuccessful
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS

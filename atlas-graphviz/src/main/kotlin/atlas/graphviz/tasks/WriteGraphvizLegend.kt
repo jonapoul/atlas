@@ -9,10 +9,10 @@ import atlas.core.internal.Variant.Legend
 import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.buildIndentedString
 import atlas.core.internal.logIfConfigured
-import atlas.core.internal.projectType
 import atlas.core.internal.orderedLinkTypes
 import atlas.core.internal.orderedProjectTypes
 import atlas.core.internal.outputFile
+import atlas.core.internal.projectType
 import atlas.core.internal.qualifier
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.TaskWithOutputFile

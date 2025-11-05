@@ -17,9 +17,9 @@ import atlas.d2.D2ElkSpec
 import atlas.d2.D2GlobalPropsSpec
 import atlas.d2.D2LayoutEngineSpec
 import atlas.d2.D2LinkTypeSpec
-import atlas.d2.D2ProjectTypeSpec
 import atlas.d2.D2NamedLinkTypeContainer
 import atlas.d2.D2NamedProjectTypeContainer
+import atlas.d2.D2ProjectTypeSpec
 import atlas.d2.D2PropertiesSpec
 import atlas.d2.D2RootStyleSpec
 import atlas.d2.D2Spec

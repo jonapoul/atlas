@@ -6,10 +6,10 @@ import atlas.d2.LinkStyle
 import atlas.d2.d2Writer
 import atlas.test.Abc
 import atlas.test.LowestLevelOfSubprojects
-import atlas.test.ProjectWithNoLinks
 import atlas.test.OneLevelOfSubprojects
 import atlas.test.OneLevelOfSubprojectsWithReplacements
 import atlas.test.ProjectLayout
+import atlas.test.ProjectWithNoLinks
 import atlas.test.SingleNestedProjectWithNoLinks
 import atlas.test.TwoLevelsOfSubprojects
 import atlas.test.equalsDiffed

@@ -6,8 +6,8 @@ import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.AtlasExtensionImpl
 import atlas.core.internal.TypedProject
 import atlas.core.internal.fileInBuildDirectory
-import atlas.core.internal.projectType
 import atlas.core.internal.orderedProjectTypes
+import atlas.core.internal.projectType
 import atlas.core.internal.writeProjectType
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project

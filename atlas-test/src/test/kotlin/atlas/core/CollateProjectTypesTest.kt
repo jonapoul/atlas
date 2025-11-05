@@ -10,8 +10,8 @@ import atlas.test.isEqualToSet
 import atlas.test.runTask
 import atlas.test.scenarios.NoSubprojects
 import atlas.test.scenarios.PathMatches
-import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
 import atlas.test.scenarios.ThreeProjectWithCustomTypes
+import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
 import atlas.test.taskWasSuccessful
 import java.io.File
 import kotlin.test.Test

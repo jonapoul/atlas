@@ -2,8 +2,8 @@ package atlas.graphviz.internal
 
 import assertk.assertThat
 import atlas.graphviz.dotWriter
-import atlas.test.ProjectWithNoLinks
 import atlas.test.OneLevelOfSubprojects
+import atlas.test.ProjectWithNoLinks
 import atlas.test.TwoLevelsOfSubprojects
 import atlas.test.equalsDiffed
 import kotlin.test.Test

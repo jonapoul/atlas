@@ -13,9 +13,9 @@ import atlas.mermaid.CycleBreakingStrategy
 import atlas.mermaid.ElkLayoutSpec
 import atlas.mermaid.MermaidLayoutSpec
 import atlas.mermaid.MermaidLinkTypeSpec
-import atlas.mermaid.MermaidProjectTypeSpec
 import atlas.mermaid.MermaidNamedLinkTypeContainer
 import atlas.mermaid.MermaidNamedProjectTypeContainer
+import atlas.mermaid.MermaidProjectTypeSpec
 import atlas.mermaid.MermaidSpec
 import atlas.mermaid.MermaidThemeVariablesSpec
 import atlas.mermaid.NodePlacementStrategy

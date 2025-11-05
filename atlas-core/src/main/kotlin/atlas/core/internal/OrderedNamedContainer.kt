@@ -2,9 +2,9 @@ package atlas.core.internal
 
 import atlas.core.InternalAtlasApi
 import atlas.core.LinkTypeSpec
-import atlas.core.ProjectTypeSpec
 import atlas.core.NamedLinkTypeContainer
 import atlas.core.NamedProjectTypeContainer
+import atlas.core.ProjectTypeSpec
 import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer

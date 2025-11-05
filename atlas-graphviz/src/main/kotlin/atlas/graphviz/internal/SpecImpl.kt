@@ -9,9 +9,9 @@ import atlas.graphviz.EdgeAttributes
 import atlas.graphviz.FileFormat
 import atlas.graphviz.GraphAttributes
 import atlas.graphviz.GraphvizLinkTypeSpec
-import atlas.graphviz.GraphvizProjectTypeSpec
 import atlas.graphviz.GraphvizNamedLinkTypeContainer
 import atlas.graphviz.GraphvizNamedProjectTypeContainer
+import atlas.graphviz.GraphvizProjectTypeSpec
 import atlas.graphviz.GraphvizSpec
 import atlas.graphviz.LayoutEngine
 import atlas.graphviz.NodeAttributes

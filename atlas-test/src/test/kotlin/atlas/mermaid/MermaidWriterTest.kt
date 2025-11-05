@@ -1,8 +1,8 @@
 package atlas.mermaid
 
 import assertk.assertThat
-import atlas.test.ProjectWithNoLinks
 import atlas.test.OneLevelOfSubprojects
+import atlas.test.ProjectWithNoLinks
 import atlas.test.TwoLevelsOfSubprojects
 import atlas.test.equalsDiffed
 import kotlin.test.Test

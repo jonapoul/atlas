@@ -3,8 +3,8 @@ package atlas.core.internal
 import atlas.core.AtlasExtension
 import atlas.core.InternalAtlasApi
 import atlas.core.LinkTypeSpec
-import atlas.core.ProjectTypeSpec
 import atlas.core.PathTransformSpec
+import atlas.core.ProjectTypeSpec
 import atlas.core.Replacement
 import org.gradle.api.Action
 import org.gradle.api.Project

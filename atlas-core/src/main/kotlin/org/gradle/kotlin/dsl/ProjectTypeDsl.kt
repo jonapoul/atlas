@@ -2,8 +2,8 @@
 
 package org.gradle.kotlin.dsl
 
-import atlas.core.ProjectTypeSpec
 import atlas.core.NamedProjectTypeContainer
+import atlas.core.ProjectTypeSpec
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectProvider
 
@@ -83,8 +83,8 @@ public fun <T : ProjectTypeSpec> NamedProjectTypeContainer<T>.kotlinMultiplatfor
 )
 
 /**
- * Adds an "Other" project type, with a grey color. This will match anything and everything, so make sure to declare this
- * last in the projectTypes block from your build file.
+ * Adds an "Other" project type, with a grey color. This will match anything and everything, so make sure to declare
+ * this last in the projectTypes block from your build file.
  */
 @JvmOverloads
 public fun <T : ProjectTypeSpec> NamedProjectTypeContainer<T>.other(

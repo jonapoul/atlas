@@ -7,10 +7,10 @@ import atlas.core.LinkType
 import atlas.core.ProjectType
 import atlas.core.internal.IndentedStringBuilder
 import atlas.core.internal.buildIndentedString
-import atlas.core.internal.projectType
 import atlas.core.internal.orderedLinkTypes
 import atlas.core.internal.orderedProjectTypes
 import atlas.core.internal.parseEnum
+import atlas.core.internal.projectType
 import atlas.core.internal.sortedByKeys
 import atlas.d2.Direction
 import atlas.d2.LayoutEngine
