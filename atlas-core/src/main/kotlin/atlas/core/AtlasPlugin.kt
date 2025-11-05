@@ -41,6 +41,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
     }
 
     configurePrintFilesToConsole()
+    registerAtlasCheckTask()
   }
 
   protected open fun applyToRoot(target: Project): Unit = with(target) {
@@ -69,7 +70,6 @@ public abstract class AtlasPlugin : Plugin<Project> {
     registerChildTasks()
 
     val atlasGenerate = registerAtlasGenerateTask()
-    registerAtlasCheckTask()
     registerGenerationTaskOnSync(atlasGenerate)
 
     CollateModuleTypes.get(rootProject).configure { task ->
