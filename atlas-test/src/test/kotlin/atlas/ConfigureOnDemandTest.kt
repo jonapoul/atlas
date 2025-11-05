@@ -1,9 +1,10 @@
 package atlas
 
 import assertk.assertThat
-import assertk.assertions.contains
 import atlas.test.ScenarioTest
 import atlas.test.allTasksSuccessful
+import atlas.test.contains
+import atlas.test.noTasksFailed
 import atlas.test.runTask
 import atlas.test.scenarios.D2ConfigureOnDemand
 import atlas.test.scenarios.GraphvizConfigureOnDemand
@@ -36,13 +37,18 @@ internal class ConfigureOnDemandTest : ScenarioTest() {
     assertThat(generate).allTasksSuccessful()
 
     val check = runTask("atlasCheck").build()
-    assertThat(check).allTasksSuccessful()
+    assertThat(check).noTasksFailed() // some cached from the generation step before
   }
 
   private fun File.subprojectFailsTestCase() {
-    val result = runTask(":a:atlasGenerate").buildAndFail()
+    val generate = runTask(":a:atlasGenerate").buildAndFail()
+    assertThat(generate.output)
+      .contains("atlasGenerate is disabled when run on a subproject because org.gradle.configureondemand is enabled.")
+      .contains("you can only run atlasGenerate on the root project, not on :a")
 
-    assertThat(result.output).contains("atlasGenerate is disabled because org.gradle.configureondemand is enabled.")
-    assertThat(result.output).contains("you can only run atlasGenerate on the root project, not on :a")
+    val check = runTask(":a:atlasCheck").buildAndFail()
+    assertThat(check.output)
+      .contains("atlasCheck is disabled when run on a subproject because org.gradle.configureondemand is enabled.")
+      .contains("you can only run atlasCheck on the root project, not on :a")
   }
 }

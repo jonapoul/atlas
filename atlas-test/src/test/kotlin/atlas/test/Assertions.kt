@@ -10,6 +10,7 @@ import org.gradle.testkit.runner.BuildTask
 import org.gradle.testkit.runner.TaskOutcome
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import java.io.File
+import kotlin.math.exp
 
 internal fun Assert<BuildResult>.allTasksSuccessful(): Assert<List<BuildTask>> =
   prop(BuildResult::getTasks).allSuccessful()
@@ -77,3 +78,11 @@ internal fun Assert<String>.equalsDiffed(expected: String): Assert<String> = tra
 }
 
 internal fun <T> Assert<Set<T>>.isEqualToSet(vararg expected: T) = isEqualTo(expected.toSet())
+
+internal fun Assert<String>.contains(expected: String): Assert<String> = transform { actual ->
+  if (actual.contains(expected)) {
+    actual
+  } else {
+    expected("string to contain '$expected' - actual = $actual")
+  }
+}
