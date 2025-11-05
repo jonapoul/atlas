@@ -49,7 +49,6 @@ internal val Scenario.kotlinJvmBuildScript
 internal val Scenario.androidBuildScript
   get() = """
   plugins {
-    kotlin("android")
     id("com.android.library")
     id("$pluginId")
   }
