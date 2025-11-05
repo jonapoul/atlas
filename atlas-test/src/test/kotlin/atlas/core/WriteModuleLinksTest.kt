@@ -37,9 +37,10 @@ internal class WriteModuleLinksTest : ScenarioTest() {
     val result = runTask("writeModuleLinks").build()
 
     // then the task was run
-    assertThat(result).taskWasSuccessful(":test-data:writeModuleLinks")
-    assertThat(result).taskWasSuccessful(":test-domain:writeModuleLinks")
-    assertThat(result).taskWasSuccessful(":test-ui:writeModuleLinks")
+    assertThat(result)
+      .taskWasSuccessful(":test-data:writeModuleLinks")
+      .taskWasSuccessful(":test-domain:writeModuleLinks")
+      .taskWasSuccessful(":test-ui:writeModuleLinks")
 
     // and the links file is empty
     assertThat(moduleLinks(module = "test-data")).isEmpty()
@@ -53,10 +54,11 @@ internal class WriteModuleLinksTest : ScenarioTest() {
     val result = runTask("writeModuleLinks").build()
 
     // then the task was run
-    assertThat(result).taskWasSuccessful(":top:writeModuleLinks")
-    assertThat(result).taskWasSuccessful(":mid-a:writeModuleLinks")
-    assertThat(result).taskWasSuccessful(":mid-b:writeModuleLinks")
-    assertThat(result).taskWasSuccessful(":bottom:writeModuleLinks")
+    assertThat(result)
+      .taskWasSuccessful(":top:writeModuleLinks")
+      .taskWasSuccessful(":mid-a:writeModuleLinks")
+      .taskWasSuccessful(":mid-b:writeModuleLinks")
+      .taskWasSuccessful(":bottom:writeModuleLinks")
 
     // and the links file is empty
     assertThat(moduleLinks(module = "top")).isEqualToSet(

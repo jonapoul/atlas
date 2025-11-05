@@ -24,7 +24,6 @@ internal class ExecD2Test : ScenarioTest() {
     assertThat(result.output).contains(
       """
         :writeD2Classes SKIPPED
-        :atlasGenerate SKIPPED
         :a:writeModuleType SKIPPED
         :b:writeModuleType SKIPPED
         :c:writeModuleType SKIPPED
@@ -71,22 +70,23 @@ internal class ExecD2Test : ScenarioTest() {
   @RequiresD2
   fun `Rerun when changing properties in the classes file`() = runScenario(D2CustomLayoutEngine) {
     // First run - all tasks run
-    val result1 = runTask(":a:execD2Chart").build()
-    assertThat(result1).taskHadResult(":writeD2Classes", SUCCESS)
-    assertThat(result1).taskHadResult(":a:writeD2Chart", SUCCESS)
-    assertThat(result1).taskHadResult(":a:execD2Chart", SUCCESS)
+    assertThat(runTask(":a:execD2Chart").build())
+      .taskHadResult(":writeD2Classes", SUCCESS)
+      .taskHadResult(":a:writeD2Chart", SUCCESS)
+      .taskHadResult(":a:execD2Chart", SUCCESS)
 
     // Second run with no changes - skipped
-    val result2 = runTask(":a:execD2Chart").build()
-    assertThat(result2).taskHadResult(":writeD2Classes", UP_TO_DATE)
-    assertThat(result2).taskHadResult(":a:writeD2Chart", UP_TO_DATE)
-    assertThat(result2).taskHadResult(":a:execD2Chart", UP_TO_DATE)
+    assertThat(runTask(":a:execD2Chart").build())
+      .taskHadResult(":writeD2Classes", UP_TO_DATE)
+      .taskHadResult(":a:writeD2Chart", UP_TO_DATE)
+      .taskHadResult(":a:execD2Chart", UP_TO_DATE)
 
     // Third run setting a property to change the classes file - classes are written, chart is not but the output
     // file is regenerated
     val result3 = runTask(":a:execD2Chart", extras = listOf("-Patlas.d2.theme=7")).build()
-    assertThat(result3).taskHadResult(":writeD2Classes", SUCCESS)
-    assertThat(result2).taskHadResult(":a:writeD2Chart", UP_TO_DATE)
-    assertThat(result3).taskHadResult(":a:execD2Chart", SUCCESS)
+    assertThat(result3)
+      .taskHadResult(":writeD2Classes", SUCCESS)
+      .taskHadResult(":a:writeD2Chart", UP_TO_DATE)
+      .taskHadResult(":a:execD2Chart", SUCCESS)
   }
 }

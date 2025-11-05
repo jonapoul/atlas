@@ -6,7 +6,6 @@ import assertk.assertions.containsAtLeast
 import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
 import atlas.test.ScenarioTest
-import atlas.test.allTasksSuccessful
 import atlas.test.runTask
 import atlas.test.scenarios.CheckExplicitlyDisabled
 import atlas.test.scenarios.CheckExplicitlyEnabled
@@ -25,7 +24,8 @@ internal class CheckFileDiffTest : ScenarioTest() {
     val result = runTask(":a:checkGraphvizChart", extras = listOf("--dry-run")).build()
 
     // then the chart wasn't written
-    assertThat(result.output).doesNotContain(":a:writeGraphvizChart")
+    assertThat(result.output)
+      .doesNotContain(":a:writeGraphvizChart")
 
     // but the dummy and check tasks were run
     assertThat(result.output).contains(":a:writeDummyGraphvizChart")
@@ -178,10 +178,11 @@ internal class CheckFileDiffTest : ScenarioTest() {
     val result = runTask("atlasCheck").build()
 
     // then
-    assertThat(result).taskWasSuccessful(":checkGraphvizLegend")
-    assertThat(result).taskWasSuccessful(":a:checkGraphvizChart")
-    assertThat(result).taskWasSuccessful(":b:checkGraphvizChart")
-    assertThat(result).taskWasSuccessful(":c:checkGraphvizChart")
-    assertThat(result).taskWasSuccessful(":atlasCheck")
+    assertThat(result)
+      .taskWasSuccessful(":checkGraphvizLegend")
+      .taskWasSuccessful(":a:checkGraphvizChart")
+      .taskWasSuccessful(":b:checkGraphvizChart")
+      .taskWasSuccessful(":c:checkGraphvizChart")
+      .taskWasSuccessful(":atlasCheck")
   }
 }

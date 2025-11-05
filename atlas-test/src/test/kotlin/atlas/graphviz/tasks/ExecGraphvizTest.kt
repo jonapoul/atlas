@@ -28,9 +28,6 @@ internal class ExecGraphvizTest : ScenarioTest() {
     // then no PNGs, SVGs, or anything else were generated besides the dotfile
     assertThat(result.output).contains(
       """
-        :writeGraphvizLegend SKIPPED
-        :execGraphvizLegend SKIPPED
-        :atlasGenerate SKIPPED
         :a:writeModuleType SKIPPED
         :b:writeModuleType SKIPPED
         :c:writeModuleType SKIPPED
@@ -42,6 +39,8 @@ internal class ExecGraphvizTest : ScenarioTest() {
         :a:writeModuleTree SKIPPED
         :a:writeGraphvizChart SKIPPED
         :a:execGraphvizChart SKIPPED
+        :writeGraphvizLegend SKIPPED
+        :execGraphvizLegend SKIPPED
         :a:writeGraphvizReadme SKIPPED
         :a:atlasGenerate SKIPPED
         :b:writeModuleTree SKIPPED
@@ -120,8 +119,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Fail with nonexistent custom path to dot command`() = runScenario(GraphVizCustomDotExecutable) {
     // Given we've made a symbolic link to a dot executable which doesn't exist
-    val customDotFile = resolve("path/to/custom/dot")
-    assertThat(customDotFile).doesNotExist()
+    assertThat(resolve("path/to/custom/dot")).doesNotExist()
 
     // when
     val result = runTask("atlasGenerate").buildAndFail()
