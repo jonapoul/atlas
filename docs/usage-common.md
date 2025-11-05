@@ -66,26 +66,22 @@ Examples below with `org.gradle.configureondemand=true` set in `gradle.propertie
 Running on the root project:
 
 ```shell
-# Run from root project
 ./gradlew atlasGenerate
 ./gradlew atlasCheck
 ```
+
+These will execute every single generation/checking task in the entire Gradle project. That we we're ensuring that all configurations are being covered for inter-module dependencies.
 
 **What doesn't work:**
 
 Running directly on a subproject:
 
 ```shell
-# atlasGenerate will fail because it can't guarantee that the whole
-# dependency tree will be included in the chart.
 ./gradlew :path:to:atlasGenerate
-
-# The check task won't fail, but it will print a warning and not actually
-# check anything - for the same reasons as above.
-# To disable check task registration entirely (and therefore hide the warning),
-# set atlas.checkOutputs = false in your build script.
 ./gradlew :path:to:atlasCheck
 ```
+
+These will both fail for the same reasons: they can't guarantee that the whole dependency tree will be included in the chart because modules uninvolved in the task execution will not be queried for their dependencies as part of the chart generation/checking.
 
 If you want to generate diagrams for a specific module, your options are to either:
 
