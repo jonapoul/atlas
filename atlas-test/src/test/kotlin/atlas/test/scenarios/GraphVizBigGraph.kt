@@ -12,13 +12,13 @@ internal object GraphVizBigGraph : GraphvizScenario {
     }
 
     atlas {
-      moduleTypes{
+      projectTypes{
         kotlinJvm()
       }
     }
   """.trimIndent()
 
-  override val submoduleBuildFiles = mapOf(
+  override val subprojectBuildFiles = mapOf(
     "app" to """
       $kotlinJvmBuildScript
       dependencies {

@@ -1,22 +1,22 @@
 ...@../../../atlas/classes.d2
-other: :other { class: module-Other }
+other: :other { class: project-Other }
 android: :android {
   class: container
-  lib: :lib { class: module-AndroidLibrary }
+  lib: :lib { class: project-AndroidLibrary }
 }
 kotlin: :kotlin {
   class: container
-  jvm: :jvm { class: module-KotlinJVM }
+  jvm: :jvm { class: project-KotlinJVM }
 }
 android.lib -> kotlin.jvm { class: link-implementation }
 android.lib -> other { class: link-implementation }
 vars: {
   d2-legend: {
-    module-AndroidLibrary: Android Library { class: module-AndroidLibrary }
-    module-KotlinJVM: Kotlin JVM { class: module-KotlinJVM }
-    module-Other: Other { class: module-Other }
-    module-dummy1.class: hidden
-    module-dummy2.class: hidden
-    module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+    project-AndroidLibrary: Android Library { class: project-AndroidLibrary }
+    project-KotlinJVM: Kotlin JVM { class: project-KotlinJVM }
+    project-Other: Other { class: project-Other }
+    project-dummy1.class: hidden
+    project-dummy2.class: hidden
+    project-dummy1 -> project-dummy2: implementation { class: link-implementation }
   }
 }

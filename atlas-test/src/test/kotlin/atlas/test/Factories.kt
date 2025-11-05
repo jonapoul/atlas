@@ -1,32 +1,32 @@
 package atlas.test
 
 import atlas.core.LinkType
-import atlas.core.ModuleType
+import atlas.core.ProjectType
 import atlas.core.StringEnum
-import atlas.core.internal.ModuleLink
 import atlas.core.internal.Node
-import atlas.core.internal.TypedModule
+import atlas.core.internal.ProjectLink
+import atlas.core.internal.TypedProject
 
 internal fun node(
   path: String,
-  type: ModuleType? = null,
-) = Node(typedModule(path, type))
+  type: ProjectType? = null,
+) = Node(typedProject(path, type))
 
-internal fun typedModule(
+internal fun typedProject(
   path: String,
-  type: ModuleType? = null,
-) = TypedModule(
+  type: ProjectType? = null,
+) = TypedProject(
   projectPath = path,
   type = type,
 )
 
-internal fun moduleLink(
+internal fun projectLink(
   fromPath: String,
   toPath: String,
   configuration: String = "implementation",
   style: StringEnum? = null,
   color: String? = null,
-) = ModuleLink(
+) = ProjectLink(
   fromPath,
   toPath,
   configuration,

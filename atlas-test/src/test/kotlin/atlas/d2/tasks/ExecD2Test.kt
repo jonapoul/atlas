@@ -24,25 +24,25 @@ internal class ExecD2Test : ScenarioTest() {
     assertThat(result.output).contains(
       """
         :writeD2Classes SKIPPED
-        :a:writeModuleType SKIPPED
-        :b:writeModuleType SKIPPED
-        :c:writeModuleType SKIPPED
-        :collateModuleTypes SKIPPED
-        :a:writeModuleLinks SKIPPED
-        :b:writeModuleLinks SKIPPED
-        :c:writeModuleLinks SKIPPED
-        :collateModuleLinks SKIPPED
-        :a:writeModuleTree SKIPPED
+        :a:writeProjectType SKIPPED
+        :b:writeProjectType SKIPPED
+        :c:writeProjectType SKIPPED
+        :collateProjectTypes SKIPPED
+        :a:writeProjectLinks SKIPPED
+        :b:writeProjectLinks SKIPPED
+        :c:writeProjectLinks SKIPPED
+        :collateProjectLinks SKIPPED
+        :a:writeProjectTree SKIPPED
         :a:writeD2Chart SKIPPED
         :a:execD2Chart SKIPPED
         :a:writeD2Readme SKIPPED
         :a:atlasGenerate SKIPPED
-        :b:writeModuleTree SKIPPED
+        :b:writeProjectTree SKIPPED
         :b:writeD2Chart SKIPPED
         :b:execD2Chart SKIPPED
         :b:writeD2Readme SKIPPED
         :b:atlasGenerate SKIPPED
-        :c:writeModuleTree SKIPPED
+        :c:writeProjectTree SKIPPED
         :c:writeD2Chart SKIPPED
         :c:execD2Chart SKIPPED
         :c:writeD2Readme SKIPPED

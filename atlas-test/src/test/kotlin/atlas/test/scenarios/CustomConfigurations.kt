@@ -3,8 +3,8 @@ package atlas.test.scenarios
 import atlas.test.Scenario
 import atlas.test.kotlinJvmBuildScript
 
-internal object CustomConfigurations : Scenario by OneKotlinJvmModule {
-  override val submoduleBuildFiles = mapOf(
+internal object CustomConfigurations : Scenario by OneKotlinJvmProject {
+  override val subprojectBuildFiles = mapOf(
     "a" to """
       $kotlinJvmBuildScript
 

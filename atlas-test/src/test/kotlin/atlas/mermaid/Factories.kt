@@ -1,22 +1,22 @@
 package atlas.mermaid
 
 import atlas.core.Replacement
-import atlas.core.internal.ModuleLink
-import atlas.core.internal.TypedModule
+import atlas.core.internal.ProjectLink
+import atlas.core.internal.TypedProject
 import atlas.mermaid.internal.MermaidWriter
 
 internal fun mermaidWriter(
-  typedModules: Set<TypedModule> = emptySet(),
-  links: Set<ModuleLink> = emptySet(),
+  typedProjects: Set<TypedProject> = emptySet(),
+  links: Set<ProjectLink> = emptySet(),
   replacements: Set<Replacement> = emptySet(),
   thisPath: String = ":app",
-  groupModules: Boolean = false,
+  groupProjects: Boolean = false,
   config: MermaidConfig = MermaidConfig(),
 ) = MermaidWriter(
-  typedModules = typedModules,
+  typedProjects = typedProjects,
   links = links,
   replacements = replacements,
   thisPath = thisPath,
-  groupModules = groupModules,
+  groupProjects = groupProjects,
   config = config,
 )

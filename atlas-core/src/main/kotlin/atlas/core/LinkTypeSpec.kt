@@ -2,7 +2,6 @@
 
 package atlas.core
 
-import atlas.core.StringEnum
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
@@ -11,7 +10,7 @@ import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
 /**
- * Used to configure expected link "types" between your modules. The majority of the time, these are only ever
+ * Used to configure expected link "types" between your projects. The majority of the time, these are only ever
  * going to be [NamedLinkTypeContainer.api] or [NamedLinkTypeContainer.implementation], hence those being listed for
  * easier access. Configure like:
  *

@@ -5,7 +5,7 @@ import atlas.test.javaBuildScript
 import atlas.test.kotlinJvmBuildScript
 
 internal object MermaidWithGroupsNested : Scenario by MermaidWithGroupsNotNested {
-  override val submoduleBuildFiles = mapOf(
+  override val subprojectBuildFiles = mapOf(
     "a" to """
       $kotlinJvmBuildScript
       dependencies {

@@ -2,8 +2,8 @@ package atlas.d2.internal
 
 import atlas.core.PropertiesSpec
 import atlas.core.internal.LinkTypeContainer
-import atlas.core.internal.ModuleTypeContainer
-import atlas.core.internal.ModuleTypeSpecImpl
+import atlas.core.internal.ProjectTypeContainer
+import atlas.core.internal.ProjectTypeSpecImpl
 import atlas.core.internal.PropertiesSpecImpl
 import atlas.core.internal.bool
 import atlas.core.internal.enum
@@ -17,9 +17,9 @@ import atlas.d2.D2ElkSpec
 import atlas.d2.D2GlobalPropsSpec
 import atlas.d2.D2LayoutEngineSpec
 import atlas.d2.D2LinkTypeSpec
-import atlas.d2.D2ModuleTypeSpec
 import atlas.d2.D2NamedLinkTypeContainer
-import atlas.d2.D2NamedModuleTypeContainer
+import atlas.d2.D2NamedProjectTypeContainer
+import atlas.d2.D2ProjectTypeSpec
 import atlas.d2.D2PropertiesSpec
 import atlas.d2.D2RootStyleSpec
 import atlas.d2.D2Spec
@@ -105,10 +105,10 @@ internal class D2PropertiesSpecImpl(
   override var underline by bool("style.underline")
 }
 
-internal abstract class D2ModuleTypeSpecImpl @Inject constructor(
+internal abstract class D2ProjectTypeSpecImpl @Inject constructor(
   override val name: String,
   objects: ObjectFactory,
-) : ModuleTypeSpecImpl(name), D2ModuleTypeSpec, D2PropertiesSpec by D2PropertiesSpecImpl(objects) {
+) : ProjectTypeSpecImpl(name), D2ProjectTypeSpec, D2PropertiesSpec by D2PropertiesSpecImpl(objects) {
   override var doubleBorder by string("style.double-border")
   override var fill by string("style.fill")
   override var fillPattern by enum<FillPattern>("style.fill-pattern")
@@ -118,18 +118,18 @@ internal abstract class D2ModuleTypeSpecImpl @Inject constructor(
   override var shape by enum<Shape>("shape")
 }
 
-internal class D2NamedModuleTypeContainerImpl(objects: ObjectFactory) :
-  ModuleTypeContainer<D2ModuleTypeSpec>(
-    delegate = objects.domainObjectContainer(D2ModuleTypeSpec::class.java) { name ->
-      objects.newInstance(D2ModuleTypeSpecImpl::class.java, name)
+internal class D2NamedProjectTypeContainerImpl(objects: ObjectFactory) :
+  ProjectTypeContainer<D2ProjectTypeSpec>(
+    delegate = objects.domainObjectContainer(D2ProjectTypeSpec::class.java) { name ->
+      objects.newInstance(D2ProjectTypeSpecImpl::class.java, name)
     },
   ),
-  D2NamedModuleTypeContainer
+  D2NamedProjectTypeContainer
 
 internal abstract class D2LinkTypeSpecImpl @Inject constructor(
   override val name: String,
   objects: ObjectFactory,
-) : ModuleTypeSpecImpl(name), D2LinkTypeSpec, D2PropertiesSpec by D2PropertiesSpecImpl(objects)
+) : ProjectTypeSpecImpl(name), D2LinkTypeSpec, D2PropertiesSpec by D2PropertiesSpecImpl(objects)
 
 internal class D2NamedLinkTypeContainerImpl(
   objects: ObjectFactory,

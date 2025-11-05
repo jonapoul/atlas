@@ -1,18 +1,18 @@
 package atlas.mermaid
 
 import assertk.assertThat
-import atlas.test.ModuleWithNoLinks
-import atlas.test.OneLevelOfSubmodules
-import atlas.test.TwoLevelsOfSubmodules
+import atlas.test.OneLevelOfSubprojects
+import atlas.test.ProjectWithNoLinks
+import atlas.test.TwoLevelsOfSubprojects
 import atlas.test.equalsDiffed
 import kotlin.test.Test
 
 internal class MermaidWriterTest {
   @Test
-  fun `Base config with no module types`() {
+  fun `Base config with no project types`() {
     val writer = mermaidWriter(
-      typedModules = OneLevelOfSubmodules.modules,
-      links = OneLevelOfSubmodules.links,
+      typedProjects = OneLevelOfSubprojects.projects,
+      links = OneLevelOfSubprojects.links,
     )
 
     assertThat(writer()).equalsDiffed(
@@ -41,11 +41,11 @@ internal class MermaidWriterTest {
   }
 
   @Test
-  fun `Grouping modules`() {
+  fun `Grouping projects`() {
     val writer = mermaidWriter(
-      typedModules = OneLevelOfSubmodules.modules,
-      links = OneLevelOfSubmodules.links,
-      groupModules = true,
+      typedProjects = OneLevelOfSubprojects.projects,
+      links = OneLevelOfSubprojects.links,
+      groupProjects = true,
     )
 
     assertThat(writer()).equalsDiffed(
@@ -80,11 +80,11 @@ internal class MermaidWriterTest {
   }
 
   @Test
-  fun `Grouping modules with sub-subgraphs`() {
+  fun `Grouping projects with sub-subgraphs`() {
     val writer = mermaidWriter(
-      typedModules = TwoLevelsOfSubmodules.modules,
-      links = TwoLevelsOfSubmodules.links,
-      groupModules = true,
+      typedProjects = TwoLevelsOfSubprojects.projects,
+      links = TwoLevelsOfSubprojects.links,
+      groupProjects = true,
     )
 
     assertThat(writer()).equalsDiffed(
@@ -125,10 +125,10 @@ internal class MermaidWriterTest {
   }
 
   @Test
-  fun `Single module with no links`() {
+  fun `Single project with no links`() {
     val writer = mermaidWriter(
-      typedModules = ModuleWithNoLinks.modules,
-      links = ModuleWithNoLinks.links,
+      typedProjects = ProjectWithNoLinks.projects,
+      links = ProjectWithNoLinks.links,
     )
 
     assertThat(writer()).equalsDiffed(

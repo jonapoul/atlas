@@ -10,12 +10,12 @@ import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.logIfConfigured
 import atlas.core.internal.outputFile
 import atlas.core.internal.qualifier
-import atlas.core.internal.readModuleLinks
-import atlas.core.internal.readModuleTypes
+import atlas.core.internal.readProjectLinks
+import atlas.core.internal.readProjectTypes
 import atlas.core.tasks.AtlasGenerationTask
-import atlas.core.tasks.CollateModuleTypes
+import atlas.core.tasks.CollateProjectTypes
 import atlas.core.tasks.TaskWithOutputFile
-import atlas.core.tasks.WriteModuleTree
+import atlas.core.tasks.WriteProjectTree
 import atlas.graphviz.DotConfig
 import atlas.graphviz.GraphvizSpec
 import atlas.graphviz.internal.DotWriter
@@ -36,17 +36,17 @@ import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 /**
- * Converts a [DotConfig] into a written module chart file, generated once for each module.
+ * Converts a [DotConfig] into a written project chart file, generated once for each project.
  */
 @CacheableTask
 public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
   // Files
   @get:[PathSensitive(NONE) InputFile] public abstract val linksFile: RegularFileProperty
-  @get:[PathSensitive(NONE) InputFile] public abstract val moduleTypesFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile] public abstract val projectTypesFile: RegularFileProperty
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General
-  @get:Input public abstract val groupModules: Property<Boolean>
+  @get:Input public abstract val groupProjects: Property<Boolean>
   @get:Input public abstract val replacements: SetProperty<Replacement>
   @get:Input public abstract val thisPath: Property<String>
 
@@ -61,14 +61,14 @@ public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, At
   @TaskAction
   public open fun execute() {
     val linksFile = linksFile.get().asFile
-    val moduleTypesFile = moduleTypesFile.get().asFile
+    val projectTypesFile = projectTypesFile.get().asFile
 
     val writer = DotWriter(
-      typedModules = readModuleTypes(moduleTypesFile),
-      links = readModuleLinks(linksFile),
+      typedProjects = readProjectTypes(projectTypesFile),
+      links = readProjectLinks(linksFile),
       replacements = replacements.get(),
       thisPath = thisPath.get(),
-      groupModules = groupModules.get(),
+      groupProjects = groupProjects.get(),
       config = config.get(),
     )
 
@@ -112,18 +112,18 @@ public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, At
       spec: GraphvizSpec,
       outputFile: File,
     ): TaskProvider<T> = with(target) {
-      val collateModuleTypes = CollateModuleTypes.get(rootProject)
-      val calculateProjectTree = WriteModuleTree.get(target)
+      val collateProjectTypes = CollateProjectTypes.get(rootProject)
+      val calculateProjectTree = WriteProjectTree.get(target)
       val name = "write${T::class.qualifier}GraphvizChart"
       val writeChart = tasks.register(name, T::class.java) { task ->
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
-        task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
+        task.projectTypesFile.convention(collateProjectTypes.map { it.outputFile.get() })
         task.outputFile.set(outputFile)
         task.thisPath.convention(target.path)
       }
 
       writeChart.configure { task ->
-        task.groupModules.convention(extension.groupModules)
+        task.groupProjects.convention(extension.groupProjects)
         task.replacements.convention(extension.pathTransforms.replacements)
         task.config.convention(DotConfig(extension, spec))
       }

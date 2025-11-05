@@ -9,12 +9,12 @@ import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.logIfConfigured
 import atlas.core.internal.outputFile
 import atlas.core.internal.qualifier
-import atlas.core.internal.readModuleLinks
-import atlas.core.internal.readModuleTypes
+import atlas.core.internal.readProjectLinks
+import atlas.core.internal.readProjectTypes
 import atlas.core.tasks.AtlasGenerationTask
-import atlas.core.tasks.CollateModuleTypes
+import atlas.core.tasks.CollateProjectTypes
 import atlas.core.tasks.TaskWithOutputFile
-import atlas.core.tasks.WriteModuleTree
+import atlas.core.tasks.WriteProjectTree
 import atlas.mermaid.MermaidConfig
 import atlas.mermaid.MermaidSpec
 import atlas.mermaid.internal.MermaidWriter
@@ -35,17 +35,17 @@ import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 /**
- * Generates a `.mmd` file containing the Mermaid diagram, which will be then injected into the module's readme.
+ * Generates a `.mmd` file containing the Mermaid diagram, which will be then injected into the project's readme.
  */
 @CacheableTask
 public abstract class WriteMermaidChart : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {
   // Files
   @get:[PathSensitive(NONE) InputFile] public abstract val linksFile: RegularFileProperty
-  @get:[PathSensitive(NONE) InputFile] public abstract val moduleTypesFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile] public abstract val projectTypesFile: RegularFileProperty
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General
-  @get:Input public abstract val groupModules: Property<Boolean>
+  @get:Input public abstract val groupProjects: Property<Boolean>
   @get:Input public abstract val replacements: SetProperty<Replacement>
   @get:Input public abstract val thisPath: Property<String>
 
@@ -60,14 +60,14 @@ public abstract class WriteMermaidChart : DefaultTask(), AtlasGenerationTask, Ta
   @TaskAction
   public open fun execute() {
     val linksFile = linksFile.get().asFile
-    val moduleTypesFile = moduleTypesFile.get().asFile
+    val projectTypesFile = projectTypesFile.get().asFile
 
     val writer = MermaidWriter(
-      typedModules = readModuleTypes(moduleTypesFile),
-      links = readModuleLinks(linksFile),
+      typedProjects = readProjectTypes(projectTypesFile),
+      links = readProjectLinks(linksFile),
       replacements = replacements.get(),
       thisPath = thisPath.get(),
-      groupModules = groupModules.get(),
+      groupProjects = groupProjects.get(),
       config = config.get(),
     )
 
@@ -111,18 +111,18 @@ public abstract class WriteMermaidChart : DefaultTask(), AtlasGenerationTask, Ta
       spec: MermaidSpec,
       outputFile: File,
     ): TaskProvider<WriteMermaidChart> = with(target) {
-      val collateModuleTypes = CollateModuleTypes.get(rootProject)
-      val calculateProjectTree = WriteModuleTree.get(target)
+      val collateProjectTypes = CollateProjectTypes.get(rootProject)
+      val calculateProjectTree = WriteProjectTree.get(target)
 
       val name = "write${T::class.qualifier}MermaidChart"
       val writeChart = tasks.register(name, WriteMermaidChart::class.java)
 
       writeChart.configure { task ->
         task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
-        task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
+        task.projectTypesFile.convention(collateProjectTypes.map { it.outputFile.get() })
         task.outputFile.set(outputFile)
 
-        task.groupModules.convention(extension.groupModules)
+        task.groupProjects.convention(extension.groupProjects)
         task.replacements.convention(extension.pathTransforms.replacements)
         task.thisPath.convention(target.path)
 

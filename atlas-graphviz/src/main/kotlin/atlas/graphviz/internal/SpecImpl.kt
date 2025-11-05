@@ -1,17 +1,17 @@
 package atlas.graphviz.internal
 
 import atlas.core.internal.LinkTypeContainer
-import atlas.core.internal.ModuleTypeContainer
-import atlas.core.internal.ModuleTypeSpecImpl
+import atlas.core.internal.ProjectTypeContainer
+import atlas.core.internal.ProjectTypeSpecImpl
 import atlas.core.internal.enum
 import atlas.core.internal.string
 import atlas.graphviz.EdgeAttributes
 import atlas.graphviz.FileFormat
 import atlas.graphviz.GraphAttributes
 import atlas.graphviz.GraphvizLinkTypeSpec
-import atlas.graphviz.GraphvizModuleTypeSpec
 import atlas.graphviz.GraphvizNamedLinkTypeContainer
-import atlas.graphviz.GraphvizNamedModuleTypeContainer
+import atlas.graphviz.GraphvizNamedProjectTypeContainer
+import atlas.graphviz.GraphvizProjectTypeSpec
 import atlas.graphviz.GraphvizSpec
 import atlas.graphviz.LayoutEngine
 import atlas.graphviz.NodeAttributes
@@ -43,23 +43,23 @@ internal class GraphvizSpecImpl(
   override fun graph(action: Action<GraphAttributes>) = action.execute(graph)
 }
 
-internal abstract class GraphvizModuleTypeSpecImpl @Inject constructor(
+internal abstract class GraphvizProjectTypeSpecImpl @Inject constructor(
   override val name: String,
   objects: ObjectFactory,
-) : ModuleTypeSpecImpl(name), GraphvizModuleTypeSpec, NodeAttributes by NodeAttributesImpl(objects)
+) : ProjectTypeSpecImpl(name), GraphvizProjectTypeSpec, NodeAttributes by NodeAttributesImpl(objects)
 
-internal class GraphvizNamedModuleTypeContainerImpl(objects: ObjectFactory) :
-  ModuleTypeContainer<GraphvizModuleTypeSpec>(
-    delegate = objects.domainObjectContainer(GraphvizModuleTypeSpec::class.java) { name ->
-      objects.newInstance(GraphvizModuleTypeSpecImpl::class.java, name)
+internal class GraphvizNamedProjectTypeContainerImpl(objects: ObjectFactory) :
+  ProjectTypeContainer<GraphvizProjectTypeSpec>(
+    delegate = objects.domainObjectContainer(GraphvizProjectTypeSpec::class.java) { name ->
+      objects.newInstance(GraphvizProjectTypeSpecImpl::class.java, name)
     },
   ),
-  GraphvizNamedModuleTypeContainer
+  GraphvizNamedProjectTypeContainer
 
 internal abstract class GraphvizLinkTypeSpecImpl @Inject constructor(
   override val name: String,
   objects: ObjectFactory,
-) : ModuleTypeSpecImpl(name), GraphvizLinkTypeSpec, EdgeAttributes by EdgeAttributesImpl(objects)
+) : ProjectTypeSpecImpl(name), GraphvizLinkTypeSpec, EdgeAttributes by EdgeAttributesImpl(objects)
 
 internal class GraphvizNamedLinkTypeContainerImpl(
   objects: ObjectFactory,

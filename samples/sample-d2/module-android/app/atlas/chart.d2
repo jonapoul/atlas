@@ -1,15 +1,15 @@
 ...@../../../atlas/classes.d2
-java: :java { class: module-Java }
-other: :other { class: module-Other }
+java: :java { class: project-Java }
+other: :other { class: project-Other }
 android: :android {
   class: container
-  app: :app { class: module-AndroidApp }
-  lib: :lib { class: module-AndroidLibrary }
+  app: :app { class: project-AndroidApp }
+  lib: :lib { class: project-AndroidLibrary }
 }
 kotlin: :kotlin {
   class: container
-  jvm: :jvm { class: module-KotlinJVM }
-  kmp: :kmp { class: module-KotlinMultiplatform }
+  jvm: :jvm { class: project-KotlinJVM }
+  kmp: :kmp { class: project-KotlinMultiplatform }
 }
 android.app -> android.lib { class: link-implementation }
 android.app -> kotlin.kmp { class: link-implementation }
@@ -21,16 +21,16 @@ kotlin.kmp -> java { class: link-jvmMainImplementation }
 kotlin.kmp -> kotlin.jvm { class: link-api }
 vars: {
   d2-legend: {
-    module-AndroidApp: Android App { class: module-AndroidApp }
-    module-AndroidLibrary: Android Library { class: module-AndroidLibrary }
-    module-Java: Java { class: module-Java }
-    module-KotlinJVM: Kotlin JVM { class: module-KotlinJVM }
-    module-KotlinMultiplatform: Kotlin Multiplatform { class: module-KotlinMultiplatform }
-    module-Other: Other { class: module-Other }
-    module-dummy1.class: hidden
-    module-dummy2.class: hidden
-    module-dummy1 -> module-dummy2: implementation { class: link-implementation }
-    module-dummy1 -> module-dummy2: api { class: link-api }
-    module-dummy1 -> module-dummy2: jvmMainImplementation { class: link-jvmMainImplementation }
+    project-AndroidApp: Android App { class: project-AndroidApp }
+    project-AndroidLibrary: Android Library { class: project-AndroidLibrary }
+    project-Java: Java { class: project-Java }
+    project-KotlinJVM: Kotlin JVM { class: project-KotlinJVM }
+    project-KotlinMultiplatform: Kotlin Multiplatform { class: project-KotlinMultiplatform }
+    project-Other: Other { class: project-Other }
+    project-dummy1.class: hidden
+    project-dummy2.class: hidden
+    project-dummy1 -> project-dummy2: implementation { class: link-implementation }
+    project-dummy1 -> project-dummy2: api { class: link-api }
+    project-dummy1 -> project-dummy2: jvmMainImplementation { class: link-jvmMainImplementation }
   }
 }

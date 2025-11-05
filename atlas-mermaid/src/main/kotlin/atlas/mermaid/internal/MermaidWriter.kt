@@ -5,9 +5,9 @@ import atlas.core.LinkType
 import atlas.core.Replacement
 import atlas.core.internal.ChartWriter
 import atlas.core.internal.IndentedStringBuilder
-import atlas.core.internal.ModuleLink
+import atlas.core.internal.ProjectLink
 import atlas.core.internal.Subgraph
-import atlas.core.internal.TypedModule
+import atlas.core.internal.TypedProject
 import atlas.core.internal.buildIndentedString
 import atlas.core.internal.contains
 import atlas.core.internal.parseEnum
@@ -17,18 +17,18 @@ import atlas.mermaid.MermaidConfig
 
 @InternalAtlasApi
 public class MermaidWriter(
-  override val typedModules: Set<TypedModule>,
-  override val links: Set<ModuleLink>,
+  override val typedProjects: Set<TypedProject>,
+  override val links: Set<ProjectLink>,
   override val replacements: Set<Replacement>,
   override val thisPath: String,
-  override val groupModules: Boolean,
+  override val groupProjects: Boolean,
   private val config: MermaidConfig,
 ) : ChartWriter() {
   override fun invoke(): String = buildIndentedString {
     appendConfig()
     appendLine("graph TD")
     indent {
-      appendModules()
+      appendProjects()
       appendTypes()
       appendLinks()
     }
@@ -64,33 +64,33 @@ public class MermaidWriter(
   }
 
   override fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph) {
-    val cleanedModuleName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
-    appendLine("subgraph $cleanedModuleName[\":${graph.name}\"]")
+    val cleanedProjectName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
+    appendLine("subgraph $cleanedProjectName[\":${graph.name}\"]")
   }
 
   override fun IndentedStringBuilder.appendSubgraphFooter() {
     appendLine("end")
   }
 
-  override fun IndentedStringBuilder.appendModule(module: TypedModule) {
-    appendLine("${module.label}[\"${module.projectPath.cleaned()}\"]")
+  override fun IndentedStringBuilder.appendProject(project: TypedProject) {
+    appendLine("${project.label}[\"${project.projectPath.cleaned()}\"]")
   }
 
   private fun IndentedStringBuilder.appendTypes() {
-    for (module in typedModules) {
-      if (module !in links && module.projectPath != thisPath) continue
+    for (project in typedProjects) {
+      if (project !in links && project.projectPath != thisPath) continue
 
       val attrs = Attrs(
-        "fill" to module.type?.color,
+        "fill" to project.type?.color,
       )
 
-      module.type?.let { type ->
+      project.type?.let { type ->
         val properties = type.properties + ("fillcolor" to type.color)
         properties.forEach { (key, value) -> attrs[key] = value }
       }
 
       if (attrs.isNotEmpty()) {
-        appendLine("style ${module.cleaned().label} $attrs")
+        appendLine("style ${project.cleaned().label} $attrs")
       }
     }
   }
@@ -106,8 +106,8 @@ public class MermaidWriter(
         ?: LinkStyle.Basic
 
       val arrow = getArrow(link.type, style)
-      val from = typedModules.first { it.projectPath == link.fromPath }.cleaned().label
-      val to = typedModules.first { it.projectPath == link.toPath }.cleaned().label
+      val from = typedProjects.first { it.projectPath == link.fromPath }.cleaned().label
+      val to = typedProjects.first { it.projectPath == link.toPath }.cleaned().label
       appendLine("$from $arrowPrefix$arrow $to")
 
       link.type?.let { type ->
@@ -148,7 +148,7 @@ public class MermaidWriter(
     }
   }
 
-  private val TypedModule.label: String
+  private val TypedProject.label: String
     get() = projectPath.label
 
   private val String.label: String

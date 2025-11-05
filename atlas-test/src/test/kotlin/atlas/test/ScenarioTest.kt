@@ -18,8 +18,8 @@ internal abstract class ScenarioTest {
       resolve(scenario.buildFileName).writeText(scenario.rootBuildFile)
       resolve("gradle.properties").writeText(scenario.gradlePropertiesFile)
 
-      scenario.submoduleBuildFiles.forEach { (path, contents) ->
-        resolve(modulePathToFilePath(path))
+      scenario.subprojectBuildFiles.forEach { (path, contents) ->
+        resolve(projectPathToFilePath(path))
           .also { it.mkdirs() }
           .resolve(scenario.buildFileName)
           .writeText(contents)
@@ -28,7 +28,7 @@ internal abstract class ScenarioTest {
     }
   }
 
-  private fun modulePathToFilePath(modulePath: String): String = modulePath
+  private fun projectPathToFilePath(projectPath: String): String = projectPath
     .split(":")
     .filter { it.isNotEmpty() }
     .joinToString(separator = File.separator)
@@ -37,7 +37,7 @@ internal abstract class ScenarioTest {
   private val Scenario.settingsFileName get() = if (isGroovy) "settings.gradle" else "settings.gradle.kts"
 
   private fun Scenario.includeStatements() =
-    submoduleBuildFiles.keys.joinToString(separator = "\n") { name ->
+    subprojectBuildFiles.keys.joinToString(separator = "\n") { name ->
       if (isGroovy) {
         "include(':$name')"
       } else {

@@ -28,7 +28,7 @@ atlas {
   generateOnSync = true
   checkOutputs = true
 
-  moduleTypes {
+  projectTypes {
     androidApp {
       shape = Rarrow
       style = Radial

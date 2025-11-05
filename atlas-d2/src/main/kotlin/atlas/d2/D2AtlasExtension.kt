@@ -15,7 +15,7 @@ public interface D2AtlasExtension : AtlasExtension {
   public fun linkTypes(action: Action<D2NamedLinkTypeContainer>)
 
   /**
-   * Configure [D2ModuleTypeSpec]s using D2-specific attributes.
+   * Configure [D2ProjectTypeSpec]s using D2-specific attributes.
    */
-  public fun moduleTypes(action: Action<D2NamedModuleTypeContainer>)
+  public fun projectTypes(action: Action<D2NamedProjectTypeContainer>)
 }

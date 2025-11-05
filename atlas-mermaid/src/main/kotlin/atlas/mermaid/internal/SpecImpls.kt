@@ -2,8 +2,8 @@ package atlas.mermaid.internal
 
 import atlas.core.PropertiesSpec
 import atlas.core.internal.LinkTypeContainer
-import atlas.core.internal.ModuleTypeContainer
-import atlas.core.internal.ModuleTypeSpecImpl
+import atlas.core.internal.ProjectTypeContainer
+import atlas.core.internal.ProjectTypeSpecImpl
 import atlas.core.internal.PropertiesSpecImpl
 import atlas.core.internal.bool
 import atlas.core.internal.enum
@@ -13,9 +13,9 @@ import atlas.mermaid.CycleBreakingStrategy
 import atlas.mermaid.ElkLayoutSpec
 import atlas.mermaid.MermaidLayoutSpec
 import atlas.mermaid.MermaidLinkTypeSpec
-import atlas.mermaid.MermaidModuleTypeSpec
 import atlas.mermaid.MermaidNamedLinkTypeContainer
-import atlas.mermaid.MermaidNamedModuleTypeContainer
+import atlas.mermaid.MermaidNamedProjectTypeContainer
+import atlas.mermaid.MermaidProjectTypeSpec
 import atlas.mermaid.MermaidSpec
 import atlas.mermaid.MermaidThemeVariablesSpec
 import atlas.mermaid.NodePlacementStrategy
@@ -86,9 +86,9 @@ internal class MermaidThemeVariablesSpecImpl(
   override var tertiaryColor by string(key = "tertiaryColor")
 }
 
-internal abstract class MermaidModuleTypeSpecImpl @Inject constructor(
+internal abstract class MermaidProjectTypeSpecImpl @Inject constructor(
   override val name: String,
-) : ModuleTypeSpecImpl(name), MermaidModuleTypeSpec {
+) : ProjectTypeSpecImpl(name), MermaidProjectTypeSpec {
   override var fontColor by string("color")
   override var fontSize by string("font-size")
   override var stroke by string("stroke")
@@ -96,18 +96,18 @@ internal abstract class MermaidModuleTypeSpecImpl @Inject constructor(
   override var strokeWidth by string("stroke-width")
 }
 
-internal class MermaidNamedModuleTypeContainerImpl(objects: ObjectFactory) :
-  ModuleTypeContainer<MermaidModuleTypeSpec>(
-    delegate = objects.domainObjectContainer(MermaidModuleTypeSpec::class.java) { name ->
-      objects.newInstance(MermaidModuleTypeSpecImpl::class.java, name)
+internal class MermaidNamedProjectTypeContainerImpl(objects: ObjectFactory) :
+  ProjectTypeContainer<MermaidProjectTypeSpec>(
+    delegate = objects.domainObjectContainer(MermaidProjectTypeSpec::class.java) { name ->
+      objects.newInstance(MermaidProjectTypeSpecImpl::class.java, name)
     },
   ),
-  MermaidNamedModuleTypeContainer
+  MermaidNamedProjectTypeContainer
 
 internal abstract class MermaidLinkTypeSpecImpl @Inject constructor(
   override val name: String,
   objects: ObjectFactory,
-) : ModuleTypeSpecImpl(name), MermaidLinkTypeSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+) : ProjectTypeSpecImpl(name), MermaidLinkTypeSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
   override var fontColor by string("color")
   override var stroke by string("stroke")
   override var strokeWidth by string("stroke-width")

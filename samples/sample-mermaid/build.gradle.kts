@@ -21,7 +21,7 @@ atlas {
   displayLinkLabels = true
   generateOnSync = true
 
-  moduleTypes {
+  projectTypes {
     androidApp()
 
     kotlinMultiplatform {

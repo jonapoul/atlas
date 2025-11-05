@@ -10,13 +10,13 @@ import atlas.test.scenarios.GraphVizChartWithCustomLinkTypes
 import atlas.test.scenarios.GraphVizChartWithProperties
 import atlas.test.scenarios.GraphVizChartWithReplacements
 import atlas.test.scenarios.GraphvizBasic
-import atlas.test.scenarios.GraphvizNestedModules
-import atlas.test.scenarios.GraphvizNestedModulesNoModuleTypes
+import atlas.test.scenarios.GraphvizNestedProject
+import atlas.test.scenarios.GraphvizNestedProjectNoProjectTypes
 import kotlin.test.Test
 
 internal class WriteGraphvizChartTest : ScenarioTest() {
   @Test
-  fun `Run if no module types are declared`() = runScenario(GraphvizNestedModulesNoModuleTypes) {
+  fun `Run if no project types are declared`() = runScenario(GraphvizNestedProjectNoProjectTypes) {
     // when
     runTask("writeGraphvizChart").build()
 
@@ -57,7 +57,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
     val dotFileB = resolve("b/atlas/chart.dot")
     val dotFileC = resolve("c/atlas/chart.dot")
 
-    // and contain expected contents, with modules in declaration order
+    // and contain expected contents, with projects in declaration order
     assertThat(dotFileA.readText()).equalsDiffed(
       """
         digraph {
@@ -95,7 +95,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
     val dotFile = resolve("a/atlas/chart.dot")
     assertThat(dotFile).exists()
 
-    // and contains expected contents, with modules in alphabetical order
+    // and contains expected contents, with projects in alphabetical order
     assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
@@ -121,7 +121,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
     val dotFile = resolve("a/atlas/chart.dot")
     assertThat(dotFile).exists()
 
-    // and contains expected contents, with modules in alphabetical order
+    // and contains expected contents, with projects in alphabetical order
     assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
@@ -137,7 +137,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Replace module names`() = runScenario(GraphVizChartWithReplacements) {
+  fun `Replace project names`() = runScenario(GraphVizChartWithReplacements) {
     // when
     runTask("writeGraphvizChart").build()
 
@@ -145,7 +145,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
     val dotFile = resolve("a/atlas/chart.dot")
     assertThat(dotFile).exists()
 
-    // and contains expected contents, colons removed from module prefixes and "b" -> "B"
+    // and contains expected contents, colons removed from project prefixes and "b" -> "B"
     assertThat(dotFile.readText()).equalsDiffed(
       """
         digraph {
@@ -185,7 +185,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Handle nested modules`() = runScenario(GraphvizNestedModules) {
+  fun `Handle nested projects`() = runScenario(GraphvizNestedProject) {
     // when
     runTask("writeGraphvizChart").build()
 

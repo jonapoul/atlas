@@ -19,7 +19,7 @@ internal object GraphVizChartCustomConfig : Scenario by GraphvizBasic {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
         java()
         hasPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")

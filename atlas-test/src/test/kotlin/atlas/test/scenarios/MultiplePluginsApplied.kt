@@ -13,5 +13,5 @@ internal object MultiplePluginsApplied : GraphvizScenario {
     }
   """.trimIndent()
 
-  override val submoduleBuildFiles = emptyMap<String, String>()
+  override val subprojectBuildFiles = emptyMap<String, String>()
 }
