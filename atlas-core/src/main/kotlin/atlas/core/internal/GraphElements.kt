@@ -8,7 +8,7 @@ public sealed interface GraphElement
 
 @InternalAtlasApi
 public data class Node(
-  val typedModule: TypedModule,
+  val typedProject: TypedProject,
 ) : GraphElement
 
 @InternalAtlasApi
@@ -21,36 +21,36 @@ public data class Subgraph(
 
 @InternalAtlasApi
 public fun buildGraphElements(
-  typedModules: Set<TypedModule>,
-  links: Set<ModuleLink>,
+  typedProjects: Set<TypedProject>,
+  links: Set<ProjectLink>,
   thisPath: String,
   replacements: Set<Replacement> = emptySet(),
 ): List<GraphElement> {
-  val cleanedModules = typedModules.map { it.cleaned(replacements) }
+  val cleanedProjects = typedProjects.map { it.cleaned(replacements) }
   val cleanedLinks = links.map { it.cleaned(replacements) }
   return buildHierarchy(
-    nodeData = cleanedModules
-      .filter { module -> shouldIncludeModule(module, cleanedLinks, thisPath, replacements) }
-      .map { module -> module to module.projectPath.split(":").filter { it.isNotEmpty() } },
+    nodeData = cleanedProjects
+      .filter { project -> shouldIncludeProject(project, cleanedLinks, thisPath, replacements) }
+      .map { project -> project to project.projectPath.split(":").filter { it.isNotEmpty() } },
   )
 }
 
-private fun shouldIncludeModule(
-  module: TypedModule,
-  links: List<ModuleLink>,
+private fun shouldIncludeProject(
+  project: TypedProject,
+  links: List<ProjectLink>,
   thisPath: String,
   replacements: Set<Replacement>,
-) = module in links || (links.isEmpty() && module.projectPath == thisPath.cleaned(replacements))
+) = project in links || (links.isEmpty() && project.projectPath == thisPath.cleaned(replacements))
 
-private fun buildHierarchy(nodeData: List<Pair<TypedModule, List<String>>>): List<GraphElement> {
+private fun buildHierarchy(nodeData: List<Pair<TypedProject, List<String>>>): List<GraphElement> {
   val elements = mutableListOf<GraphElement>()
 
   val (rootNodes, nestedNodes) = nodeData.partition { (_, parts) ->
     parts.size == 1 || parts.isEmpty()
   }
 
-  rootNodes.forEach { (module, _) ->
-    elements.add(Node(module))
+  rootNodes.forEach { (project, _) ->
+    elements.add(Node(project))
   }
 
   nestedNodes
@@ -63,15 +63,15 @@ private fun buildHierarchy(nodeData: List<Pair<TypedModule, List<String>>>): Lis
   return elements
 }
 
-private fun buildSubgraphElements(nodeData: List<Pair<TypedModule, List<String>>>, level: Int): List<GraphElement> {
+private fun buildSubgraphElements(nodeData: List<Pair<TypedProject, List<String>>>, level: Int): List<GraphElement> {
   val elements = mutableListOf<GraphElement>()
 
   val (leafNodes, deeperNodes) = nodeData.partition { (_, parts) ->
     parts.size == level + 1
   }
 
-  leafNodes.forEach { (module, _) ->
-    elements.add(Node(module))
+  leafNodes.forEach { (project, _) ->
+    elements.add(Node(project))
   }
 
   // Group deeper nodes by their part at this level
@@ -94,10 +94,10 @@ public fun String.cleaned(replacements: Set<Replacement>): String {
 }
 
 @InternalAtlasApi
-public fun TypedModule.cleaned(replacements: Set<Replacement>): TypedModule =
+public fun TypedProject.cleaned(replacements: Set<Replacement>): TypedProject =
   copy(projectPath = projectPath.cleaned(replacements))
 
-private fun ModuleLink.cleaned(replacements: Set<Replacement>) = ModuleLink(
+private fun ProjectLink.cleaned(replacements: Set<Replacement>) = ProjectLink(
   fromPath = fromPath.cleaned(replacements),
   toPath = toPath.cleaned(replacements),
   configuration = configuration,
@@ -108,19 +108,19 @@ private fun ModuleLink.cleaned(replacements: Set<Replacement>) = ModuleLink(
 public abstract class ChartWriter {
   public abstract operator fun invoke(): String
 
-  protected abstract val typedModules: Set<TypedModule>
-  protected abstract val links: Set<ModuleLink>
+  protected abstract val typedProjects: Set<TypedProject>
+  protected abstract val links: Set<ProjectLink>
   protected abstract val replacements: Set<Replacement>
-  protected abstract val groupModules: Boolean
+  protected abstract val groupProjects: Boolean
   protected abstract val thisPath: String
 
-  protected abstract fun IndentedStringBuilder.appendModule(module: TypedModule)
+  protected abstract fun IndentedStringBuilder.appendProject(project: TypedProject)
   protected abstract fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph)
   protected abstract fun IndentedStringBuilder.appendSubgraphFooter()
 
-  protected fun IndentedStringBuilder.appendModules() {
-    if (groupModules) {
-      val elements = buildGraphElements(typedModules, links, thisPath, replacements)
+  protected fun IndentedStringBuilder.appendProjects() {
+    if (groupProjects) {
+      val elements = buildGraphElements(typedProjects, links, thisPath, replacements)
       for (element in elements) {
         appendGraphNode(element)
       }
@@ -131,7 +131,7 @@ public abstract class ChartWriter {
 
   private fun IndentedStringBuilder.appendGraphNode(element: GraphElement) {
     when (element) {
-      is Node -> appendModule(element.typedModule)
+      is Node -> appendProject(element.typedProject)
       is Subgraph -> appendSubgraph(element)
     }
   }
@@ -147,23 +147,23 @@ public abstract class ChartWriter {
   }
 
   protected fun IndentedStringBuilder.appendUngroupedNodes() {
-    typedModules
+    typedProjects
       .filter { it in links }
       .map { it.cleaned() }
       .sortedBy { it.projectPath }
-      .forEach { appendModule(it.cleaned()) }
+      .forEach { appendProject(it.cleaned()) }
 
-    if (links.isEmpty() || typedModules.size == 1) {
-      // Single-module case - we still want this module to be shown along with its type
-      typedModules
+    if (links.isEmpty() || typedProjects.size == 1) {
+      // Single-project case - we still want this project to be shown along with its type
+      typedProjects
         .firstOrNull { it.projectPath == thisPath }
-        ?.let { appendModule(it.cleaned()) }
+        ?.let { appendProject(it.cleaned()) }
     }
   }
 
   protected fun String.cleaned(): String = cleaned(replacements)
 
-  protected fun TypedModule.cleaned(): TypedModule = cleaned(replacements)
+  protected fun TypedProject.cleaned(): TypedProject = cleaned(replacements)
 
   @InternalAtlasApi
   public companion object {

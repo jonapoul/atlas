@@ -1,16 +1,16 @@
 package atlas.mermaid.tasks
 
 import atlas.core.LinkType
-import atlas.core.ModuleType
+import atlas.core.ProjectType
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.AtlasExtensionImpl
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.internal.Variant.Legend
 import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.logIfConfigured
-import atlas.core.internal.moduleType
+import atlas.core.internal.projectType
 import atlas.core.internal.orderedLinkTypes
-import atlas.core.internal.orderedModuleTypes
+import atlas.core.internal.orderedProjectTypes
 import atlas.core.internal.outputFile
 import atlas.core.internal.qualifier
 import atlas.core.tasks.AtlasGenerationTask
@@ -34,7 +34,7 @@ import java.io.File
  */
 @CacheableTask
 public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
-  @get:Input public abstract val moduleTypes: ListProperty<ModuleType>
+  @get:Input public abstract val projectTypes: ListProperty<ProjectType>
   @get:Input public abstract val linkTypes: SetProperty<LinkType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
@@ -45,20 +45,20 @@ public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, A
 
   @TaskAction
   public open fun execute() {
-    val moduleTypes = moduleTypes.get()
+    val projectTypes = projectTypes.get()
     val linkTypes = linkTypes.get()
     val outputFile = outputFile.get().asFile
 
-    val hasModuleTypes = moduleTypes.isNotEmpty()
+    val hasProjectTypes = projectTypes.isNotEmpty()
     val hasLinkTypes = linkTypes.isNotEmpty()
 
     val contents = buildString {
-      if (hasModuleTypes) {
-        appendModuleTypesTable(moduleTypes)
+      if (hasProjectTypes) {
+        appendProjectTypesTable(projectTypes)
       }
 
       if (hasLinkTypes) {
-        if (hasModuleTypes) appendLine()
+        if (hasProjectTypes) appendLine()
         appendLinkTypesTable(linkTypes)
       }
     }
@@ -67,11 +67,11 @@ public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, A
     logIfConfigured(outputFile)
   }
 
-  private fun StringBuilder.appendModuleTypesTable(moduleTypes: List<ModuleType>) {
-    appendLine("| Module Types | Color |")
+  private fun StringBuilder.appendProjectTypesTable(projectTypes: List<ProjectType>) {
+    appendLine("| Project Types | Color |")
     appendLine("|:--:|:--:|")
 
-    for (type in moduleTypes) {
+    for (type in projectTypes) {
       val value = type.color?.let { color ->
         val url = "https://img.shields.io/badge/-%20-${parseColor(color)}?style=flat-square"
         "<img src=\"$url\" height=\"30\" width=\"100\">"
@@ -140,7 +140,7 @@ public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, A
       }
 
       writeLegend.configure { task ->
-        task.moduleTypes.convention(extension.orderedModuleTypes().map(::moduleType))
+        task.projectTypes.convention(extension.orderedProjectTypes().map(::projectType))
         task.linkTypes.convention(extension.orderedLinkTypes())
       }
 

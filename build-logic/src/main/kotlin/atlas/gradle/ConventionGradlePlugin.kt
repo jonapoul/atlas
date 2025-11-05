@@ -16,7 +16,11 @@ import org.gradle.plugin.devel.tasks.PluginUnderTestMetadata
 import org.gradle.plugin.devel.tasks.ValidatePlugins
 
 class ConventionGradlePlugin : Plugin<Project> {
-  private val Project.skipPublish get() = properties["atlas.skipPublish"]?.toString()?.toBoolean() ?: false
+  private val Project.skipPublish
+    get() = providers
+      .gradleProperty("atlas.skipPublish")
+      .map { it.toBoolean() }
+      .getOrElse(false)
 
   override fun apply(target: Project): Unit = with(target) {
     pluginsInternal {
@@ -28,12 +32,12 @@ class ConventionGradlePlugin : Plugin<Project> {
     }
 
     extensions.configure<GradlePluginDevelopmentExtension> {
-      vcsUrl.set("https://github.com/jonapoul/atlas.git")
-      website.set("https://github.com/jonapoul/atlas")
+      vcsUrl.set("https://github.com/jonapoul/atlas-gradle-plugin.git")
+      website.set("https://github.com/jonapoul/atlas-gradle-plugin")
 
       plugins.configureEach {
-        description = properties["POM_DESCRIPTION"] as String
-        tags.addAll("gradle", "kotlin", "modules", "diagrams", "charts", "links")
+        description = providers.gradleProperty("POM_DESCRIPTION").get()
+        tags.addAll("gradle", "kotlin", "modules", "projects", "diagrams", "charts", "links")
       }
     }
 

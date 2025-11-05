@@ -5,11 +5,11 @@ import atlas.core.internal.AtlasExtensionImpl
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.CheckFileDiff
-import atlas.core.tasks.CollateModuleLinks
-import atlas.core.tasks.CollateModuleTypes
-import atlas.core.tasks.WriteModuleLinks
-import atlas.core.tasks.WriteModuleTree
-import atlas.core.tasks.WriteModuleType
+import atlas.core.tasks.CollateProjectLinks
+import atlas.core.tasks.CollateProjectTypes
+import atlas.core.tasks.WriteProjectLinks
+import atlas.core.tasks.WriteProjectTree
+import atlas.core.tasks.WriteProjectType
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -18,7 +18,7 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
 /**
- * Base plugin, implemented by the framework modules. This plugin will be applied to the root module by the user, then
+ * Base plugin, implemented by the framework projects. This plugin will be applied to the root project by the user, then
  * it will auto-apply itself to all child subprojects internally.
  */
 public abstract class AtlasPlugin : Plugin<Project> {
@@ -28,7 +28,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
   protected abstract fun Project.registerChildTasks()
 
   override fun apply(target: Project): Unit = with(target) {
-    // This only happens if you have nested modules where the group modules don't have a build file. In that
+    // This only happens if you have nested projects where the group projects don't have a build file. In that
     // case you don't want the group to be its own node in the chart
     if (!target.buildFile.exists()) return@with
 
@@ -45,47 +45,47 @@ public abstract class AtlasPlugin : Plugin<Project> {
   }
 
   protected open fun applyToRoot(target: Project): Unit = with(target) {
-    CollateModuleTypes.register(project)
-    val collateModuleLinks = CollateModuleLinks.register(project, extension)
+    CollateProjectTypes.register(project)
+    val collateProjectLinks = CollateProjectLinks.register(project, extension)
     registerRootTasks()
 
     subprojects { child ->
       child.pluginManager.apply(this@AtlasPlugin::class.java)
       child.afterEvaluate {
-        child.tasks.withType(WriteModuleTree::class.java).configureEach { t ->
-          t.collatedLinks.convention(collateModuleLinks.flatMap { it.outputFile })
+        child.tasks.withType(WriteProjectTree::class.java).configureEach { t ->
+          t.collatedLinks.convention(collateProjectLinks.flatMap { it.outputFile })
         }
       }
     }
 
     afterEvaluate {
-      warnIfModuleTypesSpecifyNothing()
+      warnIfProjectTypesSpecifyNothing()
     }
   }
 
   protected open fun applyToChild(target: Project): Unit = with(target) {
-    val writeType = WriteModuleType.register(target, extension)
-    val writeLinks = WriteModuleLinks.register(target, extension)
-    WriteModuleTree.register(target, extension)
+    val writeType = WriteProjectType.register(target, extension)
+    val writeLinks = WriteProjectLinks.register(target, extension)
+    WriteProjectTree.register(target, extension)
     registerChildTasks()
 
     val atlasGenerate = registerAtlasGenerateTask()
     registerGenerationTaskOnSync(atlasGenerate)
 
-    CollateModuleTypes.get(rootProject).configure { task ->
+    CollateProjectTypes.get(rootProject).configure { task ->
       task.projectTypeFiles.from(writeType.flatMap { it.outputFile })
     }
 
-    CollateModuleLinks.get(rootProject).configure { task ->
-      task.moduleLinkFiles.from(writeLinks.flatMap { it.outputFile })
+    CollateProjectLinks.get(rootProject).configure { task ->
+      task.projectLinkFiles.from(writeLinks.flatMap { it.outputFile })
     }
   }
 
-  private fun Project.warnIfModuleTypesSpecifyNothing() {
-    extension.moduleTypes.configureEach { type ->
+  private fun Project.warnIfProjectTypesSpecifyNothing() {
+    extension.projectTypes.configureEach { type ->
       if (!type.pathContains.isPresent && !type.pathMatches.isPresent && !type.hasPluginId.isPresent) {
         logger.warn(
-          "Warning: Module type '${type.name}' will be ignored - you need to set one of " +
+          "Warning: Project type '${type.name}' will be ignored - you need to set one of " +
             "pathContains, pathMatches or hasPluginId.",
         )
       }

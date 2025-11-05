@@ -9,19 +9,19 @@ import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
 /**
- * API for modifying module names when inserting them into any generated diagrams. For example if your modules are
- * within a heavily-nested `"modules"` directory in your project's root, you might want to call something like:
+ * API for modifying project names when inserting them into any generated diagrams. For example if your projects are
+ * within a heavily-nested `"projects"` directory in your project's root, you might want to call something like:
  *
  * ```kotlin
  * atlas {
  *   pathTransforms {
- *     remove("^:modules:")
+ *     remove("^:projects:")
  *     replace(pattern = ":", replacement = " ")
  *   }
  * }
  * ```
  *
- * then a path of `":modules:path:to:something"` will be mapped to `"path to something"` for display in the charts.
+ * then a path of `":projects:path:to:something"` will be mapped to `"path to something"` for display in the charts.
  * Remember the declarations inside `pathTransforms` are called in descending order.
  *
  * It doesn't support Regex group replacement, just pattern identification.

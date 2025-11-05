@@ -4,13 +4,13 @@ import assertk.assertThat
 import atlas.test.ScenarioTest
 import atlas.test.equalsDiffed
 import atlas.test.runTask
-import atlas.test.scenarios.D2AllModuleTypes
+import atlas.test.scenarios.D2AllProjectTypes
 import atlas.test.taskWasSuccessful
 import kotlin.test.Test
 
 internal class WriteD2ClassesTest : ScenarioTest() {
   @Test
-  fun `Generate classes from all default types`() = runScenario(D2AllModuleTypes) {
+  fun `Generate classes from all default types`() = runScenario(D2AllProjectTypes) {
     // when
     val result = runTask("writeD2Classes").build()
 
@@ -21,22 +21,22 @@ internal class WriteD2ClassesTest : ScenarioTest() {
     assertThat(resolve("atlas/classes.d2").readText()).equalsDiffed(
       """
         classes: {
-          module-AndroidApp {
+          project-AndroidApp {
             style.fill: "limegreen"
           }
-          module-KotlinMultiplatform {
+          project-KotlinMultiplatform {
             style.fill: "mediumslateblue"
           }
-          module-AndroidLibrary {
+          project-AndroidLibrary {
             style.fill: "lightgreen"
           }
-          module-KotlinJVM {
+          project-KotlinJVM {
             style.fill: "mediumorchid"
           }
-          module-Java {
+          project-Java {
             style.fill: "orange"
           }
-          module-Other {
+          project-Other {
             style.fill: "gainsboro"
           }
           container {

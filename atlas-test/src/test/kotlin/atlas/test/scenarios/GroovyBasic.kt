@@ -12,7 +12,7 @@ internal object GroovyBasic : GraphvizScenario {
     }
   """.trimIndent()
 
-  override val submoduleBuildFiles = mapOf(
+  override val subprojectBuildFiles = mapOf(
     "a" to """
       plugins {
         id 'org.jetbrains.kotlin.jvm'

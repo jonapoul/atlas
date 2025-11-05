@@ -13,7 +13,7 @@ internal object GraphvizBasic : GraphvizScenario {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
         java()
         hasPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
@@ -21,7 +21,7 @@ internal object GraphvizBasic : GraphvizScenario {
     }
   """.trimIndent()
 
-  override val submoduleBuildFiles = mapOf(
+  override val subprojectBuildFiles = mapOf(
     "a" to """
       $kotlinJvmBuildScript
       dependencies {

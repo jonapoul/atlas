@@ -52,7 +52,7 @@ atlas {
 
 ## Generated Files
 
-Atlas Graphviz will generate a `chart.dot` file in each module directory, plus an image file based on your choice of [`fileFormat`](#fileformat). In the root module it'll also generate a `legend.dot` and an accompanying image. Both of these will be auto-added to the module readme when either `gradle atlasGenerate` or `gradle writeGraphvizReadme` is run.
+Atlas Graphviz will generate a `chart.dot` file in each project directory, plus an image file based on your choice of [`fileFormat`](#fileformat). In the root project it'll also generate a `legend.dot` and an accompanying image. Both of these will be auto-added to the project readme when either `gradle atlasGenerate` or `gradle writeGraphvizReadme` is run.
 
 ## Properties
 
@@ -119,7 +119,7 @@ As mentioned in [the Extra Properties section on the previous page](usage-common
 
 ### node
 
-Set a bunch of properties to be applied to all module nodes - unless overridden by [`moduleTypes` config](usage-common.md#moduletypes). Some examples below, though you'll want to [go through the Graphviz docs](https://graphviz.org/docs/nodes/) for all restrictions/requirements:
+Set a bunch of properties to be applied to all project nodes - unless overridden by [`projectTypes` config](usage-common.md#projecttypes). Some examples below, though you'll want to [go through the Graphviz docs](https://graphviz.org/docs/nodes/) for all restrictions/requirements:
 
 ```kotlin
 atlas {
@@ -136,13 +136,13 @@ atlas {
 
 !!! tip
 
-    All properties available in `node { }` are also available when configuring individual `moduleTypes`:
+    All properties available in `node { }` are also available when configuring individual `projectTypes`:
 
     ```kotlin
     atlas {
-      moduleTypes {
+      projectTypes {
         hasPluginId("Custom", "com.custom.plugin") {
-          // overrides fill/shape for this module type only
+          // overrides fill/shape for this project type only
           fillColor = "#ABC123"
           shape = Shape.Star
         }
@@ -210,7 +210,7 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 
 ### edge
 
-Set a bunch of properties to be applied to all links between module nodes - unless overridden by [`linkTypes` config](usage-common.md#linktypes). Some examples below, though you'll want to [go through the Graphviz docs](https://graphviz.org/docs/edges/) for all restrictions/requirements:
+Set a bunch of properties to be applied to all links between project nodes - unless overridden by [`linkTypes` config](usage-common.md#linktypes). Some examples below, though you'll want to [go through the Graphviz docs](https://graphviz.org/docs/edges/) for all restrictions/requirements:
 
 ```kotlin
 atlas {

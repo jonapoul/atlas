@@ -3,7 +3,7 @@ package atlas.graphviz.internal
 import atlas.core.internal.AtlasExtensionImpl
 import atlas.graphviz.GraphvizAtlasExtension
 import atlas.graphviz.GraphvizNamedLinkTypeContainer
-import atlas.graphviz.GraphvizNamedModuleTypeContainer
+import atlas.graphviz.GraphvizNamedProjectTypeContainer
 import atlas.graphviz.GraphvizSpec
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -20,6 +20,6 @@ internal open class GraphvizAtlasExtensionImpl @Inject constructor(
   override val linkTypes = GraphvizNamedLinkTypeContainerImpl(objects)
   override fun linkTypes(action: Action<GraphvizNamedLinkTypeContainer>) = action.execute(linkTypes)
 
-  override val moduleTypes = GraphvizNamedModuleTypeContainerImpl(objects)
-  override fun moduleTypes(action: Action<GraphvizNamedModuleTypeContainer>) = action.execute(moduleTypes)
+  override val projectTypes = GraphvizNamedProjectTypeContainerImpl(objects)
+  override fun projectTypes(action: Action<GraphvizNamedProjectTypeContainer>) = action.execute(projectTypes)
 }

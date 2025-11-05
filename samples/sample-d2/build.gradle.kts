@@ -15,13 +15,13 @@ atlas {
   alsoTraverseUpwards = false
   displayLinkLabels = true
   generateOnSync = true
-  groupModules = true
+  groupProjects = true
 
   pathTransforms {
     replace(":module-", replacement = ":")
   }
 
-  moduleTypes {
+  projectTypes {
     androidApp {
       shape = Shape.Hexagon
       strokeWidth = 10

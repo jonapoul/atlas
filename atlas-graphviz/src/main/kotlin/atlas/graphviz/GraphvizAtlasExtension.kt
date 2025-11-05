@@ -7,7 +7,7 @@ import org.gradle.api.Action
 @AtlasDsl
 public interface GraphvizAtlasExtension : AtlasExtension {
   /**
-   * Perform Graphviz-specific configuration of the module diagrams.
+   * Perform Graphviz-specific configuration of the project diagrams.
    */
   public val graphviz: GraphvizSpec
   public fun graphviz(action: Action<GraphvizSpec>)
@@ -18,7 +18,7 @@ public interface GraphvizAtlasExtension : AtlasExtension {
   public fun linkTypes(action: Action<GraphvizNamedLinkTypeContainer>)
 
   /**
-   * Configure [atlas.core.ModuleTypeSpec]s using Graphviz-specific attributes.
+   * Configure [atlas.core.ProjectTypeSpec]s using Graphviz-specific attributes.
    */
-  public fun moduleTypes(action: Action<GraphvizNamedModuleTypeContainer>)
+  public fun projectTypes(action: Action<GraphvizNamedProjectTypeContainer>)
 }

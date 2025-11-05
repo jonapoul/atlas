@@ -8,13 +8,13 @@ internal fun d2Writer(
   layout: ProjectLayout,
   replacements: Set<Replacement> = emptySet(),
   thisPath: String = ":app",
-  groupModules: Boolean = false,
+  groupProjects: Boolean = false,
   classesRelativePath: String = "../classes.d2",
 ) = D2Writer(
-  typedModules = layout.modules,
+  typedProjects = layout.projects,
   links = layout.links,
   replacements = replacements,
   thisPath = thisPath,
-  groupModules = groupModules,
+  groupProjects = groupProjects,
   pathToClassesFile = classesRelativePath,
 )

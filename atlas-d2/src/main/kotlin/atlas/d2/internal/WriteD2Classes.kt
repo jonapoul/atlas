@@ -4,12 +4,12 @@ package atlas.d2.internal
 
 import atlas.core.InternalAtlasApi
 import atlas.core.LinkType
-import atlas.core.ModuleType
+import atlas.core.ProjectType
 import atlas.core.internal.IndentedStringBuilder
 import atlas.core.internal.buildIndentedString
-import atlas.core.internal.moduleType
+import atlas.core.internal.projectType
 import atlas.core.internal.orderedLinkTypes
-import atlas.core.internal.orderedModuleTypes
+import atlas.core.internal.orderedProjectTypes
 import atlas.core.internal.parseEnum
 import atlas.core.internal.sortedByKeys
 import atlas.d2.Direction
@@ -30,7 +30,7 @@ public fun writeD2Classes(config: D2ClassesConfig): String = buildIndentedString
 
   appendLine("classes: {")
   indent {
-    for (type in config.moduleTypes) appendClass(type)
+    for (type in config.projectTypes) appendClass(type)
     for (type in config.linkTypes) appendLink(config, type)
     appendContainer(config)
     appendHidden()
@@ -51,7 +51,7 @@ public class D2ClassesConfig(
   public val layoutEngine: LayoutEngine? = null,
   public val linkTypes: List<LinkType> = emptyList(),
   public val location: Location? = null,
-  public val moduleTypes: List<ModuleType> = emptyList(),
+  public val projectTypes: List<ProjectType> = emptyList(),
   public val pad: Int? = null,
   public val position: Position? = null,
   public val rootStyle: Map<String, String> = emptyMap(),
@@ -69,7 +69,7 @@ internal fun D2AtlasExtensionImpl.toConfig() = D2ClassesConfig(
   layoutEngine = d2.layoutEngine.layoutEngine.orNull,
   linkTypes = orderedLinkTypes(),
   location = d2.groupLabelLocation.orNull,
-  moduleTypes = orderedModuleTypes().map(::moduleType),
+  projectTypes = orderedProjectTypes().map(::projectType),
   pad = d2.pad.orNull,
   position = d2.groupLabelPosition.orNull,
   rootStyle = d2.rootStyle.properties.getOrElse(mutableMapOf()),
@@ -81,15 +81,15 @@ internal const val CONTAINER_CLASS = "container"
 internal const val HIDDEN_CLASS = "hidden"
 
 internal val LinkType.classId get() = "link-$key"
-internal val ModuleType.classId get() = "module-$key"
+internal val ProjectType.classId get() = "project-$key"
 
 internal val LinkType.key: String get() = configuration.key
-internal val ModuleType.key: String get() = name.key
+internal val ProjectType.key: String get() = name.key
 
 private val String.key
   get() = this.filter { it.isLetter() || it.isDigit() }
 
-private fun IndentedStringBuilder.appendClass(type: ModuleType) = with(type) {
+private fun IndentedStringBuilder.appendClass(type: ProjectType) = with(type) {
   appendLine("$classId {")
   indent {
     val properties = type.properties + ("style.fill" to color)

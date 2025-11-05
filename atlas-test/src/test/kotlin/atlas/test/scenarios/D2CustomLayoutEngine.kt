@@ -14,7 +14,7 @@ internal object D2CustomLayoutEngine : D2Scenario by D2Basic {
     }
 
     atlas {
-      moduleTypes.useDefaults()
+      projectTypes.useDefaults()
 
       d2 {
         layoutEngine.elk()

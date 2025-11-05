@@ -48,7 +48,7 @@ public class D2AtlasPlugin : AtlasPlugin() {
     val d2Spec = d2Extension.d2
 
     // need to use the same pathToClassesFile string for real and dummy tasks, otherwise the check operation might
-    // fail if the module and the build directory have different relative paths.
+    // fail if the project and the build directory have different relative paths.
     val writeD2Classes = WriteD2Classes.get(rootProject)
     val classesFile = writeD2Classes.map { it.outputFile.get() }
     val outputFile = outputFile(Chart, d2Spec.fileExtension.get())

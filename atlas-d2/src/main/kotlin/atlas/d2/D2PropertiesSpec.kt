@@ -3,7 +3,7 @@ package atlas.d2
 import atlas.core.PropertiesSpec
 
 /**
- * A set of properties from https://d2lang.com/tour/style - applicable to both [D2ModuleTypeSpec] and [D2LinkTypeSpec].
+ * A set of properties from https://d2lang.com/tour/style - applicable to both [D2ProjectTypeSpec] and [D2LinkTypeSpec].
  */
 public interface D2PropertiesSpec : PropertiesSpec {
   public var animated: Boolean?

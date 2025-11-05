@@ -15,14 +15,14 @@ internal object GraphVizChartWithReplacements : Scenario by GraphvizBasic {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
         java()
       }
 
       pathTransforms {
         replace(pattern = "^:", replacement = "") // remove ":" prefix
-        replace(pattern = "^b$", replacement = "B") // rename one module to uppercase
+        replace(pattern = "^b$", replacement = "B") // rename one project to uppercase
       }
     }
   """.trimIndent()

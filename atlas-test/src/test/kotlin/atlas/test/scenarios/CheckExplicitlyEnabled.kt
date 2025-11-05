@@ -11,7 +11,7 @@ internal object CheckExplicitlyEnabled : Scenario by GraphvizBasic {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
         java()
       }

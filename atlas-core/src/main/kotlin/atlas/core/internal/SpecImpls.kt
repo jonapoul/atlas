@@ -3,7 +3,7 @@ package atlas.core.internal
 import atlas.core.AtlasExtension
 import atlas.core.InternalAtlasApi
 import atlas.core.LinkTypeSpec
-import atlas.core.ModuleTypeSpec
+import atlas.core.ProjectTypeSpec
 import atlas.core.PathTransformSpec
 import atlas.core.Replacement
 import org.gradle.api.Action
@@ -26,15 +26,15 @@ public abstract class AtlasExtensionImpl(
   override val checkOutputs: Property<Boolean> = objects.bool(coreProperties.checkOutputs)
   override val displayLinkLabels: Property<Boolean> = objects.bool(coreProperties.displayLinkLabels)
   override val generateOnSync: Property<Boolean> = objects.bool(coreProperties.generateOnSync)
-  override val groupModules: Property<Boolean> = objects.bool(coreProperties.groupModules)
+  override val groupProjects: Property<Boolean> = objects.bool(coreProperties.groupProjects)
   override val ignoredConfigs: SetProperty<String> = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
-  override val ignoredModules: SetProperty<Regex> = objects.set(convention = emptySet())
+  override val ignoredProjects: SetProperty<Regex> = objects.set(convention = emptySet())
   override val printFilesToConsole: Property<Boolean> = objects.bool(coreProperties.printFilesToConsole)
 
   override val pathTransforms: PathTransformSpecImpl = PathTransformSpecImpl(objects)
   override fun pathTransforms(action: Action<PathTransformSpec>): Unit = action.execute(pathTransforms)
 
-  abstract override val moduleTypes: ModuleTypeContainer<*>
+  abstract override val projectTypes: ProjectTypeContainer<*>
   abstract override val linkTypes: LinkTypeContainer<*>
 
   @InternalAtlasApi
@@ -54,7 +54,7 @@ public class PathTransformSpecImpl(objects: ObjectFactory) : PathTransformSpec {
 }
 
 @InternalAtlasApi
-public abstract class ModuleTypeSpecImpl @Inject constructor(override val name: String) : ModuleTypeSpec {
+public abstract class ProjectTypeSpecImpl @Inject constructor(override val name: String) : ProjectTypeSpec {
   @get:Input public abstract override val color: Property<String>
   @get:Input public abstract override val pathContains: Property<String>
   @get:Input public abstract override val pathMatches: Property<String>

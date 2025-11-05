@@ -17,7 +17,7 @@ internal object GraphVizChartWithCustomLinkTypes : GraphvizScenario {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
         java()
       }
@@ -30,7 +30,7 @@ internal object GraphVizChartWithCustomLinkTypes : GraphvizScenario {
     }
   """.trimIndent()
 
-  override val submoduleBuildFiles = mapOf(
+  override val subprojectBuildFiles = mapOf(
     "a" to """
       $kotlinJvmBuildScript
       dependencies {

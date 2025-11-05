@@ -13,7 +13,7 @@ internal object MermaidBasic : MermaidScenario {
     }
   """.trimIndent()
 
-  override val submoduleBuildFiles = mapOf(
+  override val subprojectBuildFiles = mapOf(
     "a" to """
       $kotlinJvmBuildScript
       dependencies {

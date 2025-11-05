@@ -481,7 +481,7 @@ public abstract interface class atlas/graphviz/GraphvizAtlasExtension : atlas/co
 	public abstract fun getGraphviz ()Latlas/graphviz/GraphvizSpec;
 	public abstract fun graphviz (Lorg/gradle/api/Action;)V
 	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
-	public abstract fun moduleTypes (Lorg/gradle/api/Action;)V
+	public abstract fun projectTypes (Lorg/gradle/api/Action;)V
 }
 
 public final class atlas/graphviz/GraphvizAtlasPlugin : atlas/core/AtlasPlugin {
@@ -496,14 +496,6 @@ public final class atlas/graphviz/GraphvizLinkTypeSpec$DefaultImpls {
 	public static fun put (Latlas/graphviz/GraphvizLinkTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
-public abstract interface class atlas/graphviz/GraphvizModuleTypeSpec : atlas/core/ModuleTypeSpec, atlas/graphviz/NodeAttributes {
-}
-
-public final class atlas/graphviz/GraphvizModuleTypeSpec$DefaultImpls {
-	public static fun clear (Latlas/graphviz/GraphvizModuleTypeSpec;)V
-	public static fun put (Latlas/graphviz/GraphvizModuleTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
-}
-
 public abstract interface class atlas/graphviz/GraphvizNamedLinkTypeContainer : atlas/core/NamedLinkTypeContainer {
 }
 
@@ -514,13 +506,21 @@ public final class atlas/graphviz/GraphvizNamedLinkTypeContainer$DefaultImpls {
 	public static fun register (Latlas/graphviz/GraphvizNamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
-public abstract interface class atlas/graphviz/GraphvizNamedModuleTypeContainer : atlas/core/NamedModuleTypeContainer {
+public abstract interface class atlas/graphviz/GraphvizNamedProjectTypeContainer : atlas/core/NamedProjectTypeContainer {
 }
 
-public final class atlas/graphviz/GraphvizNamedModuleTypeContainer$DefaultImpls {
-	public static fun hasPluginId (Latlas/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun pathContains (Latlas/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun pathMatches (Latlas/graphviz/GraphvizNamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+public final class atlas/graphviz/GraphvizNamedProjectTypeContainer$DefaultImpls {
+	public static fun hasPluginId (Latlas/graphviz/GraphvizNamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun pathContains (Latlas/graphviz/GraphvizNamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun pathMatches (Latlas/graphviz/GraphvizNamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public abstract interface class atlas/graphviz/GraphvizProjectTypeSpec : atlas/core/ProjectTypeSpec, atlas/graphviz/NodeAttributes {
+}
+
+public final class atlas/graphviz/GraphvizProjectTypeSpec$DefaultImpls {
+	public static fun clear (Latlas/graphviz/GraphvizProjectTypeSpec;)V
+	public static fun put (Latlas/graphviz/GraphvizProjectTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public abstract interface class atlas/graphviz/GraphvizSpec : atlas/core/AtlasSpec {
@@ -815,10 +815,10 @@ public abstract class atlas/graphviz/tasks/WriteGraphvizChart : org/gradle/api/D
 	public fun <init> ()V
 	public fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
-	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupProjects ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getModuleTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
@@ -828,7 +828,7 @@ public abstract class atlas/graphviz/tasks/WriteGraphvizLegend : org/gradle/api/
 	public fun execute ()V
 	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/ListProperty;
-	public abstract fun getModuleTypes ()Lorg/gradle/api/provider/ListProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectTypes ()Lorg/gradle/api/provider/ListProperty;
 }
 

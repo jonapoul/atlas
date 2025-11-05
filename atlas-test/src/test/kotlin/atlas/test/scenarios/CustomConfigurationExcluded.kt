@@ -13,7 +13,7 @@ internal object CustomConfigurationExcluded : Scenario by CustomConfigurations {
       }
     """.trimIndent()
 
-  override val submoduleBuildFiles = mapOf(
+  override val subprojectBuildFiles = mapOf(
     "a" to """
       $kotlinJvmBuildScript
 

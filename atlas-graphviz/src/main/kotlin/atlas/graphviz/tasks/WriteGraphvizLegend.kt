@@ -1,7 +1,7 @@
 package atlas.graphviz.tasks
 
 import atlas.core.LinkType
-import atlas.core.ModuleType
+import atlas.core.ProjectType
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.AtlasExtensionImpl
 import atlas.core.internal.DummyAtlasGenerationTask
@@ -9,9 +9,9 @@ import atlas.core.internal.Variant.Legend
 import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.buildIndentedString
 import atlas.core.internal.logIfConfigured
-import atlas.core.internal.moduleType
+import atlas.core.internal.projectType
 import atlas.core.internal.orderedLinkTypes
-import atlas.core.internal.orderedModuleTypes
+import atlas.core.internal.orderedProjectTypes
 import atlas.core.internal.outputFile
 import atlas.core.internal.qualifier
 import atlas.core.tasks.AtlasGenerationTask
@@ -40,7 +40,7 @@ import java.io.File
  */
 @CacheableTask
 public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
-  @get:Input public abstract val moduleTypes: ListProperty<ModuleType>
+  @get:Input public abstract val projectTypes: ListProperty<ProjectType>
   @get:Input public abstract val linkTypes: ListProperty<LinkType>
   @get:Input public abstract val config: Property<DotConfig>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
@@ -52,12 +52,12 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
 
   @TaskAction
   public open fun execute() {
-    val moduleTypes = moduleTypes.get()
+    val projectTypes = projectTypes.get()
     val linkTypes = linkTypes.get()
     val outputFile = outputFile.get().asFile
     val config = config.get()
 
-    val hasModuleTypes = moduleTypes.isNotEmpty()
+    val hasProjectTypes = projectTypes.isNotEmpty()
     val hasLinkTypes = linkTypes.isNotEmpty()
 
     val dotFileContents = buildIndentedString {
@@ -69,13 +69,13 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
 
         val tableAttrs = tableAttributes(config).joinToString(separator = " ") { (k, v) -> "$k=\"$v\"" }
 
-        if (hasModuleTypes) {
-          appendLine("modules [label=<")
+        if (hasProjectTypes) {
+          appendLine("projects [label=<")
           appendLine("<TABLE $tableAttrs>")
-          appendLine("  <TR><TD COLSPAN=\"2\"><B>Module Types</B></TD></TR>")
+          appendLine("  <TR><TD COLSPAN=\"2\"><B>Project Types</B></TD></TR>")
           indent {
-            moduleTypes.forEach { type ->
-              val text = withFontColor(text = "&lt;module-name&gt;", properties = type.properties)
+            projectTypes.forEach { type ->
+              val text = withFontColor(text = "&lt;project-name&gt;", properties = type.properties)
               appendLine("<TR><TD>${type.name}</TD><TD BGCOLOR=\"${type.color}\">$text</TD></TR>")
             }
           }
@@ -165,7 +165,7 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
       }
 
       writeLegend.configure { task ->
-        task.moduleTypes.convention(extension.orderedModuleTypes().map(::moduleType))
+        task.projectTypes.convention(extension.orderedProjectTypes().map(::projectType))
         task.linkTypes.convention(extension.orderedLinkTypes())
         task.config.convention(DotConfig(extension, spec))
       }

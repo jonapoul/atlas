@@ -5,23 +5,23 @@ import atlas.core.Replacement
 import atlas.d2.LinkStyle
 import atlas.d2.d2Writer
 import atlas.test.Abc
-import atlas.test.LowestLevelOfSubmodules
-import atlas.test.ModuleWithNoLinks
-import atlas.test.OneLevelOfSubmodules
-import atlas.test.OneLevelOfSubmodulesWithReplacements
+import atlas.test.LowestLevelOfSubprojects
+import atlas.test.ProjectWithNoLinks
+import atlas.test.OneLevelOfSubprojects
+import atlas.test.OneLevelOfSubprojectsWithReplacements
 import atlas.test.ProjectLayout
-import atlas.test.SingleNestedModuleWithNoLinks
-import atlas.test.TwoLevelsOfSubmodules
+import atlas.test.SingleNestedProjectWithNoLinks
+import atlas.test.TwoLevelsOfSubprojects
 import atlas.test.equalsDiffed
-import atlas.test.moduleLink
+import atlas.test.projectLink
 import kotlin.test.Test
 
 internal class D2WriterTest {
   @Test
-  fun `Base config with no module types`() {
+  fun `Base config with no project types`() {
     val writer = d2Writer(
-      layout = OneLevelOfSubmodules,
-      groupModules = false,
+      layout = OneLevelOfSubprojects,
+      groupProjects = false,
     )
 
     assertThat(writer()).equalsDiffed(
@@ -47,9 +47,9 @@ internal class D2WriterTest {
         ui_c -> domain_b { class: link-implementation }
         vars: {
           d2-legend: {
-            module-dummy1.class: hidden
-            module-dummy2.class: hidden
-            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+            project-dummy1.class: hidden
+            project-dummy2.class: hidden
+            project-dummy1 -> project-dummy2: implementation { class: link-implementation }
           }
         }
       """.trimIndent(),
@@ -59,11 +59,11 @@ internal class D2WriterTest {
   @Test
   fun `Lowest level of a multi-level hierarchy`() {
     val writer = d2Writer(
-      layout = LowestLevelOfSubmodules,
+      layout = LowestLevelOfSubprojects,
       thisPath = ":ui:c",
     )
 
-    // then the single module is written to the chart on its lonesome
+    // then the single project is written to the chart on its lonesome
     assertThat(writer()).equalsDiffed(
       """
         ...@../classes.d2
@@ -73,10 +73,10 @@ internal class D2WriterTest {
   }
 
   @Test
-  fun `Grouping modules`() {
+  fun `Grouping projects`() {
     val writer = d2Writer(
-      layout = OneLevelOfSubmodules,
-      groupModules = true,
+      layout = OneLevelOfSubprojects,
+      groupProjects = true,
     )
 
     assertThat(writer()).equalsDiffed(
@@ -111,9 +111,9 @@ internal class D2WriterTest {
         ui.c -> domain.b { class: link-implementation }
         vars: {
           d2-legend: {
-            module-dummy1.class: hidden
-            module-dummy2.class: hidden
-            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+            project-dummy1.class: hidden
+            project-dummy2.class: hidden
+            project-dummy1 -> project-dummy2: implementation { class: link-implementation }
           }
         }
       """.trimIndent(),
@@ -121,12 +121,12 @@ internal class D2WriterTest {
   }
 
   @Test
-  fun `Grouping modules with replacements`() {
+  fun `Grouping projects with replacements`() {
     val writer = d2Writer(
-      layout = OneLevelOfSubmodulesWithReplacements,
-      groupModules = true,
+      layout = OneLevelOfSubprojectsWithReplacements,
+      groupProjects = true,
       replacements = setOf(
-        Replacement(pattern = "^:modules:".toRegex(), replacement = ":"),
+        Replacement(pattern = "^:projects:".toRegex(), replacement = ":"),
       ),
     )
 
@@ -162,9 +162,9 @@ internal class D2WriterTest {
         ui.c -> domain.b { class: link-implementation }
         vars: {
           d2-legend: {
-            module-dummy1.class: hidden
-            module-dummy2.class: hidden
-            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+            project-dummy1.class: hidden
+            project-dummy2.class: hidden
+            project-dummy1 -> project-dummy2: implementation { class: link-implementation }
           }
         }
       """.trimIndent(),
@@ -172,10 +172,10 @@ internal class D2WriterTest {
   }
 
   @Test
-  fun `Grouping modules with sub-subgraphs`() {
+  fun `Grouping projects with sub-subgraphs`() {
     val writer = d2Writer(
-      layout = TwoLevelsOfSubmodules,
-      groupModules = true,
+      layout = TwoLevelsOfSubprojects,
+      groupProjects = true,
     )
 
     assertThat(writer()).equalsDiffed(
@@ -217,9 +217,9 @@ internal class D2WriterTest {
         ui.c -> domain.b { class: link-implementation }
         vars: {
           d2-legend: {
-            module-dummy1.class: hidden
-            module-dummy2.class: hidden
-            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+            project-dummy1.class: hidden
+            project-dummy2.class: hidden
+            project-dummy1 -> project-dummy2: implementation { class: link-implementation }
           }
         }
       """.trimIndent(),
@@ -227,16 +227,16 @@ internal class D2WriterTest {
   }
 
   @Test
-  fun `Single module with no links`() {
-    val writer = d2Writer(layout = ModuleWithNoLinks)
+  fun `Single project with no links`() {
+    val writer = d2Writer(layout = ProjectWithNoLinks)
 
     assertThat(writer()).equalsDiffed(
       """
         ...@../classes.d2
-        app: :app { class: module-red }
+        app: :app { class: project-red }
         vars: {
           d2-legend: {
-            module-red: red { class: module-red }
+            project-red: red { class: project-red }
           }
         }
       """.trimIndent(),
@@ -244,10 +244,10 @@ internal class D2WriterTest {
   }
 
   @Test
-  fun `Single nested module with no links`() {
+  fun `Single nested project with no links`() {
     val writer = d2Writer(
-      layout = SingleNestedModuleWithNoLinks,
-      groupModules = true,
+      layout = SingleNestedProjectWithNoLinks,
+      groupProjects = true,
       thisPath = ":a:b",
     )
 
@@ -256,11 +256,11 @@ internal class D2WriterTest {
         ...@../classes.d2
         a: :a {
           class: container
-          b: :b { class: module-red }
+          b: :b { class: project-red }
         }
         vars: {
           d2-legend: {
-            module-red: red { class: module-red }
+            project-red: red { class: project-red }
           }
         }
       """.trimIndent(),
@@ -284,10 +284,10 @@ internal class D2WriterTest {
         a -> c { class: link-implementation }
         vars: {
           d2-legend: {
-            module-dummy1.class: hidden
-            module-dummy2.class: hidden
-            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
-            module-dummy1 -> module-dummy2: implementation { class: link-implementation }
+            project-dummy1.class: hidden
+            project-dummy2.class: hidden
+            project-dummy1 -> project-dummy2: implementation { class: link-implementation }
+            project-dummy1 -> project-dummy2: implementation { class: link-implementation }
           }
         }
       """.trimIndent(),
@@ -296,8 +296,8 @@ internal class D2WriterTest {
 
   private object D2AbcWithLinkStyles : ProjectLayout by Abc {
     override val links = setOf(
-      moduleLink(fromPath = ":a", toPath = ":b", style = LinkStyle.Dashed, color = "orange"),
-      moduleLink(fromPath = ":a", toPath = ":c", style = LinkStyle.Bold),
+      projectLink(fromPath = ":a", toPath = ":b", style = LinkStyle.Dashed, color = "orange"),
+      projectLink(fromPath = ":a", toPath = ":c", style = LinkStyle.Bold),
     )
   }
 }
