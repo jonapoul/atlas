@@ -1,5 +1,5 @@
 [versions]
-agp = "8.13.0"
+agp = "9.0.0-alpha13"
 kotlin = "2.2.21"
 
 [libraries]
@@ -12,6 +12,7 @@ kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-
 
 [plugins]
 agp-app = { id = "com.android.application", version.ref = "agp" }
+agp-kmp = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 agp-lib = { id = "com.android.library", version.ref = "agp" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version = "5.7.1" }
 detekt = { id = "dev.detekt", version = "2.0.0-alpha.1" }

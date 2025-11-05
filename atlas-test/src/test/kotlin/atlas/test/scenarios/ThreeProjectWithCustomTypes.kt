@@ -10,7 +10,6 @@ internal object ThreeProjectWithCustomTypes : GraphvizScenario {
   override val rootBuildFile = """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      kotlin("android") version "$KOTLIN_VERSION" apply false
       id("com.android.library") version "$AGP_VERSION" apply false
       id("$pluginId")
     }
