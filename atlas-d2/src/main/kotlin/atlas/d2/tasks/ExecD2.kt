@@ -4,6 +4,7 @@ import atlas.core.InternalAtlasApi
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.Variant
 import atlas.core.internal.logIfConfigured
+import atlas.core.internal.withExtension
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.TaskWithOutputFile
 import atlas.d2.D2Spec
@@ -104,13 +105,10 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
       val d2Classes = WriteD2Classes.get(rootProject)
 
       execGraphviz.configure { task ->
-        val d2File = dotFileTask.map { it.outputFile.get() }
-        val outputFile = d2File.map { f ->
-          val newFile = f.asFile.resolveSibling("${f.asFile.nameWithoutExtension}.${spec.fileFormat.get()}")
-          project.layout.projectDirectory.file(newFile.relativeTo(projectDir).path)
-        }
+        val d2File = dotFileTask.flatMap { it.outputFile }
+        val outputFile = d2File.withExtension(target, extension = provider { spec.fileFormat.get() })
 
-        task.classesFile.convention(d2Classes.map { it.outputFile.get() })
+        task.classesFile.convention(d2Classes.flatMap { it.outputFile })
         task.inputFile.convention(d2File)
         task.pathToD2Command.convention(spec.pathToD2Command)
         task.outputFormat.convention(spec.fileFormat)

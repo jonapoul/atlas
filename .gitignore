@@ -3,6 +3,7 @@
 *.keystore
 *.sarif
 .cache/
+.claude/
 .gradle/
 .idea/
 .kotlin/

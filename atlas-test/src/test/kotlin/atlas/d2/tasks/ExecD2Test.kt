@@ -35,16 +35,19 @@ internal class ExecD2Test : ScenarioTest() {
         :a:writeProjectTree SKIPPED
         :a:writeD2Chart SKIPPED
         :a:execD2Chart SKIPPED
+        :a:svgToPng SKIPPED
         :a:writeD2Readme SKIPPED
         :a:atlasGenerate SKIPPED
         :b:writeProjectTree SKIPPED
         :b:writeD2Chart SKIPPED
         :b:execD2Chart SKIPPED
+        :b:svgToPng SKIPPED
         :b:writeD2Readme SKIPPED
         :b:atlasGenerate SKIPPED
         :c:writeProjectTree SKIPPED
         :c:writeD2Chart SKIPPED
         :c:execD2Chart SKIPPED
+        :c:svgToPng SKIPPED
         :c:writeD2Readme SKIPPED
         :c:atlasGenerate SKIPPED
 

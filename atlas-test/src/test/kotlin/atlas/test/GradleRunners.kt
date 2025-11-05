@@ -2,24 +2,26 @@ package atlas.test
 
 import org.gradle.testkit.runner.GradleRunner
 import java.io.File
+import kotlin.test.fail
 
-internal fun File.buildRunner(androidHome: File? = null): GradleRunner = GradleRunner
+internal fun File.buildRunner(requiresAndroid: Boolean = false): GradleRunner = GradleRunner
   .create()
   .withPluginClasspath()
   .withDebug(false)
-  .withGradleVersion(System.getProperty("test.version.gradle"))
+  .withGradleVersion(GRADLE_VERSION)
   .withProjectDir(this)
   .apply {
-    if (androidHome != null) {
-      withEnvironment(mapOf("ANDROID_HOME" to androidHome.absolutePath))
+    if (requiresAndroid) {
+      if (ANDROID_HOME == null) fail("No ANDROID_HOME supplied!")
+      withEnvironment(mapOf("ANDROID_HOME" to ANDROID_HOME.absolutePath))
     }
   }
 
 internal fun File.runTask(
   task: String,
-  androidHome: File? = null,
+  requiresAndroid: Boolean = false,
   extras: List<String> = emptyList(),
-): GradleRunner = buildRunner(androidHome).runTask(task, extras)
+): GradleRunner = buildRunner(requiresAndroid).runTask(task, extras)
 
 internal fun GradleRunner.runTask(
   task: String,

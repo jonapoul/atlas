@@ -9,6 +9,7 @@ import atlas.core.internal.Variant.Legend
 import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.outputFile
 import atlas.core.tasks.CheckFileDiff
+import atlas.core.tasks.SvgToPng
 import atlas.core.tasks.WriteReadme
 import atlas.d2.internal.D2AtlasExtensionImpl
 import atlas.d2.tasks.ExecD2
@@ -82,6 +83,13 @@ public class D2AtlasPlugin : AtlasPlugin() {
       spec = d2Spec,
       variant = Chart,
       dotFileTask = chartTask,
+    )
+
+    SvgToPng.register(
+      target = project,
+      svgTask = d2Task,
+      isSvgInput = d2Spec.fileFormat.map { it == FileFormat.Svg },
+      converter = d2Spec.converter,
     )
 
     WriteReadme.register(

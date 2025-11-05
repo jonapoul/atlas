@@ -2,6 +2,7 @@ package atlas.graphviz
 
 import atlas.core.AtlasDsl
 import atlas.core.AtlasSpec
+import atlas.core.tasks.SvgToPng
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
@@ -69,4 +70,10 @@ public interface GraphvizSpec : AtlasSpec {
    */
   public val graph: GraphAttributes
   public fun graph(action: Action<GraphAttributes>)
+
+  /**
+   * If called, a task will be registered to convert any SVG outputs to PNGs. Has no effect if [GraphvizSpec.fileFormat]
+   * is not [FileFormat.Svg].
+   */
+  public fun convertSvgToPng(converter: SvgToPng.Converter? = null)
 }

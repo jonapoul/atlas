@@ -16,8 +16,10 @@ buildConfig {
   sourceSets.getByName("test") {
     packageName = "atlas.test"
     useKotlinOutput { topLevelConstants = true }
-    buildConfigField<String>("AGP_VERSION", libs.versions.agp.get())
-    buildConfigField<String>("KOTLIN_VERSION", libs.versions.kotlin.get())
+    buildConfigField("AGP_VERSION", libs.versions.agp)
+    buildConfigField("KOTLIN_VERSION", libs.versions.kotlin)
+    buildConfigField("GRADLE_VERSION", GradleVersion.current().version)
+    buildConfigField<File?>("ANDROID_HOME", androidHome())
   }
 }
 
@@ -26,6 +28,7 @@ dependencies {
   testImplementation(kotlin("test"))
   testImplementation(libs.assertk)
   testImplementation(libs.junit.api)
+  testImplementation(libs.junit.params)
   testImplementation(project(":atlas-core"))
   testRuntimeOnly(libs.junit.launcher)
 
@@ -37,8 +40,6 @@ dependencies {
 
 tasks.withType<Test>().configureEach {
   useJUnitPlatform()
-  systemProperty("test.version.gradle", GradleVersion.current().version)
-  androidHome()?.let { systemProperty("test.androidHome", it) }
 
   testLogging {
     events = setOf(PASSED, SKIPPED, FAILED)
@@ -51,7 +52,7 @@ tasks.withType<Test>().configureEach {
   }
 }
 
-fun Project.androidHome(): File? {
+fun androidHome(): File? {
   val androidHome = System.getenv("ANDROID_HOME")?.let(::File)
   if (androidHome?.exists() == true) {
     logger.info("Using system environment variable $androidHome as ANDROID_HOME")

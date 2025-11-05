@@ -11,6 +11,7 @@ import atlas.test.RequiresWhereis
 import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
 import atlas.test.doesNotExist
+import atlas.test.noTasksFailed
 import atlas.test.runTask
 import atlas.test.scenarios.GraphVizBasicWithPngOutput
 import atlas.test.scenarios.GraphVizCustomDotExecutable
@@ -39,6 +40,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
         :a:writeProjectTree SKIPPED
         :a:writeGraphvizChart SKIPPED
         :a:execGraphvizChart SKIPPED
+        :a:svgToPng SKIPPED
         :writeGraphvizLegend SKIPPED
         :execGraphvizLegend SKIPPED
         :a:writeGraphvizReadme SKIPPED
@@ -46,11 +48,13 @@ internal class ExecGraphvizTest : ScenarioTest() {
         :b:writeProjectTree SKIPPED
         :b:writeGraphvizChart SKIPPED
         :b:execGraphvizChart SKIPPED
+        :b:svgToPng SKIPPED
         :b:writeGraphvizReadme SKIPPED
         :b:atlasGenerate SKIPPED
         :c:writeProjectTree SKIPPED
         :c:writeGraphvizChart SKIPPED
         :c:execGraphvizChart SKIPPED
+        :c:svgToPng SKIPPED
         :c:writeGraphvizReadme SKIPPED
         :c:atlasGenerate SKIPPED
 
@@ -109,7 +113,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
     val result = runTask("atlasGenerate").build()
 
     // then it's all good
-    assertThat(result.tasks).allSuccessful()
+    assertThat(result).noTasksFailed()
 
     // if we don't add this we'll get a junit log warning
     customDotFile.delete()

@@ -524,6 +524,8 @@ public final class atlas/graphviz/GraphvizProjectTypeSpec$DefaultImpls {
 }
 
 public abstract interface class atlas/graphviz/GraphvizSpec : atlas/core/AtlasSpec {
+	public abstract fun convertSvgToPng (Latlas/core/tasks/SvgToPng$Converter;)V
+	public static synthetic fun convertSvgToPng$default (Latlas/graphviz/GraphvizSpec;Latlas/core/tasks/SvgToPng$Converter;ILjava/lang/Object;)V
 	public abstract fun edge (Lorg/gradle/api/Action;)V
 	public abstract fun getEdge ()Latlas/graphviz/EdgeAttributes;
 	public abstract fun getFileFormat ()Lorg/gradle/api/provider/Property;
@@ -533,6 +535,10 @@ public abstract interface class atlas/graphviz/GraphvizSpec : atlas/core/AtlasSp
 	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
 	public abstract fun graph (Lorg/gradle/api/Action;)V
 	public abstract fun node (Lorg/gradle/api/Action;)V
+}
+
+public final class atlas/graphviz/GraphvizSpec$DefaultImpls {
+	public static synthetic fun convertSvgToPng$default (Latlas/graphviz/GraphvizSpec;Latlas/core/tasks/SvgToPng$Converter;ILjava/lang/Object;)V
 }
 
 public final class atlas/graphviz/ImagePos : java/lang/Enum, atlas/core/StringEnum {

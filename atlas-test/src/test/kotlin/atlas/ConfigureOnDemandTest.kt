@@ -2,7 +2,6 @@ package atlas
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.allTasksSuccessful
 import atlas.test.contains
 import atlas.test.noTasksFailed
 import atlas.test.runTask
@@ -34,7 +33,7 @@ internal class ConfigureOnDemandTest : ScenarioTest() {
   private fun File.rootProjectTestCase() {
     // When configure-on-demand is enabled, running from root should still work normally
     val generate = runTask("atlasGenerate").build()
-    assertThat(generate).allTasksSuccessful()
+    assertThat(generate).noTasksFailed()
 
     val check = runTask("atlasCheck").build()
     assertThat(check).noTasksFailed() // some cached from the generation step before

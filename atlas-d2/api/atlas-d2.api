@@ -198,6 +198,8 @@ public final class atlas/d2/D2RootStyleSpec$DefaultImpls {
 }
 
 public abstract interface class atlas/d2/D2Spec : atlas/core/AtlasSpec {
+	public abstract fun convertSvgToPng (Latlas/core/tasks/SvgToPng$Converter;)V
+	public static synthetic fun convertSvgToPng$default (Latlas/d2/D2Spec;Latlas/core/tasks/SvgToPng$Converter;ILjava/lang/Object;)V
 	public abstract fun getAnimateInterval ()Lorg/gradle/api/provider/Property;
 	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;
 	public abstract fun getCenter ()Lorg/gradle/api/provider/Property;
@@ -216,6 +218,10 @@ public abstract interface class atlas/d2/D2Spec : atlas/core/AtlasSpec {
 	public abstract fun globalProps (Lorg/gradle/api/Action;)V
 	public abstract fun layoutEngine (Lorg/gradle/api/Action;)V
 	public abstract fun rootStyle (Lorg/gradle/api/Action;)V
+}
+
+public final class atlas/d2/D2Spec$DefaultImpls {
+	public static synthetic fun convertSvgToPng$default (Latlas/d2/D2Spec;Latlas/core/tasks/SvgToPng$Converter;ILjava/lang/Object;)V
 }
 
 public abstract interface class atlas/d2/D2TalaSpec : atlas/core/PropertiesSpec {

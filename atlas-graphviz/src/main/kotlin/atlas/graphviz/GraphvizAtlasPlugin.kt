@@ -7,6 +7,7 @@ import atlas.core.internal.AtlasExtensionImpl
 import atlas.core.internal.Variant.Chart
 import atlas.core.internal.Variant.Legend
 import atlas.core.tasks.CheckFileDiff
+import atlas.core.tasks.SvgToPng
 import atlas.core.tasks.WriteReadme
 import atlas.graphviz.internal.GraphvizAtlasExtensionImpl
 import atlas.graphviz.tasks.ExecGraphviz
@@ -67,6 +68,13 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
       dotFileTask = chartTask,
     )
 
+    SvgToPng.register(
+      target = project,
+      svgTask = graphvizTask,
+      isSvgInput = graphvizSpec.fileFormat.map { it == FileFormat.Svg },
+      converter = graphvizSpec.converter,
+    )
+
     WriteReadme.register(
       target = project,
       flavor = "Graphviz",
@@ -84,11 +92,18 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
       extension = extension,
     )
 
-    ExecGraphviz.register(
+    val graphvizTask = ExecGraphviz.register(
       target = project,
       spec = spec,
       variant = Legend,
       dotFileTask = realTask,
+    )
+
+    SvgToPng.register(
+      target = project,
+      svgTask = graphvizTask,
+      isSvgInput = spec.fileFormat.map { it == FileFormat.Svg },
+      converter = spec.converter,
     )
 
     // Also validate the legend's dotfile when we call gradle check

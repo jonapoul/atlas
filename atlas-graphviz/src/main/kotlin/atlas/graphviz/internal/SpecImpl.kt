@@ -5,6 +5,7 @@ import atlas.core.internal.ProjectTypeContainer
 import atlas.core.internal.ProjectTypeSpecImpl
 import atlas.core.internal.enum
 import atlas.core.internal.string
+import atlas.core.tasks.SvgToPng
 import atlas.graphviz.EdgeAttributes
 import atlas.graphviz.FileFormat
 import atlas.graphviz.GraphAttributes
@@ -41,6 +42,9 @@ internal class GraphvizSpecImpl(
 
   override val graph = GraphAttributesImpl(objects)
   override fun graph(action: Action<GraphAttributes>) = action.execute(graph)
+
+  internal val converter = objects.property(SvgToPng.Converter::class.java)
+  override fun convertSvgToPng(converter: SvgToPng.Converter?) = this.converter.set(converter)
 }
 
 internal abstract class GraphvizProjectTypeSpecImpl @Inject constructor(

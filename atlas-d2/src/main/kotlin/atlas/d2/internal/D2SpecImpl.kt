@@ -11,6 +11,7 @@ import atlas.core.internal.float
 import atlas.core.internal.int
 import atlas.core.internal.intEnum
 import atlas.core.internal.string
+import atlas.core.tasks.SvgToPng
 import atlas.d2.ArrowType
 import atlas.d2.D2DagreSpec
 import atlas.d2.D2ElkSpec
@@ -65,6 +66,9 @@ internal class D2SpecImpl(
 
   override val globalProps = D2GlobalPropsSpecImpl(objects)
   override fun globalProps(action: Action<D2GlobalPropsSpec>) = action.execute(globalProps)
+
+  internal val converter = objects.property(SvgToPng.Converter::class.java)
+  override fun convertSvgToPng(converter: SvgToPng.Converter?) = this.converter.set(converter)
 }
 
 internal open class D2RootStyleSpecImpl(

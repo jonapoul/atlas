@@ -6,6 +6,7 @@ import atlas.d2.RequiresD2
 import atlas.test.ScenarioTest
 import atlas.test.allTasksSuccessful
 import atlas.test.contentEquals
+import atlas.test.noTasksFailed
 import atlas.test.runTask
 import atlas.test.scenarios.D2Basic
 import atlas.test.scenarios.D2NestedProjects
@@ -76,7 +77,7 @@ internal class WriteD2ChartTest : ScenarioTest() {
     val result = runTask("atlasGenerate").build()
 
     // then
-    assertThat(result).allTasksSuccessful()
+    assertThat(result).noTasksFailed()
 
     // and the file was generated
     val chartFile = resolve("path/to/my/project/atlas/chart.d2")
