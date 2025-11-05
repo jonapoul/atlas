@@ -11,7 +11,6 @@ kotlin {
     compileSdk = 36
   }
 
-
   sourceSets {
     commonMain.dependencies { api(project(":sample-lib-kotlin-jvm")) }
     androidMain.dependencies { api(project(":sample-lib-android")) }
