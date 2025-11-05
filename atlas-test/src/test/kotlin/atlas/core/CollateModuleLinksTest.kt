@@ -25,8 +25,9 @@ internal class CollateModuleLinksTest : ScenarioTest() {
     val result = runTask("collateModuleLinks").build()
 
     // then the task was run
-    assertThat(result).taskWasSuccessful(":test-jvm:writeModuleLinks")
-    assertThat(result).taskWasSuccessful(":collateModuleLinks")
+    assertThat(result)
+      .taskWasSuccessful(":test-jvm:writeModuleLinks")
+      .taskWasSuccessful(":collateModuleLinks")
 
     // and the links file is empty
     assertThat(moduleLinks).isEmpty()

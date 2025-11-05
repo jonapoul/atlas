@@ -49,6 +49,47 @@ Any other configs beyond these are specific to the particular plugin you applied
 - [D2](usage-d2.md)
 - [Mermaid](usage-mermaid.md)
 
+## Limitations
+
+### Configuration on demand
+
+!!! warning
+
+    If you have `org.gradle.configureondemand=true` enabled in your `gradle.properties`, you must run `atlasGenerate` and `atlasCheck` from the root project only. Running them on a specific subproject (e.g., `./gradlew :module:atlasGenerate`) will fail with an error or skip the check with a warning.
+
+When [Gradle's configuration on demand](https://docs.gradle.org/current/userguide/multi_project_configuration_and_execution.html#sec:configuration_on_demand) feature is enabled, Atlas will generally work but it will restrict the `atlasGenerate` and `atlasCheck` tasks to be executed ONLY on the root module. This is because configuration-on-demand doesn't guarantee all that projects are configured when checking dependencies between them, which will lead to incomplete charts. Calling `atlasGenerate` on the root forces all dependencies to be resolved and passed correctly into the chart generation tasks.
+
+Examples below with `org.gradle.configureondemand=true` set in `gradle.properties`.
+
+**What works:**
+
+Running on the root project:
+
+```shell
+./gradlew atlasGenerate
+./gradlew atlasCheck
+```
+
+These will execute every single generation/checking task in the entire Gradle project. That we we're ensuring that all configurations are being covered for inter-module dependencies.
+
+**What doesn't work:**
+
+Running directly on a subproject:
+
+```shell
+./gradlew :path:to:atlasGenerate
+./gradlew :path:to:atlasCheck
+```
+
+These will both fail for the same reasons: they can't guarantee that the whole dependency tree will be included in the chart because modules uninvolved in the task execution will not be queried for their dependencies as part of the chart generation/checking.
+
+If you want to generate diagrams for a specific module, your options are to either:
+
+1. disable `org.gradle.configureondemand`, or
+2. run `gradle atlasGenerate` on the root module, meaning all generation tasks are executed. This doesn't mean everything is run from scratch - any unchanged diagrams will be pulled from cache.
+
+So far as I'm aware, there are no easy ways around this in modern Gradle.
+
 ## Properties
 
 ### alsoTraverseUpwards

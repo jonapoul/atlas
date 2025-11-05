@@ -17,7 +17,10 @@ internal class GraphvizGroovyTest : ScenarioTest() {
     val result = runTask("atlasGenerate").build()
 
     // then
-    assertThat(result).taskWasSuccessful(":atlasGenerate")
+    assertThat(result)
+      .taskWasSuccessful(":a:atlasGenerate")
+      .taskWasSuccessful(":b:atlasGenerate")
+      .taskWasSuccessful(":c:atlasGenerate")
   }
 
   @Test
@@ -27,7 +30,10 @@ internal class GraphvizGroovyTest : ScenarioTest() {
     val result = runTask("atlasGenerate").build()
 
     // then
-    assertThat(result).taskWasSuccessful(":atlasGenerate")
+    assertThat(result)
+      .taskWasSuccessful(":a:atlasGenerate")
+      .taskWasSuccessful(":b:atlasGenerate")
+      .taskWasSuccessful(":c:atlasGenerate")
   }
 
   @Test
@@ -37,6 +43,9 @@ internal class GraphvizGroovyTest : ScenarioTest() {
     val result = runTask("atlasGenerate").build()
 
     // then
-    assertThat(result).taskWasSuccessful(":atlasGenerate")
+    assertThat(result)
+      .taskWasSuccessful(":a:atlasGenerate")
+      .taskWasSuccessful(":b:atlasGenerate")
+      .taskWasSuccessful(":c:atlasGenerate")
   }
 }

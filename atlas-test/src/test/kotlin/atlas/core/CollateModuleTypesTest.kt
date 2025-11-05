@@ -44,9 +44,10 @@ internal class CollateModuleTypesTest : ScenarioTest() {
     val result = runTask("collateModuleTypes").build()
 
     // then three dependent tasks were run
-    assertThat(result).taskWasSuccessful(":test-data:writeModuleType")
-    assertThat(result).taskWasSuccessful(":test-domain:writeModuleType")
-    assertThat(result).taskWasSuccessful(":test-ui:writeModuleType")
+    assertThat(result)
+      .taskWasSuccessful(":test-data:writeModuleType")
+      .taskWasSuccessful(":test-domain:writeModuleType")
+      .taskWasSuccessful(":test-ui:writeModuleType")
 
     // and this one
     assertThat(result).taskWasSuccessful(":collateModuleTypes")
