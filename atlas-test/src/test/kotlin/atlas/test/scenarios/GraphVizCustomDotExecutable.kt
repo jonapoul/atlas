@@ -15,7 +15,7 @@ internal object GraphVizCustomDotExecutable : Scenario by GraphvizBasic {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
         java()
       }

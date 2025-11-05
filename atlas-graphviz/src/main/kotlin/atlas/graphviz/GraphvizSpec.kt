@@ -46,13 +46,13 @@ public interface GraphvizSpec : AtlasSpec {
   public val fileFormat: Property<FileFormat>
 
   /**
-   * Customise the layout engine used to organise your module nodes in the chart. Defaults to [LayoutEngine.Dot].
+   * Customise the layout engine used to organise your project nodes in the chart. Defaults to [LayoutEngine.Dot].
    */
   public val layoutEngine: Property<LayoutEngine>
 
   /**
-   * Configure the attributes applied by default to all module nodes, unless overridden by that node's
-   * [GraphvizModuleTypeSpec].
+   * Configure the attributes applied by default to all project nodes, unless overridden by that node's
+   * [GraphvizProjectTypeSpec].
    */
   public val node: NodeAttributes
   public fun node(action: Action<NodeAttributes>)

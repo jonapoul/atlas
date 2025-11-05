@@ -28,28 +28,27 @@ internal class ExecGraphvizTest : ScenarioTest() {
     // then no PNGs, SVGs, or anything else were generated besides the dotfile
     assertThat(result.output).contains(
       """
-        :writeGraphvizLegend SKIPPED
-        :execGraphvizLegend SKIPPED
-        :atlasGenerate SKIPPED
-        :a:writeModuleType SKIPPED
-        :b:writeModuleType SKIPPED
-        :c:writeModuleType SKIPPED
-        :collateModuleTypes SKIPPED
-        :a:writeModuleLinks SKIPPED
-        :b:writeModuleLinks SKIPPED
-        :c:writeModuleLinks SKIPPED
-        :collateModuleLinks SKIPPED
-        :a:writeModuleTree SKIPPED
+        :a:writeProjectType SKIPPED
+        :b:writeProjectType SKIPPED
+        :c:writeProjectType SKIPPED
+        :collateProjectTypes SKIPPED
+        :a:writeProjectLinks SKIPPED
+        :b:writeProjectLinks SKIPPED
+        :c:writeProjectLinks SKIPPED
+        :collateProjectLinks SKIPPED
+        :a:writeProjectTree SKIPPED
         :a:writeGraphvizChart SKIPPED
         :a:execGraphvizChart SKIPPED
+        :writeGraphvizLegend SKIPPED
+        :execGraphvizLegend SKIPPED
         :a:writeGraphvizReadme SKIPPED
         :a:atlasGenerate SKIPPED
-        :b:writeModuleTree SKIPPED
+        :b:writeProjectTree SKIPPED
         :b:writeGraphvizChart SKIPPED
         :b:execGraphvizChart SKIPPED
         :b:writeGraphvizReadme SKIPPED
         :b:atlasGenerate SKIPPED
-        :c:writeModuleTree SKIPPED
+        :c:writeProjectTree SKIPPED
         :c:writeGraphvizChart SKIPPED
         :c:execGraphvizChart SKIPPED
         :c:writeGraphvizReadme SKIPPED
@@ -66,7 +65,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
     // when
     val result = runTask("atlasGenerate").build()
 
-    // then PNG, SVG and EPS tasks were run for each submodule
+    // then PNG, SVG and EPS tasks were run for each subproject
     listOf(
       ":a:execGraphvizChart",
       ":b:execGraphvizChart",
@@ -76,8 +75,8 @@ internal class ExecGraphvizTest : ScenarioTest() {
     }
 
     // and the relevant files exist
-    for (submodule in listOf("a", "b", "c")) {
-      assertThat(resolve("$submodule/atlas/chart.png")).exists()
+    for (subproject in listOf("a", "b", "c")) {
+      assertThat(resolve("$subproject/atlas/chart.png")).exists()
     }
   }
 
@@ -120,8 +119,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Fail with nonexistent custom path to dot command`() = runScenario(GraphVizCustomDotExecutable) {
     // Given we've made a symbolic link to a dot executable which doesn't exist
-    val customDotFile = resolve("path/to/custom/dot")
-    assertThat(customDotFile).doesNotExist()
+    assertThat(resolve("path/to/custom/dot")).doesNotExist()
 
     // when
     val result = runTask("atlasGenerate").buildAndFail()

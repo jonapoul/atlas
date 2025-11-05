@@ -15,7 +15,7 @@ internal object PathMatches : GraphvizScenario {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         pathMatches(
           name = "A",
           color = "orange",
@@ -53,7 +53,7 @@ internal object PathMatches : GraphvizScenario {
     }
   """.trimIndent()
 
-  override val submoduleBuildFiles = mapOf(
+  override val subprojectBuildFiles = mapOf(
     "abc123" to javaBuildScript,
     "Test-X" to javaBuildScript,
     "hello" to javaBuildScript,

@@ -16,12 +16,12 @@ atlas {
   checkOutputs = true
   displayLinkLabels = false
   generateOnSync = false
-  groupModules = false
+  groupProjects = false
   ignoredConfigs = setOf("debug", "kover", "ksp", "test")
-  ignoredModules = emptySet<String>()
+  ignoredProjects = emptySet<String>()
   printFilesToConsole = false
 
-  moduleTypes {
+  projectTypes {
     // ...
   }
 
@@ -49,6 +49,47 @@ Any other configs beyond these are specific to the particular plugin you applied
 - [D2](usage-d2.md)
 - [Mermaid](usage-mermaid.md)
 
+## Limitations
+
+### Configuration on demand
+
+!!! warning
+
+    If you have `org.gradle.configureondemand=true` enabled in your `gradle.properties`, you must run `atlasGenerate` and `atlasCheck` from the root project only. Running them on a specific subproject (e.g., `./gradlew :project:atlasGenerate`) will fail with an error or skip the check with a warning.
+
+When [Gradle's configuration on demand](https://docs.gradle.org/current/userguide/multi_project_configuration_and_execution.html#sec:configuration_on_demand) feature is enabled, Atlas will generally work but it will restrict the `atlasGenerate` and `atlasCheck` tasks to be executed ONLY on the root project. This is because configuration-on-demand doesn't guarantee all that projects are configured when checking dependencies between them, which will lead to incomplete charts. Calling `atlasGenerate` on the root forces all dependencies to be resolved and passed correctly into the chart generation tasks.
+
+Examples below with `org.gradle.configureondemand=true` set in `gradle.properties`.
+
+**What works:**
+
+Running on the root project:
+
+```shell
+./gradlew atlasGenerate
+./gradlew atlasCheck
+```
+
+These will execute every single generation/checking task in the entire Gradle build. That we we're ensuring that all configurations are being covered for inter-project dependencies.
+
+**What doesn't work:**
+
+Running directly on a subproject:
+
+```shell
+./gradlew :path:to:atlasGenerate
+./gradlew :path:to:atlasCheck
+```
+
+These will both fail for the same reasons: they can't guarantee that the whole dependency tree will be included in the chart because projects uninvolved in the task execution will not be queried for their dependencies as part of the chart generation/checking.
+
+If you want to generate diagrams for a specific project, your options are to either:
+
+1. disable `org.gradle.configureondemand`, or
+2. run `gradle atlasGenerate` on the root project, meaning all generation tasks are executed. This doesn't mean everything is run from scratch - any unchanged diagrams will be pulled from cache.
+
+So far as I'm aware, there are no easy ways around this in modern Gradle.
+
 ## Properties
 
 ### alsoTraverseUpwards
@@ -59,7 +100,7 @@ atlas {
 }
 ```
 
-If enabled, the generated module graph will also go "upwards" (showing modules depending on this one) as well as the default "downwards"( modules being consumed by this one).
+If enabled, the generated project graph will also go "upwards" (showing projects depending on this one) as well as the default "downwards" (projects being consumed by this one).
 
 Examples below from the perspective of `:android:lib`:
 
@@ -102,7 +143,7 @@ atlas {
 }
 ```
 
-When enabled, a string label is attached on each module link, showing which configuration caused represents the link. When true, the `LinkTypeSpec.name` property will be used. Disabled by default.
+When enabled, a string label is attached on each project link, showing which configuration caused represents the link. When true, the `LinkTypeSpec.name` property will be used. Disabled by default.
 
 Requires some `linkTypes` to be declared - otherwise this will have no effect.
 
@@ -126,25 +167,25 @@ atlas {
 }
 ```
 
-When enabled, syncing your IntelliJ IDE (including Android Studio) will automatically trigger regeneration of your module diagrams. Disabled by default.
+When enabled, syncing your IntelliJ IDE (including Android Studio) will automatically trigger regeneration of your project diagrams. Disabled by default.
 
 !!! danger
 
     Be careful enabling this on larger projects - sync time might extend quite a bit.
 
-### groupModules
+### groupProjects
 
 ```kotlin
 atlas {
-  groupModules = true
+  groupProjects = true
 }
 ```
 
-Set to true if you want module charts to gather together groups of modules into bordered containers. E.g. a graph with `":a"`, `":b"` and `":c"` won't be grouped at all because they don't share any path segments, but `":a:b"` and `"a:c"` will be grouped together. Disabled by default.
+Set to true if you want project charts to gather together groups of projects into bordered containers. E.g. a graph with `":a"`, `":b"` and `":c"` won't be grouped at all because they don't share any path segments, but `":a:b"` and `"a:c"` will be grouped together. Disabled by default.
 
 !!! tip
 
-    Remember this will have no effect if your modules aren't nested at all.
+    Remember this will have no effect if your projects aren't nested at all.
 
 !!! warning
 
@@ -153,12 +194,12 @@ Set to true if you want module charts to gather together groups of modules into 
 <div class="side-by-side">
   <figure>
     <figcaption>Disabled</figcaption>
-    <img src="../img/groupModules-disabled.svg" alt="Disabled">
+    <img src="../img/groupProjects-disabled.svg" alt="Disabled">
   </figure>
 
   <figure>
     <figcaption>Enabled</figcaption>
-    <img src="../img/groupModules-enabled.svg" alt="Enabled">
+    <img src="../img/groupProjects-enabled.svg" alt="Enabled">
   </figure>
 </div>
 
@@ -170,20 +211,20 @@ atlas {
 }
 ```
 
-Use this to configure Gradle `Configuration`s to ignore when collating module diagrams. Gradle does have a load of configurations floating around (depending on your project) - most of which will be practically useless when generating a diagram like this.
+Use this to configure Gradle `Configuration`s to ignore when collating project diagrams. Gradle does have a load of configurations floating around (depending on your project) - most of which will be practically useless when generating a diagram like this.
 
 Defaults to `setOf("debug", "kover", "ksp", "test")`.
 
 !!! tip "Remember"
 
-    If you don't ignore any configurations, you might end up with double links between modules - or broken builds
+    If you don't ignore any configurations, you might end up with double links between projects - or broken builds
 
-### ignoredModules
+### ignoredProjects
 
 ```kotlin
 atlas {
-  ignoredModules = setOf(
-    ":path:to:some:module",
+  ignoredProjects = setOf(
+    ":path:to:some:project",
     ".*:test:.*", // uses regex patterns
   )
 }
@@ -205,24 +246,24 @@ Disabled by default.
 
 ## Functions
 
-### moduleTypes
+### projectTypes
 
-Use the `moduleTypes` block to identify module categories, along with the styling to apply to each one in the output chart. These stylings will depend on your choice of plugin (see their docs for details), but at a minimum, each with support setting:
+Use the `projectTypes` block to identify project categories, along with the styling to apply to each one in the output chart. These stylings will depend on your choice of plugin (see their docs for details), but at a minimum, each with support setting:
 
 - **label** string
 - **color**, as a CSS color string (`"chartreuse"`) or hex string (`"#7FFF00"`)
-- **matcher**, used to decide whether a given module should match this type:
-    - **pathContains** - checks whether the module path (`":modules:path:to:my:module"`) contains a given string. Case sensitive.
+- **matcher**, used to decide whether a given project should match this type:
+    - **pathContains** - checks whether the project path (`":projects:path:to:my:project"`) contains a given string. Case sensitive.
     - **patchMatches** - same as `pathContains`, but uses Regex pattern matching. You can also pass a `regexOptions` parameter to configure this more specifically, if you need.
-    - **hasPluginId** - checks whether the module has applied the given plugin ID string, e.g. `com.android.application` or `org.jebtrains.kotlin.jvm`.
+    - **hasPluginId** - checks whether the project has applied the given plugin ID string, e.g. `com.android.application` or `org.jebtrains.kotlin.jvm`.
 
-  Only one of these three module matchers should be specified.
+  Only one of these three project matchers should be specified.
 
 Sample usage:
 
 ```kotlin
 atlas {
-  moduleTypes {
+  projectTypes {
     hasPluginId(
       name = "UI",
       color = "#ABC123",
@@ -243,11 +284,11 @@ atlas {
 }
 ```
 
-A few module type quick-access functions are built into Atlas for use in the moduleTypes block if you need them:
+A few project type quick-access functions are built into Atlas for use in the projectTypes block if you need them:
 
 ```kotlin
 atlas {
-  moduleTypes {
+  projectTypes {
     androidApp()
     androidLib()
     java()
@@ -262,17 +303,17 @@ atlas {
 
 !!! warning
 
-    Remember that the order of declaring module types does matter! When identifying a module, Atlas will use the first one and go down the list until it finds a match.
+    Remember that the order of declaring project types does matter! When identifying a project, Atlas will use the first one and go down the list until it finds a match.
 
-The below example shows one module of each of the built-in module types in a sample D2 project layout:
+The below example shows one project of each of the built-in project types in a sample D2 project layout:
 
-<img class="rounded-corner" src="../img/module-types-default.png" alt="Default module types">
+<img class="rounded-corner" src="../img/project-types-default.png" alt="Default project types">
 
-Remember also that you can pass framework-specific configuration options into any module type declarations used above, with a trailing lambda. Example below comes from D2:
+Remember also that you can pass framework-specific configuration options into any project type declarations used above, with a trailing lambda. Example below comes from D2:
 
 ```kotlin
 atlas {
-  moduleTypes {
+  projectTypes {
     androidApp {
       shape = Shape.Hexagon
       strokeWidth = 10
@@ -289,7 +330,7 @@ atlas {
 
 ### linkTypes
 
-Use this block to configure categories of link to be detected in your project and drawn onto the modules chart. These are detected by Gradle's configuration names. In most cases you'll probably use `api` and `implementation` as your main link types, so these are available as quick-access config functions:
+Use this block to configure categories of link to be detected in your project and drawn onto the projects chart. These are detected by Gradle's configuration names. In most cases you'll probably use `api` and `implementation` as your main link types, so these are available as quick-access config functions:
 
 ```kotlin
 atlas {
@@ -328,17 +369,17 @@ atlas {
 
 !!! warning
 
-    As with module types, remember that the order of declaration matters! Top takes priority. So if you define "implementation" before "testImplementation", you won't get any links matching the latter because they all also match the former.
+    As with project types, remember that the order of declaration matters! Top takes priority. So if you define "implementation" before "testImplementation", you won't get any links matching the latter because they all also match the former.
 
 ### pathTransforms
 
-This is a little API for modifying module paths when inserting them into any generated diagrams. For example if your modules are all within a `"modules"` directory in your project's root, you might want to call something like:
+This is a little API for modifying project paths when inserting them into any generated diagrams. For example if your projects are all within a `"projects"` directory in your project's root, you might want to call something like:
 
 ```kotlin
 atlas {
   pathTransforms {
-    // ":modules:path:to:something" => "path:to:something"
-    remove("^:modules:")
+    // ":projects:path:to:something" => "path:to:something"
+    remove("^:projects:")
 
     // "path:to:something" => "path to something"
     replace(":", replacement = " ")
@@ -356,7 +397,7 @@ The intention with this is to let you pass in anything to the scope in question 
 
 ```kotlin
 atlas {
-  moduleTypes {
+  projectTypes {
     // no custom config necessary
     androidApp()
 

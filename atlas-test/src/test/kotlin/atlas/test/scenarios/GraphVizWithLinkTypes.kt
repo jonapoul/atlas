@@ -14,7 +14,7 @@ internal object GraphVizWithLinkTypes : Scenario by GraphvizBasic {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
         java()
       }

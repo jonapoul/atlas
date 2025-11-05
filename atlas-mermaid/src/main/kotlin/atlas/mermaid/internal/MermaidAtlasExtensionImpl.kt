@@ -3,7 +3,7 @@ package atlas.mermaid.internal
 import atlas.core.internal.AtlasExtensionImpl
 import atlas.mermaid.MermaidAtlasExtension
 import atlas.mermaid.MermaidNamedLinkTypeContainer
-import atlas.mermaid.MermaidNamedModuleTypeContainer
+import atlas.mermaid.MermaidNamedProjectTypeContainer
 import atlas.mermaid.MermaidSpec
 import org.gradle.api.Action
 import org.gradle.api.Project
@@ -20,6 +20,6 @@ internal open class MermaidAtlasExtensionImpl @Inject constructor(
   override val linkTypes = MermaidNamedLinkTypeContainerImpl(objects)
   override fun linkTypes(action: Action<MermaidNamedLinkTypeContainer>) = action.execute(linkTypes)
 
-  override val moduleTypes = MermaidNamedModuleTypeContainerImpl(objects)
-  override fun moduleTypes(action: Action<MermaidNamedModuleTypeContainer>) = action.execute(moduleTypes)
+  override val projectTypes = MermaidNamedProjectTypeContainerImpl(objects)
+  override fun projectTypes(action: Action<MermaidNamedProjectTypeContainer>) = action.execute(projectTypes)
 }

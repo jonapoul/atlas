@@ -5,7 +5,7 @@ description: Overview of the Atlas Gradle Plugin's functionality and basic setup
 
 # Atlas Gradle Plugin
 
-Atlas is a Gradle plugin for generating, configuring and curating diagrams to illustrate your project's module structure:
+Atlas is a Gradle plugin for generating, configuring and curating diagrams to illustrate your project's project structure:
 
    1. Fully supports Gradle 9 and its configuration caching.
    2. Supports three separate frameworks as outputs:

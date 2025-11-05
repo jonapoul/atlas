@@ -13,7 +13,7 @@ internal object TriangleGraphWithUpwardsTraversal : Scenario by TriangleGraph {
     atlas {
       alsoTraverseUpwards = true
 
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
       }
     }

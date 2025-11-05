@@ -15,7 +15,7 @@ internal object GraphVizCustomLayoutEngine : Scenario by GraphVizBigGraph {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
       }
 

@@ -5,14 +5,14 @@ import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import atlas.test.ScenarioTest
 import atlas.test.buildRunner
-import atlas.test.scenarios.ModuleTypeCreated
-import atlas.test.scenarios.ModuleTypeRegistered
-import atlas.test.scenarios.ModuleTypeWithNoIdentifiers
+import atlas.test.scenarios.ProjectTypeCreated
+import atlas.test.scenarios.ProjectTypeRegistered
+import atlas.test.scenarios.ProjectTypeWithNoIdentifiers
 import kotlin.test.Test
 
 internal class PluginValidationTest : ScenarioTest() {
   @Test
-  fun `Warn if module type is declared with no identifiers`() = runScenario(ModuleTypeWithNoIdentifiers) {
+  fun `Warn if project type is declared with no identifiers`() = runScenario(ProjectTypeWithNoIdentifiers) {
     // when we're not running any of our tasks
     val result = buildRunner()
       .withArguments("help")
@@ -20,13 +20,13 @@ internal class PluginValidationTest : ScenarioTest() {
 
     // then the build didn't fail, but we get a log warning
     assertThat(result.output).contains(
-      "Warning: Module type 'custom' will be ignored - you need to set one of " +
+      "Warning: Project type 'custom' will be ignored - you need to set one of " +
         "pathContains, pathMatches or hasPluginId.",
     )
   }
 
   @Test
-  fun `Don't warn if module type is created`() = runScenario(ModuleTypeCreated) {
+  fun `Don't warn if project type is created`() = runScenario(ProjectTypeCreated) {
     // when we're not running any of our tasks
     val result = buildRunner()
       .withArguments("help")
@@ -37,7 +37,7 @@ internal class PluginValidationTest : ScenarioTest() {
   }
 
   @Test
-  fun `Don't warn if module type is registered`() = runScenario(ModuleTypeRegistered) {
+  fun `Don't warn if project type is registered`() = runScenario(ProjectTypeRegistered) {
     // when we're not running any of our tasks
     val result = buildRunner()
       .withArguments("help")

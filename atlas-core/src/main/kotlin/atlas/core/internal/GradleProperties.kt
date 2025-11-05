@@ -12,7 +12,7 @@ public class CoreGradleProperties(override val project: Project) : IGradleProper
   public val checkOutputs: Provider<Boolean> = bool(key = "atlas.checkOutputs", default = true)
   public val displayLinkLabels: Provider<Boolean> = bool(key = "atlas.addLinkLabels", default = false)
   public val generateOnSync: Provider<Boolean> = bool(key = "atlas.generateOnSync", default = false)
-  public val groupModules: Provider<Boolean> = bool(key = "atlas.groupModules", default = false)
+  public val groupProjects: Provider<Boolean> = bool(key = "atlas.groupProjects", default = false)
   public val printFilesToConsole: Provider<Boolean> = bool(key = "atlas.printFilesToConsole", default = false)
 }
 

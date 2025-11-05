@@ -20,17 +20,17 @@ internal class WriteGraphvizLegendTest : ScenarioTest() {
     val legendFile = resolve("atlas/legend.dot")
     assertThat(legendFile).exists()
 
-    // and contains expected contents, with modules in declaration order
+    // and contains expected contents, with projects in declaration order
     assertThat(legendFile.readText()).contains(
       """
         digraph {
           node [shape="plaintext"]
-          modules [label=<
+          projects [label=<
           <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-            <TR><TD COLSPAN="2"><B>Module Types</B></TD></TR>
-            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
+            <TR><TD COLSPAN="2"><B>Project Types</B></TD></TR>
+            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;project-name&gt;</TD></TR>
+            <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;project-name&gt;</TD></TR>
+            <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;project-name&gt;</TD></TR>
           </TABLE>
           >];
         }
@@ -39,7 +39,7 @@ internal class WriteGraphvizLegendTest : ScenarioTest() {
   }
 
   @Test
-  fun `Show modules and links next to each other`() = runScenario(GraphVizWithLinkTypes) {
+  fun `Show projects and links next to each other`() = runScenario(GraphVizWithLinkTypes) {
     // when
     runTask("writeGraphvizLegend").build()
 
@@ -52,11 +52,11 @@ internal class WriteGraphvizLegendTest : ScenarioTest() {
       """
         digraph {
           node [shape="plaintext"]
-          modules [label=<
+          projects [label=<
           <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-            <TR><TD COLSPAN="2"><B>Module Types</B></TD></TR>
-            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
-            <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
+            <TR><TD COLSPAN="2"><B>Project Types</B></TD></TR>
+            <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;project-name&gt;</TD></TR>
+            <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;project-name&gt;</TD></TR>
           </TABLE>
           >];
           links [label=<

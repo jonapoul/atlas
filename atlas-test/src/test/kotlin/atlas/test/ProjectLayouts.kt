@@ -1,126 +1,126 @@
 package atlas.test
 
-import atlas.core.ModuleType
-import atlas.core.internal.ModuleLink
-import atlas.core.internal.TypedModule
+import atlas.core.ProjectType
+import atlas.core.internal.ProjectLink
+import atlas.core.internal.TypedProject
 
 internal interface ProjectLayout {
-  val modules: Set<TypedModule>
-  val links: Set<ModuleLink>
+  val projects: Set<TypedProject>
+  val links: Set<ProjectLink>
 }
 
-internal object OneLevelOfSubmodules : ProjectLayout {
-  override val modules = setOf(
-    typedModule(path = ":app"),
-    typedModule(path = ":data:a"),
-    typedModule(path = ":data:b"),
-    typedModule(path = ":domain:a"),
-    typedModule(path = ":domain:b"),
-    typedModule(path = ":ui:a"),
-    typedModule(path = ":ui:b"),
-    typedModule(path = ":ui:c"),
+internal object OneLevelOfSubprojects : ProjectLayout {
+  override val projects = setOf(
+    typedProject(path = ":app"),
+    typedProject(path = ":data:a"),
+    typedProject(path = ":data:b"),
+    typedProject(path = ":domain:a"),
+    typedProject(path = ":domain:b"),
+    typedProject(path = ":ui:a"),
+    typedProject(path = ":ui:b"),
+    typedProject(path = ":ui:c"),
   )
 
   override val links = setOf(
-    moduleLink(fromPath = ":app", toPath = ":ui:a"),
-    moduleLink(fromPath = ":app", toPath = ":ui:b"),
-    moduleLink(fromPath = ":app", toPath = ":ui:c"),
-    moduleLink(fromPath = ":domain:a", toPath = ":data:a"),
-    moduleLink(fromPath = ":domain:b", toPath = ":data:a"),
-    moduleLink(fromPath = ":domain:b", toPath = ":data:b"),
-    moduleLink(fromPath = ":ui:a", toPath = ":domain:a"),
-    moduleLink(fromPath = ":ui:b", toPath = ":domain:b"),
-    moduleLink(fromPath = ":ui:c", toPath = ":domain:a"),
-    moduleLink(fromPath = ":ui:c", toPath = ":domain:b"),
+    projectLink(fromPath = ":app", toPath = ":ui:a"),
+    projectLink(fromPath = ":app", toPath = ":ui:b"),
+    projectLink(fromPath = ":app", toPath = ":ui:c"),
+    projectLink(fromPath = ":domain:a", toPath = ":data:a"),
+    projectLink(fromPath = ":domain:b", toPath = ":data:a"),
+    projectLink(fromPath = ":domain:b", toPath = ":data:b"),
+    projectLink(fromPath = ":ui:a", toPath = ":domain:a"),
+    projectLink(fromPath = ":ui:b", toPath = ":domain:b"),
+    projectLink(fromPath = ":ui:c", toPath = ":domain:a"),
+    projectLink(fromPath = ":ui:c", toPath = ":domain:b"),
   )
 }
 
-internal object LowestLevelOfSubmodules : ProjectLayout {
-  override val modules = setOf(typedModule(path = ":ui:c"))
-  override val links = emptySet<ModuleLink>()
+internal object LowestLevelOfSubprojects : ProjectLayout {
+  override val projects = setOf(typedProject(path = ":ui:c"))
+  override val links = emptySet<ProjectLink>()
 }
 
-internal object OneLevelOfSubmodulesWithReplacements : ProjectLayout {
-  override val modules = setOf(
-    typedModule(path = ":app"),
-    typedModule(path = ":modules:data:a"),
-    typedModule(path = ":modules:data:b"),
-    typedModule(path = ":modules:domain:a"),
-    typedModule(path = ":modules:domain:b"),
-    typedModule(path = ":modules:ui:a"),
-    typedModule(path = ":modules:ui:b"),
-    typedModule(path = ":modules:ui:c"),
+internal object OneLevelOfSubprojectsWithReplacements : ProjectLayout {
+  override val projects = setOf(
+    typedProject(path = ":app"),
+    typedProject(path = ":projects:data:a"),
+    typedProject(path = ":projects:data:b"),
+    typedProject(path = ":projects:domain:a"),
+    typedProject(path = ":projects:domain:b"),
+    typedProject(path = ":projects:ui:a"),
+    typedProject(path = ":projects:ui:b"),
+    typedProject(path = ":projects:ui:c"),
   )
 
   override val links = setOf(
-    moduleLink(fromPath = ":app", toPath = ":modules:ui:a"),
-    moduleLink(fromPath = ":app", toPath = ":modules:ui:b"),
-    moduleLink(fromPath = ":app", toPath = ":modules:ui:c"),
-    moduleLink(fromPath = ":modules:domain:a", toPath = ":modules:data:a"),
-    moduleLink(fromPath = ":modules:domain:b", toPath = ":modules:data:a"),
-    moduleLink(fromPath = ":modules:domain:b", toPath = ":modules:data:b"),
-    moduleLink(fromPath = ":modules:ui:a", toPath = ":modules:domain:a"),
-    moduleLink(fromPath = ":modules:ui:b", toPath = ":modules:domain:b"),
-    moduleLink(fromPath = ":modules:ui:c", toPath = ":modules:domain:a"),
-    moduleLink(fromPath = ":modules:ui:c", toPath = ":modules:domain:b"),
+    projectLink(fromPath = ":app", toPath = ":projects:ui:a"),
+    projectLink(fromPath = ":app", toPath = ":projects:ui:b"),
+    projectLink(fromPath = ":app", toPath = ":projects:ui:c"),
+    projectLink(fromPath = ":projects:domain:a", toPath = ":projects:data:a"),
+    projectLink(fromPath = ":projects:domain:b", toPath = ":projects:data:a"),
+    projectLink(fromPath = ":projects:domain:b", toPath = ":projects:data:b"),
+    projectLink(fromPath = ":projects:ui:a", toPath = ":projects:domain:a"),
+    projectLink(fromPath = ":projects:ui:b", toPath = ":projects:domain:b"),
+    projectLink(fromPath = ":projects:ui:c", toPath = ":projects:domain:a"),
+    projectLink(fromPath = ":projects:ui:c", toPath = ":projects:domain:b"),
   )
 }
 
-internal object TwoLevelsOfSubmodules : ProjectLayout {
-  override val modules = setOf(
-    typedModule(path = ":app"),
-    typedModule(path = ":data:a"),
-    typedModule(path = ":data:b"),
-    typedModule(path = ":data:sub:sub1"),
-    typedModule(path = ":data:sub:sub2"),
-    typedModule(path = ":domain:a"),
-    typedModule(path = ":domain:b"),
-    typedModule(path = ":ui:a"),
-    typedModule(path = ":ui:b"),
-    typedModule(path = ":ui:c"),
+internal object TwoLevelsOfSubprojects : ProjectLayout {
+  override val projects = setOf(
+    typedProject(path = ":app"),
+    typedProject(path = ":data:a"),
+    typedProject(path = ":data:b"),
+    typedProject(path = ":data:sub:sub1"),
+    typedProject(path = ":data:sub:sub2"),
+    typedProject(path = ":domain:a"),
+    typedProject(path = ":domain:b"),
+    typedProject(path = ":ui:a"),
+    typedProject(path = ":ui:b"),
+    typedProject(path = ":ui:c"),
   )
 
   override val links = setOf(
-    moduleLink(fromPath = ":app", toPath = ":ui:a"),
-    moduleLink(fromPath = ":app", toPath = ":ui:b"),
-    moduleLink(fromPath = ":app", toPath = ":ui:c"),
-    moduleLink(fromPath = ":domain:a", toPath = ":data:a"),
-    moduleLink(fromPath = ":domain:a", toPath = ":data:sub:sub1"),
-    moduleLink(fromPath = ":domain:a", toPath = ":data:sub:sub2"),
-    moduleLink(fromPath = ":domain:b", toPath = ":data:a"),
-    moduleLink(fromPath = ":domain:b", toPath = ":data:b"),
-    moduleLink(fromPath = ":ui:a", toPath = ":domain:a"),
-    moduleLink(fromPath = ":ui:b", toPath = ":domain:b"),
-    moduleLink(fromPath = ":ui:c", toPath = ":domain:a"),
-    moduleLink(fromPath = ":ui:c", toPath = ":domain:b"),
+    projectLink(fromPath = ":app", toPath = ":ui:a"),
+    projectLink(fromPath = ":app", toPath = ":ui:b"),
+    projectLink(fromPath = ":app", toPath = ":ui:c"),
+    projectLink(fromPath = ":domain:a", toPath = ":data:a"),
+    projectLink(fromPath = ":domain:a", toPath = ":data:sub:sub1"),
+    projectLink(fromPath = ":domain:a", toPath = ":data:sub:sub2"),
+    projectLink(fromPath = ":domain:b", toPath = ":data:a"),
+    projectLink(fromPath = ":domain:b", toPath = ":data:b"),
+    projectLink(fromPath = ":ui:a", toPath = ":domain:a"),
+    projectLink(fromPath = ":ui:b", toPath = ":domain:b"),
+    projectLink(fromPath = ":ui:c", toPath = ":domain:a"),
+    projectLink(fromPath = ":ui:c", toPath = ":domain:b"),
   )
 }
 
-internal object ModuleWithNoLinks : ProjectLayout {
-  override val modules = setOf(
-    typedModule(path = ":app", type = ModuleType(name = "red", color = "red")),
+internal object ProjectWithNoLinks : ProjectLayout {
+  override val projects = setOf(
+    typedProject(path = ":app", type = ProjectType(name = "red", color = "red")),
   )
 
-  override val links = emptySet<ModuleLink>()
+  override val links = emptySet<ProjectLink>()
 }
 
-internal object SingleNestedModuleWithNoLinks : ProjectLayout {
-  override val modules = setOf(
-    typedModule(path = ":a:b", type = ModuleType(name = "red", color = "red")),
+internal object SingleNestedProjectWithNoLinks : ProjectLayout {
+  override val projects = setOf(
+    typedProject(path = ":a:b", type = ProjectType(name = "red", color = "red")),
   )
 
-  override val links = emptySet<ModuleLink>()
+  override val links = emptySet<ProjectLink>()
 }
 
 internal object Abc : ProjectLayout {
-  override val modules = setOf(
-    typedModule(path = ":a"),
-    typedModule(path = ":b"),
-    typedModule(path = ":c"),
+  override val projects = setOf(
+    typedProject(path = ":a"),
+    typedProject(path = ":b"),
+    typedProject(path = ":c"),
   )
 
   override val links = setOf(
-    moduleLink(fromPath = ":a", toPath = ":b"),
-    moduleLink(fromPath = ":a", toPath = ":c"),
+    projectLink(fromPath = ":a", toPath = ":b"),
+    projectLink(fromPath = ":a", toPath = ":c"),
   )
 }

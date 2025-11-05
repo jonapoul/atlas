@@ -105,7 +105,7 @@ Each subproject writes its local module information to `build/atlas/*.json`, the
 
 ### Gradle Isolated Projects Support
 
-The plugin is being updated to support Gradle's isolated projects feature (see issue #307). This requires careful handling of project references and task dependencies to avoid cross-project configuration.
+The plugin will one day be updated to support Gradle's isolated projects feature (see issue #307). This requires careful handling of project references and task dependencies to avoid cross-project configuration. For now though, this isn't a top priority.
 
 ### Testing Approach
 

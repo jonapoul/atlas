@@ -12,7 +12,7 @@ internal object DiamondGraphWithUpwardsTraversal : Scenario by DiamondGraph {
 
     atlas {
       alsoTraverseUpwards = true
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
       }
     }

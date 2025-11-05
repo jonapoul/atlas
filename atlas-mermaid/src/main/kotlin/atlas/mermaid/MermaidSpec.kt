@@ -33,13 +33,13 @@ public interface MermaidSpec : AtlasSpec {
   public val theme: Property<Theme>
 
   /**
-   * Configure some global variables to apply to the module diagram itself.
+   * Configure some global variables to apply to the project diagram itself.
    */
   public val themeVariables: MermaidThemeVariablesSpec
   public fun themeVariables(action: Action<MermaidThemeVariablesSpec>)
 
   /**
-   * When set to true, all links between modules will have a pretty animation applied to them.
+   * When set to true, all links between projects will have a pretty animation applied to them.
    *
    * WARNING: this doesn't currently work on GitHub or in IntelliJ's Mermaid renderers, but it does work on
    * [mermaid.live](mermaid.live). IntelliJ breaks rendering completely, while GitHub still renders the diagram but not

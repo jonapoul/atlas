@@ -42,7 +42,7 @@ graph TD
   linkStyle 3 stroke-width:5px
 ```
 
-| Module Types | Color |
+| Project Types | Color |
 |:--:|:--:|
 | Android App | <img src="https://img.shields.io/badge/-%20-limegreen?style=flat-square" height="30" width="100"> |
 | Kotlin Multiplatform | <img src="https://img.shields.io/badge/-%20-mediumslateblue?style=flat-square" height="30" width="100"> |

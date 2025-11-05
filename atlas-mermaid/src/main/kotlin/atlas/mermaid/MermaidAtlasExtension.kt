@@ -7,7 +7,7 @@ import org.gradle.api.Action
 @AtlasDsl
 public interface MermaidAtlasExtension : AtlasExtension {
   /**
-   * Perform Mermaid-specific configuration of the module diagrams.
+   * Perform Mermaid-specific configuration of the project diagrams.
    */
   public val mermaid: MermaidSpec
   public fun mermaid(action: Action<MermaidSpec>)
@@ -18,7 +18,7 @@ public interface MermaidAtlasExtension : AtlasExtension {
   public fun linkTypes(action: Action<MermaidNamedLinkTypeContainer>)
 
   /**
-   * Configure [MermaidModuleTypeSpec]s using Mermaid-specific attributes.
+   * Configure [MermaidProjectTypeSpec]s using Mermaid-specific attributes.
    */
-  public fun moduleTypes(action: Action<MermaidNamedModuleTypeContainer>)
+  public fun projectTypes(action: Action<MermaidNamedProjectTypeContainer>)
 }

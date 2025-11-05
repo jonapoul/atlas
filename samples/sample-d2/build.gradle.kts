@@ -4,8 +4,8 @@ import atlas.d2.*
 
 plugins {
   alias(libs.plugins.agp.app) apply false
+  alias(libs.plugins.agp.kmp) apply false
   alias(libs.plugins.agp.lib) apply false
-  alias(libs.plugins.kotlinAndroid) apply false
   alias(libs.plugins.kotlinJvm) apply false
   alias(libs.plugins.kotlinMultiplatform) apply false
   id("dev.jonpoulton.atlas.d2")
@@ -15,13 +15,13 @@ atlas {
   alsoTraverseUpwards = false
   displayLinkLabels = true
   generateOnSync = true
-  groupModules = true
+  groupProjects = true
 
   pathTransforms {
     replace(":module-", replacement = ":")
   }
 
-  moduleTypes {
+  projectTypes {
     androidApp {
       shape = Shape.Hexagon
       strokeWidth = 10

@@ -4,8 +4,8 @@ import atlas.core.IntEnum
 import atlas.core.InternalAtlasApi
 import atlas.core.LinkType
 import atlas.core.LinkTypeSpec
-import atlas.core.ModuleType
-import atlas.core.ModuleTypeSpec
+import atlas.core.ProjectType
+import atlas.core.ProjectTypeSpec
 import atlas.core.StringEnum
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
@@ -17,14 +17,14 @@ import org.gradle.api.provider.SetProperty
 import java.io.File
 
 @InternalAtlasApi
-public fun AtlasExtensionImpl.orderedModuleTypes(): List<ModuleTypeSpec> = moduleTypes.getInOrder()
+public fun AtlasExtensionImpl.orderedProjectTypes(): List<ProjectTypeSpec> = projectTypes.getInOrder()
 
 @InternalAtlasApi
 public fun AtlasExtensionImpl.orderedLinkTypes(): List<LinkType> =
   linkTypes.getInOrder().map(::linkType)
 
 @InternalAtlasApi
-public fun moduleType(type: ModuleTypeSpec): ModuleType = ModuleType(
+public fun projectType(type: ProjectTypeSpec): ProjectType = ProjectType(
   name = type.name,
   color = type.color.orNull,
   properties = type.properties.getOrElse(mutableMapOf()),

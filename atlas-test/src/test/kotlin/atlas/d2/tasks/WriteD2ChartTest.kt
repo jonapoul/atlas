@@ -8,7 +8,7 @@ import atlas.test.allTasksSuccessful
 import atlas.test.contentEquals
 import atlas.test.runTask
 import atlas.test.scenarios.D2Basic
-import atlas.test.scenarios.D2NestedModules
+import atlas.test.scenarios.D2NestedProjects
 import atlas.test.taskWasSuccessful
 import kotlin.test.Test
 
@@ -26,19 +26,19 @@ internal class WriteD2ChartTest : ScenarioTest() {
     val d2FileB = resolve("b/atlas/chart.d2")
     val d2FileC = resolve("c/atlas/chart.d2")
 
-    // and contain expected contents, with modules in declaration order
+    // and contain expected contents, with projects in declaration order
     assertThat(d2FileA).contentEquals(
       """
         ...@../../atlas/classes.d2
-        a: :a { class: module-KotlinJVM }
-        b: :b { class: module-Java }
-        c: :c { class: module-Java }
+        a: :a { class: project-KotlinJVM }
+        b: :b { class: project-Java }
+        c: :c { class: project-Java }
         a -> b
         a -> c
         vars: {
           d2-legend: {
-            module-KotlinJVM: Kotlin JVM { class: module-KotlinJVM }
-            module-Java: Java { class: module-Java }
+            project-KotlinJVM: Kotlin JVM { class: project-KotlinJVM }
+            project-Java: Java { class: project-Java }
           }
         }
       """.trimIndent(),
@@ -47,10 +47,10 @@ internal class WriteD2ChartTest : ScenarioTest() {
     assertThat(d2FileB).contentEquals(
       """
         ...@../../atlas/classes.d2
-        b: :b { class: module-Java }
+        b: :b { class: project-Java }
         vars: {
           d2-legend: {
-            module-Java: Java { class: module-Java }
+            project-Java: Java { class: project-Java }
           }
         }
       """.trimIndent(),
@@ -59,10 +59,10 @@ internal class WriteD2ChartTest : ScenarioTest() {
     assertThat(d2FileC).contentEquals(
       """
         ...@../../atlas/classes.d2
-        c: :c { class: module-Java }
+        c: :c { class: project-Java }
         vars: {
           d2-legend: {
-            module-Java: Java { class: module-Java }
+            project-Java: Java { class: project-Java }
           }
         }
       """.trimIndent(),
@@ -71,7 +71,7 @@ internal class WriteD2ChartTest : ScenarioTest() {
 
   @Test
   @RequiresD2
-  fun `Write correct classes file path for nested modules`() = runScenario(D2NestedModules) {
+  fun `Write correct classes file path for nested projects`() = runScenario(D2NestedProjects) {
     // when
     val result = runTask("atlasGenerate").build()
 
@@ -79,13 +79,13 @@ internal class WriteD2ChartTest : ScenarioTest() {
     assertThat(result).allTasksSuccessful()
 
     // and the file was generated
-    val chartFile = resolve("path/to/my/module/atlas/chart.d2")
+    val chartFile = resolve("path/to/my/project/atlas/chart.d2")
     assertThat(chartFile.exists())
     assertThat(resolve("atlas/classes.d2")).exists()
     assertThat(chartFile).contentEquals(
       """
         ...@../../../../../atlas/classes.d2
-        path_to_my_module: :path:to:my:module
+        path_to_my_project: :path:to:my:project
       """.trimIndent(),
     )
 
@@ -93,6 +93,6 @@ internal class WriteD2ChartTest : ScenarioTest() {
     val checkResult = runTask("check").build()
 
     // then
-    assertThat(checkResult).taskWasSuccessful(":path:to:my:module:checkD2Chart")
+    assertThat(checkResult).taskWasSuccessful(":path:to:my:project:checkD2Chart")
   }
 }

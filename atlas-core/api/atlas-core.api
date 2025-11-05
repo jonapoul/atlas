@@ -6,13 +6,13 @@ public abstract interface class atlas/core/AtlasExtension {
 	public abstract fun getCheckOutputs ()Lorg/gradle/api/provider/Property;
 	public abstract fun getDisplayLinkLabels ()Lorg/gradle/api/provider/Property;
 	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
-	public abstract fun getGroupModules ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupProjects ()Lorg/gradle/api/provider/Property;
 	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getIgnoredProjects ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getLinkTypes ()Latlas/core/NamedLinkTypeContainer;
-	public abstract fun getModuleTypes ()Latlas/core/NamedModuleTypeContainer;
 	public abstract fun getPathTransforms ()Latlas/core/PathTransformSpec;
 	public abstract fun getPrintFilesToConsole ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProjectTypes ()Latlas/core/NamedProjectTypeContainer;
 	public abstract fun pathTransforms (Lorg/gradle/api/Action;)V
 }
 
@@ -87,52 +87,6 @@ public final class atlas/core/LinkTypeSpec$DefaultImpls {
 	public static fun put (Latlas/core/LinkTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
-public final class atlas/core/ModuleType : java/io/Serializable {
-	public static final field Companion Latlas/core/ModuleType$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/util/Map;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Latlas/core/ModuleType;
-	public static synthetic fun copy$default (Latlas/core/ModuleType;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Latlas/core/ModuleType;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getColor ()Ljava/lang/String;
-	public final fun getName ()Ljava/lang/String;
-	public final fun getProperties ()Ljava/util/Map;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final synthetic class atlas/core/ModuleType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Latlas/core/ModuleType$$serializer;
-	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/core/ModuleType;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/core/ModuleType;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class atlas/core/ModuleType$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public abstract interface class atlas/core/ModuleTypeSpec : atlas/core/PropertiesSpec {
-	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
-	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
-	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
-	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
-	public abstract fun getRegexOptions ()Lorg/gradle/api/provider/SetProperty;
-}
-
-public final class atlas/core/ModuleTypeSpec$DefaultImpls {
-	public static fun clear (Latlas/core/ModuleTypeSpec;)V
-	public static fun put (Latlas/core/ModuleTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
-}
-
 public abstract interface class atlas/core/NamedLinkTypeContainer : org/gradle/api/NamedDomainObjectContainer {
 	public fun api (Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public static synthetic fun api$default (Latlas/core/NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
@@ -155,22 +109,22 @@ public final class atlas/core/NamedLinkTypeContainer$DefaultImpls {
 	public static synthetic fun register$default (Latlas/core/NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
-public abstract interface class atlas/core/NamedModuleTypeContainer : org/gradle/api/NamedDomainObjectContainer {
+public abstract interface class atlas/core/NamedProjectTypeContainer : org/gradle/api/NamedDomainObjectContainer {
 	public fun hasPluginId (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun hasPluginId$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun hasPluginId$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public fun pathContains (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun pathContains$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun pathContains$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 	public fun pathMatches (Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun pathMatches$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun pathMatches$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
-public final class atlas/core/NamedModuleTypeContainer$DefaultImpls {
-	public static fun hasPluginId (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun hasPluginId$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun pathContains (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun pathContains$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static fun pathMatches (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun pathMatches$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+public final class atlas/core/NamedProjectTypeContainer$DefaultImpls {
+	public static fun hasPluginId (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun hasPluginId$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun pathContains (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun pathContains$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun pathMatches (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun pathMatches$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
 }
 
 public abstract interface class atlas/core/PathTransformSpec {
@@ -179,6 +133,52 @@ public abstract interface class atlas/core/PathTransformSpec {
 	public abstract fun remove (Lkotlin/text/Regex;)V
 	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
 	public abstract fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
+}
+
+public final class atlas/core/ProjectType : java/io/Serializable {
+	public static final field Companion Latlas/core/ProjectType$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Latlas/core/ProjectType;
+	public static synthetic fun copy$default (Latlas/core/ProjectType;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Latlas/core/ProjectType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getProperties ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class atlas/core/ProjectType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Latlas/core/ProjectType$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/core/ProjectType;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/core/ProjectType;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class atlas/core/ProjectType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class atlas/core/ProjectTypeSpec : atlas/core/PropertiesSpec {
+	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
+	public abstract fun getRegexOptions ()Lorg/gradle/api/provider/SetProperty;
+}
+
+public final class atlas/core/ProjectTypeSpec$DefaultImpls {
+	public static fun clear (Latlas/core/ProjectTypeSpec;)V
+	public static fun put (Latlas/core/ProjectTypeSpec;Ljava/lang/String;Ljava/lang/Object;)V
 }
 
 public abstract interface class atlas/core/PropertiesSpec {
@@ -218,33 +218,33 @@ public abstract interface class atlas/core/StringEnum {
 	public abstract fun getString ()Ljava/lang/String;
 }
 
-public final synthetic class atlas/core/internal/ModuleLink$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Latlas/core/internal/ModuleLink$$serializer;
+public final synthetic class atlas/core/internal/ProjectLink$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Latlas/core/internal/ProjectLink$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/core/internal/ModuleLink;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/core/internal/ProjectLink;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/core/internal/ModuleLink;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/core/internal/ProjectLink;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class atlas/core/internal/ModuleLink$Companion {
+public final class atlas/core/internal/ProjectLink$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final synthetic class atlas/core/internal/TypedModule$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Latlas/core/internal/TypedModule$$serializer;
+public final synthetic class atlas/core/internal/TypedProject$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Latlas/core/internal/TypedProject$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/core/internal/TypedModule;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/core/internal/TypedProject;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/core/internal/TypedModule;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/core/internal/TypedProject;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class atlas/core/internal/TypedModule$Companion {
+public final class atlas/core/internal/TypedProject$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -262,15 +262,15 @@ public abstract class atlas/core/tasks/CheckFileDiff : org/gradle/api/DefaultTas
 	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class atlas/core/tasks/CollateModuleLinks : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
+public abstract class atlas/core/tasks/CollateProjectLinks : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
-	public abstract fun getIgnoredModules ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getModuleLinkFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getIgnoredProjects ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectLinkFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
 }
 
-public abstract class atlas/core/tasks/CollateModuleTypes : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
+public abstract class atlas/core/tasks/CollateProjectTypes : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
@@ -281,16 +281,16 @@ public abstract interface class atlas/core/tasks/TaskWithOutputFile : org/gradle
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 }
 
-public abstract class atlas/core/tasks/WriteModuleLinks : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
+public abstract class atlas/core/tasks/WriteProjectLinks : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getModuleLinks ()Lorg/gradle/api/provider/MapProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectLinks ()Lorg/gradle/api/provider/MapProperty;
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class atlas/core/tasks/WriteModuleTree : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
+public abstract class atlas/core/tasks/WriteProjectTree : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
 	public abstract fun getAlsoTraverseUpwards ()Lorg/gradle/api/provider/Property;
@@ -299,12 +299,12 @@ public abstract class atlas/core/tasks/WriteModuleTree : org/gradle/api/DefaultT
 	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class atlas/core/tasks/WriteModuleType : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
+public abstract class atlas/core/tasks/WriteProjectType : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
 	public fun <init> ()V
 	public final fun execute ()V
-	public abstract fun getModuleType ()Lorg/gradle/api/provider/Property;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProjectType ()Lorg/gradle/api/provider/Property;
 }
 
 public abstract class atlas/core/tasks/WriteReadme : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
@@ -317,37 +317,37 @@ public abstract class atlas/core/tasks/WriteReadme : org/gradle/api/DefaultTask,
 	public abstract fun getReadmeFile ()Lorg/gradle/api/file/RegularFileProperty;
 }
 
-public final class org/gradle/kotlin/dsl/ModuleTypeDslKt {
-	public static final fun androidApp (Latlas/core/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun androidApp (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun androidApp (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun androidApp (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun androidApp$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun androidLibrary (Latlas/core/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun androidLibrary (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun androidLibrary (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun androidLibrary (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun androidLibrary$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun java (Latlas/core/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun java (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun java (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun java (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun java$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun kotlinJvm (Latlas/core/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun kotlinJvm (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun kotlinJvm (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun kotlinJvm (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun kotlinJvm$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun kotlinMultiplatform (Latlas/core/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun kotlinMultiplatform (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun kotlinMultiplatform (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun kotlinMultiplatform (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun kotlinMultiplatform$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun other (Latlas/core/NamedModuleTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun other (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun other (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun other (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static synthetic fun other$default (Latlas/core/NamedModuleTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
-	public static final fun useDefaults (Latlas/core/NamedModuleTypeContainer;)V
+public final class org/gradle/kotlin/dsl/ProjectTypeDslKt {
+	public static final fun androidApp (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidApp (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidApp (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidApp (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun androidApp$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun androidLibrary$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun java$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun kotlinJvm$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun kotlinMultiplatform$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun other$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun useDefaults (Latlas/core/NamedProjectTypeContainer;)V
 }
 

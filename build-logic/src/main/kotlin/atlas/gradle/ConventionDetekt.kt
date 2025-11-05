@@ -25,7 +25,11 @@ class ConventionDetekt : Plugin<Project> {
     }
 
     val detektTasks = tasks.withType<Detekt>()
-    val detektCheck by tasks.registering { dependsOn(detektTasks) }
+    val detektCheck by tasks.registering {
+      group = LifecycleBasePlugin.VERIFICATION_GROUP
+      dependsOn(detektTasks)
+    }
+
     tasks.named(LifecycleBasePlugin.CHECK_TASK_NAME).configure { dependsOn(detektCheck) }
 
     detektTasks.configureEach {

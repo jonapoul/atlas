@@ -53,7 +53,7 @@ atlas {
 
 ## Generated files
 
-The D2 plugin will generate a `classes.d2` file in the root project's `atlas` folder. This contains any shared styling, used between all child charts. It will also generate a `chart.d2` and a `chart.XXX` file for each submodule, the latter's file extension depending on [fileFormat](#fileformat).
+The D2 plugin will generate a `classes.d2` file in the root project's `atlas` folder. This contains any shared styling, used between all child charts. It will also generate a `chart.d2` and a `chart.XXX` file for each subproject, the latter's file extension depending on [fileFormat](#fileformat).
 
 ## Properties
 
@@ -79,7 +79,7 @@ atlas {
 }
 ```
 
-When enabled, links between all module nodes will be animated, as long as they aren't solidly-styled. Disabled by default.
+When enabled, links between all project nodes will be animated, as long as they aren't solidly-styled. Disabled by default.
 
 !!! warning
 
@@ -207,7 +207,7 @@ For reference, an ASCII chart looks like below. It (hopefully obviously) doesn't
 
 ```kotlin
 atlas {
-  groupModules = true
+  groupProjects = true
 
   d2 {
     groupLabelLocation = Location.Outside
@@ -216,7 +216,7 @@ atlas {
 }
 ```
 
-Only does anything if `atlas.groupModules = true`.
+Only does anything if `atlas.groupProjects = true`.
 
 <div class="svg-grid">
   <figure class="svg-item">
@@ -310,7 +310,7 @@ D2 comes with a suite of lovely built-in color schemes which you can apply to yo
 
 !!! info
 
-    If you set a specific color for a module type using the `moduleTypes` API, it will overwrite the theme color for that node. Same for link colors.
+    If you set a specific color for a project type using the `projectTypes` API, it will overwrite the theme color for that node. Same for link colors.
 
 
 !!! tip
@@ -366,7 +366,7 @@ atlas {
 }
 ```
 
-Defines the underlying engine used by D2 to organise the module nodes in each chart. [See this link in the D2 docs for more detailed information](https://d2lang.com/tour/layouts/). The available options are:
+Defines the underlying engine used by D2 to organise the project nodes in each chart. [See this link in the D2 docs for more detailed information](https://d2lang.com/tour/layouts/). The available options are:
 
 - **Dagre**: default option.
 - **Elk**: Framework from Eclipse for diagram generation - also supported by [Mermaid](./usage-mermaid.md).
@@ -422,7 +422,7 @@ atlas {
 }
 ```
 
-Style properties to be applied to all nodes (module shapes) and links by default, unless overridden by `linkTypes` or `moduleTypes` config.
+Style properties to be applied to all nodes (project shapes) and links by default, unless overridden by `linkTypes` or `projectTypes` config.
 
 !!! note
 
@@ -442,4 +442,4 @@ Style properties to be applied to all nodes (module shapes) and links by default
     }
     ```
 
-    I'm not going to document all this in here, but [take a look at the D2 docs if you're interested](https://d2lang.com/tour/globs/). If you want to add them to your chart, `globalProps` is probably(?) the best place for it. This will add the glob property to the global `classes.d2` file, which gets auto-imported into all module chart diagrams.
+    I'm not going to document all this in here, but [take a look at the D2 docs if you're interested](https://d2lang.com/tour/globs/). If you want to add them to your chart, `globalProps` is probably(?) the best place for it. This will add the glob property to the global `classes.d2` file, which gets auto-imported into all project chart diagrams.

@@ -2,12 +2,12 @@ package atlas.graphviz.internal
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import atlas.core.ModuleType
+import atlas.core.ProjectType
 import atlas.core.internal.Subgraph
 import atlas.core.internal.buildGraphElements
-import atlas.test.OneLevelOfSubmodules
-import atlas.test.SingleNestedModuleWithNoLinks
-import atlas.test.TwoLevelsOfSubmodules
+import atlas.test.OneLevelOfSubprojects
+import atlas.test.SingleNestedProjectWithNoLinks
+import atlas.test.TwoLevelsOfSubprojects
 import atlas.test.node
 import kotlin.test.Test
 
@@ -38,8 +38,8 @@ internal class GraphHierarchyTest {
     )
 
     val elements = buildGraphElements(
-      typedModules = OneLevelOfSubmodules.modules,
-      links = OneLevelOfSubmodules.links,
+      typedProjects = OneLevelOfSubprojects.projects,
+      links = OneLevelOfSubprojects.links,
       thisPath = ":app",
     )
     assertThat(elements).isEqualTo(
@@ -85,8 +85,8 @@ internal class GraphHierarchyTest {
     )
 
     val elements = buildGraphElements(
-      typedModules = TwoLevelsOfSubmodules.modules,
-      links = TwoLevelsOfSubmodules.links,
+      typedProjects = TwoLevelsOfSubprojects.projects,
+      links = TwoLevelsOfSubprojects.links,
       thisPath = ":app",
     )
     assertThat(elements).isEqualTo(
@@ -100,10 +100,10 @@ internal class GraphHierarchyTest {
   }
 
   @Test
-  fun `Single nested module, no links, grouped`() {
+  fun `Single nested project, no links, grouped`() {
     val node = node(
       path = ":a:b",
-      type = ModuleType(name = "red", color = "red"),
+      type = ProjectType(name = "red", color = "red"),
     )
     val aGraph = Subgraph(
       path = listOf("a"),
@@ -111,8 +111,8 @@ internal class GraphHierarchyTest {
     )
 
     val elements = buildGraphElements(
-      typedModules = SingleNestedModuleWithNoLinks.modules,
-      links = SingleNestedModuleWithNoLinks.links,
+      typedProjects = SingleNestedProjectWithNoLinks.projects,
+      links = SingleNestedProjectWithNoLinks.links,
       thisPath = ":a:b",
     )
     assertThat(elements).isEqualTo(listOf(aGraph))

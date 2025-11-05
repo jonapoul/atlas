@@ -2,9 +2,9 @@ package atlas.core.internal
 
 import atlas.core.InternalAtlasApi
 import atlas.core.LinkTypeSpec
-import atlas.core.ModuleTypeSpec
 import atlas.core.NamedLinkTypeContainer
-import atlas.core.NamedModuleTypeContainer
+import atlas.core.NamedProjectTypeContainer
+import atlas.core.ProjectTypeSpec
 import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
@@ -12,9 +12,9 @@ import org.gradle.api.NamedDomainObjectProvider
 import java.util.function.IntFunction
 
 @InternalAtlasApi
-public open class ModuleTypeContainer<T : ModuleTypeSpec>(
+public open class ProjectTypeContainer<T : ProjectTypeSpec>(
   delegate: NamedDomainObjectContainer<T>,
-) : OrderedNamedContainer<T>(delegate), NamedModuleTypeContainer<T>
+) : OrderedNamedContainer<T>(delegate), NamedProjectTypeContainer<T>
 
 @InternalAtlasApi
 public open class LinkTypeContainer<T : LinkTypeSpec>(

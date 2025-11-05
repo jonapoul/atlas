@@ -12,13 +12,13 @@ internal object DiamondGraph : GraphvizScenario {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
       }
     }
   """.trimIndent()
 
-  override val submoduleBuildFiles = mapOf(
+  override val subprojectBuildFiles = mapOf(
     "top" to """
       $kotlinJvmBuildScript
       dependencies {

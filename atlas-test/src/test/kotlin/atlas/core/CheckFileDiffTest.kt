@@ -6,7 +6,6 @@ import assertk.assertions.containsAtLeast
 import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
 import atlas.test.ScenarioTest
-import atlas.test.allTasksSuccessful
 import atlas.test.runTask
 import atlas.test.scenarios.CheckExplicitlyDisabled
 import atlas.test.scenarios.CheckExplicitlyEnabled
@@ -25,7 +24,8 @@ internal class CheckFileDiffTest : ScenarioTest() {
     val result = runTask(":a:checkGraphvizChart", extras = listOf("--dry-run")).build()
 
     // then the chart wasn't written
-    assertThat(result.output).doesNotContain(":a:writeGraphvizChart")
+    assertThat(result.output)
+      .doesNotContain(":a:writeGraphvizChart")
 
     // but the dummy and check tasks were run
     assertThat(result.output).contains(":a:writeDummyGraphvizChart")
@@ -67,7 +67,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   }
 
   @Test
-  fun `Verify modules of a basic project`() = runScenario(GraphVizBasicWithPngOutput) {
+  fun `Verify projects of a basic project`() = runScenario(GraphVizBasicWithPngOutput) {
     // given initial dotfile is generated
     runTask(":a:writeGraphvizChart").build()
 
@@ -130,13 +130,13 @@ internal class CheckFileDiffTest : ScenarioTest() {
       """
         |          digraph {
         |            node [shape="plaintext"]
-        |            modules [label=<
+        |            projects [label=<
         |      ---   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
         |      +++   <TABLE BORDER="0" CELLBORDER="100" CELLSPACING="0" CELLPADDING="4">
-        |              <TR><TD COLSPAN="2"><B>Module Types</B></TD></TR>
-        |              <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;module-name&gt;</TD></TR>
-        |              <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;module-name&gt;</TD></TR>
-        |              <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;module-name&gt;</TD></TR>
+        |              <TR><TD COLSPAN="2"><B>Project Types</B></TD></TR>
+        |              <TR><TD>Kotlin JVM</TD><TD BGCOLOR="mediumorchid">&lt;project-name&gt;</TD></TR>
+        |              <TR><TD>Java</TD><TD BGCOLOR="orange">&lt;project-name&gt;</TD></TR>
+        |              <TR><TD>Custom</TD><TD BGCOLOR="#123456">&lt;project-name&gt;</TD></TR>
         |            </TABLE>
         |            >];
         |          }
@@ -178,10 +178,11 @@ internal class CheckFileDiffTest : ScenarioTest() {
     val result = runTask("atlasCheck").build()
 
     // then
-    assertThat(result).taskWasSuccessful(":checkGraphvizLegend")
-    assertThat(result).taskWasSuccessful(":a:checkGraphvizChart")
-    assertThat(result).taskWasSuccessful(":b:checkGraphvizChart")
-    assertThat(result).taskWasSuccessful(":c:checkGraphvizChart")
-    assertThat(result).taskWasSuccessful(":atlasCheck")
+    assertThat(result)
+      .taskWasSuccessful(":checkGraphvizLegend")
+      .taskWasSuccessful(":a:checkGraphvizChart")
+      .taskWasSuccessful(":b:checkGraphvizChart")
+      .taskWasSuccessful(":c:checkGraphvizChart")
+      .taskWasSuccessful(":atlasCheck")
   }
 }

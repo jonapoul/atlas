@@ -6,12 +6,12 @@ import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.internal.logIfConfigured
 import atlas.core.internal.qualifier
-import atlas.core.internal.readModuleLinks
-import atlas.core.internal.readModuleTypes
+import atlas.core.internal.readProjectLinks
+import atlas.core.internal.readProjectTypes
 import atlas.core.tasks.AtlasGenerationTask
-import atlas.core.tasks.CollateModuleTypes
+import atlas.core.tasks.CollateProjectTypes
 import atlas.core.tasks.TaskWithOutputFile
-import atlas.core.tasks.WriteModuleTree
+import atlas.core.tasks.WriteProjectTree
 import atlas.d2.internal.D2Writer
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -34,12 +34,12 @@ import java.io.File
 public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
   // Files
   @get:[PathSensitive(NONE) InputFile] public abstract val linksFile: RegularFileProperty
-  @get:[PathSensitive(NONE) InputFile] public abstract val moduleTypesFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile] public abstract val projectTypesFile: RegularFileProperty
   @get:Input public abstract val pathToClassesFile: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   // General
-  @get:Input public abstract val groupModules: Property<Boolean>
+  @get:Input public abstract val groupProjects: Property<Boolean>
   @get:Input public abstract val replacements: SetProperty<Replacement>
   @get:Input public abstract val thisPath: Property<String>
 
@@ -51,16 +51,16 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
   @TaskAction
   public open fun execute() {
     val linksFile = linksFile.get().asFile
-    val moduleTypesFile = moduleTypesFile.get().asFile
+    val projectTypesFile = projectTypesFile.get().asFile
     val outputFile = outputFile.get().asFile
     val pathToClassesFile = pathToClassesFile.get()
 
     val writer = D2Writer(
-      typedModules = readModuleTypes(moduleTypesFile),
-      links = readModuleLinks(linksFile),
+      typedProjects = readProjectTypes(projectTypesFile),
+      links = readProjectLinks(linksFile),
       replacements = replacements.get(),
       thisPath = thisPath.get(),
-      groupModules = groupModules.get(),
+      groupProjects = groupProjects.get(),
       pathToClassesFile = pathToClassesFile,
     )
 
@@ -92,19 +92,19 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
       outputFile: File,
       pathToClassesFile: Provider<String>,
     ): TaskProvider<T> = with(target) {
-      val collateModuleTypes = CollateModuleTypes.get(rootProject)
-      val calculateProjectTree = WriteModuleTree.get(target)
+      val collateProjectTypes = CollateProjectTypes.get(rootProject)
+      val writeProjectTree = WriteProjectTree.get(target)
       val name = "write${T::class.qualifier}D2Chart"
       val writeChart = tasks.register(name, T::class.java) { task ->
-        task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
-        task.moduleTypesFile.convention(collateModuleTypes.map { it.outputFile.get() })
+        task.linksFile.convention(writeProjectTree.map { it.outputFile.get() })
+        task.projectTypesFile.convention(collateProjectTypes.map { it.outputFile.get() })
         task.outputFile.set(outputFile)
         task.pathToClassesFile.convention(pathToClassesFile)
         task.thisPath.convention(target.path)
       }
 
       writeChart.configure { task ->
-        task.groupModules.convention(extension.groupModules)
+        task.groupProjects.convention(extension.groupProjects)
         task.replacements.convention(extension.pathTransforms.replacements)
       }
 

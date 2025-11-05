@@ -13,7 +13,7 @@ internal object GraphVizBasicWithPngOutput : Scenario by GraphvizBasic {
     }
 
     atlas {
-      moduleTypes {
+      projectTypes {
         kotlinJvm()
         java()
       }

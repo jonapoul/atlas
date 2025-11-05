@@ -45,7 +45,7 @@ jobs:
 
       - name: Publish snapshot
         if: |
-          github.repository == 'jonapoul/atlas' &&
+          github.repository == 'jonapoul/atlas-gradle-plugin' &&
           github.ref == 'refs/heads/main' &&
           contains(steps.version.outputs.value, '-SNAPSHOT')
         env:

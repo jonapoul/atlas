@@ -11,7 +11,7 @@ internal object MermaidWithoutGroups : Scenario by MermaidBasic {
     }
 
     atlas {
-      groupModules = false
+      groupProjects = false
     }
   """.trimIndent()
 }

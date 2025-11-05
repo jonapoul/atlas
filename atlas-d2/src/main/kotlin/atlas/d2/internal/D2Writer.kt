@@ -4,30 +4,30 @@ package atlas.d2.internal
 
 import atlas.core.InternalAtlasApi
 import atlas.core.LinkType
-import atlas.core.ModuleType
+import atlas.core.ProjectType
 import atlas.core.Replacement
 import atlas.core.internal.ChartWriter
 import atlas.core.internal.IndentedStringBuilder
-import atlas.core.internal.ModuleLink
+import atlas.core.internal.ProjectLink
 import atlas.core.internal.Subgraph
-import atlas.core.internal.TypedModule
+import atlas.core.internal.TypedProject
 import atlas.core.internal.buildIndentedString
 import atlas.core.internal.contains
 
 @InternalAtlasApi
 public class D2Writer(
-  override val typedModules: Set<TypedModule>,
-  override val links: Set<ModuleLink>,
+  override val typedProjects: Set<TypedProject>,
+  override val links: Set<ProjectLink>,
   override val replacements: Set<Replacement>,
   override val thisPath: String,
-  override val groupModules: Boolean,
+  override val groupProjects: Boolean,
   private val pathToClassesFile: String,
 ) : ChartWriter() {
   private var subgraphNestingLevel = 0
 
   override fun invoke(): String = buildIndentedString {
     appendImports()
-    appendModules()
+    appendProjects()
     appendLinks()
     appendLegend()
   }
@@ -48,12 +48,12 @@ public class D2Writer(
     subgraphNestingLevel--
   }
 
-  override fun IndentedStringBuilder.appendModule(module: TypedModule) {
-    val (path, type) = module
+  override fun IndentedStringBuilder.appendProject(project: TypedProject) {
+    val (path, type) = project
     val key = path.localKey()
-    val name = if (groupModules) ":$key" else path
+    val name = if (groupProjects) ":$key" else path
     if (type == null) {
-      // just list the module with label
+      // just list the project with label
       appendLine("$key: $name")
     } else {
       // also include the class key
@@ -72,13 +72,13 @@ public class D2Writer(
   }
 
   private fun IndentedStringBuilder.appendLegend() {
-    val moduleTypes = typedModules
+    val projectTypes = typedProjects
       .filter { it in links }
       .mapNotNull { it.type }
       .distinct()
       .ifEmpty {
-        // single-module case
-        typedModules
+        // single-project case
+        typedProjects
           .firstOrNull { it.projectPath == thisPath }
           ?.type
           ?.let(::listOf)
@@ -89,13 +89,13 @@ public class D2Writer(
       .mapNotNull { it.type }
       .distinct()
 
-    if (moduleTypes.isEmpty() && linkTypes.isEmpty()) return
+    if (projectTypes.isEmpty() && linkTypes.isEmpty()) return
 
     appendLine("vars: {")
     indent {
       appendLine("d2-legend: {")
       indent {
-        moduleTypes.forEach { appendModuleType(it) }
+        projectTypes.forEach { appendProjectType(it) }
         if (linkTypes.isNotEmpty()) {
           val exampleNodes = getExampleNodesForLinks()
           linkTypes.forEach { appendLinkType(it, exampleNodes) }
@@ -106,19 +106,19 @@ public class D2Writer(
     appendLine("}")
   }
 
-  private fun IndentedStringBuilder.getExampleNodesForLinks(): Pair<ModuleType, ModuleType> {
-    val dummy = ModuleType(name = "dummy1", color = "", properties = emptyMap())
-    val dummy2 = ModuleType(name = "dummy2", color = "", properties = emptyMap())
+  private fun IndentedStringBuilder.getExampleNodesForLinks(): Pair<ProjectType, ProjectType> {
+    val dummy = ProjectType(name = "dummy1", color = "", properties = emptyMap())
+    val dummy2 = ProjectType(name = "dummy2", color = "", properties = emptyMap())
     appendLine("${dummy.classId}.class: $HIDDEN_CLASS")
     appendLine("${dummy2.classId}.class: $HIDDEN_CLASS")
     return dummy to dummy2
   }
 
-  private fun IndentedStringBuilder.appendModuleType(type: ModuleType) {
+  private fun IndentedStringBuilder.appendProjectType(type: ProjectType) {
     appendLine("${type.classId}: ${type.name} { class: ${type.classId} }")
   }
 
-  private fun IndentedStringBuilder.appendLinkType(type: LinkType, exampleNodes: Pair<ModuleType, ModuleType>) {
+  private fun IndentedStringBuilder.appendLinkType(type: LinkType, exampleNodes: Pair<ProjectType, ProjectType>) {
     val (a, b) = exampleNodes
     appendLine("${a.classId} -> ${b.classId}: ${type.displayName} { class: ${type.classId} }")
   }
@@ -131,7 +131,7 @@ public class D2Writer(
         .removePrefix("-"),
     ) { acc, string -> acc.replace(string, "") }
 
-    return if (groupModules) {
+    return if (groupProjects) {
       // Dots are nested group identifiers, so only use them if we have grouping enabled
       stripped.replace(":", ".")
     } else {
@@ -140,8 +140,8 @@ public class D2Writer(
     }
   }
 
-  private fun String.localKey(): String = if (groupModules) {
-    // "path.to.my.module" -> "module" for subgraphNestingLevel=3
+  private fun String.localKey(): String = if (groupProjects) {
+    // "path.to.my.project" -> "project" for subgraphNestingLevel=3
     fullKey().split(".")[subgraphNestingLevel]
   } else {
     fullKey()

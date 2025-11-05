@@ -42,7 +42,7 @@ import kotlin.text.RegexOption.DOT_MATCHES_ALL
  * If generating a new README, the output will look like below:
  *
  * ```markdown
- * # :path:to:my:module
+ * # :path:to:my:project
  *
  * <!--region chart-->
  * ![](atlas/chart.png)
@@ -62,7 +62,7 @@ public abstract class WriteReadme : DefaultTask(), AtlasGenerationTask, TaskWith
 
   init {
     group = ATLAS_TASK_GROUP
-    description = "Creates/updates the module README file to insert the modules chart"
+    description = "Creates/updates the project README file to insert the project's chart"
   }
 
   @TaskAction

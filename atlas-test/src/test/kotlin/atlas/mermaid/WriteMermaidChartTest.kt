@@ -34,7 +34,7 @@ internal class WriteMermaidChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Write chart with groups enabled but no nested modules`() = runScenario(MermaidWithGroupsNotNested) {
+  fun `Write chart with groups enabled but no nested projects`() = runScenario(MermaidWithGroupsNotNested) {
     // when
     val result = runTask(":a:writeMermaidChart").build()
 
@@ -55,7 +55,7 @@ internal class WriteMermaidChartTest : ScenarioTest() {
   }
 
   @Test
-  fun `Write chart with groups enabled and modules nested`() = runScenario(MermaidWithGroupsNested) {
+  fun `Write chart with groups enabled and projects nested`() = runScenario(MermaidWithGroupsNested) {
     // when
     val result = runTask(":a:writeMermaidChart").build()
 

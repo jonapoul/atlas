@@ -4,26 +4,26 @@ import atlas.core.InternalAtlasApi
 import atlas.core.Replacement
 import atlas.core.internal.ChartWriter
 import atlas.core.internal.IndentedStringBuilder
-import atlas.core.internal.ModuleLink
+import atlas.core.internal.ProjectLink
 import atlas.core.internal.Subgraph
-import atlas.core.internal.TypedModule
+import atlas.core.internal.TypedProject
 import atlas.core.internal.buildIndentedString
 import atlas.graphviz.DotConfig
 
 @InternalAtlasApi
 public data class DotWriter(
-  override val typedModules: Set<TypedModule>,
-  override val links: Set<ModuleLink>,
+  override val typedProjects: Set<TypedProject>,
+  override val links: Set<ProjectLink>,
   override val replacements: Set<Replacement>,
   override val thisPath: String,
-  override val groupModules: Boolean,
+  override val groupProjects: Boolean,
   private val config: DotConfig,
 ) : ChartWriter() {
   override fun invoke(): String = buildIndentedString {
     appendLine("digraph {")
     indent {
       appendHeader()
-      appendModules()
+      appendProjects()
       appendLinks()
     }
     appendLine("}")
@@ -61,8 +61,8 @@ public data class DotWriter(
   }
 
   override fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph) {
-    val cleanedModuleName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
-    appendLine("subgraph cluster_$cleanedModuleName {")
+    val cleanedProjectName = graph.name.filter { it.toString().matches(SUPPORTED_CHAR_REGEX) }
+    appendLine("subgraph cluster_$cleanedProjectName {")
     indent {
       appendLine("label = \":${graph.name}\"")
     }
@@ -72,11 +72,11 @@ public data class DotWriter(
     appendLine("}")
   }
 
-  override fun IndentedStringBuilder.appendModule(module: TypedModule) {
-    val nodePath = module.projectPath.cleaned()
+  override fun IndentedStringBuilder.appendProject(project: TypedProject) {
+    val nodePath = project.projectPath.cleaned()
     val attrs = Attrs()
 
-    module.type?.let { type ->
+    project.type?.let { type ->
       val properties = type.properties + ("fillcolor" to type.color)
       properties.forEach { (key, value) -> attrs[key] = value }
     }
