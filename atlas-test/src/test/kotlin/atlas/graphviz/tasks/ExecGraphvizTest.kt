@@ -40,7 +40,6 @@ internal class ExecGraphvizTest : ScenarioTest() {
         :a:writeProjectTree SKIPPED
         :a:writeGraphvizChart SKIPPED
         :a:execGraphvizChart SKIPPED
-        :a:svgToPng SKIPPED
         :writeGraphvizLegend SKIPPED
         :execGraphvizLegend SKIPPED
         :a:writeGraphvizReadme SKIPPED
@@ -48,13 +47,11 @@ internal class ExecGraphvizTest : ScenarioTest() {
         :b:writeProjectTree SKIPPED
         :b:writeGraphvizChart SKIPPED
         :b:execGraphvizChart SKIPPED
-        :b:svgToPng SKIPPED
         :b:writeGraphvizReadme SKIPPED
         :b:atlasGenerate SKIPPED
         :c:writeProjectTree SKIPPED
         :c:writeGraphvizChart SKIPPED
         :c:execGraphvizChart SKIPPED
-        :c:svgToPng SKIPPED
         :c:writeGraphvizReadme SKIPPED
         :c:atlasGenerate SKIPPED
 

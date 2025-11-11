@@ -1,10 +1,8 @@
-package atlas.core
+package atlas.d2.tasks
 
 import assertk.assertThat
 import assertk.assertions.exists
-import atlas.core.tasks.SvgToPng
 import atlas.test.D2Scenario
-import atlas.test.GraphvizScenario
 import atlas.test.RequiresImageMagick6
 import atlas.test.ScenarioTest
 import atlas.test.allTasksSuccessful
@@ -12,7 +10,6 @@ import atlas.test.doesNotExist
 import atlas.test.noTasksFailed
 import atlas.test.runTask
 import atlas.test.scenarios.D2Basic
-import atlas.test.scenarios.GraphvizBasic
 import atlas.test.taskHadResult
 import org.gradle.testkit.runner.TaskOutcome.SKIPPED
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
@@ -26,30 +23,9 @@ import kotlin.test.Test
 internal class SvgToPngTest : ScenarioTest() {
   @ParameterizedTest
   @MethodSource("converters")
-  fun `D2 convert SVG to PNG with specified converter`(
+  fun `Convert SVG to PNG with specified converter`(
     converter: SvgToPng.Converter,
-  ) = runScenario(D2SpecifiedSvgPngConverter(converter)) {
-    // given
-    assumeConverterIsInstalled(converter)
-
-    // when
-    val result = runTask("svgToPng").build()
-
-    // then both SVG and PNG were output
-    assertThat(result).allTasksSuccessful()
-    assertThat(resolve("a/atlas/chart.svg")).exists()
-    assertThat(resolve("a/atlas/chart.png")).exists()
-
-    // result is cached
-    assertThat(runTask("svgToPng").build())
-      .taskHadResult(":a:svgToPng", UP_TO_DATE)
-  }
-
-  @ParameterizedTest
-  @MethodSource("converters")
-  fun `Graphviz convert SVG to PNG with specified converter`(
-    converter: SvgToPng.Converter,
-  ) = runScenario(GraphvizSpecifiedSvgPngConverter(converter)) {
+  ) = runScenario(SpecifiedSvgPngConverter(converter)) {
     // given
     assumeConverterIsInstalled(converter)
 
@@ -67,7 +43,7 @@ internal class SvgToPngTest : ScenarioTest() {
   }
 
   @Test
-  fun `Don't run PNG conversion if converter not specified`() = runScenario(D2UnspecifiedConverter) {
+  fun `Don't run PNG conversion if converter not specified`() = runScenario(UnspecifiedConverter) {
     // when
     val result = runTask("atlasGenerate").build()
 
@@ -88,7 +64,7 @@ internal class SvgToPngTest : ScenarioTest() {
 
   @Test
   @RequiresImageMagick6
-  fun `Don't run PNG conversion if file format is not SVG`() = runScenario(D2SpecifiedConverterButWrongFormat) {
+  fun `Don't run PNG conversion if file format is not SVG`() = runScenario(SpecifiedConverterButWrongFormat) {
     // when
     val result = runTask("atlasGenerate").build()
 
@@ -125,10 +101,10 @@ internal class SvgToPngTest : ScenarioTest() {
     assumeTrue(isInstalled, "Converter '$converter' is not installed on this system")
   }
 
-  private class D2SpecifiedSvgPngConverter(converter: SvgToPng.Converter) : D2Scenario by D2Basic {
+  private class SpecifiedSvgPngConverter(converter: SvgToPng.Converter) : D2Scenario by D2Basic {
     override val rootBuildFile: String = """
-      import atlas.core.tasks.SvgToPng
       import atlas.d2.FileFormat
+      import atlas.d2.tasks.SvgToPng
 
       plugins {
         kotlin("jvm")
@@ -144,26 +120,7 @@ internal class SvgToPngTest : ScenarioTest() {
     """.trimIndent()
   }
 
-  private class GraphvizSpecifiedSvgPngConverter(converter: SvgToPng.Converter) : GraphvizScenario by GraphvizBasic {
-    override val rootBuildFile: String = """
-      import atlas.core.tasks.SvgToPng
-      import atlas.graphviz.FileFormat
-
-      plugins {
-        kotlin("jvm")
-        id("$pluginId")
-      }
-
-      atlas {
-        graphviz {
-          convertSvgToPng(SvgToPng.Converter.${converter.name})
-          fileFormat = FileFormat.Svg
-        }
-      }
-    """.trimIndent()
-  }
-
-  private object D2UnspecifiedConverter : D2Scenario by D2Basic {
+  private object UnspecifiedConverter : D2Scenario by D2Basic {
     override val rootBuildFile: String = """
       import atlas.d2.FileFormat
 
@@ -180,10 +137,10 @@ internal class SvgToPngTest : ScenarioTest() {
     """.trimIndent()
   }
 
-  private object D2SpecifiedConverterButWrongFormat : D2Scenario by D2Basic {
+  private object SpecifiedConverterButWrongFormat : D2Scenario by D2Basic {
     override val rootBuildFile: String = """
-      import atlas.core.tasks.SvgToPng
       import atlas.d2.FileFormat
+      import atlas.d2.tasks.SvgToPng
 
       plugins {
         kotlin("jvm")

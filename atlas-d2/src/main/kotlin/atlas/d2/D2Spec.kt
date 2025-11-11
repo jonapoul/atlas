@@ -3,7 +3,7 @@ package atlas.d2
 import atlas.core.AtlasDsl
 import atlas.core.AtlasSpec
 import atlas.core.PropertiesSpec
-import atlas.core.tasks.SvgToPng
+import atlas.d2.tasks.SvgToPng
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 

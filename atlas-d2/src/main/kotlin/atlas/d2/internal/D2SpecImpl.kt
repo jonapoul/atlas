@@ -11,7 +11,6 @@ import atlas.core.internal.float
 import atlas.core.internal.int
 import atlas.core.internal.intEnum
 import atlas.core.internal.string
-import atlas.core.tasks.SvgToPng
 import atlas.d2.ArrowType
 import atlas.d2.D2DagreSpec
 import atlas.d2.D2ElkSpec
@@ -31,6 +30,7 @@ import atlas.d2.Font
 import atlas.d2.LayoutEngine
 import atlas.d2.Shape
 import atlas.d2.TextTransform
+import atlas.d2.tasks.SvgToPng
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory

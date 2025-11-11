@@ -277,26 +277,6 @@ public abstract class atlas/core/tasks/CollateProjectTypes : org/gradle/api/Defa
 	public abstract fun getProjectTypeFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
 }
 
-public abstract class atlas/core/tasks/SvgToPng : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
-	public fun <init> ()V
-	public final fun execute ()V
-	public abstract fun getConverter ()Lorg/gradle/api/provider/Property;
-	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
-	public abstract fun getInputFile ()Lorg/gradle/api/file/RegularFileProperty;
-	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
-}
-
-public final class atlas/core/tasks/SvgToPng$Converter : java/lang/Enum {
-	public static final field CairoSvg Latlas/core/tasks/SvgToPng$Converter;
-	public static final field ImageMagick6 Latlas/core/tasks/SvgToPng$Converter;
-	public static final field ImageMagick7 Latlas/core/tasks/SvgToPng$Converter;
-	public static final field Inkscape Latlas/core/tasks/SvgToPng$Converter;
-	public static final field LibRsvg Latlas/core/tasks/SvgToPng$Converter;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Latlas/core/tasks/SvgToPng$Converter;
-	public static fun values ()[Latlas/core/tasks/SvgToPng$Converter;
-}
-
 public abstract interface class atlas/core/tasks/TaskWithOutputFile : org/gradle/api/Task {
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 }

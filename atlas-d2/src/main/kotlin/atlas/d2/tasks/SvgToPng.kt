@@ -1,9 +1,10 @@
-package atlas.core.tasks
+package atlas.d2.tasks
 
-import atlas.core.InternalAtlasApi
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.logIfConfigured
 import atlas.core.internal.withExtension
+import atlas.core.tasks.AtlasGenerationTask
+import atlas.core.tasks.TaskWithOutputFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -83,9 +84,6 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
     Converter.CairoSvg -> listOf(converter.value, inputPath, "-o", outputPath)
   }
 
-  /**
-   * Checked in descending priority order, if the [atlas.core.tasks.SvgToPng.converter] property isn't specified
-   */
   public enum class Converter(internal val value: String) {
     ImageMagick7("magick"),
     ImageMagick6("convert"),
@@ -97,13 +95,11 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
     override fun toString(): String = value
   }
 
-  @InternalAtlasApi
-  public companion object {
-    @InternalAtlasApi
-    public fun <T : TaskWithOutputFile> register(
+  internal companion object {
+    internal fun <T : TaskWithOutputFile> register(
       target: Project,
       svgTask: TaskProvider<T>,
-      isSvgInput: Provider<Boolean>,
+      isEnabled: Provider<Boolean>,
       converter: Property<Converter>,
     ): TaskProvider<SvgToPng> = with(target) {
       tasks.register("svgToPng", SvgToPng::class.java) { task ->
@@ -114,7 +110,7 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
             t.outputFile.withExtension(target, provider { "png" })
           },
         )
-        task.onlyIf { isSvgInput.get() && converter.isPresent }
+        task.onlyIf { isEnabled.get() }
       }
     }
   }
