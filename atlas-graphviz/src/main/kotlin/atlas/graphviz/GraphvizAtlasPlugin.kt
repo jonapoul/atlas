@@ -68,18 +68,24 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
       dotFileTask = chartTask,
     )
 
-    SvgToPng.register(
+    val svgToPng = SvgToPng.register(
       target = project,
       svgTask = graphvizTask,
       isSvgInput = graphvizSpec.fileFormat.map { it == FileFormat.Svg },
       converter = graphvizSpec.converter,
     )
 
+    val taskForReadme = svgToPng.flatMap { task -> if (task.isEnabled) svgToPng else graphvizTask }
+
+    val rootGraphviz = rootProject.tasks.named("execGraphvizLegend", ExecGraphviz::class.java)
+    val rootSvgToPng = rootProject.tasks.named("svgToPng", SvgToPng::class.java)
+    val legendForReadme = rootSvgToPng.flatMap { task -> if (task.isEnabled) rootSvgToPng else rootGraphviz }
+
     WriteReadme.register(
       target = project,
       flavor = "Graphviz",
-      chartFile = graphvizTask.map { it.outputFile.get() },
-      legendTask = rootProject.tasks.named("execGraphvizLegend", ExecGraphviz::class.java),
+      chartFile = taskForReadme.flatMap { it.outputFile },
+      legendTask = legendForReadme,
     )
   }
 

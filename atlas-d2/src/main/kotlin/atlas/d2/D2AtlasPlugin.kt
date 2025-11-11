@@ -85,17 +85,19 @@ public class D2AtlasPlugin : AtlasPlugin() {
       dotFileTask = chartTask,
     )
 
-    SvgToPng.register(
+    val svgToPng = SvgToPng.register(
       target = project,
       svgTask = d2Task,
       isSvgInput = d2Spec.fileFormat.map { it == FileFormat.Svg },
       converter = d2Spec.converter,
     )
 
+    val taskForReadme = svgToPng.flatMap { task -> if (task.isEnabled) svgToPng else d2Task }
+
     WriteReadme.register(
       target = project,
       flavor = "D2",
-      chartFile = d2Task.map { it.outputFile.get() },
+      chartFile = taskForReadme.flatMap { it.outputFile },
       legendTask = null,
     )
   }
