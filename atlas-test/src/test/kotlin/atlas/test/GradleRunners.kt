@@ -1,8 +1,8 @@
 package atlas.test
 
 import org.gradle.testkit.runner.GradleRunner
+import org.junit.jupiter.api.Assumptions.assumeFalse
 import java.io.File
-import kotlin.test.fail
 
 internal fun File.buildRunner(requiresAndroid: Boolean = false): GradleRunner = GradleRunner
   .create()
@@ -12,8 +12,12 @@ internal fun File.buildRunner(requiresAndroid: Boolean = false): GradleRunner = 
   .withProjectDir(this)
   .apply {
     if (requiresAndroid) {
-      if (ANDROID_HOME == null) fail("No ANDROID_HOME supplied!")
-      withEnvironment(mapOf("ANDROID_HOME" to ANDROID_HOME.absolutePath))
+      val home = ANDROID_HOME
+      if (home == null) {
+        assumeFalse(true, "No ANDROID_HOME supplied for an android test")
+      } else {
+        withEnvironment(mapOf("ANDROID_HOME" to home.absolutePath))
+      }
     }
   }
 
