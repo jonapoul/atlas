@@ -30,6 +30,7 @@ import atlas.d2.Font
 import atlas.d2.LayoutEngine
 import atlas.d2.Shape
 import atlas.d2.TextTransform
+import atlas.d2.tasks.SvgToPng
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
@@ -65,6 +66,9 @@ internal class D2SpecImpl(
 
   override val globalProps = D2GlobalPropsSpecImpl(objects)
   override fun globalProps(action: Action<D2GlobalPropsSpec>) = action.execute(globalProps)
+
+  internal val converter = objects.property(SvgToPng.Converter::class.java)
+  override fun convertSvgToPng(converter: SvgToPng.Converter?) = this.converter.set(converter)
 }
 
 internal open class D2RootStyleSpecImpl(

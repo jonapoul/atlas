@@ -12,6 +12,7 @@ import atlas.core.tasks.CheckFileDiff
 import atlas.core.tasks.WriteReadme
 import atlas.d2.internal.D2AtlasExtensionImpl
 import atlas.d2.tasks.ExecD2
+import atlas.d2.tasks.SvgToPng
 import atlas.d2.tasks.WriteD2Chart
 import atlas.d2.tasks.WriteD2Classes
 import org.gradle.api.Project
@@ -84,12 +85,26 @@ public class D2AtlasPlugin : AtlasPlugin() {
       dotFileTask = chartTask,
     )
 
-    WriteReadme.register(
+    val isSvgInput = d2Spec.fileFormat.map { it == FileFormat.Svg }
+    val runSvgToPng = provider { isSvgInput.get() && d2Spec.converter.isPresent }
+
+    val svgToPng = SvgToPng.register(
+      target = project,
+      svgTask = d2Task,
+      isEnabled = runSvgToPng,
+      converter = d2Spec.converter,
+    )
+
+    val taskForReadme = svgToPng.flatMap { task -> if (runSvgToPng.get()) svgToPng else d2Task }
+
+    val writeReadme = WriteReadme.register(
       target = project,
       flavor = "D2",
-      chartFile = d2Task.map { it.outputFile.get() },
+      chartFile = taskForReadme.flatMap { it.outputFile },
       legendTask = null,
     )
+
+    writeReadme.configure { it.dependsOn(taskForReadme) }
   }
 
   override fun Project.registerRootTasks() {

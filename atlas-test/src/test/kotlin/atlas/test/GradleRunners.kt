@@ -1,25 +1,31 @@
 package atlas.test
 
 import org.gradle.testkit.runner.GradleRunner
+import org.junit.jupiter.api.Assumptions.assumeFalse
 import java.io.File
 
-internal fun File.buildRunner(androidHome: File? = null): GradleRunner = GradleRunner
+internal fun File.buildRunner(requiresAndroid: Boolean = false): GradleRunner = GradleRunner
   .create()
   .withPluginClasspath()
   .withDebug(false)
-  .withGradleVersion(System.getProperty("test.version.gradle"))
+  .withGradleVersion(GRADLE_VERSION)
   .withProjectDir(this)
   .apply {
-    if (androidHome != null) {
-      withEnvironment(mapOf("ANDROID_HOME" to androidHome.absolutePath))
+    if (requiresAndroid) {
+      val home = ANDROID_HOME
+      if (home == null) {
+        assumeFalse(true, "No ANDROID_HOME supplied for an android test")
+      } else {
+        withEnvironment(mapOf("ANDROID_HOME" to home.absolutePath))
+      }
     }
   }
 
 internal fun File.runTask(
   task: String,
-  androidHome: File? = null,
+  requiresAndroid: Boolean = false,
   extras: List<String> = emptyList(),
-): GradleRunner = buildRunner(androidHome).runTask(task, extras)
+): GradleRunner = buildRunner(requiresAndroid).runTask(task, extras)
 
 internal fun GradleRunner.runTask(
   task: String,

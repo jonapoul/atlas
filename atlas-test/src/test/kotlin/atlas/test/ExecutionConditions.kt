@@ -20,6 +20,11 @@ annotation class RequiresWhereis
 
 @Target(FUNCTION, CLASS)
 @Retention(RUNTIME)
+@RequiresCommand(command = "convert")
+annotation class RequiresImageMagick6
+
+@Target(FUNCTION, CLASS)
+@Retention(RUNTIME)
 @ExtendWith(RequiresCommandExtension::class)
 annotation class RequiresCommand(val command: String)
 

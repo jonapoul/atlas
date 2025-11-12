@@ -3,6 +3,7 @@ package atlas.graphviz.tasks
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.Variant
 import atlas.core.internal.logIfConfigured
+import atlas.core.internal.withExtension
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.TaskWithOutputFile
 import atlas.graphviz.FileFormat
@@ -90,10 +91,7 @@ public abstract class ExecGraphviz : DefaultTask(), AtlasGenerationTask, TaskWit
 
       execGraphviz.configure { task ->
         val dotFile = dotFileTask.map { it.outputFile.get() }
-        val outputFile = dotFile.map { f ->
-          val newFile = f.asFile.resolveSibling("${f.asFile.nameWithoutExtension}.${spec.fileFormat.get()}")
-          project.layout.projectDirectory.file(newFile.relativeTo(projectDir).path)
-        }
+        val outputFile = dotFile.withExtension(target, provider { spec.fileFormat.get() })
 
         task.dotFile.convention(dotFile)
         task.pathToDotCommand.convention(spec.pathToDotCommand)

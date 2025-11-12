@@ -198,6 +198,8 @@ public final class atlas/d2/D2RootStyleSpec$DefaultImpls {
 }
 
 public abstract interface class atlas/d2/D2Spec : atlas/core/AtlasSpec {
+	public abstract fun convertSvgToPng (Latlas/d2/tasks/SvgToPng$Converter;)V
+	public static synthetic fun convertSvgToPng$default (Latlas/d2/D2Spec;Latlas/d2/tasks/SvgToPng$Converter;ILjava/lang/Object;)V
 	public abstract fun getAnimateInterval ()Lorg/gradle/api/provider/Property;
 	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;
 	public abstract fun getCenter ()Lorg/gradle/api/provider/Property;
@@ -216,6 +218,10 @@ public abstract interface class atlas/d2/D2Spec : atlas/core/AtlasSpec {
 	public abstract fun globalProps (Lorg/gradle/api/Action;)V
 	public abstract fun layoutEngine (Lorg/gradle/api/Action;)V
 	public abstract fun rootStyle (Lorg/gradle/api/Action;)V
+}
+
+public final class atlas/d2/D2Spec$DefaultImpls {
+	public static synthetic fun convertSvgToPng$default (Latlas/d2/D2Spec;Latlas/d2/tasks/SvgToPng$Converter;ILjava/lang/Object;)V
 }
 
 public abstract interface class atlas/d2/D2TalaSpec : atlas/core/PropertiesSpec {
@@ -465,6 +471,27 @@ public abstract class atlas/d2/tasks/ExecD2 : org/gradle/api/DefaultTask, atlas/
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
 	public abstract fun getPathToD2Command ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class atlas/d2/tasks/SvgToPng : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getConverter ()Lorg/gradle/api/provider/Property;
+	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
+	public abstract fun getInputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public final class atlas/d2/tasks/SvgToPng$Converter : java/lang/Enum {
+	public static final field CairoSvg Latlas/d2/tasks/SvgToPng$Converter;
+	public static final field ImageMagick6 Latlas/d2/tasks/SvgToPng$Converter;
+	public static final field ImageMagick7 Latlas/d2/tasks/SvgToPng$Converter;
+	public static final field Inkscape Latlas/d2/tasks/SvgToPng$Converter;
+	public static final field LibRsvg Latlas/d2/tasks/SvgToPng$Converter;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/tasks/SvgToPng$Converter;
+	public static fun values ()[Latlas/d2/tasks/SvgToPng$Converter;
 }
 
 public abstract class atlas/d2/tasks/WriteD2Chart : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {

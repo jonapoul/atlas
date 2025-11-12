@@ -3,6 +3,7 @@ package atlas.d2
 import atlas.core.AtlasDsl
 import atlas.core.AtlasSpec
 import atlas.core.PropertiesSpec
+import atlas.d2.tasks.SvgToPng
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
@@ -66,6 +67,12 @@ public interface D2Spec : AtlasSpec {
 
   public val globalProps: D2GlobalPropsSpec
   public fun globalProps(action: Action<D2GlobalPropsSpec>)
+
+  /**
+   * If called, a task will be registered to convert any SVG outputs to PNGs. Has no effect if [D2Spec.fileFormat]
+   * is not [FileFormat.Svg].
+   */
+  public fun convertSvgToPng(converter: SvgToPng.Converter? = null)
 }
 
 /**

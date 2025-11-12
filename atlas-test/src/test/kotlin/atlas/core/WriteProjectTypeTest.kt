@@ -5,7 +5,6 @@ import assertk.assertions.isEqualTo
 import atlas.core.internal.TypedProject
 import atlas.core.internal.readProjectType
 import atlas.test.ScenarioTest
-import atlas.test.androidHomeOrSkip
 import atlas.test.buildRunner
 import atlas.test.runTask
 import atlas.test.scenarios.NoProjectTypesDeclared
@@ -60,7 +59,7 @@ internal class WriteProjectTypeTest : ScenarioTest() {
   @Test
   fun `Write files if custom types match`() = runScenario(ThreeProjectWithCustomTypes) {
     // when
-    val result = buildRunner(androidHomeOrSkip())
+    val result = buildRunner(requiresAndroid = true)
       .runTask("writeProjectType")
       .build()
 
@@ -81,7 +80,7 @@ internal class WriteProjectTypeTest : ScenarioTest() {
   @Test
   fun `Fall back to other if no types match`() = runScenario(ThreeProjectsOnlyMatchingOther) {
     // when
-    runTask("writeProjectType", androidHomeOrSkip()).build()
+    runTask("writeProjectType", requiresAndroid = true).build()
 
     // then
     assertThat(projectType("a")).isEqualTo(TypedProject(":a", type = ProjectType("Other", color = "gainsboro")))
@@ -92,7 +91,7 @@ internal class WriteProjectTypeTest : ScenarioTest() {
   @Test
   fun `No types match`() = runScenario(ThreeProjectsNoMatchingType) {
     // when
-    val result = runTask("a:writeProjectType", androidHomeOrSkip()).build()
+    val result = runTask("a:writeProjectType", requiresAndroid = true).build()
 
     // then
     assertThat(result).taskHadResult(":a:writeProjectType", SUCCESS)
