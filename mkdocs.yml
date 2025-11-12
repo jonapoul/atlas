@@ -11,10 +11,12 @@ edit_uri: edit/main/docs/
 remote_branch: gh-pages
 
 theme:
-  name: "material"
+  name: "modern"
   icon:
-    repo: fontawesome/brands/github
     edit: material/pencil
+    next: fontawesome/solid/angle-right
+    previous: fontawesome/solid/angle-left
+    repo: fontawesome/brands/github
     view: material/eye
   favicon: site-assets/img/favicon.ico
   logo: site-assets/img/atlas.png
@@ -34,12 +36,24 @@ theme:
         icon: material/weather-night
         name: Switch to light mode
   features:
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
     - content.code.copy
     - content.code.select
     - content.code.view
+    - content.tabs.link
+    - content.tooltips
     - navigation.expand
     - navigation.footer
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.path
+    - navigation.top
     - navigation.tracking
+    - navigation.tracking
+    - search.highlight
     - toc.follow
 
 extra_css:
@@ -75,6 +89,7 @@ markdown_extensions:
 
 nav:
   - Overview: index.md
+  - Installation: installation.md
   - Usage:
       - "Common": usage-common.md
       - "Graphviz": usage-graphviz.md

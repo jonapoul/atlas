@@ -1,15 +1,16 @@
 ---
-title: Common Usage
+title: Common Config
 description: Common configuration steps across all Atlas Gradle plugins
+icon: lucide/component
 ---
 
-# Common Usage
+# Common Config
 
 ## Overview
 
 Configuration is primarily done via the `atlas` Gradle extension function, accessible in your root build file. [See here for the KDoc](api/atlas-core/atlas.core/-atlas-extension/index.html), or [here for the source file](https://github.com/jonapoul/atlas-gradle-plugin/blob/main/atlas-core/src/main/kotlin/atlas/core/AtlasExtension.kt).
 
-```kotlin
+``` kotlin
 // none of these are required - these values are the defaults
 atlas {
   alsoTraverseUpwards = false
@@ -37,7 +38,7 @@ atlas {
 
 Alternatively, if calling from a `buildSrc` Kotlin file (or similar):
 
-```kotlin
+``` kotlin
 project.extensions.configure<AtlasExtension> {
   // ...
 }
@@ -55,30 +56,30 @@ Any other configs beyond these are specific to the particular plugin you applied
 
 !!! warning
 
-    If you have `org.gradle.configureondemand=true` enabled in your `gradle.properties`, you must run `atlasGenerate` and `atlasCheck` from the root project only. Running them on a specific subproject (e.g., `./gradlew :project:atlasGenerate`) will fail with an error or skip the check with a warning.
+    If you have `org.gradle.configureondemand=true` enabled in your `gradle.properties`, you must run `atlasGenerate` and `atlasCheck` from the root project only. Running them on a specific subproject (e.g., `gradle :project:atlasGenerate`) will fail with an error or skip the check with a warning.
 
 When [Gradle's configuration on demand](https://docs.gradle.org/current/userguide/multi_project_configuration_and_execution.html#sec:configuration_on_demand) feature is enabled, Atlas will generally work but it will restrict the `atlasGenerate` and `atlasCheck` tasks to be executed ONLY on the root project. This is because configuration-on-demand doesn't guarantee all that projects are configured when checking dependencies between them, which will lead to incomplete charts. Calling `atlasGenerate` on the root forces all dependencies to be resolved and passed correctly into the chart generation tasks.
 
 Examples below with `org.gradle.configureondemand=true` set in `gradle.properties`.
 
-**What works:**
+**:white_check_mark: What works:**
 
 Running on the root project:
 
-```shell
-./gradlew atlasGenerate
-./gradlew atlasCheck
+``` shell
+gradle atlasGenerate
+gradle atlasCheck
 ```
 
 These will execute every single generation/checking task in the entire Gradle build. That we we're ensuring that all configurations are being covered for inter-project dependencies.
 
-**What doesn't work:**
+**:x: What doesn't work:**
 
 Running directly on a subproject:
 
-```shell
-./gradlew :path:to:atlasGenerate
-./gradlew :path:to:atlasCheck
+``` shell
+gradle :path:to:atlasGenerate
+gradle :path:to:atlasCheck
 ```
 
 These will both fail for the same reasons: they can't guarantee that the whole dependency tree will be included in the chart because projects uninvolved in the task execution will not be queried for their dependencies as part of the chart generation/checking.
@@ -94,7 +95,7 @@ So far as I'm aware, there are no easy ways around this in modern Gradle.
 
 ### alsoTraverseUpwards
 
-```kotlin
+``` kotlin
 atlas {
   alsoTraverseUpwards = true
 }
@@ -118,7 +119,7 @@ Examples below from the perspective of `:android:lib`:
 
 ### checkOutputs
 
-```kotlin
+``` kotlin
 atlas {
   checkOutputs = true
 }
@@ -132,7 +133,7 @@ Even if this option is disabled, the task will still be created, it just won't b
 
 ### displayLinkLabels
 
-```kotlin
+``` kotlin
 atlas {
   displayLinkLabels = true
 
@@ -161,7 +162,7 @@ Requires some `linkTypes` to be declared - otherwise this will have no effect.
 
 ### generateOnSync
 
-```kotlin
+``` kotlin
 atlas {
   generateOnSync = true
 }
@@ -175,7 +176,7 @@ When enabled, syncing your IntelliJ IDE (including Android Studio) will automati
 
 ### groupProjects
 
-```kotlin
+``` kotlin
 atlas {
   groupProjects = true
 }
@@ -205,7 +206,7 @@ Set to true if you want project charts to gather together groups of projects int
 
 ### ignoredConfigs
 
-```kotlin
+``` kotlin
 atlas {
   ignoredConfigs = setOf("debug", "kover", "ksp", "test")
 }
@@ -221,7 +222,7 @@ Defaults to `setOf("debug", "kover", "ksp", "test")`.
 
 ### ignoredProjects
 
-```kotlin
+``` kotlin
 atlas {
   ignoredProjects = setOf(
     ":path:to:some:project",
@@ -234,7 +235,7 @@ Defaults to an empty set.
 
 ### printFilesToConsole
 
-```kotlin
+``` kotlin
 atlas {
   printFilesToConsole = true
 }
@@ -261,7 +262,7 @@ Use the `projectTypes` block to identify project categories, along with the styl
 
 Sample usage:
 
-```kotlin
+``` kotlin
 atlas {
   projectTypes {
     hasPluginId(
@@ -286,7 +287,7 @@ atlas {
 
 A few project type quick-access functions are built into Atlas for use in the projectTypes block if you need them:
 
-```kotlin
+``` kotlin
 atlas {
   projectTypes {
     androidApp()
@@ -311,7 +312,7 @@ The below example shows one project of each of the built-in project types in a s
 
 Remember also that you can pass framework-specific configuration options into any project type declarations used above, with a trailing lambda. Example below comes from D2:
 
-```kotlin
+``` kotlin
 atlas {
   projectTypes {
     androidApp {
@@ -332,7 +333,7 @@ atlas {
 
 Use this block to configure categories of link to be detected in your project and drawn onto the projects chart. These are detected by Gradle's configuration names. In most cases you'll probably use `api` and `implementation` as your main link types, so these are available as quick-access config functions:
 
-```kotlin
+``` kotlin
 atlas {
   linkTypes {
     implementation(color = "red")
@@ -354,7 +355,7 @@ atlas {
 
 Besides the default `api` and `implementation`, you can declare links representing other Gradle configurations too:
 
-```kotlin
+``` kotlin
 atlas {
   linkTypes {
     // All parameters are optional
@@ -375,7 +376,7 @@ atlas {
 
 This is a little API for modifying project paths when inserting them into any generated diagrams. For example if your projects are all within a `"projects"` directory in your project's root, you might want to call something like:
 
-```kotlin
+``` kotlin
 atlas {
   pathTransforms {
     // ":projects:path:to:something" => "path:to:something"
@@ -395,7 +396,7 @@ Several components in Atlas make use of the [`PropertiesSpec`](api/atlas-core/at
 
 The intention with this is to let you pass in anything to the scope in question - allowing you to make use of any new APIs in that framework which haven't been explicitly implemented in Atlas. Any usage of these keys is up to you to validate - sometimes the diagram framework won't give you a warning if you pass in an invalid key. If you have some brand-spanking new attribute that you want to apply somewhere:
 
-```kotlin
+``` kotlin
 atlas {
   projectTypes {
     // no custom config necessary

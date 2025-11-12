@@ -1,9 +1,10 @@
 ---
 title: Graphviz
 description: Configuration steps for the Graphviz Atlas Gradle plugin
+icon: lucide/chart-line
 ---
 
-# Graphviz Usage
+# Graphviz Config
 
 ## Overview
 
@@ -13,13 +14,13 @@ You'll need to install Graphviz's binary executables separately, to use them as 
 
 Config is done with the `graphviz` lambda block within the base `atlas` extension:
 
-```kotlin
+``` kotlin
 plugins {
   id("dev.jonpoulton.atlas.graphviz") version "x.y.z"
 }
 
 atlas {
-  // other Atlas config - see common usage docs
+  // other Atlas config - see common config docs
 
   graphviz {
     pathToDotCommand = "/path/to/dot"
@@ -58,7 +59,7 @@ Atlas Graphviz will generate a `chart.dot` file in each project directory, plus 
 
 ### pathToDotCommand
 
-```kotlin
+``` kotlin
 atlas {
   graphviz {
     pathToDotCommand = "/path/to/dot"
@@ -70,7 +71,7 @@ By default, Atlas will try to call `dot` from the system PATH. Use this to speci
 
 ### fileFormat
 
-```kotlin
+``` kotlin
 atlas {
   graphviz {
     fileFormat = FileFormat.Svg
@@ -82,7 +83,7 @@ There are plenty of options here, [all those specified in the Graphviz docs](htt
 
 ### layoutEngine
 
-```kotlin
+``` kotlin
 atlas {
   graphviz {
     layoutEngine = LayoutEngine.Dot
@@ -121,7 +122,7 @@ As mentioned in [the Extra Properties section on the previous page](usage-common
 
 Set a bunch of properties to be applied to all project nodes - unless overridden by [`projectTypes` config](usage-common.md#projecttypes). Some examples below, though you'll want to [go through the Graphviz docs](https://graphviz.org/docs/nodes/) for all restrictions/requirements:
 
-```kotlin
+``` kotlin
 atlas {
   graphviz {
     node {
@@ -138,7 +139,7 @@ atlas {
 
     All properties available in `node { }` are also available when configuring individual `projectTypes`:
 
-    ```kotlin
+    ``` kotlin
     atlas {
       projectTypes {
         hasPluginId("Custom", "com.custom.plugin") {
@@ -212,7 +213,7 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 
 Set a bunch of properties to be applied to all links between project nodes - unless overridden by [`linkTypes` config](usage-common.md#linktypes). Some examples below, though you'll want to [go through the Graphviz docs](https://graphviz.org/docs/edges/) for all restrictions/requirements:
 
-```kotlin
+``` kotlin
 atlas {
   graphviz {
     edge {
@@ -231,7 +232,7 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 
     Same here for link styles as with node styles - any properties set in `edge` can be overridden by custom `linkTypes` config:
 
-    ```kotlin
+    ``` kotlin
     atlas {
       linkTypes {
         api {
@@ -323,7 +324,7 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 
 Set a bunch of properties to be applied to the chart itself. Some examples below, though you'll want to [go through the Graphviz docs](https://graphviz.org/docs/edges/) for all restrictions/requirements:
 
-```kotlin
+``` kotlin
 atlas {
   graphviz {
     graph {

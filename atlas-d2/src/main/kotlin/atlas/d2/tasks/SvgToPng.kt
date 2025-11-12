@@ -27,7 +27,7 @@ import javax.inject.Inject
 @CacheableTask
 public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {
   @get:[PathSensitive(NONE) InputFile] public abstract val inputFile: RegularFileProperty
-  @get:[Input Optional] public abstract val converter: Property<Converter>
+  @get:Input public abstract val converter: Property<Converter>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
   @get:Inject public abstract val execOperations: ExecOperations
 
