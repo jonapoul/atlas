@@ -70,7 +70,7 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
     WriteReadme.register(
       target = project,
       flavor = "Graphviz",
-      chartFile = graphvizTask.map { it.outputFile.get() },
+      chartFile = graphvizTask.flatMap { it.outputFile },
       legendTask = rootProject.tasks.named("execGraphvizLegend", ExecGraphviz::class.java),
     )
   }

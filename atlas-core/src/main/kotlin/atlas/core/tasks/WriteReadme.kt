@@ -156,7 +156,7 @@ public abstract class WriteReadme : DefaultTask(), AtlasGenerationTask, TaskWith
         if (legendTask == null) {
           task.legendFile.convention(null)
         } else {
-          task.legendFile.convention(legendTask.map { it.outputFile.get() })
+          task.legendFile.convention(legendTask.flatMap { it.outputFile })
         }
         task.chartFile.convention(chartFile)
         val readme = layout.projectDirectory.file("README.md")

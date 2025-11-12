@@ -116,8 +116,8 @@ public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, At
       val calculateProjectTree = WriteProjectTree.get(target)
       val name = "write${T::class.qualifier}GraphvizChart"
       val writeChart = tasks.register(name, T::class.java) { task ->
-        task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
-        task.projectTypesFile.convention(collateProjectTypes.map { it.outputFile.get() })
+        task.linksFile.convention(calculateProjectTree.flatMap { it.outputFile })
+        task.projectTypesFile.convention(collateProjectTypes.flatMap { it.outputFile })
         task.outputFile.set(outputFile)
         task.thisPath.convention(target.path)
       }

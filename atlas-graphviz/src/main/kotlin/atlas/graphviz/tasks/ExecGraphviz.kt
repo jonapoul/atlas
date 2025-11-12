@@ -90,7 +90,7 @@ public abstract class ExecGraphviz : DefaultTask(), AtlasGenerationTask, TaskWit
       val execGraphviz = tasks.register(name, ExecGraphviz::class.java)
 
       execGraphviz.configure { task ->
-        val dotFile = dotFileTask.map { it.outputFile.get() }
+        val dotFile = dotFileTask.flatMap { it.outputFile }
         val outputFile = dotFile.withExtension(target, provider { spec.fileFormat.get() })
 
         task.dotFile.convention(dotFile)

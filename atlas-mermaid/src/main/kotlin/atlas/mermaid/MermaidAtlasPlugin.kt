@@ -62,7 +62,7 @@ public class MermaidAtlasPlugin : AtlasPlugin() {
     WriteReadme.register(
       target = project,
       flavor = "Mermaid",
-      chartFile = chartTask.map { it.outputFile.get() },
+      chartFile = chartTask.flatMap { it.outputFile },
       legendTask = WriteMarkdownLegend.get(rootProject),
     )
   }
