@@ -106,7 +106,7 @@ public abstract class CheckFileDiff : DefaultTask() {
       val name = "check${spec.name.capitalized()}$variant"
       val checkDiff = tasks.register(name, CheckFileDiff::class.java) { task ->
         task.taskPath.convention(target.path + ":" + realTask.name)
-        task.actualFile.convention(dummyTask.map { it.outputFile.get() })
+        task.actualFile.convention(dummyTask.flatMap { it.outputFile })
       }
 
       checkDiff.configure { task ->

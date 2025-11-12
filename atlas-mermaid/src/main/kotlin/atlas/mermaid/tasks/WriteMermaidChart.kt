@@ -118,8 +118,8 @@ public abstract class WriteMermaidChart : DefaultTask(), AtlasGenerationTask, Ta
       val writeChart = tasks.register(name, WriteMermaidChart::class.java)
 
       writeChart.configure { task ->
-        task.linksFile.convention(calculateProjectTree.map { it.outputFile.get() })
-        task.projectTypesFile.convention(collateProjectTypes.map { it.outputFile.get() })
+        task.linksFile.convention(calculateProjectTree.flatMap { it.outputFile })
+        task.projectTypesFile.convention(collateProjectTypes.flatMap { it.outputFile })
         task.outputFile.set(outputFile)
 
         task.groupProjects.convention(extension.groupProjects)

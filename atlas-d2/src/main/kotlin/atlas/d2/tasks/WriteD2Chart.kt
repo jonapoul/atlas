@@ -96,8 +96,8 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
       val writeProjectTree = WriteProjectTree.get(target)
       val name = "write${T::class.qualifier}D2Chart"
       val writeChart = tasks.register(name, T::class.java) { task ->
-        task.linksFile.convention(writeProjectTree.map { it.outputFile.get() })
-        task.projectTypesFile.convention(collateProjectTypes.map { it.outputFile.get() })
+        task.linksFile.convention(writeProjectTree.flatMap { it.outputFile })
+        task.projectTypesFile.convention(collateProjectTypes.flatMap { it.outputFile })
         task.outputFile.set(outputFile)
         task.pathToClassesFile.convention(pathToClassesFile)
         task.thisPath.convention(target.path)
