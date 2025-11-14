@@ -29,4 +29,5 @@ jobs:
         run: pip install -r config/docs-requirements.txt
 
       - name: Build
-        run: zensical build -f docs/mkdocs.yml --clean
+        working-directory: docs
+        run: zensical build -f zensical.toml --clean
