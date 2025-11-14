@@ -58,7 +58,7 @@ jobs:
 
       - name: Upload
         id: deployment
-        run: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v4
         with:
           path: docs/site
 
