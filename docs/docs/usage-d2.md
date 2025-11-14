@@ -1,9 +1,10 @@
 ---
 title: D2
 description: Configuration steps for the D2 Atlas Gradle plugin
+icon: lucide/columns-2
 ---
 
-# D2 Usage
+# D2 Config
 
 ## Overview
 
@@ -13,13 +14,13 @@ See [here for the official D2 docs](https://d2lang.com/tour/intro/) or [here for
 
 D2-specific configuration is performed from the `d2 { }` block within the base `atlas` extension function:
 
-```kotlin
+``` kotlin
 plugins {
   id("dev.jonpoulton.atlas.d2") version "x.y.z"
 }
 
 atlas {
-  // other Atlas config - see common usage docs
+  // other Atlas config - see common config docs
 
   d2 {
     animateInterval = 10
@@ -35,6 +36,8 @@ atlas {
     sketch = true
     theme = Theme.ColorblindClear
     themeDark = Theme.DarkMauve
+
+    convertSvgToPng(SvgToPng.Converter.ImageMagick6)
 
     rootStyle {
       // ...
@@ -59,7 +62,7 @@ The D2 plugin will generate a `classes.d2` file in the root project's `atlas` fo
 
 ### animateInterval
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     animateInterval = 100
@@ -71,7 +74,7 @@ Only used if [fileFormat](#fileformat) is set to `FileFormat.Gif`.
 
 ### animateLinks
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     animateLinks = true
@@ -99,7 +102,7 @@ When enabled, links between all project nodes will be animated, as long as they 
 
 ### center
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     center = true
@@ -111,7 +114,7 @@ This flag centers the SVG within the containing viewbox. Doesn't really give an 
 
 ### direction
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     direction = Direction.Down
@@ -145,7 +148,7 @@ Sets the flow direction of the dependency chart. Defaults to `Direction.Down`.
 
 ### fileFormat
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     fileFormat = FileFormat.Svg
@@ -155,7 +158,7 @@ atlas {
 
 Defaults to SVG. Available options:
 
-```kotlin
+``` kotlin
 FileFormat.Svg
 FileFormat.Png
 FileFormat.Pdf
@@ -205,7 +208,7 @@ For reference, an ASCII chart looks like below. It (hopefully obviously) doesn't
 
 ### groupLabelLocation & groupLabelPosition
 
-```kotlin
+``` kotlin
 atlas {
   groupProjects = true
 
@@ -241,7 +244,7 @@ Only does anything if `atlas.groupProjects = true`.
 
 ### pad
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     pad = 100
@@ -265,7 +268,7 @@ Should probably be called `padding` for clarity, but kept as `pad` for consisten
 
 ### pathToD2Command
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     pathToD2Command = "/custom/path/to/d2"
@@ -277,7 +280,7 @@ By default, Atlas will try to call `d2` from the system path. Use this to call f
 
 ### sketch
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     sketch = true
@@ -289,13 +292,13 @@ Draws the chart in an excalidraw-like format, with pseudo-handwritten font and s
 
 !!! warning
 
-    For awareness: enabling this property will inflate the size of the generated SVG file by a factor of ~4.5: the example below is 71kB, and disabling the flag drops it down to 15kB. It does look pretty nice, though.
+    For awareness: enabling this property will inflate the size of the generated SVG file by quite a bit. The example below is 71kB, and disabling the flag drops it down to 15kB. It does look pretty nice, though.
 
 ![D2 sketch](img/d2-sketch.svg)
 
 ### theme & themeDark
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     theme = Theme.ShirleyTemple
@@ -338,9 +341,28 @@ D2 comes with a suite of lovely built-in color schemes which you can apply to yo
 
 ## Functions
 
+### convertSvgToPng
+
+``` kotlin
+atlas {
+  d2 {
+    fileFormat = FileFormat.Svg
+    convertSvgToPng(SvgToPng.Converter.ImageMagick6)
+  }
+}
+```
+
+This was added to help output charts in PNG format, since D2's built-in method relies on auto-downloading massive external software without asking you first (see [`fileFormat`](#fileformat)).
+
+A new task will be attached to `gradle atlasGenerate` called `svgToPng`, which spits out a PNG file at `atlas/chart.png` in each subproject.
+
+Uses the [`SvgToPng.Converter`](api/atlas-d2/atlas.d2.tasks/-svg-to-png/-converter/index.html) enum as an input, which lists the supported third-party image-processing software to convert SVGs into PNGs. It's up to you to ensure this is installed on your machine at execution time.
+
+Requires the [`fileFormat`](#fileformat) property to be set to `FileFormat.Svg` (or unset, since SVG is the default) - otherwise no conversion will be done.
+
 ### layoutEngine
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     layoutEngine {
@@ -369,7 +391,7 @@ atlas {
 Defines the underlying engine used by D2 to organise the project nodes in each chart. [See this link in the D2 docs for more detailed information](https://d2lang.com/tour/layouts/). The available options are:
 
 - **Dagre**: default option.
-- **Elk**: Framework from Eclipse for diagram generation - also supported by [Mermaid](./usage-mermaid.md).
+- **Elk**: Framework from Eclipse for diagram generation - also supported by [Mermaid](usage-mermaid.md).
 - **Tala**: Technically supported but it's closed source, so you need an installation of this engine on your machine from somewhere other than the public D2 installation. Only included here because it's in the D2 docs ¯\_(ツ)_/¯. Since it's a private engine, I've no idea how it's supposed to look and I don't have an example screenshot for you. Sorry-not-sorry!
 
 Screenshots below are with all default settings.
@@ -388,7 +410,7 @@ Screenshots below are with all default settings.
 
 ### rootStyle
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     rootStyle {
@@ -409,7 +431,7 @@ A set of style properties to be applied to the chart itself. The most common one
 
 ### globalProps
 
-```kotlin
+``` kotlin
 atlas {
   d2 {
     globalProps {
@@ -432,7 +454,7 @@ Style properties to be applied to all nodes (project shapes) and links by defaul
 
     As a bonus, in `globalProps` you can also make use of D2's wonderfully-complicated "globs" feature to apply some style to all matching nodes/links in the chart. An example from the sample-d2 project in this repo, which sets all text on link labels to black:
 
-    ```kotlin
+    ``` kotlin
     atlas {
       d2 {
         globalProps {

@@ -68,7 +68,7 @@ internal class D2SpecImpl(
   override fun globalProps(action: Action<D2GlobalPropsSpec>) = action.execute(globalProps)
 
   internal val converter = objects.property(SvgToPng.Converter::class.java)
-  override fun convertSvgToPng(converter: SvgToPng.Converter?) = this.converter.set(converter)
+  override fun convertSvgToPng(converter: SvgToPng.Converter) = this.converter.set(converter)
 }
 
 internal open class D2RootStyleSpecImpl(

@@ -72,7 +72,7 @@ public interface D2Spec : AtlasSpec {
    * If called, a task will be registered to convert any SVG outputs to PNGs. Has no effect if [D2Spec.fileFormat]
    * is not [FileFormat.Svg].
    */
-  public fun convertSvgToPng(converter: SvgToPng.Converter? = null)
+  public fun convertSvgToPng(converter: SvgToPng.Converter)
 }
 
 /**

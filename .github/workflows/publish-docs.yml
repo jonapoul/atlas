@@ -8,30 +8,26 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
+  id-token: write
 
 concurrency:
   group: 'ci-${{ github.event.merge_group.head_ref || github.head_ref }}-${{ github.workflow }}'
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
+      - name: Configure pages
+        uses: actions/configure-pages@v5
+
       - name: Checkout
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
           fetch-tags: true
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: 3.14
-
-      - name: Install dependencies
-        run: pip install -r config/mkdocs-requirements.txt
 
       - name: Set up Java
         uses: actions/setup-java@v5
@@ -48,5 +44,31 @@ jobs:
       - name: Build Dokka artifacts
         run: ./gradlew dokkaGeneratePublicationHtml
 
-      - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --force --remote-branch gh-pages
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.14
+
+      - name: Install dependencies
+        run: pip install -r config/docs-requirements.txt
+
+      - name: Build site
+        working-directory: docs
+        run: zensical build -f zensical.toml --clean
+
+      - name: Upload
+        id: deployment
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs/site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

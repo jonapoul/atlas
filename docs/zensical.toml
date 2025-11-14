@@ -1,0 +1,99 @@
+[project]
+site_name = "Atlas"
+site_description = "A Gradle plugin for mapping and categorizing connections between subprojects"
+site_author = "Jon Poulton"
+site_url = "https://jonapoul.github.io/atlas-gradle-plugin"
+repo_url = "https://github.com/jonapoul/atlas-gradle-plugin"
+repo_name = "jonapoul/atlas-gradle-plugin"
+edit_uri = "edit/main/docs/"
+extra_css = ["stylesheets/extra.css"]
+nav = [
+  { "Overview" = "index.md" },
+  { "Installation" = "installation.md" },
+  { "Samples" = "samples.md" },
+  { "Configuration" = [
+    { "Common" = "usage-common.md" },
+    { "D2" = "usage-d2.md" },
+    { "Graphviz" = "usage-graphviz.md" },
+    { "Mermaid" = "usage-mermaid.md" },
+  ] },
+  { "API" = "api/index.html" },
+]
+
+[project.theme]
+variant = "modern"
+logo = "assets/img/atlas.png"
+favicon = "assets/img/favicon.ico"
+language = "en"
+features = [
+  "announce.dismiss",
+  "content.action.edit",
+  "content.action.view",
+  "content.code.annotate",
+  "content.code.copy",
+  "content.code.select",
+  "content.footnote.tooltips",
+  "content.tabs.link",
+  "content.tooltips",
+  "navigation.expand",
+  "navigation.footer",
+  "navigation.instant.prefetch",
+  "navigation.instant.progress",
+  "navigation.instant",
+  "navigation.path",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+  "toc.follow",
+]
+
+[project.theme.icon]
+edit = "material/pencil"
+next = "fontawesome/solid/angle-right"
+previous = "fontawesome/solid/angle-left"
+repo = "fontawesome/brands/github"
+view = "material/eye"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+accent = "red"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Switch to automatic theme"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "white"
+accent = "red"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "black"
+accent = "red"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/jonapoul"
+name = "GitHub"
+
+[project.markdown_extensions.pymdownx.emoji]
+emoji_index = "zensical.extensions.emoji.twemoji"
+emoji_generator = "zensical.extensions.emoji.to_svg"
+
+#[project.markdown_extensions.tabbed]
+#alternate_style = true
+
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.highlight]
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.smartsymbols]
+[project.markdown_extensions.pymdownx.snippets]
+[project.markdown_extensions.pymdownx.superfences]
+[project.markdown_extensions.tables]

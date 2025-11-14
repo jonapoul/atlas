@@ -10,4 +10,5 @@
 .venv/
 build/
 docs/api/
+docs/site/
 local.properties
