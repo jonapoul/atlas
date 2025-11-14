@@ -5,8 +5,7 @@ on:
     paths:
       - ".github/workflows/test-docs.yml"
       - "config/docs-requirements.txt"
-      - "docs/"
-
+      - "docs/**"
 
 permissions:
   contents: read
