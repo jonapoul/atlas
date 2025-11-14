@@ -32,14 +32,6 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: 3.14
-
-      - name: Install dependencies
-        run: pip install -r config/docs-requirements.txt
-
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
@@ -55,11 +47,22 @@ jobs:
       - name: Build Dokka artifacts
         run: ./gradlew dokkaGeneratePublicationHtml
 
-      - name: Build
-        run: zensical build -f docs/mkdocs.yml --clean
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.14
+
+      - name: Install dependencies
+        run: pip install -r config/docs-requirements.txt
+
+      - name: Build site
+        working-directory: docs
+        run: zensical build -f zensical.toml --clean
 
       - name: Upload
         run: actions/upload-pages-artifact@v4
+        with:
+          path: docs/site
 
       - name: Deploy
         run: actions/deploy-pages@v4
