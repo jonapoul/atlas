@@ -1,16 +1,20 @@
 package atlas.core.tasks
 
-import atlas.core.AtlasExtension
 import atlas.core.InternalAtlasApi
+import atlas.core.LinkType
 import atlas.core.internal.ATLAS_TASK_GROUP
+import atlas.core.internal.AtlasExtensionImpl
 import atlas.core.internal.ProjectLink
 import atlas.core.internal.fileInBuildDirectory
+import atlas.core.internal.linkType
+import atlas.core.internal.orderedLinkTypes
 import atlas.core.internal.readProjectLinks
 import atlas.core.internal.writeProjectLinks
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
@@ -29,6 +33,7 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
   @get:[PathSensitive(NONE) InputFile] public abstract val collatedLinks: RegularFileProperty
   @get:Input public abstract val alsoTraverseUpwards: Property<Boolean>
   @get:Input public abstract val thisPath: Property<String>
+  @get:Input public abstract val linkTypes: SetProperty<LinkType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -39,22 +44,52 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
   @TaskAction
   public fun execute() {
     val thisPath = thisPath.get()
-
     val allLinks = readProjectLinks(collatedLinks.get().asFile)
-    val tree = mutableSetOf<ProjectLink>()
+    val links = filterLinks(allLinks)
 
+    val tree = mutableSetOf<ProjectLink>()
     if (alsoTraverseUpwards.get()) {
-      calculate(thisPath, Direction.Up, allLinks, tree)
+      calculate(thisPath, Direction.Up, links, tree)
     }
-    calculate(thisPath, Direction.Down, allLinks, tree)
+    calculate(thisPath, Direction.Down, links, tree)
 
     val outputFile = outputFile.get().asFile
     writeProjectLinks(tree, outputFile)
 
-    logger.info("WriteProjectTree: written ${tree.size} links from ${allLinks.size} across the project")
+    logger.info("WriteProjectTree: written ${tree.size} links from ${links.size} across the project")
     tree.forEach { link ->
       logger.info("WriteProjectTree:     link = $link")
     }
+  }
+
+  private fun filterLinks(links: Set<ProjectLink>): Set<ProjectLink> {
+    val types = linkTypes.get()
+    val filtered = hashSetOf<ProjectLink>()
+
+    links
+      .groupBy { it.fromPath to it.toPath }
+      .values
+      .forEach { groupedLinks ->
+        val linksWithTypes = groupedLinks.filter { it.type != null }
+        filtered += when (linksWithTypes.size) {
+          0 -> groupedLinks.first()
+          1 -> linksWithTypes[0]
+          else -> highestPriorityLink(linksWithTypes, types)
+        }
+      }
+
+    return filtered
+  }
+
+  private fun highestPriorityLink(links: List<ProjectLink>, types: Set<LinkType>): ProjectLink {
+    for (type in types) {
+      for (link in links) {
+        if (type == link.type) {
+          return link
+        }
+      }
+    }
+    return links.first()
   }
 
   private enum class Direction { Up, Down }
@@ -62,23 +97,23 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
   private fun calculate(
     targetPath: String,
     direction: Direction,
-    allLinks: Set<ProjectLink>,
-    output: MutableSet<ProjectLink>,
+    links: Set<ProjectLink>,
+    tree: MutableSet<ProjectLink>,
   ) {
     when (direction) {
       Direction.Up -> {
-        val relevantLinks = allLinks.filter { it.toPath == targetPath }
-        output += relevantLinks
+        val relevantLinks = links.filter { it.toPath == targetPath }
+        tree += relevantLinks
         for (link in relevantLinks) {
-          calculate(link.fromPath, direction, allLinks, output)
+          calculate(link.fromPath, direction, links, tree)
         }
       }
 
       Direction.Down -> {
-        val relevantLinks = allLinks.filter { it.fromPath == targetPath }
-        output += relevantLinks
+        val relevantLinks = links.filter { it.fromPath == targetPath }
+        tree += relevantLinks
         for (link in relevantLinks) {
-          calculate(link.toPath, direction, allLinks, output)
+          calculate(link.toPath, direction, links, tree)
         }
       }
     }
@@ -95,13 +130,19 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
     @InternalAtlasApi
     public fun register(
       target: Project,
-      extension: AtlasExtension,
+      extension: AtlasExtensionImpl,
     ): TaskProvider<WriteProjectTree> = with(target) {
-      tasks.register(NAME, WriteProjectTree::class.java) { task ->
+      val writeProjectTree = tasks.register(NAME, WriteProjectTree::class.java) { task ->
         task.thisPath.convention(target.path)
         task.outputFile.convention(fileInBuildDirectory("project-tree.json"))
         task.alsoTraverseUpwards.convention(extension.alsoTraverseUpwards)
       }
+
+      writeProjectTree.configure { task ->
+        task.linkTypes.convention(extension.orderedLinkTypes())
+      }
+
+      writeProjectTree
     }
   }
 }
