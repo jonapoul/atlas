@@ -1,0 +1,28 @@
+---
+config:
+  layout: elk
+  look: handDrawn
+  theme: forest
+  elk:
+    mergeEdges: true
+    forceNodeModelOrder: true
+    nodePlacementStrategy: LINEAR_SEGMENTS
+    cycleBreakingStrategy: INTERACTIVE
+    considerModelOrder: PREFER_EDGES
+  themeVariables:
+    background: #FFF
+    fontFamily: arial
+    lineColor: #55FF55
+    primaryBorderColor: #FF5555
+    primaryColor: #ABC123
+    darkMode: true
+    fontSize: 30px
+    defaultLinkColor: #5555FF
+---
+graph TD
+  _module_java[":module java"]
+  _module_other[":module other"]
+  style _module_java fill:orange,fillcolor:orange
+  style _module_other fill:gainsboro,fillcolor:gainsboro
+  _module_java -.implementation.-> _module_other
+  linkStyle 0 stroke:aqua

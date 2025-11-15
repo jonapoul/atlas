@@ -13,9 +13,10 @@ dependencyResolutionManagement {
 }
 
 include(
-  "sample-app-android",
-  "sample-lib-android",
-  "sample-lib-java",
-  "sample-lib-kotlin-jvm",
-  "sample-lib-kotlin-mp",
+  "module-android:app",
+  "module-android:lib",
+  "module-kotlin:kmp",
+  "module-kotlin:jvm",
+  "module-java",
+  "module-other",
 )
