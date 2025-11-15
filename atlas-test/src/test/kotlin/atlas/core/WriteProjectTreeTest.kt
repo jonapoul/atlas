@@ -2,14 +2,16 @@ package atlas.core
 
 import assertk.assertThat
 import assertk.assertions.isEmpty
-import assertk.assertions.isEqualTo
 import atlas.core.internal.ProjectLink
 import atlas.core.internal.readProjectLinks
 import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
+import atlas.test.allTasksSuccessful
+import atlas.test.isEqualToSet
 import atlas.test.runTask
 import atlas.test.scenarios.DiamondGraph
 import atlas.test.scenarios.DiamondGraphWithUpwardsTraversal
+import atlas.test.scenarios.MultiplatformProjectsCustomConfigurations
 import atlas.test.scenarios.OneKotlinJvmProject
 import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
 import atlas.test.scenarios.TriangleGraph
@@ -46,6 +48,32 @@ internal class WriteProjectTreeTest : ScenarioTest() {
   }
 
   @Test
+  fun `Filter links between multiplatform projects including custom configurations`() =
+    runScenario(MultiplatformProjectsCustomConfigurations) {
+      // when
+      val result = runTask("writeProjectTree").build()
+
+      // then
+      assertThat(result).allTasksSuccessful()
+
+      // and the specified link type takes precedence over the others
+      assertThat(projectTree(project = "a")).isEqualToSet(
+        ProjectLink(
+          fromPath = ":a",
+          toPath = ":b",
+          configuration = "commonMainImplementation",
+          type = LinkType(configuration = "commonMainImplementation", style = "solid"),
+        ),
+        ProjectLink(
+          fromPath = ":a",
+          toPath = ":c",
+          configuration = "commonMainApi",
+          type = LinkType(configuration = "commonMainApi", style = "dotted"),
+        ),
+      )
+    }
+
+  @Test
   fun `Single links for diamond`() = runScenario(DiamondGraph) {
     // when
     val result = runTask("writeProjectTree").build()
@@ -54,26 +82,20 @@ internal class WriteProjectTreeTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
 
     // and the top project sees everything below it
-    assertThat(projectTree("top")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
-        ProjectLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
-        ProjectLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("top")).isEqualToSet(
+      ProjectLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
+      ProjectLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
+      ProjectLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
     )
 
     // and the mid only sees itself and bottom
-    assertThat(projectTree("mid-a")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
-      ),
+    assertThat(projectTree("mid-a")).isEqualToSet(
+      ProjectLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
     )
 
-    assertThat(projectTree("mid-b")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("mid-b")).isEqualToSet(
+      ProjectLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
     )
 
     // and the bottom sees nothing
@@ -89,38 +111,30 @@ internal class WriteProjectTreeTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
 
     // and the top project sees everything below it
-    assertThat(projectTree("top")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
-        ProjectLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
-        ProjectLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("top")).isEqualToSet(
+      ProjectLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
+      ProjectLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
+      ProjectLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
     )
 
     // and the mid sees itself, top and bottom
-    assertThat(projectTree("mid-a")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
-        ProjectLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
-      ),
+    assertThat(projectTree("mid-a")).isEqualToSet(
+      ProjectLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
+      ProjectLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
     )
 
-    assertThat(projectTree("mid-b")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("mid-b")).isEqualToSet(
+      ProjectLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
     )
 
     // and the bottom sees everything above it
-    assertThat(projectTree("bottom")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
-        ProjectLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
-        ProjectLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("bottom")).isEqualToSet(
+      ProjectLink(fromPath = ":mid-a", toPath = ":bottom", configuration = "api", type = null),
+      ProjectLink(fromPath = ":mid-b", toPath = ":bottom", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":top", toPath = ":mid-a", configuration = "api", type = null),
+      ProjectLink(fromPath = ":top", toPath = ":mid-b", configuration = "implementation", type = null),
     )
   }
 
@@ -133,27 +147,21 @@ internal class WriteProjectTreeTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
 
     // and the triangle links were detected, in a-z order
-    assertThat(projectTree("a")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("a")).isEqualToSet(
+      ProjectLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
     )
-    assertThat(projectTree("b1")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("b1")).isEqualToSet(
+      ProjectLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
     )
-    assertThat(projectTree("b2")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("b2")).isEqualToSet(
+      ProjectLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
     )
     assertThat(projectTree("c1")).isEmpty()
     assertThat(projectTree("c2")).isEmpty()
@@ -169,49 +177,37 @@ internal class WriteProjectTreeTest : ScenarioTest() {
     assertThat(result.tasks).allSuccessful()
 
     // and the triangle links were detected, in a-z order
-    assertThat(projectTree("a")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("a")).isEqualToSet(
+      ProjectLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
     )
-    assertThat(projectTree("b1")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("b1")).isEqualToSet(
+      ProjectLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
     )
-    assertThat(projectTree("b2")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("b2")).isEqualToSet(
+      ProjectLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
     )
-    assertThat(projectTree("c1")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("c1")).isEqualToSet(
+      ProjectLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b1", toPath = ":c1", configuration = "implementation", type = null),
     )
-    assertThat(projectTree("c2")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("c2")).isEqualToSet(
+      ProjectLink(fromPath = ":a", toPath = ":b1", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b1", toPath = ":c2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b2", toPath = ":c2", configuration = "implementation", type = null),
     )
-    assertThat(projectTree("c3")).isEqualTo(
-      setOf(
-        ProjectLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
-        ProjectLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
-      ),
+    assertThat(projectTree("c3")).isEqualToSet(
+      ProjectLink(fromPath = ":a", toPath = ":b2", configuration = "implementation", type = null),
+      ProjectLink(fromPath = ":b2", toPath = ":c3", configuration = "implementation", type = null),
     )
   }
 
