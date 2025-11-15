@@ -85,8 +85,10 @@ name = "GitHub"
 emoji_index = "zensical.extensions.emoji.twemoji"
 emoji_generator = "zensical.extensions.emoji.to_svg"
 
-#[project.markdown_extensions.tabbed]
-#alternate_style = true
+[project.markdown_extensions.pymdownx.superfences]
+custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
+]
 
 [project.markdown_extensions.admonition]
 [project.markdown_extensions.footnotes]
@@ -95,5 +97,4 @@ emoji_generator = "zensical.extensions.emoji.to_svg"
 [project.markdown_extensions.pymdownx.inlinehilite]
 [project.markdown_extensions.pymdownx.smartsymbols]
 [project.markdown_extensions.pymdownx.snippets]
-[project.markdown_extensions.pymdownx.superfences]
 [project.markdown_extensions.tables]
