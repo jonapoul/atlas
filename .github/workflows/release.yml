@@ -15,7 +15,7 @@ jobs:
       git-tag: ${{ steps.git-tag.outputs.version }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-tags: true
           fetch-depth: 0 # get everything
@@ -63,7 +63,7 @@ jobs:
     needs: verify-version
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-tags: true
           fetch-depth: 0
