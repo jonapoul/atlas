@@ -4,4 +4,4 @@ Markdown==3.10
 Pygments==2.19.2
 pymdown-extensions==10.17.2
 PyYAML==6.0.3
-zensical==0.0.10
+zensical==0.0.11
