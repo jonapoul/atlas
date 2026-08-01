@@ -5,9 +5,10 @@ import atlas.test.ScenarioTest
 import atlas.test.contentContains
 import atlas.test.contentEquals
 import atlas.test.exists
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.GraphVizWithLinkTypes
 import atlas.test.scenarios.GraphvizBasic
+import blueprint.test.runTask
 import kotlin.test.Test
 
 internal class WriteGraphvizLegendTest : ScenarioTest() {

@@ -2,11 +2,11 @@ package atlas.graphviz
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.runTask
 import atlas.test.scenarios.GroovyGraphVizBasic
 import atlas.test.scenarios.GroovyGraphVizFull
 import atlas.test.scenarios.GroovyGraphVizProjectTypes
-import atlas.test.taskWasSuccessful
+import blueprint.test.runTask
+import blueprint.test.taskSucceeded
 import org.junit.jupiter.api.Test
 
 internal class GraphvizGroovyTest : ScenarioTest() {
@@ -19,9 +19,9 @@ internal class GraphvizGroovyTest : ScenarioTest() {
 
       // then
       assertThat(result)
-        .taskWasSuccessful(":a:atlasGenerate")
-        .taskWasSuccessful(":b:atlasGenerate")
-        .taskWasSuccessful(":c:atlasGenerate")
+        .taskSucceeded(":a:atlasGenerate")
+        .taskSucceeded(":b:atlasGenerate")
+        .taskSucceeded(":c:atlasGenerate")
     }
 
   @Test
@@ -33,9 +33,9 @@ internal class GraphvizGroovyTest : ScenarioTest() {
 
       // then
       assertThat(result)
-        .taskWasSuccessful(":a:atlasGenerate")
-        .taskWasSuccessful(":b:atlasGenerate")
-        .taskWasSuccessful(":c:atlasGenerate")
+        .taskSucceeded(":a:atlasGenerate")
+        .taskSucceeded(":b:atlasGenerate")
+        .taskSucceeded(":c:atlasGenerate")
     }
 
   @Test
@@ -47,8 +47,8 @@ internal class GraphvizGroovyTest : ScenarioTest() {
 
       // then
       assertThat(result)
-        .taskWasSuccessful(":a:atlasGenerate")
-        .taskWasSuccessful(":b:atlasGenerate")
-        .taskWasSuccessful(":c:atlasGenerate")
+        .taskSucceeded(":a:atlasGenerate")
+        .taskSucceeded(":b:atlasGenerate")
+        .taskSucceeded(":c:atlasGenerate")
     }
 }

@@ -4,7 +4,7 @@ import assertk.assertThat
 import atlas.test.ScenarioTest
 import atlas.test.contentEquals
 import atlas.test.exists
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.GraphVizChartCustomConfig
 import atlas.test.scenarios.GraphVizChartWithCustomLinkTypes
 import atlas.test.scenarios.GraphVizChartWithProperties
@@ -12,6 +12,7 @@ import atlas.test.scenarios.GraphVizChartWithReplacements
 import atlas.test.scenarios.GraphvizBasic
 import atlas.test.scenarios.GraphvizNestedProject
 import atlas.test.scenarios.GraphvizNestedProjectNoProjectTypes
+import blueprint.test.runTask
 import kotlin.test.Test
 
 internal class WriteGraphvizChartTest : ScenarioTest() {

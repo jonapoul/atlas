@@ -4,11 +4,11 @@ import assertk.assertThat
 import atlas.test.ScenarioTest
 import atlas.test.contains
 import atlas.test.noTasksFailed
-import atlas.test.runTask
 import atlas.test.scenarios.D2ConfigureOnDemand
 import atlas.test.scenarios.GraphvizConfigureOnDemand
 import atlas.test.scenarios.MermaidConfigureOnDemand
-import java.io.File
+import blueprint.test.Scenario
+import blueprint.test.runTask
 import kotlin.test.Test
 
 internal class ConfigureOnDemandTest : ScenarioTest() {
@@ -36,7 +36,7 @@ internal class ConfigureOnDemandTest : ScenarioTest() {
   fun `Mermaid configureOnDemand on subproject fails`() =
     runScenario(MermaidConfigureOnDemand) { subprojectFailsTestCase() }
 
-  private fun File.rootProjectTestCase() {
+  private fun Scenario.rootProjectTestCase() {
     // When configure-on-demand is enabled, running from root should still work normally
     val generate = runTask("atlasGenerate").build()
     assertThat(generate).noTasksFailed()
@@ -45,7 +45,7 @@ internal class ConfigureOnDemandTest : ScenarioTest() {
     assertThat(check).noTasksFailed() // some cached from the generation step before
   }
 
-  private fun File.subprojectFailsTestCase() {
+  private fun Scenario.subprojectFailsTestCase() {
     val generate = runTask(":a:atlasGenerate").buildAndFail()
     assertThat(generate.output)
       .contains(

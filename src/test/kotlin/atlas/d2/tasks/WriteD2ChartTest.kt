@@ -8,10 +8,11 @@ import atlas.test.childExists
 import atlas.test.contentEquals
 import atlas.test.exists
 import atlas.test.noTasksFailed
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.D2Basic
 import atlas.test.scenarios.D2NestedProjects
-import atlas.test.taskWasSuccessful
+import blueprint.test.runTask
+import blueprint.test.taskSucceeded
 import kotlin.test.Test
 
 internal class WriteD2ChartTest : ScenarioTest() {
@@ -89,7 +90,7 @@ internal class WriteD2ChartTest : ScenarioTest() {
       assertThat(result).noTasksFailed()
 
       // and the files were generated
-      assertThat(this).childExists("atlas/d2/classes.d2")
+      assertThat(rootDir).childExists("atlas/d2/classes.d2")
       assertThat(resolve("path/to/my/project/atlas/d2/chart.d2"))
         .exists()
         .contentEquals(
@@ -104,6 +105,6 @@ internal class WriteD2ChartTest : ScenarioTest() {
       val checkResult = runTask("check").build()
 
       // then
-      assertThat(checkResult).taskWasSuccessful(":path:to:my:project:checkD2Chart")
+      assertThat(checkResult).taskSucceeded(":path:to:my:project:checkD2Chart")
     }
 }

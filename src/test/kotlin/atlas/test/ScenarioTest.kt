@@ -1,34 +1,70 @@
 package atlas.test
 
+import blueprint.test.DEFAULT_REPOSITORIES_KTS
+import blueprint.test.FileTree
+import blueprint.test.Scenario as RunningScenario
+import blueprint.test.ScenarioTest as BlueprintScenarioTest
 import java.io.File
-import org.junit.jupiter.api.io.TempDir
+import kotlin.test.fail
+import org.gradle.testkit.runner.GradleRunner
+import org.junit.jupiter.api.Assumptions.assumeFalse
+import org.junit.jupiter.api.extension.ConditionEvaluationResult
 
 @Suppress("AbstractClassCanBeConcreteClass")
-internal abstract class ScenarioTest {
-  @TempDir lateinit var projectRoot: File
+internal abstract class ScenarioTest : BlueprintScenarioTest() {
+  override val gradleVersion = GRADLE_VERSION
 
-  protected fun <T> runScenario(scenario: Scenario, test: File.() -> T) {
-    val settingsFile =
-      """
-      ${if (scenario.isGroovy) REPOSITORIES_GRADLE_GROOVY else REPOSITORIES_GRADLE_KTS}
-      ${scenario.includeStatements()}
-    """
-        .trimIndent()
+  private var current: FileTree = fileTree {}
 
-    with(projectRoot) {
-      resolve(scenario.settingsFileName).writeText(settingsFile)
-      resolve(scenario.buildFileName)
-        .writeText(scenario.rootBuildFile + scenario.enableFrameworks())
-      resolve("gradle.properties").writeText(scenario.gradlePropertiesFile)
+  override val fileTree: FileTree
+    get() = current
 
-      scenario.subprojectBuildFiles.forEach { (path, contents) ->
-        resolve(projectPathToFilePath(path))
-          .also { it.mkdirs() }
-          .resolve(scenario.buildFileName)
-          .writeText(contents)
-      }
-      test()
+  protected fun runScenario(
+    scenario: Scenario,
+    runner: GradleRunner = defaultRunner(),
+    test: RunningScenario.() -> Unit,
+  ) {
+    current = scenario.toFileTree()
+    super.runScenario(runner, test)
+  }
+
+  protected fun androidRunner(): GradleRunner {
+    val home = ANDROID_HOME
+    val reason = "No ANDROID_HOME supplied for an android test"
+    if (isRunningOnCi()) {
+      if (home == null) fail(reason)
+    } else {
+      assumeFalse(home == null) { "No ANDROID_HOME supplied for an android test" }
+      ConditionEvaluationResult.disabled(reason)
     }
+
+    return defaultRunner().withEnvironment(mapOf("ANDROID_HOME" to checkNotNull(home).absolutePath))
+  }
+
+  private fun Scenario.toFileTree(): FileTree =
+    FileTree.Builder(relativeRootPath = "")
+      .apply {
+        settingsFileName(settingsFile())
+        buildFileName(rootBuildFile + enableFrameworks())
+        "gradle.properties"(gradleProperties())
+
+        subprojectBuildFiles.forEach { (path, contents) ->
+          val directory = path.toDirectoryPath()
+          directory { buildFileName(contents) }
+        }
+      }
+      .build()
+
+  private fun Scenario.settingsFile() = buildString {
+    appendLine(DEFAULT_REPOSITORIES_KTS.trimIndent())
+    subprojectBuildFiles.keys.forEach { path ->
+      if (isGroovy) appendLine("include(':$path')") else appendLine("include(\":$path\")")
+    }
+  }
+
+  private fun Scenario.gradleProperties() = buildString {
+    appendLine("android.useAndroidX=true")
+    appendLine(gradlePropertiesFile)
   }
 
   /**
@@ -44,26 +80,16 @@ internal abstract class ScenarioTest {
         prefix = "\n\natlas {\n",
         separator = "\n",
         postfix = "\n}\n",
-      ) { framework ->
-        "  ${framework.string}()"
-      }
+        transform = { framework -> "  ${framework.string}()" },
+      )
     }
 
-  private fun projectPathToFilePath(projectPath: String): String =
-    projectPath.split(":").filter { it.isNotEmpty() }.joinToString(separator = File.separator)
+  private fun String.toDirectoryPath() =
+    split(":").filter(String::isNotEmpty).joinToString(File.separator)
 
   private val Scenario.buildFileName
     get() = if (isGroovy) "build.gradle" else "build.gradle.kts"
 
   private val Scenario.settingsFileName
     get() = if (isGroovy) "settings.gradle" else "settings.gradle.kts"
-
-  private fun Scenario.includeStatements() =
-    subprojectBuildFiles.keys.joinToString(separator = "\n") { name ->
-      if (isGroovy) {
-        "include(':$name')"
-      } else {
-        "include(\":$name\")"
-      }
-    }
 }

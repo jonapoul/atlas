@@ -6,10 +6,11 @@ import atlas.test.allSuccessful
 import atlas.test.contentEquals
 import atlas.test.doesNotExist
 import atlas.test.exists
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.MermaidBasic
 import atlas.test.scenarios.MermaidWithLinkTypes
-import atlas.test.taskHadResult
+import blueprint.test.runTask
+import blueprint.test.taskHadResult
 import kotlin.test.Test
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
@@ -137,7 +138,7 @@ internal class WriteReadmeTest : ScenarioTest() {
       assertThat(readme).contentEquals(expected)
 
       // when we run again and force the regeneration
-      val result2 = runTask(":a:writeReadme", extras = listOf("--rerun-tasks")).build()
+      val result2 = runTask(":a:writeReadme", "--rerun-tasks").build()
       assertThat(result2).taskHadResult(":a:writeReadme", SUCCESS)
       assertThat(readme).contentEquals(expected)
     }

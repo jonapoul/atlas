@@ -6,10 +6,10 @@ import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
 import atlas.test.childExists
 import atlas.test.contains
-import atlas.test.runTask
 import atlas.test.scenarios.D2Basic
 import atlas.test.scenarios.D2CustomLayoutEngine
-import atlas.test.taskHadResult
+import blueprint.test.runTask
+import blueprint.test.taskHadResult
 import kotlin.test.Test
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
@@ -19,7 +19,7 @@ internal class ExecD2Test : ScenarioTest() {
   fun `No extras are generated if no file formats have been declared`() =
     runScenario(D2Basic) {
       // when
-      val result = runTask("atlasGenerate", extras = listOf("--dry-run")).build()
+      val result = runTask("atlasGenerate", "--dry-run").build()
 
       // then no PNGs, SVGs, or anything else were generated besides the dotfile
       assertThat(result.output)
@@ -68,7 +68,7 @@ internal class ExecD2Test : ScenarioTest() {
 
       // then
       assertThat(result.tasks).allSuccessful()
-      assertThat(this)
+      assertThat(rootDir)
         .childExists("a/atlas/d2/chart.svg")
         .childExists("b/atlas/d2/chart.svg")
         .childExists("c/atlas/d2/chart.svg")
@@ -93,7 +93,7 @@ internal class ExecD2Test : ScenarioTest() {
       // Third run setting a property to change the classes file - classes are written, chart is not
       // but the output
       // file is regenerated
-      val result3 = runTask(":a:execD2Chart", extras = listOf("-Patlas.d2.theme=7")).build()
+      val result3 = runTask(":a:execD2Chart", "-Patlas.d2.theme=7").build()
       assertThat(result3)
         .taskHadResult(":writeD2Classes", SUCCESS)
         .taskHadResult(":a:writeD2Chart", UP_TO_DATE)

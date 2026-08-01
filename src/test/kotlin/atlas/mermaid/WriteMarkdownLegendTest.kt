@@ -6,9 +6,10 @@ import atlas.test.allSuccessful
 import atlas.test.contentContains
 import atlas.test.contentEquals
 import atlas.test.exists
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.MermaidWithLinkTypes
 import atlas.test.scenarios.MermaidWithProjectTypes
+import blueprint.test.runTask
 import kotlin.test.Test
 
 internal class WriteMarkdownLegendTest : ScenarioTest() {

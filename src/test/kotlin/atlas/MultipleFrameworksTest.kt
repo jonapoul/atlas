@@ -5,8 +5,9 @@ import atlas.test.ScenarioTest
 import atlas.test.childExists
 import atlas.test.contentContains
 import atlas.test.noTasksFailed
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.MultipleFrameworks
+import blueprint.test.runTask
 import kotlin.test.Test
 
 internal class MultipleFrameworksTest : ScenarioTest() {
@@ -19,7 +20,7 @@ internal class MultipleFrameworksTest : ScenarioTest() {
 
       // then each framework wrote to its own directory, so nothing was overwritten, and the shared
       // legends live in the root project
-      assertThat(this)
+      assertThat(rootDir)
         .childExists("a/atlas/d2/chart.d2")
         .childExists("a/atlas/graphviz/chart.dot")
         .childExists("a/atlas/mermaid/chart.mmd")
