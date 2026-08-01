@@ -1,7 +1,7 @@
 FROM gradle:9.6.1-jdk21
 
 RUN apt-get update
-RUN apt-get install -y graphviz curl
+RUN apt-get install -y graphviz libgvplugin-neato-layout8 curl
 
 # https://d2lang.com/tour/install/
 RUN curl -fsSL https://d2lang.com/install.sh | sh -s --
