@@ -23,13 +23,12 @@ internal class CollateProjectTypesTest : ScenarioTest() {
       // when
       val result = runTask("collateProjectTypes").build()
 
-      // then three dependent tasks were run
-      assertThat(result).taskWasSuccessful(":test-data:writeProjectType")
-      assertThat(result).taskWasSuccessful(":test-domain:writeProjectType")
-      assertThat(result).taskWasSuccessful(":test-ui:writeProjectType")
-
-      // and this one
-      assertThat(result).taskWasSuccessful(":collateProjectTypes")
+      // then three dependent tasks were run, and this one
+      assertThat(result)
+        .taskWasSuccessful(":test-data:writeProjectType")
+        .taskWasSuccessful(":test-domain:writeProjectType")
+        .taskWasSuccessful(":test-ui:writeProjectType")
+        .taskWasSuccessful(":collateProjectTypes")
 
       // and the types were aggregated in the root project's build dir
       assertThat(projectTypes)
@@ -55,14 +54,12 @@ internal class CollateProjectTypesTest : ScenarioTest() {
       // when
       val result = runTask("collateProjectTypes").build()
 
-      // then three dependent tasks were run
+      // then three dependent tasks were run, and this one
       assertThat(result)
         .taskWasSuccessful(":test-data:writeProjectType")
         .taskWasSuccessful(":test-domain:writeProjectType")
         .taskWasSuccessful(":test-ui:writeProjectType")
-
-      // and this one
-      assertThat(result).taskWasSuccessful(":collateProjectTypes")
+        .taskWasSuccessful(":collateProjectTypes")
 
       // and the types were aggregated in the root project's build dir
       assertThat(projectTypes)

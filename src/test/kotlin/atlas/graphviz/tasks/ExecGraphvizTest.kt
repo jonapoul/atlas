@@ -1,24 +1,25 @@
 package atlas.graphviz.tasks
 
 import assertk.assertThat
-import assertk.assertions.contains
 import assertk.assertions.containsMatch
-import assertk.assertions.exists
 import assertk.assertions.isEqualTo
 import atlas.graphviz.RequiresGraphviz
 import atlas.test.RequiresLn
 import atlas.test.RequiresWhereis
 import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
-import atlas.test.doesNotExist
+import atlas.test.childDoesNotExist
+import atlas.test.childExists
+import atlas.test.contains
+import atlas.test.exists
 import atlas.test.noTasksFailed
 import atlas.test.runTask
 import atlas.test.scenarios.GraphVizBasicWithPngOutput
 import atlas.test.scenarios.GraphVizCustomDotExecutable
 import atlas.test.scenarios.GraphVizCustomLayoutEngine
 import atlas.test.scenarios.GraphvizBasic
+import atlas.test.tasksWereSuccessful
 import kotlin.test.Test
-import org.gradle.testkit.runner.TaskOutcome
 
 internal class ExecGraphvizTest : ScenarioTest() {
   @Test
@@ -71,19 +72,18 @@ internal class ExecGraphvizTest : ScenarioTest() {
       val result = runTask("atlasGenerate").build()
 
       // then PNG, SVG and EPS tasks were run for each subproject
-      listOf(
+      assertThat(result)
+        .tasksWereSuccessful(
           ":a:execGraphvizChart",
           ":b:execGraphvizChart",
           ":c:execGraphvizChart",
         )
-        .forEach { t ->
-          assertThat(result.task(t)?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        }
 
       // and the relevant files exist
-      for (subproject in listOf("a", "b", "c")) {
-        assertThat(resolve("$subproject/atlas/graphviz/chart.png")).exists()
-      }
+      assertThat(this)
+        .childExists("a/atlas/graphviz/chart.png")
+        .childExists("b/atlas/graphviz/chart.png")
+        .childExists("c/atlas/graphviz/chart.png")
     }
 
   @Test
@@ -128,7 +128,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
   fun `Fail with nonexistent custom path to dot command`() =
     runScenario(GraphVizCustomDotExecutable) {
       // Given we've made a symbolic link to a dot executable which doesn't exist
-      assertThat(resolve("path/to/custom/dot")).doesNotExist()
+      assertThat(this).childDoesNotExist("path/to/custom/dot")
 
       // when
       val result = runTask("atlasGenerate").buildAndFail()

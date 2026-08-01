@@ -1,11 +1,11 @@
 package atlas.core
 
 import assertk.assertThat
-import assertk.assertions.exists
 import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
+import atlas.test.contentEquals
 import atlas.test.doesNotExist
-import atlas.test.equalsDiffed
+import atlas.test.exists
 import atlas.test.runTask
 import atlas.test.scenarios.MermaidBasic
 import atlas.test.scenarios.MermaidWithLinkTypes
@@ -22,10 +22,9 @@ internal class WriteReadmeTest : ScenarioTest() {
       assertThat(result.tasks).allSuccessful()
 
       // then
-      val readme = resolve("a/README.md")
-      assertThat(readme).exists()
-      assertThat(readme.readText())
-        .equalsDiffed(
+      assertThat(resolve("a/README.md"))
+        .exists()
+        .contentEquals(
           """
           # a
 
@@ -52,10 +51,9 @@ internal class WriteReadmeTest : ScenarioTest() {
       assertThat(result.tasks).allSuccessful()
 
       // then
-      val readme = resolve("a/README.md")
-      assertThat(readme).exists()
-      assertThat(readme.readText())
-        .equalsDiffed(
+      assertThat(resolve("a/README.md"))
+        .exists()
+        .contentEquals(
           """
           # a
 
@@ -136,11 +134,11 @@ internal class WriteReadmeTest : ScenarioTest() {
         Some suffix
         """
           .trimIndent()
-      assertThat(readme.readText()).equalsDiffed(expected)
+      assertThat(readme).contentEquals(expected)
 
       // when we run again and force the regeneration
       val result2 = runTask(":a:writeReadme", extras = listOf("--rerun-tasks")).build()
       assertThat(result2).taskHadResult(":a:writeReadme", SUCCESS)
-      assertThat(readme.readText()).equalsDiffed(expected)
+      assertThat(readme).contentEquals(expected)
     }
 }

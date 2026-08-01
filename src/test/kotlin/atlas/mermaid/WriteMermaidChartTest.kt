@@ -1,10 +1,10 @@
 package atlas.mermaid
 
 import assertk.assertThat
-import assertk.assertions.exists
 import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
-import atlas.test.equalsDiffed
+import atlas.test.contentEquals
+import atlas.test.exists
 import atlas.test.runTask
 import atlas.test.scenarios.MermaidWithGroupsNested
 import atlas.test.scenarios.MermaidWithGroupsNotNested
@@ -20,10 +20,9 @@ internal class WriteMermaidChartTest : ScenarioTest() {
 
       // then
       assertThat(result.tasks).allSuccessful()
-      val chart = resolve("a/atlas/mermaid/chart.mmd")
-      assertThat(chart).exists()
-      assertThat(chart.readText())
-        .equalsDiffed(
+      assertThat(resolve("a/atlas/mermaid/chart.mmd"))
+        .exists()
+        .contentEquals(
           """
           graph TD
             _a[":a"]
@@ -44,10 +43,9 @@ internal class WriteMermaidChartTest : ScenarioTest() {
 
       // then
       assertThat(result.tasks).allSuccessful()
-      val chart = resolve("a/atlas/mermaid/chart.mmd")
-      assertThat(chart).exists()
-      assertThat(chart.readText())
-        .equalsDiffed(
+      assertThat(resolve("a/atlas/mermaid/chart.mmd"))
+        .exists()
+        .contentEquals(
           """
           graph TD
             _a[":a"]
@@ -68,10 +66,9 @@ internal class WriteMermaidChartTest : ScenarioTest() {
 
       // then
       assertThat(result.tasks).allSuccessful()
-      val chart = resolve("a/atlas/mermaid/chart.mmd")
-      assertThat(chart).exists()
-      assertThat(chart.readText())
-        .equalsDiffed(
+      assertThat(resolve("a/atlas/mermaid/chart.mmd"))
+        .exists()
+        .contentEquals(
           """
           graph TD
             _a[":a"]

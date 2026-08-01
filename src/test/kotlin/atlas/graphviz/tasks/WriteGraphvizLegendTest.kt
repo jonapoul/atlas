@@ -1,10 +1,10 @@
 package atlas.graphviz.tasks
 
 import assertk.assertThat
-import assertk.assertions.contains
-import assertk.assertions.exists
 import atlas.test.ScenarioTest
+import atlas.test.contentContains
 import atlas.test.contentEquals
+import atlas.test.exists
 import atlas.test.runTask
 import atlas.test.scenarios.GraphVizWithLinkTypes
 import atlas.test.scenarios.GraphvizBasic
@@ -17,13 +17,10 @@ internal class WriteGraphvizLegendTest : ScenarioTest() {
       // when
       runTask("writeGraphvizLegend").build()
 
-      // then the file was generated
-      val legendFile = resolve("atlas/graphviz/legend.dot")
-      assertThat(legendFile).exists()
-
-      // and contains expected contents, with projects in declaration order
-      assertThat(legendFile.readText())
-        .contains(
+      // then the file was generated, with projects in declaration order
+      assertThat(resolve("atlas/graphviz/legend.dot"))
+        .exists()
+        .contentContains(
           """
           digraph {
             node [shape="plaintext"]
@@ -47,12 +44,9 @@ internal class WriteGraphvizLegendTest : ScenarioTest() {
       // when
       runTask("writeGraphvizLegend").build()
 
-      // then the file was generated
-      val legendFile = resolve("atlas/graphviz/legend.dot")
-      assertThat(legendFile).exists()
-
-      // and contains expected contents, overriding build script
-      assertThat(legendFile)
+      // then the file was generated, overriding build script
+      assertThat(resolve("atlas/graphviz/legend.dot"))
+        .exists()
         .contentEquals(
           """
           digraph {

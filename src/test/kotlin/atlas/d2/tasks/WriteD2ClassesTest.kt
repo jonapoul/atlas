@@ -2,7 +2,7 @@ package atlas.d2.tasks
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.equalsDiffed
+import atlas.test.contentEquals
 import atlas.test.runTask
 import atlas.test.scenarios.D2AllProjectTypes
 import atlas.test.taskWasSuccessful
@@ -19,8 +19,8 @@ internal class WriteD2ClassesTest : ScenarioTest() {
       assertThat(result).taskWasSuccessful(":writeD2Classes")
 
       // and the file was generated
-      assertThat(resolve("atlas/d2/classes.d2").readText())
-        .equalsDiffed(
+      assertThat(resolve("atlas/d2/classes.d2"))
+        .contentEquals(
           """
           classes: {
             project-AndroidApp {

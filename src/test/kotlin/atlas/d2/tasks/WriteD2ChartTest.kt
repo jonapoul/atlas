@@ -1,11 +1,12 @@
 package atlas.d2.tasks
 
 import assertk.assertThat
-import assertk.assertions.exists
 import atlas.d2.RequiresD2
 import atlas.test.ScenarioTest
 import atlas.test.allTasksSuccessful
+import atlas.test.childExists
 import atlas.test.contentEquals
+import atlas.test.exists
 import atlas.test.noTasksFailed
 import atlas.test.runTask
 import atlas.test.scenarios.D2Basic
@@ -87,11 +88,10 @@ internal class WriteD2ChartTest : ScenarioTest() {
       // then
       assertThat(result).noTasksFailed()
 
-      // and the file was generated
-      val chartFile = resolve("path/to/my/project/atlas/d2/chart.d2")
-      assertThat(chartFile.exists())
-      assertThat(resolve("atlas/d2/classes.d2")).exists()
-      assertThat(chartFile)
+      // and the files were generated
+      assertThat(this).childExists("atlas/d2/classes.d2")
+      assertThat(resolve("path/to/my/project/atlas/d2/chart.d2"))
+        .exists()
         .contentEquals(
           """
           ...@../../../../../../atlas/d2/classes.d2

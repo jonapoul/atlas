@@ -1,10 +1,10 @@
 package atlas.core
 
 import assertk.assertThat
-import assertk.assertions.contains
-import assertk.assertions.doesNotContain
 import atlas.test.ScenarioTest
 import atlas.test.buildRunner
+import atlas.test.contains
+import atlas.test.doesNotContain
 import atlas.test.runTask
 import atlas.test.scenarios.MermaidBasic
 import atlas.test.scenarios.NoFrameworksConfigured
@@ -19,20 +19,18 @@ internal class FrameworkConfigTest : ScenarioTest() {
       // when
       val result = buildRunner().withArguments("help").build()
 
-      // then the D2-only and Graphviz-only properties are called out, grouped by framework
+      // then the D2-only and Graphviz-only properties are called out, grouped by framework, but
+      // stroke is understood by Mermaid so it isn't mentioned
       assertThat(result.output)
         .contains(
           "Warning: project type 'Kotlin JVM' sets render3D and shadow, which only D2 uses. " +
             "Configure the d2 { } block to use them, or remove the config."
         )
-      assertThat(result.output)
         .contains(
           "Warning: project type 'Kotlin JVM' sets peripheries, which only Graphviz uses. " +
             "Configure the graphviz { } block to use it, or remove the config."
         )
-
-      // but stroke is understood by Mermaid, so it isn't mentioned
-      assertThat(result.output).doesNotContain("sets stroke")
+        .doesNotContain("sets stroke")
     }
 
   @Test
@@ -79,8 +77,9 @@ internal class FrameworkConfigTest : ScenarioTest() {
       val result = runTask("tasks", extras = listOf("--all")).build()
 
       // then
-      assertThat(result.output).contains("writeMermaidChart")
-      assertThat(result.output).doesNotContain("writeGraphvizChart")
-      assertThat(result.output).doesNotContain("writeD2Chart")
+      assertThat(result.output)
+        .contains("writeMermaidChart")
+        .doesNotContain("writeGraphvizChart")
+        .doesNotContain("writeD2Chart")
     }
 }
