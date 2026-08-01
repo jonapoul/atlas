@@ -7,7 +7,7 @@ import atlas.core.PropertiesSpec
 
 /**
  * These attributes will be applied by default to all project nodes, unless overridden by that
- * node's [GraphvizProjectTypeSpec].
+ * node's [atlas.core.ProjectTypeSpec].
  *
  * See [the Graphviz docs](https://graphviz.org/docs/nodes/) for any restrictions, this interface
  * will just pass-through the attribute and let Graphviz handle validation.
@@ -168,7 +168,7 @@ public interface NodeAttributes : PropertiesSpec {
 
 /**
  * These attributes will be applied by default to all project edges (AKA link lines), unless
- * overridden by that link's [GraphvizLinkTypeSpec].
+ * overridden by that link's [atlas.core.ProjectTypeSpec].
  *
  * See [the Graphviz docs](https://graphviz.org/docs/edges/) for any restrictions, this interface
  * will just pass-through the attribute and let Graphviz handle validation.

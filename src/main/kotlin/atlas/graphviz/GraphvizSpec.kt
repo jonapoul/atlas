@@ -51,7 +51,7 @@ public interface GraphvizSpec : AtlasSpec {
 
   /**
    * Configure the attributes applied by default to all project nodes, unless overridden by that
-   * node's [GraphvizProjectTypeSpec].
+   * node's [atlas.core.ProjectTypeSpec].
    */
   public val node: NodeAttributes
 
@@ -59,7 +59,7 @@ public interface GraphvizSpec : AtlasSpec {
 
   /**
    * Configure the attributes applied by default to all links between nodes, unless overridden by
-   * that link's [GraphvizLinkTypeSpec].
+   * that link's [atlas.core.ProjectTypeSpec].
    */
   public val edge: EdgeAttributes
 
