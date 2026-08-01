@@ -4,8 +4,10 @@ import atlas.test.Scenario
 import atlas.test.kotlinJvmBuildScript
 
 internal object CustomConfigurations : Scenario by OneKotlinJvmProject {
-  override val subprojectBuildFiles = mapOf(
-    "a" to """
+  override val subprojectBuildFiles =
+    mapOf(
+      "a" to
+        """
       $kotlinJvmBuildScript
 
       val abc by configurations.creating
@@ -15,8 +17,8 @@ internal object CustomConfigurations : Scenario by OneKotlinJvmProject {
         abc(project(":b"))
         xyz(project(":b"))
       }
-    """.trimIndent(),
-
-    "b" to kotlinJvmBuildScript,
-  )
+    """
+          .trimIndent(),
+      "b" to kotlinJvmBuildScript,
+    )
 }

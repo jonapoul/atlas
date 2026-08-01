@@ -4,7 +4,4 @@ package atlas.test
 
 import java.io.File
 
-internal fun File.allFilesSorted() = walkTopDown()
-  .filter { it.isFile }
-  .sorted()
-  .toList()
+internal fun File.allFilesSorted() = walkTopDown().filter { it.isFile }.sorted().toList()

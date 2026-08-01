@@ -14,30 +14,31 @@ import org.gradle.kotlin.dsl.withType
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
 class ConventionDetekt : Plugin<Project> {
-  override fun apply(target: Project) = with(target) {
-    pluginsInternal {
-      apply(DetektPlugin::class)
-    }
-
-    extensions.configure<DetektExtension> {
-      config.from(rootProject.file("config/detekt.yml"))
-      buildUponDefaultConfig.set(true)
-    }
-
-    val detektTasks = tasks.withType<Detekt>()
-    val detektCheck by tasks.registering {
-      group = LifecycleBasePlugin.VERIFICATION_GROUP
-      dependsOn(detektTasks)
-    }
-
-    tasks.named(LifecycleBasePlugin.CHECK_TASK_NAME).configure { dependsOn(detektCheck) }
-
-    detektTasks.configureEach {
-      reports {
-        html.required.set(true)
-        sarif.required.set(true)
+  override fun apply(target: Project) =
+    with(target) {
+      pluginsInternal {
+        apply(DetektPlugin::class)
       }
-      exclude { it.file.path.contains("generated") }
+
+      extensions.configure<DetektExtension> {
+        config.from(rootProject.file("config/detekt.yml"))
+        buildUponDefaultConfig.set(true)
+      }
+
+      val detektTasks = tasks.withType<Detekt>()
+      val detektCheck by tasks.registering {
+        group = LifecycleBasePlugin.VERIFICATION_GROUP
+        dependsOn(detektTasks)
+      }
+
+      tasks.named(LifecycleBasePlugin.CHECK_TASK_NAME).configure { dependsOn(detektCheck) }
+
+      detektTasks.configureEach {
+        reports {
+          html.required.set(true)
+          sarif.required.set(true)
+        }
+        exclude { it.file.path.contains("generated") }
+      }
     }
-  }
 }

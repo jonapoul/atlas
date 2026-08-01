@@ -4,7 +4,8 @@ import atlas.test.KOTLIN_VERSION
 import atlas.test.Scenario
 
 internal object CheckExplicitlyDisabled : Scenario by GraphvizBasic {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
@@ -13,5 +14,6 @@ internal object CheckExplicitlyDisabled : Scenario by GraphvizBasic {
     atlas {
       checkOutputs = false
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 }

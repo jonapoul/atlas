@@ -8,9 +8,8 @@ import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
 /**
- * Used to configure D2 output from Atlas. For barebones output to a `.d2` file, you can just add the
- * `"dev.jonpoulton.atlas.d2"` gradle plugin. Or for a more fleshed-out config:
- *
+ * Used to configure D2 output from Atlas. For barebones output to a `.d2` file, you can just add
+ * the `"dev.jonpoulton.atlas.d2"` gradle plugin. Or for a more fleshed-out config:
  * ```kotlin
  * atlas {
  *   // other Atlas config
@@ -60,24 +59,25 @@ public interface D2Spec : AtlasSpec {
   public val themeDark: Property<Theme>
 
   public val layoutEngine: D2LayoutEngineSpec
+
   public fun layoutEngine(action: Action<D2LayoutEngineSpec>)
 
   public val rootStyle: D2RootStyleSpec
+
   public fun rootStyle(action: Action<D2RootStyleSpec>)
 
   public val globalProps: D2GlobalPropsSpec
+
   public fun globalProps(action: Action<D2GlobalPropsSpec>)
 
   /**
-   * If called, a task will be registered to convert any SVG outputs to PNGs. Has no effect if [D2Spec.fileFormat]
-   * is not [FileFormat.Svg].
+   * If called, a task will be registered to convert any SVG outputs to PNGs. Has no effect if
+   * [D2Spec.fileFormat] is not [FileFormat.Svg].
    */
   public fun convertSvgToPng(converter: SvgToPng.Converter)
 }
 
-/**
- * https://d2lang.com/tour/style/#root
- */
+/** https://d2lang.com/tour/style/#root */
 @AtlasDsl
 public interface D2RootStyleSpec : PropertiesSpec {
   public var fill: String?
@@ -89,9 +89,9 @@ public interface D2RootStyleSpec : PropertiesSpec {
 }
 
 /**
- * Use this for any arbitrary global properties that you want to apply to all charts. These properties will be appended
- * to the bottom of the chart. Chances are, you'll want to use some [globs](https://d2lang.com/tour/globs/) in here,
- * so make sure to read the D2 docs on those.
+ * Use this for any arbitrary global properties that you want to apply to all charts. These
+ * properties will be appended to the bottom of the chart. Chances are, you'll want to use some
+ * [globs](https://d2lang.com/tour/globs/) in here, so make sure to read the D2 docs on those.
  */
 @AtlasDsl
 public interface D2GlobalPropsSpec : PropertiesSpec {

@@ -2,6 +2,10 @@ package atlas.core.internal
 
 import atlas.core.InternalAtlasApi
 import atlas.core.LinkType
+import java.io.File
+import java.io.Serializable as JSerializable
+import kotlin.text.RegexOption.IGNORE_CASE
+import kotlinx.serialization.Serializable as KSerializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.SetSerializer
 import kotlinx.serialization.json.decodeFromStream
@@ -10,18 +14,15 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.provider.Provider
-import java.io.File
-import kotlin.text.RegexOption.IGNORE_CASE
-import java.io.Serializable as JSerializable
-import kotlinx.serialization.Serializable as KSerializable
 
 @InternalAtlasApi
-public fun readProjectLinks(inputFile: File): Set<ProjectLink> = inputFile.inputStream().use { stream ->
-  AtlasJson.decodeFromStream(
-    deserializer = SetSerializer(ProjectLink.serializer()),
-    stream = stream,
-  )
-}
+public fun readProjectLinks(inputFile: File): Set<ProjectLink> =
+  inputFile.inputStream().use { stream ->
+    AtlasJson.decodeFromStream(
+      deserializer = SetSerializer(ProjectLink.serializer()),
+      stream = stream,
+    )
+  }
 
 internal fun writeProjectLinks(links: Collection<ProjectLink>, outputFile: File) {
   outputFile.outputStream().use { stream ->
@@ -42,15 +43,13 @@ internal fun writeProjectLinks(
   val links = projectLinks.toSortedMap()
   val filteredLinks = mutableListOf<ProjectLink>()
   links.forEach { (toPath, configurations) ->
-    configurations
-      .sorted()
-      .forEach { config ->
-        val type = linkTypes.firstOrNull { t ->
-          // treat the given string first as an exact match, then fall back to treating as regex
-          t.configuration == config || t.configuration.toRegex(IGNORE_CASE).matches(config)
-        }
-        filteredLinks += ProjectLink(fromPath, toPath, config, type)
+    configurations.sorted().forEach { config ->
+      val type = linkTypes.firstOrNull { t ->
+        // treat the given string first as an exact match, then fall back to treating as regex
+        t.configuration == config || t.configuration.toRegex(IGNORE_CASE).matches(config)
       }
+      filteredLinks += ProjectLink(fromPath, toPath, config, type)
+    }
   }
   writeProjectLinks(filteredLinks, outputFile)
   return filteredLinks
@@ -61,16 +60,11 @@ internal fun createProjectLinks(
   ignoredConfigs: Iterable<String>,
 ): Provider<Map<String, List<String>>> = project.provider {
   val map = hashMapOf<String, List<String>>()
-  project
-    .configurations
-    .filterUseful(ignoredConfigs)
-    .forEach { c ->
-      c.dependencies
-        .filterIsInstance<ProjectDependency>()
-        .forEach { p ->
-          map[p.path] = map.getOrElse(p.path) { listOf() } + c.name
-        }
+  project.configurations.filterUseful(ignoredConfigs).forEach { c ->
+    c.dependencies.filterIsInstance<ProjectDependency>().forEach { p ->
+      map[p.path] = map.getOrElse(p.path) { listOf() } + c.name
     }
+  }
   map
 }
 
@@ -90,7 +84,9 @@ public data class ProjectLink(
 
 @InternalAtlasApi
 public operator fun Iterable<ProjectLink>.contains(p: TypedProject): Boolean =
-  any { (from, to, _) -> from == p.projectPath || to == p.projectPath }
+  any { (from, to, _) ->
+    from == p.projectPath || to == p.projectPath
+  }
 
 private fun ConfigurationContainer.filterUseful(ignoredConfigs: Iterable<String>) = filter { c ->
   ignoredConfigs.none { blocked ->

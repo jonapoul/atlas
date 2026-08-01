@@ -8,6 +8,9 @@ import atlas.core.InternalAtlasApi
 import atlas.core.internal.Variant
 import atlas.core.internal.diff
 import atlas.core.internal.problemId
+import java.io.File
+import java.io.FileNotFoundException
+import javax.inject.Inject
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -25,19 +28,18 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.language.base.plugins.LifecycleBasePlugin.CHECK_TASK_NAME
 import org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
-import java.io.File
-import java.io.FileNotFoundException
-import javax.inject.Inject
 
 /**
- * Registered on each chart file generation task to confirm that its configuration hasn't changed since the last
- * `gradle atlasGenerate` task run. Will throw an exception if a difference is found.
+ * Registered on each chart file generation task to confirm that its configuration hasn't changed
+ * since the last `gradle atlasGenerate` task run. Will throw an exception if a difference is found.
  *
- * This will auto-attach to `gradle check` if [AtlasExtension.checkOutputs] is enabled, which it is by default.
+ * This will auto-attach to `gradle check` if [AtlasExtension.checkOutputs] is enabled, which it is
+ * by default.
  */
 @CacheableTask
 public abstract class CheckFileDiff : DefaultTask() {
-  @get:[PathSensitive(NONE) InputFile] public abstract val actualFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile]
+  public abstract val actualFile: RegularFileProperty
   @get:Input public abstract val expectedDirectory: Property<String>
   @get:Input public abstract val expectedFilename: Property<String>
   @get:Input public abstract val taskPath: Property<String>
@@ -85,14 +87,16 @@ public abstract class CheckFileDiff : DefaultTask() {
 
   @InternalAtlasApi
   public companion object {
-    private val PROBLEM_DOESNT_EXIST = problemId(
-      id = "atlas-check-doesnt-exist",
-      description = "Expected file doesn't exist",
-    )
-    private val PROBLEM_NEEDS_REGENERATION = problemId(
-      id = "atlas-check-regenerate",
-      description = "Chart file needs regenerating",
-    )
+    private val PROBLEM_DOESNT_EXIST =
+      problemId(
+        id = "atlas-check-doesnt-exist",
+        description = "Expected file doesn't exist",
+      )
+    private val PROBLEM_NEEDS_REGENERATION =
+      problemId(
+        id = "atlas-check-regenerate",
+        description = "Chart file needs regenerating",
+      )
 
     @InternalAtlasApi
     public inline fun <reified T1 : TaskWithOutputFile, T2 : TaskWithOutputFile> register(
@@ -102,31 +106,30 @@ public abstract class CheckFileDiff : DefaultTask() {
       variant: Variant,
       realTask: TaskProvider<T1>,
       dummyTask: TaskProvider<T2>,
-    ): TaskProvider<CheckFileDiff> = with(target) {
-      val name = "check${spec.name.capitalized()}$variant"
-      val checkDiff = tasks.register(name, CheckFileDiff::class.java) { task ->
-        task.taskPath.convention(target.path + ":" + realTask.name)
-        task.actualFile.convention(dummyTask.flatMap { it.outputFile })
-      }
+    ): TaskProvider<CheckFileDiff> =
+      with(target) {
+        val name = "check${spec.name.capitalized()}$variant"
+        val checkDiff =
+          tasks.register(name, CheckFileDiff::class.java) { task ->
+            task.taskPath.convention(target.path + ":" + realTask.name)
+            task.actualFile.convention(dummyTask.flatMap { it.outputFile })
+          }
 
-      checkDiff.configure { task ->
-        // explicitly splitting like this to force-break the task dependency between write and check
-        val expectedFile = realTask
-          .map { it.outputFile }
-          .get()
-          .get()
-          .asFile
-        task.expectedDirectory.set(expectedFile.parentFile.absolutePath)
-        task.expectedFilename.set(expectedFile.name)
-      }
-
-      tasks.named(CHECK_TASK_NAME).configure { check ->
-        if (extension.checkOutputs.get()) {
-          check.dependsOn(checkDiff)
+        checkDiff.configure { task ->
+          // explicitly splitting like this to force-break the task dependency between write and
+          // check
+          val expectedFile = realTask.map { it.outputFile }.get().get().asFile
+          task.expectedDirectory.set(expectedFile.parentFile.absolutePath)
+          task.expectedFilename.set(expectedFile.name)
         }
-      }
 
-      checkDiff
-    }
+        tasks.named(CHECK_TASK_NAME).configure { check ->
+          if (extension.checkOutputs.get()) {
+            check.dependsOn(checkDiff)
+          }
+        }
+
+        checkDiff
+      }
   }
 }

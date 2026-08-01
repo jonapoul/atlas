@@ -8,7 +8,8 @@ import atlas.test.javaBuildScript
 import atlas.test.kotlinJvmBuildScript
 
 internal object ThreeProjectsNoMatchingType : GraphvizScenario {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("com.android.library") version "$AGP_VERSION" apply false
@@ -20,11 +21,13 @@ internal object ThreeProjectsNoMatchingType : GraphvizScenario {
         hasPluginId(name = "Won't match", color = "#123456", pluginId = "com.something.whatever")
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 
-  override val subprojectBuildFiles = mapOf(
-    "a" to javaBuildScript,
-    "b" to kotlinJvmBuildScript,
-    "c" to androidBuildScript,
-  )
+  override val subprojectBuildFiles =
+    mapOf(
+      "a" to javaBuildScript,
+      "b" to kotlinJvmBuildScript,
+      "c" to androidBuildScript,
+    )
 }

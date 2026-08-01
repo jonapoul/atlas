@@ -20,9 +20,7 @@ import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
-/**
- * Dumps all [atlas.core.internal.ProjectLink]s between this and any other projects to a file.
- */
+/** Dumps all [atlas.core.internal.ProjectLink]s between this and any other projects to a file. */
 @CacheableTask
 public abstract class WriteProjectLinks : DefaultTask(), TaskWithOutputFile {
   @get:Input public abstract val projectLinks: MapProperty<String, List<String>>
@@ -37,12 +35,13 @@ public abstract class WriteProjectLinks : DefaultTask(), TaskWithOutputFile {
 
   @TaskAction
   public fun execute() {
-    val links = writeProjectLinks(
-      outputFile = outputFile.get().asFile,
-      fromPath = thisPath.get(),
-      projectLinks = projectLinks.get(),
-      linkTypes = linkTypes.get(),
-    )
+    val links =
+      writeProjectLinks(
+        outputFile = outputFile.get().asFile,
+        fromPath = thisPath.get(),
+        projectLinks = projectLinks.get(),
+        linkTypes = linkTypes.get(),
+      )
 
     logger.info("WriteProjectLinks: ${links.size} links")
     links.forEach {
@@ -53,27 +52,30 @@ public abstract class WriteProjectLinks : DefaultTask(), TaskWithOutputFile {
   internal companion object {
     private const val NAME = "writeProjectLinks"
 
-    internal fun get(target: Project): TaskProvider<WriteProjectLinks>? = try {
-      target.tasks.named(NAME, WriteProjectLinks::class.java)
-    } catch (_: UnknownTaskException) {
-      null
-    }
+    internal fun get(target: Project): TaskProvider<WriteProjectLinks>? =
+      try {
+        target.tasks.named(NAME, WriteProjectLinks::class.java)
+      } catch (_: UnknownTaskException) {
+        null
+      }
 
     internal fun register(
       target: Project,
       extension: AtlasExtensionImpl,
-    ): TaskProvider<WriteProjectLinks> = with(target) {
-      val writeLinks = tasks.register(NAME, WriteProjectLinks::class.java) { task ->
-        task.thisPath.convention(target.path)
-        task.outputFile.convention(fileInBuildDirectory("project-links.json"))
-      }
+    ): TaskProvider<WriteProjectLinks> =
+      with(target) {
+        val writeLinks =
+          tasks.register(NAME, WriteProjectLinks::class.java) { task ->
+            task.thisPath.convention(target.path)
+            task.outputFile.convention(fileInBuildDirectory("project-links.json"))
+          }
 
-      writeLinks.configure { task ->
-        task.projectLinks.convention(createProjectLinks(target, extension.ignoredConfigs.get()))
-        task.linkTypes.convention(extension.orderedLinkTypes())
-      }
+        writeLinks.configure { task ->
+          task.projectLinks.convention(createProjectLinks(target, extension.ignoredConfigs.get()))
+          task.linkTypes.convention(extension.orderedLinkTypes())
+        }
 
-      return writeLinks
-    }
+        return writeLinks
+      }
   }
 }

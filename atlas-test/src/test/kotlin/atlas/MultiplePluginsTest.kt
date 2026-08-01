@@ -9,15 +9,18 @@ import kotlin.test.Test
 
 internal class MultiplePluginsTest : ScenarioTest() {
   @Test
-  fun `Fail when multiple atlas plugins are applied`() = runScenario(MultiplePluginsApplied) {
-    // when
-    val result = runTask("atlasGenerate").buildAndFail()
+  fun `Fail when multiple atlas plugins are applied`() =
+    runScenario(MultiplePluginsApplied) {
+      // when
+      val result = runTask("atlasGenerate").buildAndFail()
 
-    // then
-    assertThat(result.output).contains(
-      """
-        > Cannot add extension with name 'atlas', as there is an extension already registered with that name.
-      """.trimIndent(),
-    )
-  }
+      // then
+      assertThat(result.output)
+        .contains(
+          """
+          > Cannot add extension with name 'atlas', as there is an extension already registered with that name.
+          """
+            .trimIndent()
+        )
+    }
 }

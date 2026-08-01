@@ -2,52 +2,66 @@ package atlas.test
 
 internal interface Scenario {
   val rootBuildFile: String
-  val subprojectBuildFiles: Map<String, String> get() = emptyMap()
-  val gradlePropertiesFile: String get() = ""
-  val isGroovy: Boolean get() = false
+  val subprojectBuildFiles: Map<String, String>
+    get() = emptyMap()
+
+  val gradlePropertiesFile: String
+    get() = ""
+
+  val isGroovy: Boolean
+    get() = false
+
   val variant: PluginVariant
-  val pluginId get() = "dev.jonpoulton.atlas.$variant"
+  val pluginId
+    get() = "dev.jonpoulton.atlas.$variant"
 }
 
 internal interface D2Scenario : Scenario {
-  override val variant get() = PluginVariant.D2
+  override val variant
+    get() = PluginVariant.D2
 }
 
 internal interface GraphvizScenario : Scenario {
-  override val variant get() = PluginVariant.Graphviz
+  override val variant
+    get() = PluginVariant.Graphviz
 }
 
 internal interface MermaidScenario : Scenario {
-  override val variant get() = PluginVariant.Mermaid
+  override val variant
+    get() = PluginVariant.Mermaid
 }
 
 internal enum class PluginVariant(val string: String) {
   D2("d2"),
   Graphviz("graphviz"),
-  Mermaid("mermaid"),
-  ;
+  Mermaid("mermaid");
 
   override fun toString(): String = string
 }
 
 internal val Scenario.javaBuildScript
-  get() = """
+  get() =
+    """
   plugins {
     id("java")
     id("$pluginId")
   }
-  """.trimIndent()
+  """
+      .trimIndent()
 
 internal val Scenario.kotlinJvmBuildScript
-  get() = """
+  get() =
+    """
   plugins {
     kotlin("jvm")
     id("$pluginId")
   }
-  """.trimIndent()
+  """
+      .trimIndent()
 
 internal val Scenario.androidBuildScript
-  get() = """
+  get() =
+    """
   plugins {
     id("com.android.library")
     id("$pluginId")
@@ -57,4 +71,5 @@ internal val Scenario.androidBuildScript
     namespace = "dev.jonpoulton.dummy.$variant"
     compileSdk = 36
   }
-  """.trimIndent()
+  """
+      .trimIndent()

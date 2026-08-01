@@ -9,7 +9,8 @@ import org.gradle.api.Project
 import org.gradle.api.provider.Provider
 
 internal class MermaidGradleProperties(override val project: Project) : IGradleProperties {
-  val animateLinks: Provider<Boolean> = bool(key = "atlas.mermaid.chart.animateLinks", default = null)
+  val animateLinks: Provider<Boolean> =
+    bool(key = "atlas.mermaid.chart.animateLinks", default = null)
   val look: Provider<Look> = enum(key = "atlas.mermaid.chart.look", default = null)
   val theme: Provider<Theme> = enum(key = "atlas.mermaid.chart.theme", default = null)
 }

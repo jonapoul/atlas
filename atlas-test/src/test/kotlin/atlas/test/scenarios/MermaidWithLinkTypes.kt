@@ -4,7 +4,8 @@ import atlas.test.KOTLIN_VERSION
 import atlas.test.MermaidScenario
 
 internal object MermaidWithLinkTypes : MermaidScenario by MermaidBasic {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import atlas.mermaid.LinkStyle
 
     plugins {
@@ -19,5 +20,6 @@ internal object MermaidWithLinkTypes : MermaidScenario by MermaidBasic {
         "compileOnly"(style = LinkStyle.Dashed, color = "yellow")
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 }

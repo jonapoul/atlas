@@ -3,12 +3,16 @@ package atlas.graphviz.internal
 import atlas.core.internal.IndentedStringBuilder
 
 @Suppress("SpreadOperator")
-internal class Attrs(private val delegate: MutableMap<String, Any?>) : MutableMap<String, Any?> by delegate {
+internal class Attrs(private val delegate: MutableMap<String, Any?>) :
+  MutableMap<String, Any?> by delegate {
   constructor(vararg entries: Pair<String, Any?>) : this(mutableMapOf(*entries))
 
   override fun toString(): String {
     if (isEmpty() || values.all { it == null }) return ""
-    val csv = mapNotNull { (k, v) -> if (v == null) null else "$k=\"$v\"" }.joinToString(separator = ",")
+    val csv = mapNotNull { (k, v) ->
+      if (v == null) null else "$k=\"$v\""
+    }
+      .joinToString(separator = ",")
     return " [$csv]"
   }
 

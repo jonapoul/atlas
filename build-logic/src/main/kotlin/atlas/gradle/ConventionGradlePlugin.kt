@@ -17,58 +17,56 @@ import org.gradle.plugin.devel.tasks.ValidatePlugins
 
 class ConventionGradlePlugin : Plugin<Project> {
   private val Project.skipPublish
-    get() = providers
-      .gradleProperty("atlas.skipPublish")
-      .map { it.toBoolean() }
-      .getOrElse(false)
+    get() = providers.gradleProperty("atlas.skipPublish").map { it.toBoolean() }.getOrElse(false)
 
-  override fun apply(target: Project): Unit = with(target) {
-    pluginsInternal {
-      apply(ConventionKotlin::class)
-      apply(ConventionLicensee::class)
-      if (!skipPublish) apply(ConventionPublish::class)
-      apply(JavaGradlePluginPlugin::class)
-      apply("org.jetbrains.kotlin.plugin.serialization")
-    }
+  override fun apply(target: Project): Unit =
+    with(target) {
+      pluginsInternal {
+        apply(ConventionKotlin::class)
+        apply(ConventionLicensee::class)
+        if (!skipPublish) apply(ConventionPublish::class)
+        apply(JavaGradlePluginPlugin::class)
+        apply("org.jetbrains.kotlin.plugin.serialization")
+      }
 
-    extensions.configure<GradlePluginDevelopmentExtension> {
-      vcsUrl.set("https://github.com/jonapoul/atlas-gradle-plugin.git")
-      website.set("https://github.com/jonapoul/atlas-gradle-plugin")
+      extensions.configure<GradlePluginDevelopmentExtension> {
+        vcsUrl.set("https://github.com/jonapoul/atlas-gradle-plugin.git")
+        website.set("https://github.com/jonapoul/atlas-gradle-plugin")
 
-      plugins.configureEach {
-        description = providers.gradleProperty("POM_DESCRIPTION").get()
-        tags.addAll("gradle", "kotlin", "modules", "projects", "diagrams", "charts", "links")
+        plugins.configureEach {
+          description = providers.gradleProperty("POM_DESCRIPTION").get()
+          tags.addAll("gradle", "kotlin", "modules", "projects", "diagrams", "charts", "links")
+        }
+      }
+
+      val testPluginClasspath by configurations.registering { isCanBeResolved = true }
+
+      dependencies {
+        "compileOnly"(libs("kotlin.gradle"))
+        "implementation"(libs("kotlinx.serialization"))
+        testPluginClasspath(libs("agp"))
+        testPluginClasspath(libs("kotlin.gradle"))
+      }
+
+      tasks.withType<ValidatePlugins>().configureEach {
+        enableStricterValidation.set(true)
+        failOnWarning.set(true)
+      }
+
+      // Plugins used in tests could be resolved in classpath
+      tasks.withType<PluginUnderTestMetadata> {
+        pluginClasspath.from(testPluginClasspath)
+      }
+
+      // Set the minimum supported gradle version
+      val minimumGradleVersion = providers.gradleProperty("atlas.minimumGradleVersion")
+      configurations.named("apiElements").configure {
+        attributes {
+          attribute(
+            GradlePluginApiVersion.GRADLE_PLUGIN_API_VERSION_ATTRIBUTE,
+            objects.named(GradlePluginApiVersion::class.java, minimumGradleVersion.get()),
+          )
+        }
       }
     }
-
-    val testPluginClasspath by configurations.registering { isCanBeResolved = true }
-
-    dependencies {
-      "compileOnly"(libs("kotlin.gradle"))
-      "implementation"(libs("kotlinx.serialization"))
-      testPluginClasspath(libs("agp"))
-      testPluginClasspath(libs("kotlin.gradle"))
-    }
-
-    tasks.withType<ValidatePlugins>().configureEach {
-      enableStricterValidation.set(true)
-      failOnWarning.set(true)
-    }
-
-    // Plugins used in tests could be resolved in classpath
-    tasks.withType<PluginUnderTestMetadata> {
-      pluginClasspath.from(testPluginClasspath)
-    }
-
-    // Set the minimum supported gradle version
-    val minimumGradleVersion = providers.gradleProperty("atlas.minimumGradleVersion")
-    configurations.named("apiElements").configure {
-      attributes {
-        attribute(
-          GradlePluginApiVersion.GRADLE_PLUGIN_API_VERSION_ATTRIBUTE,
-          objects.named(GradlePluginApiVersion::class.java, minimumGradleVersion.get()),
-        )
-      }
-    }
-  }
 }

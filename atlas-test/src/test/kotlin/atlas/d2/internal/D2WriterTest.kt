@@ -19,13 +19,15 @@ import kotlin.test.Test
 internal class D2WriterTest {
   @Test
   fun `Base config with no project types`() {
-    val writer = d2Writer(
-      layout = OneLevelOfSubprojects,
-      groupProjects = false,
-    )
+    val writer =
+      d2Writer(
+        layout = OneLevelOfSubprojects,
+        groupProjects = false,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         ...@../classes.d2
         app: :app
         data_a: :data:a
@@ -52,35 +54,41 @@ internal class D2WriterTest {
             project-dummy1 -> project-dummy2: implementation { class: link-implementation }
           }
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Lowest level of a multi-level hierarchy`() {
-    val writer = d2Writer(
-      layout = LowestLevelOfSubprojects,
-      thisPath = ":ui:c",
-    )
+    val writer =
+      d2Writer(
+        layout = LowestLevelOfSubprojects,
+        thisPath = ":ui:c",
+      )
 
     // then the single project is written to the chart on its lonesome
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         ...@../classes.d2
         ui_c: :ui:c
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Grouping projects`() {
-    val writer = d2Writer(
-      layout = OneLevelOfSubprojects,
-      groupProjects = true,
-    )
+    val writer =
+      d2Writer(
+        layout = OneLevelOfSubprojects,
+        groupProjects = true,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         ...@../classes.d2
         app: :app
         data: :data {
@@ -116,22 +124,23 @@ internal class D2WriterTest {
             project-dummy1 -> project-dummy2: implementation { class: link-implementation }
           }
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Grouping projects with replacements`() {
-    val writer = d2Writer(
-      layout = OneLevelOfSubprojectsWithReplacements,
-      groupProjects = true,
-      replacements = setOf(
-        Replacement(pattern = "^:projects:".toRegex(), replacement = ":"),
-      ),
-    )
+    val writer =
+      d2Writer(
+        layout = OneLevelOfSubprojectsWithReplacements,
+        groupProjects = true,
+        replacements = setOf(Replacement(pattern = "^:projects:".toRegex(), replacement = ":")),
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         ...@../classes.d2
         app: :app
         data: :data {
@@ -167,19 +176,22 @@ internal class D2WriterTest {
             project-dummy1 -> project-dummy2: implementation { class: link-implementation }
           }
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Grouping projects with sub-subgraphs`() {
-    val writer = d2Writer(
-      layout = TwoLevelsOfSubprojects,
-      groupProjects = true,
-    )
+    val writer =
+      d2Writer(
+        layout = TwoLevelsOfSubprojects,
+        groupProjects = true,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         ...@../classes.d2
         app: :app
         data: :data {
@@ -222,16 +234,18 @@ internal class D2WriterTest {
             project-dummy1 -> project-dummy2: implementation { class: link-implementation }
           }
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Single project with no links`() {
     val writer = d2Writer(layout = ProjectWithNoLinks)
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         ...@../classes.d2
         app: :app { class: project-red }
         vars: {
@@ -239,20 +253,23 @@ internal class D2WriterTest {
             project-red: red { class: project-red }
           }
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Single nested project with no links`() {
-    val writer = d2Writer(
-      layout = SingleNestedProjectWithNoLinks,
-      groupProjects = true,
-      thisPath = ":a:b",
-    )
+    val writer =
+      d2Writer(
+        layout = SingleNestedProjectWithNoLinks,
+        groupProjects = true,
+        thisPath = ":a:b",
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         ...@../classes.d2
         a: :a {
           class: container
@@ -263,19 +280,22 @@ internal class D2WriterTest {
             project-red: red { class: project-red }
           }
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Graph with link styles and colors`() {
-    val writer = d2Writer(
-      layout = D2AbcWithLinkStyles,
-      thisPath = ":a",
-    )
+    val writer =
+      d2Writer(
+        layout = D2AbcWithLinkStyles,
+        thisPath = ":a",
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         ...@../classes.d2
         a: :a
         b: :b
@@ -290,14 +310,16 @@ internal class D2WriterTest {
             project-dummy1 -> project-dummy2: implementation { class: link-implementation }
           }
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   private object D2AbcWithLinkStyles : ProjectLayout by Abc {
-    override val links = setOf(
-      projectLink(fromPath = ":a", toPath = ":b", style = LinkStyle.Dashed, color = "orange"),
-      projectLink(fromPath = ":a", toPath = ":c", style = LinkStyle.Bold),
-    )
+    override val links =
+      setOf(
+        projectLink(fromPath = ":a", toPath = ":b", style = LinkStyle.Dashed, color = "orange"),
+        projectLink(fromPath = ":a", toPath = ":c", style = LinkStyle.Bold),
+      )
   }
 }

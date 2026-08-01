@@ -6,24 +6,27 @@ import atlas.test.javaBuildScript
 import atlas.test.kotlinJvmBuildScript
 
 internal object MermaidBasic : MermaidScenario {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 
-  override val subprojectBuildFiles = mapOf(
-    "a" to """
+  override val subprojectBuildFiles =
+    mapOf(
+      "a" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         api(project(":b"))
         implementation(project(":c"))
       }
-    """.trimIndent(),
-
-    "b" to javaBuildScript,
-
-    "c" to javaBuildScript,
-  )
+    """
+          .trimIndent(),
+      "b" to javaBuildScript,
+      "c" to javaBuildScript,
+    )
 }

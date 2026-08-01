@@ -12,9 +12,12 @@ idea {
   }
 }
 
-// Pull java version property from project's root properties file, since build-logic doesn't have access to it
+// Pull java version property from project's root properties file, since build-logic doesn't have
+// access to it
 val props = Properties().also { it.load(file("../gradle.properties").reader()) }
-val javaInt = props["atlas.javaVersion"]?.toString()?.toInt() ?: error("Failed getting java version from $props")
+val javaInt =
+  props["atlas.javaVersion"]?.toString()?.toInt()
+    ?: error("Failed getting java version from $props")
 val javaVersion = JavaVersion.toVersion(javaInt)
 
 java {
@@ -44,10 +47,11 @@ tasks.validatePlugins {
 
 gradlePlugin {
   plugins {
-    operator fun String.invoke(impl: String) = register(this) {
-      id = this@invoke
-      implementationClass = impl
-    }
+    operator fun String.invoke(impl: String) =
+      register(this) {
+        id = this@invoke
+        implementationClass = impl
+      }
 
     "atlas.convention.detekt"(impl = "atlas.gradle.ConventionDetekt")
     "atlas.convention.kotlin"(impl = "atlas.gradle.ConventionKotlin")

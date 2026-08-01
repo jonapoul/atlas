@@ -12,40 +12,43 @@ import org.junit.jupiter.api.Test
 internal class GraphvizGroovyTest : ScenarioTest() {
   @Test
   @RequiresGraphviz
-  fun `Configure graphviz`() = runScenario(GroovyGraphVizBasic) {
-    // when
-    val result = runTask("atlasGenerate").build()
+  fun `Configure graphviz`() =
+    runScenario(GroovyGraphVizBasic) {
+      // when
+      val result = runTask("atlasGenerate").build()
 
-    // then
-    assertThat(result)
-      .taskWasSuccessful(":a:atlasGenerate")
-      .taskWasSuccessful(":b:atlasGenerate")
-      .taskWasSuccessful(":c:atlasGenerate")
-  }
-
-  @Test
-  @RequiresGraphviz
-  fun `Configure graphviz project types`() = runScenario(GroovyGraphVizProjectTypes) {
-    // when
-    val result = runTask("atlasGenerate").build()
-
-    // then
-    assertThat(result)
-      .taskWasSuccessful(":a:atlasGenerate")
-      .taskWasSuccessful(":b:atlasGenerate")
-      .taskWasSuccessful(":c:atlasGenerate")
-  }
+      // then
+      assertThat(result)
+        .taskWasSuccessful(":a:atlasGenerate")
+        .taskWasSuccessful(":b:atlasGenerate")
+        .taskWasSuccessful(":c:atlasGenerate")
+    }
 
   @Test
   @RequiresGraphviz
-  fun `Configure graphviz with everything`() = runScenario(GroovyGraphVizFull) {
-    // when
-    val result = runTask("atlasGenerate").build()
+  fun `Configure graphviz project types`() =
+    runScenario(GroovyGraphVizProjectTypes) {
+      // when
+      val result = runTask("atlasGenerate").build()
 
-    // then
-    assertThat(result)
-      .taskWasSuccessful(":a:atlasGenerate")
-      .taskWasSuccessful(":b:atlasGenerate")
-      .taskWasSuccessful(":c:atlasGenerate")
-  }
+      // then
+      assertThat(result)
+        .taskWasSuccessful(":a:atlasGenerate")
+        .taskWasSuccessful(":b:atlasGenerate")
+        .taskWasSuccessful(":c:atlasGenerate")
+    }
+
+  @Test
+  @RequiresGraphviz
+  fun `Configure graphviz with everything`() =
+    runScenario(GroovyGraphVizFull) {
+      // when
+      val result = runTask("atlasGenerate").build()
+
+      // then
+      assertThat(result)
+        .taskWasSuccessful(":a:atlasGenerate")
+        .taskWasSuccessful(":b:atlasGenerate")
+        .taskWasSuccessful(":c:atlasGenerate")
+    }
 }

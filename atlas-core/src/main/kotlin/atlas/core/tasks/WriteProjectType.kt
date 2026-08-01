@@ -22,12 +22,14 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 /**
- * Dumps the [ProjectTypeSpec] of this project to a file. This will then by aggregated in [CollateProjectTypes].
+ * Dumps the [ProjectTypeSpec] of this project to a file. This will then by aggregated in
+ * [CollateProjectTypes].
  */
 @CacheableTask
 public abstract class WriteProjectType : DefaultTask(), TaskWithOutputFile {
   @get:Input public abstract val projectPath: Property<String>
-  @get:[Input Optional] public abstract val projectType: Property<ProjectType>
+  @get:[Input Optional]
+  public abstract val projectType: Property<ProjectType>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -50,39 +52,44 @@ public abstract class WriteProjectType : DefaultTask(), TaskWithOutputFile {
   internal companion object {
     internal const val NAME = "writeProjectType"
 
-    internal fun get(target: Project): TaskProvider<WriteProjectType>? = try {
-      target.tasks.named(NAME, WriteProjectType::class.java)
-    } catch (_: UnknownTaskException) {
-      null
-    }
+    internal fun get(target: Project): TaskProvider<WriteProjectType>? =
+      try {
+        target.tasks.named(NAME, WriteProjectType::class.java)
+      } catch (_: UnknownTaskException) {
+        null
+      }
 
     internal fun register(
       target: Project,
       extension: AtlasExtensionImpl,
-    ): TaskProvider<WriteProjectType> = with(target) {
-      val writeProject = tasks.register(NAME, WriteProjectType::class.java) { task ->
-        task.projectPath.convention(target.path)
-        task.outputFile.convention(fileInBuildDirectory("project-type.json"))
-      }
+    ): TaskProvider<WriteProjectType> =
+      with(target) {
+        val writeProject =
+          tasks.register(NAME, WriteProjectType::class.java) { task ->
+            task.projectPath.convention(target.path)
+            task.outputFile.convention(fileInBuildDirectory("project-type.json"))
+          }
 
-      afterEvaluate {
-        val matching = extension
-          .orderedProjectTypes()
-          .firstOrNull { t -> t.matches(target) }
-          ?.let(::projectType)
-        writeProject.configure { t ->
-          t.projectType.convention(matching)
+        afterEvaluate {
+          val matching =
+            extension
+              .orderedProjectTypes()
+              .firstOrNull { t -> t.matches(target) }
+              ?.let(::projectType)
+          writeProject.configure { t ->
+            t.projectType.convention(matching)
+          }
         }
+
+        writeProject
       }
 
-      writeProject
-    }
-
-    private fun ProjectTypeSpec.matches(project: Project): Boolean = with(project) {
-      pathContains.map { path.contains(it) }.orNull
-        ?: pathMatches.map { path.matches(it.toRegex(regexOptions.orNull.orEmpty())) }.orNull
-        ?: hasPluginId.map { pluginManager.hasPlugin(it) }.orNull
-        ?: false
-    }
+    private fun ProjectTypeSpec.matches(project: Project): Boolean =
+      with(project) {
+        pathContains.map { path.contains(it) }.orNull
+          ?: pathMatches.map { path.matches(it.toRegex(regexOptions.orNull.orEmpty())) }.orNull
+          ?: hasPluginId.map { pluginManager.hasPlugin(it) }.orNull
+          ?: false
+      }
   }
 }

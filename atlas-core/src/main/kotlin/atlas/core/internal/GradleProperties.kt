@@ -8,12 +8,15 @@ import org.gradle.api.provider.Provider
 
 @InternalAtlasApi
 public class CoreGradleProperties(override val project: Project) : IGradleProperties {
-  public val alsoTraverseUpwards: Provider<Boolean> = bool("atlas.alsoTraverseUpwards", default = false)
+  public val alsoTraverseUpwards: Provider<Boolean> =
+    bool("atlas.alsoTraverseUpwards", default = false)
   public val checkOutputs: Provider<Boolean> = bool(key = "atlas.checkOutputs", default = true)
-  public val displayLinkLabels: Provider<Boolean> = bool(key = "atlas.addLinkLabels", default = false)
+  public val displayLinkLabels: Provider<Boolean> =
+    bool(key = "atlas.addLinkLabels", default = false)
   public val generateOnSync: Provider<Boolean> = bool(key = "atlas.generateOnSync", default = false)
   public val groupProjects: Provider<Boolean> = bool(key = "atlas.groupProjects", default = false)
-  public val printFilesToConsole: Provider<Boolean> = bool(key = "atlas.printFilesToConsole", default = false)
+  public val printFilesToConsole: Provider<Boolean> =
+    bool(key = "atlas.printFilesToConsole", default = false)
 }
 
 @InternalAtlasApi
@@ -41,7 +44,8 @@ public fun IGradleProperties.string(key: String, default: String? = null): Provi
 public inline fun <reified E> IGradleProperties.enum(
   key: String,
   default: E? = null,
-): Provider<E> where E : StringEnum, E : Enum<E> = string(key, default?.string).map { parseEnum(it) }
+): Provider<E> where E : StringEnum, E : Enum<E> =
+  string(key, default?.string).map { parseEnum(it) }
 
 @InternalAtlasApi
 public inline fun <reified E> IGradleProperties.intEnum(
@@ -53,7 +57,4 @@ private inline fun <reified T : Any> IGradleProperties.prop(
   key: String,
   default: T?,
   noinline mapper: (String) -> T?,
-) = project.providers
-  .gradleProperty(key)
-  .map(mapper)
-  .orElse(project.provider { default })
+) = project.providers.gradleProperty(key).map(mapper).orElse(project.provider { default })

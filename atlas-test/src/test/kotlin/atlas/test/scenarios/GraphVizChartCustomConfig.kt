@@ -5,7 +5,8 @@ import atlas.test.Scenario
 import kotlin.text.trimIndent
 
 internal object GraphVizChartCustomConfig : Scenario by GraphvizBasic {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import atlas.graphviz.ArrowType
     import atlas.graphviz.Dir
     import atlas.graphviz.FileFormat
@@ -43,5 +44,6 @@ internal object GraphVizChartCustomConfig : Scenario by GraphvizBasic {
         }
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 }

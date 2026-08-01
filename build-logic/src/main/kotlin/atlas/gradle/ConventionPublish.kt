@@ -10,23 +10,24 @@ import org.jetbrains.kotlin.gradle.dsl.abi.AbiValidationExtension
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 class ConventionPublish : Plugin<Project> {
-  override fun apply(target: Project) = with(target) {
-    pluginsInternal {
-      apply(MavenPublishPlugin::class)
-      apply(ConventionDokka::class)
-    }
+  override fun apply(target: Project) =
+    with(target) {
+      pluginsInternal {
+        apply(MavenPublishPlugin::class)
+        apply(ConventionDokka::class)
+      }
 
-    extensions.configure<KotlinJvmProjectExtension> {
-      // https://kotlinlang.org/docs/gradle-binary-compatibility-validation.html
-      @OptIn(ExperimentalAbiValidation::class)
-      extensions.configure<AbiValidationExtension> {
-        enabled.set(true)
-        filters {
-          excluded {
-            annotatedWith.add("atlas.core.InternalAtlasApi")
+      extensions.configure<KotlinJvmProjectExtension> {
+        // https://kotlinlang.org/docs/gradle-binary-compatibility-validation.html
+        @OptIn(ExperimentalAbiValidation::class)
+        extensions.configure<AbiValidationExtension> {
+          enabled.set(true)
+          filters {
+            excluded {
+              annotatedWith.add("atlas.core.InternalAtlasApi")
+            }
           }
         }
       }
     }
-  }
 }

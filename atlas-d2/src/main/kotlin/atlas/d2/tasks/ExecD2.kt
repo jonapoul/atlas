@@ -9,6 +9,8 @@ import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.TaskWithOutputFile
 import atlas.d2.D2Spec
 import atlas.d2.FileFormat
+import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -25,23 +27,27 @@ import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.process.ExecOperations
-import java.io.ByteArrayOutputStream
-import javax.inject.Inject
 
 /**
- * Executes `d2` with the configured inputs to generate an image file. Requires D2 to be pre-installed.
+ * Executes `d2` with the configured inputs to generate an image file. Requires D2 to be
+ * pre-installed.
  *
- * Just so I don't forget, [classesFile] is only used to force regeneration if the classes file updates, since we don't
- * directly read it in this task.
+ * Just so I don't forget, [classesFile] is only used to force regeneration if the classes file
+ * updates, since we don't directly read it in this task.
  */
 @CacheableTask
 public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {
-  @get:[PathSensitive(NONE) InputFile] public abstract val classesFile: RegularFileProperty
-  @get:[PathSensitive(NONE) InputFile] public abstract val inputFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile]
+  public abstract val classesFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile]
+  public abstract val inputFile: RegularFileProperty
   @get:Input public abstract val outputFormat: Property<FileFormat>
-  @get:[Input Optional] public abstract val animateInterval: Property<Int>
-  @get:[Input Optional] public abstract val cliArguments: MapProperty<String, String>
-  @get:[Input Optional] public abstract val pathToD2Command: Property<String>
+  @get:[Input Optional]
+  public abstract val animateInterval: Property<Int>
+  @get:[Input Optional]
+  public abstract val cliArguments: MapProperty<String, String>
+  @get:[Input Optional]
+  public abstract val pathToD2Command: Property<String>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
   @get:Inject public abstract val execOperations: ExecOperations
 
@@ -50,7 +56,8 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
   }
 
   // Not using kotlin setter because this pulls a property value
-  override fun getDescription(): String = "Uses D2 to convert a text diagram into a ${outputFormat.get()} file"
+  override fun getDescription(): String =
+    "Uses D2 to convert a text diagram into a ${outputFormat.get()} file"
 
   @TaskAction
   public fun execute() {
@@ -99,25 +106,27 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
       spec: D2Spec,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
-    ): TaskProvider<ExecD2> = with(target) {
-      val name = "execD2$variant"
-      val execGraphviz = tasks.register(name, ExecD2::class.java)
-      val d2Classes = WriteD2Classes.get(rootProject)
+    ): TaskProvider<ExecD2> =
+      with(target) {
+        val name = "execD2$variant"
+        val execGraphviz = tasks.register(name, ExecD2::class.java)
+        val d2Classes = WriteD2Classes.get(rootProject)
 
-      execGraphviz.configure { task ->
-        val d2File = dotFileTask.flatMap { it.outputFile }
-        val outputFile = d2File.withExtension(target, extension = provider { spec.fileFormat.get() })
+        execGraphviz.configure { task ->
+          val d2File = dotFileTask.flatMap { it.outputFile }
+          val outputFile =
+            d2File.withExtension(target, extension = provider { spec.fileFormat.get() })
 
-        task.classesFile.convention(d2Classes.flatMap { it.outputFile })
-        task.inputFile.convention(d2File)
-        task.pathToD2Command.convention(spec.pathToD2Command)
-        task.outputFormat.convention(spec.fileFormat)
-        task.outputFile.convention(outputFile)
-        task.cliArguments.convention(spec.layoutEngine.properties)
-        task.animateInterval.convention(spec.animateInterval)
+          task.classesFile.convention(d2Classes.flatMap { it.outputFile })
+          task.inputFile.convention(d2File)
+          task.pathToD2Command.convention(spec.pathToD2Command)
+          task.outputFormat.convention(spec.fileFormat)
+          task.outputFile.convention(outputFile)
+          task.cliArguments.convention(spec.layoutEngine.properties)
+          task.animateInterval.convention(spec.animateInterval)
+        }
+
+        return execGraphviz
       }
-
-      return execGraphviz
-    }
   }
 }

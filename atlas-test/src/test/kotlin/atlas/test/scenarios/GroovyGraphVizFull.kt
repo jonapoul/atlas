@@ -5,7 +5,8 @@ import atlas.test.GraphvizScenario
 internal object GroovyGraphVizFull : GraphvizScenario by GroovyBasic {
   override val isGroovy = true
 
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import atlas.graphviz.*
 
     plugins {
@@ -19,5 +20,6 @@ internal object GroovyGraphVizFull : GraphvizScenario by GroovyBasic {
         layoutEngine = LayoutEngine.Circo
       }
     }
-  """.trimIndent()
+    """
+      .trimIndent()
 }

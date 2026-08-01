@@ -59,46 +59,52 @@ public class D2ClassesConfig(
   public val theme: Theme? = null,
 ) : JSerializable
 
-internal fun D2AtlasExtensionImpl.toConfig() = D2ClassesConfig(
-  animateLinks = d2.animateLinks.orNull,
-  center = d2.center.orNull,
-  darkTheme = d2.themeDark.orNull,
-  direction = d2.direction.orNull,
-  displayLinkLabels = displayLinkLabels.orNull,
-  globalProps = d2.globalProps.properties.orNull,
-  layoutEngine = d2.layoutEngine.layoutEngine.orNull,
-  linkTypes = orderedLinkTypes(),
-  location = d2.groupLabelLocation.orNull,
-  projectTypes = orderedProjectTypes().map(::projectType),
-  pad = d2.pad.orNull,
-  position = d2.groupLabelPosition.orNull,
-  rootStyle = d2.rootStyle.properties.getOrElse(mutableMapOf()),
-  sketch = d2.sketch.orNull,
-  theme = d2.theme.orNull,
-)
+internal fun D2AtlasExtensionImpl.toConfig() =
+  D2ClassesConfig(
+    animateLinks = d2.animateLinks.orNull,
+    center = d2.center.orNull,
+    darkTheme = d2.themeDark.orNull,
+    direction = d2.direction.orNull,
+    displayLinkLabels = displayLinkLabels.orNull,
+    globalProps = d2.globalProps.properties.orNull,
+    layoutEngine = d2.layoutEngine.layoutEngine.orNull,
+    linkTypes = orderedLinkTypes(),
+    location = d2.groupLabelLocation.orNull,
+    projectTypes = orderedProjectTypes().map(::projectType),
+    pad = d2.pad.orNull,
+    position = d2.groupLabelPosition.orNull,
+    rootStyle = d2.rootStyle.properties.getOrElse(mutableMapOf()),
+    sketch = d2.sketch.orNull,
+    theme = d2.theme.orNull,
+  )
 
 internal const val CONTAINER_CLASS = "container"
 internal const val HIDDEN_CLASS = "hidden"
 
-internal val LinkType.classId get() = "link-$key"
-internal val ProjectType.classId get() = "project-$key"
+internal val LinkType.classId
+  get() = "link-$key"
+internal val ProjectType.classId
+  get() = "project-$key"
 
-internal val LinkType.key: String get() = configuration.key
-internal val ProjectType.key: String get() = name.key
+internal val LinkType.key: String
+  get() = configuration.key
+internal val ProjectType.key: String
+  get() = name.key
 
 private val String.key
   get() = this.filter { it.isLetter() || it.isDigit() }
 
-private fun IndentedStringBuilder.appendClass(type: ProjectType) = with(type) {
-  appendLine("$classId {")
-  indent {
-    val properties = type.properties + ("style.fill" to color)
-    properties.sortedByKeys().forEach { (key, value) ->
-      appendLine("$key: \"$value\"")
+private fun IndentedStringBuilder.appendClass(type: ProjectType) =
+  with(type) {
+    appendLine("$classId {")
+    indent {
+      val properties = type.properties + ("style.fill" to color)
+      properties.sortedByKeys().forEach { (key, value) ->
+        appendLine("$key: \"$value\"")
+      }
     }
+    appendLine("}")
   }
-  appendLine("}")
-}
 
 private fun IndentedStringBuilder.appendLink(config: D2ClassesConfig, type: LinkType) {
   appendLine("${type.classId} {")
@@ -149,71 +155,78 @@ private fun IndentedStringBuilder.appendHidden() {
   appendLine("}")
 }
 
-private fun IndentedStringBuilder.appendGroupLabelSpecifier(config: D2ClassesConfig) = with(config) {
-  position ?: return@with // e.g. top-right
-  if (location == null) {
-    appendLine("label.near: $position")
-  } else {
-    // need to swap the order to "left-center" if we have a location specifier prefix
-    val rejiggedPosition = if (position in setOf(CenterLeft, CenterRight)) {
-      position.toString().split("-").let { str -> "${str[1]}-${str[0]}" }
+private fun IndentedStringBuilder.appendGroupLabelSpecifier(config: D2ClassesConfig) =
+  with(config) {
+    position ?: return@with // e.g. top-right
+    if (location == null) {
+      appendLine("label.near: $position")
     } else {
-      position.toString()
-    }
-    val position = when (location) {
-      Location.Inside -> ""
-      Location.Border -> "$location-"
-      Location.Outside -> "$location-"
-    }
-    appendLine("label.near: $position$rejiggedPosition")
-  }
-}
-
-private fun IndentedStringBuilder.appendStyles(config: D2ClassesConfig) = with(config) {
-  direction?.let { appendLine("direction: $it") }
-
-  if (rootStyle.isEmpty()) return@with
-  appendLine("style: {")
-  indent {
-    rootStyle.forEach { (key, value) ->
-      appendLine("$key: \"$value\"")
-    }
-  }
-  appendLine("}")
-}
-
-private fun IndentedStringBuilder.appendVars(config: D2ClassesConfig) = with(config) {
-  val attrs = mapOf<String, Any?>(
-    "theme-id" to theme?.value,
-    "dark-theme-id" to darkTheme?.value,
-    "layout-engine" to layoutEngine?.string,
-    "pad" to pad,
-    "sketch" to sketch,
-    "center" to center,
-  )
-  if (attrs.count { it.value != null } == 0) {
-    return@with
-  }
-
-  appendLine("vars: {")
-  indent {
-    appendLine("d2-config: {")
-    indent {
-      attrs.sortedByKeys().forEach { (key, value) ->
-        if (value != null) {
-          appendLine("$key: $value")
+      // need to swap the order to "left-center" if we have a location specifier prefix
+      val rejiggedPosition =
+        if (position in setOf(CenterLeft, CenterRight)) {
+          position.toString().split("-").let { str -> "${str[1]}-${str[0]}" }
+        } else {
+          position.toString()
         }
+      val position =
+        when (location) {
+          Location.Inside -> ""
+          Location.Border -> "$location-"
+          Location.Outside -> "$location-"
+        }
+      appendLine("label.near: $position$rejiggedPosition")
+    }
+  }
+
+private fun IndentedStringBuilder.appendStyles(config: D2ClassesConfig) =
+  with(config) {
+    direction?.let { appendLine("direction: $it") }
+
+    if (rootStyle.isEmpty()) return@with
+    appendLine("style: {")
+    indent {
+      rootStyle.forEach { (key, value) ->
+        appendLine("$key: \"$value\"")
       }
     }
     appendLine("}")
   }
-  appendLine("}")
-}
 
-private fun IndentedStringBuilder.appendGlobs(config: D2ClassesConfig) = config.globalProps?.let { props ->
-  props.sortedByKeys().forEach { (key, value) ->
-    appendLine("$key: $value")
+private fun IndentedStringBuilder.appendVars(config: D2ClassesConfig) =
+  with(config) {
+    val attrs =
+      mapOf<String, Any?>(
+        "theme-id" to theme?.value,
+        "dark-theme-id" to darkTheme?.value,
+        "layout-engine" to layoutEngine?.string,
+        "pad" to pad,
+        "sketch" to sketch,
+        "center" to center,
+      )
+    if (attrs.count { it.value != null } == 0) {
+      return@with
+    }
+
+    appendLine("vars: {")
+    indent {
+      appendLine("d2-config: {")
+      indent {
+        attrs.sortedByKeys().forEach { (key, value) ->
+          if (value != null) {
+            appendLine("$key: $value")
+          }
+        }
+      }
+      appendLine("}")
+    }
+    appendLine("}")
   }
-}
+
+private fun IndentedStringBuilder.appendGlobs(config: D2ClassesConfig) =
+  config.globalProps?.let { props ->
+    props.sortedByKeys().forEach { (key, value) ->
+      appendLine("$key: $value")
+    }
+  }
 
 private val ANIMATABLE_LINK_TYPES = setOf(LinkStyle.Dashed, LinkStyle.Dotted)

@@ -11,98 +11,100 @@ import atlas.test.noTasksFailed
 import atlas.test.runTask
 import atlas.test.scenarios.D2Basic
 import atlas.test.taskHadResult
+import java.lang.ProcessBuilder.Redirect.PIPE
+import kotlin.test.Test
 import org.gradle.testkit.runner.TaskOutcome.SKIPPED
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
 import org.junit.jupiter.api.Assumptions.assumeTrue
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import java.lang.ProcessBuilder.Redirect.PIPE
-import kotlin.test.Test
 
 internal class SvgToPngTest : ScenarioTest() {
   @ParameterizedTest
   @MethodSource("converters")
-  fun `Convert SVG to PNG with specified converter`(
-    converter: SvgToPng.Converter,
-  ) = runScenario(SpecifiedSvgPngConverter(converter)) {
-    // given
-    assumeConverterIsInstalled(converter)
+  fun `Convert SVG to PNG with specified converter`(converter: SvgToPng.Converter) =
+    runScenario(SpecifiedSvgPngConverter(converter)) {
+      // given
+      assumeConverterIsInstalled(converter)
 
-    // when
-    val result = runTask("svgToPng").build()
+      // when
+      val result = runTask("svgToPng").build()
 
-    // then both SVG and PNG were output
-    assertThat(result).allTasksSuccessful()
-    assertThat(resolve("a/atlas/chart.svg")).exists()
-    assertThat(resolve("a/atlas/chart.png")).exists()
+      // then both SVG and PNG were output
+      assertThat(result).allTasksSuccessful()
+      assertThat(resolve("a/atlas/chart.svg")).exists()
+      assertThat(resolve("a/atlas/chart.png")).exists()
 
-    // result is cached
-    assertThat(runTask("svgToPng").build())
-      .taskHadResult(":a:svgToPng", UP_TO_DATE)
-  }
+      // result is cached
+      assertThat(runTask("svgToPng").build()).taskHadResult(":a:svgToPng", UP_TO_DATE)
+    }
 
   @Test
-  fun `Don't run PNG conversion if converter not specified`() = runScenario(UnspecifiedConverter) {
-    // when
-    val result = runTask("atlasGenerate").build()
+  fun `Don't run PNG conversion if converter not specified`() =
+    runScenario(UnspecifiedConverter) {
+      // when
+      val result = runTask("atlasGenerate").build()
 
-    // then
-    assertThat(resolve("a/atlas/chart.svg")).exists()
-    assertThat(resolve("a/atlas/chart.png")).doesNotExist()
+      // then
+      assertThat(resolve("a/atlas/chart.svg")).exists()
+      assertThat(resolve("a/atlas/chart.png")).doesNotExist()
 
-    // and the charts were generated, but the PNGs weren't
-    assertThat(result)
-      .noTasksFailed()
-      .taskHadResult(":a:execD2Chart", SUCCESS)
-      .taskHadResult(":b:execD2Chart", SUCCESS)
-      .taskHadResult(":c:execD2Chart", SUCCESS)
-      .taskHadResult(":a:svgToPng", SKIPPED)
-      .taskHadResult(":b:svgToPng", SKIPPED)
-      .taskHadResult(":c:svgToPng", SKIPPED)
-  }
+      // and the charts were generated, but the PNGs weren't
+      assertThat(result)
+        .noTasksFailed()
+        .taskHadResult(":a:execD2Chart", SUCCESS)
+        .taskHadResult(":b:execD2Chart", SUCCESS)
+        .taskHadResult(":c:execD2Chart", SUCCESS)
+        .taskHadResult(":a:svgToPng", SKIPPED)
+        .taskHadResult(":b:svgToPng", SKIPPED)
+        .taskHadResult(":c:svgToPng", SKIPPED)
+    }
 
   @Test
   @RequiresImageMagick6
-  fun `Don't run PNG conversion if file format is not SVG`() = runScenario(SpecifiedConverterButWrongFormat) {
-    // when
-    val result = runTask("atlasGenerate").build()
+  fun `Don't run PNG conversion if file format is not SVG`() =
+    runScenario(SpecifiedConverterButWrongFormat) {
+      // when
+      val result = runTask("atlasGenerate").build()
 
-    // then
-    assertThat(resolve("a/atlas/chart.txt")).exists()
-    assertThat(resolve("a/atlas/chart.png")).doesNotExist()
+      // then
+      assertThat(resolve("a/atlas/chart.txt")).exists()
+      assertThat(resolve("a/atlas/chart.png")).doesNotExist()
 
-    // and the charts were generated, but the PNGs weren't
-    assertThat(result)
-      .noTasksFailed()
-      .taskHadResult(":a:execD2Chart", SUCCESS)
-      .taskHadResult(":b:execD2Chart", SUCCESS)
-      .taskHadResult(":c:execD2Chart", SUCCESS)
-      .taskHadResult(":a:svgToPng", SKIPPED)
-      .taskHadResult(":b:svgToPng", SKIPPED)
-      .taskHadResult(":c:svgToPng", SKIPPED)
-  }
+      // and the charts were generated, but the PNGs weren't
+      assertThat(result)
+        .noTasksFailed()
+        .taskHadResult(":a:execD2Chart", SUCCESS)
+        .taskHadResult(":b:execD2Chart", SUCCESS)
+        .taskHadResult(":c:execD2Chart", SUCCESS)
+        .taskHadResult(":a:svgToPng", SKIPPED)
+        .taskHadResult(":b:svgToPng", SKIPPED)
+        .taskHadResult(":c:svgToPng", SKIPPED)
+    }
 
   private fun assumeConverterIsInstalled(converter: SvgToPng.Converter) {
     val isWindows = System.getProperty("os.name").contains("win", ignoreCase = true)
     val whichCommand = if (isWindows) "where" else "which"
 
-    val isInstalled = try {
-      ProcessBuilder(whichCommand, converter.toString())
-        .redirectOutput(PIPE)
-        .redirectError(PIPE)
-        .start()
-        .apply { waitFor() }
-        .exitValue() == 0
-    } catch (_: Exception) {
-      false
-    }
+    val isInstalled =
+      try {
+        ProcessBuilder(whichCommand, converter.toString())
+          .redirectOutput(PIPE)
+          .redirectError(PIPE)
+          .start()
+          .apply { waitFor() }
+          .exitValue() == 0
+      } catch (_: Exception) {
+        false
+      }
 
     assumeTrue(isInstalled, "Converter '$converter' is not installed on this system")
   }
 
   private class SpecifiedSvgPngConverter(converter: SvgToPng.Converter) : D2Scenario by D2Basic {
-    override val rootBuildFile: String = """
+    override val rootBuildFile: String =
+      """
       import atlas.d2.FileFormat
       import atlas.d2.tasks.SvgToPng
 
@@ -117,11 +119,13 @@ internal class SvgToPngTest : ScenarioTest() {
           fileFormat = FileFormat.Svg
         }
       }
-    """.trimIndent()
+    """
+        .trimIndent()
   }
 
   private object UnspecifiedConverter : D2Scenario by D2Basic {
-    override val rootBuildFile: String = """
+    override val rootBuildFile: String =
+      """
       import atlas.d2.FileFormat
 
       plugins {
@@ -134,11 +138,13 @@ internal class SvgToPngTest : ScenarioTest() {
           fileFormat = FileFormat.Svg
         }
       }
-    """.trimIndent()
+    """
+        .trimIndent()
   }
 
   private object SpecifiedConverterButWrongFormat : D2Scenario by D2Basic {
-    override val rootBuildFile: String = """
+    override val rootBuildFile: String =
+      """
       import atlas.d2.FileFormat
       import atlas.d2.tasks.SvgToPng
 
@@ -153,11 +159,11 @@ internal class SvgToPngTest : ScenarioTest() {
           convertSvgToPng(SvgToPng.Converter.ImageMagick7)
         }
       }
-    """.trimIndent()
+    """
+        .trimIndent()
   }
 
   companion object {
-    @JvmStatic
-    fun converters() = SvgToPng.Converter.entries
+    @JvmStatic fun converters() = SvgToPng.Converter.entries
   }
 }

@@ -21,26 +21,27 @@ public class D2AtlasPlugin : AtlasPlugin() {
   private lateinit var d2Extension: D2AtlasExtensionImpl
   override val extension: AtlasExtensionImpl by lazy { d2Extension }
 
-  override fun applyToRoot(target: Project): Unit = with(target) {
-    d2Extension = extensions.create(
-      D2AtlasExtension::class.java,
-      AtlasExtensionImpl.NAME,
-      D2AtlasExtensionImpl::class.java,
-    ) as D2AtlasExtensionImpl
+  override fun applyToRoot(target: Project): Unit =
+    with(target) {
+      d2Extension =
+        extensions.create(
+          D2AtlasExtension::class.java,
+          AtlasExtensionImpl.NAME,
+          D2AtlasExtensionImpl::class.java,
+        ) as D2AtlasExtensionImpl
 
-    super.applyToRoot(target)
+      super.applyToRoot(target)
 
-    afterEvaluate {
-      warnIfFileFormatRequiresPlaywright()
-      warnIfLabelLocationSpecifiedButNotPosition()
-      warnIfAnimationSelectedWithNonAnimatedFileFormat()
+      afterEvaluate {
+        warnIfFileFormatRequiresPlaywright()
+        warnIfLabelLocationSpecifiedButNotPosition()
+        warnIfAnimationSelectedWithNonAnimatedFileFormat()
+      }
     }
-  }
 
   override fun applyToChild(target: Project) {
-    d2Extension = target.rootProject
-      .extensions
-      .getByType(D2AtlasExtension::class.java) as D2AtlasExtensionImpl
+    d2Extension =
+      target.rootProject.extensions.getByType(D2AtlasExtension::class.java) as D2AtlasExtensionImpl
 
     super.applyToChild(target)
   }
@@ -48,26 +49,29 @@ public class D2AtlasPlugin : AtlasPlugin() {
   override fun Project.registerChildTasks() {
     val d2Spec = d2Extension.d2
 
-    // need to use the same pathToClassesFile string for real and dummy tasks, otherwise the check operation might
+    // need to use the same pathToClassesFile string for real and dummy tasks, otherwise the check
+    // operation might
     // fail if the project and the build directory have different relative paths.
     val writeD2Classes = WriteD2Classes.get(rootProject)
     val classesFile = writeD2Classes.flatMap { it.outputFile }
     val outputFile = outputFile(Chart, d2Spec.fileExtension.get())
     val pathToClassesFile = classesFile.map { it.asFile.relativeTo(outputFile.parentFile).path }
 
-    val chartTask = WriteD2Chart.real(
-      target = project,
-      extension = extension,
-      outputFile = outputFile,
-      pathToClassesFile = pathToClassesFile,
-    )
+    val chartTask =
+      WriteD2Chart.real(
+        target = project,
+        extension = extension,
+        outputFile = outputFile,
+        pathToClassesFile = pathToClassesFile,
+      )
 
-    val dummyChartTask = WriteD2Chart.dummy(
-      target = project,
-      extension = extension,
-      outputFile = atlasBuildDirectory.get().file("chart-temp.d2").asFile,
-      pathToClassesFile = pathToClassesFile,
-    )
+    val dummyChartTask =
+      WriteD2Chart.dummy(
+        target = project,
+        extension = extension,
+        outputFile = atlasBuildDirectory.get().file("chart-temp.d2").asFile,
+        pathToClassesFile = pathToClassesFile,
+      )
 
     CheckFileDiff.register(
       target = project,
@@ -78,31 +82,34 @@ public class D2AtlasPlugin : AtlasPlugin() {
       dummyTask = dummyChartTask,
     )
 
-    val d2Task = ExecD2.register(
-      target = project,
-      spec = d2Spec,
-      variant = Chart,
-      dotFileTask = chartTask,
-    )
+    val d2Task =
+      ExecD2.register(
+        target = project,
+        spec = d2Spec,
+        variant = Chart,
+        dotFileTask = chartTask,
+      )
 
     val isSvgInput = d2Spec.fileFormat.map { it == FileFormat.Svg }
     val runSvgToPng = provider { isSvgInput.get() && d2Spec.converter.isPresent }
 
-    val svgToPng = SvgToPng.register(
-      target = project,
-      svgTask = d2Task,
-      isEnabled = runSvgToPng,
-      converter = d2Spec.converter,
-    )
+    val svgToPng =
+      SvgToPng.register(
+        target = project,
+        svgTask = d2Task,
+        isEnabled = runSvgToPng,
+        converter = d2Spec.converter,
+      )
 
     val taskForReadme = svgToPng.flatMap { task -> if (runSvgToPng.get()) svgToPng else d2Task }
 
-    val writeReadme = WriteReadme.register(
-      target = project,
-      flavor = "D2",
-      chartFile = taskForReadme.flatMap { it.outputFile },
-      legendTask = null,
-    )
+    val writeReadme =
+      WriteReadme.register(
+        target = project,
+        flavor = "D2",
+        chartFile = taskForReadme.flatMap { it.outputFile },
+        legendTask = null,
+      )
 
     writeReadme.configure { it.dependsOn(taskForReadme) }
   }
@@ -110,17 +117,19 @@ public class D2AtlasPlugin : AtlasPlugin() {
   override fun Project.registerRootTasks() {
     val d2 = d2Extension.d2
 
-    val classes = WriteD2Classes.real(
-      target = this,
-      extension = d2Extension,
-      outputFile = outputFile(variant = Legend, fileExtension = "d2", filename = "classes"),
-    )
+    val classes =
+      WriteD2Classes.real(
+        target = this,
+        extension = d2Extension,
+        outputFile = outputFile(variant = Legend, fileExtension = "d2", filename = "classes"),
+      )
 
-    val dummyClasses = WriteD2Classes.dummy(
-      target = project,
-      extension = d2Extension,
-      outputFile = atlasBuildDirectory.get().file("classes-temp.d2").asFile,
-    )
+    val dummyClasses =
+      WriteD2Classes.dummy(
+        target = project,
+        extension = d2Extension,
+        outputFile = atlasBuildDirectory.get().file("classes-temp.d2").asFile,
+      )
 
     CheckFileDiff.register(
       target = project,
@@ -143,7 +152,7 @@ public class D2AtlasPlugin : AtlasPlugin() {
           "Playwright for image conversion. Depending on your OS, this might need to download a build of Chromium " +
           "to run Playwright. See https://github.com/terrastruct/d2/issues/2502 for a bit more context. " +
           "If you want to suppress this warning, add 'atlas.d2.suppressPlaywrightWarning=true' to your " +
-          "gradle.properties file.",
+          "gradle.properties file."
       )
     }
   }
@@ -157,7 +166,7 @@ public class D2AtlasPlugin : AtlasPlugin() {
       logger.warn(
         "Warning: you've configured groupLabelLocation but not groupLabelPosition - this is not supported in D2 " +
           "diagrams. If you want to suppress this warning, add 'atlas.d2.suppressLabelLocationWarning=true' to " +
-          "your gradle.properties file.",
+          "your gradle.properties file."
       )
     }
   }
@@ -171,7 +180,7 @@ public class D2AtlasPlugin : AtlasPlugin() {
     if (animated == true && format !in animatedFormats && !shouldSuppress) {
       logger.warn(
         "Warning: you've configured animateLinks but chosen a non-animatable file format ($format). If you want to " +
-          "suppress this warning, add 'atlas.d2.suppressAnimationWarning=true' to your gradle.properties file.",
+          "suppress this warning, add 'atlas.d2.suppressAnimationWarning=true' to your gradle.properties file."
       )
     }
   }

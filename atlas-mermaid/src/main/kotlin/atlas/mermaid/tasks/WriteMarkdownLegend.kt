@@ -15,6 +15,7 @@ import atlas.core.internal.projectType
 import atlas.core.internal.qualifier
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.TaskWithOutputFile
+import java.io.File
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -27,11 +28,8 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.work.DisableCachingByDefault
-import java.io.File
 
-/**
- * Generates a legend table in markdown format, since Mermaid itself doesn't support tables.
- */
+/** Generates a legend table in markdown format, since Mermaid itself doesn't support tables. */
 @CacheableTask
 public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
   @get:Input public abstract val projectTypes: ListProperty<ProjectType>
@@ -72,10 +70,11 @@ public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, A
     appendLine("|:--:|:--:|")
 
     for (type in projectTypes) {
-      val value = type.color?.let { color ->
-        val url = "https://img.shields.io/badge/-%20-${parseColor(color)}?style=flat-square"
-        "<img src=\"$url\" height=\"30\" width=\"100\">"
-      } ?: "<no color>"
+      val value =
+        type.color?.let { color ->
+          val url = "https://img.shields.io/badge/-%20-${parseColor(color)}?style=flat-square"
+          "<img src=\"$url\" height=\"30\" width=\"100\">"
+        } ?: "<no color>"
 
       appendLine("| ${type.name} | $value |")
     }
@@ -86,18 +85,20 @@ public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, A
     appendLine("|:--:|:--:|")
 
     for (type in linkTypes) {
-      val style = listOfNotNull(type.color, type.style).joinToString(separator = " ") { it.capitalized() }
+      val style =
+        listOfNotNull(type.color, type.style).joinToString(separator = " ") { it.capitalized() }
       appendLine("| ${type.displayName} | $style |")
     }
   }
 
-  private fun parseColor(color: String) = if (color.matches("#[0-9A-Fa-f]{6}".toRegex())) {
-    // hex color, e.g. "#ABC123" -> "ABC123"
-    color.removePrefix("#")
-  } else {
-    // assume it's a valid color name, e.g. "orange"
-    color
-  }
+  private fun parseColor(color: String) =
+    if (color.matches("#[0-9A-Fa-f]{6}".toRegex())) {
+      // hex color, e.g. "#ABC123" -> "ABC123"
+      color.removePrefix("#")
+    } else {
+      // assume it's a valid color name, e.g. "orange"
+      color
+    }
 
   @DisableCachingByDefault
   internal abstract class WriteMarkdownLegendDummy : WriteMarkdownLegend(), DummyAtlasGenerationTask
@@ -111,40 +112,41 @@ public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, A
     internal fun real(
       target: Project,
       extension: AtlasExtensionImpl,
-    ) = register<WriteMarkdownLegend>(
-      target,
-      extension,
-      outputFile = target.outputFile(Legend, fileExtension = "md"),
-    )
+    ) =
+      register<WriteMarkdownLegend>(
+        target,
+        extension,
+        outputFile = target.outputFile(Legend, fileExtension = "md"),
+      )
 
     internal fun dummy(
       target: Project,
       extension: AtlasExtensionImpl,
-    ) = register<WriteMarkdownLegendDummy>(
-      target = target,
-      extension = extension,
-      outputFile = target.atlasBuildDirectory
-        .get()
-        .file("legend-temp.md")
-        .asFile,
-    )
+    ) =
+      register<WriteMarkdownLegendDummy>(
+        target = target,
+        extension = extension,
+        outputFile = target.atlasBuildDirectory.get().file("legend-temp.md").asFile,
+      )
 
     private inline fun <reified T : WriteMarkdownLegend> register(
       target: Project,
       extension: AtlasExtensionImpl,
       outputFile: File,
-    ): TaskProvider<T> = with(target) {
-      val name = "write${T::class.qualifier}MermaidLegend"
-      val writeLegend = tasks.register(name, T::class.java) { task ->
-        task.outputFile.set(outputFile)
-      }
+    ): TaskProvider<T> =
+      with(target) {
+        val name = "write${T::class.qualifier}MermaidLegend"
+        val writeLegend =
+          tasks.register(name, T::class.java) { task ->
+            task.outputFile.set(outputFile)
+          }
 
-      writeLegend.configure { task ->
-        task.projectTypes.convention(extension.orderedProjectTypes().map(::projectType))
-        task.linkTypes.convention(extension.orderedLinkTypes())
-      }
+        writeLegend.configure { task ->
+          task.projectTypes.convention(extension.orderedProjectTypes().map(::projectType))
+          task.linkTypes.convention(extension.orderedLinkTypes())
+        }
 
-      return writeLegend
-    }
+        return writeLegend
+      }
   }
 }

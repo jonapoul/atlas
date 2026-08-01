@@ -22,7 +22,8 @@ internal class D2GradleProperties(override val project: Project) : IGradleProper
   val darkTheme: Provider<Theme> = intEnum("atlas.d2.darkTheme", default = null)
   val direction: Provider<Direction> = enum("atlas.d2.direction", default = null)
   val fileFormat: Provider<FileFormat> = enum("atlas.d2.fileFormat", default = FileFormat.Svg)
-  val groupLabelLocation: Provider<Location> = enum("fontSize.d2.groupLabelLocation", default = null)
+  val groupLabelLocation: Provider<Location> =
+    enum("fontSize.d2.groupLabelLocation", default = null)
   val groupLabelPosition: Provider<Position> = enum("atlas.d2.groupLabelPosition", default = null)
   val pad: Provider<Int> = int("atlas.d2.pad", default = null)
   val pathToD2Command: Provider<String> = string("atlas.d2.pathToD2Command", default = null)
@@ -30,7 +31,10 @@ internal class D2GradleProperties(override val project: Project) : IGradleProper
   val theme: Provider<Theme> = intEnum("atlas.d2.theme", default = null)
 
   // Warning suppressions
-  val suppressPlaywrightWarning: Provider<Boolean> = bool("atlas.d2.suppressPlaywrightWarning", default = false)
-  val suppressLabelLocationWarning: Provider<Boolean> = bool("atlas.d2.suppressLabelLocationWarning", default = false)
-  val suppressAnimationWarning: Provider<Boolean> = bool("atlas.d2.suppressAnimationWarning", default = false)
+  val suppressPlaywrightWarning: Provider<Boolean> =
+    bool("atlas.d2.suppressPlaywrightWarning", default = false)
+  val suppressLabelLocationWarning: Provider<Boolean> =
+    bool("atlas.d2.suppressLabelLocationWarning", default = false)
+  val suppressAnimationWarning: Provider<Boolean> =
+    bool("atlas.d2.suppressAnimationWarning", default = false)
 }

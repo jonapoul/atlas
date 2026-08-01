@@ -5,7 +5,8 @@ import atlas.test.KOTLIN_VERSION
 import atlas.test.kotlinJvmBuildScript
 
 internal object ProjectTypesDeclaredButNoneMatch : GraphvizScenario {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
@@ -18,9 +19,8 @@ internal object ProjectTypesDeclaredButNoneMatch : GraphvizScenario {
         androidLibrary()
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 
-  override val subprojectBuildFiles = mapOf(
-    "test-jvm" to kotlinJvmBuildScript,
-  )
+  override val subprojectBuildFiles = mapOf("test-jvm" to kotlinJvmBuildScript)
 }

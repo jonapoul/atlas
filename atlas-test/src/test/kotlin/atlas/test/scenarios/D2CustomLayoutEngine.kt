@@ -4,7 +4,8 @@ import atlas.test.D2Scenario
 import atlas.test.KOTLIN_VERSION
 
 internal object D2CustomLayoutEngine : D2Scenario by D2Basic {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import atlas.d2.FileFormat
     import atlas.d2.LayoutEngine
 
@@ -21,5 +22,6 @@ internal object D2CustomLayoutEngine : D2Scenario by D2Basic {
         fileFormat = FileFormat.Svg
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 }

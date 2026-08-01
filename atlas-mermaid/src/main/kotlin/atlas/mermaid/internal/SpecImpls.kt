@@ -19,11 +19,11 @@ import atlas.mermaid.MermaidProjectTypeSpec
 import atlas.mermaid.MermaidSpec
 import atlas.mermaid.MermaidThemeVariablesSpec
 import atlas.mermaid.NodePlacementStrategy
+import javax.inject.Inject
+import kotlin.jvm.java
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
-import javax.inject.Inject
-import kotlin.jvm.java
 
 internal class MermaidSpecImpl(
   private val objects: ObjectFactory,
@@ -35,11 +35,15 @@ internal class MermaidSpecImpl(
   override val name = "Mermaid"
   override val fileExtension = objects.string(convention = "mmd")
 
-  override val layout get() = mutableLayout
+  override val layout
+    get() = mutableLayout
+
   override fun layout(action: Action<MermaidLayoutSpec>) = action.execute(mutableLayout)
 
   override val themeVariables = MermaidThemeVariablesSpecImpl(objects)
-  override fun themeVariables(action: Action<MermaidThemeVariablesSpec>) = action.execute(themeVariables)
+
+  override fun themeVariables(action: Action<MermaidThemeVariablesSpec>) =
+    action.execute(themeVariables)
 
   override fun elk(action: Action<ElkLayoutSpec>?) {
     mutableLayout = ElkLayoutSpecImpl(objects).also { action?.execute(it) }
@@ -50,15 +54,13 @@ internal class MermaidSpecImpl(
   override val theme = objects.enum(properties.theme)
 }
 
-internal open class MermaidLayoutSpecImpl(
-  objects: ObjectFactory,
-) : MermaidLayoutSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
-  override val name = objects
-    .property(String::class.java)
-    .unsetConvention()
+internal open class MermaidLayoutSpecImpl(objects: ObjectFactory) :
+  MermaidLayoutSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+  override val name = objects.property(String::class.java).unsetConvention()
 }
 
-internal class ElkLayoutSpecImpl(objects: ObjectFactory) : MermaidLayoutSpecImpl(objects), ElkLayoutSpec {
+internal class ElkLayoutSpecImpl(objects: ObjectFactory) :
+  MermaidLayoutSpecImpl(objects), ElkLayoutSpec {
   init {
     name.set("elk")
     name.finalizeValue()
@@ -71,9 +73,8 @@ internal class ElkLayoutSpecImpl(objects: ObjectFactory) : MermaidLayoutSpecImpl
   override var nodePlacementStrategy by enum<NodePlacementStrategy>("nodePlacementStrategy")
 }
 
-internal class MermaidThemeVariablesSpecImpl(
-  objects: ObjectFactory,
-) : MermaidThemeVariablesSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+internal class MermaidThemeVariablesSpecImpl(objects: ObjectFactory) :
+  MermaidThemeVariablesSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
   override var background by string(key = "background")
   override var darkMode by bool(key = "darkMode")
   override var fontFamily by string(key = "fontFamily")
@@ -86,9 +87,8 @@ internal class MermaidThemeVariablesSpecImpl(
   override var tertiaryColor by string(key = "tertiaryColor")
 }
 
-internal abstract class MermaidProjectTypeSpecImpl @Inject constructor(
-  override val name: String,
-) : ProjectTypeSpecImpl(name), MermaidProjectTypeSpec {
+internal abstract class MermaidProjectTypeSpecImpl @Inject constructor(override val name: String) :
+  ProjectTypeSpecImpl(name), MermaidProjectTypeSpec {
   override var fontColor by string("color")
   override var fontSize by string("font-size")
   override var stroke by string("stroke")
@@ -98,13 +98,16 @@ internal abstract class MermaidProjectTypeSpecImpl @Inject constructor(
 
 internal class MermaidNamedProjectTypeContainerImpl(objects: ObjectFactory) :
   ProjectTypeContainer<MermaidProjectTypeSpec>(
-    delegate = objects.domainObjectContainer(MermaidProjectTypeSpec::class.java) { name ->
-      objects.newInstance(MermaidProjectTypeSpecImpl::class.java, name)
-    },
+    delegate =
+      objects.domainObjectContainer(MermaidProjectTypeSpec::class.java) { name ->
+        objects.newInstance(MermaidProjectTypeSpecImpl::class.java, name)
+      }
   ),
   MermaidNamedProjectTypeContainer
 
-internal abstract class MermaidLinkTypeSpecImpl @Inject constructor(
+internal abstract class MermaidLinkTypeSpecImpl
+@Inject
+constructor(
   override val name: String,
   objects: ObjectFactory,
 ) : ProjectTypeSpecImpl(name), MermaidLinkTypeSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
@@ -114,11 +117,11 @@ internal abstract class MermaidLinkTypeSpecImpl @Inject constructor(
   override var strokeDashArray by string("stroke-dasharray")
 }
 
-internal class MermaidNamedLinkTypeContainerImpl(
-  objects: ObjectFactory,
-) : LinkTypeContainer<MermaidLinkTypeSpec>(
-    delegate = objects.domainObjectContainer(MermaidLinkTypeSpec::class.java) { name ->
-      objects.newInstance(MermaidLinkTypeSpecImpl::class.java, name)
-    },
+internal class MermaidNamedLinkTypeContainerImpl(objects: ObjectFactory) :
+  LinkTypeContainer<MermaidLinkTypeSpec>(
+    delegate =
+      objects.domainObjectContainer(MermaidLinkTypeSpec::class.java) { name ->
+        objects.newInstance(MermaidLinkTypeSpecImpl::class.java, name)
+      }
   ),
   MermaidNamedLinkTypeContainer

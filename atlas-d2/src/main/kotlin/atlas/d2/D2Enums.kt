@@ -3,12 +3,10 @@
 package atlas.d2
 
 import atlas.core.IntEnum
-import atlas.core.StringEnum
 import atlas.core.LinkStyle as CoreLinkStyle
+import atlas.core.StringEnum
 
-/**
- * See [https://d2lang.com/tour/shapes/](https://d2lang.com/tour/shapes/)
- */
+/** See [https://d2lang.com/tour/shapes/](https://d2lang.com/tour/shapes/) */
 public enum class Shape(override val string: String) : StringEnum {
   Rectangle("rectangle"),
   Square("square"),
@@ -27,29 +25,23 @@ public enum class Shape(override val string: String) : StringEnum {
   Circle("circle"),
   Hexagon("hexagon"),
   Cloud("cloud"),
-  C4Person("c4-person"),
-  ;
+  C4Person("c4-person");
 
   override fun toString(): String = string
 }
 
-/**
- * See [https://d2lang.com/tour/connections/](https://d2lang.com/tour/connections/)
- */
+/** See [https://d2lang.com/tour/connections/](https://d2lang.com/tour/connections/) */
 public enum class LinkStyle(override val string: String) : CoreLinkStyle {
   Basic("basic"),
   Bold("bold"),
   Dashed("dashed"),
   Dotted("dotted"),
-  Invisible("invisible"),
-  ;
+  Invisible("invisible");
 
   override fun toString(): String = string
 }
 
-/**
- * See [https://d2lang.com/tour/layouts/](https://d2lang.com/tour/layouts/)
- */
+/** See [https://d2lang.com/tour/layouts/](https://d2lang.com/tour/layouts/) */
 public enum class LayoutEngine(override val string: String) : StringEnum {
   /**
    * See [the D2 docs](https://d2lang.com/tour/dagre/) for official documentation, and [D2DagreSpec]
@@ -58,8 +50,8 @@ public enum class LayoutEngine(override val string: String) : StringEnum {
   Dagre("dagre"),
 
   /**
-   * See [the D2 docs](https://d2lang.com/tour/elk/) for official documentation, and [D2ElkSpec]
-   * for Atlas configuration of it.
+   * See [the D2 docs](https://d2lang.com/tour/elk/) for official documentation, and [D2ElkSpec] for
+   * Atlas configuration of it.
    */
   Elk("elk"),
 
@@ -67,15 +59,12 @@ public enum class LayoutEngine(override val string: String) : StringEnum {
    * See [the D2 docs](https://d2lang.com/tour/tala/) for official documentation, and [D2TalaSpec]
    * for Atlas configuration of it.
    */
-  Tala("tala"),
-  ;
+  Tala("tala");
 
   override fun toString(): String = string
 }
 
-/**
- * [https://d2lang.com/tour/themes/](https://d2lang.com/tour/themes/)
- */
+/** [https://d2lang.com/tour/themes/](https://d2lang.com/tour/themes/) */
 public enum class Theme(override val value: Int) : IntEnum {
   Default(0),
   NeutralGrey(1),
@@ -101,43 +90,34 @@ public enum class Theme(override val value: Int) : IntEnum {
   DarkFlagshipTerrastruct(201),
 }
 
-/**
- * [https://d2lang.com/tour/exports/](https://d2lang.com/tour/exports/)
- */
+/** [https://d2lang.com/tour/exports/](https://d2lang.com/tour/exports/) */
 public enum class FileFormat(override val string: String) : StringEnum {
   Svg("svg"),
   Png("png"),
   Pdf("pdf"),
   Pptx("pptx"),
   Gif("gif"),
-  Ascii("txt"),
-  ;
+  Ascii("txt");
 
   override fun toString(): String = string
 }
 
-/**
- * [https://d2lang.com/tour/layouts/#direction](https://d2lang.com/tour/layouts/#direction)
- */
+/** [https://d2lang.com/tour/layouts/#direction](https://d2lang.com/tour/layouts/#direction) */
 public enum class Direction(override val string: String) : StringEnum {
   Up("up"),
   Down("down"),
   Right("right"),
-  Left("left"),
-  ;
+  Left("left");
 
   override fun toString(): String = string
 }
 
-/**
- * [https://d2lang.com/tour/style/#fill-pattern](https://d2lang.com/tour/style/#fill-pattern)
- */
+/** [https://d2lang.com/tour/style/#fill-pattern](https://d2lang.com/tour/style/#fill-pattern) */
 public enum class FillPattern(override val string: String) : StringEnum {
   Dots("dots"),
   Lines("lines"),
   Grain("grain"),
-  None("none"),
-  ;
+  None("none");
 
   override fun toString(): String = string
 }
@@ -155,15 +135,12 @@ public enum class ArrowType(override val string: String) : StringEnum {
   CrowsFootOneRequired("cf-one-required"),
   CrowsFootMany("cf-many"),
   CrowsFootManyRequired("cf-many-required"),
-  Cross("cross"),
-  ;
+  Cross("cross");
 
   override fun toString(): String = string
 }
 
-/**
- * [https://d2lang.com/tour/positions/](https://d2lang.com/tour/positions/)
- */
+/** [https://d2lang.com/tour/positions/](https://d2lang.com/tour/positions/) */
 public enum class Position(override val string: String) : StringEnum {
   TopLeft("top-left"),
   TopCenter("top-center"),
@@ -172,8 +149,7 @@ public enum class Position(override val string: String) : StringEnum {
   CenterRight("center-right"),
   BottomLeft("bottom-left"),
   BottomCenter("bottom-center"),
-  BottomRight("bottom-right"),
-  ;
+  BottomRight("bottom-right");
 
   override fun toString(): String = string
 }
@@ -184,18 +160,14 @@ public enum class Position(override val string: String) : StringEnum {
 public enum class Location(override val string: String) : StringEnum {
   Border("border"),
   Inside("inside"),
-  Outside("outside"),
-  ;
+  Outside("outside");
 
   override fun toString(): String = string
 }
 
-/**
- * [https://d2lang.com/tour/style/#font](https://d2lang.com/tour/style/#font)
- */
+/** [https://d2lang.com/tour/style/#font](https://d2lang.com/tour/style/#font) */
 public enum class Font(override val string: String) : StringEnum {
-  Mono("mono"),
-  ;
+  Mono("mono");
 
   override fun toString(): String = string
 }
@@ -207,8 +179,7 @@ public enum class TextTransform(override val string: String) : StringEnum {
   Uppercase("uppercase"),
   Lowercase("lowercase"),
   Title("title"),
-  None("none"),
-  ;
+  None("none");
 
   override fun toString(): String = string
 }
@@ -235,8 +206,7 @@ public enum class ElkAlgorithm(override val string: String) : StringEnum {
   GraphvizDot("graphviz.dot"),
   GraphvizFdp("graphviz.fdp"),
   GraphvizNeato("graphviz.neato"),
-  GraphvizTwopi("graphviz.twopi"),
-  ;
+  GraphvizTwopi("graphviz.twopi");
 
   override fun toString(): String = string
 }
