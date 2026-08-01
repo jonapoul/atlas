@@ -18,6 +18,23 @@
       "schedule": [
         "* 0-8 * * 0"
       ]
+    },
+    {
+      // The gradle image is used by both docker/Dockerfile and the container in
+      // release.yml, which are handled by different managers. Group them so the
+      // two references can't drift apart. Schedule is set explicitly here to
+      // override the github-actions rule above, otherwise the group would have
+      // two conflicting schedules
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "gradle"
+      ],
+      "groupName": "gradle docker image",
+      "schedule": [
+        "at any time"
+      ]
     }
   ]
 }
