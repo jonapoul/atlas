@@ -23,7 +23,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
-          java-version-file: .github/workflows/.java-version
+          java-version-file: .java-version
           distribution: zulu
 
       - name: Run

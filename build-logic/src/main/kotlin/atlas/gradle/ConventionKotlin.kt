@@ -1,12 +1,12 @@
 package atlas.gradle
 
-import org.gradle.api.JavaVersion
+import blueprint.core.javaVersion
+import blueprint.core.jvmTarget
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 
@@ -20,12 +20,10 @@ class ConventionKotlin : Plugin<Project> {
         apply(ConventionLicensee::class)
       }
 
-      val javaVersion = providers.gradleProperty("atlas.javaVersion")
-
       extensions.configure<KotlinJvmProjectExtension> {
         compilerOptions {
           allWarningsAsErrors.set(true)
-          jvmTarget.set(javaVersion.map(JvmTarget::fromTarget))
+          this.jvmTarget.set(jvmTarget())
           explicitApi()
 
           freeCompilerArgs.addAll(
@@ -37,7 +35,7 @@ class ConventionKotlin : Plugin<Project> {
       }
 
       extensions.configure<JavaPluginExtension> {
-        val version = javaVersion.map(JavaVersion::toVersion).get()
+        val version = javaVersion().get()
         sourceCompatibility = version
         targetCompatibility = version
       }

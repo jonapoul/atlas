@@ -6,7 +6,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
-import org.jetbrains.kotlin.gradle.dsl.abi.AbiValidationExtension
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 class ConventionPublish : Plugin<Project> {
@@ -20,10 +19,9 @@ class ConventionPublish : Plugin<Project> {
       extensions.configure<KotlinJvmProjectExtension> {
         // https://kotlinlang.org/docs/gradle-binary-compatibility-validation.html
         @OptIn(ExperimentalAbiValidation::class)
-        extensions.configure<AbiValidationExtension> {
-          enabled.set(true)
+        abiValidation {
           filters {
-            excluded {
+            exclude {
               annotatedWith.add("atlas.core.InternalAtlasApi")
             }
           }

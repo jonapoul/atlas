@@ -3,6 +3,8 @@ package atlas.core.internal
 import atlas.core.IntEnum
 import atlas.core.InternalAtlasApi
 import atlas.core.StringEnum
+import blueprint.core.floatProperty
+import blueprint.core.intProperty
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
 
@@ -30,11 +32,11 @@ public fun IGradleProperties.bool(key: String, default: Boolean? = null): Provid
 
 @InternalAtlasApi
 public fun IGradleProperties.float(key: String, default: Float? = null): Provider<Float> =
-  prop(key, default, String::toFloat)
+  project.providers.floatProperty(key).orElse(project.provider { default })
 
 @InternalAtlasApi
 public fun IGradleProperties.int(key: String, default: Int? = null): Provider<Int> =
-  prop(key, default, String::toInt)
+  project.providers.intProperty(key).orElse(project.provider { default })
 
 @InternalAtlasApi
 public fun IGradleProperties.string(key: String, default: String? = null): Provider<String> =

@@ -10,6 +10,8 @@ import atlas.core.tasks.CollateProjectTypes
 import atlas.core.tasks.WriteProjectLinks
 import atlas.core.tasks.WriteProjectTree
 import atlas.core.tasks.WriteProjectType
+import blueprint.core.boolProperty
+import blueprint.core.isIntellijSyncing
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -31,8 +33,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
   override fun apply(target: Project): Unit =
     with(target) {
       // This only happens if you have nested projects where the group projects don't have a build
-      // file. In that
-      // case you don't want the group to be its own node in the chart
+      // file. In that case you don't want the group to be its own node in the chart
       if (!target.buildFile.exists()) return@with
 
       pluginManager.apply(LifecycleBasePlugin::class.java)
@@ -106,7 +107,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
   }
 
   private fun Project.configureOnDemand() =
-    providers.gradleProperty("org.gradle.configureondemand").map { it.toBoolean() }.getOrElse(false)
+    providers.boolProperty("org.gradle.configureondemand").getOrElse(false)
 
   private fun Project.registerAtlasGenerateTask() =
     tasks.register("atlasGenerate") { t ->
@@ -119,8 +120,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
       )
 
       // Fail if configureondemand is enabled, this is a subproject, and this specific task was
-      // directly called
-      // (eg :path:to:atlasGenerate)
+      // directly called (eg :path:to:atlasGenerate)
       if (configureOnDemand() && project != rootProject) {
         val projectPath = path
         val wasDirectlyInvoked =
@@ -145,8 +145,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
       t.dependsOn(tasks.withType(CheckFileDiff::class.java))
 
       // Fail if configureondemand is enabled, this is a subproject, and this specific task was
-      // directly called
-      // (eg :path:to:atlasCheck)
+      // directly called (eg :path:to:atlasCheck)
       if (configureOnDemand() && project != rootProject) {
         val projectPath = path
         val wasDirectlyInvoked =
@@ -165,7 +164,7 @@ public abstract class AtlasPlugin : Plugin<Project> {
 
   private fun Project.registerGenerationTaskOnSync(atlasGenerate: TaskProvider<Task>) {
     afterEvaluate {
-      val isIntellijSyncing = System.getProperty("idea.sync.active") == "true"
+      val isIntellijSyncing = providers.isIntellijSyncing.getOrElse(false)
       if (extension.generateOnSync.get() && isIntellijSyncing) {
         tasks.maybeCreate("prepareKotlinIdeaImport").dependsOn(atlasGenerate)
       }
