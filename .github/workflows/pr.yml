@@ -103,17 +103,23 @@ jobs:
           fetch-depth: 0
       - run: shellcheck -x --source-path=SCRIPTDIR scripts/*.sh scripts/lib/*.sh
 
-  gitleaks:
+  betterleaks:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_CONFIG: ./config/gitleaks.toml
+      - uses: dortort/betterleaks-action@cd0b905aa4befb8f42f8b1ab98150180c9e77515 # v0.1.0
+        id: betterleaks
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          config: ./config/betterleaks.toml
+          fail-on-leak: 'true'
+      - uses: github/codeql-action/upload-sarif@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4
+        if: always()
+        with:
+          sarif_file: ${{ steps.betterleaks.outputs.sarif-path }}
 
   ktfmt:
     needs: changed-files
@@ -126,7 +132,7 @@ jobs:
       - run: scripts/ktfmt.sh check --force
 
   validation:
-    needs: [ changed-files, validate-renovate, validate-wrapper, actionlint, shellcheck, gitleaks, ktfmt ]
+    needs: [ changed-files, validate-renovate, validate-wrapper, actionlint, shellcheck, betterleaks, ktfmt ]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
