@@ -1,0 +1,42 @@
+name: Main
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  checks: write
+  packages: read
+
+concurrency:
+  group: 'ci-${{ github.event.merge_group.head_ref || github.head_ref }}-${{ github.workflow }}'
+  cancel-in-progress: true
+
+env:
+  CI: true
+  GRADLE_ENCRYPTION_KEY: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: ./.github/actions/setup-gradle
+      - uses: ./.github/actions/setup-gradle-properties
+
+      - uses: ./.github/actions/docker-login
+
+      - name: Check
+        run: docker compose -f docker/docker-compose.yml run --rm check
+
+      - name: Fix permissions
+        run: sudo chown -R runner:runner .
+        if: ${{ !cancelled() }}
+
+      - uses: ./.github/actions/report-build-results
+        if: ${{ !cancelled() }}
