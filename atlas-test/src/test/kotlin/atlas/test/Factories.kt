@@ -15,10 +15,11 @@ internal fun node(
 internal fun typedProject(
   path: String,
   type: ProjectType? = null,
-) = TypedProject(
-  projectPath = path,
-  type = type,
-)
+) =
+  TypedProject(
+    projectPath = path,
+    type = type,
+  )
 
 internal fun projectLink(
   fromPath: String,
@@ -26,9 +27,10 @@ internal fun projectLink(
   configuration: String = "implementation",
   style: StringEnum? = null,
   color: String? = null,
-) = ProjectLink(
-  fromPath,
-  toPath,
-  configuration,
-  type = LinkType(configuration, style?.string, color),
-)
+) =
+  ProjectLink(
+    fromPath,
+    toPath,
+    configuration,
+    type = LinkType(configuration, style?.string, color),
+  )

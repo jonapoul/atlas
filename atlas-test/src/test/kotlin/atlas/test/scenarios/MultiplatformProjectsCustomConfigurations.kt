@@ -3,11 +3,10 @@ package atlas.test.scenarios
 import atlas.test.GraphvizScenario
 import atlas.test.KOTLIN_VERSION
 
-/**
- * Intended to replicate the jvmDev source set added by Compose Hot Reload
- */
+/** Intended to replicate the jvmDev source set added by Compose Hot Reload */
 internal object MultiplatformProjectsCustomConfigurations : GraphvizScenario {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import atlas.graphviz.LinkStyle
 
     plugins {
@@ -21,37 +20,43 @@ internal object MultiplatformProjectsCustomConfigurations : GraphvizScenario {
         "commonMainApi"(LinkStyle.Dotted)
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 
-  override val subprojectBuildFiles = mapOf(
-    "a" to """
-      plugins { kotlin("multiplatform") }
+  override val subprojectBuildFiles =
+    mapOf(
+      "a" to
+        """
+        plugins { kotlin("multiplatform") }
 
-      kotlin {
-        jvm()
-        sourceSets {
-          commonMain.dependencies {
-            implementation(project(":b"))
-            api(project(":c"))
-          }
-
-          register("jvmDev") {
-            dependencies {
+        kotlin {
+          jvm()
+          sourceSets {
+            commonMain.dependencies {
               implementation(project(":b"))
+              api(project(":c"))
+            }
+
+            register("jvmDev") {
+              dependencies {
+                implementation(project(":b"))
+              }
             }
           }
         }
-      }
-    """.trimIndent(),
-
-    "b" to """
-      plugins { kotlin("multiplatform") }
-      kotlin.jvm()
-    """.trimIndent(),
-
-    "c" to """
-      plugins { kotlin("multiplatform") }
-      kotlin.jvm()
-    """.trimIndent(),
-  )
+        """
+          .trimIndent(),
+      "b" to
+        """
+        plugins { kotlin("multiplatform") }
+        kotlin.jvm()
+        """
+          .trimIndent(),
+      "c" to
+        """
+        plugins { kotlin("multiplatform") }
+        kotlin.jvm()
+        """
+          .trimIndent(),
+    )
 }

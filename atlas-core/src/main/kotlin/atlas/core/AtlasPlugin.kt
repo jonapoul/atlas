@@ -18,75 +18,82 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
 /**
- * Base plugin, implemented by the framework projects. This plugin will be applied to the root project by the user, then
- * it will auto-apply itself to all child subprojects internally.
+ * Base plugin, implemented by the framework projects. This plugin will be applied to the root
+ * project by the user, then it will auto-apply itself to all child subprojects internally.
  */
 public abstract class AtlasPlugin : Plugin<Project> {
   protected abstract val extension: AtlasExtensionImpl
 
   protected abstract fun Project.registerRootTasks()
+
   protected abstract fun Project.registerChildTasks()
 
-  override fun apply(target: Project): Unit = with(target) {
-    // This only happens if you have nested projects where the group projects don't have a build file. In that
-    // case you don't want the group to be its own node in the chart
-    if (!target.buildFile.exists()) return@with
+  override fun apply(target: Project): Unit =
+    with(target) {
+      // This only happens if you have nested projects where the group projects don't have a build
+      // file. In that
+      // case you don't want the group to be its own node in the chart
+      if (!target.buildFile.exists()) return@with
 
-    pluginManager.apply(LifecycleBasePlugin::class.java)
+      pluginManager.apply(LifecycleBasePlugin::class.java)
 
-    if (target == rootProject) {
-      applyToRoot(target)
-    } else {
-      applyToChild(target)
+      if (target == rootProject) {
+        applyToRoot(target)
+      } else {
+        applyToChild(target)
+      }
+
+      configurePrintFilesToConsole()
+      registerAtlasCheckTask()
     }
 
-    configurePrintFilesToConsole()
-    registerAtlasCheckTask()
-  }
+  protected open fun applyToRoot(target: Project): Unit =
+    with(target) {
+      CollateProjectTypes.register(project)
+      val collateProjectLinks = CollateProjectLinks.register(project, extension)
+      registerRootTasks()
 
-  protected open fun applyToRoot(target: Project): Unit = with(target) {
-    CollateProjectTypes.register(project)
-    val collateProjectLinks = CollateProjectLinks.register(project, extension)
-    registerRootTasks()
-
-    subprojects { child ->
-      child.pluginManager.apply(this@AtlasPlugin::class.java)
-      child.afterEvaluate {
-        child.tasks.withType(WriteProjectTree::class.java).configureEach { t ->
-          t.collatedLinks.convention(collateProjectLinks.flatMap { it.outputFile })
+      subprojects { child ->
+        child.pluginManager.apply(this@AtlasPlugin::class.java)
+        child.afterEvaluate {
+          child.tasks.withType(WriteProjectTree::class.java).configureEach { t ->
+            t.collatedLinks.convention(collateProjectLinks.flatMap { it.outputFile })
+          }
         }
+      }
+
+      afterEvaluate {
+        warnIfProjectTypesSpecifyNothing()
       }
     }
 
-    afterEvaluate {
-      warnIfProjectTypesSpecifyNothing()
+  protected open fun applyToChild(target: Project): Unit =
+    with(target) {
+      val writeType = WriteProjectType.register(target, extension)
+      val writeLinks = WriteProjectLinks.register(target, extension)
+      WriteProjectTree.register(target, extension)
+      registerChildTasks()
+
+      val atlasGenerate = registerAtlasGenerateTask()
+      registerGenerationTaskOnSync(atlasGenerate)
+
+      CollateProjectTypes.get(rootProject).configure { task ->
+        task.projectTypeFiles.from(writeType.flatMap { it.outputFile })
+      }
+
+      CollateProjectLinks.get(rootProject).configure { task ->
+        task.projectLinkFiles.from(writeLinks.flatMap { it.outputFile })
+      }
     }
-  }
-
-  protected open fun applyToChild(target: Project): Unit = with(target) {
-    val writeType = WriteProjectType.register(target, extension)
-    val writeLinks = WriteProjectLinks.register(target, extension)
-    WriteProjectTree.register(target, extension)
-    registerChildTasks()
-
-    val atlasGenerate = registerAtlasGenerateTask()
-    registerGenerationTaskOnSync(atlasGenerate)
-
-    CollateProjectTypes.get(rootProject).configure { task ->
-      task.projectTypeFiles.from(writeType.flatMap { it.outputFile })
-    }
-
-    CollateProjectLinks.get(rootProject).configure { task ->
-      task.projectLinkFiles.from(writeLinks.flatMap { it.outputFile })
-    }
-  }
 
   private fun Project.warnIfProjectTypesSpecifyNothing() {
     extension.projectTypes.configureEach { type ->
-      if (!type.pathContains.isPresent && !type.pathMatches.isPresent && !type.hasPluginId.isPresent) {
+      if (
+        !type.pathContains.isPresent && !type.pathMatches.isPresent && !type.hasPluginId.isPresent
+      ) {
         logger.warn(
           "Warning: Project type '${type.name}' will be ignored - you need to set one of " +
-            "pathContains, pathMatches or hasPluginId.",
+            "pathContains, pathMatches or hasPluginId."
         )
       }
     }
@@ -98,61 +105,63 @@ public abstract class AtlasPlugin : Plugin<Project> {
     }
   }
 
-  private fun Project.configureOnDemand() = providers
-    .gradleProperty("org.gradle.configureondemand")
-    .map { it.toBoolean() }
-    .getOrElse(false)
+  private fun Project.configureOnDemand() =
+    providers.gradleProperty("org.gradle.configureondemand").map { it.toBoolean() }.getOrElse(false)
 
-  private fun Project.registerAtlasGenerateTask() = tasks.register("atlasGenerate") { t ->
-    t.group = ATLAS_TASK_GROUP
-    t.description = "Aggregates all Atlas generation tasks"
+  private fun Project.registerAtlasGenerateTask() =
+    tasks.register("atlasGenerate") { t ->
+      t.group = ATLAS_TASK_GROUP
+      t.description = "Aggregates all Atlas generation tasks"
 
-    // Always add dependencies first
-    t.dependsOn(
-      tasks
-        .withType(AtlasGenerationTask::class.java)
-        .matching { it !is DummyAtlasGenerationTask },
-    )
+      // Always add dependencies first
+      t.dependsOn(
+        tasks.withType(AtlasGenerationTask::class.java).matching { it !is DummyAtlasGenerationTask }
+      )
 
-    // Fail if configureondemand is enabled, this is a subproject, and this specific task was directly called
-    // (eg :path:to:atlasGenerate)
-    if (configureOnDemand() && project != rootProject) {
-      val projectPath = path
-      val wasDirectlyInvoked = gradle.startParameter.taskNames.any { it == "$projectPath:atlasGenerate" }
-      if (wasDirectlyInvoked) {
-        t.doFirst {
-          throw GradleException(
-            "atlasGenerate is disabled when run on a subproject because org.gradle.configureondemand is enabled. " +
-              "With this property set, you can only run atlasGenerate on the root project, not on $projectPath.",
-          )
+      // Fail if configureondemand is enabled, this is a subproject, and this specific task was
+      // directly called
+      // (eg :path:to:atlasGenerate)
+      if (configureOnDemand() && project != rootProject) {
+        val projectPath = path
+        val wasDirectlyInvoked =
+          gradle.startParameter.taskNames.any { it == "$projectPath:atlasGenerate" }
+        if (wasDirectlyInvoked) {
+          t.doFirst {
+            throw GradleException(
+              "atlasGenerate is disabled when run on a subproject because org.gradle.configureondemand is enabled. " +
+                "With this property set, you can only run atlasGenerate on the root project, not on $projectPath."
+            )
+          }
         }
       }
     }
-  }
 
-  private fun Project.registerAtlasCheckTask() = tasks.register("atlasCheck") { t ->
-    t.group = LifecycleBasePlugin.VERIFICATION_GROUP
-    t.description = "Aggregates all Atlas verification tasks"
+  private fun Project.registerAtlasCheckTask() =
+    tasks.register("atlasCheck") { t ->
+      t.group = LifecycleBasePlugin.VERIFICATION_GROUP
+      t.description = "Aggregates all Atlas verification tasks"
 
-    // Always add dependencies first
-    t.dependsOn(tasks.withType(CheckFileDiff::class.java))
+      // Always add dependencies first
+      t.dependsOn(tasks.withType(CheckFileDiff::class.java))
 
-    // Fail if configureondemand is enabled, this is a subproject, and this specific task was directly called
-    // (eg :path:to:atlasCheck)
-    if (configureOnDemand() && project != rootProject) {
-      val projectPath = path
-      val wasDirectlyInvoked = gradle.startParameter.taskNames.any { it == "$projectPath:atlasCheck" }
-      if (wasDirectlyInvoked) {
-        t.doFirst {
-          throw GradleException(
-            "atlasCheck is disabled when run on a subproject because org.gradle.configureondemand is enabled. " +
-              "With this property set, you can only run atlasCheck on the root project, not on $projectPath. " +
-              "To disable check task registration entirely, set atlas.checkOutputs = false in your build script.",
-          )
+      // Fail if configureondemand is enabled, this is a subproject, and this specific task was
+      // directly called
+      // (eg :path:to:atlasCheck)
+      if (configureOnDemand() && project != rootProject) {
+        val projectPath = path
+        val wasDirectlyInvoked =
+          gradle.startParameter.taskNames.any { it == "$projectPath:atlasCheck" }
+        if (wasDirectlyInvoked) {
+          t.doFirst {
+            throw GradleException(
+              "atlasCheck is disabled when run on a subproject because org.gradle.configureondemand is enabled. " +
+                "With this property set, you can only run atlasCheck on the root project, not on $projectPath. " +
+                "To disable check task registration entirely, set atlas.checkOutputs = false in your build script."
+            )
+          }
         }
       }
     }
-  }
 
   private fun Project.registerGenerationTaskOnSync(atlasGenerate: TaskProvider<Task>) {
     afterEvaluate {

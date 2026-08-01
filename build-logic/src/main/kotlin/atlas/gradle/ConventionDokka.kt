@@ -9,38 +9,39 @@ import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier.Public
 
 class ConventionDokka : Plugin<Project> {
-  override fun apply(target: Project) = with(target) {
-    pluginsInternal {
-      apply(DokkaPlugin::class)
-    }
-
-    extensions.configure<DokkaExtension> {
-      moduleName.set(path)
-
-      dokkaPublications.configureEach {
-        failOnWarning.set(true)
-        suppressInheritedMembers.set(true)
-        suppressObviousFunctions.set(true)
+  override fun apply(target: Project) =
+    with(target) {
+      pluginsInternal {
+        apply(DokkaPlugin::class)
       }
 
-      dokkaSourceSets.configureEach {
-        documentedVisibilities.add(Public)
-        reportUndocumented.set(false)
-        skipDeprecated.set(true)
-        suppressGeneratedFiles.set(true)
+      extensions.configure<DokkaExtension> {
+        moduleName.set(path)
 
-        perPackageOption {
-          matchingRegex.set(".*\\.internal.*")
-          suppress.set(true)
+        dokkaPublications.configureEach {
+          failOnWarning.set(true)
+          suppressInheritedMembers.set(true)
+          suppressObviousFunctions.set(true)
         }
 
-        sourceLink {
-          localDirectory.set(layout.projectDirectory)
-          remoteLineSuffix.set("#L")
-          val path = project.path.replace(":", "")
-          remoteUrl("https://github.com/jonapoul/atlas-gradle-plugin/tree/main/$path")
+        dokkaSourceSets.configureEach {
+          documentedVisibilities.add(Public)
+          reportUndocumented.set(false)
+          skipDeprecated.set(true)
+          suppressGeneratedFiles.set(true)
+
+          perPackageOption {
+            matchingRegex.set(".*\\.internal.*")
+            suppress.set(true)
+          }
+
+          sourceLink {
+            localDirectory.set(layout.projectDirectory)
+            remoteLineSuffix.set("#L")
+            val path = project.path.replace(":", "")
+            remoteUrl("https://github.com/jonapoul/atlas-gradle-plugin/tree/main/$path")
+          }
         }
       }
     }
-  }
 }

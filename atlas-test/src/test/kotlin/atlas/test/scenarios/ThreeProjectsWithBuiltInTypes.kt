@@ -8,7 +8,8 @@ import atlas.test.javaBuildScript
 import atlas.test.kotlinJvmBuildScript
 
 internal object ThreeProjectsWithBuiltInTypes : GraphvizScenario {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("com.android.library") version "$AGP_VERSION" apply false
@@ -22,11 +23,13 @@ internal object ThreeProjectsWithBuiltInTypes : GraphvizScenario {
         java()
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 
-  override val subprojectBuildFiles = mapOf(
-    "test-data" to javaBuildScript,
-    "test-domain" to kotlinJvmBuildScript,
-    "test-ui" to androidBuildScript,
-  )
+  override val subprojectBuildFiles =
+    mapOf(
+      "test-data" to javaBuildScript,
+      "test-domain" to kotlinJvmBuildScript,
+      "test-ui" to androidBuildScript,
+    )
 }

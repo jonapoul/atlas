@@ -6,7 +6,6 @@ import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.AtlasExtensionImpl
 import atlas.core.internal.ProjectLink
 import atlas.core.internal.fileInBuildDirectory
-import atlas.core.internal.linkType
 import atlas.core.internal.orderedLinkTypes
 import atlas.core.internal.readProjectLinks
 import atlas.core.internal.writeProjectLinks
@@ -25,12 +24,14 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 /**
- * Gathers a snapshot of the whole-project [collatedLinks] data to only find those projects and links relevant to
- * [thisPath]. If [alsoTraverseUpwards] is enabled, upstream projects will be included too.
+ * Gathers a snapshot of the whole-project [collatedLinks] data to only find those projects and
+ * links relevant to [thisPath]. If [alsoTraverseUpwards] is enabled, upstream projects will be
+ * included too.
  */
 @CacheableTask
 public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
-  @get:[PathSensitive(NONE) InputFile] public abstract val collatedLinks: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile]
+  public abstract val collatedLinks: RegularFileProperty
   @get:Input public abstract val alsoTraverseUpwards: Property<Boolean>
   @get:Input public abstract val thisPath: Property<String>
   @get:Input public abstract val linkTypes: SetProperty<LinkType>
@@ -56,7 +57,9 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
     val outputFile = outputFile.get().asFile
     writeProjectLinks(tree, outputFile)
 
-    logger.info("WriteProjectTree: written ${tree.size} links from ${links.size} across the project")
+    logger.info(
+      "WriteProjectTree: written ${tree.size} links from ${links.size} across the project"
+    )
     tree.forEach { link ->
       logger.info("WriteProjectTree:     link = $link")
     }
@@ -71,11 +74,12 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
       .values
       .forEach { groupedLinks ->
         val linksWithTypes = groupedLinks.filter { it.type != null }
-        filtered += when (linksWithTypes.size) {
-          0 -> groupedLinks.first()
-          1 -> linksWithTypes[0]
-          else -> highestPriorityLink(linksWithTypes, types)
-        }
+        filtered +=
+          when (linksWithTypes.size) {
+            0 -> groupedLinks.first()
+            1 -> linksWithTypes[0]
+            else -> highestPriorityLink(linksWithTypes, types)
+          }
       }
 
     return filtered
@@ -92,7 +96,10 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
     return links.first()
   }
 
-  private enum class Direction { Up, Down }
+  private enum class Direction {
+    Up,
+    Down,
+  }
 
   private fun calculate(
     targetPath: String,
@@ -131,18 +138,20 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
     public fun register(
       target: Project,
       extension: AtlasExtensionImpl,
-    ): TaskProvider<WriteProjectTree> = with(target) {
-      val writeProjectTree = tasks.register(NAME, WriteProjectTree::class.java) { task ->
-        task.thisPath.convention(target.path)
-        task.outputFile.convention(fileInBuildDirectory("project-tree.json"))
-        task.alsoTraverseUpwards.convention(extension.alsoTraverseUpwards)
-      }
+    ): TaskProvider<WriteProjectTree> =
+      with(target) {
+        val writeProjectTree =
+          tasks.register(NAME, WriteProjectTree::class.java) { task ->
+            task.thisPath.convention(target.path)
+            task.outputFile.convention(fileInBuildDirectory("project-tree.json"))
+            task.alsoTraverseUpwards.convention(extension.alsoTraverseUpwards)
+          }
 
-      writeProjectTree.configure { task ->
-        task.linkTypes.convention(extension.orderedLinkTypes())
-      }
+        writeProjectTree.configure { task ->
+          task.linkTypes.convention(extension.orderedLinkTypes())
+        }
 
-      writeProjectTree
-    }
+        writeProjectTree
+      }
   }
 }

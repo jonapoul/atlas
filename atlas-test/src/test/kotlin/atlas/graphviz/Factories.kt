@@ -12,11 +12,12 @@ internal fun dotWriter(
   thisPath: String = ":app",
   groupProjects: Boolean = false,
   config: DotConfig = DotConfig(),
-) = DotWriter(
-  typedProjects = typedProjects,
-  links = links,
-  replacements = replacements,
-  thisPath = thisPath,
-  groupProjects = groupProjects,
-  config = config,
-)
+) =
+  DotWriter(
+    typedProjects = typedProjects,
+    links = links,
+    replacements = replacements,
+    thisPath = thisPath,
+    groupProjects = groupProjects,
+    config = config,
+  )

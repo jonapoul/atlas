@@ -5,7 +5,8 @@ import atlas.test.Scenario
 import kotlin.text.trimIndent
 
 internal object GraphVizWithLinkTypes : Scenario by GraphvizBasic {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import atlas.graphviz.LinkStyle
 
     plugins {
@@ -25,5 +26,6 @@ internal object GraphVizWithLinkTypes : Scenario by GraphvizBasic {
         implementation(LinkStyle.Dotted)
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 }

@@ -51,11 +51,12 @@ public data class DotWriter(
       .map { link -> link.copy(fromPath = link.fromPath.cleaned(), toPath = link.toPath.cleaned()) }
       .sortedWith(compareBy({ it.fromPath }, { it.toPath }))
       .forEach { (fromPath, toPath, _, type) ->
-        val attrs = Attrs(
-          "style" to type?.style,
-          "color" to type?.color,
-          "label" to if (displayLinkLabels) type?.displayName else null,
-        ) + type?.properties
+        val attrs =
+          Attrs(
+            "style" to type?.style,
+            "color" to type?.color,
+            "label" to if (displayLinkLabels) type?.displayName else null,
+          ) + type?.properties
         appendLine("\"$fromPath\" -> \"$toPath\"$attrs")
       }
   }

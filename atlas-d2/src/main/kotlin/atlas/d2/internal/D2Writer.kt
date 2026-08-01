@@ -72,22 +72,17 @@ public class D2Writer(
   }
 
   private fun IndentedStringBuilder.appendLegend() {
-    val projectTypes = typedProjects
-      .filter { it in links }
-      .mapNotNull { it.type }
-      .distinct()
-      .ifEmpty {
-        // single-project case
-        typedProjects
-          .firstOrNull { it.projectPath == thisPath }
-          ?.type
-          ?.let(::listOf)
-          .orEmpty()
-      }
+    val projectTypes =
+      typedProjects
+        .filter { it in links }
+        .mapNotNull { it.type }
+        .distinct()
+        .ifEmpty {
+          // single-project case
+          typedProjects.firstOrNull { it.projectPath == thisPath }?.type?.let(::listOf).orEmpty()
+        }
 
-    val linkTypes = links
-      .mapNotNull { it.type }
-      .distinct()
+    val linkTypes = links.mapNotNull { it.type }.distinct()
 
     if (projectTypes.isEmpty() && linkTypes.isEmpty()) return
 
@@ -118,18 +113,23 @@ public class D2Writer(
     appendLine("${type.classId}: ${type.name} { class: ${type.classId} }")
   }
 
-  private fun IndentedStringBuilder.appendLinkType(type: LinkType, exampleNodes: Pair<ProjectType, ProjectType>) {
+  private fun IndentedStringBuilder.appendLinkType(
+    type: LinkType,
+    exampleNodes: Pair<ProjectType, ProjectType>,
+  ) {
     val (a, b) = exampleNodes
     appendLine("${a.classId} -> ${b.classId}: ${type.displayName} { class: ${type.classId} }")
   }
 
-  // Colons in d2 have special meaning, so strip them out of the key string. Not visible in the diagram anyway.
+  // Colons in d2 have special meaning, so strip them out of the key string. Not visible in the
+  // diagram anyway.
   private fun String.fullKey(): String {
-    val stripped = DISALLOWED_SUBSTRINGS.fold(
-      initial = cleaned()
-        .removePrefix(":")
-        .removePrefix("-"),
-    ) { acc, string -> acc.replace(string, "") }
+    val stripped =
+      DISALLOWED_SUBSTRINGS.fold(initial = cleaned().removePrefix(":").removePrefix("-")) {
+        acc,
+        string ->
+        acc.replace(string, "")
+      }
 
     return if (groupProjects) {
       // Dots are nested group identifiers, so only use them if we have grouping enabled
@@ -140,12 +140,13 @@ public class D2Writer(
     }
   }
 
-  private fun String.localKey(): String = if (groupProjects) {
-    // "path.to.my.project" -> "project" for subgraphNestingLevel=3
-    fullKey().split(".")[subgraphNestingLevel]
-  } else {
-    fullKey()
-  }
+  private fun String.localKey(): String =
+    if (groupProjects) {
+      // "path.to.my.project" -> "project" for subgraphNestingLevel=3
+      fullKey().split(".")[subgraphNestingLevel]
+    } else {
+      fullKey()
+    }
 
   private companion object {
     val DISALLOWED_SUBSTRINGS = setOf("{", "}", "->", "--", "<-", "<->", "|", "#", "\"", "'")

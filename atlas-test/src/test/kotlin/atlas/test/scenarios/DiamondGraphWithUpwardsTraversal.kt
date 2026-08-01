@@ -4,7 +4,8 @@ import atlas.test.KOTLIN_VERSION
 import atlas.test.Scenario
 
 internal object DiamondGraphWithUpwardsTraversal : Scenario by DiamondGraph {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
@@ -16,5 +17,6 @@ internal object DiamondGraphWithUpwardsTraversal : Scenario by DiamondGraph {
         kotlinJvm()
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 }

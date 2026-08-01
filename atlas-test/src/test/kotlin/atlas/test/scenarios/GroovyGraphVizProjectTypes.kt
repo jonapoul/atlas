@@ -3,7 +3,8 @@ package atlas.test.scenarios
 import atlas.test.Scenario
 
 internal object GroovyGraphVizProjectTypes : Scenario by GroovyBasic {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       id 'org.jetbrains.kotlin.jvm'
       id 'dev.jonpoulton.atlas.graphviz'
@@ -22,5 +23,6 @@ internal object GroovyGraphVizProjectTypes : Scenario by GroovyBasic {
         }
       }
     }
-  """.trimIndent()
+    """
+      .trimIndent()
 }

@@ -11,13 +11,15 @@ import kotlin.test.Test
 internal class DotWriterTest {
   @Test
   fun `Base config with no project types`() {
-    val writer = dotWriter(
-      typedProjects = OneLevelOfSubprojects.projects,
-      links = OneLevelOfSubprojects.links,
-    )
+    val writer =
+      dotWriter(
+        typedProjects = OneLevelOfSubprojects.projects,
+        links = OneLevelOfSubprojects.links,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         digraph {
           ":app"
           ":data:a"
@@ -38,20 +40,23 @@ internal class DotWriterTest {
           ":ui:c" -> ":domain:a"
           ":ui:c" -> ":domain:b"
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Grouping projects`() {
-    val writer = dotWriter(
-      typedProjects = OneLevelOfSubprojects.projects,
-      links = OneLevelOfSubprojects.links,
-      groupProjects = true,
-    )
+    val writer =
+      dotWriter(
+        typedProjects = OneLevelOfSubprojects.projects,
+        links = OneLevelOfSubprojects.links,
+        groupProjects = true,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         digraph {
           ":app"
           subgraph cluster_data {
@@ -81,20 +86,23 @@ internal class DotWriterTest {
           ":ui:c" -> ":domain:a"
           ":ui:c" -> ":domain:b"
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Grouping projects with sub-subgraphs`() {
-    val writer = dotWriter(
-      typedProjects = TwoLevelsOfSubprojects.projects,
-      links = TwoLevelsOfSubprojects.links,
-      groupProjects = true,
-    )
+    val writer =
+      dotWriter(
+        typedProjects = TwoLevelsOfSubprojects.projects,
+        links = TwoLevelsOfSubprojects.links,
+        groupProjects = true,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         digraph {
           ":app"
           subgraph cluster_data {
@@ -131,23 +139,27 @@ internal class DotWriterTest {
           ":ui:c" -> ":domain:a"
           ":ui:c" -> ":domain:b"
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Single project with no links`() {
-    val writer = dotWriter(
-      typedProjects = ProjectWithNoLinks.projects,
-      links = ProjectWithNoLinks.links,
-    )
+    val writer =
+      dotWriter(
+        typedProjects = ProjectWithNoLinks.projects,
+        links = ProjectWithNoLinks.links,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         digraph {
           ":app" [fillcolor="red"]
         }
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 }

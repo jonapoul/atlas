@@ -18,12 +18,14 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 /**
- * Registered on the root project to aggregate the results of [WriteProjectType] tasks. This will then be referenced
- * from the various Write*Chart tasks to identify and customize nodes in the chart.
+ * Registered on the root project to aggregate the results of [WriteProjectType] tasks. This will
+ * then be referenced from the various Write*Chart tasks to identify and customize nodes in the
+ * chart.
  */
 @CacheableTask
 public abstract class CollateProjectTypes : DefaultTask(), TaskWithOutputFile {
-  @get:[PathSensitive(NONE) InputFiles] public abstract val projectTypeFiles: ConfigurableFileCollection
+  @get:[PathSensitive(NONE) InputFiles]
+  public abstract val projectTypeFiles: ConfigurableFileCollection
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
   init {
@@ -34,10 +36,7 @@ public abstract class CollateProjectTypes : DefaultTask(), TaskWithOutputFile {
   @TaskAction
   public fun execute() {
     val outputFile = outputFile.get().asFile
-    val typedProjects = projectTypeFiles
-      .filter { it.exists() }
-      .map(::readProjectType)
-      .toSortedSet()
+    val typedProjects = projectTypeFiles.filter { it.exists() }.map(::readProjectType).toSortedSet()
 
     writeProjectTypes(
       projects = typedProjects,
@@ -59,10 +58,11 @@ public abstract class CollateProjectTypes : DefaultTask(), TaskWithOutputFile {
       target.tasks.named(NAME, CollateProjectTypes::class.java)
 
     @InternalAtlasApi
-    public fun register(target: Project): TaskProvider<CollateProjectTypes> = with(target) {
-      tasks.register(NAME, CollateProjectTypes::class.java) { task ->
-        task.outputFile.convention(fileInBuildDirectory("project-types.json"))
+    public fun register(target: Project): TaskProvider<CollateProjectTypes> =
+      with(target) {
+        tasks.register(NAME, CollateProjectTypes::class.java) { task ->
+          task.outputFile.convention(fileInBuildDirectory("project-types.json"))
+        }
       }
-    }
   }
 }

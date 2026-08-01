@@ -4,7 +4,8 @@ import atlas.test.GraphvizScenario
 import atlas.test.KOTLIN_VERSION
 
 internal object NoSubprojects : GraphvizScenario {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
@@ -17,5 +18,6 @@ internal object NoSubprojects : GraphvizScenario {
         androidLibrary()
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 }

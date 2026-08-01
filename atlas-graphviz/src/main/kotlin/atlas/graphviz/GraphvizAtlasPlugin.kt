@@ -18,20 +18,22 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
   private lateinit var graphVizExtension: GraphvizAtlasExtensionImpl
   override val extension: AtlasExtensionImpl by lazy { graphVizExtension }
 
-  override fun applyToRoot(target: Project): Unit = with(target) {
-    graphVizExtension = extensions.create(
-      GraphvizAtlasExtension::class.java,
-      AtlasExtensionImpl.NAME,
-      GraphvizAtlasExtensionImpl::class.java,
-    ) as GraphvizAtlasExtensionImpl
+  override fun applyToRoot(target: Project): Unit =
+    with(target) {
+      graphVizExtension =
+        extensions.create(
+          GraphvizAtlasExtension::class.java,
+          AtlasExtensionImpl.NAME,
+          GraphvizAtlasExtensionImpl::class.java,
+        ) as GraphvizAtlasExtensionImpl
 
-    super.applyToRoot(target)
-  }
+      super.applyToRoot(target)
+    }
 
   override fun applyToChild(target: Project) {
-    graphVizExtension = target.rootProject
-      .extensions
-      .getByType(GraphvizAtlasExtension::class.java) as GraphvizAtlasExtensionImpl
+    graphVizExtension =
+      target.rootProject.extensions.getByType(GraphvizAtlasExtension::class.java)
+        as GraphvizAtlasExtensionImpl
 
     super.applyToChild(target)
   }
@@ -39,17 +41,19 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
   override fun Project.registerChildTasks() {
     val graphvizSpec = graphVizExtension.graphviz
 
-    val chartTask = WriteGraphvizChart.real(
-      target = project,
-      extension = extension,
-      spec = graphvizSpec,
-    )
+    val chartTask =
+      WriteGraphvizChart.real(
+        target = project,
+        extension = extension,
+        spec = graphvizSpec,
+      )
 
-    val dummyChartTask = WriteGraphvizChart.dummy(
-      target = project,
-      extension = extension,
-      spec = graphvizSpec,
-    )
+    val dummyChartTask =
+      WriteGraphvizChart.dummy(
+        target = project,
+        extension = extension,
+        spec = graphvizSpec,
+      )
 
     CheckFileDiff.register(
       target = project,
@@ -60,12 +64,13 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
       dummyTask = dummyChartTask,
     )
 
-    val graphvizTask = ExecGraphviz.register(
-      target = project,
-      spec = graphvizSpec,
-      variant = Chart,
-      dotFileTask = chartTask,
-    )
+    val graphvizTask =
+      ExecGraphviz.register(
+        target = project,
+        spec = graphvizSpec,
+        variant = Chart,
+        dotFileTask = chartTask,
+      )
 
     WriteReadme.register(
       target = project,
@@ -78,11 +83,12 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
   override fun Project.registerRootTasks() {
     val spec = graphVizExtension.graphviz
 
-    val realTask = WriteGraphvizLegend.real(
-      target = project,
-      spec = spec,
-      extension = extension,
-    )
+    val realTask =
+      WriteGraphvizLegend.real(
+        target = project,
+        spec = spec,
+        extension = extension,
+      )
 
     ExecGraphviz.register(
       target = project,
@@ -92,11 +98,12 @@ public class GraphvizAtlasPlugin : AtlasPlugin() {
     )
 
     // Also validate the legend's dotfile when we call gradle check
-    val dummyTask = WriteGraphvizLegend.dummy(
-      target = project,
-      spec = spec,
-      extension = extension,
-    )
+    val dummyTask =
+      WriteGraphvizLegend.dummy(
+        target = project,
+        spec = spec,
+        extension = extension,
+      )
 
     CheckFileDiff.register(
       target = project,

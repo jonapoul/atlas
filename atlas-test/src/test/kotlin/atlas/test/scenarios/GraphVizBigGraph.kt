@@ -5,7 +5,8 @@ import atlas.test.KOTLIN_VERSION
 import atlas.test.kotlinJvmBuildScript
 
 internal object GraphVizBigGraph : GraphvizScenario {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
@@ -16,79 +17,89 @@ internal object GraphVizBigGraph : GraphvizScenario {
         kotlinJvm()
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 
-  override val subprojectBuildFiles = mapOf(
-    "app" to """
+  override val subprojectBuildFiles =
+    mapOf(
+      "app" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         implementation(project(":a1"))
         implementation(project(":a2"))
         implementation(project(":a3"))
       }
-    """.trimIndent(),
-
-    "a1" to """
+    """
+          .trimIndent(),
+      "a1" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         implementation(project(":b1"))
         implementation(project(":b2"))
       }
-    """.trimIndent(),
-
-    "a2" to """
+    """
+          .trimIndent(),
+      "a2" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         implementation(project(":b2"))
         implementation(project(":b3"))
       }
-    """.trimIndent(),
-
-    "a3" to """
+    """
+          .trimIndent(),
+      "a3" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         implementation(project(":b3"))
         implementation(project(":b4"))
       }
-    """.trimIndent(),
-
-    "b1" to """
+    """
+          .trimIndent(),
+      "b1" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         implementation(project(":c1"))
         implementation(project(":c2"))
       }
-    """.trimIndent(),
-
-    "b2" to """
+    """
+          .trimIndent(),
+      "b2" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         implementation(project(":c1"))
         implementation(project(":c2"))
       }
-    """.trimIndent(),
-
-    "b3" to """
+    """
+          .trimIndent(),
+      "b3" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         implementation(project(":c1"))
         implementation(project(":c4"))
       }
-    """.trimIndent(),
-
-    "b4" to """
+    """
+          .trimIndent(),
+      "b4" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         implementation(project(":c3"))
         implementation(project(":c4"))
         implementation(project(":c5"))
       }
-    """.trimIndent(),
-
-    "c1" to kotlinJvmBuildScript,
-    "c2" to kotlinJvmBuildScript,
-    "c3" to kotlinJvmBuildScript,
-    "c4" to kotlinJvmBuildScript,
-    "c5" to kotlinJvmBuildScript,
-  )
+    """
+          .trimIndent(),
+      "c1" to kotlinJvmBuildScript,
+      "c2" to kotlinJvmBuildScript,
+      "c3" to kotlinJvmBuildScript,
+      "c4" to kotlinJvmBuildScript,
+      "c5" to kotlinJvmBuildScript,
+    )
 }

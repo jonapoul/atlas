@@ -37,7 +37,11 @@ To run a specific test method:
 ```bash
 ./gradlew detektCheck              # Run static analysis
 ./gradlew licensee                 # Validate dependency licenses
-./scripts/ktlintCheck.sh           # Run ktlint checks
+
+# Formatting, using ktfmt with Google style
+./scripts/ktfmt.sh                 # format files changed since main
+./scripts/ktfmt.sh check           # check-only
+./scripts/ktfmt.sh --force         # all files
 ```
 
 ### Documentation

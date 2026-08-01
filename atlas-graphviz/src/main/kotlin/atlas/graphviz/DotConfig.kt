@@ -5,7 +5,8 @@ import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
 /**
- * Used to configure the [atlas.graphviz.tasks.WriteGraphvizChart] and [atlas.graphviz.tasks.WriteGraphvizLegend] tasks.
+ * Used to configure the [atlas.graphviz.tasks.WriteGraphvizChart] and
+ * [atlas.graphviz.tasks.WriteGraphvizLegend] tasks.
  */
 @KSerializable
 public class DotConfig(
@@ -19,10 +20,11 @@ public class DotConfig(
 internal fun DotConfig(
   extension: AtlasExtension,
   spec: GraphvizSpec,
-): DotConfig = DotConfig(
-  displayLinkLabels = extension.displayLinkLabels.orNull,
-  layoutEngine = spec.layoutEngine.orNull,
-  nodeAttributes = spec.node.properties.orNull,
-  edgeAttributes = spec.edge.properties.orNull,
-  graphAttributes = spec.graph.properties.orNull,
-)
+): DotConfig =
+  DotConfig(
+    displayLinkLabels = extension.displayLinkLabels.orNull,
+    layoutEngine = spec.layoutEngine.orNull,
+    nodeAttributes = spec.node.properties.orNull,
+    edgeAttributes = spec.edge.properties.orNull,
+    graphAttributes = spec.graph.properties.orNull,
+  )

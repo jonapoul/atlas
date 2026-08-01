@@ -5,12 +5,11 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.prop
 import assertk.assertions.support.expected
 import atlas.core.internal.diff
+import java.io.File
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.BuildTask
 import org.gradle.testkit.runner.TaskOutcome
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
-import java.io.File
-import kotlin.math.exp
 
 internal fun Assert<BuildResult>.allTasksSuccessful(): Assert<List<BuildTask>> =
   prop(BuildResult::getTasks).allSuccessful()
@@ -54,7 +53,9 @@ internal fun Assert<File>.contentEquals(expected: String): Assert<File> = transf
   if (contents == expected) {
     file
   } else {
-    expected("string with length ${expected.length}, got ${contents.length}:\n" + diff(expected, contents))
+    expected(
+      "string with length ${expected.length}, got ${contents.length}:\n" + diff(expected, contents)
+    )
   }
 }
 
@@ -73,7 +74,9 @@ internal fun Assert<String>.equalsDiffed(expected: String): Assert<String> = tra
   if (expected == stripped) {
     actual
   } else {
-    expected("string with length ${expected.length}, got ${stripped.length}:\n" + diff(expected, stripped))
+    expected(
+      "string with length ${expected.length}, got ${stripped.length}:\n" + diff(expected, stripped)
+    )
   }
 }
 

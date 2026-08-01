@@ -17,7 +17,10 @@ public val AtlasJson: Json = Json {
 }
 
 internal object RegexSerializer : KSerializer<Regex> {
-  override val descriptor = PrimitiveSerialDescriptor(serialName = "kotlin.text.Regex", kind = PrimitiveKind.STRING)
+  override val descriptor =
+    PrimitiveSerialDescriptor(serialName = "kotlin.text.Regex", kind = PrimitiveKind.STRING)
+
   override fun serialize(encoder: Encoder, value: Regex) = encoder.encodeString(value.pattern)
+
   override fun deserialize(decoder: Decoder): Regex = decoder.decodeString().let(::Regex)
 }

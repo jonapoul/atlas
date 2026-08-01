@@ -9,6 +9,7 @@ import atlas.core.tasks.TaskWithOutputFile
 import atlas.graphviz.FileFormat
 import atlas.graphviz.GraphvizSpec
 import atlas.graphviz.LayoutEngine
+import javax.inject.Inject
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -24,17 +25,20 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.process.ExecOperations
 import org.gradle.process.ExecSpec
-import javax.inject.Inject
 
 /**
- * Executes `dot` with the configured inputs to generate an image file. Requires Graphviz to be pre-installed.
+ * Executes `dot` with the configured inputs to generate an image file. Requires Graphviz to be
+ * pre-installed.
  */
 @CacheableTask
 public abstract class ExecGraphviz : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {
-  @get:[PathSensitive(NONE) InputFile] public abstract val dotFile: RegularFileProperty
+  @get:[PathSensitive(NONE) InputFile]
+  public abstract val dotFile: RegularFileProperty
   @get:Input public abstract val outputFormat: Property<FileFormat>
-  @get:[Input Optional] public abstract val pathToDotCommand: Property<String>
-  @get:[Input Optional] public abstract val engine: Property<LayoutEngine>
+  @get:[Input Optional]
+  public abstract val pathToDotCommand: Property<String>
+  @get:[Input Optional]
+  public abstract val engine: Property<LayoutEngine>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
   @get:Inject public abstract val execOperations: ExecOperations
 
@@ -43,14 +47,12 @@ public abstract class ExecGraphviz : DefaultTask(), AtlasGenerationTask, TaskWit
   }
 
   // Not using kotlin setter because this pulls a property value
-  override fun getDescription(): String = "Uses Graphviz to convert a dotfile into a ${outputFormat.get()} file"
+  override fun getDescription(): String =
+    "Uses Graphviz to convert a dotfile into a ${outputFormat.get()} file"
 
   @TaskAction
   public fun execute() {
-    execOperations
-      .exec(::configureExec)
-      .rethrowFailure()
-      .assertNormalExitValue()
+    execOperations.exec(::configureExec).rethrowFailure().assertNormalExitValue()
 
     val outputFile = outputFile.get().asFile
     logIfConfigured(outputFile)
@@ -85,22 +87,23 @@ public abstract class ExecGraphviz : DefaultTask(), AtlasGenerationTask, TaskWit
       spec: GraphvizSpec,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
-    ): TaskProvider<ExecGraphviz> = with(target) {
-      val name = "execGraphviz$variant"
-      val execGraphviz = tasks.register(name, ExecGraphviz::class.java)
+    ): TaskProvider<ExecGraphviz> =
+      with(target) {
+        val name = "execGraphviz$variant"
+        val execGraphviz = tasks.register(name, ExecGraphviz::class.java)
 
-      execGraphviz.configure { task ->
-        val dotFile = dotFileTask.flatMap { it.outputFile }
-        val outputFile = dotFile.withExtension(target, provider { spec.fileFormat.get() })
+        execGraphviz.configure { task ->
+          val dotFile = dotFileTask.flatMap { it.outputFile }
+          val outputFile = dotFile.withExtension(target, provider { spec.fileFormat.get() })
 
-        task.dotFile.convention(dotFile)
-        task.pathToDotCommand.convention(spec.pathToDotCommand)
-        task.engine.convention(spec.layoutEngine)
-        task.outputFormat.convention(spec.fileFormat)
-        task.outputFile.convention(outputFile)
+          task.dotFile.convention(dotFile)
+          task.pathToDotCommand.convention(spec.pathToDotCommand)
+          task.engine.convention(spec.layoutEngine)
+          task.outputFormat.convention(spec.fileFormat)
+          task.outputFile.convention(outputFile)
+        }
+
+        return execGraphviz
       }
-
-      return execGraphviz
-    }
   }
 }

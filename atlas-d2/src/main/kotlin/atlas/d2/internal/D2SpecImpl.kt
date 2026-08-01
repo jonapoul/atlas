@@ -31,10 +31,10 @@ import atlas.d2.LayoutEngine
 import atlas.d2.Shape
 import atlas.d2.TextTransform
 import atlas.d2.tasks.SvgToPng
+import javax.inject.Inject
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
-import javax.inject.Inject
 
 internal class D2SpecImpl(
   objects: ObjectFactory,
@@ -59,21 +59,24 @@ internal class D2SpecImpl(
   override val themeDark = objects.intEnum(properties.darkTheme)
 
   override val layoutEngine = D2LayoutEngineSpecImpl(objects)
+
   override fun layoutEngine(action: Action<D2LayoutEngineSpec>) = action.execute(layoutEngine)
 
   override val rootStyle = D2RootStyleSpecImpl(objects)
+
   override fun rootStyle(action: Action<D2RootStyleSpec>) = action.execute(rootStyle)
 
   override val globalProps = D2GlobalPropsSpecImpl(objects)
+
   override fun globalProps(action: Action<D2GlobalPropsSpec>) = action.execute(globalProps)
 
   internal val converter = objects.property(SvgToPng.Converter::class.java)
+
   override fun convertSvgToPng(converter: SvgToPng.Converter) = this.converter.set(converter)
 }
 
-internal open class D2RootStyleSpecImpl(
-  objects: ObjectFactory,
-) : D2RootStyleSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+internal open class D2RootStyleSpecImpl(objects: ObjectFactory) :
+  D2RootStyleSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
   override var fill by string("fill")
   override var fillPattern by enum<FillPattern>("fill-pattern")
   override var stroke by string("stroke")
@@ -82,18 +85,16 @@ internal open class D2RootStyleSpecImpl(
   override var doubleBorder by bool("double-border")
 }
 
-internal open class D2GlobalPropsSpecImpl(
-  objects: ObjectFactory,
-) : D2GlobalPropsSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+internal open class D2GlobalPropsSpecImpl(objects: ObjectFactory) :
+  D2GlobalPropsSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
   override var arrowType by enum<ArrowType>("(** -> **)[*].target-arrowhead.shape")
   override var fillArrowHeads by bool("(** -> **)[*].target-arrowhead.style.filled")
   override var font by enum<Font>("***.style.font")
   override var fontSize by int("***.style.font-size")
 }
 
-internal class D2PropertiesSpecImpl(
-  objects: ObjectFactory,
-) : D2PropertiesSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+internal class D2PropertiesSpecImpl(objects: ObjectFactory) :
+  D2PropertiesSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
   override var animated by bool("style.animated")
   override var bold by bool("style.bold")
   override var borderRadius by int("style.border-radius")
@@ -109,10 +110,13 @@ internal class D2PropertiesSpecImpl(
   override var underline by bool("style.underline")
 }
 
-internal abstract class D2ProjectTypeSpecImpl @Inject constructor(
+internal abstract class D2ProjectTypeSpecImpl
+@Inject
+constructor(
   override val name: String,
   objects: ObjectFactory,
-) : ProjectTypeSpecImpl(name), D2ProjectTypeSpec, D2PropertiesSpec by D2PropertiesSpecImpl(objects) {
+) :
+  ProjectTypeSpecImpl(name), D2ProjectTypeSpec, D2PropertiesSpec by D2PropertiesSpecImpl(objects) {
   override var doubleBorder by string("style.double-border")
   override var fill by string("style.fill")
   override var fillPattern by enum<FillPattern>("style.fill-pattern")
@@ -124,29 +128,31 @@ internal abstract class D2ProjectTypeSpecImpl @Inject constructor(
 
 internal class D2NamedProjectTypeContainerImpl(objects: ObjectFactory) :
   ProjectTypeContainer<D2ProjectTypeSpec>(
-    delegate = objects.domainObjectContainer(D2ProjectTypeSpec::class.java) { name ->
-      objects.newInstance(D2ProjectTypeSpecImpl::class.java, name)
-    },
+    delegate =
+      objects.domainObjectContainer(D2ProjectTypeSpec::class.java) { name ->
+        objects.newInstance(D2ProjectTypeSpecImpl::class.java, name)
+      }
   ),
   D2NamedProjectTypeContainer
 
-internal abstract class D2LinkTypeSpecImpl @Inject constructor(
+internal abstract class D2LinkTypeSpecImpl
+@Inject
+constructor(
   override val name: String,
   objects: ObjectFactory,
 ) : ProjectTypeSpecImpl(name), D2LinkTypeSpec, D2PropertiesSpec by D2PropertiesSpecImpl(objects)
 
-internal class D2NamedLinkTypeContainerImpl(
-  objects: ObjectFactory,
-) : LinkTypeContainer<D2LinkTypeSpec>(
-    delegate = objects.domainObjectContainer(D2LinkTypeSpec::class.java) { name ->
-      objects.newInstance(D2LinkTypeSpecImpl::class.java, name)
-    },
+internal class D2NamedLinkTypeContainerImpl(objects: ObjectFactory) :
+  LinkTypeContainer<D2LinkTypeSpec>(
+    delegate =
+      objects.domainObjectContainer(D2LinkTypeSpec::class.java) { name ->
+        objects.newInstance(D2LinkTypeSpecImpl::class.java, name)
+      }
   ),
   D2NamedLinkTypeContainer
 
-internal class D2LayoutEngineSpecImpl(
-  objects: ObjectFactory,
-) : D2LayoutEngineSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
+internal class D2LayoutEngineSpecImpl(objects: ObjectFactory) :
+  D2LayoutEngineSpec, PropertiesSpec by PropertiesSpecImpl(objects) {
   override val layoutEngine = objects.enum<LayoutEngine>(convention = null)
   override val dagre = D2DagreSpecImpl(this)
   override val elk = D2ElkSpecImpl(this)

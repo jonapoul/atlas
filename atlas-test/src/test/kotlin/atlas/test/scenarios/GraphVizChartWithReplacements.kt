@@ -5,7 +5,8 @@ import atlas.test.Scenario
 import kotlin.text.trimIndent
 
 internal object GraphVizChartWithReplacements : Scenario by GraphvizBasic {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import atlas.graphviz.ArrowType
     import atlas.graphviz.RankDir
 
@@ -25,5 +26,6 @@ internal object GraphVizChartWithReplacements : Scenario by GraphvizBasic {
         replace(pattern = "^b$", replacement = "B") // rename one project to uppercase
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 }

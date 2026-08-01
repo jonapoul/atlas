@@ -21,6 +21,7 @@ import atlas.graphviz.GraphvizSpec
 import atlas.graphviz.Shape.Plaintext
 import atlas.graphviz.internal.appendHeaderGroup
 import atlas.graphviz.internal.attrs
+import java.io.File
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -33,11 +34,8 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.work.DisableCachingByDefault
-import java.io.File
 
-/**
- * Converts a [DotConfig] into a written legend table, generated once in the project root.
- */
+/** Converts a [DotConfig] into a written legend table, generated once in the project root. */
 @CacheableTask
 public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, AtlasGenerationTask {
   @get:Input public abstract val projectTypes: ListProperty<ProjectType>
@@ -67,7 +65,8 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
         appendHeaderGroup(name = "edge", attrs(config.edgeAttributes))
         appendHeaderGroup(name = "graph", attrs(config.graphAttributes))
 
-        val tableAttrs = tableAttributes(config).joinToString(separator = " ") { (k, v) -> "$k=\"$v\"" }
+        val tableAttrs =
+          tableAttributes(config).joinToString(separator = " ") { (k, v) -> "$k=\"$v\"" }
 
         if (hasProjectTypes) {
           appendLine("projects [label=<")
@@ -111,15 +110,17 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
   }
 
   @Suppress("MagicNumber")
-  private fun tableAttributes(config: DotConfig) = listOf(
-    "BORDER" to 0,
-    "CELLBORDER" to 1,
-    "CELLSPACING" to 0,
-    "CELLPADDING" to 4,
-    "COLOR" to config.fontColor(),
-  ).mapNotNull { (k, v) ->
-    if (v == null) null else k to v.toString()
-  }
+  private fun tableAttributes(config: DotConfig) =
+    listOf(
+        "BORDER" to 0,
+        "CELLBORDER" to 1,
+        "CELLSPACING" to 0,
+        "CELLPADDING" to 4,
+        "COLOR" to config.fontColor(),
+      )
+      .mapNotNull { (k, v) ->
+        if (v == null) null else k to v.toString()
+      }
 
   private fun DotConfig.fontColor(): String? =
     listOf(nodeAttributes, graphAttributes).firstNotNullOfOrNull { it?.get("fontcolor") }
@@ -132,45 +133,46 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
       target: Project,
       spec: GraphvizSpec,
       extension: AtlasExtensionImpl,
-    ) = register<WriteGraphvizLegend>(
-      target = target,
-      extension = extension,
-      spec = spec,
-      outputFile = target.outputFile(Legend, spec.fileExtension.get()),
-    )
+    ) =
+      register<WriteGraphvizLegend>(
+        target = target,
+        extension = extension,
+        spec = spec,
+        outputFile = target.outputFile(Legend, spec.fileExtension.get()),
+      )
 
     internal fun dummy(
       target: Project,
       spec: GraphvizSpec,
       extension: AtlasExtensionImpl,
-    ) = register<WriteGraphvizLegendDummy>(
-      target = target,
-      spec = spec,
-      extension = extension,
-      outputFile = target.atlasBuildDirectory
-        .get()
-        .file("legend-temp.dot")
-        .asFile,
-    )
+    ) =
+      register<WriteGraphvizLegendDummy>(
+        target = target,
+        spec = spec,
+        extension = extension,
+        outputFile = target.atlasBuildDirectory.get().file("legend-temp.dot").asFile,
+      )
 
     internal inline fun <reified T : WriteGraphvizLegend> register(
       target: Project,
       spec: GraphvizSpec,
       extension: AtlasExtensionImpl,
       outputFile: File,
-    ): TaskProvider<T> = with(target) {
-      val name = "write${T::class.qualifier}GraphvizLegend"
-      val writeLegend = tasks.register(name, T::class.java) { task ->
-        task.outputFile.set(outputFile)
-      }
+    ): TaskProvider<T> =
+      with(target) {
+        val name = "write${T::class.qualifier}GraphvizLegend"
+        val writeLegend =
+          tasks.register(name, T::class.java) { task ->
+            task.outputFile.set(outputFile)
+          }
 
-      writeLegend.configure { task ->
-        task.projectTypes.convention(extension.orderedProjectTypes().map(::projectType))
-        task.linkTypes.convention(extension.orderedLinkTypes())
-        task.config.convention(DotConfig(extension, spec))
-      }
+        writeLegend.configure { task ->
+          task.projectTypes.convention(extension.orderedProjectTypes().map(::projectType))
+          task.linkTypes.convention(extension.orderedLinkTypes())
+          task.config.convention(DotConfig(extension, spec))
+        }
 
-      return writeLegend
-    }
+        return writeLegend
+      }
   }
 }

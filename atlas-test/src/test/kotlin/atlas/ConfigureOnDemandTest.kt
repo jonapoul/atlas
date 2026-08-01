@@ -12,22 +12,28 @@ import java.io.File
 import kotlin.test.Test
 
 internal class ConfigureOnDemandTest : ScenarioTest() {
-  @Test fun `D2 configureOnDemand on root project`() =
+  @Test
+  fun `D2 configureOnDemand on root project`() =
     runScenario(D2ConfigureOnDemand) { rootProjectTestCase() }
 
-  @Test fun `Graphviz configureOnDemand on root project`() =
+  @Test
+  fun `Graphviz configureOnDemand on root project`() =
     runScenario(GraphvizConfigureOnDemand) { rootProjectTestCase() }
 
-  @Test fun `Mermaid configureOnDemand on root project`() =
+  @Test
+  fun `Mermaid configureOnDemand on root project`() =
     runScenario(MermaidConfigureOnDemand) { rootProjectTestCase() }
 
-  @Test fun `D2 configureOnDemand on subproject fails`() =
+  @Test
+  fun `D2 configureOnDemand on subproject fails`() =
     runScenario(D2ConfigureOnDemand) { subprojectFailsTestCase() }
 
-  @Test fun `Graphviz configureOnDemand on subproject fails`() =
+  @Test
+  fun `Graphviz configureOnDemand on subproject fails`() =
     runScenario(GraphvizConfigureOnDemand) { subprojectFailsTestCase() }
 
-  @Test fun `Mermaid configureOnDemand on subproject fails`() =
+  @Test
+  fun `Mermaid configureOnDemand on subproject fails`() =
     runScenario(MermaidConfigureOnDemand) { subprojectFailsTestCase() }
 
   private fun File.rootProjectTestCase() {
@@ -42,12 +48,16 @@ internal class ConfigureOnDemandTest : ScenarioTest() {
   private fun File.subprojectFailsTestCase() {
     val generate = runTask(":a:atlasGenerate").buildAndFail()
     assertThat(generate.output)
-      .contains("atlasGenerate is disabled when run on a subproject because org.gradle.configureondemand is enabled.")
+      .contains(
+        "atlasGenerate is disabled when run on a subproject because org.gradle.configureondemand is enabled."
+      )
       .contains("you can only run atlasGenerate on the root project, not on :a")
 
     val check = runTask(":a:atlasCheck").buildAndFail()
     assertThat(check.output)
-      .contains("atlasCheck is disabled when run on a subproject because org.gradle.configureondemand is enabled.")
+      .contains(
+        "atlasCheck is disabled when run on a subproject because org.gradle.configureondemand is enabled."
+      )
       .contains("you can only run atlasCheck on the root project, not on :a")
   }
 }

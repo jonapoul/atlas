@@ -3,15 +3,14 @@ package atlas.core.internal
 import atlas.core.InternalAtlasApi
 import atlas.core.PropertiesSpec
 import atlas.core.StringEnum
+import kotlin.reflect.KProperty
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.MapProperty
-import kotlin.reflect.KProperty
 
 @InternalAtlasApi
 public class PropertiesSpecImpl(objects: ObjectFactory) : PropertiesSpec {
-  override val properties: MapProperty<String, String> = objects
-    .mapProperty(String::class.java, String::class.java)
-    .convention(null)
+  override val properties: MapProperty<String, String> =
+    objects.mapProperty(String::class.java, String::class.java).convention(null)
 }
 
 @InternalAtlasApi
@@ -33,7 +32,8 @@ public fun PropertiesSpec.bool(key: String): Delegate<Boolean> =
   Delegate(properties, key, fromString = { it.toBoolean() })
 
 @InternalAtlasApi
-public inline fun <reified E> PropertiesSpec.enum(key: String): Delegate<E> where E : StringEnum, E : Enum<E> =
+public inline fun <reified E> PropertiesSpec.enum(key: String): Delegate<E>
+  where E : StringEnum, E : Enum<E> =
   Delegate(
     mapProperty = properties,
     key = key,

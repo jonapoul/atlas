@@ -10,11 +10,12 @@ internal fun d2Writer(
   thisPath: String = ":app",
   groupProjects: Boolean = false,
   classesRelativePath: String = "../classes.d2",
-) = D2Writer(
-  typedProjects = layout.projects,
-  links = layout.links,
-  replacements = replacements,
-  thisPath = thisPath,
-  groupProjects = groupProjects,
-  pathToClassesFile = classesRelativePath,
-)
+) =
+  D2Writer(
+    typedProjects = layout.projects,
+    links = layout.links,
+    replacements = replacements,
+    thisPath = thisPath,
+    groupProjects = groupProjects,
+    pathToClassesFile = classesRelativePath,
+  )

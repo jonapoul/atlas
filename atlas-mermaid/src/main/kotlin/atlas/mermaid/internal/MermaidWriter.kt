@@ -53,7 +53,10 @@ public class MermaidWriter(
     appendLine("---")
   }
 
-  private fun IndentedStringBuilder.appendProperties(name: String, properties: Map<String, String>?) {
+  private fun IndentedStringBuilder.appendProperties(
+    name: String,
+    properties: Map<String, String>?,
+  ) {
     if (properties.isNullOrEmpty()) return
     appendLine("$name:")
     indent {
@@ -80,9 +83,7 @@ public class MermaidWriter(
     for (project in typedProjects) {
       if (project !in links && project.projectPath != thisPath) continue
 
-      val attrs = Attrs(
-        "fill" to project.type?.color,
-      )
+      val attrs = Attrs("fill" to project.type?.color)
 
       project.type?.let { type ->
         val properties = type.properties + ("fillcolor" to type.color)
@@ -100,10 +101,7 @@ public class MermaidWriter(
     val animateLinks = config.animateLinks == true
     links.forEachIndexed { i, link ->
       val arrowPrefix = if (animateLinks) "link$i@" else ""
-      val style = link.type
-        ?.style
-        ?.let { parseEnum<LinkStyle>(it) }
-        ?: LinkStyle.Basic
+      val style = link.type?.style?.let { parseEnum<LinkStyle>(it) } ?: LinkStyle.Basic
 
       val arrow = getArrow(link.type, style)
       val from = typedProjects.first { it.projectPath == link.fromPath }.cleaned().label
@@ -155,9 +153,8 @@ public class MermaidWriter(
     get() = split(":", "-", " ").joinToString("_")
 
   @Suppress("SpreadOperator")
-  private class Attrs private constructor(
-    private val delegate: MutableMap<String, Any?>,
-  ) : MutableMap<String, Any?> by delegate {
+  private class Attrs private constructor(private val delegate: MutableMap<String, Any?>) :
+    MutableMap<String, Any?> by delegate {
     constructor(vararg entries: Pair<String, Any?>) : this(mutableMapOf(*entries))
 
     init {

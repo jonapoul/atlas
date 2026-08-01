@@ -6,7 +6,8 @@ import atlas.test.javaBuildScript
 import atlas.test.kotlinJvmBuildScript
 
 internal object GraphvizBasic : GraphvizScenario {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
@@ -19,19 +20,21 @@ internal object GraphvizBasic : GraphvizScenario {
         hasPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 
-  override val subprojectBuildFiles = mapOf(
-    "a" to """
+  override val subprojectBuildFiles =
+    mapOf(
+      "a" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         api(project(":b"))
         implementation(project(":c"))
       }
-    """.trimIndent(),
-
-    "b" to javaBuildScript,
-
-    "c" to javaBuildScript,
-  )
+    """
+          .trimIndent(),
+      "b" to javaBuildScript,
+      "c" to javaBuildScript,
+    )
 }

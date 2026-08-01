@@ -1,17 +1,19 @@
 package atlas.test
 
-import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import org.junit.jupiter.api.io.TempDir
 
 @Suppress("AbstractClassCanBeConcreteClass")
 internal abstract class ScenarioTest {
   @TempDir lateinit var projectRoot: File
 
   protected fun <T> runScenario(scenario: Scenario, test: File.() -> T) {
-    val settingsFile = """
+    val settingsFile =
+      """
       ${if (scenario.isGroovy) REPOSITORIES_GRADLE_GROOVY else REPOSITORIES_GRADLE_KTS}
       ${scenario.includeStatements()}
-    """.trimIndent()
+    """
+        .trimIndent()
 
     with(projectRoot) {
       resolve(scenario.settingsFileName).writeText(settingsFile)
@@ -28,13 +30,14 @@ internal abstract class ScenarioTest {
     }
   }
 
-  private fun projectPathToFilePath(projectPath: String): String = projectPath
-    .split(":")
-    .filter { it.isNotEmpty() }
-    .joinToString(separator = File.separator)
+  private fun projectPathToFilePath(projectPath: String): String =
+    projectPath.split(":").filter { it.isNotEmpty() }.joinToString(separator = File.separator)
 
-  private val Scenario.buildFileName get() = if (isGroovy) "build.gradle" else "build.gradle.kts"
-  private val Scenario.settingsFileName get() = if (isGroovy) "settings.gradle" else "settings.gradle.kts"
+  private val Scenario.buildFileName
+    get() = if (isGroovy) "build.gradle" else "build.gradle.kts"
+
+  private val Scenario.settingsFileName
+    get() = if (isGroovy) "settings.gradle" else "settings.gradle.kts"
 
   private fun Scenario.includeStatements() =
     subprojectBuildFiles.keys.joinToString(separator = "\n") { name ->

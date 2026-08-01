@@ -27,9 +27,10 @@ dependencies {
   dokka(project(":atlas-mermaid"))
 }
 
-val detektReportMergeSarif by tasks.registering(ReportMergeTask::class) {
-  output = layout.buildDirectory.file("reports/detekt/merge.sarif.json")
-}
+val detektReportMergeSarif by
+  tasks.registering(ReportMergeTask::class) {
+    output = layout.buildDirectory.file("reports/detekt/merge.sarif.json")
+  }
 
 tasks.named("check").configure { dependsOn(detektReportMergeSarif) }
 

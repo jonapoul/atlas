@@ -6,7 +6,8 @@ import atlas.test.javaBuildScript
 internal object PathMatches : GraphvizScenario {
   const val THREE_QUOTES = "\"\"\""
 
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import kotlin.text.RegexOption.*
 
     plugins {
@@ -51,13 +52,15 @@ internal object PathMatches : GraphvizScenario {
         )
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 
-  override val subprojectBuildFiles = mapOf(
-    "abc123" to javaBuildScript,
-    "Test-X" to javaBuildScript,
-    "hello" to javaBuildScript,
-    "a1-B2-C3" to javaBuildScript,
-    "foo-bar" to javaBuildScript,
-  )
+  override val subprojectBuildFiles =
+    mapOf(
+      "abc123" to javaBuildScript,
+      "Test-X" to javaBuildScript,
+      "hello" to javaBuildScript,
+      "a1-B2-C3" to javaBuildScript,
+      "foo-bar" to javaBuildScript,
+    )
 }

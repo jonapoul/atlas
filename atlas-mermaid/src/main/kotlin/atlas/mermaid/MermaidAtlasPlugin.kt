@@ -17,20 +17,22 @@ public class MermaidAtlasPlugin : AtlasPlugin() {
   private lateinit var mermaidExtension: MermaidAtlasExtensionImpl
   override val extension: AtlasExtensionImpl by lazy { mermaidExtension }
 
-  override fun applyToRoot(target: Project): Unit = with(target) {
-    mermaidExtension = extensions.create(
-      MermaidAtlasExtension::class.java,
-      AtlasExtensionImpl.NAME,
-      MermaidAtlasExtensionImpl::class.java,
-    ) as MermaidAtlasExtensionImpl
+  override fun applyToRoot(target: Project): Unit =
+    with(target) {
+      mermaidExtension =
+        extensions.create(
+          MermaidAtlasExtension::class.java,
+          AtlasExtensionImpl.NAME,
+          MermaidAtlasExtensionImpl::class.java,
+        ) as MermaidAtlasExtensionImpl
 
-    super.applyToRoot(target)
-  }
+      super.applyToRoot(target)
+    }
 
   override fun applyToChild(target: Project) {
-    mermaidExtension = target.rootProject
-      .extensions
-      .getByType(MermaidAtlasExtension::class.java) as MermaidAtlasExtensionImpl
+    mermaidExtension =
+      target.rootProject.extensions.getByType(MermaidAtlasExtension::class.java)
+        as MermaidAtlasExtensionImpl
 
     super.applyToChild(target)
   }
@@ -38,17 +40,19 @@ public class MermaidAtlasPlugin : AtlasPlugin() {
   override fun Project.registerChildTasks() {
     val spec = mermaidExtension.mermaid
 
-    val chartTask = WriteMermaidChart.real(
-      target = project,
-      extension = extension,
-      spec = spec,
-    )
+    val chartTask =
+      WriteMermaidChart.real(
+        target = project,
+        extension = extension,
+        spec = spec,
+      )
 
-    val dummyChartTask = WriteMermaidChart.dummy(
-      target = project,
-      extension = extension,
-      spec = spec,
-    )
+    val dummyChartTask =
+      WriteMermaidChart.dummy(
+        target = project,
+        extension = extension,
+        spec = spec,
+      )
 
     CheckFileDiff.register(
       target = project,
@@ -70,15 +74,17 @@ public class MermaidAtlasPlugin : AtlasPlugin() {
   override fun Project.registerRootTasks() {
     val spec = mermaidExtension.mermaid
 
-    val realTask = WriteMarkdownLegend.real(
-      target = project,
-      extension = extension,
-    )
+    val realTask =
+      WriteMarkdownLegend.real(
+        target = project,
+        extension = extension,
+      )
 
-    val dummyTask = WriteMarkdownLegend.dummy(
-      target = project,
-      extension = extension,
-    )
+    val dummyTask =
+      WriteMarkdownLegend.dummy(
+        target = project,
+        extension = extension,
+      )
 
     CheckFileDiff.register(
       target = project,

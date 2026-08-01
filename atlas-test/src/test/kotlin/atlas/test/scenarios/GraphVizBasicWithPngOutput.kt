@@ -4,7 +4,8 @@ import atlas.test.KOTLIN_VERSION
 import atlas.test.Scenario
 
 internal object GraphVizBasicWithPngOutput : Scenario by GraphvizBasic {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import atlas.graphviz.FileFormat
 
     plugins {
@@ -22,5 +23,6 @@ internal object GraphVizBasicWithPngOutput : Scenario by GraphvizBasic {
         fileFormat = FileFormat.Png
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 }

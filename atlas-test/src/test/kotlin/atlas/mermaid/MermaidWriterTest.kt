@@ -10,46 +10,51 @@ import kotlin.test.Test
 internal class MermaidWriterTest {
   @Test
   fun `Base config with no project types`() {
-    val writer = mermaidWriter(
-      typedProjects = OneLevelOfSubprojects.projects,
-      links = OneLevelOfSubprojects.links,
-    )
+    val writer =
+      mermaidWriter(
+        typedProjects = OneLevelOfSubprojects.projects,
+        links = OneLevelOfSubprojects.links,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
-      graph TD
-        _app[":app"]
-        _data_a[":data:a"]
-        _data_b[":data:b"]
-        _domain_a[":domain:a"]
-        _domain_b[":domain:b"]
-        _ui_a[":ui:a"]
-        _ui_b[":ui:b"]
-        _ui_c[":ui:c"]
-        _app --> _ui_a
-        _app --> _ui_b
-        _app --> _ui_c
-        _domain_a --> _data_a
-        _domain_b --> _data_a
-        _domain_b --> _data_b
-        _ui_a --> _domain_a
-        _ui_b --> _domain_b
-        _ui_c --> _domain_a
-        _ui_c --> _domain_b
-      """.trimIndent(),
-    )
+    assertThat(writer())
+      .equalsDiffed(
+        """
+        graph TD
+          _app[":app"]
+          _data_a[":data:a"]
+          _data_b[":data:b"]
+          _domain_a[":domain:a"]
+          _domain_b[":domain:b"]
+          _ui_a[":ui:a"]
+          _ui_b[":ui:b"]
+          _ui_c[":ui:c"]
+          _app --> _ui_a
+          _app --> _ui_b
+          _app --> _ui_c
+          _domain_a --> _data_a
+          _domain_b --> _data_a
+          _domain_b --> _data_b
+          _ui_a --> _domain_a
+          _ui_b --> _domain_b
+          _ui_c --> _domain_a
+          _ui_c --> _domain_b
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Grouping projects`() {
-    val writer = mermaidWriter(
-      typedProjects = OneLevelOfSubprojects.projects,
-      links = OneLevelOfSubprojects.links,
-      groupProjects = true,
-    )
+    val writer =
+      mermaidWriter(
+        typedProjects = OneLevelOfSubprojects.projects,
+        links = OneLevelOfSubprojects.links,
+        groupProjects = true,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         graph TD
           _app[":app"]
           subgraph data[":data"]
@@ -75,20 +80,23 @@ internal class MermaidWriterTest {
           _ui_b --> _domain_b
           _ui_c --> _domain_a
           _ui_c --> _domain_b
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Grouping projects with sub-subgraphs`() {
-    val writer = mermaidWriter(
-      typedProjects = TwoLevelsOfSubprojects.projects,
-      links = TwoLevelsOfSubprojects.links,
-      groupProjects = true,
-    )
+    val writer =
+      mermaidWriter(
+        typedProjects = TwoLevelsOfSubprojects.projects,
+        links = TwoLevelsOfSubprojects.links,
+        groupProjects = true,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         graph TD
           _app[":app"]
           subgraph data[":data"]
@@ -120,23 +128,27 @@ internal class MermaidWriterTest {
           _ui_b --> _domain_b
           _ui_c --> _domain_a
           _ui_c --> _domain_b
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 
   @Test
   fun `Single project with no links`() {
-    val writer = mermaidWriter(
-      typedProjects = ProjectWithNoLinks.projects,
-      links = ProjectWithNoLinks.links,
-    )
+    val writer =
+      mermaidWriter(
+        typedProjects = ProjectWithNoLinks.projects,
+        links = ProjectWithNoLinks.links,
+      )
 
-    assertThat(writer()).equalsDiffed(
-      """
+    assertThat(writer())
+      .equalsDiffed(
+        """
         graph TD
           _app[":app"]
           style _app fill:red,fillcolor:red
-      """.trimIndent(),
-    )
+        """
+          .trimIndent()
+      )
   }
 }

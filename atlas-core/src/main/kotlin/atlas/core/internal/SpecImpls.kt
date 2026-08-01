@@ -6,6 +6,7 @@ import atlas.core.LinkTypeSpec
 import atlas.core.PathTransformSpec
 import atlas.core.ProjectTypeSpec
 import atlas.core.Replacement
+import javax.inject.Inject
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
@@ -13,7 +14,6 @@ import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.Input
-import javax.inject.Inject
 
 @InternalAtlasApi
 public abstract class AtlasExtensionImpl(
@@ -22,39 +22,50 @@ public abstract class AtlasExtensionImpl(
 ) : AtlasExtension {
   private val coreProperties = CoreGradleProperties(project)
 
-  override val alsoTraverseUpwards: Property<Boolean> = objects.bool(coreProperties.alsoTraverseUpwards)
+  override val alsoTraverseUpwards: Property<Boolean> =
+    objects.bool(coreProperties.alsoTraverseUpwards)
   override val checkOutputs: Property<Boolean> = objects.bool(coreProperties.checkOutputs)
   override val displayLinkLabels: Property<Boolean> = objects.bool(coreProperties.displayLinkLabels)
   override val generateOnSync: Property<Boolean> = objects.bool(coreProperties.generateOnSync)
   override val groupProjects: Property<Boolean> = objects.bool(coreProperties.groupProjects)
-  override val ignoredConfigs: SetProperty<String> = objects.set(convention = setOf("debug", "kover", "ksp", "test"))
+  override val ignoredConfigs: SetProperty<String> =
+    objects.set(convention = setOf("debug", "kover", "ksp", "test"))
   override val ignoredProjects: SetProperty<Regex> = objects.set(convention = emptySet())
-  override val printFilesToConsole: Property<Boolean> = objects.bool(coreProperties.printFilesToConsole)
+  override val printFilesToConsole: Property<Boolean> =
+    objects.bool(coreProperties.printFilesToConsole)
 
   override val pathTransforms: PathTransformSpecImpl = PathTransformSpecImpl(objects)
-  override fun pathTransforms(action: Action<PathTransformSpec>): Unit = action.execute(pathTransforms)
+
+  override fun pathTransforms(action: Action<PathTransformSpec>): Unit =
+    action.execute(pathTransforms)
 
   abstract override val projectTypes: ProjectTypeContainer<*>
   abstract override val linkTypes: LinkTypeContainer<*>
 
   @InternalAtlasApi
   public companion object {
-    @InternalAtlasApi
-    public const val NAME: String = "atlas"
+    @InternalAtlasApi public const val NAME: String = "atlas"
   }
 }
 
 @InternalAtlasApi
 public class PathTransformSpecImpl(objects: ObjectFactory) : PathTransformSpec {
   override val replacements: SetProperty<Replacement> = objects.setProperty(Replacement::class.java)
-  override fun replace(pattern: Regex, replacement: String): Unit = replacements.add(Replacement(pattern, replacement))
-  override fun replace(pattern: String, replacement: String): Unit = replace(pattern.toRegex(), replacement)
+
+  override fun replace(pattern: Regex, replacement: String): Unit =
+    replacements.add(Replacement(pattern, replacement))
+
+  override fun replace(pattern: String, replacement: String): Unit =
+    replace(pattern.toRegex(), replacement)
+
   override fun remove(pattern: Regex): Unit = replace(pattern, replacement = "")
+
   override fun remove(pattern: String): Unit = remove(pattern.toRegex())
 }
 
 @InternalAtlasApi
-public abstract class ProjectTypeSpecImpl @Inject constructor(override val name: String) : ProjectTypeSpec {
+public abstract class ProjectTypeSpecImpl @Inject constructor(override val name: String) :
+  ProjectTypeSpec {
   @get:Input public abstract override val color: Property<String>
   @get:Input public abstract override val pathContains: Property<String>
   @get:Input public abstract override val pathMatches: Property<String>
@@ -70,7 +81,8 @@ public abstract class ProjectTypeSpecImpl @Inject constructor(override val name:
   }
 }
 
-internal abstract class LinkTypeSpecImpl @Inject constructor(override val name: String) : LinkTypeSpec {
+internal abstract class LinkTypeSpecImpl @Inject constructor(override val name: String) :
+  LinkTypeSpec {
   @get:Input abstract override val configuration: Property<String>
   @get:Input abstract override val style: Property<String>
   @get:Input abstract override val color: Property<String>

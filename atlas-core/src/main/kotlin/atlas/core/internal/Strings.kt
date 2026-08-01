@@ -11,11 +11,12 @@ public fun diff(expected: String, actual: String): String {
   val dp = Array(expectedLines.size + 1) { IntArray(actualLines.size + 1) }
   for (i in expectedLines.indices.reversed()) {
     for (j in actualLines.indices.reversed()) {
-      dp[i][j] = if (expectedLines[i] == actualLines[j]) {
-        1 + dp[i + 1][j + 1]
-      } else {
-        maxOf(dp[i + 1][j], dp[i][j + 1])
-      }
+      dp[i][j] =
+        if (expectedLines[i] == actualLines[j]) {
+          1 + dp[i + 1][j + 1]
+        } else {
+          maxOf(dp[i + 1][j], dp[i][j + 1])
+        }
     }
   }
 
@@ -32,14 +33,16 @@ public fun diff(expected: String, actual: String): String {
           j++
         }
 
-        // Case 2: Prefer consuming a line from actual if it leads to a longer match later. This means a line was
+        // Case 2: Prefer consuming a line from actual if it leads to a longer match later. This
+        // means a line was
         // inserted in actual that doesn't exist in expected.
         j < actualLines.size && (i == expectedLines.size || dp[i][j + 1] >= dp[i + 1][j]) -> {
           appendLine("--- ${actualLines[j]}")
           j++
         }
 
-        // Case 3: consume a line from expected. This means a line was removed from actual compared to expected
+        // Case 3: consume a line from expected. This means a line was removed from actual compared
+        // to expected
         i < expectedLines.size -> {
           appendLine("+++ ${expectedLines[i]}")
           i++
@@ -54,7 +57,8 @@ public class IndentedStringBuilder(private val indentSize: Int) {
   private val sb = StringBuilder()
   private var currentIndent = 0
   private var atLineStart = true
-  private val indent get() = " ".repeat(currentIndent)
+  private val indent
+    get() = " ".repeat(currentIndent)
 
   public fun appendLine(line: String = ""): IndentedStringBuilder {
     if (atLineStart) sb.append(indent)
@@ -84,6 +88,4 @@ public class IndentedStringBuilder(private val indentSize: Int) {
 public fun buildIndentedString(
   size: Int = 2,
   block: IndentedStringBuilder.() -> Unit,
-): String = IndentedStringBuilder(size)
-  .also { it.block() }
-  .toString()
+): String = IndentedStringBuilder(size).also { it.block() }.toString()

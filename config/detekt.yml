@@ -1,5 +1,8 @@
 ---
 complexity:
+  LongMethod:
+    # ktfmt's google style is verbose, and the data-heavy assertions in tests blow past the default
+    excludes: [ "**/test/**", "**/*Test/**" ]
   LongParameterList:
     allowedConstructorParameters: 8
     allowedFunctionParameters: 8

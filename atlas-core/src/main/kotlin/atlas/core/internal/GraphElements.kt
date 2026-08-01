@@ -3,13 +3,9 @@ package atlas.core.internal
 import atlas.core.InternalAtlasApi
 import atlas.core.Replacement
 
-@InternalAtlasApi
-public sealed interface GraphElement
+@InternalAtlasApi public sealed interface GraphElement
 
-@InternalAtlasApi
-public data class Node(
-  val typedProject: TypedProject,
-) : GraphElement
+@InternalAtlasApi public data class Node(val typedProject: TypedProject) : GraphElement
 
 @InternalAtlasApi
 public data class Subgraph(
@@ -29,9 +25,10 @@ public fun buildGraphElements(
   val cleanedProjects = typedProjects.map { it.cleaned(replacements) }
   val cleanedLinks = links.map { it.cleaned(replacements) }
   return buildHierarchy(
-    nodeData = cleanedProjects
-      .filter { project -> shouldIncludeProject(project, cleanedLinks, thisPath, replacements) }
-      .map { project -> project to project.projectPath.split(":").filter { it.isNotEmpty() } },
+    nodeData =
+      cleanedProjects
+        .filter { project -> shouldIncludeProject(project, cleanedLinks, thisPath, replacements) }
+        .map { project -> project to project.projectPath.split(":").filter { it.isNotEmpty() } }
   )
 }
 
@@ -45,9 +42,10 @@ private fun shouldIncludeProject(
 private fun buildHierarchy(nodeData: List<Pair<TypedProject, List<String>>>): List<GraphElement> {
   val elements = mutableListOf<GraphElement>()
 
-  val (rootNodes, nestedNodes) = nodeData.partition { (_, parts) ->
-    parts.size == 1 || parts.isEmpty()
-  }
+  val (rootNodes, nestedNodes) =
+    nodeData.partition { (_, parts) ->
+      parts.size == 1 || parts.isEmpty()
+    }
 
   rootNodes.forEach { (project, _) ->
     elements.add(Node(project))
@@ -63,12 +61,16 @@ private fun buildHierarchy(nodeData: List<Pair<TypedProject, List<String>>>): Li
   return elements
 }
 
-private fun buildSubgraphElements(nodeData: List<Pair<TypedProject, List<String>>>, level: Int): List<GraphElement> {
+private fun buildSubgraphElements(
+  nodeData: List<Pair<TypedProject, List<String>>>,
+  level: Int,
+): List<GraphElement> {
   val elements = mutableListOf<GraphElement>()
 
-  val (leafNodes, deeperNodes) = nodeData.partition { (_, parts) ->
-    parts.size == level + 1
-  }
+  val (leafNodes, deeperNodes) =
+    nodeData.partition { (_, parts) ->
+      parts.size == level + 1
+    }
 
   leafNodes.forEach { (project, _) ->
     elements.add(Node(project))
@@ -97,12 +99,13 @@ public fun String.cleaned(replacements: Set<Replacement>): String {
 public fun TypedProject.cleaned(replacements: Set<Replacement>): TypedProject =
   copy(projectPath = projectPath.cleaned(replacements))
 
-private fun ProjectLink.cleaned(replacements: Set<Replacement>) = ProjectLink(
-  fromPath = fromPath.cleaned(replacements),
-  toPath = toPath.cleaned(replacements),
-  configuration = configuration,
-  type = type,
-)
+private fun ProjectLink.cleaned(replacements: Set<Replacement>) =
+  ProjectLink(
+    fromPath = fromPath.cleaned(replacements),
+    toPath = toPath.cleaned(replacements),
+    configuration = configuration,
+    type = type,
+  )
 
 @InternalAtlasApi
 public abstract class ChartWriter {
@@ -115,7 +118,9 @@ public abstract class ChartWriter {
   protected abstract val thisPath: String
 
   protected abstract fun IndentedStringBuilder.appendProject(project: TypedProject)
+
   protected abstract fun IndentedStringBuilder.appendSubgraphHeader(graph: Subgraph)
+
   protected abstract fun IndentedStringBuilder.appendSubgraphFooter()
 
   protected fun IndentedStringBuilder.appendProjects() {
@@ -155,9 +160,7 @@ public abstract class ChartWriter {
 
     if (links.isEmpty() || typedProjects.size == 1) {
       // Single-project case - we still want this project to be shown along with its type
-      typedProjects
-        .firstOrNull { it.projectPath == thisPath }
-        ?.let { appendProject(it.cleaned()) }
+      typedProjects.firstOrNull { it.projectPath == thisPath }?.let { appendProject(it.cleaned()) }
     }
   }
 
@@ -168,6 +171,7 @@ public abstract class ChartWriter {
   @InternalAtlasApi
   public companion object {
     @InternalAtlasApi
-    public val SUPPORTED_CHAR_REGEX: Regex = "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()
+    public val SUPPORTED_CHAR_REGEX: Regex =
+      "^[a-zA-Z\\u0080-\\u00FF_][a-zA-Z\\u0080-\\u00FF_0-9]*$".toRegex()
   }
 }

@@ -8,4 +8,5 @@ import atlas.core.NamedProjectTypeContainer
 public interface MermaidNamedLinkTypeContainer : NamedLinkTypeContainer<MermaidLinkTypeSpec>
 
 @AtlasDsl
-public interface MermaidNamedProjectTypeContainer : NamedProjectTypeContainer<MermaidProjectTypeSpec>
+public interface MermaidNamedProjectTypeContainer :
+  NamedProjectTypeContainer<MermaidProjectTypeSpec>

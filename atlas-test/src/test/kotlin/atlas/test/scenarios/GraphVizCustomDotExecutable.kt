@@ -5,7 +5,8 @@ import atlas.test.Scenario
 import kotlin.text.trimIndent
 
 internal object GraphVizCustomDotExecutable : Scenario by GraphvizBasic {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import atlas.graphviz.FileFormat
     import atlas.graphviz.LayoutEngine.Neato
 
@@ -25,5 +26,6 @@ internal object GraphVizCustomDotExecutable : Scenario by GraphvizBasic {
         fileFormat = FileFormat.Svg
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 }

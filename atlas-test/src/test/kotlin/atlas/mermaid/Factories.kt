@@ -12,11 +12,12 @@ internal fun mermaidWriter(
   thisPath: String = ":app",
   groupProjects: Boolean = false,
   config: MermaidConfig = MermaidConfig(),
-) = MermaidWriter(
-  typedProjects = typedProjects,
-  links = links,
-  replacements = replacements,
-  thisPath = thisPath,
-  groupProjects = groupProjects,
-  config = config,
-)
+) =
+  MermaidWriter(
+    typedProjects = typedProjects,
+    links = links,
+    replacements = replacements,
+    thisPath = thisPath,
+    groupProjects = groupProjects,
+    config = config,
+  )

@@ -6,7 +6,8 @@ import atlas.test.javaBuildScript
 import atlas.test.kotlinJvmBuildScript
 
 internal object GraphVizChartWithCustomLinkTypes : GraphvizScenario {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     import atlas.graphviz.ArrowType
     import atlas.graphviz.RankDir
     import atlas.graphviz.LinkStyle
@@ -28,22 +29,23 @@ internal object GraphVizChartWithCustomLinkTypes : GraphvizScenario {
         "compileOnly"(color = "#FF55FF", style = LinkStyle.Dotted)
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 
-  override val subprojectBuildFiles = mapOf(
-    "a" to """
+  override val subprojectBuildFiles =
+    mapOf(
+      "a" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         api(project(":b"))
         implementation(project(":c"))
         compileOnly(project(":d"))
       }
-    """.trimIndent(),
-
-    "b" to kotlinJvmBuildScript,
-
-    "c" to javaBuildScript,
-
-    "d" to javaBuildScript,
-  )
+    """
+          .trimIndent(),
+      "b" to kotlinJvmBuildScript,
+      "c" to javaBuildScript,
+      "d" to javaBuildScript,
+    )
 }

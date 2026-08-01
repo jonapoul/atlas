@@ -8,4 +8,5 @@ import atlas.core.NamedProjectTypeContainer
 public interface GraphvizNamedLinkTypeContainer : NamedLinkTypeContainer<GraphvizLinkTypeSpec>
 
 @AtlasDsl
-public interface GraphvizNamedProjectTypeContainer : NamedProjectTypeContainer<GraphvizProjectTypeSpec>
+public interface GraphvizNamedProjectTypeContainer :
+  NamedProjectTypeContainer<GraphvizProjectTypeSpec>

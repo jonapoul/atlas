@@ -1,25 +1,25 @@
 package atlas.test
 
+import java.io.File
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.Assumptions.assumeFalse
-import java.io.File
 
-internal fun File.buildRunner(requiresAndroid: Boolean = false): GradleRunner = GradleRunner
-  .create()
-  .withPluginClasspath()
-  .withDebug(false)
-  .withGradleVersion(GRADLE_VERSION)
-  .withProjectDir(this)
-  .apply {
-    if (requiresAndroid) {
-      val home = ANDROID_HOME
-      if (home == null) {
-        assumeFalse(true, "No ANDROID_HOME supplied for an android test")
-      } else {
-        withEnvironment(mapOf("ANDROID_HOME" to home.absolutePath))
+internal fun File.buildRunner(requiresAndroid: Boolean = false): GradleRunner =
+  GradleRunner.create()
+    .withPluginClasspath()
+    .withDebug(false)
+    .withGradleVersion(GRADLE_VERSION)
+    .withProjectDir(this)
+    .apply {
+      if (requiresAndroid) {
+        val home = ANDROID_HOME
+        if (home == null) {
+          assumeFalse(true, "No ANDROID_HOME supplied for an android test")
+        } else {
+          withEnvironment(mapOf("ANDROID_HOME" to home.absolutePath))
+        }
       }
     }
-  }
 
 internal fun File.runTask(
   task: String,
@@ -30,12 +30,13 @@ internal fun File.runTask(
 internal fun GradleRunner.runTask(
   task: String,
   extras: List<String> = emptyList(),
-): GradleRunner = withArguments(
-  listOf(
-    task,
-    "--configuration-cache",
-    // "--info",
-    // "--stacktrace",
-    "-Pandroid.useAndroidX=true", // needed for android builds to work, unused otherwise
-  ) + extras,
-)
+): GradleRunner =
+  withArguments(
+    listOf(
+      task,
+      "--configuration-cache",
+      // "--info",
+      // "--stacktrace",
+      "-Pandroid.useAndroidX=true", // needed for android builds to work, unused otherwise
+    ) + extras
+  )

@@ -21,12 +21,14 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 /**
- * Registered on the root project to aggregate the results of [WriteProjectLinks] tasks. This will then be referenced
- * from [WriteProjectTree] to draw up the full project picture. This will then be sub-charted for each project in turn.
+ * Registered on the root project to aggregate the results of [WriteProjectLinks] tasks. This will
+ * then be referenced from [WriteProjectTree] to draw up the full project picture. This will then be
+ * sub-charted for each project in turn.
  */
 @CacheableTask
 public abstract class CollateProjectLinks : DefaultTask(), TaskWithOutputFile {
-  @get:[PathSensitive(NONE) InputFiles] public abstract val projectLinkFiles: ConfigurableFileCollection
+  @get:[PathSensitive(NONE) InputFiles]
+  public abstract val projectLinkFiles: ConfigurableFileCollection
   @get:Input public abstract val ignoredProjects: SetProperty<Regex>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
 
@@ -39,10 +41,7 @@ public abstract class CollateProjectLinks : DefaultTask(), TaskWithOutputFile {
   public fun execute() {
     val outputFile = outputFile.get().asFile
 
-    val links = projectLinkFiles
-      .flatMap(::readProjectLinks)
-      .filterProjects()
-      .toSet()
+    val links = projectLinkFiles.flatMap(::readProjectLinks).filterProjects().toSet()
 
     for ((from, to) in links) {
       if (to == from) {
@@ -54,7 +53,9 @@ public abstract class CollateProjectLinks : DefaultTask(), TaskWithOutputFile {
 
     logger.info("CollateProjectLinks: ${links.size} links")
     links.forEach { link ->
-      logger.info("CollateProjectLinks:     from=${link.fromPath}, to=${link.toPath}, config=${link.configuration}")
+      logger.info(
+        "CollateProjectLinks:     from=${link.fromPath}, to=${link.toPath}, config=${link.configuration}"
+      )
     }
   }
 
@@ -73,11 +74,12 @@ public abstract class CollateProjectLinks : DefaultTask(), TaskWithOutputFile {
     internal fun register(
       target: Project,
       extension: AtlasExtension,
-    ): TaskProvider<CollateProjectLinks> = with(target) {
-      tasks.register(NAME, CollateProjectLinks::class.java) { task ->
-        task.outputFile.convention(fileInBuildDirectory("project-links.json"))
-        task.ignoredProjects.convention(extension.ignoredProjects)
+    ): TaskProvider<CollateProjectLinks> =
+      with(target) {
+        tasks.register(NAME, CollateProjectLinks::class.java) { task ->
+          task.outputFile.convention(fileInBuildDirectory("project-links.json"))
+          task.ignoredProjects.convention(extension.ignoredProjects)
+        }
       }
-    }
   }
 }

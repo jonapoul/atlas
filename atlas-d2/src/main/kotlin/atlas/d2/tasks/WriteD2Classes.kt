@@ -10,6 +10,7 @@ import atlas.d2.internal.D2AtlasExtensionImpl
 import atlas.d2.internal.D2ClassesConfig
 import atlas.d2.internal.toConfig
 import atlas.d2.internal.writeD2Classes
+import java.io.File
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -20,7 +21,6 @@ import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.work.DisableCachingByDefault
-import java.io.File
 
 @CacheableTask
 public abstract class WriteD2Classes : DefaultTask(), AtlasGenerationTask, TaskWithOutputFile {
@@ -65,17 +65,19 @@ public abstract class WriteD2Classes : DefaultTask(), AtlasGenerationTask, TaskW
       target: Project,
       extension: D2AtlasExtensionImpl,
       outputFile: File,
-    ): TaskProvider<T> = with(target) {
-      val name = "write${T::class.qualifier}D2Classes"
-      val writeClasses = tasks.register(name, T::class.java) { task ->
-        task.outputFile.set(outputFile)
-      }
+    ): TaskProvider<T> =
+      with(target) {
+        val name = "write${T::class.qualifier}D2Classes"
+        val writeClasses =
+          tasks.register(name, T::class.java) { task ->
+            task.outputFile.set(outputFile)
+          }
 
-      writeClasses.configure { task ->
-        task.config.convention(extension.toConfig())
-      }
+        writeClasses.configure { task ->
+          task.config.convention(extension.toConfig())
+        }
 
-      writeClasses
-    }
+        writeClasses
+      }
   }
 }

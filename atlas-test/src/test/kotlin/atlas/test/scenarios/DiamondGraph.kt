@@ -5,7 +5,8 @@ import atlas.test.KOTLIN_VERSION
 import atlas.test.kotlinJvmBuildScript
 
 internal object DiamondGraph : GraphvizScenario {
-  override val rootBuildFile = """
+  override val rootBuildFile =
+    """
     plugins {
       kotlin("jvm") version "$KOTLIN_VERSION" apply false
       id("$pluginId")
@@ -16,31 +17,36 @@ internal object DiamondGraph : GraphvizScenario {
         kotlinJvm()
       }
     }
-  """.trimIndent()
+  """
+      .trimIndent()
 
-  override val subprojectBuildFiles = mapOf(
-    "top" to """
+  override val subprojectBuildFiles =
+    mapOf(
+      "top" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         api(project(":mid-a"))
         implementation(project(":mid-b"))
       }
-    """.trimIndent(),
-
-    "mid-a" to """
+    """
+          .trimIndent(),
+      "mid-a" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         api(project(":bottom"))
       }
-    """.trimIndent(),
-
-    "mid-b" to """
+    """
+          .trimIndent(),
+      "mid-b" to
+        """
       $kotlinJvmBuildScript
       dependencies {
         implementation(project(":bottom"))
       }
-    """.trimIndent(),
-
-    "bottom" to kotlinJvmBuildScript,
-  )
+    """
+          .trimIndent(),
+      "bottom" to kotlinJvmBuildScript,
+    )
 }

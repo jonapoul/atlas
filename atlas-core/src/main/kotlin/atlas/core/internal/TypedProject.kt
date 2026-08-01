@@ -2,13 +2,13 @@ package atlas.core.internal
 
 import atlas.core.InternalAtlasApi
 import atlas.core.ProjectType
+import java.io.File
+import java.io.Serializable as JSerializable
+import kotlinx.serialization.Serializable as KSerializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.SetSerializer
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.json.encodeToStream
-import java.io.File
-import java.io.Serializable as JSerializable
-import kotlinx.serialization.Serializable as KSerializable
 
 @InternalAtlasApi
 @KSerializable
@@ -20,20 +20,22 @@ public data class TypedProject(
 }
 
 @InternalAtlasApi
-public fun readProjectTypes(inputFile: File): Set<TypedProject> = inputFile.inputStream().use { stream ->
-  AtlasJson.decodeFromStream(
-    deserializer = SetSerializer(TypedProject.serializer()),
-    stream = stream,
-  )
-}
+public fun readProjectTypes(inputFile: File): Set<TypedProject> =
+  inputFile.inputStream().use { stream ->
+    AtlasJson.decodeFromStream(
+      deserializer = SetSerializer(TypedProject.serializer()),
+      stream = stream,
+    )
+  }
 
 @InternalAtlasApi
-public fun readProjectType(inputFile: File): TypedProject = inputFile.inputStream().use { stream ->
-  AtlasJson.decodeFromStream(
-    deserializer = TypedProject.serializer(),
-    stream = stream,
-  )
-}
+public fun readProjectType(inputFile: File): TypedProject =
+  inputFile.inputStream().use { stream ->
+    AtlasJson.decodeFromStream(
+      deserializer = TypedProject.serializer(),
+      stream = stream,
+    )
+  }
 
 internal fun writeProjectTypes(projects: Collection<TypedProject>, outputFile: File) {
   outputFile.outputStream().use { stream ->
