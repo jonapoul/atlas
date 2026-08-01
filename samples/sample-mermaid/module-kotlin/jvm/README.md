@@ -25,7 +25,7 @@ config:
 ---
 graph TD
   _module_kotlin_jvm[":module kotlin:jvm"]
-  style _module_kotlin_jvm fill:mediumorchid,fillcolor:mediumorchid
+  style _module_kotlin_jvm fill:mediumorchid
 ```
 
 | Project Types | Color |
@@ -40,6 +40,6 @@ graph TD
 | Link Types | Style |
 |:--:|:--:|
 | jvmMainImplementation | Orange Bold |
-| api | Basic |
+| api | Solid |
 | implementation | Dashed |
 <!--endregion-->

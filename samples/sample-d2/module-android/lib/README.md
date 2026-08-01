@@ -1,5 +1,5 @@
 # sample-lib-android
 
 <!--region chart-->
-![chart](atlas/chart.svg)
+![chart](atlas/d2/chart.svg)
 <!--endregion-->

@@ -26,8 +26,8 @@ config:
 graph TD
   _module_java[":module java"]
   _module_other[":module other"]
-  style _module_java fill:orange,fillcolor:orange
-  style _module_other fill:gainsboro,fillcolor:gainsboro
+  style _module_java fill:orange
+  style _module_other fill:gainsboro
   _module_java -.implementation.-> _module_other
   linkStyle 0 stroke:aqua
 ```
@@ -44,6 +44,6 @@ graph TD
 | Link Types | Style |
 |:--:|:--:|
 | jvmMainImplementation | Orange Bold |
-| api | Basic |
+| api | Solid |
 | implementation | Dashed |
 <!--endregion-->

@@ -1,15 +1,26 @@
+@file:Suppress("UnstableApiUsage", "AvoidApplyPluginMethod")
+
 rootProject.name = "atlas"
 
 apply("gradle/repositories.gradle.kts")
 
 pluginManagement {
-  includeBuild("build-logic")
+  repositories {
+    google {
+      mavenContent {
+        includeGroupByRegex(".*android.*")
+        includeGroupByRegex(".*google.*")
+      }
+    }
+    mavenCentral()
+    gradlePluginPortal()
+  }
 }
 
-include(
-  ":atlas-core",
-  ":atlas-d2",
-  ":atlas-graphviz",
-  ":atlas-mermaid",
-  ":atlas-test",
-)
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositories {
+    google()
+    mavenCentral()
+  }
+}

@@ -7,9 +7,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Atlas is a Gradle plugin for generating diagrams of modular project dependencies. It supports three rendering frameworks: D2, Graphviz, and Mermaid. The plugin is built with Kotlin and targets Gradle 9+ with full configuration cache support.
 
 **Key Characteristics:**
-- Multi-module Gradle project with convention plugins in `build-logic/`
+- A single published module (`atlas-plugin`), plus convention plugins in `build-logic/`
+- One plugin id, `dev.jonpoulton.atlas`. Users pick frameworks by configuring `d2 { }`, `graphviz { }` and/or `mermaid { }` in the `atlas` extension - any combination is allowed
 - Java 21 minimum (see the root `.java-version` file)
-- Uses [Blueprint](https://github.com/jonapoul/blueprint) (`dev.jonpoulton.blueprint:core`) for Gradle DSL shortcuts, in both `build-logic` and `atlas-core`
+- Uses [Blueprint](https://github.com/jonapoul/blueprint) (`dev.jonpoulton.blueprint:core`) for Gradle DSL shortcuts, in both `build-logic` and `atlas-plugin`
 - Uses Gradle configuration cache and parallel execution
 - Published to Maven Central under `dev.jonpoulton.atlas`
 
@@ -17,21 +18,20 @@ Atlas is a Gradle plugin for generating diagrams of modular project dependencies
 
 ### Building and Testing
 ```bash
-./gradlew build                    # Build all modules
+./gradlew build                    # Build everything
 ./gradlew test                     # Run all tests
-./gradlew :atlas-test:test         # Run tests for specific module
-./gradlew check                    # Run all checks including detekt and licensee
+./gradlew check                    # Run all checks including detekt, licensee and the ABI dump
 ```
 
 ### Single Test Execution
 Tests use JUnit 6. To run a single test class:
 ```bash
-./gradlew :atlas-test:test --tests "atlas.core.WriteModuleTreeTest"
+./gradlew :atlas-plugin:test --tests "atlas.core.WriteProjectTreeTest"
 ```
 
 To run a specific test method:
 ```bash
-./gradlew :atlas-test:test --tests "atlas.core.WriteModuleTreeTest.Single links for diamond"
+./gradlew :atlas-plugin:test --tests "atlas.core.WriteProjectTreeTest.Single links for diamond"
 ```
 
 ### Code Quality
@@ -52,61 +52,63 @@ This task will take a while, so don't run unless really necessary:
 ```
 
 ### Plugin Development
-The plugin can be tested locally using the test scenarios in `atlas-test`. Tests use Gradle TestKit to verify plugin behavior in realistic project structures.
+The plugin is tested from its own test source set (`atlas-plugin/src/test`), so tests can see `internal` declarations. Tests use Gradle TestKit to verify plugin behavior in realistic project structures.
+
+When the public API changes, refresh the ABI dump with `./gradlew :atlas-plugin:updateKotlinAbi`, otherwise `check` fails.
 
 ## Architecture
 
 ### Module Structure
 
-1. **atlas-core**: Base plugin implementation
-   - `AtlasPlugin`: Abstract base plugin that auto-applies to root and subprojects
-   - `AtlasExtension`: Main DSL for configuration
-   - Core tasks: `CollateModuleTypes`, `CollateModuleLinks`, `WriteModuleType`, `WriteModuleLinks`, `WriteModuleTree`
-   - Internal utilities for module graph traversal and serialization
+1. **atlas-plugin**: the whole plugin, published as `dev.jonpoulton.atlas:atlas-plugin`
+   - `atlas.core`: `AtlasPlugin` (the single entry point), `AtlasExtension`, the shared
+     `ProjectTypeSpec`/`LinkTypeSpec`, and the framework-agnostic tasks `CollateProjectTypes`,
+     `CollateProjectLinks`, `WriteProjectType`, `WriteProjectLinks`, `WriteProjectTree`,
+     `WriteReadme`, `CheckFileDiff`
+   - `atlas.d2`: `D2Spec` config, `D2Tasks` registration, tasks `WriteD2Chart`, `WriteD2Classes`,
+     `ExecD2`, `SvgToPng`
+   - `atlas.graphviz`: `GraphvizSpec` config, `GraphvizTasks` registration, tasks
+     `WriteGraphvizChart`, `WriteGraphvizLegend`, `ExecGraphviz`
+   - `atlas.mermaid`: `MermaidSpec` config, `MermaidTasks` registration, tasks `WriteMermaidChart`,
+     `WriteMarkdownLegend`
+   - Anything not part of the user-facing API is Kotlin `internal` - there's no opt-in annotation
+   - Tests live in `src/test`, with `ScenarioTest` + `atlas.test.scenarios.*` driving TestKit builds
 
-2. **atlas-d2**: D2 diagram generation plugin
-   - Extends `AtlasPlugin` with D2-specific functionality
-   - `D2AtlasExtension`: D2-specific configuration DSL
-   - Tasks: `WriteD2Chart`, `WriteD2Classes`, `ExecD2`
-
-3. **atlas-graphviz**: Graphviz diagram generation plugin
-   - Extends `AtlasPlugin` with Graphviz/DOT-specific functionality
-   - `GraphvizAtlasExtension`: Graphviz-specific configuration DSL
-   - Tasks: `WriteGraphvizChart`, `WriteGraphvizLegend`, `ExecGraphviz`
-
-4. **atlas-mermaid**: Mermaid diagram generation plugin
-   - Extends `AtlasPlugin` with Mermaid-specific functionality
-   - `MermaidAtlasExtension`: Mermaid-specific configuration DSL
-   - Tasks: `WriteMermaidChart`, `WriteMarkdownLegend`
-
-5. **atlas-test**: Test infrastructure and scenarios
-   - `ScenarioTest`: Base class for integration tests
-   - Test scenarios in `atlas.test.scenarios.*` representing common project structures
-   - Utilities for Gradle TestKit runners and assertions
-
-6. **build-logic**: Convention plugins for the build itself
+2. **build-logic**: Convention plugins for the build itself
    - Located in `build-logic/src/main/kotlin/atlas/gradle/`
    - Convention plugins: `ConventionKotlin`, `ConventionPublish`, `ConventionDetekt`, etc.
    - Applied via `atlas.convention.*` plugin IDs
 
+### Shared Project and Link Types
+
+`projectTypes` and `linkTypes` are declared once and rendered by every configured framework. Each
+spec carries the union of all three frameworks' style properties: shared meanings get one property
+mapping to several framework keys (`fontColor` -> D2 `style.font-color`, Graphviz `fontcolor`,
+Mermaid `color`), and only genuine clashes are prefixed (`d2Shape`, `graphvizShape`). `StyleProperties`
+holds one attribute map per framework and records which DSL properties were set, so `AtlasPlugin`
+can warn about properties no configured framework will read.
+
 ### Plugin Application Pattern
 
-**Critical**: Only ONE Atlas plugin can be applied per project (d2, graphviz, or mermaid). The plugin is applied to the root project and automatically propagates to all subprojects.
+The plugin is applied to the root project and automatically propagates to all subprojects.
 
-The base `AtlasPlugin` uses a two-phase application:
-1. **Root project**: Registers `CollateModuleTypes` and `CollateModuleLinks` tasks that aggregate data from all subprojects
-2. **Subprojects**: Auto-applied via `subprojects {}`, registers `WriteModuleType`, `WriteModuleLinks`, `WriteModuleTree` tasks
+`AtlasPlugin` applies in two phases:
+1. **Root project**: creates the extension and registers `CollateProjectTypes`/`CollateProjectLinks`, which aggregate data from all subprojects
+2. **Subprojects**: auto-applied via `subprojects {}`, registers `WriteProjectType`, `WriteProjectLinks`, `WriteProjectTree`
 
-Each subproject writes its local module information to `build/atlas/*.json`, then root tasks collate these into project-wide diagrams.
+Framework tasks are registered later, in the root project's `afterEvaluate`, because which frameworks are switched on isn't known until the root build script has run. Root is always evaluated before its children, so subproject tasks still exist by the time anything runs.
+
+Each subproject writes its local project information to `build/atlas/*.json`, then root tasks collate these into project-wide diagrams.
 
 ### Task Execution Flow
 
-1. Each subproject runs `WriteModuleType` → outputs module type classification to JSON
-2. Each subproject runs `WriteModuleLinks` → outputs direct dependencies to JSON
-3. Root runs `CollateModuleTypes` → aggregates all module types
-4. Root runs `CollateModuleLinks` → aggregates all module links
-5. Each subproject runs `WriteModuleTree` → consumes collated links to compute full dependency tree
+1. Each subproject runs `WriteProjectType` → outputs project type classification to JSON
+2. Each subproject runs `WriteProjectLinks` → outputs direct dependencies to JSON
+3. Root runs `CollateProjectTypes` → aggregates all project types
+4. Root runs `CollateProjectLinks` → aggregates all project links
+5. Each subproject runs `WriteProjectTree` → consumes collated links to compute full dependency tree
 6. Framework-specific tasks (D2/Graphviz/Mermaid) generate diagram files from the aggregated data
+7. Each subproject runs `WriteReadme` → injects every configured framework's diagram into its README
 
 ### Gradle Isolated Projects Support
 
@@ -124,27 +126,27 @@ Example: `DiamondGraph` creates a 4-module project (top → mid-a/mid-b → bott
 
 ## Key Concepts
 
-### Module Types
-Modules are classified by `ModuleTypeSpec` using matchers:
-- `pathContains`: substring match on module path
-- `pathMatches`: regex match on module path
+### Project Types
+Projects are classified by `ProjectTypeSpec` using matchers:
+- `pathContains`: substring match on project path
+- `pathMatches`: regex match on project path
 - `hasPluginId`: detect applied Gradle plugins
 
-Built-in types include `KOTLIN_JVM`, `KOTLIN_ANDROID`, `JAVA_LIBRARY`, etc.
+Quick-access helpers (`androidApp()`, `kotlinJvm()`, `useDefaults()`, ...) live in `org.gradle.kotlin.dsl.ProjectTypeDsl`.
 
 ### Link Types
-Module dependencies are classified by `LinkTypeSpec`:
+Project dependencies are classified by `LinkTypeSpec`:
 - Based on Gradle configuration name (e.g., "api", "implementation")
-- Can customize visual styling per link type in each framework
+- `style` uses the shared `atlas.core.LinkStyle`; frameworks which can't draw a given style fall back to the closest one and warn at configuration time
 
 ### Path Transforms
-The `PathTransformSpec` allows regex-based transformations of module paths in generated diagrams (e.g., removing common prefixes).
+The `PathTransformSpec` allows regex-based transformations of project paths in generated diagrams (e.g., removing common prefixes).
 
 ## File Locations
 
-- Generated diagrams: `build/atlas/` in root project
-- Per-module data: `build/atlas/*.json` in each subproject
-- Test fixtures: `atlas-test/src/test/kotlin/atlas/test/scenarios/`
+- Generated diagrams: `atlas/<framework>/` in each project, e.g. `atlas/d2/chart.d2`. Legends only in the root project
+- Per-project data: `build/atlas/*.json` in each subproject
+- Test fixtures: `atlas-plugin/src/test/kotlin/atlas/test/scenarios/`
 - Documentation: `docs/` (MkDocs-based, deployed to GitHub Pages)
 
 ## Important Properties

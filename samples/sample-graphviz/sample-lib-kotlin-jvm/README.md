@@ -1,7 +1,7 @@
 # sample-lib-kotlin-jvm
 
 <!--region chart-->
-![chart](atlas/chart.svg)
+![chart](atlas/graphviz/chart.svg)
 
-![legend](../atlas/legend.svg)
+![legend](../atlas/graphviz/legend.svg)
 <!--endregion-->

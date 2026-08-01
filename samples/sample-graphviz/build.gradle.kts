@@ -1,12 +1,12 @@
+import atlas.core.LinkStyle.Bold
+import atlas.core.LinkStyle.Dotted
+import atlas.core.LinkStyle.Solid
 import atlas.graphviz.ArrowType.Crow
 import atlas.graphviz.ArrowType.Ediamond
 import atlas.graphviz.ArrowType.None
 import atlas.graphviz.Dir.Both
 import atlas.graphviz.FileFormat.Svg
 import atlas.graphviz.LayoutEngine.Dot
-import atlas.graphviz.LinkStyle.Bold
-import atlas.graphviz.LinkStyle.Dotted
-import atlas.graphviz.LinkStyle.Solid
 import atlas.graphviz.NodeStyle.Filled
 import atlas.graphviz.NodeStyle.Radial
 import atlas.graphviz.RankDir.TopToBottom
@@ -19,7 +19,7 @@ plugins {
   alias(libs.plugins.agp.lib) apply false
   alias(libs.plugins.kotlinJvm) apply false
   alias(libs.plugins.kotlinMultiplatform) apply false
-  id("dev.jonpoulton.atlas.graphviz")
+  id("dev.jonpoulton.atlas")
 }
 
 atlas {
@@ -30,7 +30,7 @@ atlas {
 
   projectTypes {
     androidApp {
-      shape = Rarrow
+      graphvizShape = Rarrow
       style = Radial
     }
     kotlinMultiplatform { fontColor = "red" }

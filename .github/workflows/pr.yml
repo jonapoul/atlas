@@ -136,20 +136,6 @@ jobs:
             exit 1
           fi
 
-  check-build-logic:
-    needs: validation
-    if: ${{ !cancelled() && needs.validation.result == 'success' }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: ./.github/actions/setup-java
-      - uses: ./.github/actions/setup-gradle
-      - uses: ./.github/actions/setup-gradle-properties
-      - run: ./gradlew -p build-logic check
-      - uses: ./.github/actions/report-build-results
-        if: ${{ !cancelled() }}
-
   build-docker:
     needs: [ changed-files, validation ]
     if: ${{ !cancelled() && needs.validation.result == 'success' && needs.changed-files.outputs.docker == 'true' }}
@@ -192,7 +178,7 @@ jobs:
       - uses: ./.github/actions/setup-gradle
       - uses: ./.github/actions/setup-gradle-properties
 
-      - run: ./gradlew detektCheck detektReportMergeSarif
+      - run: ./gradlew detektCheck
 
       - name: Upload SARIF
         uses: github/codeql-action/upload-sarif@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4
@@ -251,7 +237,6 @@ jobs:
           ref: ${{ github.head_ref }}
       - uses: ./.github/actions/setup-gradle
       - uses: ./.github/actions/setup-gradle-properties
-
       - uses: ./.github/actions/docker-login
 
       - name: Generate samples
@@ -292,7 +277,6 @@ jobs:
     needs:
       - validation
       - build-docker
-      - check-build-logic
       - detekt
       - test
       - other-checks
