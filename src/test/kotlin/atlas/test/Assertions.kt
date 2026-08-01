@@ -9,11 +9,15 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.prop
 import assertk.assertions.support.expected
 import atlas.core.internal.diff
+import blueprint.test.Scenario as RunningScenario
+import blueprint.test.taskHadResult
 import java.io.File
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.BuildTask
 import org.gradle.testkit.runner.TaskOutcome
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
+
+internal fun RunningScenario.resolve(path: String): File = rootDir.resolve(path)
 
 internal fun Assert<BuildResult>.allTasksSuccessful(): Assert<List<BuildTask>> =
   prop(BuildResult::getTasks).allSuccessful()
@@ -34,21 +38,6 @@ internal fun Assert<List<BuildTask>>.allSuccessful(): Assert<List<BuildTask>> = 
   } else {
     val successes = tasks.filter { t -> t.outcome == SUCCESS }
     expected("all tasks to succeed: failures=$nonSuccesses, successes=$successes")
-  }
-}
-
-internal fun Assert<BuildResult>.taskWasSuccessful(name: String): Assert<BuildResult> =
-  taskHadResult(name, expected = SUCCESS)
-
-internal fun Assert<BuildResult>.taskHadResult(
-  name: String,
-  expected: TaskOutcome,
-): Assert<BuildResult> = transform { result ->
-  val task = result.task(name)
-  if (task?.outcome == expected) {
-    result
-  } else {
-    expected("task result $expected for $name, actual: ${task?.outcome}")
   }
 }
 

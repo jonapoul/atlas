@@ -35,7 +35,7 @@ internal class RequiresCommandExtension : ExecutionCondition {
     } else {
       val reason = "Missing required commands: ${missingCommands.joinToString()}"
 
-      if (System.getenv("CI").toBoolean()) {
+      if (isRunningOnCi()) {
         fail(reason)
       } else {
         System.err.println("WARNING: $reason - skipping test")

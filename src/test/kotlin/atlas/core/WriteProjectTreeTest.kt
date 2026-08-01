@@ -8,7 +8,6 @@ import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
 import atlas.test.allTasksSuccessful
 import atlas.test.isEqualToSet
-import atlas.test.runTask
 import atlas.test.scenarios.DiamondGraph
 import atlas.test.scenarios.DiamondGraphWithUpwardsTraversal
 import atlas.test.scenarios.MultiplatformProjectsCustomConfigurations
@@ -16,6 +15,7 @@ import atlas.test.scenarios.OneKotlinJvmProject
 import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
 import atlas.test.scenarios.TriangleGraph
 import atlas.test.scenarios.TriangleGraphWithUpwardsTraversal
+import blueprint.test.runTask
 import kotlin.test.Test
 
 internal class WriteProjectTreeTest : ScenarioTest() {
@@ -428,5 +428,5 @@ internal class WriteProjectTreeTest : ScenarioTest() {
     }
 
   private fun projectTree(project: String): Set<ProjectLink> =
-    projectRoot.resolve("$project/build/atlas/project-tree.json").let(::readProjectLinks)
+    rootDir.resolve("$project/build/atlas/project-tree.json").let(::readProjectLinks)
 }

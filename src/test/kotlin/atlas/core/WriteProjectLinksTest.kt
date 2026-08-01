@@ -8,14 +8,14 @@ import atlas.core.internal.readProjectLinks
 import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
 import atlas.test.isEqualToSet
-import atlas.test.runTask
 import atlas.test.scenarios.CustomConfigurationExcluded
 import atlas.test.scenarios.CustomConfigurations
 import atlas.test.scenarios.DiamondGraph
 import atlas.test.scenarios.OneKotlinJvmProject
 import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
 import atlas.test.scenarios.TriangleGraph
-import atlas.test.taskWasSuccessful
+import blueprint.test.runTask
+import blueprint.test.taskSucceeded
 import kotlin.test.Test
 
 internal class WriteProjectLinksTest : ScenarioTest() {
@@ -26,7 +26,7 @@ internal class WriteProjectLinksTest : ScenarioTest() {
       val result = runTask("writeProjectLinks").build()
 
       // then the task was run
-      assertThat(result).taskWasSuccessful(":test-jvm:writeProjectLinks")
+      assertThat(result).taskSucceeded(":test-jvm:writeProjectLinks")
 
       // and the links file is empty
       assertThat(projectLinks(project = "test-jvm")).isEmpty()
@@ -40,9 +40,9 @@ internal class WriteProjectLinksTest : ScenarioTest() {
 
       // then the task was run
       assertThat(result)
-        .taskWasSuccessful(":test-data:writeProjectLinks")
-        .taskWasSuccessful(":test-domain:writeProjectLinks")
-        .taskWasSuccessful(":test-ui:writeProjectLinks")
+        .taskSucceeded(":test-data:writeProjectLinks")
+        .taskSucceeded(":test-domain:writeProjectLinks")
+        .taskSucceeded(":test-ui:writeProjectLinks")
 
       // and the links file is empty
       assertThat(projectLinks(project = "test-data")).isEmpty()
@@ -58,10 +58,10 @@ internal class WriteProjectLinksTest : ScenarioTest() {
 
       // then the task was run
       assertThat(result)
-        .taskWasSuccessful(":top:writeProjectLinks")
-        .taskWasSuccessful(":mid-a:writeProjectLinks")
-        .taskWasSuccessful(":mid-b:writeProjectLinks")
-        .taskWasSuccessful(":bottom:writeProjectLinks")
+        .taskSucceeded(":top:writeProjectLinks")
+        .taskSucceeded(":mid-a:writeProjectLinks")
+        .taskSucceeded(":mid-b:writeProjectLinks")
+        .taskSucceeded(":bottom:writeProjectLinks")
 
       // and the links file is empty
       assertThat(projectLinks(project = "top"))
@@ -186,5 +186,5 @@ internal class WriteProjectLinksTest : ScenarioTest() {
     }
 
   private fun projectLinks(project: String): Set<ProjectLink> =
-    projectRoot.resolve("$project/build/atlas/project-links.json").let(::readProjectLinks)
+    rootDir.resolve("$project/build/atlas/project-links.json").let(::readProjectLinks)
 }

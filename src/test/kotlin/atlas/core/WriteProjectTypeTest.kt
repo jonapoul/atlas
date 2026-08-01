@@ -5,17 +5,17 @@ import assertk.assertions.isEqualTo
 import atlas.core.internal.TypedProject
 import atlas.core.internal.readProjectType
 import atlas.test.ScenarioTest
-import atlas.test.buildRunner
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.NoProjectTypesDeclared
 import atlas.test.scenarios.OneKotlinJvmProject
 import atlas.test.scenarios.ProjectTypesDeclaredButNoneMatch
 import atlas.test.scenarios.ThreeProjectWithCustomTypes
 import atlas.test.scenarios.ThreeProjectsNoMatchingType
 import atlas.test.scenarios.ThreeProjectsOnlyMatchingOther
-import atlas.test.taskHadResult
-import atlas.test.taskWasSuccessful
-import java.io.File
+import blueprint.test.Scenario
+import blueprint.test.runTask
+import blueprint.test.taskHadResult
+import blueprint.test.taskSucceeded
 import kotlin.test.Test
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
@@ -50,7 +50,7 @@ internal class WriteProjectTypeTest : ScenarioTest() {
       val result = runTask("writeProjectType").build()
 
       // then
-      assertThat(result).taskWasSuccessful(":test-jvm:writeProjectType")
+      assertThat(result).taskSucceeded(":test-jvm:writeProjectType")
       assertThat(projectType("test-jvm"))
         .isEqualTo(
           TypedProject(":test-jvm", type = ProjectType("Kotlin JVM", color = "mediumorchid"))
@@ -63,15 +63,15 @@ internal class WriteProjectTypeTest : ScenarioTest() {
 
   @Test
   fun `Write files if custom types match`() =
-    runScenario(ThreeProjectWithCustomTypes) {
+    runScenario(ThreeProjectWithCustomTypes, runner = androidRunner()) {
       // when
-      val result = buildRunner(requiresAndroid = true).runTask("writeProjectType").build()
+      val result = runTask("writeProjectType").build()
 
       // then
       assertThat(result)
-        .taskWasSuccessful(":test-data:writeProjectType")
-        .taskWasSuccessful(":test-domain:writeProjectType")
-        .taskWasSuccessful(":test-ui:writeProjectType")
+        .taskSucceeded(":test-data:writeProjectType")
+        .taskSucceeded(":test-domain:writeProjectType")
+        .taskSucceeded(":test-ui:writeProjectType")
 
       assertThat(projectType("test-data"))
         .isEqualTo(TypedProject(":test-data", type = ProjectType("Data", color = "#ABC123")))
@@ -83,9 +83,9 @@ internal class WriteProjectTypeTest : ScenarioTest() {
 
   @Test
   fun `Fall back to other if no types match`() =
-    runScenario(ThreeProjectsOnlyMatchingOther) {
+    runScenario(ThreeProjectsOnlyMatchingOther, runner = androidRunner()) {
       // when
-      runTask("writeProjectType", requiresAndroid = true).build()
+      runTask("writeProjectType").build()
 
       // then
       assertThat(projectType("a"))
@@ -98,15 +98,15 @@ internal class WriteProjectTypeTest : ScenarioTest() {
 
   @Test
   fun `No types match`() =
-    runScenario(ThreeProjectsNoMatchingType) {
+    runScenario(ThreeProjectsNoMatchingType, runner = androidRunner()) {
       // when
-      val result = runTask("a:writeProjectType", requiresAndroid = true).build()
+      val result = runTask("a:writeProjectType").build()
 
       // then
       assertThat(result).taskHadResult(":a:writeProjectType", SUCCESS)
       assertThat(projectType("a")).isEqualTo(TypedProject(":a", type = null))
     }
 
-  private fun File.projectType(path: String) =
+  private fun Scenario.projectType(path: String) =
     resolve("$path/build/atlas/project-type.json").let(::readProjectType)
 }

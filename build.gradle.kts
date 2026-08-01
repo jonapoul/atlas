@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 plugins {
   alias(libs.plugins.blueprint)
+  alias(libs.plugins.blueprintTest)
   alias(libs.plugins.buildConfig)
   alias(libs.plugins.detekt)
   alias(libs.plugins.dokka)
@@ -27,8 +28,6 @@ plugins {
   alias(libs.plugins.publishReport)
   `java-gradle-plugin`
 }
-
-val testPluginClasspath = configurations.register("testPluginClasspath") { isCanBeResolved = true }
 
 dependencies {
   compileOnly(gradleApi())
@@ -44,6 +43,7 @@ dependencies {
   testImplementation(kotlin("stdlib"))
   testImplementation(kotlin("test"))
   testImplementation(libs.assertk)
+  testImplementation(libs.blueprint.testAssertk)
   testImplementation(libs.junit.api)
   testImplementation(libs.junit.params)
   testRuntimeOnly(libs.junit.launcher)
@@ -94,10 +94,6 @@ configurations.named("apiElements").configure {
 tasks.validatePlugins {
   enableStricterValidation = true
   failOnWarning = true
-}
-
-tasks.pluginUnderTestMetadata {
-  pluginClasspath.from(testPluginClasspath)
 }
 
 kotlin {
@@ -193,7 +189,12 @@ buildConfig {
 }
 
 fun androidHome(): File? {
-  val fromEnv = providers.environmentVariable("ANDROID_HOME").orNull?.let(::File)
+  val fromEnv =
+    providers
+      .environmentVariable("ANDROID_HOME")
+      .orElse(providers.environmentVariable("ANDROID_SDK_ROOT"))
+      .orNull
+      ?.let(::File)
   if (fromEnv?.exists() == true) {
     logger.info("Using system environment variable $fromEnv as ANDROID_HOME")
     return fromEnv

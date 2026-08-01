@@ -7,13 +7,14 @@ import atlas.test.ScenarioTest
 import atlas.test.contains
 import atlas.test.contentContains
 import atlas.test.doesNotContain
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.CheckExplicitlyDisabled
 import atlas.test.scenarios.CheckExplicitlyEnabled
 import atlas.test.scenarios.D2Basic
 import atlas.test.scenarios.GraphVizBasicWithPngOutput
 import atlas.test.scenarios.GraphvizBasic
-import atlas.test.taskWasSuccessful
+import blueprint.test.runTask
+import blueprint.test.taskSucceeded
 import org.gradle.testkit.runner.TaskOutcome.FAILED
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.junit.jupiter.api.Test
@@ -23,7 +24,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   fun `Write doesn't run as a dependency of check for graphviz`() =
     runScenario(GraphvizBasic) {
       // when
-      val result = runTask(":a:checkGraphvizChart", extras = listOf("--dry-run")).build()
+      val result = runTask(":a:checkGraphvizChart", "--dry-run").build()
 
       // then the chart wasn't written but the dummy and check tasks were run
       assertThat(result.output)
@@ -36,7 +37,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   fun `Write doesn't run as a dependency of check for D2`() =
     runScenario(D2Basic) {
       // when
-      val result = runTask(":a:checkD2Chart", extras = listOf("--dry-run")).build()
+      val result = runTask(":a:checkD2Chart", "--dry-run").build()
 
       // then the chart wasn't written but the dummy and check tasks were run
       assertThat(result.output)
@@ -152,7 +153,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   fun `Register check tasks when checkOutputs is true`() =
     runScenario(CheckExplicitlyEnabled) {
       // when
-      val result = runTask("check", extras = listOf("--dry-run")).build()
+      val result = runTask("check", "--dry-run").build()
       val output = result.output.lines()
 
       // then
@@ -170,7 +171,7 @@ internal class CheckFileDiffTest : ScenarioTest() {
   fun `Don't register check tasks when checkOutputs is false`() =
     runScenario(CheckExplicitlyDisabled) {
       // when
-      val result = runTask("check", extras = listOf("--dry-run")).build()
+      val result = runTask("check", "--dry-run").build()
 
       // then
       assertThat(result.output).doesNotContain("checkGraphvizLegend")
@@ -187,10 +188,10 @@ internal class CheckFileDiffTest : ScenarioTest() {
 
       // then
       assertThat(result)
-        .taskWasSuccessful(":checkGraphvizLegend")
-        .taskWasSuccessful(":a:checkGraphvizChart")
-        .taskWasSuccessful(":b:checkGraphvizChart")
-        .taskWasSuccessful(":c:checkGraphvizChart")
-        .taskWasSuccessful(":atlasCheck")
+        .taskSucceeded(":checkGraphvizLegend")
+        .taskSucceeded(":a:checkGraphvizChart")
+        .taskSucceeded(":b:checkGraphvizChart")
+        .taskSucceeded(":c:checkGraphvizChart")
+        .taskSucceeded(":atlasCheck")
     }
 }

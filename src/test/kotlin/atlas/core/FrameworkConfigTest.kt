@@ -2,14 +2,13 @@ package atlas.core
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.buildRunner
 import atlas.test.contains
 import atlas.test.doesNotContain
-import atlas.test.runTask
 import atlas.test.scenarios.MermaidBasic
 import atlas.test.scenarios.NoFrameworksConfigured
 import atlas.test.scenarios.PropertiesForUnusedFrameworks
 import atlas.test.scenarios.UnsupportedLinkStyle
+import blueprint.test.runTask
 import kotlin.test.Test
 
 internal class FrameworkConfigTest : ScenarioTest() {
@@ -17,7 +16,7 @@ internal class FrameworkConfigTest : ScenarioTest() {
   fun `Warn about style properties which no configured framework reads`() =
     runScenario(PropertiesForUnusedFrameworks) {
       // when
-      val result = buildRunner().withArguments("help").build()
+      val result = runner.withArguments("help").build()
 
       // then the D2-only and Graphviz-only properties are called out, grouped by framework, but
       // stroke is understood by Mermaid so it isn't mentioned
@@ -37,7 +36,7 @@ internal class FrameworkConfigTest : ScenarioTest() {
   fun `Don't warn about properties the configured framework reads`() =
     runScenario(MermaidBasic) {
       // when
-      val result = buildRunner().withArguments("help").build()
+      val result = runner.withArguments("help").build()
 
       // then
       assertThat(result.output).doesNotContain("Warning")
@@ -47,7 +46,7 @@ internal class FrameworkConfigTest : ScenarioTest() {
   fun `Warn when a link style isn't supported by a configured framework`() =
     runScenario(UnsupportedLinkStyle) {
       // when
-      val result = buildRunner().withArguments("help").build()
+      val result = runner.withArguments("help").build()
 
       // then
       assertThat(result.output)
@@ -61,7 +60,7 @@ internal class FrameworkConfigTest : ScenarioTest() {
   fun `Warn when no frameworks are configured`() =
     runScenario(NoFrameworksConfigured) {
       // when
-      val result = buildRunner().withArguments("help").build()
+      val result = runner.withArguments("help").build()
 
       // then
       assertThat(result.output)
@@ -74,7 +73,7 @@ internal class FrameworkConfigTest : ScenarioTest() {
   fun `Only register tasks for configured frameworks`() =
     runScenario(MermaidBasic) {
       // when
-      val result = runTask("tasks", extras = listOf("--all")).build()
+      val result = runTask("tasks", "--all").build()
 
       // then
       assertThat(result.output)

@@ -5,10 +5,11 @@ import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
 import atlas.test.contentEquals
 import atlas.test.exists
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.MermaidWithGroupsNested
 import atlas.test.scenarios.MermaidWithGroupsNotNested
 import atlas.test.scenarios.MermaidWithoutGroups
+import blueprint.test.runTask
 import kotlin.test.Test
 
 internal class WriteMermaidChartTest : ScenarioTest() {

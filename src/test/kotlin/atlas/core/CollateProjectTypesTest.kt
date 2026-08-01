@@ -7,13 +7,14 @@ import atlas.core.internal.TypedProject
 import atlas.core.internal.readProjectTypes
 import atlas.test.ScenarioTest
 import atlas.test.isEqualToSet
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.NoSubprojects
 import atlas.test.scenarios.PathMatches
 import atlas.test.scenarios.ThreeProjectWithCustomTypes
 import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
-import atlas.test.taskWasSuccessful
-import java.io.File
+import blueprint.test.Scenario
+import blueprint.test.runTask
+import blueprint.test.taskSucceeded
 import kotlin.test.Test
 
 internal class CollateProjectTypesTest : ScenarioTest() {
@@ -25,10 +26,10 @@ internal class CollateProjectTypesTest : ScenarioTest() {
 
       // then three dependent tasks were run, and this one
       assertThat(result)
-        .taskWasSuccessful(":test-data:writeProjectType")
-        .taskWasSuccessful(":test-domain:writeProjectType")
-        .taskWasSuccessful(":test-ui:writeProjectType")
-        .taskWasSuccessful(":collateProjectTypes")
+        .taskSucceeded(":test-data:writeProjectType")
+        .taskSucceeded(":test-domain:writeProjectType")
+        .taskSucceeded(":test-ui:writeProjectType")
+        .taskSucceeded(":collateProjectTypes")
 
       // and the types were aggregated in the root project's build dir
       assertThat(projectTypes)
@@ -56,10 +57,10 @@ internal class CollateProjectTypesTest : ScenarioTest() {
 
       // then three dependent tasks were run, and this one
       assertThat(result)
-        .taskWasSuccessful(":test-data:writeProjectType")
-        .taskWasSuccessful(":test-domain:writeProjectType")
-        .taskWasSuccessful(":test-ui:writeProjectType")
-        .taskWasSuccessful(":collateProjectTypes")
+        .taskSucceeded(":test-data:writeProjectType")
+        .taskSucceeded(":test-domain:writeProjectType")
+        .taskSucceeded(":test-ui:writeProjectType")
+        .taskSucceeded(":collateProjectTypes")
 
       // and the types were aggregated in the root project's build dir
       assertThat(projectTypes)
@@ -90,7 +91,7 @@ internal class CollateProjectTypesTest : ScenarioTest() {
       assertThat(taskPaths).isEqualTo(listOf(":collateProjectTypes"))
 
       // and no types were collated, but the task still passed
-      assertThat(result).taskWasSuccessful(":collateProjectTypes")
+      assertThat(result).taskSucceeded(":collateProjectTypes")
       assertThat(projectTypes).isEmpty()
     }
 
@@ -123,6 +124,6 @@ internal class CollateProjectTypesTest : ScenarioTest() {
         )
     }
 
-  private val File.projectTypes
+  private val Scenario.projectTypes
     get() = resolve("build/atlas/project-types.json").let(::readProjectTypes)
 }

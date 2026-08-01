@@ -3,9 +3,10 @@ package atlas.d2.tasks
 import assertk.assertThat
 import atlas.test.ScenarioTest
 import atlas.test.contentEquals
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.D2AllProjectTypes
-import atlas.test.taskWasSuccessful
+import blueprint.test.runTask
+import blueprint.test.taskSucceeded
 import kotlin.test.Test
 
 internal class WriteD2ClassesTest : ScenarioTest() {
@@ -16,7 +17,7 @@ internal class WriteD2ClassesTest : ScenarioTest() {
       val result = runTask("writeD2Classes").build()
 
       // then
-      assertThat(result).taskWasSuccessful(":writeD2Classes")
+      assertThat(result).taskSucceeded(":writeD2Classes")
 
       // and the file was generated
       assertThat(resolve("atlas/d2/classes.d2"))

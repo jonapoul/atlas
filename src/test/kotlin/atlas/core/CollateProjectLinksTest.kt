@@ -8,13 +8,14 @@ import atlas.core.internal.readProjectLinks
 import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
 import atlas.test.doesNotExist
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.DiamondGraph
 import atlas.test.scenarios.OneKotlinJvmProject
 import atlas.test.scenarios.OverrideProjectLinksFile
 import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
 import atlas.test.scenarios.TriangleGraph
-import atlas.test.taskWasSuccessful
+import blueprint.test.runTask
+import blueprint.test.taskSucceeded
 import java.io.File
 import kotlin.test.Test
 
@@ -27,8 +28,8 @@ internal class CollateProjectLinksTest : ScenarioTest() {
 
       // then the task was run
       assertThat(result)
-        .taskWasSuccessful(":test-jvm:writeProjectLinks")
-        .taskWasSuccessful(":collateProjectLinks")
+        .taskSucceeded(":test-jvm:writeProjectLinks")
+        .taskSucceeded(":collateProjectLinks")
 
       // and the links file is empty
       assertThat(projectLinks).isEmpty()
@@ -177,7 +178,7 @@ internal class CollateProjectLinksTest : ScenarioTest() {
     }
 
   private val projectLinksFile: File
-    get() = projectRoot.resolve("build/atlas/project-links.json")
+    get() = rootDir.resolve("build/atlas/project-links.json")
 
   private val projectLinks: Set<ProjectLink>
     get() = readProjectLinks(projectLinksFile)

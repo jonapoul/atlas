@@ -13,12 +13,13 @@ import atlas.test.childExists
 import atlas.test.contains
 import atlas.test.exists
 import atlas.test.noTasksFailed
-import atlas.test.runTask
+import atlas.test.resolve
 import atlas.test.scenarios.GraphVizBasicWithPngOutput
 import atlas.test.scenarios.GraphVizCustomDotExecutable
 import atlas.test.scenarios.GraphVizCustomLayoutEngine
 import atlas.test.scenarios.GraphvizBasic
 import atlas.test.tasksWereSuccessful
+import blueprint.test.runTask
 import kotlin.test.Test
 
 internal class ExecGraphvizTest : ScenarioTest() {
@@ -26,7 +27,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
   fun `No extras are generated if no file formats have been declared`() =
     runScenario(GraphvizBasic) {
       // when
-      val result = runTask("atlasGenerate", extras = listOf("--dry-run")).build()
+      val result = runTask("atlasGenerate", "--dry-run").build()
 
       // then no PNGs, SVGs, or anything else were generated besides the dotfile
       assertThat(result.output)
@@ -80,7 +81,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
         )
 
       // and the relevant files exist
-      assertThat(this)
+      assertThat(rootDir)
         .childExists("a/atlas/graphviz/chart.png")
         .childExists("b/atlas/graphviz/chart.png")
         .childExists("c/atlas/graphviz/chart.png")
@@ -128,7 +129,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
   fun `Fail with nonexistent custom path to dot command`() =
     runScenario(GraphVizCustomDotExecutable) {
       // Given we've made a symbolic link to a dot executable which doesn't exist
-      assertThat(this).childDoesNotExist("path/to/custom/dot")
+      assertThat(rootDir).childDoesNotExist("path/to/custom/dot")
 
       // when
       val result = runTask("atlasGenerate").buildAndFail()

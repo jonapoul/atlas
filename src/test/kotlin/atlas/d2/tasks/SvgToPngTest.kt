@@ -8,10 +8,10 @@ import atlas.test.allTasksSuccessful
 import atlas.test.childDoesNotExist
 import atlas.test.childExists
 import atlas.test.noTasksFailed
-import atlas.test.runTask
 import atlas.test.scenarios.D2Basic
-import atlas.test.taskHadResult
 import atlas.test.tasksHadResult
+import blueprint.test.runTask
+import blueprint.test.taskHadResult
 import java.lang.ProcessBuilder.Redirect.PIPE
 import kotlin.test.Test
 import org.gradle.testkit.runner.TaskOutcome.SKIPPED
@@ -34,7 +34,7 @@ internal class SvgToPngTest : ScenarioTest() {
 
       // then both SVG and PNG were output
       assertThat(result).allTasksSuccessful()
-      assertThat(this).childExists("a/atlas/d2/chart.svg").childExists("a/atlas/d2/chart.png")
+      assertThat(rootDir).childExists("a/atlas/d2/chart.svg").childExists("a/atlas/d2/chart.png")
 
       // result is cached
       assertThat(runTask("svgToPng").build()).taskHadResult(":a:svgToPng", UP_TO_DATE)
@@ -47,7 +47,9 @@ internal class SvgToPngTest : ScenarioTest() {
       val result = runTask("atlasGenerate").build()
 
       // then
-      assertThat(this).childExists("a/atlas/d2/chart.svg").childDoesNotExist("a/atlas/d2/chart.png")
+      assertThat(rootDir)
+        .childExists("a/atlas/d2/chart.svg")
+        .childDoesNotExist("a/atlas/d2/chart.png")
 
       // and the charts were generated, but the PNGs weren't
       assertThat(result)
@@ -64,7 +66,9 @@ internal class SvgToPngTest : ScenarioTest() {
       val result = runTask("atlasGenerate").build()
 
       // then
-      assertThat(this).childExists("a/atlas/d2/chart.txt").childDoesNotExist("a/atlas/d2/chart.png")
+      assertThat(rootDir)
+        .childExists("a/atlas/d2/chart.txt")
+        .childDoesNotExist("a/atlas/d2/chart.png")
 
       // and the charts were generated, but the PNGs weren't
       assertThat(result)
