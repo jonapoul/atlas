@@ -1,32 +1,18 @@
 package atlas.test
 
-import kotlin.annotation.AnnotationRetention.RUNTIME
-import kotlin.annotation.AnnotationTarget.CLASS
-import kotlin.annotation.AnnotationTarget.FUNCTION
+import kotlin.test.fail
 import org.junit.jupiter.api.extension.ConditionEvaluationResult
 import org.junit.jupiter.api.extension.ExecutionCondition
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.ExtensionContext
 
-@Target(FUNCTION, CLASS)
-@Retention(RUNTIME)
-@RequiresCommand(command = "ln")
-annotation class RequiresLn
+@RequiresCommand(command = "ln") annotation class RequiresLn
 
-@Target(FUNCTION, CLASS)
-@Retention(RUNTIME)
-@RequiresCommand(command = "whereis")
-annotation class RequiresWhereis
+@RequiresCommand(command = "whereis") annotation class RequiresWhereis
 
-@Target(FUNCTION, CLASS)
-@Retention(RUNTIME)
-@RequiresCommand(command = "convert")
-annotation class RequiresImageMagick6
+@RequiresCommand(command = "convert") annotation class RequiresImageMagick6
 
-@Target(FUNCTION, CLASS)
-@Retention(RUNTIME)
-@ExtendWith(RequiresCommandExtension::class)
-annotation class RequiresCommand(val command: String)
+@ExtendWith(RequiresCommandExtension::class) annotation class RequiresCommand(val command: String)
 
 internal class RequiresCommandExtension : ExecutionCondition {
   override fun evaluateExecutionCondition(context: ExtensionContext): ConditionEvaluationResult {
@@ -48,12 +34,19 @@ internal class RequiresCommandExtension : ExecutionCondition {
       )
     } else {
       val reason = "Missing required commands: ${missingCommands.joinToString()}"
-      ConditionEvaluationResult.disabled(reason)
+
+      if (System.getenv("CI").toBoolean()) {
+        fail(reason)
+      } else {
+        System.err.println("WARNING: $reason - skipping test")
+        ConditionEvaluationResult.disabled(reason)
+      }
     }
   }
 
   private fun Annotation.commandOrNull() =
-    annotationClass.java.getAnnotation(RequiresCommand::class.java)?.command
+    (this as? RequiresCommand)?.command
+      ?: annotationClass.java.getAnnotation(RequiresCommand::class.java)?.command
 
   private fun isCommandAvailable(command: String): Boolean =
     try {
