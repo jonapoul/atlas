@@ -8,7 +8,6 @@ import java.io.File
 import kotlin.test.fail
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.Assumptions.assumeFalse
-import org.junit.jupiter.api.extension.ConditionEvaluationResult
 
 @Suppress("AbstractClassCanBeConcreteClass")
 internal abstract class ScenarioTest : BlueprintScenarioTest() {
@@ -35,7 +34,6 @@ internal abstract class ScenarioTest : BlueprintScenarioTest() {
       if (home == null) fail(reason)
     } else {
       assumeFalse(home == null) { "No ANDROID_HOME supplied for an android test" }
-      ConditionEvaluationResult.disabled(reason)
     }
 
     return defaultRunner().withEnvironment(mapOf("ANDROID_HOME" to checkNotNull(home).absolutePath))
