@@ -19,7 +19,7 @@ ktfmt = { module = "com.facebook:ktfmt", version = "0.64" } # only used in ktfmt
 agp-app = { id = "com.android.application", version.ref = "agp" }
 agp-kmp = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 agp-lib = { id = "com.android.library", version.ref = "agp" }
-blueprint = { id = "dev.jonpoulton.blueprint", version = "2.3.0" }
+blueprint = { id = "dev.jonpoulton.blueprint", version.ref = "blueprint" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version = "6.0.7" }
 detekt = { id = "dev.detekt", version = "2.0.0-alpha.1" }
 dokka = { id = "org.jetbrains.dokka", version = "2.1.0" }
