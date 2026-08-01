@@ -9,7 +9,7 @@ icon: lucide/info
 Atlas is a Gradle plugin for generating, configuring and curating diagrams to illustrate your project's project structure:
 
    1. Fully supports Gradle 9 and its configuration caching.
-   2. Supports three separate frameworks as outputs:
+   2. Supports three frameworks as outputs, any combination of which can be used at once:
       - **D2**: [Official docs here](https://d2lang.org/)
       - **Graphviz**: [Official docs here](https://graphviz.org/)
       - **Mermaid**: [Official docs here](https://mermaid.js.org/)

@@ -25,7 +25,7 @@ config:
 ---
 graph TD
   _module_other[":module other"]
-  style _module_other fill:gainsboro,fillcolor:gainsboro
+  style _module_other fill:gainsboro
 ```
 
 | Project Types | Color |
@@ -40,6 +40,6 @@ graph TD
 | Link Types | Style |
 |:--:|:--:|
 | jvmMainImplementation | Orange Bold |
-| api | Basic |
+| api | Solid |
 | implementation | Dashed |
 <!--endregion-->

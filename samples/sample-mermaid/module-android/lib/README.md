@@ -27,9 +27,9 @@ graph TD
   _module_android_lib[":module android:lib"]
   _module_kotlin_jvm[":module kotlin:jvm"]
   _module_other[":module other"]
-  style _module_android_lib fill:lightgreen,fillcolor:lightgreen
-  style _module_kotlin_jvm fill:mediumorchid,fillcolor:mediumorchid
-  style _module_other fill:gainsboro,fillcolor:gainsboro
+  style _module_android_lib fill:lightgreen
+  style _module_kotlin_jvm fill:mediumorchid
+  style _module_other fill:gainsboro
   _module_android_lib -.implementation.-> _module_kotlin_jvm
   linkStyle 0 stroke:aqua
   _module_android_lib -.implementation.-> _module_other
@@ -48,6 +48,6 @@ graph TD
 | Link Types | Style |
 |:--:|:--:|
 | jvmMainImplementation | Orange Bold |
-| api | Basic |
+| api | Solid |
 | implementation | Dashed |
 <!--endregion-->

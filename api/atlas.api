@@ -1,0 +1,2015 @@
+public abstract interface annotation class atlas/core/AtlasDsl : java/lang/annotation/Annotation {
+}
+
+public abstract interface class atlas/core/AtlasExtension {
+	public abstract fun d2 ()V
+	public abstract fun d2 (Lorg/gradle/api/Action;)V
+	public abstract fun getAlsoTraverseUpwards ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCheckOutputs ()Lorg/gradle/api/provider/Property;
+	public abstract fun getD2 ()Latlas/d2/D2Spec;
+	public abstract fun getDisplayLinkLabels ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFrameworks ()Ljava/util/Set;
+	public abstract fun getGenerateOnSync ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGraphviz ()Latlas/graphviz/GraphvizSpec;
+	public abstract fun getGroupProjects ()Lorg/gradle/api/provider/Property;
+	public abstract fun getIgnoredConfigs ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getIgnoredProjects ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getLinkTypes ()Latlas/core/NamedLinkTypeContainer;
+	public abstract fun getMermaid ()Latlas/mermaid/MermaidSpec;
+	public abstract fun getPathTransforms ()Latlas/core/PathTransformSpec;
+	public abstract fun getPrintFilesToConsole ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProjectTypes ()Latlas/core/NamedProjectTypeContainer;
+	public abstract fun graphviz ()V
+	public abstract fun graphviz (Lorg/gradle/api/Action;)V
+	public abstract fun linkTypes (Lorg/gradle/api/Action;)V
+	public abstract fun mermaid ()V
+	public abstract fun mermaid (Lorg/gradle/api/Action;)V
+	public abstract fun pathTransforms (Lorg/gradle/api/Action;)V
+	public abstract fun projectTypes (Lorg/gradle/api/Action;)V
+}
+
+public final class atlas/core/AtlasPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public abstract interface class atlas/core/AtlasSpec {
+	public abstract fun getFileExtension ()Lorg/gradle/api/provider/Property;
+	public abstract fun getName ()Ljava/lang/String;
+}
+
+public final class atlas/core/Framework : java/lang/Enum, atlas/core/StringEnum {
+	public static final field D2 Latlas/core/Framework;
+	public static final field Graphviz Latlas/core/Framework;
+	public static final field Mermaid Latlas/core/Framework;
+	public final fun getDisplayName ()Ljava/lang/String;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/core/Framework;
+	public static fun values ()[Latlas/core/Framework;
+}
+
+public abstract interface class atlas/core/IntEnum {
+	public abstract fun getValue ()I
+}
+
+public final class atlas/core/LinkStyle : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Bold Latlas/core/LinkStyle;
+	public static final field Dashed Latlas/core/LinkStyle;
+	public static final field Dotted Latlas/core/LinkStyle;
+	public static final field Invisible Latlas/core/LinkStyle;
+	public static final field Solid Latlas/core/LinkStyle;
+	public static final field Tapered Latlas/core/LinkStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public final fun getSupportedBy ()Ljava/util/Set;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/core/LinkStyle;
+	public static fun values ()[Latlas/core/LinkStyle;
+}
+
+public final class atlas/core/LinkType : java/io/Serializable {
+	public static final field Companion Latlas/core/LinkType$Companion;
+	public fun <init> (Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Latlas/core/LinkStyle;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Latlas/core/LinkType;
+	public static synthetic fun copy$default (Latlas/core/LinkType;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Latlas/core/LinkType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getConfiguration ()Ljava/lang/String;
+	public final fun getDisplayName ()Ljava/lang/String;
+	public final fun getProperties ()Ljava/util/Map;
+	public final fun getStyle ()Latlas/core/LinkStyle;
+	public fun hashCode ()I
+	public final fun properties (Latlas/core/Framework;)Ljava/util/Map;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class atlas/core/LinkType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Latlas/core/LinkType$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/core/LinkType;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/core/LinkType;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class atlas/core/LinkType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class atlas/core/LinkTypeSpec : atlas/core/StyleSpec {
+	public abstract fun getAnimated ()Ljava/lang/Boolean;
+	public abstract fun getArrowHead ()Latlas/graphviz/ArrowType;
+	public abstract fun getArrowSize ()Ljava/lang/Number;
+	public abstract fun getArrowTail ()Latlas/graphviz/ArrowType;
+	public abstract fun getBold ()Ljava/lang/Boolean;
+	public abstract fun getBorderRadius ()Ljava/lang/Integer;
+	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getColorScheme ()Ljava/lang/String;
+	public abstract fun getComment ()Ljava/lang/String;
+	public abstract fun getConfiguration ()Lorg/gradle/api/provider/Property;
+	public abstract fun getConstraint ()Ljava/lang/Boolean;
+	public abstract fun getDecorate ()Ljava/lang/Boolean;
+	public abstract fun getDir ()Latlas/graphviz/Dir;
+	public abstract fun getEdgeHref ()Ljava/lang/String;
+	public abstract fun getEdgeTarget ()Ljava/lang/String;
+	public abstract fun getEdgeTooltip ()Ljava/lang/String;
+	public abstract fun getEdgeUrl ()Ljava/lang/String;
+	public abstract fun getFillColor ()Ljava/lang/String;
+	public abstract fun getFont ()Latlas/d2/Font;
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontName ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getHeadClip ()Ljava/lang/Boolean;
+	public abstract fun getHeadHref ()Ljava/lang/String;
+	public abstract fun getHeadLabel ()Ljava/lang/String;
+	public abstract fun getHeadLp ()Ljava/lang/String;
+	public abstract fun getHeadPort ()Ljava/lang/String;
+	public abstract fun getHeadTarget ()Ljava/lang/String;
+	public abstract fun getHeadTooltip ()Ljava/lang/String;
+	public abstract fun getHeadUrl ()Ljava/lang/String;
+	public abstract fun getHref ()Ljava/lang/String;
+	public abstract fun getId ()Ljava/lang/String;
+	public abstract fun getItalic ()Ljava/lang/Boolean;
+	public abstract fun getLabel ()Ljava/lang/String;
+	public abstract fun getLabelAngle ()Ljava/lang/Number;
+	public abstract fun getLabelDistance ()Ljava/lang/Number;
+	public abstract fun getLabelFloat ()Ljava/lang/Boolean;
+	public abstract fun getLabelFontColor ()Ljava/lang/String;
+	public abstract fun getLabelFontName ()Ljava/lang/String;
+	public abstract fun getLabelFontSize ()Ljava/lang/String;
+	public abstract fun getLabelHref ()Ljava/lang/String;
+	public abstract fun getLabelTarget ()Ljava/lang/String;
+	public abstract fun getLabelTooltip ()Ljava/lang/String;
+	public abstract fun getLabelUrl ()Ljava/lang/String;
+	public abstract fun getLayer ()Ljava/lang/String;
+	public abstract fun getLen ()Ljava/lang/Number;
+	public abstract fun getLhead ()Ljava/lang/String;
+	public abstract fun getLp ()Ljava/lang/String;
+	public abstract fun getLtail ()Ljava/lang/String;
+	public abstract fun getMinLen ()Ljava/lang/Integer;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getNoJustify ()Ljava/lang/Boolean;
+	public abstract fun getOpacity ()Ljava/lang/Float;
+	public abstract fun getPos ()Ljava/lang/String;
+	public abstract fun getSameHead ()Ljava/lang/String;
+	public abstract fun getSameTail ()Ljava/lang/String;
+	public abstract fun getShowBoxes ()Ljava/lang/Integer;
+	public abstract fun getStroke ()Ljava/lang/String;
+	public abstract fun getStrokeDash ()Ljava/lang/Integer;
+	public abstract fun getStrokeDashArray ()Ljava/lang/String;
+	public abstract fun getStrokeWidth ()Ljava/lang/String;
+	public abstract fun getStyle ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTailClip ()Ljava/lang/Boolean;
+	public abstract fun getTailHref ()Ljava/lang/String;
+	public abstract fun getTailLabel ()Ljava/lang/String;
+	public abstract fun getTailLp ()Ljava/lang/String;
+	public abstract fun getTailPort ()Ljava/lang/String;
+	public abstract fun getTailTarget ()Ljava/lang/String;
+	public abstract fun getTailTooltip ()Ljava/lang/String;
+	public abstract fun getTailUrl ()Ljava/lang/String;
+	public abstract fun getTarget ()Ljava/lang/String;
+	public abstract fun getTextTransform ()Latlas/d2/TextTransform;
+	public abstract fun getTooltip ()Ljava/lang/String;
+	public abstract fun getUnderline ()Ljava/lang/Boolean;
+	public abstract fun getUrl ()Ljava/lang/String;
+	public abstract fun getWeight ()Ljava/lang/Number;
+	public abstract fun getXLabel ()Ljava/lang/String;
+	public abstract fun getXlp ()Ljava/lang/String;
+	public abstract fun setAnimated (Ljava/lang/Boolean;)V
+	public abstract fun setArrowHead (Latlas/graphviz/ArrowType;)V
+	public abstract fun setArrowSize (Ljava/lang/Number;)V
+	public abstract fun setArrowTail (Latlas/graphviz/ArrowType;)V
+	public abstract fun setBold (Ljava/lang/Boolean;)V
+	public abstract fun setBorderRadius (Ljava/lang/Integer;)V
+	public abstract fun setColorScheme (Ljava/lang/String;)V
+	public abstract fun setComment (Ljava/lang/String;)V
+	public abstract fun setConstraint (Ljava/lang/Boolean;)V
+	public abstract fun setDecorate (Ljava/lang/Boolean;)V
+	public abstract fun setDir (Latlas/graphviz/Dir;)V
+	public abstract fun setEdgeHref (Ljava/lang/String;)V
+	public abstract fun setEdgeTarget (Ljava/lang/String;)V
+	public abstract fun setEdgeTooltip (Ljava/lang/String;)V
+	public abstract fun setEdgeUrl (Ljava/lang/String;)V
+	public abstract fun setFillColor (Ljava/lang/String;)V
+	public abstract fun setFont (Latlas/d2/Font;)V
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontName (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setHeadClip (Ljava/lang/Boolean;)V
+	public abstract fun setHeadHref (Ljava/lang/String;)V
+	public abstract fun setHeadLabel (Ljava/lang/String;)V
+	public abstract fun setHeadLp (Ljava/lang/String;)V
+	public abstract fun setHeadPort (Ljava/lang/String;)V
+	public abstract fun setHeadTarget (Ljava/lang/String;)V
+	public abstract fun setHeadTooltip (Ljava/lang/String;)V
+	public abstract fun setHeadUrl (Ljava/lang/String;)V
+	public abstract fun setHref (Ljava/lang/String;)V
+	public abstract fun setId (Ljava/lang/String;)V
+	public abstract fun setItalic (Ljava/lang/Boolean;)V
+	public abstract fun setLabel (Ljava/lang/String;)V
+	public abstract fun setLabelAngle (Ljava/lang/Number;)V
+	public abstract fun setLabelDistance (Ljava/lang/Number;)V
+	public abstract fun setLabelFloat (Ljava/lang/Boolean;)V
+	public abstract fun setLabelFontColor (Ljava/lang/String;)V
+	public abstract fun setLabelFontName (Ljava/lang/String;)V
+	public abstract fun setLabelFontSize (Ljava/lang/String;)V
+	public abstract fun setLabelHref (Ljava/lang/String;)V
+	public abstract fun setLabelTarget (Ljava/lang/String;)V
+	public abstract fun setLabelTooltip (Ljava/lang/String;)V
+	public abstract fun setLabelUrl (Ljava/lang/String;)V
+	public abstract fun setLayer (Ljava/lang/String;)V
+	public abstract fun setLen (Ljava/lang/Number;)V
+	public abstract fun setLhead (Ljava/lang/String;)V
+	public abstract fun setLp (Ljava/lang/String;)V
+	public abstract fun setLtail (Ljava/lang/String;)V
+	public abstract fun setMinLen (Ljava/lang/Integer;)V
+	public abstract fun setNoJustify (Ljava/lang/Boolean;)V
+	public abstract fun setOpacity (Ljava/lang/Float;)V
+	public abstract fun setPos (Ljava/lang/String;)V
+	public abstract fun setSameHead (Ljava/lang/String;)V
+	public abstract fun setSameTail (Ljava/lang/String;)V
+	public abstract fun setShowBoxes (Ljava/lang/Integer;)V
+	public abstract fun setStroke (Ljava/lang/String;)V
+	public abstract fun setStrokeDash (Ljava/lang/Integer;)V
+	public abstract fun setStrokeDashArray (Ljava/lang/String;)V
+	public abstract fun setStrokeWidth (Ljava/lang/String;)V
+	public abstract fun setTailClip (Ljava/lang/Boolean;)V
+	public abstract fun setTailHref (Ljava/lang/String;)V
+	public abstract fun setTailLabel (Ljava/lang/String;)V
+	public abstract fun setTailLp (Ljava/lang/String;)V
+	public abstract fun setTailPort (Ljava/lang/String;)V
+	public abstract fun setTailTarget (Ljava/lang/String;)V
+	public abstract fun setTailTooltip (Ljava/lang/String;)V
+	public abstract fun setTailUrl (Ljava/lang/String;)V
+	public abstract fun setTarget (Ljava/lang/String;)V
+	public abstract fun setTextTransform (Latlas/d2/TextTransform;)V
+	public abstract fun setTooltip (Ljava/lang/String;)V
+	public abstract fun setUnderline (Ljava/lang/Boolean;)V
+	public abstract fun setUrl (Ljava/lang/String;)V
+	public abstract fun setWeight (Ljava/lang/Number;)V
+	public abstract fun setXLabel (Ljava/lang/String;)V
+	public abstract fun setXlp (Ljava/lang/String;)V
+}
+
+public final class atlas/core/LinkTypeSpec$DefaultImpls {
+	public static fun put (Latlas/core/LinkTypeSpec;Latlas/core/Framework;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/core/NamedLinkTypeContainer : org/gradle/api/NamedDomainObjectContainer {
+	public fun api (Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun api$default (Latlas/core/NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public fun implementation (Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun implementation$default (Latlas/core/NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public fun invoke (Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Latlas/core/NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public fun register (Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun register$default (Latlas/core/NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public final class atlas/core/NamedLinkTypeContainer$DefaultImpls {
+	public static fun api (Latlas/core/NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun api$default (Latlas/core/NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun implementation (Latlas/core/NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun implementation$default (Latlas/core/NamedLinkTypeContainer;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun invoke (Latlas/core/NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun invoke$default (Latlas/core/NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun register (Latlas/core/NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun register$default (Latlas/core/NamedLinkTypeContainer;Ljava/lang/String;Latlas/core/LinkStyle;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public abstract interface class atlas/core/NamedProjectTypeContainer : org/gradle/api/NamedDomainObjectContainer {
+	public fun hasPluginId (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun hasPluginId$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public fun pathContains (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun pathContains$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public fun pathMatches (Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun pathMatches$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public final class atlas/core/NamedProjectTypeContainer$DefaultImpls {
+	public static fun hasPluginId (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun hasPluginId$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun pathContains (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun pathContains$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static fun pathMatches (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun pathMatches$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+}
+
+public abstract interface class atlas/core/PathTransformSpec {
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun remove (Ljava/lang/String;)V
+	public abstract fun remove (Lkotlin/text/Regex;)V
+	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun replace (Lkotlin/text/Regex;Ljava/lang/String;)V
+}
+
+public final class atlas/core/ProjectType : java/io/Serializable {
+	public static final field Companion Latlas/core/ProjectType$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Latlas/core/ProjectType;
+	public static synthetic fun copy$default (Latlas/core/ProjectType;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Latlas/core/ProjectType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getProperties ()Ljava/util/Map;
+	public fun hashCode ()I
+	public final fun properties (Latlas/core/Framework;)Ljava/util/Map;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class atlas/core/ProjectType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Latlas/core/ProjectType$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/core/ProjectType;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/core/ProjectType;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class atlas/core/ProjectType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class atlas/core/ProjectTypeSpec : atlas/core/StyleSpec {
+	public abstract fun getAnimated ()Ljava/lang/Boolean;
+	public abstract fun getBold ()Ljava/lang/Boolean;
+	public abstract fun getBorderRadius ()Ljava/lang/Integer;
+	public abstract fun getColor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getColorScheme ()Ljava/lang/String;
+	public abstract fun getComment ()Ljava/lang/String;
+	public abstract fun getD2Shape ()Latlas/d2/Shape;
+	public abstract fun getDistortion ()Ljava/lang/String;
+	public abstract fun getDoubleBorder ()Ljava/lang/Boolean;
+	public abstract fun getFill ()Ljava/lang/String;
+	public abstract fun getFillPattern ()Latlas/d2/FillPattern;
+	public abstract fun getFixedSize ()Ljava/lang/String;
+	public abstract fun getFont ()Latlas/d2/Font;
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontName ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getGradientAngle ()Ljava/lang/Integer;
+	public abstract fun getGraphvizShape ()Latlas/graphviz/Shape;
+	public abstract fun getGroup ()Ljava/lang/String;
+	public abstract fun getHasPluginId ()Lorg/gradle/api/provider/Property;
+	public abstract fun getHeight ()Ljava/lang/Number;
+	public abstract fun getHref ()Ljava/lang/String;
+	public abstract fun getId ()Ljava/lang/String;
+	public abstract fun getImage ()Ljava/lang/String;
+	public abstract fun getImagePos ()Latlas/graphviz/ImagePos;
+	public abstract fun getImageScale ()Ljava/lang/String;
+	public abstract fun getItalic ()Ljava/lang/Boolean;
+	public abstract fun getLabel ()Ljava/lang/String;
+	public abstract fun getLabelLoc ()Ljava/lang/String;
+	public abstract fun getLayer ()Ljava/lang/String;
+	public abstract fun getMargin ()Ljava/lang/String;
+	public abstract fun getMultiple ()Ljava/lang/Boolean;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getNoJustify ()Ljava/lang/Boolean;
+	public abstract fun getOpacity ()Ljava/lang/Float;
+	public abstract fun getOrdering ()Ljava/lang/String;
+	public abstract fun getOrientation ()Ljava/lang/Number;
+	public abstract fun getPathContains ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathMatches ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPeripheries ()Ljava/lang/Integer;
+	public abstract fun getPin ()Ljava/lang/Boolean;
+	public abstract fun getPos ()Ljava/lang/String;
+	public abstract fun getRects ()Ljava/lang/String;
+	public abstract fun getRegexOptions ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getRegular ()Ljava/lang/Boolean;
+	public abstract fun getRender3D ()Ljava/lang/Boolean;
+	public abstract fun getRoot ()Ljava/lang/String;
+	public abstract fun getSamplePoints ()Ljava/lang/Integer;
+	public abstract fun getShadow ()Ljava/lang/Boolean;
+	public abstract fun getShapeFile ()Ljava/lang/String;
+	public abstract fun getShowBoxes ()Ljava/lang/Integer;
+	public abstract fun getSides ()Ljava/lang/Integer;
+	public abstract fun getSkew ()Ljava/lang/Number;
+	public abstract fun getSortv ()Ljava/lang/Integer;
+	public abstract fun getStroke ()Ljava/lang/String;
+	public abstract fun getStrokeDash ()Ljava/lang/Integer;
+	public abstract fun getStrokeDashArray ()Ljava/lang/String;
+	public abstract fun getStrokeWidth ()Ljava/lang/String;
+	public abstract fun getStyle ()Latlas/graphviz/NodeStyle;
+	public abstract fun getTarget ()Ljava/lang/String;
+	public abstract fun getTextTransform ()Latlas/d2/TextTransform;
+	public abstract fun getTooltip ()Ljava/lang/String;
+	public abstract fun getUnderline ()Ljava/lang/Boolean;
+	public abstract fun getUrl ()Ljava/lang/String;
+	public abstract fun getVertices ()Ljava/lang/String;
+	public abstract fun getWidth ()Ljava/lang/Number;
+	public abstract fun getXlabel ()Ljava/lang/String;
+	public abstract fun getXlp ()Ljava/lang/String;
+	public abstract fun getZ ()Ljava/lang/Number;
+	public abstract fun setAnimated (Ljava/lang/Boolean;)V
+	public abstract fun setBold (Ljava/lang/Boolean;)V
+	public abstract fun setBorderRadius (Ljava/lang/Integer;)V
+	public abstract fun setColorScheme (Ljava/lang/String;)V
+	public abstract fun setComment (Ljava/lang/String;)V
+	public abstract fun setD2Shape (Latlas/d2/Shape;)V
+	public abstract fun setDistortion (Ljava/lang/String;)V
+	public abstract fun setDoubleBorder (Ljava/lang/Boolean;)V
+	public abstract fun setFill (Ljava/lang/String;)V
+	public abstract fun setFillPattern (Latlas/d2/FillPattern;)V
+	public abstract fun setFixedSize (Ljava/lang/String;)V
+	public abstract fun setFont (Latlas/d2/Font;)V
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontName (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setGradientAngle (Ljava/lang/Integer;)V
+	public abstract fun setGraphvizShape (Latlas/graphviz/Shape;)V
+	public abstract fun setGroup (Ljava/lang/String;)V
+	public abstract fun setHeight (Ljava/lang/Number;)V
+	public abstract fun setHref (Ljava/lang/String;)V
+	public abstract fun setId (Ljava/lang/String;)V
+	public abstract fun setImage (Ljava/lang/String;)V
+	public abstract fun setImagePos (Latlas/graphviz/ImagePos;)V
+	public abstract fun setImageScale (Ljava/lang/String;)V
+	public abstract fun setItalic (Ljava/lang/Boolean;)V
+	public abstract fun setLabel (Ljava/lang/String;)V
+	public abstract fun setLabelLoc (Ljava/lang/String;)V
+	public abstract fun setLayer (Ljava/lang/String;)V
+	public abstract fun setMargin (Ljava/lang/String;)V
+	public abstract fun setMultiple (Ljava/lang/Boolean;)V
+	public abstract fun setNoJustify (Ljava/lang/Boolean;)V
+	public abstract fun setOpacity (Ljava/lang/Float;)V
+	public abstract fun setOrdering (Ljava/lang/String;)V
+	public abstract fun setOrientation (Ljava/lang/Number;)V
+	public abstract fun setPeripheries (Ljava/lang/Integer;)V
+	public abstract fun setPin (Ljava/lang/Boolean;)V
+	public abstract fun setPos (Ljava/lang/String;)V
+	public abstract fun setRects (Ljava/lang/String;)V
+	public abstract fun setRegular (Ljava/lang/Boolean;)V
+	public abstract fun setRender3D (Ljava/lang/Boolean;)V
+	public abstract fun setRoot (Ljava/lang/String;)V
+	public abstract fun setSamplePoints (Ljava/lang/Integer;)V
+	public abstract fun setShadow (Ljava/lang/Boolean;)V
+	public abstract fun setShapeFile (Ljava/lang/String;)V
+	public abstract fun setShowBoxes (Ljava/lang/Integer;)V
+	public abstract fun setSides (Ljava/lang/Integer;)V
+	public abstract fun setSkew (Ljava/lang/Number;)V
+	public abstract fun setSortv (Ljava/lang/Integer;)V
+	public abstract fun setStroke (Ljava/lang/String;)V
+	public abstract fun setStrokeDash (Ljava/lang/Integer;)V
+	public abstract fun setStrokeDashArray (Ljava/lang/String;)V
+	public abstract fun setStrokeWidth (Ljava/lang/String;)V
+	public abstract fun setStyle (Latlas/graphviz/NodeStyle;)V
+	public abstract fun setTarget (Ljava/lang/String;)V
+	public abstract fun setTextTransform (Latlas/d2/TextTransform;)V
+	public abstract fun setTooltip (Ljava/lang/String;)V
+	public abstract fun setUnderline (Ljava/lang/Boolean;)V
+	public abstract fun setUrl (Ljava/lang/String;)V
+	public abstract fun setVertices (Ljava/lang/String;)V
+	public abstract fun setWidth (Ljava/lang/Number;)V
+	public abstract fun setXlabel (Ljava/lang/String;)V
+	public abstract fun setXlp (Ljava/lang/String;)V
+	public abstract fun setZ (Ljava/lang/Number;)V
+}
+
+public final class atlas/core/ProjectTypeSpec$DefaultImpls {
+	public static fun put (Latlas/core/ProjectTypeSpec;Latlas/core/Framework;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/core/PropertiesSpec {
+	public fun clear ()V
+	public abstract fun getProperties ()Lorg/gradle/api/provider/MapProperty;
+	public fun put (Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class atlas/core/PropertiesSpec$DefaultImpls {
+	public static fun clear (Latlas/core/PropertiesSpec;)V
+	public static fun put (Latlas/core/PropertiesSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class atlas/core/Replacement : java/io/Serializable {
+	public static final field Companion Latlas/core/Replacement$Companion;
+	public fun <init> (Lkotlin/text/Regex;Ljava/lang/String;)V
+	public final fun getPattern ()Lkotlin/text/Regex;
+	public final fun getReplacement ()Ljava/lang/String;
+}
+
+public final synthetic class atlas/core/Replacement$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Latlas/core/Replacement$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/core/Replacement;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/core/Replacement;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class atlas/core/Replacement$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class atlas/core/StringEnum {
+	public abstract fun getString ()Ljava/lang/String;
+}
+
+public abstract interface class atlas/core/StyleSpec {
+	public abstract fun clear ()V
+	public abstract fun clear (Latlas/core/Framework;)V
+	public abstract fun properties (Latlas/core/Framework;)Lorg/gradle/api/provider/MapProperty;
+	public fun put (Latlas/core/Framework;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class atlas/core/StyleSpec$DefaultImpls {
+	public static fun put (Latlas/core/StyleSpec;Latlas/core/Framework;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/core/tasks/AtlasGenerationTask : org/gradle/api/Task {
+	public abstract fun getPrintFilesToConsole ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class atlas/core/tasks/CheckFileDiff : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getActualFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getExpectedDirectory ()Lorg/gradle/api/provider/Property;
+	public abstract fun getExpectedFilename ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProblems ()Lorg/gradle/api/problems/Problems;
+	public abstract fun getTaskPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class atlas/core/tasks/CollateProjectLinks : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getIgnoredProjects ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectLinkFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+}
+
+public abstract class atlas/core/tasks/CollateProjectTypes : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectTypeFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+}
+
+public abstract interface class atlas/core/tasks/TaskWithOutputFile : org/gradle/api/Task {
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public abstract class atlas/core/tasks/WriteProjectLinks : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectLinks ()Lorg/gradle/api/provider/MapProperty;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class atlas/core/tasks/WriteProjectTree : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getAlsoTraverseUpwards ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCollatedLinks ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class atlas/core/tasks/WriteProjectType : org/gradle/api/DefaultTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProjectType ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class atlas/core/tasks/WriteReadme : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getDiagrams ()Lorg/gradle/api/provider/ListProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectPath ()Lorg/gradle/api/provider/Property;
+	public abstract fun getReadmeFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public abstract interface class atlas/core/tasks/WriteReadme$Diagram {
+	public abstract fun getChartFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getLegendFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public final class atlas/d2/ArrowType : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Arrow Latlas/d2/ArrowType;
+	public static final field Box Latlas/d2/ArrowType;
+	public static final field Circle Latlas/d2/ArrowType;
+	public static final field Cross Latlas/d2/ArrowType;
+	public static final field CrowsFootMany Latlas/d2/ArrowType;
+	public static final field CrowsFootManyRequired Latlas/d2/ArrowType;
+	public static final field CrowsFootOne Latlas/d2/ArrowType;
+	public static final field CrowsFootOneRequired Latlas/d2/ArrowType;
+	public static final field Diamond Latlas/d2/ArrowType;
+	public static final field Triangle Latlas/d2/ArrowType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/ArrowType;
+	public static fun values ()[Latlas/d2/ArrowType;
+}
+
+public abstract interface class atlas/d2/D2DagreSpec : atlas/core/PropertiesSpec {
+	public abstract fun getEdgeSep ()Ljava/lang/Integer;
+	public abstract fun getNodeSep ()Ljava/lang/Integer;
+	public abstract fun setEdgeSep (Ljava/lang/Integer;)V
+	public abstract fun setNodeSep (Ljava/lang/Integer;)V
+}
+
+public final class atlas/d2/D2DagreSpec$DefaultImpls {
+	public static fun clear (Latlas/d2/D2DagreSpec;)V
+	public static fun put (Latlas/d2/D2DagreSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/d2/D2ElkSpec : atlas/core/PropertiesSpec {
+	public abstract fun getAlgorithm ()Latlas/d2/ElkAlgorithm;
+	public abstract fun getEdgeNodeBetweenLayers ()Ljava/lang/Integer;
+	public abstract fun getNodeNodeBetweenLayers ()Ljava/lang/Integer;
+	public abstract fun getNodeSelfLoop ()Ljava/lang/Integer;
+	public abstract fun getPadding ()Ljava/lang/String;
+	public abstract fun setAlgorithm (Latlas/d2/ElkAlgorithm;)V
+	public abstract fun setEdgeNodeBetweenLayers (Ljava/lang/Integer;)V
+	public abstract fun setNodeNodeBetweenLayers (Ljava/lang/Integer;)V
+	public abstract fun setNodeSelfLoop (Ljava/lang/Integer;)V
+	public abstract fun setPadding (Ljava/lang/String;)V
+}
+
+public final class atlas/d2/D2ElkSpec$DefaultImpls {
+	public static fun clear (Latlas/d2/D2ElkSpec;)V
+	public static fun put (Latlas/d2/D2ElkSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/d2/D2GlobalPropsSpec : atlas/core/PropertiesSpec {
+	public abstract fun getArrowType ()Latlas/d2/ArrowType;
+	public abstract fun getFillArrowHeads ()Ljava/lang/Boolean;
+	public abstract fun getFont ()Latlas/d2/Font;
+	public abstract fun getFontSize ()Ljava/lang/Integer;
+	public abstract fun setArrowType (Latlas/d2/ArrowType;)V
+	public abstract fun setFillArrowHeads (Ljava/lang/Boolean;)V
+	public abstract fun setFont (Latlas/d2/Font;)V
+	public abstract fun setFontSize (Ljava/lang/Integer;)V
+}
+
+public final class atlas/d2/D2GlobalPropsSpec$DefaultImpls {
+	public static fun clear (Latlas/d2/D2GlobalPropsSpec;)V
+	public static fun put (Latlas/d2/D2GlobalPropsSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/d2/D2LayoutEngineSpec : atlas/core/PropertiesSpec {
+	public abstract fun dagre (Lorg/gradle/api/Action;)V
+	public static synthetic fun dagre$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public abstract fun elk (Lorg/gradle/api/Action;)V
+	public static synthetic fun elk$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public abstract fun getDagre ()Latlas/d2/D2DagreSpec;
+	public abstract fun getElk ()Latlas/d2/D2ElkSpec;
+	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTala ()Latlas/d2/D2TalaSpec;
+	public abstract fun tala (Lorg/gradle/api/Action;)V
+	public static synthetic fun tala$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+}
+
+public final class atlas/d2/D2LayoutEngineSpec$DefaultImpls {
+	public static fun clear (Latlas/d2/D2LayoutEngineSpec;)V
+	public static synthetic fun dagre$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public static synthetic fun elk$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public static fun put (Latlas/d2/D2LayoutEngineSpec;Ljava/lang/String;Ljava/lang/Object;)V
+	public static synthetic fun tala$default (Latlas/d2/D2LayoutEngineSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+}
+
+public abstract interface class atlas/d2/D2RootStyleSpec : atlas/core/PropertiesSpec {
+	public abstract fun getDoubleBorder ()Ljava/lang/Boolean;
+	public abstract fun getFill ()Ljava/lang/String;
+	public abstract fun getFillPattern ()Latlas/d2/FillPattern;
+	public abstract fun getStroke ()Ljava/lang/String;
+	public abstract fun getStrokeDash ()Ljava/lang/Integer;
+	public abstract fun getStrokeWidth ()Ljava/lang/Integer;
+	public abstract fun setDoubleBorder (Ljava/lang/Boolean;)V
+	public abstract fun setFill (Ljava/lang/String;)V
+	public abstract fun setFillPattern (Latlas/d2/FillPattern;)V
+	public abstract fun setStroke (Ljava/lang/String;)V
+	public abstract fun setStrokeDash (Ljava/lang/Integer;)V
+	public abstract fun setStrokeWidth (Ljava/lang/Integer;)V
+}
+
+public final class atlas/d2/D2RootStyleSpec$DefaultImpls {
+	public static fun clear (Latlas/d2/D2RootStyleSpec;)V
+	public static fun put (Latlas/d2/D2RootStyleSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/d2/D2Spec : atlas/core/AtlasSpec {
+	public abstract fun convertSvgToPng (Latlas/d2/tasks/SvgToPng$Converter;)V
+	public abstract fun getAnimateInterval ()Lorg/gradle/api/provider/Property;
+	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCenter ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDirection ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFileFormat ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGlobalProps ()Latlas/d2/D2GlobalPropsSpec;
+	public abstract fun getGroupLabelLocation ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupLabelPosition ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLayoutEngine ()Latlas/d2/D2LayoutEngineSpec;
+	public abstract fun getPad ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathToD2Command ()Lorg/gradle/api/provider/Property;
+	public abstract fun getRootStyle ()Latlas/d2/D2RootStyleSpec;
+	public abstract fun getSketch ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTheme ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThemeDark ()Lorg/gradle/api/provider/Property;
+	public abstract fun globalProps (Lorg/gradle/api/Action;)V
+	public abstract fun layoutEngine (Lorg/gradle/api/Action;)V
+	public abstract fun rootStyle (Lorg/gradle/api/Action;)V
+}
+
+public abstract interface class atlas/d2/D2TalaSpec : atlas/core/PropertiesSpec {
+}
+
+public final class atlas/d2/D2TalaSpec$DefaultImpls {
+	public static fun clear (Latlas/d2/D2TalaSpec;)V
+	public static fun put (Latlas/d2/D2TalaSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class atlas/d2/Direction : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Down Latlas/d2/Direction;
+	public static final field Left Latlas/d2/Direction;
+	public static final field Right Latlas/d2/Direction;
+	public static final field Up Latlas/d2/Direction;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/Direction;
+	public static fun values ()[Latlas/d2/Direction;
+}
+
+public final class atlas/d2/ElkAlgorithm : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Box Latlas/d2/ElkAlgorithm;
+	public static final field Disco Latlas/d2/ElkAlgorithm;
+	public static final field Fixed Latlas/d2/ElkAlgorithm;
+	public static final field Force Latlas/d2/ElkAlgorithm;
+	public static final field GraphvizCirco Latlas/d2/ElkAlgorithm;
+	public static final field GraphvizDot Latlas/d2/ElkAlgorithm;
+	public static final field GraphvizFdp Latlas/d2/ElkAlgorithm;
+	public static final field GraphvizNeato Latlas/d2/ElkAlgorithm;
+	public static final field GraphvizTwopi Latlas/d2/ElkAlgorithm;
+	public static final field Layered Latlas/d2/ElkAlgorithm;
+	public static final field MrTree Latlas/d2/ElkAlgorithm;
+	public static final field Radial Latlas/d2/ElkAlgorithm;
+	public static final field Random Latlas/d2/ElkAlgorithm;
+	public static final field RectPacking Latlas/d2/ElkAlgorithm;
+	public static final field SporeCompaction Latlas/d2/ElkAlgorithm;
+	public static final field SporeOverlap Latlas/d2/ElkAlgorithm;
+	public static final field Stress Latlas/d2/ElkAlgorithm;
+	public static final field TopDownPacking Latlas/d2/ElkAlgorithm;
+	public static final field VertiFlex Latlas/d2/ElkAlgorithm;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/ElkAlgorithm;
+	public static fun values ()[Latlas/d2/ElkAlgorithm;
+}
+
+public final class atlas/d2/FileFormat : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Ascii Latlas/d2/FileFormat;
+	public static final field Gif Latlas/d2/FileFormat;
+	public static final field Pdf Latlas/d2/FileFormat;
+	public static final field Png Latlas/d2/FileFormat;
+	public static final field Pptx Latlas/d2/FileFormat;
+	public static final field Svg Latlas/d2/FileFormat;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/FileFormat;
+	public static fun values ()[Latlas/d2/FileFormat;
+}
+
+public final class atlas/d2/FillPattern : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Dots Latlas/d2/FillPattern;
+	public static final field Grain Latlas/d2/FillPattern;
+	public static final field Lines Latlas/d2/FillPattern;
+	public static final field None Latlas/d2/FillPattern;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/FillPattern;
+	public static fun values ()[Latlas/d2/FillPattern;
+}
+
+public final class atlas/d2/Font : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Mono Latlas/d2/Font;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/Font;
+	public static fun values ()[Latlas/d2/Font;
+}
+
+public final class atlas/d2/LayoutEngine : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Dagre Latlas/d2/LayoutEngine;
+	public static final field Elk Latlas/d2/LayoutEngine;
+	public static final field Tala Latlas/d2/LayoutEngine;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/LayoutEngine;
+	public static fun values ()[Latlas/d2/LayoutEngine;
+}
+
+public final class atlas/d2/Location : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Border Latlas/d2/Location;
+	public static final field Inside Latlas/d2/Location;
+	public static final field Outside Latlas/d2/Location;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/Location;
+	public static fun values ()[Latlas/d2/Location;
+}
+
+public final class atlas/d2/Position : java/lang/Enum, atlas/core/StringEnum {
+	public static final field BottomCenter Latlas/d2/Position;
+	public static final field BottomLeft Latlas/d2/Position;
+	public static final field BottomRight Latlas/d2/Position;
+	public static final field CenterLeft Latlas/d2/Position;
+	public static final field CenterRight Latlas/d2/Position;
+	public static final field TopCenter Latlas/d2/Position;
+	public static final field TopLeft Latlas/d2/Position;
+	public static final field TopRight Latlas/d2/Position;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/Position;
+	public static fun values ()[Latlas/d2/Position;
+}
+
+public final class atlas/d2/Shape : java/lang/Enum, atlas/core/StringEnum {
+	public static final field C4Person Latlas/d2/Shape;
+	public static final field Callout Latlas/d2/Shape;
+	public static final field Circle Latlas/d2/Shape;
+	public static final field Cloud Latlas/d2/Shape;
+	public static final field Cylinder Latlas/d2/Shape;
+	public static final field Diamond Latlas/d2/Shape;
+	public static final field Document Latlas/d2/Shape;
+	public static final field Hexagon Latlas/d2/Shape;
+	public static final field Oval Latlas/d2/Shape;
+	public static final field Package Latlas/d2/Shape;
+	public static final field Page Latlas/d2/Shape;
+	public static final field Parallelogram Latlas/d2/Shape;
+	public static final field Person Latlas/d2/Shape;
+	public static final field Queue Latlas/d2/Shape;
+	public static final field Rectangle Latlas/d2/Shape;
+	public static final field Square Latlas/d2/Shape;
+	public static final field Step Latlas/d2/Shape;
+	public static final field StoredData Latlas/d2/Shape;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/Shape;
+	public static fun values ()[Latlas/d2/Shape;
+}
+
+public final class atlas/d2/TextTransform : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Lowercase Latlas/d2/TextTransform;
+	public static final field None Latlas/d2/TextTransform;
+	public static final field Title Latlas/d2/TextTransform;
+	public static final field Uppercase Latlas/d2/TextTransform;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/TextTransform;
+	public static fun values ()[Latlas/d2/TextTransform;
+}
+
+public final class atlas/d2/Theme : java/lang/Enum, atlas/core/IntEnum {
+	public static final field Aubergine Latlas/d2/Theme;
+	public static final field ButteredToast Latlas/d2/Theme;
+	public static final field C4 Latlas/d2/Theme;
+	public static final field ColorblindClear Latlas/d2/Theme;
+	public static final field CoolClassics Latlas/d2/Theme;
+	public static final field DarkFlagshipTerrastruct Latlas/d2/Theme;
+	public static final field DarkMauve Latlas/d2/Theme;
+	public static final field Default Latlas/d2/Theme;
+	public static final field EarthTones Latlas/d2/Theme;
+	public static final field EvergladeGreen Latlas/d2/Theme;
+	public static final field FlagshipTerrastruct Latlas/d2/Theme;
+	public static final field GrapeSoda Latlas/d2/Theme;
+	public static final field MixedBerryBlue Latlas/d2/Theme;
+	public static final field NeutralGrey Latlas/d2/Theme;
+	public static final field OrangeCreamsicle Latlas/d2/Theme;
+	public static final field Origami Latlas/d2/Theme;
+	public static final field ShirleyTemple Latlas/d2/Theme;
+	public static final field Terminal Latlas/d2/Theme;
+	public static final field TerminalGrayscale Latlas/d2/Theme;
+	public static final field VanillaNitroCola Latlas/d2/Theme;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/Theme;
+	public static fun values ()[Latlas/d2/Theme;
+}
+
+public final class atlas/d2/internal/D2ClassesConfig : java/io/Serializable {
+	public static final field Companion Latlas/d2/internal/D2ClassesConfig$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Boolean;Ljava/lang/Boolean;Latlas/d2/Theme;Latlas/d2/Direction;Ljava/lang/Boolean;Ljava/util/Map;Latlas/d2/LayoutEngine;Ljava/util/List;Latlas/d2/Location;Ljava/util/List;Ljava/lang/Integer;Latlas/d2/Position;Ljava/util/Map;Ljava/lang/Boolean;Latlas/d2/Theme;)V
+	public synthetic fun <init> (Ljava/lang/Boolean;Ljava/lang/Boolean;Latlas/d2/Theme;Latlas/d2/Direction;Ljava/lang/Boolean;Ljava/util/Map;Latlas/d2/LayoutEngine;Ljava/util/List;Latlas/d2/Location;Ljava/util/List;Ljava/lang/Integer;Latlas/d2/Position;Ljava/util/Map;Ljava/lang/Boolean;Latlas/d2/Theme;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAnimateLinks ()Ljava/lang/Boolean;
+	public final fun getCenter ()Ljava/lang/Boolean;
+	public final fun getDarkTheme ()Latlas/d2/Theme;
+	public final fun getDirection ()Latlas/d2/Direction;
+	public final fun getDisplayLinkLabels ()Ljava/lang/Boolean;
+	public final fun getGlobalProps ()Ljava/util/Map;
+	public final fun getLayoutEngine ()Latlas/d2/LayoutEngine;
+	public final fun getLinkTypes ()Ljava/util/List;
+	public final fun getLocation ()Latlas/d2/Location;
+	public final fun getPad ()Ljava/lang/Integer;
+	public final fun getPosition ()Latlas/d2/Position;
+	public final fun getProjectTypes ()Ljava/util/List;
+	public final fun getRootStyle ()Ljava/util/Map;
+	public final fun getSketch ()Ljava/lang/Boolean;
+	public final fun getTheme ()Latlas/d2/Theme;
+}
+
+public final synthetic class atlas/d2/internal/D2ClassesConfig$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Latlas/d2/internal/D2ClassesConfig$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/d2/internal/D2ClassesConfig;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/d2/internal/D2ClassesConfig;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class atlas/d2/internal/D2ClassesConfig$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class atlas/d2/tasks/ExecD2 : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getAnimateInterval ()Lorg/gradle/api/provider/Property;
+	public abstract fun getClassesFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getCliArguments ()Lorg/gradle/api/provider/MapProperty;
+	public fun getDescription ()Ljava/lang/String;
+	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
+	public abstract fun getInputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathToD2Command ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class atlas/d2/tasks/SvgToPng : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public abstract fun getConverter ()Lorg/gradle/api/provider/Property;
+	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
+	public abstract fun getInputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public final class atlas/d2/tasks/SvgToPng$Converter : java/lang/Enum {
+	public static final field CairoSvg Latlas/d2/tasks/SvgToPng$Converter;
+	public static final field ImageMagick6 Latlas/d2/tasks/SvgToPng$Converter;
+	public static final field ImageMagick7 Latlas/d2/tasks/SvgToPng$Converter;
+	public static final field Inkscape Latlas/d2/tasks/SvgToPng$Converter;
+	public static final field LibRsvg Latlas/d2/tasks/SvgToPng$Converter;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/d2/tasks/SvgToPng$Converter;
+	public static fun values ()[Latlas/d2/tasks/SvgToPng$Converter;
+}
+
+public abstract class atlas/d2/tasks/WriteD2Chart : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public fun execute ()V
+	public abstract fun getGroupProjects ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getPathToClassesFile ()Lorg/gradle/api/provider/Property;
+	public abstract fun getProjectTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class atlas/d2/tasks/WriteD2Classes : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public fun execute ()V
+	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public final class atlas/graphviz/ArrowType : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Box Latlas/graphviz/ArrowType;
+	public static final field Crow Latlas/graphviz/ArrowType;
+	public static final field Diamond Latlas/graphviz/ArrowType;
+	public static final field Dot Latlas/graphviz/ArrowType;
+	public static final field Ediamond Latlas/graphviz/ArrowType;
+	public static final field Empty Latlas/graphviz/ArrowType;
+	public static final field HalfOpen Latlas/graphviz/ArrowType;
+	public static final field Inv Latlas/graphviz/ArrowType;
+	public static final field InvEmpty Latlas/graphviz/ArrowType;
+	public static final field Invdot Latlas/graphviz/ArrowType;
+	public static final field Invodot Latlas/graphviz/ArrowType;
+	public static final field None Latlas/graphviz/ArrowType;
+	public static final field Normal Latlas/graphviz/ArrowType;
+	public static final field Obox Latlas/graphviz/ArrowType;
+	public static final field Odiamond Latlas/graphviz/ArrowType;
+	public static final field Odot Latlas/graphviz/ArrowType;
+	public static final field Open Latlas/graphviz/ArrowType;
+	public static final field Tee Latlas/graphviz/ArrowType;
+	public static final field Vee Latlas/graphviz/ArrowType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/ArrowType;
+	public static fun values ()[Latlas/graphviz/ArrowType;
+}
+
+public final class atlas/graphviz/ClusterMode : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Global Latlas/graphviz/ClusterMode;
+	public static final field Local Latlas/graphviz/ClusterMode;
+	public static final field None Latlas/graphviz/ClusterMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/ClusterMode;
+	public static fun values ()[Latlas/graphviz/ClusterMode;
+}
+
+public final class atlas/graphviz/Dir : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Back Latlas/graphviz/Dir;
+	public static final field Both Latlas/graphviz/Dir;
+	public static final field Forward Latlas/graphviz/Dir;
+	public static final field None Latlas/graphviz/Dir;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/Dir;
+	public static fun values ()[Latlas/graphviz/Dir;
+}
+
+public final class atlas/graphviz/DotConfig : java/io/Serializable {
+	public static final field Companion Latlas/graphviz/DotConfig$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Boolean;Latlas/graphviz/LayoutEngine;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/Boolean;Latlas/graphviz/LayoutEngine;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getDisplayLinkLabels ()Ljava/lang/Boolean;
+	public final fun getEdgeAttributes ()Ljava/util/Map;
+	public final fun getGraphAttributes ()Ljava/util/Map;
+	public final fun getLayoutEngine ()Latlas/graphviz/LayoutEngine;
+	public final fun getNodeAttributes ()Ljava/util/Map;
+}
+
+public final synthetic class atlas/graphviz/DotConfig$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Latlas/graphviz/DotConfig$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/graphviz/DotConfig;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/graphviz/DotConfig;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class atlas/graphviz/DotConfig$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class atlas/graphviz/EdgeAttributes : atlas/core/PropertiesSpec {
+	public abstract fun getArrowHead ()Latlas/graphviz/ArrowType;
+	public abstract fun getArrowSize ()Ljava/lang/Number;
+	public abstract fun getArrowTail ()Latlas/graphviz/ArrowType;
+	public abstract fun getColorScheme ()Ljava/lang/String;
+	public abstract fun getComment ()Ljava/lang/String;
+	public abstract fun getConstraint ()Ljava/lang/Boolean;
+	public abstract fun getDecorate ()Ljava/lang/Boolean;
+	public abstract fun getDir ()Latlas/graphviz/Dir;
+	public abstract fun getEdgeHref ()Ljava/lang/String;
+	public abstract fun getEdgeTarget ()Ljava/lang/String;
+	public abstract fun getEdgeTooltip ()Ljava/lang/String;
+	public abstract fun getEdgeUrl ()Ljava/lang/String;
+	public abstract fun getFillColor ()Ljava/lang/String;
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontName ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getHeadClip ()Ljava/lang/Boolean;
+	public abstract fun getHeadHref ()Ljava/lang/String;
+	public abstract fun getHeadLabel ()Ljava/lang/String;
+	public abstract fun getHeadLp ()Ljava/lang/String;
+	public abstract fun getHeadPort ()Ljava/lang/String;
+	public abstract fun getHeadTarget ()Ljava/lang/String;
+	public abstract fun getHeadTooltip ()Ljava/lang/String;
+	public abstract fun getHeadUrl ()Ljava/lang/String;
+	public abstract fun getHref ()Ljava/lang/String;
+	public abstract fun getId ()Ljava/lang/String;
+	public abstract fun getLabel ()Ljava/lang/String;
+	public abstract fun getLabelAngle ()Ljava/lang/Number;
+	public abstract fun getLabelDistance ()Ljava/lang/Number;
+	public abstract fun getLabelFloat ()Ljava/lang/Boolean;
+	public abstract fun getLabelFontColor ()Ljava/lang/String;
+	public abstract fun getLabelFontName ()Ljava/lang/String;
+	public abstract fun getLabelFontSize ()Ljava/lang/String;
+	public abstract fun getLabelHref ()Ljava/lang/String;
+	public abstract fun getLabelTarget ()Ljava/lang/String;
+	public abstract fun getLabelTooltip ()Ljava/lang/String;
+	public abstract fun getLabelUrl ()Ljava/lang/String;
+	public abstract fun getLayer ()Ljava/lang/String;
+	public abstract fun getLen ()Ljava/lang/Number;
+	public abstract fun getLhead ()Ljava/lang/String;
+	public abstract fun getLinkColor ()Ljava/lang/String;
+	public abstract fun getLinkStyle ()Latlas/graphviz/EdgeStyle;
+	public abstract fun getLp ()Ljava/lang/String;
+	public abstract fun getLtail ()Ljava/lang/String;
+	public abstract fun getMinLen ()Ljava/lang/Integer;
+	public abstract fun getNoJustify ()Ljava/lang/Boolean;
+	public abstract fun getPenWidth ()Ljava/lang/Number;
+	public abstract fun getPos ()Ljava/lang/String;
+	public abstract fun getSameHead ()Ljava/lang/String;
+	public abstract fun getSameTail ()Ljava/lang/String;
+	public abstract fun getShowBoxes ()Ljava/lang/Integer;
+	public abstract fun getTailClip ()Ljava/lang/Boolean;
+	public abstract fun getTailHref ()Ljava/lang/String;
+	public abstract fun getTailLabel ()Ljava/lang/String;
+	public abstract fun getTailLp ()Ljava/lang/String;
+	public abstract fun getTailPort ()Ljava/lang/String;
+	public abstract fun getTailTarget ()Ljava/lang/String;
+	public abstract fun getTailTooltip ()Ljava/lang/String;
+	public abstract fun getTailUrl ()Ljava/lang/String;
+	public abstract fun getTarget ()Ljava/lang/String;
+	public abstract fun getTooltip ()Ljava/lang/String;
+	public abstract fun getUrl ()Ljava/lang/String;
+	public abstract fun getWeight ()Ljava/lang/Number;
+	public abstract fun getXLabel ()Ljava/lang/String;
+	public abstract fun getXlp ()Ljava/lang/String;
+	public abstract fun setArrowHead (Latlas/graphviz/ArrowType;)V
+	public abstract fun setArrowSize (Ljava/lang/Number;)V
+	public abstract fun setArrowTail (Latlas/graphviz/ArrowType;)V
+	public abstract fun setColorScheme (Ljava/lang/String;)V
+	public abstract fun setComment (Ljava/lang/String;)V
+	public abstract fun setConstraint (Ljava/lang/Boolean;)V
+	public abstract fun setDecorate (Ljava/lang/Boolean;)V
+	public abstract fun setDir (Latlas/graphviz/Dir;)V
+	public abstract fun setEdgeHref (Ljava/lang/String;)V
+	public abstract fun setEdgeTarget (Ljava/lang/String;)V
+	public abstract fun setEdgeTooltip (Ljava/lang/String;)V
+	public abstract fun setEdgeUrl (Ljava/lang/String;)V
+	public abstract fun setFillColor (Ljava/lang/String;)V
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontName (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setHeadClip (Ljava/lang/Boolean;)V
+	public abstract fun setHeadHref (Ljava/lang/String;)V
+	public abstract fun setHeadLabel (Ljava/lang/String;)V
+	public abstract fun setHeadLp (Ljava/lang/String;)V
+	public abstract fun setHeadPort (Ljava/lang/String;)V
+	public abstract fun setHeadTarget (Ljava/lang/String;)V
+	public abstract fun setHeadTooltip (Ljava/lang/String;)V
+	public abstract fun setHeadUrl (Ljava/lang/String;)V
+	public abstract fun setHref (Ljava/lang/String;)V
+	public abstract fun setId (Ljava/lang/String;)V
+	public abstract fun setLabel (Ljava/lang/String;)V
+	public abstract fun setLabelAngle (Ljava/lang/Number;)V
+	public abstract fun setLabelDistance (Ljava/lang/Number;)V
+	public abstract fun setLabelFloat (Ljava/lang/Boolean;)V
+	public abstract fun setLabelFontColor (Ljava/lang/String;)V
+	public abstract fun setLabelFontName (Ljava/lang/String;)V
+	public abstract fun setLabelFontSize (Ljava/lang/String;)V
+	public abstract fun setLabelHref (Ljava/lang/String;)V
+	public abstract fun setLabelTarget (Ljava/lang/String;)V
+	public abstract fun setLabelTooltip (Ljava/lang/String;)V
+	public abstract fun setLabelUrl (Ljava/lang/String;)V
+	public abstract fun setLayer (Ljava/lang/String;)V
+	public abstract fun setLen (Ljava/lang/Number;)V
+	public abstract fun setLhead (Ljava/lang/String;)V
+	public abstract fun setLinkColor (Ljava/lang/String;)V
+	public abstract fun setLinkStyle (Latlas/graphviz/EdgeStyle;)V
+	public abstract fun setLp (Ljava/lang/String;)V
+	public abstract fun setLtail (Ljava/lang/String;)V
+	public abstract fun setMinLen (Ljava/lang/Integer;)V
+	public abstract fun setNoJustify (Ljava/lang/Boolean;)V
+	public abstract fun setPenWidth (Ljava/lang/Number;)V
+	public abstract fun setPos (Ljava/lang/String;)V
+	public abstract fun setSameHead (Ljava/lang/String;)V
+	public abstract fun setSameTail (Ljava/lang/String;)V
+	public abstract fun setShowBoxes (Ljava/lang/Integer;)V
+	public abstract fun setTailClip (Ljava/lang/Boolean;)V
+	public abstract fun setTailHref (Ljava/lang/String;)V
+	public abstract fun setTailLabel (Ljava/lang/String;)V
+	public abstract fun setTailLp (Ljava/lang/String;)V
+	public abstract fun setTailPort (Ljava/lang/String;)V
+	public abstract fun setTailTarget (Ljava/lang/String;)V
+	public abstract fun setTailTooltip (Ljava/lang/String;)V
+	public abstract fun setTailUrl (Ljava/lang/String;)V
+	public abstract fun setTarget (Ljava/lang/String;)V
+	public abstract fun setTooltip (Ljava/lang/String;)V
+	public abstract fun setUrl (Ljava/lang/String;)V
+	public abstract fun setWeight (Ljava/lang/Number;)V
+	public abstract fun setXLabel (Ljava/lang/String;)V
+	public abstract fun setXlp (Ljava/lang/String;)V
+}
+
+public final class atlas/graphviz/EdgeAttributes$DefaultImpls {
+	public static fun clear (Latlas/graphviz/EdgeAttributes;)V
+	public static fun put (Latlas/graphviz/EdgeAttributes;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class atlas/graphviz/EdgeStyle : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Bold Latlas/graphviz/EdgeStyle;
+	public static final field Dashed Latlas/graphviz/EdgeStyle;
+	public static final field Dotted Latlas/graphviz/EdgeStyle;
+	public static final field Invis Latlas/graphviz/EdgeStyle;
+	public static final field Solid Latlas/graphviz/EdgeStyle;
+	public static final field Tapered Latlas/graphviz/EdgeStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/EdgeStyle;
+	public static fun values ()[Latlas/graphviz/EdgeStyle;
+}
+
+public final class atlas/graphviz/FileFormat : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Canon Latlas/graphviz/FileFormat;
+	public static final field Cmap Latlas/graphviz/FileFormat;
+	public static final field Cmapx Latlas/graphviz/FileFormat;
+	public static final field CmapxNp Latlas/graphviz/FileFormat;
+	public static final field Dot Latlas/graphviz/FileFormat;
+	public static final field DotJson Latlas/graphviz/FileFormat;
+	public static final field Eps Latlas/graphviz/FileFormat;
+	public static final field Fig Latlas/graphviz/FileFormat;
+	public static final field Gd Latlas/graphviz/FileFormat;
+	public static final field Gd2 Latlas/graphviz/FileFormat;
+	public static final field Gif Latlas/graphviz/FileFormat;
+	public static final field Gv Latlas/graphviz/FileFormat;
+	public static final field Imap Latlas/graphviz/FileFormat;
+	public static final field ImapNp Latlas/graphviz/FileFormat;
+	public static final field Ismap Latlas/graphviz/FileFormat;
+	public static final field Jpe Latlas/graphviz/FileFormat;
+	public static final field Jpeg Latlas/graphviz/FileFormat;
+	public static final field Jpg Latlas/graphviz/FileFormat;
+	public static final field Json Latlas/graphviz/FileFormat;
+	public static final field Json0 Latlas/graphviz/FileFormat;
+	public static final field Mp Latlas/graphviz/FileFormat;
+	public static final field Pdf Latlas/graphviz/FileFormat;
+	public static final field Pic Latlas/graphviz/FileFormat;
+	public static final field Plain Latlas/graphviz/FileFormat;
+	public static final field PlainExt Latlas/graphviz/FileFormat;
+	public static final field Png Latlas/graphviz/FileFormat;
+	public static final field Pov Latlas/graphviz/FileFormat;
+	public static final field Ps Latlas/graphviz/FileFormat;
+	public static final field Ps2 Latlas/graphviz/FileFormat;
+	public static final field Svg Latlas/graphviz/FileFormat;
+	public static final field Svgz Latlas/graphviz/FileFormat;
+	public static final field Tk Latlas/graphviz/FileFormat;
+	public static final field Vdx Latlas/graphviz/FileFormat;
+	public static final field Vml Latlas/graphviz/FileFormat;
+	public static final field Vmlz Latlas/graphviz/FileFormat;
+	public static final field Vrml Latlas/graphviz/FileFormat;
+	public static final field Wbmp Latlas/graphviz/FileFormat;
+	public static final field Webp Latlas/graphviz/FileFormat;
+	public static final field X11 Latlas/graphviz/FileFormat;
+	public static final field Xdot Latlas/graphviz/FileFormat;
+	public static final field Xdot12 Latlas/graphviz/FileFormat;
+	public static final field Xdot14 Latlas/graphviz/FileFormat;
+	public static final field XdotJson Latlas/graphviz/FileFormat;
+	public static final field Xlib Latlas/graphviz/FileFormat;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/FileFormat;
+	public static fun values ()[Latlas/graphviz/FileFormat;
+}
+
+public abstract interface class atlas/graphviz/GraphAttributes : atlas/core/PropertiesSpec {
+	public abstract fun getBackground ()Ljava/lang/String;
+	public abstract fun getBb ()Ljava/lang/String;
+	public abstract fun getBeautify ()Ljava/lang/Boolean;
+	public abstract fun getBgColor ()Ljava/lang/String;
+	public abstract fun getCenter ()Ljava/lang/Boolean;
+	public abstract fun getCharset ()Ljava/lang/String;
+	public abstract fun getClusterRank ()Latlas/graphviz/ClusterMode;
+	public abstract fun getColorScheme ()Ljava/lang/String;
+	public abstract fun getComment ()Ljava/lang/String;
+	public abstract fun getCompound ()Ljava/lang/Boolean;
+	public abstract fun getConcentrate ()Ljava/lang/Boolean;
+	public abstract fun getDamping ()Ljava/lang/Float;
+	public abstract fun getDefaultDist ()Ljava/lang/Number;
+	public abstract fun getDim ()Ljava/lang/Integer;
+	public abstract fun getDimen ()Ljava/lang/Integer;
+	public abstract fun getDirEdgeConstraints ()Ljava/lang/String;
+	public abstract fun getDpi ()Ljava/lang/Number;
+	public abstract fun getEpsilon ()Ljava/lang/Float;
+	public abstract fun getEsep ()Ljava/lang/String;
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontName ()Ljava/lang/String;
+	public abstract fun getFontNames ()Ljava/lang/String;
+	public abstract fun getFontPath ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getForceLabels ()Ljava/lang/Boolean;
+	public abstract fun getGradientAngle ()Ljava/lang/Integer;
+	public abstract fun getHref ()Ljava/lang/String;
+	public abstract fun getId ()Ljava/lang/String;
+	public abstract fun getImagePath ()Ljava/lang/String;
+	public abstract fun getInputScale ()Ljava/lang/Number;
+	public abstract fun getK ()Ljava/lang/Number;
+	public abstract fun getLWidth ()Ljava/lang/Number;
+	public abstract fun getLabel ()Ljava/lang/String;
+	public abstract fun getLabelJust ()Ljava/lang/String;
+	public abstract fun getLabelLoc ()Ljava/lang/String;
+	public abstract fun getLabelScheme ()Ljava/lang/Integer;
+	public abstract fun getLandscape ()Ljava/lang/Boolean;
+	public abstract fun getLayerListSep ()Ljava/lang/String;
+	public abstract fun getLayerSelect ()Ljava/lang/String;
+	public abstract fun getLayerSep ()Ljava/lang/String;
+	public abstract fun getLayers ()Ljava/lang/String;
+	public abstract fun getLayout ()Latlas/graphviz/LayoutEngine;
+	public abstract fun getLevels ()Ljava/lang/Integer;
+	public abstract fun getLevelsGap ()Ljava/lang/Number;
+	public abstract fun getLheight ()Ljava/lang/Number;
+	public abstract fun getLineLength ()Ljava/lang/Integer;
+	public abstract fun getLp ()Ljava/lang/String;
+	public abstract fun getMargin ()Ljava/lang/String;
+	public abstract fun getMaxiter ()Ljava/lang/Integer;
+	public abstract fun getMcLimit ()Ljava/lang/Number;
+	public abstract fun getMinDist ()Ljava/lang/Number;
+	public abstract fun getMode ()Ljava/lang/String;
+	public abstract fun getModel ()Ljava/lang/String;
+	public abstract fun getNewRank ()Ljava/lang/Boolean;
+	public abstract fun getNoJustify ()Ljava/lang/Boolean;
+	public abstract fun getNoTranslate ()Ljava/lang/Boolean;
+	public abstract fun getNodeSep ()Ljava/lang/Number;
+	public abstract fun getNormalize ()Ljava/lang/String;
+	public abstract fun getNsLimit ()Ljava/lang/Number;
+	public abstract fun getNsLimit1 ()Ljava/lang/Number;
+	public abstract fun getOneBlock ()Ljava/lang/Boolean;
+	public abstract fun getOrdering ()Ljava/lang/String;
+	public abstract fun getOrientation ()Ljava/lang/Number;
+	public abstract fun getOutputOrder ()Ljava/lang/String;
+	public abstract fun getOverlap ()Ljava/lang/String;
+	public abstract fun getOverlapScaling ()Ljava/lang/Number;
+	public abstract fun getOverlapShrink ()Ljava/lang/Boolean;
+	public abstract fun getPack ()Ljava/lang/String;
+	public abstract fun getPackMode ()Ljava/lang/String;
+	public abstract fun getPad ()Ljava/lang/String;
+	public abstract fun getPage ()Ljava/lang/String;
+	public abstract fun getPageDir ()Ljava/lang/String;
+	public abstract fun getQuadTree ()Ljava/lang/String;
+	public abstract fun getQuantum ()Ljava/lang/Number;
+	public abstract fun getRankDir ()Latlas/graphviz/RankDir;
+	public abstract fun getRankSep ()Ljava/lang/Number;
+	public abstract fun getRatio ()Ljava/lang/String;
+	public abstract fun getReminCross ()Ljava/lang/Boolean;
+	public abstract fun getRepulsiveForce ()Ljava/lang/Number;
+	public abstract fun getResolution ()Ljava/lang/Number;
+	public abstract fun getRoot ()Ljava/lang/String;
+	public abstract fun getRotate ()Ljava/lang/Integer;
+	public abstract fun getRotation ()Ljava/lang/Number;
+	public abstract fun getScale ()Ljava/lang/String;
+	public abstract fun getSearchSize ()Ljava/lang/Integer;
+	public abstract fun getSep ()Ljava/lang/String;
+	public abstract fun getShowBoxes ()Ljava/lang/Integer;
+	public abstract fun getSize ()Ljava/lang/String;
+	public abstract fun getSmoothing ()Latlas/graphviz/SmoothType;
+	public abstract fun getSortv ()Ljava/lang/Integer;
+	public abstract fun getSplines ()Ljava/lang/String;
+	public abstract fun getStart ()Ljava/lang/String;
+	public abstract fun getStyle ()Ljava/lang/String;
+	public abstract fun getStyleSheet ()Ljava/lang/String;
+	public abstract fun getTarget ()Ljava/lang/String;
+	public abstract fun getTbBalance ()Ljava/lang/String;
+	public abstract fun getTooltip ()Ljava/lang/String;
+	public abstract fun getTrueColor ()Ljava/lang/Boolean;
+	public abstract fun getUrl ()Ljava/lang/String;
+	public abstract fun getViewPort ()Ljava/lang/String;
+	public abstract fun getVoroMargin ()Ljava/lang/Number;
+	public abstract fun getXdotVersion ()Ljava/lang/String;
+	public abstract fun setBackground (Ljava/lang/String;)V
+	public abstract fun setBb (Ljava/lang/String;)V
+	public abstract fun setBeautify (Ljava/lang/Boolean;)V
+	public abstract fun setBgColor (Ljava/lang/String;)V
+	public abstract fun setCenter (Ljava/lang/Boolean;)V
+	public abstract fun setCharset (Ljava/lang/String;)V
+	public abstract fun setClusterRank (Latlas/graphviz/ClusterMode;)V
+	public abstract fun setColorScheme (Ljava/lang/String;)V
+	public abstract fun setComment (Ljava/lang/String;)V
+	public abstract fun setCompound (Ljava/lang/Boolean;)V
+	public abstract fun setConcentrate (Ljava/lang/Boolean;)V
+	public abstract fun setDamping (Ljava/lang/Float;)V
+	public abstract fun setDefaultDist (Ljava/lang/Number;)V
+	public abstract fun setDim (Ljava/lang/Integer;)V
+	public abstract fun setDimen (Ljava/lang/Integer;)V
+	public abstract fun setDirEdgeConstraints (Ljava/lang/String;)V
+	public abstract fun setDpi (Ljava/lang/Number;)V
+	public abstract fun setEpsilon (Ljava/lang/Float;)V
+	public abstract fun setEsep (Ljava/lang/String;)V
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontName (Ljava/lang/String;)V
+	public abstract fun setFontNames (Ljava/lang/String;)V
+	public abstract fun setFontPath (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setForceLabels (Ljava/lang/Boolean;)V
+	public abstract fun setGradientAngle (Ljava/lang/Integer;)V
+	public abstract fun setHref (Ljava/lang/String;)V
+	public abstract fun setId (Ljava/lang/String;)V
+	public abstract fun setImagePath (Ljava/lang/String;)V
+	public abstract fun setInputScale (Ljava/lang/Number;)V
+	public abstract fun setK (Ljava/lang/Number;)V
+	public abstract fun setLWidth (Ljava/lang/Number;)V
+	public abstract fun setLabel (Ljava/lang/String;)V
+	public abstract fun setLabelJust (Ljava/lang/String;)V
+	public abstract fun setLabelLoc (Ljava/lang/String;)V
+	public abstract fun setLabelScheme (Ljava/lang/Integer;)V
+	public abstract fun setLandscape (Ljava/lang/Boolean;)V
+	public abstract fun setLayerListSep (Ljava/lang/String;)V
+	public abstract fun setLayerSelect (Ljava/lang/String;)V
+	public abstract fun setLayerSep (Ljava/lang/String;)V
+	public abstract fun setLayers (Ljava/lang/String;)V
+	public abstract fun setLayout (Latlas/graphviz/LayoutEngine;)V
+	public abstract fun setLevels (Ljava/lang/Integer;)V
+	public abstract fun setLevelsGap (Ljava/lang/Number;)V
+	public abstract fun setLheight (Ljava/lang/Number;)V
+	public abstract fun setLineLength (Ljava/lang/Integer;)V
+	public abstract fun setLp (Ljava/lang/String;)V
+	public abstract fun setMargin (Ljava/lang/String;)V
+	public abstract fun setMaxiter (Ljava/lang/Integer;)V
+	public abstract fun setMcLimit (Ljava/lang/Number;)V
+	public abstract fun setMinDist (Ljava/lang/Number;)V
+	public abstract fun setMode (Ljava/lang/String;)V
+	public abstract fun setModel (Ljava/lang/String;)V
+	public abstract fun setNewRank (Ljava/lang/Boolean;)V
+	public abstract fun setNoJustify (Ljava/lang/Boolean;)V
+	public abstract fun setNoTranslate (Ljava/lang/Boolean;)V
+	public abstract fun setNodeSep (Ljava/lang/Number;)V
+	public abstract fun setNormalize (Ljava/lang/String;)V
+	public abstract fun setNsLimit (Ljava/lang/Number;)V
+	public abstract fun setNsLimit1 (Ljava/lang/Number;)V
+	public abstract fun setOneBlock (Ljava/lang/Boolean;)V
+	public abstract fun setOrdering (Ljava/lang/String;)V
+	public abstract fun setOrientation (Ljava/lang/Number;)V
+	public abstract fun setOutputOrder (Ljava/lang/String;)V
+	public abstract fun setOverlap (Ljava/lang/String;)V
+	public abstract fun setOverlapScaling (Ljava/lang/Number;)V
+	public abstract fun setOverlapShrink (Ljava/lang/Boolean;)V
+	public abstract fun setPack (Ljava/lang/String;)V
+	public abstract fun setPackMode (Ljava/lang/String;)V
+	public abstract fun setPad (Ljava/lang/String;)V
+	public abstract fun setPage (Ljava/lang/String;)V
+	public abstract fun setPageDir (Ljava/lang/String;)V
+	public abstract fun setQuadTree (Ljava/lang/String;)V
+	public abstract fun setQuantum (Ljava/lang/Number;)V
+	public abstract fun setRankDir (Latlas/graphviz/RankDir;)V
+	public abstract fun setRankSep (Ljava/lang/Number;)V
+	public abstract fun setRatio (Ljava/lang/String;)V
+	public abstract fun setReminCross (Ljava/lang/Boolean;)V
+	public abstract fun setRepulsiveForce (Ljava/lang/Number;)V
+	public abstract fun setResolution (Ljava/lang/Number;)V
+	public abstract fun setRoot (Ljava/lang/String;)V
+	public abstract fun setRotate (Ljava/lang/Integer;)V
+	public abstract fun setRotation (Ljava/lang/Number;)V
+	public abstract fun setScale (Ljava/lang/String;)V
+	public abstract fun setSearchSize (Ljava/lang/Integer;)V
+	public abstract fun setSep (Ljava/lang/String;)V
+	public abstract fun setShowBoxes (Ljava/lang/Integer;)V
+	public abstract fun setSize (Ljava/lang/String;)V
+	public abstract fun setSmoothing (Latlas/graphviz/SmoothType;)V
+	public abstract fun setSortv (Ljava/lang/Integer;)V
+	public abstract fun setSplines (Ljava/lang/String;)V
+	public abstract fun setStart (Ljava/lang/String;)V
+	public abstract fun setStyle (Ljava/lang/String;)V
+	public abstract fun setStyleSheet (Ljava/lang/String;)V
+	public abstract fun setTarget (Ljava/lang/String;)V
+	public abstract fun setTbBalance (Ljava/lang/String;)V
+	public abstract fun setTooltip (Ljava/lang/String;)V
+	public abstract fun setTrueColor (Ljava/lang/Boolean;)V
+	public abstract fun setUrl (Ljava/lang/String;)V
+	public abstract fun setViewPort (Ljava/lang/String;)V
+	public abstract fun setVoroMargin (Ljava/lang/Number;)V
+	public abstract fun setXdotVersion (Ljava/lang/String;)V
+}
+
+public final class atlas/graphviz/GraphAttributes$DefaultImpls {
+	public static fun clear (Latlas/graphviz/GraphAttributes;)V
+	public static fun put (Latlas/graphviz/GraphAttributes;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/graphviz/GraphvizSpec : atlas/core/AtlasSpec {
+	public abstract fun edge (Lorg/gradle/api/Action;)V
+	public abstract fun getEdge ()Latlas/graphviz/EdgeAttributes;
+	public abstract fun getFileFormat ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGraph ()Latlas/graphviz/GraphAttributes;
+	public abstract fun getLayoutEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getNode ()Latlas/graphviz/NodeAttributes;
+	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
+	public abstract fun graph (Lorg/gradle/api/Action;)V
+	public abstract fun node (Lorg/gradle/api/Action;)V
+}
+
+public final class atlas/graphviz/ImagePos : java/lang/Enum, atlas/core/StringEnum {
+	public static final field BottomCenter Latlas/graphviz/ImagePos;
+	public static final field BottomLeft Latlas/graphviz/ImagePos;
+	public static final field BottomRight Latlas/graphviz/ImagePos;
+	public static final field MiddleCenter Latlas/graphviz/ImagePos;
+	public static final field MiddleLeft Latlas/graphviz/ImagePos;
+	public static final field MiddleRight Latlas/graphviz/ImagePos;
+	public static final field TopCenter Latlas/graphviz/ImagePos;
+	public static final field TopLeft Latlas/graphviz/ImagePos;
+	public static final field TopRight Latlas/graphviz/ImagePos;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/ImagePos;
+	public static fun values ()[Latlas/graphviz/ImagePos;
+}
+
+public final class atlas/graphviz/LayoutEngine : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Circo Latlas/graphviz/LayoutEngine;
+	public static final field Dot Latlas/graphviz/LayoutEngine;
+	public static final field Fdp Latlas/graphviz/LayoutEngine;
+	public static final field Neato Latlas/graphviz/LayoutEngine;
+	public static final field Nop Latlas/graphviz/LayoutEngine;
+	public static final field Nop2 Latlas/graphviz/LayoutEngine;
+	public static final field Osage Latlas/graphviz/LayoutEngine;
+	public static final field Patchwork Latlas/graphviz/LayoutEngine;
+	public static final field Sfdp Latlas/graphviz/LayoutEngine;
+	public static final field TwoPi Latlas/graphviz/LayoutEngine;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/LayoutEngine;
+	public static fun values ()[Latlas/graphviz/LayoutEngine;
+}
+
+public abstract interface class atlas/graphviz/NodeAttributes : atlas/core/PropertiesSpec {
+	public abstract fun getColorScheme ()Ljava/lang/String;
+	public abstract fun getComment ()Ljava/lang/String;
+	public abstract fun getDistortion ()Ljava/lang/String;
+	public abstract fun getFillColor ()Ljava/lang/String;
+	public abstract fun getFixedSize ()Ljava/lang/String;
+	public abstract fun getFontColor ()Ljava/lang/String;
+	public abstract fun getFontName ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getGradientAngle ()Ljava/lang/Integer;
+	public abstract fun getGroup ()Ljava/lang/String;
+	public abstract fun getHeight ()Ljava/lang/Number;
+	public abstract fun getHref ()Ljava/lang/String;
+	public abstract fun getId ()Ljava/lang/String;
+	public abstract fun getImage ()Ljava/lang/String;
+	public abstract fun getImagePos ()Latlas/graphviz/ImagePos;
+	public abstract fun getImageScale ()Ljava/lang/String;
+	public abstract fun getLabel ()Ljava/lang/String;
+	public abstract fun getLabelLoc ()Ljava/lang/String;
+	public abstract fun getLayer ()Ljava/lang/String;
+	public abstract fun getLineColor ()Ljava/lang/String;
+	public abstract fun getMargin ()Ljava/lang/String;
+	public abstract fun getNoJustify ()Ljava/lang/Boolean;
+	public abstract fun getOrdering ()Ljava/lang/String;
+	public abstract fun getOrientation ()Ljava/lang/Number;
+	public abstract fun getPenWidth ()Ljava/lang/Number;
+	public abstract fun getPeripheries ()Ljava/lang/Integer;
+	public abstract fun getPin ()Ljava/lang/Boolean;
+	public abstract fun getPos ()Ljava/lang/String;
+	public abstract fun getRects ()Ljava/lang/String;
+	public abstract fun getRegular ()Ljava/lang/Boolean;
+	public abstract fun getRoot ()Ljava/lang/String;
+	public abstract fun getSamplePoints ()Ljava/lang/Integer;
+	public abstract fun getShape ()Latlas/graphviz/Shape;
+	public abstract fun getShapeFile ()Ljava/lang/String;
+	public abstract fun getShowBoxes ()Ljava/lang/Integer;
+	public abstract fun getSides ()Ljava/lang/Integer;
+	public abstract fun getSkew ()Ljava/lang/Number;
+	public abstract fun getSortv ()Ljava/lang/Integer;
+	public abstract fun getStyle ()Latlas/graphviz/NodeStyle;
+	public abstract fun getTarget ()Ljava/lang/String;
+	public abstract fun getTooltip ()Ljava/lang/String;
+	public abstract fun getUrl ()Ljava/lang/String;
+	public abstract fun getVertices ()Ljava/lang/String;
+	public abstract fun getWidth ()Ljava/lang/Number;
+	public abstract fun getXlabel ()Ljava/lang/String;
+	public abstract fun getXlp ()Ljava/lang/String;
+	public abstract fun getZ ()Ljava/lang/Number;
+	public abstract fun setColorScheme (Ljava/lang/String;)V
+	public abstract fun setComment (Ljava/lang/String;)V
+	public abstract fun setDistortion (Ljava/lang/String;)V
+	public abstract fun setFillColor (Ljava/lang/String;)V
+	public abstract fun setFixedSize (Ljava/lang/String;)V
+	public abstract fun setFontColor (Ljava/lang/String;)V
+	public abstract fun setFontName (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setGradientAngle (Ljava/lang/Integer;)V
+	public abstract fun setGroup (Ljava/lang/String;)V
+	public abstract fun setHeight (Ljava/lang/Number;)V
+	public abstract fun setHref (Ljava/lang/String;)V
+	public abstract fun setId (Ljava/lang/String;)V
+	public abstract fun setImage (Ljava/lang/String;)V
+	public abstract fun setImagePos (Latlas/graphviz/ImagePos;)V
+	public abstract fun setImageScale (Ljava/lang/String;)V
+	public abstract fun setLabel (Ljava/lang/String;)V
+	public abstract fun setLabelLoc (Ljava/lang/String;)V
+	public abstract fun setLayer (Ljava/lang/String;)V
+	public abstract fun setLineColor (Ljava/lang/String;)V
+	public abstract fun setMargin (Ljava/lang/String;)V
+	public abstract fun setNoJustify (Ljava/lang/Boolean;)V
+	public abstract fun setOrdering (Ljava/lang/String;)V
+	public abstract fun setOrientation (Ljava/lang/Number;)V
+	public abstract fun setPenWidth (Ljava/lang/Number;)V
+	public abstract fun setPeripheries (Ljava/lang/Integer;)V
+	public abstract fun setPin (Ljava/lang/Boolean;)V
+	public abstract fun setPos (Ljava/lang/String;)V
+	public abstract fun setRects (Ljava/lang/String;)V
+	public abstract fun setRegular (Ljava/lang/Boolean;)V
+	public abstract fun setRoot (Ljava/lang/String;)V
+	public abstract fun setSamplePoints (Ljava/lang/Integer;)V
+	public abstract fun setShape (Latlas/graphviz/Shape;)V
+	public abstract fun setShapeFile (Ljava/lang/String;)V
+	public abstract fun setShowBoxes (Ljava/lang/Integer;)V
+	public abstract fun setSides (Ljava/lang/Integer;)V
+	public abstract fun setSkew (Ljava/lang/Number;)V
+	public abstract fun setSortv (Ljava/lang/Integer;)V
+	public abstract fun setStyle (Latlas/graphviz/NodeStyle;)V
+	public abstract fun setTarget (Ljava/lang/String;)V
+	public abstract fun setTooltip (Ljava/lang/String;)V
+	public abstract fun setUrl (Ljava/lang/String;)V
+	public abstract fun setVertices (Ljava/lang/String;)V
+	public abstract fun setWidth (Ljava/lang/Number;)V
+	public abstract fun setXlabel (Ljava/lang/String;)V
+	public abstract fun setXlp (Ljava/lang/String;)V
+	public abstract fun setZ (Ljava/lang/Number;)V
+}
+
+public final class atlas/graphviz/NodeAttributes$DefaultImpls {
+	public static fun clear (Latlas/graphviz/NodeAttributes;)V
+	public static fun put (Latlas/graphviz/NodeAttributes;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class atlas/graphviz/NodeStyle : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Bold Latlas/graphviz/NodeStyle;
+	public static final field Dashed Latlas/graphviz/NodeStyle;
+	public static final field Diagonals Latlas/graphviz/NodeStyle;
+	public static final field Dotted Latlas/graphviz/NodeStyle;
+	public static final field Filled Latlas/graphviz/NodeStyle;
+	public static final field Invis Latlas/graphviz/NodeStyle;
+	public static final field Radial Latlas/graphviz/NodeStyle;
+	public static final field Rounded Latlas/graphviz/NodeStyle;
+	public static final field Solid Latlas/graphviz/NodeStyle;
+	public static final field Striped Latlas/graphviz/NodeStyle;
+	public static final field Wedged Latlas/graphviz/NodeStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/NodeStyle;
+	public static fun values ()[Latlas/graphviz/NodeStyle;
+}
+
+public final class atlas/graphviz/RankDir : java/lang/Enum, atlas/core/StringEnum {
+	public static final field BottomToTop Latlas/graphviz/RankDir;
+	public static final field LeftToRight Latlas/graphviz/RankDir;
+	public static final field RightToLeft Latlas/graphviz/RankDir;
+	public static final field TopToBottom Latlas/graphviz/RankDir;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/RankDir;
+	public static fun values ()[Latlas/graphviz/RankDir;
+}
+
+public final class atlas/graphviz/Shape : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Assembly Latlas/graphviz/Shape;
+	public static final field Box Latlas/graphviz/Shape;
+	public static final field Box3d Latlas/graphviz/Shape;
+	public static final field Cds Latlas/graphviz/Shape;
+	public static final field Circle Latlas/graphviz/Shape;
+	public static final field Component Latlas/graphviz/Shape;
+	public static final field Cylinder Latlas/graphviz/Shape;
+	public static final field Diamond Latlas/graphviz/Shape;
+	public static final field Doublecircle Latlas/graphviz/Shape;
+	public static final field Doubleoctagon Latlas/graphviz/Shape;
+	public static final field Egg Latlas/graphviz/Shape;
+	public static final field Ellipse Latlas/graphviz/Shape;
+	public static final field Fivepoverhang Latlas/graphviz/Shape;
+	public static final field Folder Latlas/graphviz/Shape;
+	public static final field Hexagon Latlas/graphviz/Shape;
+	public static final field House Latlas/graphviz/Shape;
+	public static final field Insulator Latlas/graphviz/Shape;
+	public static final field Invhouse Latlas/graphviz/Shape;
+	public static final field Invtrapezium Latlas/graphviz/Shape;
+	public static final field Invtriangle Latlas/graphviz/Shape;
+	public static final field Larrow Latlas/graphviz/Shape;
+	public static final field Lpromoter Latlas/graphviz/Shape;
+	public static final field Mcircle Latlas/graphviz/Shape;
+	public static final field Mdiamond Latlas/graphviz/Shape;
+	public static final field Msquare Latlas/graphviz/Shape;
+	public static final field None Latlas/graphviz/Shape;
+	public static final field Note Latlas/graphviz/Shape;
+	public static final field Noverhang Latlas/graphviz/Shape;
+	public static final field Octagon Latlas/graphviz/Shape;
+	public static final field Oval Latlas/graphviz/Shape;
+	public static final field Parallelogram Latlas/graphviz/Shape;
+	public static final field Pentagon Latlas/graphviz/Shape;
+	public static final field Plain Latlas/graphviz/Shape;
+	public static final field Plaintext Latlas/graphviz/Shape;
+	public static final field Point Latlas/graphviz/Shape;
+	public static final field Polygon Latlas/graphviz/Shape;
+	public static final field Primersite Latlas/graphviz/Shape;
+	public static final field Promoter Latlas/graphviz/Shape;
+	public static final field Proteasesite Latlas/graphviz/Shape;
+	public static final field Proteinstab Latlas/graphviz/Shape;
+	public static final field Rarrow Latlas/graphviz/Shape;
+	public static final field Rect Latlas/graphviz/Shape;
+	public static final field Rectangle Latlas/graphviz/Shape;
+	public static final field Restrictionsite Latlas/graphviz/Shape;
+	public static final field Ribosite Latlas/graphviz/Shape;
+	public static final field Rnastab Latlas/graphviz/Shape;
+	public static final field Rpromoter Latlas/graphviz/Shape;
+	public static final field Septagon Latlas/graphviz/Shape;
+	public static final field Signature Latlas/graphviz/Shape;
+	public static final field Square Latlas/graphviz/Shape;
+	public static final field Star Latlas/graphviz/Shape;
+	public static final field Tab Latlas/graphviz/Shape;
+	public static final field Terminator Latlas/graphviz/Shape;
+	public static final field Threepoverhang Latlas/graphviz/Shape;
+	public static final field Trapezium Latlas/graphviz/Shape;
+	public static final field Triangle Latlas/graphviz/Shape;
+	public static final field Tripleoctagon Latlas/graphviz/Shape;
+	public static final field Underline Latlas/graphviz/Shape;
+	public static final field Utr Latlas/graphviz/Shape;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/Shape;
+	public static fun values ()[Latlas/graphviz/Shape;
+}
+
+public final class atlas/graphviz/SmoothType : java/lang/Enum, atlas/core/StringEnum {
+	public static final field AvgDist Latlas/graphviz/SmoothType;
+	public static final field GraphDist Latlas/graphviz/SmoothType;
+	public static final field None Latlas/graphviz/SmoothType;
+	public static final field PowerDist Latlas/graphviz/SmoothType;
+	public static final field Rng Latlas/graphviz/SmoothType;
+	public static final field Spring Latlas/graphviz/SmoothType;
+	public static final field Triangle Latlas/graphviz/SmoothType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/graphviz/SmoothType;
+	public static fun values ()[Latlas/graphviz/SmoothType;
+}
+
+public abstract class atlas/graphviz/tasks/ExecGraphviz : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public final fun execute ()V
+	public fun getDescription ()Ljava/lang/String;
+	public abstract fun getDotFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getEngine ()Lorg/gradle/api/provider/Property;
+	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFormat ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPathToDotCommand ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class atlas/graphviz/tasks/WriteGraphvizChart : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public fun execute ()V
+	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupProjects ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class atlas/graphviz/tasks/WriteGraphvizLegend : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public fun execute ()V
+	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/ListProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectTypes ()Lorg/gradle/api/provider/ListProperty;
+}
+
+public final class atlas/mermaid/ConsiderModelOrder : java/lang/Enum, atlas/core/StringEnum {
+	public static final field NodesAndEdges Latlas/mermaid/ConsiderModelOrder;
+	public static final field None Latlas/mermaid/ConsiderModelOrder;
+	public static final field PreferEdges Latlas/mermaid/ConsiderModelOrder;
+	public static final field PreferNodes Latlas/mermaid/ConsiderModelOrder;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/ConsiderModelOrder;
+	public static fun values ()[Latlas/mermaid/ConsiderModelOrder;
+}
+
+public final class atlas/mermaid/CycleBreakingStrategy : java/lang/Enum, atlas/core/StringEnum {
+	public static final field DepthFirst Latlas/mermaid/CycleBreakingStrategy;
+	public static final field Greedy Latlas/mermaid/CycleBreakingStrategy;
+	public static final field GreedyModelOrder Latlas/mermaid/CycleBreakingStrategy;
+	public static final field Interactive Latlas/mermaid/CycleBreakingStrategy;
+	public static final field ModelOrder Latlas/mermaid/CycleBreakingStrategy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/CycleBreakingStrategy;
+	public static fun values ()[Latlas/mermaid/CycleBreakingStrategy;
+}
+
+public abstract interface class atlas/mermaid/ElkLayoutSpec : atlas/mermaid/MermaidLayoutSpec {
+	public abstract fun getConsiderModelOrder ()Latlas/mermaid/ConsiderModelOrder;
+	public abstract fun getCycleBreakingStrategy ()Latlas/mermaid/CycleBreakingStrategy;
+	public abstract fun getForceNodeModelOrder ()Ljava/lang/Boolean;
+	public abstract fun getMergeEdges ()Ljava/lang/Boolean;
+	public abstract fun getNodePlacementStrategy ()Latlas/mermaid/NodePlacementStrategy;
+	public abstract fun setConsiderModelOrder (Latlas/mermaid/ConsiderModelOrder;)V
+	public abstract fun setCycleBreakingStrategy (Latlas/mermaid/CycleBreakingStrategy;)V
+	public abstract fun setForceNodeModelOrder (Ljava/lang/Boolean;)V
+	public abstract fun setMergeEdges (Ljava/lang/Boolean;)V
+	public abstract fun setNodePlacementStrategy (Latlas/mermaid/NodePlacementStrategy;)V
+}
+
+public final class atlas/mermaid/ElkLayoutSpec$DefaultImpls {
+	public static fun clear (Latlas/mermaid/ElkLayoutSpec;)V
+	public static fun put (Latlas/mermaid/ElkLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class atlas/mermaid/Look : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Classic Latlas/mermaid/Look;
+	public static final field HandDrawn Latlas/mermaid/Look;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/Look;
+	public static fun values ()[Latlas/mermaid/Look;
+}
+
+public final class atlas/mermaid/MermaidConfig : java/io/Serializable {
+	public static final field Companion Latlas/mermaid/MermaidConfig$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Boolean;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Latlas/mermaid/Look;Latlas/mermaid/Theme;Ljava/lang/Boolean;)V
+	public synthetic fun <init> (Ljava/lang/Boolean;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Latlas/mermaid/Look;Latlas/mermaid/Theme;Ljava/lang/Boolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAnimateLinks ()Ljava/lang/Boolean;
+	public final fun getDisplayLinkLabels ()Ljava/lang/Boolean;
+	public final fun getLayout ()Ljava/lang/String;
+	public final fun getLayoutProperties ()Ljava/util/Map;
+	public final fun getLook ()Latlas/mermaid/Look;
+	public final fun getTheme ()Latlas/mermaid/Theme;
+	public final fun getThemeVariables ()Ljava/util/Map;
+}
+
+public final synthetic class atlas/mermaid/MermaidConfig$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Latlas/mermaid/MermaidConfig$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Latlas/mermaid/MermaidConfig;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Latlas/mermaid/MermaidConfig;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class atlas/mermaid/MermaidConfig$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class atlas/mermaid/MermaidLayoutSpec : atlas/core/PropertiesSpec {
+	public abstract fun getName ()Lorg/gradle/api/provider/Property;
+}
+
+public final class atlas/mermaid/MermaidLayoutSpec$DefaultImpls {
+	public static fun clear (Latlas/mermaid/MermaidLayoutSpec;)V
+	public static fun put (Latlas/mermaid/MermaidLayoutSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class atlas/mermaid/MermaidSpec : atlas/core/AtlasSpec {
+	public abstract fun elk (Lorg/gradle/api/Action;)V
+	public static synthetic fun elk$default (Latlas/mermaid/MermaidSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLayout ()Latlas/mermaid/MermaidLayoutSpec;
+	public abstract fun getLook ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTheme ()Lorg/gradle/api/provider/Property;
+	public abstract fun getThemeVariables ()Latlas/mermaid/MermaidThemeVariablesSpec;
+	public abstract fun layout (Lorg/gradle/api/Action;)V
+	public abstract fun themeVariables (Lorg/gradle/api/Action;)V
+}
+
+public final class atlas/mermaid/MermaidSpec$DefaultImpls {
+	public static synthetic fun elk$default (Latlas/mermaid/MermaidSpec;Lorg/gradle/api/Action;ILjava/lang/Object;)V
+}
+
+public abstract interface class atlas/mermaid/MermaidThemeVariablesSpec : atlas/core/PropertiesSpec {
+	public abstract fun getBackground ()Ljava/lang/String;
+	public abstract fun getDarkMode ()Ljava/lang/Boolean;
+	public abstract fun getFontFamily ()Ljava/lang/String;
+	public abstract fun getFontSize ()Ljava/lang/String;
+	public abstract fun getLineColor ()Ljava/lang/String;
+	public abstract fun getPrimaryBorderColor ()Ljava/lang/String;
+	public abstract fun getPrimaryColor ()Ljava/lang/String;
+	public abstract fun getPrimaryTextColor ()Ljava/lang/String;
+	public abstract fun getSecondaryColor ()Ljava/lang/String;
+	public abstract fun getTertiaryColor ()Ljava/lang/String;
+	public abstract fun setBackground (Ljava/lang/String;)V
+	public abstract fun setDarkMode (Ljava/lang/Boolean;)V
+	public abstract fun setFontFamily (Ljava/lang/String;)V
+	public abstract fun setFontSize (Ljava/lang/String;)V
+	public abstract fun setLineColor (Ljava/lang/String;)V
+	public abstract fun setPrimaryBorderColor (Ljava/lang/String;)V
+	public abstract fun setPrimaryColor (Ljava/lang/String;)V
+	public abstract fun setPrimaryTextColor (Ljava/lang/String;)V
+	public abstract fun setSecondaryColor (Ljava/lang/String;)V
+	public abstract fun setTertiaryColor (Ljava/lang/String;)V
+}
+
+public final class atlas/mermaid/MermaidThemeVariablesSpec$DefaultImpls {
+	public static fun clear (Latlas/mermaid/MermaidThemeVariablesSpec;)V
+	public static fun put (Latlas/mermaid/MermaidThemeVariablesSpec;Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class atlas/mermaid/NodePlacementStrategy : java/lang/Enum, atlas/core/StringEnum {
+	public static final field BrandesKoepf Latlas/mermaid/NodePlacementStrategy;
+	public static final field LinearSegments Latlas/mermaid/NodePlacementStrategy;
+	public static final field NetworkSimplex Latlas/mermaid/NodePlacementStrategy;
+	public static final field Simple Latlas/mermaid/NodePlacementStrategy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/NodePlacementStrategy;
+	public static fun values ()[Latlas/mermaid/NodePlacementStrategy;
+}
+
+public final class atlas/mermaid/Theme : java/lang/Enum, atlas/core/StringEnum {
+	public static final field Base Latlas/mermaid/Theme;
+	public static final field Dark Latlas/mermaid/Theme;
+	public static final field Default Latlas/mermaid/Theme;
+	public static final field Forest Latlas/mermaid/Theme;
+	public static final field Neutral Latlas/mermaid/Theme;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Latlas/mermaid/Theme;
+	public static fun values ()[Latlas/mermaid/Theme;
+}
+
+public abstract class atlas/mermaid/tasks/WriteMarkdownLegend : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public fun execute ()V
+	public abstract fun getLinkTypes ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectTypes ()Lorg/gradle/api/provider/ListProperty;
+}
+
+public abstract class atlas/mermaid/tasks/WriteMermaidChart : org/gradle/api/DefaultTask, atlas/core/tasks/AtlasGenerationTask, atlas/core/tasks/TaskWithOutputFile {
+	public fun <init> ()V
+	public fun execute ()V
+	public abstract fun getConfig ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGroupProjects ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLinksFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getProjectTypesFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getReplacements ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getThisPath ()Lorg/gradle/api/provider/Property;
+}
+
+public final class org/gradle/kotlin/dsl/ProjectTypeDslKt {
+	public static final fun androidApp (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidApp (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidApp (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidApp (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun androidApp$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun androidLibrary (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun androidLibrary$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun java (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun java$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinJvm (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun kotlinJvm$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun kotlinMultiplatform (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun kotlinMultiplatform$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Latlas/core/NamedProjectTypeContainer;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun other (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static synthetic fun other$default (Latlas/core/NamedProjectTypeContainer;Ljava/lang/String;Ljava/lang/String;Lorg/gradle/api/Action;ILjava/lang/Object;)Lorg/gradle/api/NamedDomainObjectProvider;
+	public static final fun useDefaults (Latlas/core/NamedProjectTypeContainer;)V
+}
+

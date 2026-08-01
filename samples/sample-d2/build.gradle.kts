@@ -1,3 +1,4 @@
+import atlas.core.LinkStyle
 import atlas.d2.*
 
 plugins {
@@ -6,7 +7,7 @@ plugins {
   alias(libs.plugins.agp.lib) apply false
   alias(libs.plugins.kotlinJvm) apply false
   alias(libs.plugins.kotlinMultiplatform) apply false
-  id("dev.jonpoulton.atlas.d2")
+  id("dev.jonpoulton.atlas")
 }
 
 atlas {
@@ -21,8 +22,8 @@ atlas {
 
   projectTypes {
     androidApp {
-      shape = Shape.Hexagon
-      strokeWidth = 10
+      d2Shape = Shape.Hexagon
+      strokeWidth = "10"
       stroke = "black"
       fontColor = "black"
     }
@@ -43,8 +44,8 @@ atlas {
       fontColor = "orange"
       strokeDash = 3
     }
-    api(style = LinkStyle.Basic, color = "greenyellow") {
-      strokeWidth = 5
+    api(style = LinkStyle.Solid, color = "greenyellow") {
+      strokeWidth = "5"
     }
     implementation(style = LinkStyle.Dotted, color = "fuchsia") {
       textTransform = TextTransform.Uppercase

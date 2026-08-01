@@ -8,7 +8,7 @@ icon: lucide/component
 
 ## Overview
 
-Configuration is primarily done via the `atlas` Gradle extension function, accessible in your root build file. [See here for the KDoc](api/atlas-core/atlas.core/-atlas-extension/index.html), or [here for the source file](https://github.com/jonapoul/atlas-gradle-plugin/blob/main/atlas-core/src/main/kotlin/atlas/core/AtlasExtension.kt).
+Configuration is primarily done via the `atlas` Gradle extension function, accessible in your root build file. [See here for the KDoc](api/atlas-plugin/atlas.core/-atlas-extension/index.html), or [here for the source file](https://github.com/jonapoul/atlas-gradle-plugin/blob/main/atlas-plugin/src/main/kotlin/atlas/core/AtlasExtension.kt).
 
 ``` kotlin
 // none of these are required - these values are the defaults
@@ -33,6 +33,11 @@ atlas {
   pathTransforms {
     // ...
   }
+
+  // plus a block per framework you want diagrams from - see below
+  d2 { }
+  graphviz { }
+  mermaid { }
 }
 ```
 
@@ -44,7 +49,25 @@ project.extensions.configure<AtlasExtension> {
 }
 ```
 
-Any other configs beyond these are specific to the particular plugin you applied, see:
+## Frameworks
+
+Everything above applies to every diagram Atlas generates. Which diagrams those are is decided by the framework blocks you configure - use one, or all three. Each writes into its own `atlas/<framework>/` directory, so they never overwrite each other, and every framework you enable adds its own block to each project's README.
+
+``` kotlin
+atlas {
+  // switch a framework on with its defaults
+  mermaid()
+
+  // or configure it, which switches it on too
+  d2 {
+    fileFormat = FileFormat.Svg
+  }
+
+  // graphviz isn't mentioned, so no Graphviz tasks are registered
+}
+```
+
+The framework-specific configs are documented in:
 
 - [Graphviz](usage-graphviz.md)
 - [D2](usage-d2.md)
@@ -310,14 +333,21 @@ The below example shows one project of each of the built-in project types in a s
 
 <img class="rounded-corner" src="../img/project-types-default.png" alt="Default project types">
 
-Remember also that you can pass framework-specific configuration options into any project type declarations used above, with a trailing lambda. Example below comes from D2:
+Remember also that you can style any project type with a trailing lambda:
 
 ``` kotlin
 atlas {
   projectTypes {
     androidApp {
-      shape = Shape.Hexagon
-      strokeWidth = 10
+      // read by every framework
+      fill = "#ABC123"
+      stroke = "black"
+      strokeWidth = "10"
+
+      // read by one framework each
+      d2Shape = Shape.Hexagon        // D2
+      graphvizShape = Shape.Rarrow   // Graphviz
+      strokeDashArray = "5 5"        // Mermaid
     }
 
     kotlinMultiplatform()
@@ -328,6 +358,15 @@ atlas {
   }
 }
 ```
+
+Every framework's properties are available on every project type, whichever frameworks you've enabled. The ones your configured frameworks don't understand are ignored, and Atlas logs a warning naming them:
+
+```
+Warning: project type 'Android App' sets render3D and shadow, which only D2 uses.
+Configure the d2 { } block to use them, or remove the config.
+```
+
+Where two frameworks mean the same thing by a property, there's one property covering both - `fontColor` writes D2's `style.font-color`, Graphviz's `fontcolor` and Mermaid's `color`. Only genuinely incompatible ones are prefixed, which is currently just `d2Shape` and `graphvizShape`.
 
 ### linkTypes
 
@@ -347,11 +386,16 @@ atlas {
 
 !!! tip
 
-    The `style` parameter on each of these will have different available options for each plugin. See the `LinkStyle` enum implementations for each one:
+    The `style` parameter takes the shared [`LinkStyle`](api/atlas-plugin/atlas.core/-link-style/index.html) enum, which each framework draws in its own way. Not all of them can draw all of the styles, so where one can't, Atlas falls back to the closest match and warns you:
 
-      - **Graphviz**: Bold, Dashed, Dotted, Invis, Solid, Tapered. [See here for details - specifically for "edges"](https://graphviz.org/docs/attr-types/style/)
-      - **Mermaid**: Basic, Bold, Dashed, Invisible. [See here for details](https://mermaid.js.org/syntax/flowchart.html#links-between-nodes)
-      - **D2**: Basic, Bold, Dashed, Dotted, Invisible. [See here for details](https://d2lang.com/tour/connections/)
+    | Style | D2 | Graphviz | Mermaid |
+    |--|--|--|--|
+    | Solid | ✅ | ✅ | ✅ |
+    | Bold | ✅ | ✅ | ✅ |
+    | Dashed | ✅ | ✅ | ✅ |
+    | Dotted | ✅ | ✅ | drawn as Dashed |
+    | Invisible | ✅ | ✅ | ✅ |
+    | Tapered | drawn as Solid | ✅ | drawn as Solid |
 
 Besides the default `api` and `implementation`, you can declare links representing other Gradle configurations too:
 
@@ -392,7 +436,9 @@ Remember the declarations inside `pathTransforms` are called in descending order
 
 ## Extra properties
 
-Several components in Atlas make use of the [`PropertiesSpec`](api/atlas-core/atlas.core/-properties-spec/index.html?query=interface%20PropertiesSpec) interface, which allows you to apply arbitrary key-value pair properties to the interfaces that make use of it. Specifically, you can call `put("key", value)`.
+Several components in Atlas make use of the [`PropertiesSpec`](api/atlas-plugin/atlas.core/-properties-spec/index.html?query=interface%20PropertiesSpec) interface, which allows you to apply arbitrary key-value pair properties to the interfaces that make use of it. Specifically, you can call `put("key", value)`.
+
+Project and link types are shared between frameworks, so their equivalent takes the framework you're aiming at: `put(Framework.D2, "key", value)`.
 
 The intention with this is to let you pass in anything to the scope in question - allowing you to make use of any new APIs in that framework which haven't been explicitly implemented in Atlas. Any usage of these keys is up to you to validate - sometimes the diagram framework won't give you a warning if you pass in an invalid key. If you have some brand-spanking new attribute that you want to apply somewhere:
 
@@ -411,8 +457,8 @@ atlas {
 
     // standard colors/styles in the brackets, everything else in the lambda
     java(color = "orange") {
-      // or custom setters for undefined properties
-      put("insertKeyHere", "some-value")
+      // or custom setters for undefined properties, naming the framework which should read them
+      put(Framework.D2, "insertKeyHere", "some-value")
     }
   }
 
@@ -423,7 +469,7 @@ atlas {
     // again with the trailing lambda:
     implementation {
       animated = true
-      strokeWidth = 100
+      strokeWidth = "100"
     }
   }
 

@@ -16,7 +16,7 @@ Config is done with the `graphviz` lambda block within the base `atlas` extensio
 
 ``` kotlin
 plugins {
-  id("dev.jonpoulton.atlas.graphviz") version "x.y.z"
+  id("dev.jonpoulton.atlas") version "x.y.z"
 }
 
 atlas {
@@ -53,7 +53,7 @@ atlas {
 
 ## Generated Files
 
-Atlas Graphviz will generate a `chart.dot` file in each project directory, plus an image file based on your choice of [`fileFormat`](#fileformat). In the root project it'll also generate a `legend.dot` and an accompanying image. Both of these will be auto-added to the project readme when either `gradle atlasGenerate` or `gradle writeGraphvizReadme` is run.
+Atlas Graphviz will generate a `chart.dot` file in each project's `atlas/graphviz` directory, plus an image file based on your choice of [`fileFormat`](#fileformat). In the root project it'll also generate a `legend.dot` and an accompanying image. Both of these will be auto-added to the project readme when either `gradle atlasGenerate` or `gradle writeReadme` is run.
 
 ## Properties
 
@@ -79,7 +79,7 @@ atlas {
 }
 ```
 
-There are plenty of options here, [all those specified in the Graphviz docs](https://graphviz.org/docs/outputs/) are provided as options by Atlas in the [`FileFormat` enum](api/atlas-graphviz/atlas.graphviz/-file-format/index.html). Not all have been tested, so please raise an issue on Github if you see anything weird.
+There are plenty of options here, [all those specified in the Graphviz docs](https://graphviz.org/docs/outputs/) are provided as options by Atlas in the [`FileFormat` enum](api/atlas-plugin/atlas.graphviz/-file-format/index.html). Not all have been tested, so please raise an issue on Github if you see anything weird.
 
 ### layoutEngine
 
@@ -137,22 +137,31 @@ atlas {
 
 !!! tip
 
-    All properties available in `node { }` are also available when configuring individual `projectTypes`:
+    Everything in `node { }` can also be set on an individual project type, though a handful are named differently there because those properties are shared with the other frameworks:
+
+    | In `node { }` | On a project type |
+    |--|--|
+    | `fillColor` | `fill` |
+    | `lineColor` | `stroke` |
+    | `penWidth` | `strokeWidth` |
+    | `shape` | `graphvizShape` |
 
     ``` kotlin
     atlas {
       projectTypes {
         hasPluginId("Custom", "com.custom.plugin") {
           // overrides fill/shape for this project type only
-          fillColor = "#ABC123"
-          shape = Shape.Star
+          fill = "#ABC123"
+          graphvizShape = Shape.Star
         }
       }
 
-      node {
-        // all others are red eggs by default
-        fillColor = "red"
-        shape = Shape.Egg
+      graphviz {
+        node {
+          // all others are red eggs by default
+          fillColor = "red"
+          shape = Shape.Egg
+        }
       }
     }
     ```
@@ -176,7 +185,7 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 | [href](https://graphviz.org/docs/attrs/href/) | String |
 | [id](https://graphviz.org/docs/attrs/id/) | String |
 | [image](https://graphviz.org/docs/attrs/image/) | String |
-| [imagePos](https://graphviz.org/docs/attrs/imagepos/) | [ImagePos](api/atlas-graphviz/atlas.graphviz/-node-attributes/image-pos.html) |
+| [imagePos](https://graphviz.org/docs/attrs/imagepos/) | [ImagePos](api/atlas-plugin/atlas.graphviz/-node-attributes/image-pos.html) |
 | [imageScale](https://graphviz.org/docs/attrs/imagescale/) | String |
 | [label](https://graphviz.org/docs/attrs/label/) | String |
 | [labelLoc](https://graphviz.org/docs/attrs/labelloc/) | String |
@@ -193,13 +202,13 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 | [regular](https://graphviz.org/docs/attrs/regular/) | Boolean |
 | [root](https://graphviz.org/docs/attrs/root/) | String |
 | [samplePoints](https://graphviz.org/docs/attrs/samplepoints/) | Int |
-| [shape](https://graphviz.org/docs/attrs/shape/) | [Shape](api/atlas-graphviz/atlas.graphviz/-shape/index.html) |
+| [shape](https://graphviz.org/docs/attrs/shape/) | [Shape](api/atlas-plugin/atlas.graphviz/-shape/index.html) |
 | [shapeFile](https://graphviz.org/docs/attrs/shapefile/) | String |
 | [showBoxes](https://graphviz.org/docs/attrs/showboxes/) | Int |
 | [sides](https://graphviz.org/docs/attrs/sides/) | Int |
 | [skew](https://graphviz.org/docs/attrs/skew/) | Number |
 | [sortv](https://graphviz.org/docs/attrs/sortv/) | Int |
-| [style](https://graphviz.org/docs/attrs/style/) | [NodeStyle](api/atlas-graphviz/atlas.graphviz/-node-style/index.html) |
+| [style](https://graphviz.org/docs/attrs/style/) | [NodeStyle](api/atlas-plugin/atlas.graphviz/-node-style/index.html) |
 | [target](https://graphviz.org/docs/attrs/target/) | String |
 | [tooltip](https://graphviz.org/docs/attrs/tooltip/) | String |
 | [url](https://graphviz.org/docs/attrs/URL/) | String |
@@ -232,13 +241,15 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 
     Same here for link styles as with node styles - any properties set in `edge` can be overridden by custom `linkTypes` config:
 
+    As with node properties, a few are named differently on a link type: `linkColor` is `stroke`, `penWidth` is `strokeWidth`, and `linkStyle` is the shared `style` parameter.
+
     ``` kotlin
     atlas {
       linkTypes {
         api {
           // overrides arrow/color for this link type only
           arrowHead = ArrowType.Diamond
-          linkColor = "red"
+          stroke = "red"
         }
 
         implementation()
@@ -254,15 +265,15 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 
 | Edge Property | Type |
 |--|--|
-| [arrowHead](https://graphviz.org/docs/attrs/arrowhead/) | [ArrowType](api/atlas-graphviz/atlas.graphviz/-arrow-type/index.html) |
+| [arrowHead](https://graphviz.org/docs/attrs/arrowhead/) | [ArrowType](api/atlas-plugin/atlas.graphviz/-arrow-type/index.html) |
 | [arrowSize](https://graphviz.org/docs/attrs/arrowsize/) | Number |
-| [arrowTail](https://graphviz.org/docs/attrs/arrowtail/) | [ArrowType](api/atlas-graphviz/atlas.graphviz/-arrow-type/index.html) |
+| [arrowTail](https://graphviz.org/docs/attrs/arrowtail/) | [ArrowType](api/atlas-plugin/atlas.graphviz/-arrow-type/index.html) |
 | [linkColor](https://graphviz.org/docs/attrs/color/) | String |
 | [colorScheme](https://graphviz.org/docs/attrs/colorscheme/) | String |
 | [comment](https://graphviz.org/docs/attrs/comment/) | String |
 | [constraint](https://graphviz.org/docs/attrs/constraint/) | Boolean |
 | [decorate](https://graphviz.org/docs/attrs/decorate/) | Boolean |
-| [dir](https://graphviz.org/docs/attrs/dir/) | [Dir](api/atlas-graphviz/atlas.graphviz/-dir/index.html) |
+| [dir](https://graphviz.org/docs/attrs/dir/) | [Dir](api/atlas-plugin/atlas.graphviz/-dir/index.html) |
 | [edgeHref](https://graphviz.org/docs/attrs/edgehref/) | String |
 | [edgeTarget](https://graphviz.org/docs/attrs/edgetarget/) | String |
 | [edgeTooltip](https://graphviz.org/docs/attrs/edgetooltip/) | String |
@@ -304,7 +315,7 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 | [sameHead](https://graphviz.org/docs/attrs/samehead/) | String |
 | [sameTail](https://graphviz.org/docs/attrs/sametail/) | String |
 | [showBoxes](https://graphviz.org/docs/attrs/showboxes/) | Int |
-| [linkStyle](https://graphviz.org/docs/attrs/style/) | [LinkStyle](api/atlas-graphviz/atlas.graphviz/-link-style/index.html) |
+| [linkStyle](https://graphviz.org/docs/attrs/style/) | [EdgeStyle](api/atlas-plugin/atlas.graphviz/-edge-style/index.html) |
 | [tailLp](https://graphviz.org/docs/attrs/tail_lp/) | String |
 | [tailClip](https://graphviz.org/docs/attrs/tailclip/) | Boolean |
 | [tailHref](https://graphviz.org/docs/attrs/tailhref/) | String |

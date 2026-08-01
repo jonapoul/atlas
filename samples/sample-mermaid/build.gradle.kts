@@ -1,8 +1,8 @@
+import atlas.core.LinkStyle.Bold
+import atlas.core.LinkStyle.Dashed
+import atlas.core.LinkStyle.Solid
 import atlas.mermaid.ConsiderModelOrder.PreferEdges
 import atlas.mermaid.CycleBreakingStrategy.Interactive
-import atlas.mermaid.LinkStyle.Basic
-import atlas.mermaid.LinkStyle.Bold
-import atlas.mermaid.LinkStyle.Dashed
 import atlas.mermaid.Look.HandDrawn
 import atlas.mermaid.NodePlacementStrategy.LinearSegments
 import atlas.mermaid.Theme.Forest
@@ -13,7 +13,7 @@ plugins {
   alias(libs.plugins.agp.lib) apply false
   alias(libs.plugins.kotlinJvm) apply false
   alias(libs.plugins.kotlinMultiplatform) apply false
-  id("dev.jonpoulton.atlas.mermaid")
+  id("dev.jonpoulton.atlas")
 }
 
 atlas {
@@ -38,7 +38,7 @@ atlas {
 
   linkTypes {
     "jvmMainImplementation"(style = Bold, color = "orange")
-    api(Basic) { strokeWidth = "5px" }
+    api(Solid) { strokeWidth = "5px" }
     implementation(Dashed) { stroke = "aqua" }
   }
 

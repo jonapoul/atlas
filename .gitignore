@@ -1,7 +1,6 @@
 !.idea/detekt.xml
 *.jks
 *.keystore
-*.sarif
 .cache/
 .claude/
 .gradle/

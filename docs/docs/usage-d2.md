@@ -16,7 +16,7 @@ D2-specific configuration is performed from the `d2 { }` block within the base `
 
 ``` kotlin
 plugins {
-  id("dev.jonpoulton.atlas.d2") version "x.y.z"
+  id("dev.jonpoulton.atlas") version "x.y.z"
 }
 
 atlas {
@@ -56,7 +56,7 @@ atlas {
 
 ## Generated files
 
-The D2 plugin will generate a `classes.d2` file in the root project's `atlas` folder. This contains any shared styling, used between all child charts. It will also generate a `chart.d2` and a `chart.XXX` file for each subproject, the latter's file extension depending on [fileFormat](#fileformat).
+The D2 plugin will generate a `classes.d2` file in the root project's `atlas/d2` folder. This contains any shared styling, used between all child charts. It will also generate a `chart.d2` and a `chart.XXX` file in each subproject's `atlas/d2` folder, the latter's file extension depending on [fileFormat](#fileformat).
 
 ## Properties
 
@@ -356,7 +356,7 @@ This was added to help output charts in PNG format, since D2's built-in method r
 
 A new task will be attached to `gradle atlasGenerate` called `svgToPng`, which spits out a PNG file at `atlas/chart.png` in each subproject.
 
-Uses the [`SvgToPng.Converter`](api/atlas-d2/atlas.d2.tasks/-svg-to-png/-converter/index.html) enum as an input, which lists the supported third-party image-processing software to convert SVGs into PNGs. It's up to you to ensure this is installed on your machine at execution time.
+Uses the [`SvgToPng.Converter`](api/atlas-plugin/atlas.d2.tasks/-svg-to-png/-converter/index.html) enum as an input, which lists the supported third-party image-processing software to convert SVGs into PNGs. It's up to you to ensure this is installed on your machine at execution time.
 
 Requires the [`fileFormat`](#fileformat) property to be set to `FileFormat.Svg` (or unset, since SVG is the default) - otherwise no conversion will be done.
 

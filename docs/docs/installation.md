@@ -30,10 +30,27 @@ Then in your ***root*** `build.gradle.kts` file:
 
 ``` kotlin
 plugins {
-  // 🚨🚨🚨 WARNING: You can only apply one of these at a time! 🚨🚨🚨
-  id("dev.jonpoulton.atlas.d2") version "x.y.z"
-  id("dev.jonpoulton.atlas.graphviz") version "x.y.z"
-  id("dev.jonpoulton.atlas.mermaid") version "x.y.z"
+  id("dev.jonpoulton.atlas") version "x.y.z"
+}
+```
+
+Nothing is generated until you pick a framework, which you do by configuring its block. Use as many as you like:
+
+``` kotlin
+atlas {
+  d2()          // writes to atlas/d2/
+  graphviz()    // writes to atlas/graphviz/
+  mermaid()     // writes to atlas/mermaid/
+}
+```
+
+Each framework writes into its own directory, so enabling several at once never has two of them fighting over the same file. Passing a configuration block switches the framework on too, so this is enough:
+
+``` kotlin
+atlas {
+  mermaid {
+    theme = Theme.Forest
+  }
 }
 ```
 

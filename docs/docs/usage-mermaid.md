@@ -16,7 +16,7 @@ Mermaid-specific configuration is performed from the `mermaid { }` block within 
 
 ``` kotlin
 plugins {
-  id("dev.jonpoulton.atlas.mermaid") version "x.y.z"
+  id("dev.jonpoulton.atlas") version "x.y.z"
 }
 
 atlas {
@@ -54,7 +54,7 @@ or a barebones config:
 
 ``` kotlin
 plugins {
-  id("dev.jonpoulton.atlas.mermaid") version "x.y.z"
+  id("dev.jonpoulton.atlas") version "x.y.z"
 }
 ```
 
@@ -80,7 +80,7 @@ graph TD
 
 ## Generated Files
 
-The Mermaid plugin will generate a `chart.mmd` file in each subproject's `atlas/` folder, containing the Mermaid flowchart diagram for that project's dependencies. In the root project, it will also generate a `legend.md` file containing a legend of any defined project types and link types.
+The Mermaid plugin will generate a `chart.mmd` file in each subproject's `atlas/mermaid` folder, containing the Mermaid flowchart diagram for that project's dependencies. In the root project, it will also generate a `legend.md` file containing a legend of any defined project types and link types.
 
 These `.mmd` files can be embedded directly in Markdown files or rendered by compatible viewers (such as this page!). Many platforms (GitHub, GitLab, etc.) will automatically render Mermaid diagrams when viewing `.md` files containing mermaid code blocks.
 
@@ -402,15 +402,19 @@ atlas {
 }
 ```
 
-Available properties for [MermaidProjectTypeSpec](api/atlas-mermaid/atlas.mermaid/-mermaid-project-type-spec/index.html):
+The [`ProjectTypeSpec`](api/atlas-plugin/atlas.core/-project-type-spec/index.html) properties Mermaid reads:
 
 | Property | Type | Description |
 |----------|------|-------------|
+| **fill** | String | Background color of the node. Overrides `color` |
 | **fontColor** | String | Color of the text in the node |
 | **fontSize** | String | Size of the text (e.g., "20px") |
+| **opacity** | Float | How see-through the node is, between 0 and 1 |
 | **stroke** | String | Color of the node border |
 | **strokeDashArray** | String | Dash pattern for the border (e.g., "5 5" or "4 3 2 1") |
 | **strokeWidth** | String | Width of the node border (e.g., "3px" or "3") |
+
+Anything else on `ProjectTypeSpec` is for one of the other frameworks - set one of those with only Mermaid configured and Atlas will warn you about it.
 
 !!! warning
 
@@ -423,7 +427,7 @@ When configuring link types for Mermaid, you can use Mermaid-specific styling pr
 ``` kotlin
 atlas {
   linkTypes {
-    api(LinkStyle.Basic) {
+    api(LinkStyle.Solid) {
       fontColor = "blue"
       stroke = "red"
       strokeWidth = "5px"
@@ -439,33 +443,36 @@ atlas {
 }
 ```
 
-Available link styles:
+How Mermaid draws each of the shared [`LinkStyle`](api/atlas-plugin/atlas.core/-link-style/index.html) values:
 
 ``` kotlin
-LinkStyle.Basic      // Solid line with arrow (default)
+LinkStyle.Solid      // Solid line with arrow (default)
 LinkStyle.Bold       // Thick solid line with arrow
 LinkStyle.Dashed     // Dashed line with arrow
+LinkStyle.Dotted     // Mermaid has no dotted links, so drawn as Dashed
 LinkStyle.Invisible  // Hidden link (still affects layout)
+LinkStyle.Tapered    // Mermaid has no tapered links, so drawn as Solid
 ```
 
-| Basic | Bold |
+| Solid | Bold |
 |:--:|:--:|
 | ![](img/mermaid-link-Basic.png) | ![](img/mermaid-link-Bold.png) |
 | Dashed | Invisible |
 | ![](img/mermaid-link-Dashed.png) | ![](img/mermaid-link-Invisible.png) |
 
 
-Available properties for [MermaidLinkTypeSpec](api/atlas-mermaid/atlas.mermaid/-mermaid-link-type-spec/index.html):
+The [`LinkTypeSpec`](api/atlas-plugin/atlas.core/-link-type-spec/index.html) properties Mermaid reads:
 
 | Property | Type | Description |
 |----------|------|-------------|
 | **fontColor** | String | Color of the link label text |
-| **stroke** | String | Color of the link line |
+| **opacity** | Float | How see-through the line is, between 0 and 1 |
+| **stroke** | String | Color of the link line. Overrides `color` |
 | **strokeWidth** | String | Width of the link line (e.g., "5px") |
 | **strokeDashArray** | String | Dash pattern for the link (e.g., "5 5") |
 
 !!! tip
 
-    Like project type specs, this also implements `PropertiesSpec`, so you can use `put("key", "value")` to add custom properties if needed.
+    Like project type specs, this also implements `StyleSpec`, so you can use `put(Framework.Mermaid, "key", "value")` to add custom properties if needed.
 
 [See the Mermaid docs on link styling](https://mermaid.js.org/syntax/flowchart.html#links-between-nodes).
