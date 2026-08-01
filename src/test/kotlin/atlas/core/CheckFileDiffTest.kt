@@ -1,11 +1,12 @@
 package atlas.core
 
 import assertk.assertThat
-import assertk.assertions.contains
 import assertk.assertions.containsAtLeast
-import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
 import atlas.test.ScenarioTest
+import atlas.test.contains
+import atlas.test.contentContains
+import atlas.test.doesNotContain
 import atlas.test.runTask
 import atlas.test.scenarios.CheckExplicitlyDisabled
 import atlas.test.scenarios.CheckExplicitlyEnabled
@@ -24,12 +25,11 @@ internal class CheckFileDiffTest : ScenarioTest() {
       // when
       val result = runTask(":a:checkGraphvizChart", extras = listOf("--dry-run")).build()
 
-      // then the chart wasn't written
-      assertThat(result.output).doesNotContain(":a:writeGraphvizChart")
-
-      // but the dummy and check tasks were run
-      assertThat(result.output).contains(":a:writeDummyGraphvizChart")
-      assertThat(result.output).contains(":a:checkGraphvizChart")
+      // then the chart wasn't written but the dummy and check tasks were run
+      assertThat(result.output)
+        .doesNotContain(":a:writeGraphvizChart")
+        .contains(":a:writeDummyGraphvizChart")
+        .contains(":a:checkGraphvizChart")
     }
 
   @Test
@@ -38,12 +38,11 @@ internal class CheckFileDiffTest : ScenarioTest() {
       // when
       val result = runTask(":a:checkD2Chart", extras = listOf("--dry-run")).build()
 
-      // then the chart wasn't written
-      assertThat(result.output).doesNotContain(":a:writeD2Chart")
-
-      // but the dummy and check tasks were run
-      assertThat(result.output).contains(":a:writeDummyD2Chart")
-      assertThat(result.output).contains(":a:checkD2Chart")
+      // then the chart wasn't written but the dummy and check tasks were run
+      assertThat(result.output)
+        .doesNotContain(":a:writeD2Chart")
+        .contains(":a:writeDummyD2Chart")
+        .contains(":a:checkD2Chart")
     }
 
   @Test
@@ -63,9 +62,8 @@ internal class CheckFileDiffTest : ScenarioTest() {
             .trimIndent()
         )
 
-      val report = resolve("build/reports/problems/problems-report.html")
-      assertThat(report.readText())
-        .contains("Run `gradle :a:writeGraphvizChart` to generate the file.")
+      assertThat(resolve("build/reports/problems/problems-report.html"))
+        .contentContains("Run `gradle :a:writeGraphvizChart` to generate the file.")
     }
 
   @Test

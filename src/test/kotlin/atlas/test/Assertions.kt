@@ -1,6 +1,10 @@
 package atlas.test
 
 import assertk.Assert
+import assertk.assertThat
+import assertk.assertions.contains as assertkContains
+import assertk.assertions.doesNotContain as assertkDoesNotContain
+import assertk.assertions.exists as assertkExists
 import assertk.assertions.isEqualTo
 import assertk.assertions.prop
 import assertk.assertions.support.expected
@@ -48,6 +52,14 @@ internal fun Assert<BuildResult>.taskHadResult(
   }
 }
 
+internal fun Assert<BuildResult>.tasksHadResult(
+  expected: TaskOutcome,
+  vararg names: String,
+): Assert<BuildResult> = names.fold(this) { assert, name -> assert.taskHadResult(name, expected) }
+
+internal fun Assert<BuildResult>.tasksWereSuccessful(vararg names: String): Assert<BuildResult> =
+  tasksHadResult(SUCCESS, *names)
+
 internal fun Assert<File>.contentEquals(expected: String): Assert<File> = transform { file ->
   val contents = file.readText().removeSuffix("\n")
   if (contents == expected) {
@@ -59,6 +71,16 @@ internal fun Assert<File>.contentEquals(expected: String): Assert<File> = transf
   }
 }
 
+internal fun Assert<File>.contentContains(expected: String): Assert<File> = transform { file ->
+  assertThat(file.readText()).contains(expected)
+  file
+}
+
+internal fun Assert<File>.exists(): Assert<File> = transform { file ->
+  assertThat(file).assertkExists()
+  file
+}
+
 // Copied from assertk repo but they haven't published in ages
 // https://github.com/assertk-org/assertk/blob/main/assertk/src/jvmMain/kotlin/assertk/assertions/file.kt
 internal fun Assert<File>.doesNotExist(): Assert<File> = transform { actual ->
@@ -67,6 +89,16 @@ internal fun Assert<File>.doesNotExist(): Assert<File> = transform { actual ->
   } else {
     expected("$actual not to exist")
   }
+}
+
+internal fun Assert<File>.childExists(path: String): Assert<File> = transform { dir ->
+  assertThat(dir.resolve(path)).exists()
+  dir
+}
+
+internal fun Assert<File>.childDoesNotExist(path: String): Assert<File> = transform { dir ->
+  assertThat(dir.resolve(path)).doesNotExist()
+  dir
 }
 
 internal fun Assert<String>.equalsDiffed(expected: String): Assert<String> = transform { actual ->
@@ -83,9 +115,11 @@ internal fun Assert<String>.equalsDiffed(expected: String): Assert<String> = tra
 internal fun <T> Assert<Set<T>>.isEqualToSet(vararg expected: T) = isEqualTo(expected.toSet())
 
 internal fun Assert<String>.contains(expected: String): Assert<String> = transform { actual ->
-  if (actual.contains(expected)) {
-    actual
-  } else {
-    expected("string to contain '$expected' - actual = $actual")
-  }
+  assertThat(actual).assertkContains(expected)
+  actual
+}
+
+internal fun Assert<String>.doesNotContain(expected: String): Assert<String> = transform { actual ->
+  assertThat(actual).assertkDoesNotContain(expected)
+  actual
 }

@@ -1,9 +1,9 @@
 package atlas
 
 import assertk.assertThat
-import assertk.assertions.contains
-import assertk.assertions.exists
 import atlas.test.ScenarioTest
+import atlas.test.childExists
+import atlas.test.contentContains
 import atlas.test.noTasksFailed
 import atlas.test.runTask
 import atlas.test.scenarios.MultipleFrameworks
@@ -17,15 +17,15 @@ internal class MultipleFrameworksTest : ScenarioTest() {
       val result = runTask("atlasGenerate").build()
       assertThat(result).noTasksFailed()
 
-      // then each framework wrote to its own directory, so nothing was overwritten
-      assertThat(resolve("a/atlas/d2/chart.d2")).exists()
-      assertThat(resolve("a/atlas/graphviz/chart.dot")).exists()
-      assertThat(resolve("a/atlas/mermaid/chart.mmd")).exists()
-
-      // and the shared legends live in the root project
-      assertThat(resolve("atlas/d2/classes.d2")).exists()
-      assertThat(resolve("atlas/graphviz/legend.dot")).exists()
-      assertThat(resolve("atlas/mermaid/legend.md")).exists()
+      // then each framework wrote to its own directory, so nothing was overwritten, and the shared
+      // legends live in the root project
+      assertThat(this)
+        .childExists("a/atlas/d2/chart.d2")
+        .childExists("a/atlas/graphviz/chart.dot")
+        .childExists("a/atlas/mermaid/chart.mmd")
+        .childExists("atlas/d2/classes.d2")
+        .childExists("atlas/graphviz/legend.dot")
+        .childExists("atlas/mermaid/legend.md")
     }
 
   @Test
@@ -35,9 +35,9 @@ internal class MultipleFrameworksTest : ScenarioTest() {
       runTask("atlasGenerate").build()
 
       // then
-      val readme = resolve("a/README.md").readText()
-      assertThat(readme).contains("![chart](atlas/d2/chart.svg)")
-      assertThat(readme).contains("![chart](atlas/graphviz/chart.svg)")
-      assertThat(readme).contains("```mermaid")
+      assertThat(resolve("a/README.md"))
+        .contentContains("![chart](atlas/d2/chart.svg)")
+        .contentContains("![chart](atlas/graphviz/chart.svg)")
+        .contentContains("```mermaid")
     }
 }

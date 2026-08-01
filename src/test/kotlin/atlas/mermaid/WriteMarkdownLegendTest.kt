@@ -1,11 +1,11 @@
 package atlas.mermaid
 
 import assertk.assertThat
-import assertk.assertions.contains
-import assertk.assertions.exists
 import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
-import atlas.test.equalsDiffed
+import atlas.test.contentContains
+import atlas.test.contentEquals
+import atlas.test.exists
 import atlas.test.runTask
 import atlas.test.scenarios.MermaidWithLinkTypes
 import atlas.test.scenarios.MermaidWithProjectTypes
@@ -20,10 +20,9 @@ internal class WriteMarkdownLegendTest : ScenarioTest() {
 
       // then
       assertThat(result.tasks).allSuccessful()
-      val legend = resolve("atlas/mermaid/legend.md")
-      assertThat(legend).exists()
-      assertThat(legend.readText())
-        .contains(
+      assertThat(resolve("atlas/mermaid/legend.md"))
+        .exists()
+        .contentContains(
           """
           | Project Types | Color |
           |:--:|:--:|
@@ -42,10 +41,9 @@ internal class WriteMarkdownLegendTest : ScenarioTest() {
 
       // then
       assertThat(result.tasks).allSuccessful()
-      val legend = resolve("atlas/mermaid/legend.md")
-      assertThat(legend).exists()
-      assertThat(legend.readText())
-        .equalsDiffed(
+      assertThat(resolve("atlas/mermaid/legend.md"))
+        .exists()
+        .contentEquals(
           """
           | Link Types | Style |
           |:--:|:--:|

@@ -1,11 +1,11 @@
 package atlas.d2.tasks
 
 import assertk.assertThat
-import assertk.assertions.contains
-import assertk.assertions.exists
 import atlas.d2.RequiresD2
 import atlas.test.ScenarioTest
 import atlas.test.allSuccessful
+import atlas.test.childExists
+import atlas.test.contains
 import atlas.test.runTask
 import atlas.test.scenarios.D2Basic
 import atlas.test.scenarios.D2CustomLayoutEngine
@@ -68,9 +68,10 @@ internal class ExecD2Test : ScenarioTest() {
 
       // then
       assertThat(result.tasks).allSuccessful()
-      assertThat(resolve("a/atlas/d2/chart.svg")).exists()
-      assertThat(resolve("b/atlas/d2/chart.svg")).exists()
-      assertThat(resolve("c/atlas/d2/chart.svg")).exists()
+      assertThat(this)
+        .childExists("a/atlas/d2/chart.svg")
+        .childExists("b/atlas/d2/chart.svg")
+        .childExists("c/atlas/d2/chart.svg")
     }
 
   @Test

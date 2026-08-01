@@ -1,9 +1,9 @@
 package atlas.graphviz.tasks
 
 import assertk.assertThat
-import assertk.assertions.exists
 import atlas.test.ScenarioTest
-import atlas.test.equalsDiffed
+import atlas.test.contentEquals
+import atlas.test.exists
 import atlas.test.runTask
 import atlas.test.scenarios.GraphVizChartCustomConfig
 import atlas.test.scenarios.GraphVizChartWithCustomLinkTypes
@@ -22,8 +22,8 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
       runTask("writeGraphvizChart").build()
 
       // then
-      assertThat(resolve("app/atlas/graphviz/chart.dot").readText())
-        .equalsDiffed(
+      assertThat(resolve("app/atlas/graphviz/chart.dot"))
+        .contentEquals(
           """
           digraph {
             ":app"
@@ -62,8 +62,8 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
       val dotFileC = resolve("c/atlas/graphviz/chart.dot")
 
       // and contain expected contents, with projects in declaration order
-      assertThat(dotFileA.readText())
-        .equalsDiffed(
+      assertThat(dotFileA)
+        .contentEquals(
           """
           digraph {
             ":a" [fillcolor="mediumorchid"]
@@ -76,8 +76,8 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
             .trimIndent()
         )
 
-      assertThat(dotFileB.readText())
-        .equalsDiffed(
+      assertThat(dotFileB)
+        .contentEquals(
           """
           digraph {
             ":b" [fillcolor="orange"]
@@ -85,8 +85,8 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
           """
             .trimIndent()
         )
-      assertThat(dotFileC.readText())
-        .equalsDiffed(
+      assertThat(dotFileC)
+        .contentEquals(
           """
           digraph {
             ":c" [fillcolor="orange"]
@@ -102,13 +102,10 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
       // when
       runTask("writeGraphvizChart").build()
 
-      // then the file was generated
-      val dotFile = resolve("a/atlas/graphviz/chart.dot")
-      assertThat(dotFile).exists()
-
-      // and contains expected contents, with projects in alphabetical order
-      assertThat(dotFile.readText())
-        .equalsDiffed(
+      // then the file was generated, with projects in alphabetical order
+      assertThat(resolve("a/atlas/graphviz/chart.dot"))
+        .exists()
+        .contentEquals(
           """
           digraph {
             edge [arrowhead="halfopen",arrowtail="open"]
@@ -131,13 +128,10 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
       // when
       runTask("writeGraphvizChart").build()
 
-      // then the file was generated
-      val dotFile = resolve("a/atlas/graphviz/chart.dot")
-      assertThat(dotFile).exists()
-
-      // and contains expected contents, with projects in alphabetical order
-      assertThat(dotFile.readText())
-        .equalsDiffed(
+      // then the file was generated, with projects in alphabetical order
+      assertThat(resolve("a/atlas/graphviz/chart.dot"))
+        .exists()
+        .contentEquals(
           """
           digraph {
             graph [layout="neato"]
@@ -158,13 +152,10 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
       // when
       runTask("writeGraphvizChart").build()
 
-      // then the file was generated
-      val dotFile = resolve("a/atlas/graphviz/chart.dot")
-      assertThat(dotFile).exists()
-
-      // and contains expected contents, colons removed from project prefixes and "b" -> "B"
-      assertThat(dotFile.readText())
-        .equalsDiffed(
+      // then the file was generated, with colons removed from project prefixes and "b" -> "B"
+      assertThat(resolve("a/atlas/graphviz/chart.dot"))
+        .exists()
+        .contentEquals(
           """
           digraph {
             "B" [fillcolor="orange"]
@@ -184,13 +175,10 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
       // when
       runTask("writeGraphvizChart").build()
 
-      // then the file was generated
-      val dotFile = resolve("a/atlas/graphviz/chart.dot")
-      assertThat(dotFile).exists()
-
-      // and contains expected link styles
-      assertThat(dotFile.readText())
-        .equalsDiffed(
+      // then the file was generated, with the expected link styles
+      assertThat(resolve("a/atlas/graphviz/chart.dot"))
+        .exists()
+        .contentEquals(
           """
           digraph {
             ":a" [fillcolor="mediumorchid"]
@@ -212,13 +200,10 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
       // when
       runTask("writeGraphvizChart").build()
 
-      // then the file was generated
-      val dotFile = resolve("app/atlas/graphviz/chart.dot")
-      assertThat(dotFile).exists()
-
-      // and contains expected link styles
-      assertThat(dotFile.readText())
-        .equalsDiffed(
+      // then the file was generated, with the expected link styles
+      assertThat(resolve("app/atlas/graphviz/chart.dot"))
+        .exists()
+        .contentEquals(
           """
           digraph {
             ":app" [fillcolor="mediumorchid"]

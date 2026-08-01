@@ -1,16 +1,17 @@
 package atlas.d2.tasks
 
 import assertk.assertThat
-import assertk.assertions.exists
 import atlas.test.D2Scenario
 import atlas.test.RequiresImageMagick6
 import atlas.test.ScenarioTest
 import atlas.test.allTasksSuccessful
-import atlas.test.doesNotExist
+import atlas.test.childDoesNotExist
+import atlas.test.childExists
 import atlas.test.noTasksFailed
 import atlas.test.runTask
 import atlas.test.scenarios.D2Basic
 import atlas.test.taskHadResult
+import atlas.test.tasksHadResult
 import java.lang.ProcessBuilder.Redirect.PIPE
 import kotlin.test.Test
 import org.gradle.testkit.runner.TaskOutcome.SKIPPED
@@ -33,8 +34,7 @@ internal class SvgToPngTest : ScenarioTest() {
 
       // then both SVG and PNG were output
       assertThat(result).allTasksSuccessful()
-      assertThat(resolve("a/atlas/d2/chart.svg")).exists()
-      assertThat(resolve("a/atlas/d2/chart.png")).exists()
+      assertThat(this).childExists("a/atlas/d2/chart.svg").childExists("a/atlas/d2/chart.png")
 
       // result is cached
       assertThat(runTask("svgToPng").build()).taskHadResult(":a:svgToPng", UP_TO_DATE)
@@ -47,18 +47,13 @@ internal class SvgToPngTest : ScenarioTest() {
       val result = runTask("atlasGenerate").build()
 
       // then
-      assertThat(resolve("a/atlas/d2/chart.svg")).exists()
-      assertThat(resolve("a/atlas/d2/chart.png")).doesNotExist()
+      assertThat(this).childExists("a/atlas/d2/chart.svg").childDoesNotExist("a/atlas/d2/chart.png")
 
       // and the charts were generated, but the PNGs weren't
       assertThat(result)
         .noTasksFailed()
-        .taskHadResult(":a:execD2Chart", SUCCESS)
-        .taskHadResult(":b:execD2Chart", SUCCESS)
-        .taskHadResult(":c:execD2Chart", SUCCESS)
-        .taskHadResult(":a:svgToPng", SKIPPED)
-        .taskHadResult(":b:svgToPng", SKIPPED)
-        .taskHadResult(":c:svgToPng", SKIPPED)
+        .tasksHadResult(SUCCESS, ":a:execD2Chart", ":b:execD2Chart", ":c:execD2Chart")
+        .tasksHadResult(SKIPPED, ":a:svgToPng", ":b:svgToPng", ":c:svgToPng")
     }
 
   @Test
@@ -69,18 +64,13 @@ internal class SvgToPngTest : ScenarioTest() {
       val result = runTask("atlasGenerate").build()
 
       // then
-      assertThat(resolve("a/atlas/d2/chart.txt")).exists()
-      assertThat(resolve("a/atlas/d2/chart.png")).doesNotExist()
+      assertThat(this).childExists("a/atlas/d2/chart.txt").childDoesNotExist("a/atlas/d2/chart.png")
 
       // and the charts were generated, but the PNGs weren't
       assertThat(result)
         .noTasksFailed()
-        .taskHadResult(":a:execD2Chart", SUCCESS)
-        .taskHadResult(":b:execD2Chart", SUCCESS)
-        .taskHadResult(":c:execD2Chart", SUCCESS)
-        .taskHadResult(":a:svgToPng", SKIPPED)
-        .taskHadResult(":b:svgToPng", SKIPPED)
-        .taskHadResult(":c:svgToPng", SKIPPED)
+        .tasksHadResult(SUCCESS, ":a:execD2Chart", ":b:execD2Chart", ":c:execD2Chart")
+        .tasksHadResult(SKIPPED, ":a:svgToPng", ":b:svgToPng", ":c:svgToPng")
     }
 
   private fun assumeConverterIsInstalled(converter: SvgToPng.Converter) {
