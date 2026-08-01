@@ -7,5 +7,6 @@ plugins {
 dependencies {
   compileOnly(gradleApi())
   compileOnly(kotlin("stdlib"))
+  implementation(libs.blueprint.core)
   implementation(libs.kotlinx.serialization)
 }

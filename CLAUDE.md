@@ -8,7 +8,8 @@ Atlas is a Gradle plugin for generating diagrams of modular project dependencies
 
 **Key Characteristics:**
 - Multi-module Gradle project with convention plugins in `build-logic/`
-- Java 17 minimum (see `gradle.properties`)
+- Java 21 minimum (see the root `.java-version` file)
+- Uses [Blueprint](https://github.com/jonapoul/blueprint) (`dev.jonpoulton.blueprint:core`) for Gradle DSL shortcuts, in both `build-logic` and `atlas-core`
 - Uses Gradle configuration cache and parallel execution
 - Published to Maven Central under `dev.jonpoulton.atlas`
 
@@ -148,8 +149,9 @@ The `PathTransformSpec` allows regex-based transformations of module paths in ge
 
 ## Important Properties
 
+The Java version is read from the root `.java-version` file (via Blueprint's `javaVersion()`/`jvmTarget()`), and is also what CI's `setup-java` steps and the `gradle:*-jdk*` docker images pin.
+
 From `gradle.properties`:
-- `atlas.javaVersion`: Minimum Java version
 - `atlas.minimumGradleVersion`: Minimum Gradle version
 - `org.gradle.configuration-cache`: Configuration cache is enabled
 - `org.gradle.parallel`: Parallel execution is enabled

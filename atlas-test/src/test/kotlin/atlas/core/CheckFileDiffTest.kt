@@ -57,19 +57,15 @@ internal class CheckFileDiffTest : ScenarioTest() {
         .contains(
           """
           * What went wrong:
-          Execution failed for task ':a:checkGraphvizChart'.
+          Execution failed for task ':a:checkGraphvizChart' (registered by plugin class 'atlas.graphviz.GraphvizAtlasPlugin').
           > java.io.FileNotFoundException
           """
             .trimIndent()
         )
-      assertThat(result.output)
-        .contains(
-          """
-          * Try:
-          > Run `gradle :a:writeGraphvizChart` to generate the file.
-          """
-            .trimIndent()
-        )
+
+      val report = resolve("build/reports/problems/problems-report.html")
+      assertThat(report.readText())
+        .contains("Run `gradle :a:writeGraphvizChart` to generate the file.")
     }
 
   @Test

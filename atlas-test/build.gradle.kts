@@ -1,4 +1,5 @@
-import java.util.Properties
+import blueprint.core.getOptional
+import blueprint.core.localProperties
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
@@ -6,6 +7,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 
 plugins {
   id("atlas.convention.plugin")
+  alias(libs.plugins.blueprint) apply false
   alias(libs.plugins.buildConfig)
 }
 
@@ -53,21 +55,16 @@ tasks.withType<Test>().configureEach {
 }
 
 fun androidHome(): File? {
-  val androidHome = System.getenv("ANDROID_HOME")?.let(::File)
-  if (androidHome?.exists() == true) {
-    logger.info("Using system environment variable $androidHome as ANDROID_HOME")
-    return androidHome
+  val fromEnv = providers.environmentVariable("ANDROID_HOME").orNull?.let(::File)
+  if (fromEnv?.exists() == true) {
+    logger.info("Using system environment variable $fromEnv as ANDROID_HOME")
+    return fromEnv
   }
 
-  val localProps = rootProject.file("local.properties")
-  if (localProps.exists()) {
-    val properties = Properties()
-    localProps.inputStream().use { properties.load(it) }
-    val sdkHome = properties.getProperty("sdk.dir")?.let(::File)
-    if (sdkHome?.exists() == true) {
-      logger.info("Using local.properties sdk.dir $sdkHome as ANDROID_HOME")
-      return sdkHome
-    }
+  val sdkHome = localProperties().getOptional("sdk.dir")?.let(::File)
+  if (sdkHome?.exists() == true) {
+    logger.info("Using local.properties sdk.dir $sdkHome as ANDROID_HOME")
+    return sdkHome
   }
 
   logger.warn("No Android SDK found - Android unit tests will be skipped")

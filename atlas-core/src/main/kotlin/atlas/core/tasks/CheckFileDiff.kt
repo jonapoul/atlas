@@ -16,7 +16,6 @@ import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.problems.Problems
-import org.gradle.api.problems.Severity
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
@@ -62,7 +61,6 @@ public abstract class CheckFileDiff : DefaultTask() {
           details("Tried to run comparison on the file at $expectedFile, but it doesn't exist yet.")
           fileLocation(expectedFile.absolutePath)
           solution("Run `gradle ${taskPath.get()}` to generate the file.")
-          severity(Severity.ERROR)
           withException(e)
         }
       }
@@ -78,7 +76,6 @@ public abstract class CheckFileDiff : DefaultTask() {
           details(diff(expectedContents, actualContents))
           fileLocation(expectedFile.absolutePath)
           solution("Run `gradle ${taskPath.get()}` to apply the fixes.")
-          severity(Severity.ERROR)
           withException(exception)
         }
       }

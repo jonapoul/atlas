@@ -7,9 +7,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.provideDelegate
-import org.gradle.kotlin.dsl.registering
 import org.gradle.kotlin.dsl.withType
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
@@ -26,10 +23,11 @@ class ConventionDetekt : Plugin<Project> {
       }
 
       val detektTasks = tasks.withType<Detekt>()
-      val detektCheck by tasks.registering {
-        group = LifecycleBasePlugin.VERIFICATION_GROUP
-        dependsOn(detektTasks)
-      }
+      val detektCheck =
+        tasks.register("detektCheck") {
+          group = LifecycleBasePlugin.VERIFICATION_GROUP
+          dependsOn(detektTasks)
+        }
 
       tasks.named(LifecycleBasePlugin.CHECK_TASK_NAME).configure { dependsOn(detektCheck) }
 

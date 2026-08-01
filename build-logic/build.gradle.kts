@@ -1,8 +1,9 @@
-import java.util.Properties
+import blueprint.core.toDependency
 
 plugins {
   `kotlin-dsl`
   idea
+  alias(libs.plugins.blueprint) apply false
 }
 
 idea {
@@ -12,12 +13,14 @@ idea {
   }
 }
 
-// Pull java version property from project's root properties file, since build-logic doesn't have
-// access to it
-val props = Properties().also { it.load(file("../gradle.properties").reader()) }
+// Read the java version from the project's root file, since build-logic's own root is this
+// directory
 val javaInt =
-  props["atlas.javaVersion"]?.toString()?.toInt()
-    ?: error("Failed getting java version from $props")
+  providers
+    .fileContents(layout.projectDirectory.file("../.java-version"))
+    .asText
+    .map { it.trim().toInt() }
+    .get()
 val javaVersion = JavaVersion.toVersion(javaInt)
 
 java {
@@ -30,14 +33,15 @@ kotlin {
 }
 
 dependencies {
-  fun compileOnly(plugin: Provider<PluginDependency>) =
-    with(plugin.get()) { compileOnly("$pluginId:$pluginId.gradle.plugin:$version") }
+  fun compileOnlyPlugin(plugin: Provider<PluginDependency>) = compileOnly(plugin.toDependency())
 
-  compileOnly(libs.plugins.detekt)
-  compileOnly(libs.plugins.dokka)
-  compileOnly(libs.plugins.kotlinJvm)
-  compileOnly(libs.plugins.licensee)
-  compileOnly(libs.plugins.publish)
+  compileOnlyPlugin(libs.plugins.detekt)
+  compileOnlyPlugin(libs.plugins.dokka)
+  compileOnlyPlugin(libs.plugins.kotlinJvm)
+  compileOnlyPlugin(libs.plugins.licensee)
+  compileOnlyPlugin(libs.plugins.publish)
+
+  implementation(libs.blueprint.core)
 }
 
 tasks.validatePlugins {

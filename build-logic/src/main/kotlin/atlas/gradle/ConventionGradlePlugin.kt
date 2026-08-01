@@ -1,14 +1,14 @@
 package atlas.gradle
 
+import blueprint.core.boolProperty
+import blueprint.core.get
+import blueprint.core.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.attributes.plugin.GradlePluginApiVersion
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.provideDelegate
-import org.gradle.kotlin.dsl.registering
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugin.devel.GradlePluginDevelopmentExtension
 import org.gradle.plugin.devel.plugins.JavaGradlePluginPlugin
@@ -17,7 +17,7 @@ import org.gradle.plugin.devel.tasks.ValidatePlugins
 
 class ConventionGradlePlugin : Plugin<Project> {
   private val Project.skipPublish
-    get() = providers.gradleProperty("atlas.skipPublish").map { it.toBoolean() }.getOrElse(false)
+    get() = providers.boolProperty("atlas.skipPublish").getOrElse(false)
 
   override fun apply(target: Project): Unit =
     with(target) {
@@ -39,13 +39,14 @@ class ConventionGradlePlugin : Plugin<Project> {
         }
       }
 
-      val testPluginClasspath by configurations.registering { isCanBeResolved = true }
+      val testPluginClasspath =
+        configurations.register("testPluginClasspath") { isCanBeResolved = true }
 
       dependencies {
-        "compileOnly"(libs("kotlin.gradle"))
-        "implementation"(libs("kotlinx.serialization"))
-        testPluginClasspath(libs("agp"))
-        testPluginClasspath(libs("kotlin.gradle"))
+        "compileOnly"(libs["kotlin.gradle"])
+        "implementation"(libs["kotlinx.serialization"])
+        testPluginClasspath(libs["agp"])
+        testPluginClasspath(libs["kotlin.gradle"])
       }
 
       tasks.withType<ValidatePlugins>().configureEach {
