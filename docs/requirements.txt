@@ -1,4 +1,4 @@
-click==8.3.1
+click==8.4.2
 deepmerge==2.1.0
 Markdown==3.10
 Pygments==2.20.0
