@@ -177,14 +177,7 @@ jobs:
       - uses: ./.github/actions/setup-java
       - uses: ./.github/actions/setup-gradle
       - uses: ./.github/actions/setup-gradle-properties
-
       - run: ./gradlew detektCheck
-
-      - name: Upload SARIF
-        uses: github/codeql-action/upload-sarif@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4
-        if: ${{ !cancelled() }}
-        with:
-          sarif_file: build/reports/detekt/merge.sarif.json
 
   test:
     needs: [ validation, build-docker ]

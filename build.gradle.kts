@@ -170,10 +170,7 @@ val detektCheck =
 tasks.check.configure { dependsOn(detektCheck) }
 
 detektTasks.configureEach {
-  reports {
-    html.required = true
-    sarif.required = true
-  }
+  reports { html.required = true }
   exclude { it.file.path.contains("generated") }
 }
 
