@@ -14,36 +14,32 @@ concurrency:
   group: 'ci-${{ github.event.merge_group.head_ref || github.head_ref }}-${{ github.workflow }}'
   cancel-in-progress: false
 
+env:
+  CI: true
+  GRADLE_ENCRYPTION_KEY: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - name: Configure pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
 
-      - name: Checkout
-        uses: actions/checkout@v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Set up Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: "zulu"
-          java-version-file: .java-version
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v5
-        with:
-          add-job-summary: on-failure
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+      - uses: ./.github/actions/setup-java
+      - uses: ./.github/actions/setup-gradle
+      - uses: ./.github/actions/setup-gradle-properties
 
       - name: Build Dokka artifacts
         run: ./gradlew dokkaGeneratePublicationHtml
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: 3.14
 
@@ -55,8 +51,7 @@ jobs:
         run: zensical build -f zensical.toml --clean
 
       - name: Upload
-        id: deployment
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
           path: docs/site
 
@@ -69,4 +64,4 @@ jobs:
     steps:
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

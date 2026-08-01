@@ -1,13 +1,26 @@
+x-atlas: &atlas
+  # CI overrides the tag when a PR rebuilds the image; defaults to the published one.
+  image: ghcr.io/jonapoul/atlas-gradle-plugin:${ATLAS_IMAGE_TAG:-latest}
+  volumes:
+    - $HOME/.gradle:/home/gradle/.gradle
+    - ..:/atlas
+  working_dir: /atlas
+
 services:
   check:
-    image: ghcr.io/jonapoul/atlas-gradle-plugin:latest
-    volumes:
-      - $HOME/.gradle:/home/gradle/.gradle
-      - ..:/atlas
-    working_dir: /atlas
+    <<: *atlas
+    command: >
+      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ check
+
+  test:
+    <<: *atlas
+    command: >
+      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ test
+
+  samples:
+    <<: *atlas
     command: >
       /bin/bash -c "
-      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ check &&
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-d2 &&
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-graphviz &&
       gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-mermaid

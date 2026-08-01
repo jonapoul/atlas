@@ -11,11 +11,12 @@ env:
 jobs:
   verify-version:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       git-tag: ${{ steps.git-tag.outputs.version }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-tags: true
           fetch-depth: 0 # get everything
@@ -42,7 +43,7 @@ jobs:
           if [ -z "$GRADLE_VERSION" ]; then
             echo "Empty gradle version"
             exit 1
-          elif [[ "$VERSION" == *"-SNAPSHOT"* ]]; then
+          elif [[ "$GRADLE_VERSION" == *"-SNAPSHOT"* ]]; then
             echo "Can't publish a snapshot"
             exit 1
           elif [ -z "$GIT_TAG" ]; then
@@ -55,6 +56,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     if: github.repository == 'jonapoul/atlas-gradle-plugin'
     container:
       image: gradle:9.6.1-jdk21
@@ -63,7 +65,7 @@ jobs:
     needs: verify-version
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-tags: true
           fetch-depth: 0
@@ -77,7 +79,7 @@ jobs:
         run: ./gradlew publishToMavenCentral -x dokkaGeneratePublicationHtml
 
       - name: Create release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1
         with:
           generateReleaseNotes: true
           name: v${{ needs.verify-version.outputs.git-tag }}
