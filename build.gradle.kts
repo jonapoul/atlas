@@ -25,7 +25,6 @@ plugins {
   alias(libs.plugins.kotlinSerialization)
   alias(libs.plugins.licensee)
   alias(libs.plugins.publish)
-  alias(libs.plugins.publishReport)
   `java-gradle-plugin`
 }
 
