@@ -6,9 +6,9 @@ icon: lucide/info
 
 # Atlas Gradle Plugin
 
-Atlas is a Gradle plugin for generating, configuring and curating diagrams to illustrate your project's project structure:
+Atlas is a Gradle settings plugin for generating, configuring and curating diagrams to illustrate your project's project structure:
 
-   1. Fully supports Gradle 9 and its configuration caching.
+   1. Fully supports Gradle 9, its configuration caching, and [isolated projects](https://docs.gradle.org/current/userguide/isolated_projects.html).
    2. Supports three frameworks as outputs, any combination of which can be used at once:
       - **D2**: [Official docs here](https://d2lang.org/)
       - **Graphviz**: [Official docs here](https://graphviz.org/)

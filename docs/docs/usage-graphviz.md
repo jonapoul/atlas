@@ -79,7 +79,7 @@ atlas {
 }
 ```
 
-There are plenty of options here, [all those specified in the Graphviz docs](https://graphviz.org/docs/outputs/) are provided as options by Atlas in the [`FileFormat` enum](api/atlas-plugin/atlas.graphviz/-file-format/index.html). Not all have been tested, so please raise an issue on Github if you see anything weird.
+There are plenty of options here, [all those specified in the Graphviz docs](https://graphviz.org/docs/outputs/) are provided as options by Atlas in the [`FileFormat` enum](api/atlas/atlas.graphviz/-file-format/index.html). Not all have been tested, so please raise an issue on Github if you see anything weird.
 
 ### layoutEngine
 
@@ -185,7 +185,7 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 | [href](https://graphviz.org/docs/attrs/href/) | String |
 | [id](https://graphviz.org/docs/attrs/id/) | String |
 | [image](https://graphviz.org/docs/attrs/image/) | String |
-| [imagePos](https://graphviz.org/docs/attrs/imagepos/) | [ImagePos](api/atlas-plugin/atlas.graphviz/-node-attributes/image-pos.html) |
+| [imagePos](https://graphviz.org/docs/attrs/imagepos/) | [ImagePos](api/atlas/atlas.graphviz/-node-attributes/image-pos.html) |
 | [imageScale](https://graphviz.org/docs/attrs/imagescale/) | String |
 | [label](https://graphviz.org/docs/attrs/label/) | String |
 | [labelLoc](https://graphviz.org/docs/attrs/labelloc/) | String |
@@ -202,13 +202,13 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 | [regular](https://graphviz.org/docs/attrs/regular/) | Boolean |
 | [root](https://graphviz.org/docs/attrs/root/) | String |
 | [samplePoints](https://graphviz.org/docs/attrs/samplepoints/) | Int |
-| [shape](https://graphviz.org/docs/attrs/shape/) | [Shape](api/atlas-plugin/atlas.graphviz/-shape/index.html) |
+| [shape](https://graphviz.org/docs/attrs/shape/) | [Shape](api/atlas/atlas.graphviz/-shape/index.html) |
 | [shapeFile](https://graphviz.org/docs/attrs/shapefile/) | String |
 | [showBoxes](https://graphviz.org/docs/attrs/showboxes/) | Int |
 | [sides](https://graphviz.org/docs/attrs/sides/) | Int |
 | [skew](https://graphviz.org/docs/attrs/skew/) | Number |
 | [sortv](https://graphviz.org/docs/attrs/sortv/) | Int |
-| [style](https://graphviz.org/docs/attrs/style/) | [NodeStyle](api/atlas-plugin/atlas.graphviz/-node-style/index.html) |
+| [style](https://graphviz.org/docs/attrs/style/) | [NodeStyle](api/atlas/atlas.graphviz/-node-style/index.html) |
 | [target](https://graphviz.org/docs/attrs/target/) | String |
 | [tooltip](https://graphviz.org/docs/attrs/tooltip/) | String |
 | [url](https://graphviz.org/docs/attrs/URL/) | String |
@@ -265,15 +265,15 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 
 | Edge Property | Type |
 |--|--|
-| [arrowHead](https://graphviz.org/docs/attrs/arrowhead/) | [ArrowType](api/atlas-plugin/atlas.graphviz/-arrow-type/index.html) |
+| [arrowHead](https://graphviz.org/docs/attrs/arrowhead/) | [ArrowType](api/atlas/atlas.graphviz/-arrow-type/index.html) |
 | [arrowSize](https://graphviz.org/docs/attrs/arrowsize/) | Number |
-| [arrowTail](https://graphviz.org/docs/attrs/arrowtail/) | [ArrowType](api/atlas-plugin/atlas.graphviz/-arrow-type/index.html) |
+| [arrowTail](https://graphviz.org/docs/attrs/arrowtail/) | [ArrowType](api/atlas/atlas.graphviz/-arrow-type/index.html) |
 | [linkColor](https://graphviz.org/docs/attrs/color/) | String |
 | [colorScheme](https://graphviz.org/docs/attrs/colorscheme/) | String |
 | [comment](https://graphviz.org/docs/attrs/comment/) | String |
 | [constraint](https://graphviz.org/docs/attrs/constraint/) | Boolean |
 | [decorate](https://graphviz.org/docs/attrs/decorate/) | Boolean |
-| [dir](https://graphviz.org/docs/attrs/dir/) | [Dir](api/atlas-plugin/atlas.graphviz/-dir/index.html) |
+| [dir](https://graphviz.org/docs/attrs/dir/) | [Dir](api/atlas/atlas.graphviz/-dir/index.html) |
 | [edgeHref](https://graphviz.org/docs/attrs/edgehref/) | String |
 | [edgeTarget](https://graphviz.org/docs/attrs/edgetarget/) | String |
 | [edgeTooltip](https://graphviz.org/docs/attrs/edgetooltip/) | String |
@@ -315,7 +315,7 @@ There's plenty you can do here, not all of it is immediately easy to figure out 
 | [sameHead](https://graphviz.org/docs/attrs/samehead/) | String |
 | [sameTail](https://graphviz.org/docs/attrs/sametail/) | String |
 | [showBoxes](https://graphviz.org/docs/attrs/showboxes/) | Int |
-| [linkStyle](https://graphviz.org/docs/attrs/style/) | [EdgeStyle](api/atlas-plugin/atlas.graphviz/-edge-style/index.html) |
+| [linkStyle](https://graphviz.org/docs/attrs/style/) | [EdgeStyle](api/atlas/atlas.graphviz/-edge-style/index.html) |
 | [tailLp](https://graphviz.org/docs/attrs/tail_lp/) | String |
 | [tailClip](https://graphviz.org/docs/attrs/tailclip/) | Boolean |
 | [tailHref](https://graphviz.org/docs/attrs/tailhref/) | String |
