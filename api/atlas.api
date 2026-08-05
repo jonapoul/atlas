@@ -29,9 +29,9 @@ public abstract interface class atlas/core/AtlasExtension {
 }
 
 public final class atlas/core/AtlasPlugin : org/gradle/api/Plugin {
-	public fun <init> ()V
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/provider/ProviderFactory;)V
 	public synthetic fun apply (Ljava/lang/Object;)V
-	public fun apply (Lorg/gradle/api/Project;)V
+	public fun apply (Lorg/gradle/api/initialization/Settings;)V
 }
 
 public abstract interface class atlas/core/AtlasSpec {

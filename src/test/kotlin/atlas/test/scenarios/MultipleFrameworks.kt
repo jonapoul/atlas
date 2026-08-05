@@ -1,7 +1,6 @@
 package atlas.test.scenarios
 
 import atlas.core.Framework
-import atlas.test.KOTLIN_VERSION
 import atlas.test.Scenario
 import atlas.test.javaBuildScript
 import atlas.test.kotlinJvmBuildScript
@@ -13,17 +12,18 @@ internal object MultipleFrameworks : Scenario {
   override val rootBuildFile =
     """
     plugins {
-      kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
+      kotlin("jvm") apply false
     }
+    """
+      .trimIndent()
 
-    atlas {
-      projectTypes {
-        kotlinJvm()
-        java()
-      }
+  override val atlasConfig =
+    """
+    projectTypes {
+      kotlinJvm()
+      java()
     }
-  """
+    """
       .trimIndent()
 
   override val subprojectBuildFiles =

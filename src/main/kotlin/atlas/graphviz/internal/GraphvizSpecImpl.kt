@@ -9,15 +9,15 @@ import atlas.graphviz.GraphvizSpec
 import atlas.graphviz.LayoutEngine
 import atlas.graphviz.NodeAttributes
 import org.gradle.api.Action
-import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.ProviderFactory
 
 internal class GraphvizSpecImpl(
   objects: ObjectFactory,
-  project: Project,
+  providers: ProviderFactory,
 ) : GraphvizSpec {
-  internal val properties = GraphvizGradleProperties(project)
+  internal val properties = GraphvizGradleProperties(providers)
 
   override val name: String = "Graphviz"
   override val fileExtension: Property<String> = objects.string(convention = "dot")

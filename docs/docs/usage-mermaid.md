@@ -402,7 +402,7 @@ atlas {
 }
 ```
 
-The [`ProjectTypeSpec`](api/atlas-plugin/atlas.core/-project-type-spec/index.html) properties Mermaid reads:
+The [`ProjectTypeSpec`](api/atlas/atlas.core/-project-type-spec/index.html) properties Mermaid reads:
 
 | Property | Type | Description |
 |----------|------|-------------|
@@ -443,7 +443,7 @@ atlas {
 }
 ```
 
-How Mermaid draws each of the shared [`LinkStyle`](api/atlas-plugin/atlas.core/-link-style/index.html) values:
+How Mermaid draws each of the shared [`LinkStyle`](api/atlas/atlas.core/-link-style/index.html) values:
 
 ``` kotlin
 LinkStyle.Solid      // Solid line with arrow (default)
@@ -461,7 +461,7 @@ LinkStyle.Tapered    // Mermaid has no tapered links, so drawn as Solid
 | ![](img/mermaid-link-Dashed.png) | ![](img/mermaid-link-Invisible.png) |
 
 
-The [`LinkTypeSpec`](api/atlas-plugin/atlas.core/-link-type-spec/index.html) properties Mermaid reads:
+The [`LinkTypeSpec`](api/atlas/atlas.core/-link-type-spec/index.html) properties Mermaid reads:
 
 | Property | Type | Description |
 |----------|------|-------------|

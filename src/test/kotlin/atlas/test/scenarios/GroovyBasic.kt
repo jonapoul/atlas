@@ -9,9 +9,8 @@ internal object GroovyBasic : GraphvizScenario {
     """
     plugins {
       id 'org.jetbrains.kotlin.jvm'
-      id '$pluginId'
     }
-  """
+    """
       .trimIndent()
 
   override val subprojectBuildFiles =

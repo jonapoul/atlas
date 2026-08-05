@@ -2,8 +2,8 @@
 
 package atlas.core.tasks
 
-import atlas.core.AtlasExtension
 import atlas.core.AtlasSpec
+import atlas.core.internal.AtlasConfig
 import atlas.core.internal.Variant
 import atlas.core.internal.diff
 import atlas.core.internal.problemId
@@ -31,8 +31,8 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
  * Registered on each chart file generation task to confirm that its configuration hasn't changed
  * since the last `gradle atlasGenerate` task run. Will throw an exception if a difference is found.
  *
- * This will auto-attach to `gradle check` if [AtlasExtension.checkOutputs] is enabled, which it is
- * by default.
+ * This will auto-attach to `gradle check` if [atlas.core.AtlasExtension.checkOutputs] is enabled,
+ * which it is by default.
  */
 @CacheableTask
 public abstract class CheckFileDiff : DefaultTask() {
@@ -95,7 +95,7 @@ public abstract class CheckFileDiff : DefaultTask() {
 
     internal inline fun <reified T1 : TaskWithOutputFile, T2 : TaskWithOutputFile> register(
       target: Project,
-      extension: AtlasExtension,
+      config: AtlasConfig,
       spec: AtlasSpec,
       variant: Variant,
       realTask: TaskProvider<T1>,
@@ -118,7 +118,7 @@ public abstract class CheckFileDiff : DefaultTask() {
         }
 
         tasks.named(CHECK_TASK_NAME).configure { check ->
-          if (extension.checkOutputs.get()) {
+          if (config.checkOutputs) {
             check.dependsOn(checkDiff)
           }
         }

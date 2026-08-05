@@ -4,6 +4,11 @@ import atlas.core.Framework
 
 internal interface Scenario {
   val rootBuildFile: String
+
+  // The body of the `atlas { }` block, which lives in `settings.gradle.kts`.
+  val atlasConfig: String
+    get() = ""
+
   val subprojectBuildFiles: Map<String, String>
     get() = emptyMap()
 
@@ -43,24 +48,23 @@ internal interface MermaidScenario : Scenario {
 internal val Scenario.framework: Framework
   get() = frameworks.single()
 
+// Subprojects no longer apply the plugin themselves - the settings plugin wires every project.
 internal val Scenario.javaBuildScript
   get() =
     """
-  plugins {
-    id("java")
-    id("$pluginId")
-  }
-  """
+    plugins {
+      id("java")
+    }
+    """
       .trimIndent()
 
 internal val Scenario.kotlinJvmBuildScript
   get() =
     """
-  plugins {
-    kotlin("jvm")
-    id("$pluginId")
-  }
-  """
+    plugins {
+      kotlin("jvm")
+    }
+    """
       .trimIndent()
 
 internal val Scenario.androidBuildScript
@@ -68,7 +72,6 @@ internal val Scenario.androidBuildScript
     """
   plugins {
     id("com.android.library")
-    id("$pluginId")
   }
 
   android {

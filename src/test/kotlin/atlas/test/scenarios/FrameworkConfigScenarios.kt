@@ -1,7 +1,6 @@
 package atlas.test.scenarios
 
 import atlas.core.Framework
-import atlas.test.KOTLIN_VERSION
 import atlas.test.MermaidScenario
 import atlas.test.Scenario
 import atlas.test.javaBuildScript
@@ -9,24 +8,19 @@ import atlas.test.kotlinJvmBuildScript
 
 /** A project type styled with properties which only D2 and Graphviz know what to do with. */
 internal object PropertiesForUnusedFrameworks : MermaidScenario {
-  override val rootBuildFile =
-    """
-    plugins {
-      kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
-    }
+  override val rootBuildFile = SIMPLE_ROOT_BUILD_FILE
 
-    atlas {
-      projectTypes {
-        kotlinJvm {
-          stroke = "black"
-          render3D = true
-          shadow = true
-          peripheries = 2
-        }
+  override val atlasConfig =
+    """
+    projectTypes {
+      kotlinJvm {
+        stroke = "black"
+        render3D = true
+        shadow = true
+        peripheries = 2
       }
     }
-  """
+    """
       .trimIndent()
 
   override val subprojectBuildFiles = SIMPLE_SUBPROJECTS
@@ -34,21 +28,14 @@ internal object PropertiesForUnusedFrameworks : MermaidScenario {
 
 /** Mermaid has no dotted links, so it'll fall back to dashed ones. */
 internal object UnsupportedLinkStyle : MermaidScenario {
-  override val rootBuildFile =
+  override val rootBuildFile = SIMPLE_ROOT_BUILD_FILE
+
+  override val atlasConfig =
     """
-    import atlas.core.LinkStyle
-
-    plugins {
-      kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
+    linkTypes {
+      api(style = LinkStyle.Dotted)
     }
-
-    atlas {
-      linkTypes {
-        api(style = LinkStyle.Dotted)
-      }
-    }
-  """
+    """
       .trimIndent()
 
   override val subprojectBuildFiles = SIMPLE_SUBPROJECTS
@@ -58,23 +45,26 @@ internal object UnsupportedLinkStyle : MermaidScenario {
 internal object NoFrameworksConfigured : Scenario {
   override val frameworks = emptySet<Framework>()
 
-  override val rootBuildFile =
-    """
-    plugins {
-      kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
-    }
+  override val rootBuildFile = SIMPLE_ROOT_BUILD_FILE
 
-    atlas {
-      projectTypes {
-        kotlinJvm()
-      }
+  override val atlasConfig =
+    """
+    projectTypes {
+      kotlinJvm()
     }
-  """
+    """
       .trimIndent()
 
   override val subprojectBuildFiles = SIMPLE_SUBPROJECTS
 }
+
+private val SIMPLE_ROOT_BUILD_FILE =
+  """
+  plugins {
+    kotlin("jvm") apply false
+  }
+  """
+    .trimIndent()
 
 private val SIMPLE_SUBPROJECTS: Map<String, String>
   get() =

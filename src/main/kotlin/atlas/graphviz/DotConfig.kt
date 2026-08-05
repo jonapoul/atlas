@@ -1,6 +1,6 @@
 package atlas.graphviz
 
-import atlas.core.AtlasExtension
+import atlas.core.internal.AtlasConfig
 import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
@@ -18,11 +18,11 @@ public class DotConfig(
 ) : JSerializable
 
 internal fun DotConfig(
-  extension: AtlasExtension,
+  config: AtlasConfig,
   spec: GraphvizSpec,
 ): DotConfig =
   DotConfig(
-    displayLinkLabels = extension.displayLinkLabels.orNull,
+    displayLinkLabels = config.displayLinkLabels,
     layoutEngine = spec.layoutEngine.orNull,
     nodeAttributes = spec.node.properties.orNull,
     edgeAttributes = spec.edge.properties.orNull,

@@ -1,23 +1,15 @@
 package atlas.test.scenarios
 
-import atlas.test.KOTLIN_VERSION
 import atlas.test.Scenario
 
 internal object TriangleGraphWithUpwardsTraversal : Scenario by TriangleGraph {
-  override val rootBuildFile =
+  override val atlasConfig =
     """
-    plugins {
-      kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
-    }
+    alsoTraverseUpwards = true
 
-    atlas {
-      alsoTraverseUpwards = true
-
-      projectTypes {
-        kotlinJvm()
-      }
+    projectTypes {
+      kotlinJvm()
     }
-  """
+    """
       .trimIndent()
 }

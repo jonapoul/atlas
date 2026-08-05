@@ -1,6 +1,6 @@
 package atlas.mermaid
 
-import atlas.core.AtlasExtension
+import atlas.core.internal.AtlasConfig
 import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
 
@@ -17,11 +17,11 @@ public class MermaidConfig(
 ) : JSerializable
 
 internal fun MermaidConfig(
-  extension: AtlasExtension,
+  config: AtlasConfig,
   spec: MermaidSpec,
 ): MermaidConfig =
   MermaidConfig(
-    displayLinkLabels = extension.displayLinkLabels.orNull,
+    displayLinkLabels = config.displayLinkLabels,
     layout = spec.layout.name.orNull,
     layoutProperties = spec.layout.properties.orNull,
     themeVariables = spec.themeVariables.properties.orNull,

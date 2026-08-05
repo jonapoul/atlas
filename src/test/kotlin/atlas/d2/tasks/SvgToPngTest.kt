@@ -97,63 +97,34 @@ internal class SvgToPngTest : ScenarioTest() {
   }
 
   private class SpecifiedSvgPngConverter(converter: SvgToPng.Converter) : D2Scenario by D2Basic {
-    override val rootBuildFile: String =
+    override val atlasConfig: String =
       """
-      import atlas.d2.FileFormat
-      import atlas.d2.tasks.SvgToPng
-
-      plugins {
-        kotlin("jvm")
-        id("$pluginId")
+      d2 {
+        convertSvgToPng(SvgToPng.Converter.${converter.name})
+        fileFormat = FileFormat.Svg
       }
-
-      atlas {
-        d2 {
-          convertSvgToPng(SvgToPng.Converter.${converter.name})
-          fileFormat = FileFormat.Svg
-        }
-      }
-    """
+      """
         .trimIndent()
   }
 
   private object UnspecifiedConverter : D2Scenario by D2Basic {
-    override val rootBuildFile: String =
+    override val atlasConfig: String =
       """
-      import atlas.d2.FileFormat
-
-      plugins {
-        kotlin("jvm")
-        id("$pluginId")
+      d2 {
+        fileFormat = FileFormat.Svg
       }
-
-      atlas {
-        d2 {
-          fileFormat = FileFormat.Svg
-        }
-      }
-    """
+      """
         .trimIndent()
   }
 
   private object SpecifiedConverterButWrongFormat : D2Scenario by D2Basic {
-    override val rootBuildFile: String =
+    override val atlasConfig: String =
       """
-      import atlas.d2.FileFormat
-      import atlas.d2.tasks.SvgToPng
-
-      plugins {
-        kotlin("jvm")
-        id("$pluginId")
+      d2 {
+        fileFormat = FileFormat.Ascii
+        convertSvgToPng(SvgToPng.Converter.ImageMagick7)
       }
-
-      atlas {
-        d2 {
-          fileFormat = FileFormat.Ascii
-          convertSvgToPng(SvgToPng.Converter.ImageMagick7)
-        }
-      }
-    """
+      """
         .trimIndent()
   }
 

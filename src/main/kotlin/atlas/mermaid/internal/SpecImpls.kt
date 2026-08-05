@@ -14,14 +14,14 @@ import atlas.mermaid.MermaidThemeVariablesSpec
 import atlas.mermaid.NodePlacementStrategy
 import kotlin.jvm.java
 import org.gradle.api.Action
-import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.ProviderFactory
 
 internal class MermaidSpecImpl(
   private val objects: ObjectFactory,
-  project: Project,
+  providers: ProviderFactory,
 ) : MermaidSpec {
-  private val properties = MermaidGradleProperties(project)
+  private val properties = MermaidGradleProperties(providers)
   private var mutableLayout = MermaidLayoutSpecImpl(objects)
 
   override val name = "Mermaid"

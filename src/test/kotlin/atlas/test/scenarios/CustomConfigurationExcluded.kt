@@ -4,16 +4,15 @@ import atlas.test.Scenario
 import atlas.test.kotlinJvmBuildScript
 
 internal object CustomConfigurationExcluded : Scenario by CustomConfigurations {
-  override val rootBuildFile: String
-    get() =
-      """
-      ${CustomConfigurations.rootBuildFile}
-
-      atlas {
-        ignoredConfigs.add("xyz")
-      }
+  override val atlasConfig =
     """
-        .trimIndent()
+    projectTypes {
+      kotlinJvm()
+    }
+
+    ignoredConfigs.add("xyz")
+    """
+      .trimIndent()
 
   override val subprojectBuildFiles =
     mapOf(

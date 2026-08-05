@@ -1,28 +1,18 @@
 package atlas.test.scenarios
 
-import atlas.test.KOTLIN_VERSION
 import atlas.test.Scenario
 
 internal object GraphVizBasicWithPngOutput : Scenario by GraphvizBasic {
-  override val rootBuildFile =
+  override val atlasConfig =
     """
-    import atlas.graphviz.FileFormat
-
-    plugins {
-      kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
+    projectTypes {
+      kotlinJvm()
+      java()
     }
 
-    atlas {
-      projectTypes {
-        kotlinJvm()
-        java()
-      }
-
-      graphviz {
-        fileFormat = FileFormat.Png
-      }
+    graphviz {
+      fileFormat = FileFormat.Png
     }
-  """
+    """
       .trimIndent()
 }

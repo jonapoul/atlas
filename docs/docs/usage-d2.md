@@ -356,7 +356,7 @@ This was added to help output charts in PNG format, since D2's built-in method r
 
 A new task will be attached to `gradle atlasGenerate` called `svgToPng`, which spits out a PNG file at `atlas/chart.png` in each subproject.
 
-Uses the [`SvgToPng.Converter`](api/atlas-plugin/atlas.d2.tasks/-svg-to-png/-converter/index.html) enum as an input, which lists the supported third-party image-processing software to convert SVGs into PNGs. It's up to you to ensure this is installed on your machine at execution time.
+Uses the [`SvgToPng.Converter`](api/atlas/atlas.d2.tasks/-svg-to-png/-converter/index.html) enum as an input, which lists the supported third-party image-processing software to convert SVGs into PNGs. It's up to you to ensure this is installed on your machine at execution time.
 
 Requires the [`fileFormat`](#fileformat) property to be set to `FileFormat.Svg` (or unset, since SVG is the default) - otherwise no conversion will be done.
 

@@ -1,49 +1,49 @@
 package atlas.graphviz.internal
 
 import atlas.core.Framework
-import atlas.core.internal.AtlasExtensionImpl
+import atlas.core.internal.AtlasArtifact
+import atlas.core.internal.AtlasContext
 import atlas.core.internal.ChartFiles
 import atlas.core.internal.FrameworkTasks
 import atlas.core.internal.Variant.Chart
 import atlas.core.internal.Variant.Legend
+import atlas.core.internal.publishAtlasArtifact
 import atlas.core.tasks.CheckFileDiff
 import atlas.graphviz.tasks.ExecGraphviz
 import atlas.graphviz.tasks.WriteGraphvizChart
 import atlas.graphviz.tasks.WriteGraphvizLegend
-import org.gradle.api.Project
 
 internal object GraphvizTasks : FrameworkTasks {
   override val framework: Framework = Framework.Graphviz
 
-  override fun registerRootTasks(target: Project, extension: AtlasExtensionImpl): Unit =
-    with(target) {
-      val spec = extension.graphviz
+  override fun registerRootTasks(context: AtlasContext): Unit =
+    with(context.project) {
+      val spec = context.graphviz
 
-      val realTask =
-        WriteGraphvizLegend.real(
-          target = project,
+      val realTask = WriteGraphvizLegend.real(context = context, spec = spec)
+
+      val execLegend =
+        ExecGraphviz.register(
+          target = this,
           spec = spec,
-          extension = extension,
+          variant = Legend,
+          dotFileTask = realTask,
         )
 
-      ExecGraphviz.register(
-        target = project,
-        spec = spec,
-        variant = Legend,
-        dotFileTask = realTask,
+      // The README of every project links to this one file, and under isolated projects a
+      // subproject can't reach the task that draws it, so publish it as an artifact instead.
+      publishAtlasArtifact(
+        artifact = AtlasArtifact.legend(framework),
+        file = execLegend.flatMap { it.outputFile },
+        builtBy = execLegend,
       )
 
       // Also validate the legend's dotfile when we call gradle check
-      val dummyTask =
-        WriteGraphvizLegend.dummy(
-          target = project,
-          spec = spec,
-          extension = extension,
-        )
+      val dummyTask = WriteGraphvizLegend.dummy(context = context, spec = spec)
 
       CheckFileDiff.register(
-        target = project,
-        extension = extension,
+        target = this,
+        config = context.config,
         spec = spec,
         variant = Legend,
         realTask = realTask,
@@ -51,27 +51,16 @@ internal object GraphvizTasks : FrameworkTasks {
       )
     }
 
-  override fun registerChildTasks(target: Project, extension: AtlasExtensionImpl): ChartFiles =
-    with(target) {
-      val graphvizSpec = extension.graphviz
+  override fun registerChildTasks(context: AtlasContext): ChartFiles =
+    with(context.project) {
+      val graphvizSpec = context.graphviz
 
-      val chartTask =
-        WriteGraphvizChart.real(
-          target = project,
-          extension = extension,
-          spec = graphvizSpec,
-        )
-
-      val dummyChartTask =
-        WriteGraphvizChart.dummy(
-          target = project,
-          extension = extension,
-          spec = graphvizSpec,
-        )
+      val chartTask = WriteGraphvizChart.real(context = context, spec = graphvizSpec)
+      val dummyChartTask = WriteGraphvizChart.dummy(context = context, spec = graphvizSpec)
 
       CheckFileDiff.register(
-        target = project,
-        extension = extension,
+        target = this,
+        config = context.config,
         spec = graphvizSpec,
         variant = Chart,
         realTask = chartTask,
@@ -80,7 +69,7 @@ internal object GraphvizTasks : FrameworkTasks {
 
       val graphvizTask =
         ExecGraphviz.register(
-          target = project,
+          target = this,
           spec = graphvizSpec,
           variant = Chart,
           dotFileTask = chartTask,
@@ -89,7 +78,7 @@ internal object GraphvizTasks : FrameworkTasks {
       ChartFiles(
         framework = framework,
         chart = graphvizTask.flatMap { it.outputFile },
-        legend = rootProject.tasks.named("execGraphvizLegend", ExecGraphviz::class.java),
+        legend = context.fromRoot(AtlasArtifact.legend(framework)),
       )
     }
 }

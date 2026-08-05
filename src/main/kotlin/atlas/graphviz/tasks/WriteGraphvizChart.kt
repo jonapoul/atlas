@@ -1,10 +1,10 @@
 package atlas.graphviz.tasks
 
-import atlas.core.AtlasExtension
 import atlas.core.Framework.Graphviz
 import atlas.core.Replacement
 import atlas.core.internal.ATLAS_TASK_GROUP
-import atlas.core.internal.AtlasExtensionImpl
+import atlas.core.internal.AtlasArtifact
+import atlas.core.internal.AtlasContext
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.internal.Variant.Chart
 import atlas.core.internal.atlasBuildDirectory
@@ -13,8 +13,8 @@ import atlas.core.internal.outputFile
 import atlas.core.internal.qualifier
 import atlas.core.internal.readProjectLinks
 import atlas.core.internal.readProjectTypes
+import atlas.core.internal.singleFile
 import atlas.core.tasks.AtlasGenerationTask
-import atlas.core.tasks.CollateProjectTypes
 import atlas.core.tasks.TaskWithOutputFile
 import atlas.core.tasks.WriteProjectTree
 import atlas.graphviz.DotConfig
@@ -22,7 +22,6 @@ import atlas.graphviz.GraphvizSpec
 import atlas.graphviz.internal.DotWriter
 import java.io.File
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
@@ -83,52 +82,48 @@ public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, At
   internal abstract class WriteGraphvizChartDummy : WriteGraphvizChart(), DummyAtlasGenerationTask
 
   internal companion object {
-    internal fun real(
-      target: Project,
-      spec: GraphvizSpec,
-      extension: AtlasExtensionImpl,
-    ) =
+    internal fun real(context: AtlasContext, spec: GraphvizSpec) =
       register<WriteGraphvizChart>(
-        target = target,
-        extension = extension,
+        context = context,
         spec = spec,
-        outputFile = target.outputFile(Graphviz, Chart, spec.fileExtension.get()),
+        outputFile =
+          context.project.outputFile(
+            config = context.config,
+            framework = Graphviz,
+            variant = Chart,
+            fileExtension = spec.fileExtension.get(),
+          ),
       )
 
-    internal fun dummy(
-      target: Project,
-      spec: GraphvizSpec,
-      extension: AtlasExtensionImpl,
-    ) =
+    internal fun dummy(context: AtlasContext, spec: GraphvizSpec) =
       register<WriteGraphvizChartDummy>(
-        target = target,
-        extension = extension,
+        context = context,
         spec = spec,
-        outputFile = target.atlasBuildDirectory.get().file("chart-temp.dot").asFile,
+        outputFile = context.project.atlasBuildDirectory.get().file("chart-temp.dot").asFile,
       )
 
     private inline fun <reified T : WriteGraphvizChart> register(
-      target: Project,
-      extension: AtlasExtension,
+      context: AtlasContext,
       spec: GraphvizSpec,
       outputFile: File,
     ): TaskProvider<T> =
-      with(target) {
-        val collateProjectTypes = CollateProjectTypes.get(rootProject)
-        val calculateProjectTree = WriteProjectTree.get(target)
+      with(context.project) {
+        val collatedTypes = context.fromRoot(AtlasArtifact.CollatedTypes)
+        val calculateProjectTree = WriteProjectTree.get(this)
         val name = "write${T::class.qualifier}GraphvizChart"
         val writeChart =
           tasks.register(name, T::class.java) { task ->
             task.linksFile.convention(calculateProjectTree.flatMap { it.outputFile })
-            task.projectTypesFile.convention(collateProjectTypes.flatMap { it.outputFile })
             task.outputFile.set(outputFile)
-            task.thisPath.convention(target.path)
+            task.thisPath.convention(path)
           }
 
         writeChart.configure { task ->
-          task.groupProjects.convention(extension.groupProjects)
-          task.replacements.convention(extension.pathTransforms.replacements)
-          task.config.convention(DotConfig(extension, spec))
+          task.projectTypesFile.fileProvider(collatedTypes.singleFile())
+          task.dependsOn(collatedTypes)
+          task.groupProjects.convention(context.config.groupProjects)
+          task.replacements.convention(context.config.replacements)
+          task.config.convention(DotConfig(context.config, spec))
         }
 
         return writeChart

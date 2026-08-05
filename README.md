@@ -2,6 +2,46 @@
 
 ### [jonapoul.github.io/atlas-gradle-plugin](https://jonapoul.github.io/atlas-gradle-plugin)
 
+A Gradle settings plugin for generating diagrams of your project's module structure, rendered with
+[D2](https://d2lang.org/), [Graphviz](https://graphviz.org/) or [Mermaid](https://mermaid.js.org/) -
+any combination of the three. Supports Gradle 9, the configuration cache and isolated projects.
+
+## Quick start
+
+Atlas is applied and configured in `settings.gradle.kts`, not in a build script:
+
+```kotlin
+pluginManagement {
+  repositories {
+    mavenCentral()
+  }
+}
+
+plugins {
+  id("dev.jonpoulton.atlas") version "x.y.z"
+}
+
+include(":app", ":core")
+
+atlas {
+  projectTypes { useDefaults() }
+  mermaid()
+}
+```
+
+Nothing is generated until you configure at least one framework block. Your subprojects need no
+changes - the settings plugin wires up every project in the build.
+
+Then:
+
+```shell
+gradle atlasGenerate   # write the diagrams
+gradle atlasCheck      # verify they match the current project structure
+```
+
+See the [documentation](https://jonapoul.github.io/atlas-gradle-plugin) for the full configuration
+reference, and [`samples/`](samples) for complete worked examples of each framework.
+
 ## License
 
 ```

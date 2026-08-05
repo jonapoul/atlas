@@ -11,10 +11,10 @@ import atlas.d2.FileFormat
 import atlas.d2.Location
 import atlas.d2.Position
 import atlas.d2.Theme
-import org.gradle.api.Project
 import org.gradle.api.provider.Provider
+import org.gradle.api.provider.ProviderFactory
 
-internal class D2GradleProperties(override val project: Project) : IGradleProperties {
+internal class D2GradleProperties(override val providers: ProviderFactory) : IGradleProperties {
   // Actual config
   val animateLinks: Provider<Boolean> = bool("atlas.d2.animateLinks", default = null)
   val animateInterval: Provider<Int> = int("atlas.d2.animateInterval", default = null)

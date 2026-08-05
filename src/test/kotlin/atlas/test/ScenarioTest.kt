@@ -1,6 +1,5 @@
 package atlas.test
 
-import blueprint.test.DEFAULT_REPOSITORIES_KTS
 import blueprint.test.FileTree
 import blueprint.test.Scenario as RunningScenario
 import blueprint.test.ScenarioTest as BlueprintScenarioTest
@@ -43,7 +42,7 @@ internal abstract class ScenarioTest : BlueprintScenarioTest() {
     FileTree.Builder(relativeRootPath = "")
       .apply {
         settingsFileName(settingsFile())
-        buildFileName(rootBuildFile + enableFrameworks())
+        buildFileName(rootBuildFile)
         "gradle.properties"(gradleProperties())
 
         subprojectBuildFiles.forEach { (path, contents) ->
@@ -54,33 +53,53 @@ internal abstract class ScenarioTest : BlueprintScenarioTest() {
       .build()
 
   private fun Scenario.settingsFile() = buildString {
-    appendLine(DEFAULT_REPOSITORIES_KTS.trimIndent())
+    // The `atlas` extension accessor shadows the `atlas` package inside a settings script, so
+    // scenarios can't fully qualify Atlas types there - everything they might name gets imported.
+    // Framework packages are only pulled in when the scenario uses them, because D2 and Graphviz
+    // share several type names (FileFormat, LayoutEngine, Shape, ArrowType).
+    val imports =
+      frameworks.flatMap { f ->
+        listOf("atlas.${f.string}.*", "atlas.${f.string}.tasks.*")
+      } + "atlas.core.*"
+    imports.forEach { appendLine("import $it") }
+    appendLine()
+
+    appendLine(PLUGIN_MANAGEMENT_KTS)
+    appendLine()
+
+    if (isGroovy) {
+      appendLine("plugins { id '$pluginId' }")
+    } else {
+      appendLine("plugins { id(\"$pluginId\") }")
+    }
+    appendLine()
+
+    // This has to come after `plugins { }`, which only tolerates pluginManagement before it
+    appendLine(DEPENDENCY_RESOLUTION_MANAGEMENT_KTS)
+    appendLine()
+
     subprojectBuildFiles.keys.forEach { path ->
       if (isGroovy) appendLine("include(':$path')") else appendLine("include(\":$path\")")
     }
+    appendLine()
+
+    appendLine(atlasBlock())
+  }
+
+  private fun Scenario.atlasBlock(): String {
+    val body =
+      frameworks.map { framework -> "  ${framework.string}()" } +
+        atlasConfig.trimIndent().lines().filter(String::isNotBlank).map { "  $it" }
+    return if (body.isEmpty()) "" else body.joinToString("\n", "atlas {\n", "\n}\n")
   }
 
   private fun Scenario.gradleProperties() = buildString {
     appendLine("android.useAndroidX=true")
+    // Atlas is built to work under isolated projects, so every scenario runs with it enabled by
+    // default
+    appendLine("org.gradle.unsafe.isolated-projects=true")
     appendLine(gradlePropertiesFile)
   }
-
-  /**
-   * A framework only generates diagrams once its block has been configured, so switch on the ones
-   * this scenario declared. Configuring the same extension twice is fine, so scenarios which
-   * already configure a framework in detail don't need to care.
-   */
-  private fun Scenario.enableFrameworks(): String =
-    if (frameworks.isEmpty()) {
-      ""
-    } else {
-      frameworks.joinToString(
-        prefix = "\n\natlas {\n",
-        separator = "\n",
-        postfix = "\n}\n",
-        transform = { framework -> "  ${framework.string}()" },
-      )
-    }
 
   private fun String.toDirectoryPath() =
     split(":").filter(String::isNotEmpty).joinToString(File.separator)
@@ -91,3 +110,28 @@ internal abstract class ScenarioTest : BlueprintScenarioTest() {
   private val Scenario.settingsFileName
     get() = if (isGroovy) "settings.gradle" else "settings.gradle.kts"
 }
+
+// Blueprint's DEFAULT_REPOSITORIES_KTS bundles these two together, but the settings plugin has to
+// be applied between them, so we declare them separately here.
+private val PLUGIN_MANAGEMENT_KTS =
+  """
+  pluginManagement {
+    repositories {
+      mavenCentral()
+      google()
+      gradlePluginPortal()
+    }
+  }
+  """
+    .trimIndent()
+
+private val DEPENDENCY_RESOLUTION_MANAGEMENT_KTS =
+  """
+  dependencyResolutionManagement {
+    repositories {
+      google()
+      mavenCentral()
+    }
+  }
+  """
+    .trimIndent()

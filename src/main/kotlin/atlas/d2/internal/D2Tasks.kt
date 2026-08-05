@@ -1,13 +1,16 @@
 package atlas.d2.internal
 
 import atlas.core.Framework
-import atlas.core.internal.AtlasExtensionImpl
+import atlas.core.internal.AtlasArtifact
+import atlas.core.internal.AtlasContext
 import atlas.core.internal.ChartFiles
 import atlas.core.internal.FrameworkTasks
 import atlas.core.internal.Variant.Chart
 import atlas.core.internal.Variant.Legend
 import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.outputFile
+import atlas.core.internal.publishAtlasArtifact
+import atlas.core.internal.singleFile
 import atlas.core.tasks.CheckFileDiff
 import atlas.d2.FileFormat
 import atlas.d2.tasks.ExecD2
@@ -19,20 +22,20 @@ import org.gradle.api.Project
 internal object D2Tasks : FrameworkTasks {
   override val framework: Framework = Framework.D2
 
-  override fun registerRootTasks(target: Project, extension: AtlasExtensionImpl): Unit =
-    with(target) {
-      val d2 = extension.d2
+  override fun registerRootTasks(context: AtlasContext): Unit =
+    with(context.project) {
+      val d2 = context.d2
 
-      warnIfFileFormatRequiresPlaywright(extension)
-      warnIfLabelLocationSpecifiedButNotPosition(extension)
-      warnIfAnimationSelectedWithNonAnimatedFileFormat(extension)
+      warnIfFileFormatRequiresPlaywright(context)
+      warnIfLabelLocationSpecifiedButNotPosition(context)
+      warnIfAnimationSelectedWithNonAnimatedFileFormat(context)
 
       val classes =
         WriteD2Classes.real(
-          target = this,
-          extension = extension,
+          context = context,
           outputFile =
             outputFile(
+              config = context.config,
               framework = framework,
               variant = Legend,
               fileExtension = "d2",
@@ -40,16 +43,23 @@ internal object D2Tasks : FrameworkTasks {
             ),
         )
 
+      // Every project's chart references this one file, and under isolated projects a subproject
+      // can't reach the task that writes it, so publish it as an artifact instead.
+      publishAtlasArtifact(
+        artifact = AtlasArtifact.D2Classes,
+        file = classes.flatMap { it.outputFile },
+        builtBy = classes,
+      )
+
       val dummyClasses =
         WriteD2Classes.dummy(
-          target = project,
-          extension = extension,
+          context = context,
           outputFile = atlasBuildDirectory.get().file("classes-temp.d2").asFile,
         )
 
       CheckFileDiff.register(
-        target = project,
-        extension = extension,
+        target = this,
+        config = context.config,
         spec = d2,
         variant = Chart,
         realTask = classes,
@@ -57,36 +67,40 @@ internal object D2Tasks : FrameworkTasks {
       )
     }
 
-  override fun registerChildTasks(target: Project, extension: AtlasExtensionImpl): ChartFiles =
-    with(target) {
-      val d2Spec = extension.d2
+  override fun registerChildTasks(context: AtlasContext): ChartFiles =
+    with(context.project) {
+      val d2Spec = context.d2
 
       // need to use the same pathToClassesFile string for real and dummy tasks, otherwise the check
       // operation might fail if the project and the build directory have different relative paths.
-      val writeD2Classes = WriteD2Classes.get(rootProject)
-      val classesFile = writeD2Classes.flatMap { it.outputFile }
-      val outputFile = outputFile(framework, Chart, d2Spec.fileExtension.get())
-      val pathToClassesFile = classesFile.map { it.asFile.relativeTo(outputFile.parentFile).path }
+      val classesFile = context.fromRoot(AtlasArtifact.D2Classes)
+      val outputFile =
+        outputFile(
+          config = context.config,
+          framework = framework,
+          variant = Chart,
+          fileExtension = d2Spec.fileExtension.get(),
+        )
+      val pathToClassesFile =
+        classesFile.singleFile().map { it.relativeTo(outputFile.parentFile).path }
 
       val chartTask =
         WriteD2Chart.real(
-          target = project,
-          extension = extension,
+          context = context,
           outputFile = outputFile,
           pathToClassesFile = pathToClassesFile,
         )
 
       val dummyChartTask =
         WriteD2Chart.dummy(
-          target = project,
-          extension = extension,
+          context = context,
           outputFile = atlasBuildDirectory.get().file("chart-temp.d2").asFile,
           pathToClassesFile = pathToClassesFile,
         )
 
       CheckFileDiff.register(
-        target = project,
-        extension = extension,
+        target = this,
+        config = context.config,
         spec = d2Spec,
         variant = Chart,
         realTask = chartTask,
@@ -95,10 +109,11 @@ internal object D2Tasks : FrameworkTasks {
 
       val d2Task =
         ExecD2.register(
-          target = project,
+          target = this,
           spec = d2Spec,
           variant = Chart,
           dotFileTask = chartTask,
+          classesFile = classesFile,
         )
 
       val isSvgInput = d2Spec.fileFormat.map { it == FileFormat.Svg }
@@ -106,7 +121,7 @@ internal object D2Tasks : FrameworkTasks {
 
       val svgToPng =
         SvgToPng.register(
-          target = project,
+          target = this,
           svgTask = d2Task,
           isEnabled = runSvgToPng,
           converter = d2Spec.converter,
@@ -121,8 +136,8 @@ internal object D2Tasks : FrameworkTasks {
       )
     }
 
-  private fun Project.warnIfFileFormatRequiresPlaywright(extension: AtlasExtensionImpl) {
-    val d2 = extension.d2
+  private fun Project.warnIfFileFormatRequiresPlaywright(context: AtlasContext) {
+    val d2 = context.d2
     val format = d2.fileFormat.get()
     val shouldSuppress = d2.properties.suppressPlaywrightWarning.get()
     val simpleFormats = setOf(FileFormat.Svg, FileFormat.Ascii)
@@ -137,8 +152,8 @@ internal object D2Tasks : FrameworkTasks {
     }
   }
 
-  private fun Project.warnIfLabelLocationSpecifiedButNotPosition(extension: AtlasExtensionImpl) {
-    val d2 = extension.d2
+  private fun Project.warnIfLabelLocationSpecifiedButNotPosition(context: AtlasContext) {
+    val d2 = context.d2
     val position = d2.groupLabelPosition.orNull
     val location = d2.groupLabelLocation.orNull
     val shouldSuppress = d2.properties.suppressLabelLocationWarning.get()
@@ -151,10 +166,8 @@ internal object D2Tasks : FrameworkTasks {
     }
   }
 
-  private fun Project.warnIfAnimationSelectedWithNonAnimatedFileFormat(
-    extension: AtlasExtensionImpl
-  ) {
-    val d2 = extension.d2
+  private fun Project.warnIfAnimationSelectedWithNonAnimatedFileFormat(context: AtlasContext) {
+    val d2 = context.d2
     val format = d2.fileFormat.get()
     val animatedFormats = setOf(FileFormat.Svg, FileFormat.Gif)
     val animated = d2.animateLinks.orNull

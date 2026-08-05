@@ -3,6 +3,7 @@ package atlas.core.tasks
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.ChartFiles
 import atlas.core.internal.logIfConfigured
+import atlas.core.internal.singleFile
 import java.io.File
 import kotlin.text.RegexOption.DOT_MATCHES_ALL
 import org.gradle.api.DefaultTask
@@ -175,7 +176,7 @@ public abstract class WriteReadme : DefaultTask(), AtlasGenerationTask, TaskWith
           charts.forEach { chart ->
             val diagram = objects.newInstance(Diagram::class.java)
             diagram.chartFile.set(chart.chart)
-            chart.legend?.let { legend -> diagram.legendFile.set(legend.flatMap { it.outputFile }) }
+            chart.legend?.let { legend -> diagram.legendFile.fileProvider(legend.singleFile()) }
             task.diagrams.add(diagram)
           }
         }

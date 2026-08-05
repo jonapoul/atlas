@@ -2,14 +2,15 @@ package atlas.core.tasks
 
 import atlas.core.LinkType
 import atlas.core.internal.ATLAS_TASK_GROUP
-import atlas.core.internal.AtlasExtensionImpl
+import atlas.core.internal.AtlasConfig
 import atlas.core.internal.ProjectLink
 import atlas.core.internal.fileInBuildDirectory
-import atlas.core.internal.orderedLinkTypes
 import atlas.core.internal.readProjectLinks
+import atlas.core.internal.singleFile
 import atlas.core.internal.writeProjectLinks
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.api.file.FileCollection
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
@@ -133,18 +134,21 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
 
     internal fun register(
       target: Project,
-      extension: AtlasExtensionImpl,
+      config: AtlasConfig,
+      collatedLinks: FileCollection,
     ): TaskProvider<WriteProjectTree> =
       with(target) {
         val writeProjectTree =
           tasks.register(NAME, WriteProjectTree::class.java) { task ->
             task.thisPath.convention(target.path)
             task.outputFile.convention(fileInBuildDirectory("project-tree.json"))
-            task.alsoTraverseUpwards.convention(extension.alsoTraverseUpwards)
+            task.alsoTraverseUpwards.convention(config.alsoTraverseUpwards)
           }
 
         writeProjectTree.configure { task ->
-          task.linkTypes.convention(extension.orderedLinkTypes())
+          task.linkTypes.convention(config.linkTypes)
+          task.collatedLinks.fileProvider(collatedLinks.singleFile())
+          task.dependsOn(collatedLinks)
         }
 
         writeProjectTree

@@ -1,7 +1,7 @@
 package atlas.core.tasks
 
-import atlas.core.AtlasExtension
 import atlas.core.internal.ATLAS_TASK_GROUP
+import atlas.core.internal.AtlasConfig
 import atlas.core.internal.ProjectLink
 import atlas.core.internal.fileInBuildDirectory
 import atlas.core.internal.readProjectLinks
@@ -9,6 +9,7 @@ import atlas.core.internal.writeProjectLinks
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
+import org.gradle.api.file.FileCollection
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
@@ -68,17 +69,16 @@ public abstract class CollateProjectLinks : DefaultTask(), TaskWithOutputFile {
   internal companion object {
     private const val NAME = "collateProjectLinks"
 
-    internal fun get(target: Project): TaskProvider<CollateProjectLinks> =
-      target.tasks.named(NAME, CollateProjectLinks::class.java)
-
     internal fun register(
       target: Project,
-      extension: AtlasExtension,
+      config: AtlasConfig,
+      projectLinkFiles: FileCollection,
     ): TaskProvider<CollateProjectLinks> =
       with(target) {
         tasks.register(NAME, CollateProjectLinks::class.java) { task ->
           task.outputFile.convention(fileInBuildDirectory("project-links.json"))
-          task.ignoredProjects.convention(extension.ignoredProjects)
+          task.ignoredProjects.convention(config.ignoredProjects)
+          task.projectLinkFiles.from(projectLinkFiles)
         }
       }
   }

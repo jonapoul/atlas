@@ -4,16 +4,13 @@ import atlas.core.Framework.Graphviz
 import atlas.core.LinkType
 import atlas.core.ProjectType
 import atlas.core.internal.ATLAS_TASK_GROUP
-import atlas.core.internal.AtlasExtensionImpl
+import atlas.core.internal.AtlasContext
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.internal.Variant.Legend
 import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.buildIndentedString
 import atlas.core.internal.logIfConfigured
-import atlas.core.internal.orderedLinkTypes
-import atlas.core.internal.orderedProjectTypes
 import atlas.core.internal.outputFile
-import atlas.core.internal.projectType
 import atlas.core.internal.qualifier
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.TaskWithOutputFile
@@ -24,7 +21,6 @@ import atlas.graphviz.internal.appendHeaderGroup
 import atlas.graphviz.internal.attrs
 import java.io.File
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
@@ -131,37 +127,32 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
   internal abstract class WriteGraphvizLegendDummy : WriteGraphvizLegend(), DummyAtlasGenerationTask
 
   internal companion object {
-    internal fun real(
-      target: Project,
-      spec: GraphvizSpec,
-      extension: AtlasExtensionImpl,
-    ) =
+    internal fun real(context: AtlasContext, spec: GraphvizSpec) =
       register<WriteGraphvizLegend>(
-        target = target,
-        extension = extension,
+        context = context,
         spec = spec,
-        outputFile = target.outputFile(Graphviz, Legend, spec.fileExtension.get()),
+        outputFile =
+          context.project.outputFile(
+            config = context.config,
+            framework = Graphviz,
+            variant = Legend,
+            fileExtension = spec.fileExtension.get(),
+          ),
       )
 
-    internal fun dummy(
-      target: Project,
-      spec: GraphvizSpec,
-      extension: AtlasExtensionImpl,
-    ) =
+    internal fun dummy(context: AtlasContext, spec: GraphvizSpec) =
       register<WriteGraphvizLegendDummy>(
-        target = target,
+        context = context,
         spec = spec,
-        extension = extension,
-        outputFile = target.atlasBuildDirectory.get().file("legend-temp.dot").asFile,
+        outputFile = context.project.atlasBuildDirectory.get().file("legend-temp.dot").asFile,
       )
 
     internal inline fun <reified T : WriteGraphvizLegend> register(
-      target: Project,
+      context: AtlasContext,
       spec: GraphvizSpec,
-      extension: AtlasExtensionImpl,
       outputFile: File,
     ): TaskProvider<T> =
-      with(target) {
+      with(context.project) {
         val name = "write${T::class.qualifier}GraphvizLegend"
         val writeLegend =
           tasks.register(name, T::class.java) { task ->
@@ -169,9 +160,9 @@ public abstract class WriteGraphvizLegend : DefaultTask(), TaskWithOutputFile, A
           }
 
         writeLegend.configure { task ->
-          task.projectTypes.convention(extension.orderedProjectTypes().map(::projectType))
-          task.linkTypes.convention(extension.orderedLinkTypes())
-          task.config.convention(DotConfig(extension, spec))
+          task.projectTypes.convention(context.projectTypes)
+          task.linkTypes.convention(context.linkTypes)
+          task.config.convention(DotConfig(context.config, spec))
         }
 
         return writeLegend

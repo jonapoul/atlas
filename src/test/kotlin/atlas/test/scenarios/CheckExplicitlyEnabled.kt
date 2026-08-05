@@ -1,24 +1,16 @@
 package atlas.test.scenarios
 
-import atlas.test.KOTLIN_VERSION
 import atlas.test.Scenario
 
 internal object CheckExplicitlyEnabled : Scenario by GraphvizBasic {
-  override val rootBuildFile =
+  override val atlasConfig =
     """
-    plugins {
-      kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
+    projectTypes {
+      kotlinJvm()
+      java()
     }
 
-    atlas {
-      projectTypes {
-        kotlinJvm()
-        java()
-      }
-
-      checkOutputs = true
-    }
-  """
+    checkOutputs = true
+    """
       .trimIndent()
 }

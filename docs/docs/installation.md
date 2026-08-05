@@ -6,7 +6,9 @@ icon: lucide/package-open
 
 # Installation
 
-For proper release builds, you want to add the central repository to your `settings.gradle.kts` file:
+Atlas is a **settings plugin**, so everything below goes in `settings.gradle.kts` - not in a build script.
+
+First add the central repository:
 
 ``` kotlin
 pluginManagement {
@@ -26,7 +28,7 @@ pluginManagement {
 }
 ```
 
-Then in your ***root*** `build.gradle.kts` file:
+Then apply the plugin in the same file, after the `pluginManagement` block:
 
 ``` kotlin
 plugins {
@@ -53,6 +55,43 @@ atlas {
   }
 }
 ```
+
+Putting it together, a complete `settings.gradle.kts` looks like:
+
+``` kotlin
+import atlas.mermaid.Theme
+
+pluginManagement {
+  repositories {
+    mavenCentral()
+  }
+}
+
+plugins {
+  id("dev.jonpoulton.atlas") version "x.y.z"
+}
+
+include(":app", ":core")
+
+atlas {
+  projectTypes { useDefaults() }
+
+  mermaid {
+    theme = Theme.Forest
+  }
+}
+```
+
+!!! tip "Import Atlas types, don't fully qualify them"
+
+    Inside `settings.gradle.kts` the `atlas` extension accessor shadows the `atlas` package, so
+    `atlas.mermaid.Theme.Forest` won't resolve. Add an `import` at the top of the file, as above, and
+    refer to the type by its short name.
+
+!!! info "Only the settings file needs to change"
+
+    You don't apply Atlas to your subprojects, and you don't add anything to their build scripts.
+    The settings plugin wires up every project in the build for you.
 
 Then generate your diagrams by running:
 

@@ -8,7 +8,7 @@ icon: lucide/component
 
 ## Overview
 
-Configuration is primarily done via the `atlas` Gradle extension function, accessible in your root build file. [See here for the KDoc](api/atlas-plugin/atlas.core/-atlas-extension/index.html), or [here for the source file](https://github.com/jonapoul/atlas-gradle-plugin/blob/main/atlas-plugin/src/main/kotlin/atlas/core/AtlasExtension.kt).
+Configuration is done via the `atlas` Gradle extension function in your `settings.gradle.kts` file. [See here for the KDoc](api/atlas/atlas.core/-atlas-extension/index.html), or [here for the source file](https://github.com/jonapoul/atlas-gradle-plugin/blob/main/src/main/kotlin/atlas/core/AtlasExtension.kt).
 
 ``` kotlin
 // none of these are required - these values are the defaults
@@ -41,10 +41,10 @@ atlas {
 }
 ```
 
-Alternatively, if calling from a `buildSrc` Kotlin file (or similar):
+Alternatively, if calling from a settings plugin in `build-logic` (or similar), the extension is on the `Settings` object:
 
 ``` kotlin
-project.extensions.configure<AtlasExtension> {
+settings.extensions.configure<AtlasExtension> {
   // ...
 }
 ```
@@ -73,46 +73,23 @@ The framework-specific configs are documented in:
 - [D2](usage-d2.md)
 - [Mermaid](usage-mermaid.md)
 
-## Limitations
+## Isolated projects and configuration on demand
 
-### Configuration on demand
-
-!!! warning
-
-    If you have `org.gradle.configureondemand=true` enabled in your `gradle.properties`, you must run `atlasGenerate` and `atlasCheck` from the root project only. Running them on a specific subproject (e.g., `gradle :project:atlasGenerate`) will fail with an error or skip the check with a warning.
-
-When [Gradle's configuration on demand](https://docs.gradle.org/current/userguide/multi_project_configuration_and_execution.html#sec:configuration_on_demand) feature is enabled, Atlas will generally work but it will restrict the `atlasGenerate` and `atlasCheck` tasks to be executed ONLY on the root project. This is because configuration-on-demand doesn't guarantee all that projects are configured when checking dependencies between them, which will lead to incomplete charts. Calling `atlasGenerate` on the root forces all dependencies to be resolved and passed correctly into the chart generation tasks.
-
-Examples below with `org.gradle.configureondemand=true` set in `gradle.properties`.
-
-**:white_check_mark: What works:**
-
-Running on the root project:
+Atlas supports [isolated projects](https://docs.gradle.org/current/userguide/isolated_projects.html) and [configuration on demand](https://docs.gradle.org/current/userguide/multi_project_configuration_and_execution.html#sec:configuration_on_demand). Both can be switched on without restricting how you invoke Atlas:
 
 ``` shell
-gradle atlasGenerate
-gradle atlasCheck
-```
-
-These will execute every single generation/checking task in the entire Gradle build. That we we're ensuring that all configurations are being covered for inter-project dependencies.
-
-**:x: What doesn't work:**
-
-Running directly on a subproject:
-
-``` shell
-gradle :path:to:atlasGenerate
+gradle atlasGenerate            # the whole build
+gradle :path:to:atlasGenerate   # one project
 gradle :path:to:atlasCheck
 ```
 
-These will both fail for the same reasons: they can't guarantee that the whole dependency tree will be included in the chart because projects uninvolved in the task execution will not be queried for their dependencies as part of the chart generation/checking.
+Running on a single project still produces a complete chart. Atlas shares data between projects using ordinary dependency resolution, so asking for one project's diagram automatically pulls in every other project it needs to describe the graph.
 
-If you want to generate diagrams for a specific project, your options are to either:
+!!! info "Changed in 0.6.0"
 
-1. disable `org.gradle.configureondemand`, or
-2. run `gradle atlasGenerate` on the root project, meaning all generation tasks are executed. This doesn't mean everything is run from scratch - any unchanged diagrams will be pulled from cache.
-
-So far as I'm aware, there are no easy ways around this in modern Gradle.
+    Earlier versions restricted `atlasGenerate` and `atlasCheck` to the root project whenever
+    `org.gradle.configureondemand=true` was set, because they read dependency information directly
+    from other projects at configuration time. That restriction is gone.
 
 ## Properties
 
@@ -386,7 +363,7 @@ atlas {
 
 !!! tip
 
-    The `style` parameter takes the shared [`LinkStyle`](api/atlas-plugin/atlas.core/-link-style/index.html) enum, which each framework draws in its own way. Not all of them can draw all of the styles, so where one can't, Atlas falls back to the closest match and warns you:
+    The `style` parameter takes the shared [`LinkStyle`](api/atlas/atlas.core/-link-style/index.html) enum, which each framework draws in its own way. Not all of them can draw all of the styles, so where one can't, Atlas falls back to the closest match and warns you:
 
     | Style | D2 | Graphviz | Mermaid |
     |--|--|--|--|
@@ -436,7 +413,7 @@ Remember the declarations inside `pathTransforms` are called in descending order
 
 ## Extra properties
 
-Several components in Atlas make use of the [`PropertiesSpec`](api/atlas-plugin/atlas.core/-properties-spec/index.html?query=interface%20PropertiesSpec) interface, which allows you to apply arbitrary key-value pair properties to the interfaces that make use of it. Specifically, you can call `put("key", value)`.
+Several components in Atlas make use of the [`PropertiesSpec`](api/atlas/atlas.core/-properties-spec/index.html?query=interface%20PropertiesSpec) interface, which allows you to apply arbitrary key-value pair properties to the interfaces that make use of it. Specifically, you can call `put("key", value)`.
 
 Project and link types are shared between frameworks, so their equivalent takes the framework you're aiming at: `put(Framework.D2, "key", value)`.
 

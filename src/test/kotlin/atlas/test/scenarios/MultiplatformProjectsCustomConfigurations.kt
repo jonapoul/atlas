@@ -1,26 +1,24 @@
 package atlas.test.scenarios
 
 import atlas.test.GraphvizScenario
-import atlas.test.KOTLIN_VERSION
 
 /** Intended to replicate the jvmDev source set added by Compose Hot Reload */
 internal object MultiplatformProjectsCustomConfigurations : GraphvizScenario {
   override val rootBuildFile =
     """
-    import atlas.core.LinkStyle
-
     plugins {
-      kotlin("multiplatform") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
+      kotlin("multiplatform") apply false
     }
+    """
+      .trimIndent()
 
-    atlas {
-      linkTypes {
-        "commonMainImplementation"(LinkStyle.Solid)
-        "commonMainApi"(LinkStyle.Dotted)
-      }
+  override val atlasConfig =
+    """
+    linkTypes {
+      "commonMainImplementation"(LinkStyle.Solid)
+      "commonMainApi"(LinkStyle.Dotted)
     }
-  """
+    """
       .trimIndent()
 
   override val subprojectBuildFiles =

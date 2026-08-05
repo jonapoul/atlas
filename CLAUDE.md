@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Atlas is a Gradle plugin for generating diagrams of modular project dependencies. It supports three rendering frameworks: D2, Graphviz, and Mermaid. The plugin is built with Kotlin and targets Gradle 9+ with full configuration cache support.
+Atlas is a Gradle **settings** plugin for generating diagrams of modular project dependencies. It supports three rendering frameworks: D2, Graphviz, and Mermaid. The plugin is built with Kotlin and targets Gradle 9+ with full configuration cache and isolated projects support.
 
 **Key Characteristics:**
-- A single published module (`atlas-plugin`), plus convention plugins in `build-logic/`
-- One plugin id, `dev.jonpoulton.atlas`. Users pick frameworks by configuring `d2 { }`, `graphviz { }` and/or `mermaid { }` in the `atlas` extension - any combination is allowed
+- A single-project build: the whole plugin lives in `src/`, published as `dev.jonpoulton.atlas:plugin`
+- One plugin id, `dev.jonpoulton.atlas`, applied in `settings.gradle.kts`. Users pick frameworks by configuring `d2 { }`, `graphviz { }` and/or `mermaid { }` in the `atlas` extension - any combination is allowed
 - Java 21 minimum (see the root `.java-version` file)
-- Uses [Blueprint](https://github.com/jonapoul/blueprint) (`dev.jonpoulton.blueprint:core`) for Gradle DSL shortcuts, in both `build-logic` and `atlas-plugin`
-- Uses Gradle configuration cache and parallel execution
+- Uses [Blueprint](https://github.com/jonapoul/blueprint) (`dev.jonpoulton.blueprint:core`) for Gradle DSL shortcuts
+- Uses Gradle configuration cache, parallel execution, and isolated projects
 - Published to Maven Central under `dev.jonpoulton.atlas`
 
 ## Commands
@@ -26,12 +26,12 @@ Atlas is a Gradle plugin for generating diagrams of modular project dependencies
 ### Single Test Execution
 Tests use JUnit 6. To run a single test class:
 ```bash
-./gradlew :atlas-plugin:test --tests "atlas.core.WriteProjectTreeTest"
+./gradlew test --tests "atlas.core.WriteProjectTreeTest"
 ```
 
 To run a specific test method:
 ```bash
-./gradlew :atlas-plugin:test --tests "atlas.core.WriteProjectTreeTest.Single links for diamond"
+./gradlew test --tests "atlas.core.WriteProjectTreeTest.Single links for diamond"
 ```
 
 ### Code Quality
@@ -52,32 +52,32 @@ This task will take a while, so don't run unless really necessary:
 ```
 
 ### Plugin Development
-The plugin is tested from its own test source set (`atlas-plugin/src/test`), so tests can see `internal` declarations. Tests use Gradle TestKit to verify plugin behavior in realistic project structures.
+The plugin is tested from its own test source set (`src/test`), so tests can see `internal` declarations. Tests use Gradle TestKit to verify plugin behavior in realistic project structures.
 
-When the public API changes, refresh the ABI dump with `./gradlew :atlas-plugin:updateKotlinAbi`, otherwise `check` fails.
+When the public API changes, refresh the ABI dump with `./gradlew updateKotlinAbi`, otherwise `check` fails.
 
 ## Architecture
 
-### Module Structure
+### Package Structure
 
-1. **atlas-plugin**: the whole plugin, published as `dev.jonpoulton.atlas:atlas-plugin`
-   - `atlas.core`: `AtlasPlugin` (the single entry point), `AtlasExtension`, the shared
-     `ProjectTypeSpec`/`LinkTypeSpec`, and the framework-agnostic tasks `CollateProjectTypes`,
-     `CollateProjectLinks`, `WriteProjectType`, `WriteProjectLinks`, `WriteProjectTree`,
-     `WriteReadme`, `CheckFileDiff`
-   - `atlas.d2`: `D2Spec` config, `D2Tasks` registration, tasks `WriteD2Chart`, `WriteD2Classes`,
-     `ExecD2`, `SvgToPng`
-   - `atlas.graphviz`: `GraphvizSpec` config, `GraphvizTasks` registration, tasks
-     `WriteGraphvizChart`, `WriteGraphvizLegend`, `ExecGraphviz`
-   - `atlas.mermaid`: `MermaidSpec` config, `MermaidTasks` registration, tasks `WriteMermaidChart`,
-     `WriteMarkdownLegend`
-   - Anything not part of the user-facing API is Kotlin `internal` - there's no opt-in annotation
-   - Tests live in `src/test`, with `ScenarioTest` + `atlas.test.scenarios.*` driving TestKit builds
+One package per concern: `atlas.core` for everything framework-agnostic, then `atlas.d2`,
+`atlas.graphviz` and `atlas.mermaid`. Each follows the same layout:
 
-2. **build-logic**: Convention plugins for the build itself
-   - Located in `build-logic/src/main/kotlin/atlas/gradle/`
-   - Convention plugins: `ConventionKotlin`, `ConventionPublish`, `ConventionDetekt`, etc.
-   - Applied via `atlas.convention.*` plugin IDs
+| Location | Holds |
+|---|---|
+| `atlas.<pkg>` | user-facing API - the `*Spec` config interfaces and shared value types |
+| `atlas.<pkg>.internal` | implementation, including the `*SpecImpl`s and each framework's `*Tasks` registrar |
+| `atlas.<pkg>.tasks` | task types |
+
+So a framework is reached through exactly two entry points: `<Framework>Spec` for its config, and a
+`<Framework>Tasks` object implementing `FrameworkTasks` for its task registration. Adding a
+framework means adding those two plus a `Framework` enum entry.
+
+`atlas.core` additionally holds `AtlasPlugin` (a `Plugin<Settings>`, the single entry point) and
+`AtlasExtension`; `atlas.core.internal` holds the wiring layer described in the sections below.
+
+Anything not part of the user-facing API is Kotlin `internal` - there's no opt-in annotation. Tests
+live in `src/test`, with `ScenarioTest` + `atlas.test.scenarios.*` driving TestKit builds.
 
 ### Shared Project and Link Types
 
@@ -85,44 +85,108 @@ When the public API changes, refresh the ABI dump with `./gradlew :atlas-plugin:
 spec carries the union of all three frameworks' style properties: shared meanings get one property
 mapping to several framework keys (`fontColor` -> D2 `style.font-color`, Graphviz `fontcolor`,
 Mermaid `color`), and only genuine clashes are prefixed (`d2Shape`, `graphvizShape`). `StyleProperties`
-holds one attribute map per framework and records which DSL properties were set, so `AtlasPlugin`
+holds one attribute map per framework and records which DSL properties were set, so `Warnings.kt`
 can warn about properties no configured framework will read.
 
 ### Plugin Application Pattern
 
-The plugin is applied to the root project and automatically propagates to all subprojects.
+Atlas is applied to `settings.gradle.kts` and configured there:
 
-`AtlasPlugin` applies in two phases:
-1. **Root project**: creates the extension and registers `CollateProjectTypes`/`CollateProjectLinks`, which aggregate data from all subprojects
-2. **Subprojects**: auto-applied via `subprojects {}`, registers `WriteProjectType`, `WriteProjectLinks`, `WriteProjectTree`
+```kotlin
+plugins { id("dev.jonpoulton.atlas") }
 
-Framework tasks are registered later, in the root project's `afterEvaluate`, because which frameworks are switched on isn't known until the root build script has run. Root is always evaluated before its children, so subproject tasks still exist by the time anything runs.
+atlas {
+  projectTypes { useDefaults() }
+  graphviz { }
+}
+```
 
-Each subproject writes its local project information to `build/atlas/*.json`, then root tasks collate these into project-wide diagrams.
+It lives in settings because every project needs the same config, and under isolated projects a
+subproject may not read the root project's extension.
+
+`AtlasPlugin.apply(Settings)` does three things:
+1. Creates the `AtlasExtension` on the settings object
+2. On `settingsEvaluated`, snapshots the config into `AtlasConfig` and enumerates every project path
+3. Registers `gradle.lifecycle.beforeProject`, which calls `wireProject` for each project
+
+### The Config Snapshot (important constraint)
+
+`beforeProject` actions are **isolated**, i.e. serialized, before they run. That imposes hard limits
+on what the per-project wiring may capture:
+
+- **`NamedDomainObjectContainer` cannot be isolated** (it fails with a `ConcurrentModificationException`
+  while serializing its pending-actions map). So `projectTypes` and `linkTypes` are flattened into
+  plain value types in `AtlasConfig`/`ProjectTypeMatcher`.
+- **Managed `Property` instances isolate fine**, including ones whose convention comes from
+  `providers.gradleProperty(...)`. That's why `D2SpecImpl`/`GraphvizSpecImpl`/`MermaidSpecImpl` are
+  captured live on `AtlasWiring` rather than snapshotted.
+- **Script references cannot be captured at all**, which is why the callback lives in a plugin class.
+
+Because the specs are captured live, they must never hold a `Project`. They take `ObjectFactory` and
+`ProviderFactory` instead, which is also why `IGradleProperties` exposes `providers` rather than a
+project.
+
+### Cross-Project Data Flow
+
+Isolated projects forbids reading another project's tasks or extensions, so **every file Atlas passes
+between projects travels as a dependency-resolution artifact**. See `internal/Aggregation.kt`.
+
+Each kind of file is an `AtlasArtifact` with its own value for the `dev.jonpoulton.atlas.artifact`
+attribute, so a single project dependency can carry any number of them:
+
+- Each subproject publishes `ProjectType` and `ProjectLinks`
+- The root resolves those from every subproject, collates them, and publishes `CollatedTypes`,
+  `CollatedLinks`, `D2Classes` and per-framework `legend(framework)` back out
+- Each subproject resolves what it needs from `:`
+
+The two directions use different configurations distinguished by attribute, so there is no cycle.
+Resolution is lenient, because a project may legitimately publish nothing (e.g. a group directory
+with no build file, which Atlas leaves out of the graph entirely).
+
+> **Every configuration Atlas creates must keep the `ATLAS_CONFIGURATION_PREFIX` (`"atlas"`) prefix.**
+> `createProjectLinks` scans `project.configurations` for `ProjectDependency` entries to build the
+> graph, and skips anything with that prefix. Drop the prefix and Atlas's own plumbing draws itself
+> into every user's diagrams as a phantom edge to the root project.
 
 ### Task Execution Flow
 
 1. Each subproject runs `WriteProjectType` → outputs project type classification to JSON
 2. Each subproject runs `WriteProjectLinks` → outputs direct dependencies to JSON
-3. Root runs `CollateProjectTypes` → aggregates all project types
-4. Root runs `CollateProjectLinks` → aggregates all project links
-5. Each subproject runs `WriteProjectTree` → consumes collated links to compute full dependency tree
-6. Framework-specific tasks (D2/Graphviz/Mermaid) generate diagram files from the aggregated data
-7. Each subproject runs `WriteReadme` → injects every configured framework's diagram into its README
+3. Root runs `CollateProjectTypes` / `CollateProjectLinks` → aggregates via resolved artifacts
+4. Each subproject runs `WriteProjectTree` → consumes the collated links to compute its own tree
+5. Framework-specific tasks (D2/Graphviz/Mermaid) generate diagram files
+6. Each subproject runs `WriteReadme` → injects every configured framework's diagram into its README
 
-### Gradle Isolated Projects Support
-
-The plugin will one day be updated to support Gradle's isolated projects feature (see issue #307). This requires careful handling of project references and task dependencies to avoid cross-project configuration. For now though, this isn't a top priority.
+Note the root project is not itself a node in the chart: it only collates and draws legends.
 
 ### Testing Approach
 
 Tests use a scenario-based pattern:
-- Each scenario (e.g., `DiamondGraph`, `TriangleGraph`) defines a complete multi-module project structure
+- Each scenario (e.g. `DiamondGraph`, `TriangleGraph`) defines a complete multi-module project structure
 - `ScenarioTest.runScenario()` creates a temporary Gradle project with that structure
 - Tests invoke Gradle tasks via TestKit and verify generated outputs
 - Scenarios are reused across multiple test classes for different plugin variants
 
 Example: `DiamondGraph` creates a 4-module project (top → mid-a/mid-b → bottom) to test transitive dependency tracking.
+
+Scenario rules that follow from Atlas being a settings plugin:
+- The `atlas { }` block goes in `Scenario.atlasConfig`, which `ScenarioTest` writes into
+  `settings.gradle.kts`. It does **not** belong in `rootBuildFile`.
+- Subproject build files must **not** apply `id("dev.jonpoulton.atlas")` - the settings plugin wires
+  every project itself.
+- Build scripts must **not** declare plugin versions (e.g. `kotlin("jvm") version "..."`). Applying
+  the plugin from settings puts the TestKit-injected classpath on the settings classloader, so a
+  version request fails with "already on the classpath with an unknown version".
+- `ScenarioTest` emits blanket imports into the settings file, because the `atlas` extension
+  accessor shadows the `atlas` package and blocks fully qualified references there. `atlas.core.*`
+  and `atlas.core.internal.*` always, plus `atlas.<framework>.*` and `atlas.<framework>.tasks.*` for
+  each framework the scenario declares. Framework packages are conditional on purpose: D2 and
+  Graphviz both export `FileFormat`, `LayoutEngine`, `Shape` and `ArrowType`, so importing both
+  unconditionally would make those names ambiguous.
+- `pluginManagement { }` is written before `plugins { }` and `dependencyResolutionManagement { }`
+  after it. Groovy settings scripts reject anything but `pluginManagement`/`buildscript` ahead of
+  `plugins`, which is why Blueprint's combined `DEFAULT_REPOSITORIES_KTS` isn't used here.
+- Every scenario runs with `org.gradle.unsafe.isolated-projects=true`.
 
 ## Key Concepts
 
@@ -132,11 +196,15 @@ Projects are classified by `ProjectTypeSpec` using matchers:
 - `pathMatches`: regex match on project path
 - `hasPluginId`: detect applied Gradle plugins
 
+The first matcher that is *set* wins, even if it doesn't match. Matching runs in the project's own
+`afterEvaluate` (see `WriteProjectType`), which is what makes `hasPluginId` work without violating
+isolated projects.
+
 Quick-access helpers (`androidApp()`, `kotlinJvm()`, `useDefaults()`, ...) live in `org.gradle.kotlin.dsl.ProjectTypeDsl`.
 
 ### Link Types
 Project dependencies are classified by `LinkTypeSpec`:
-- Based on Gradle configuration name (e.g., "api", "implementation")
+- Based on Gradle configuration name (e.g. "api", "implementation")
 - `style` uses the shared `atlas.core.LinkStyle`; frameworks which can't draw a given style fall back to the closest one and warn at configuration time
 
 ### Path Transforms
@@ -144,9 +212,9 @@ The `PathTransformSpec` allows regex-based transformations of project paths in g
 
 ## File Locations
 
-- Generated diagrams: `atlas/<framework>/` in each project, e.g. `atlas/d2/chart.d2`. Legends only in the root project
+- Generated diagrams: `atlas/<framework>/` in each project, e.g. `atlas/d2/chart.d2`. Legends only in the root project, resolved from `AtlasConfig.rootDir`
 - Per-project data: `build/atlas/*.json` in each subproject
-- Test fixtures: `atlas-plugin/src/test/kotlin/atlas/test/scenarios/`
+- Test fixtures: `src/test/kotlin/atlas/test/scenarios/`
 - Documentation: `docs/` (MkDocs-based, deployed to GitHub Pages)
 
 ## Important Properties
@@ -154,6 +222,9 @@ The `PathTransformSpec` allows regex-based transformations of project paths in g
 The Java version is read from the root `.java-version` file (via Blueprint's `javaVersion()`/`jvmTarget()`), and is also what CI's `setup-java` steps and the `gradle:*-jdk*` docker images pin.
 
 From `gradle.properties`:
-- `atlas.minimumGradleVersion`: Minimum Gradle version
+- `atlas.minimumGradleVersion`: Minimum Gradle version. The APIs used are available from 8.8
+  (`gradle.lifecycle.beforeProject`) and 8.4 (the configuration role factories), but isolated
+  projects is only really usable on 9.x
 - `org.gradle.configuration-cache`: Configuration cache is enabled
 - `org.gradle.parallel`: Parallel execution is enabled
+- `org.gradle.unsafe.isolated-projects`: Isolated projects is enabled

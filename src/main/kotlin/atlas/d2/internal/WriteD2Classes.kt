@@ -6,12 +6,9 @@ import atlas.core.Framework.D2
 import atlas.core.LinkStyle
 import atlas.core.LinkType
 import atlas.core.ProjectType
-import atlas.core.internal.AtlasExtensionImpl
+import atlas.core.internal.AtlasContext
 import atlas.core.internal.IndentedStringBuilder
 import atlas.core.internal.buildIndentedString
-import atlas.core.internal.orderedLinkTypes
-import atlas.core.internal.orderedProjectTypes
-import atlas.core.internal.projectType
 import atlas.core.internal.sortedByKeys
 import atlas.d2.Direction
 import atlas.d2.LayoutEngine
@@ -58,18 +55,18 @@ public class D2ClassesConfig(
   public val theme: Theme? = null,
 ) : JSerializable
 
-internal fun AtlasExtensionImpl.toConfig() =
+internal fun AtlasContext.toConfig() =
   D2ClassesConfig(
     animateLinks = d2.animateLinks.orNull,
     center = d2.center.orNull,
     darkTheme = d2.themeDark.orNull,
     direction = d2.direction.orNull,
-    displayLinkLabels = displayLinkLabels.orNull,
+    displayLinkLabels = config.displayLinkLabels,
     globalProps = d2.globalProps.properties.orNull,
     layoutEngine = d2.layoutEngine.layoutEngine.orNull,
-    linkTypes = orderedLinkTypes(),
+    linkTypes = linkTypes,
     location = d2.groupLabelLocation.orNull,
-    projectTypes = orderedProjectTypes().map(::projectType),
+    projectTypes = projectTypes,
     pad = d2.pad.orNull,
     position = d2.groupLabelPosition.orNull,
     rootStyle = d2.rootStyle.properties.getOrElse(mutableMapOf()),
