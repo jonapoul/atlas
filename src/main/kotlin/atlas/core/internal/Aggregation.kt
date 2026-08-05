@@ -10,6 +10,15 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskProvider
 
 /**
+ * Every configuration Atlas creates starts with this, so that the project dependencies it declares
+ * on itself never show up as links in the charts.
+ */
+internal const val ATLAS_CONFIGURATION_PREFIX = "atlas"
+
+internal val ATLAS_ARTIFACT_ATTRIBUTE =
+  Attribute.of("dev.jonpoulton.atlas.artifact", String::class.java)
+
+/**
  * Isolated projects forbids reading another project's tasks or extensions, so every file Atlas
  * passes between projects travels as a dependency-resolution artifact instead. Each kind gets its
  * own attribute value, so one project dependency can carry any number of them.
@@ -48,15 +57,6 @@ internal value class AtlasArtifact(private val id: String) {
     fun legend(framework: Framework) = AtlasArtifact("legend-${framework.string}")
   }
 }
-
-/**
- * Every configuration Atlas creates starts with this, so that the project dependencies it declares
- * on itself never show up as links in the charts.
- */
-internal const val ATLAS_CONFIGURATION_PREFIX = "atlas"
-
-internal val ATLAS_ARTIFACT_ATTRIBUTE =
-  Attribute.of("dev.jonpoulton.atlas.artifact", String::class.java)
 
 /** Publishes [file] so that other projects can resolve it as [artifact]. */
 internal fun Project.publishAtlasArtifact(

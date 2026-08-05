@@ -1,22 +1,14 @@
 package atlas.test.scenarios
 
-import atlas.test.KOTLIN_VERSION
 import atlas.test.Scenario
 
 internal object MermaidWithProjectTypes : Scenario by MermaidBasic {
-  override val rootBuildFile =
+  override val atlasConfig =
     """
-    plugins {
-      kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
+    projectTypes {
+      kotlinJvm()
+      java()
     }
-
-    atlas {
-      projectTypes {
-        kotlinJvm()
-        java()
-      }
-    }
-  """
+    """
       .trimIndent()
 }

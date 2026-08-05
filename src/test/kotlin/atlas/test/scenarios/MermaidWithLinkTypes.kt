@@ -1,25 +1,15 @@
 package atlas.test.scenarios
 
-import atlas.test.KOTLIN_VERSION
 import atlas.test.MermaidScenario
 
 internal object MermaidWithLinkTypes : MermaidScenario by MermaidBasic {
-  override val rootBuildFile =
+  override val atlasConfig =
     """
-    import atlas.core.LinkStyle
-
-    plugins {
-      kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
+    linkTypes {
+      api(color = "green")
+      implementation(color = "#5555FF")
+      "compileOnly"(style = LinkStyle.Dashed, color = "yellow")
     }
-
-    atlas {
-      linkTypes {
-        api(color = "green")
-        implementation(color = "#5555FF")
-        "compileOnly"(style = LinkStyle.Dashed, color = "yellow")
-      }
-    }
-  """
+    """
       .trimIndent()
 }

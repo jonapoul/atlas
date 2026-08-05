@@ -1,7 +1,6 @@
 package atlas.test.scenarios
 
 import atlas.test.GraphvizScenario
-import atlas.test.KOTLIN_VERSION
 import atlas.test.javaBuildScript
 import atlas.test.kotlinJvmBuildScript
 
@@ -9,18 +8,19 @@ internal object GraphvizBasic : GraphvizScenario {
   override val rootBuildFile =
     """
     plugins {
-      kotlin("jvm") version "$KOTLIN_VERSION" apply false
-      id("$pluginId")
+      kotlin("jvm") apply false
     }
+    """
+      .trimIndent()
 
-    atlas {
-      projectTypes {
-        kotlinJvm()
-        java()
-        hasPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
-      }
+  override val atlasConfig =
+    """
+    projectTypes {
+      kotlinJvm()
+      java()
+      hasPluginId(name = "Custom", color = "#123456", pluginId = "com.something.whatever")
     }
-  """
+    """
       .trimIndent()
 
   override val subprojectBuildFiles =

@@ -8,51 +8,50 @@ internal object PathMatches : GraphvizScenario {
 
   override val rootBuildFile =
     """
-    import kotlin.text.RegexOption.*
-
     plugins {
       `java`
-      id("$pluginId")
     }
+    """
+      .trimIndent()
 
-    atlas {
-      projectTypes {
-        pathMatches(
-          name = "A",
-          color = "orange",
-          pathMatches = $THREE_QUOTES.*[a-z]+\d+$THREE_QUOTES,
-        )
+  override val atlasConfig =
+    """
+    projectTypes {
+      pathMatches(
+        name = "A",
+        color = "orange",
+        pathMatches = $THREE_QUOTES.*[a-z]+\d+$THREE_QUOTES,
+      )
 
-        pathMatches(
-          name = "B",
-          color = "limegreen",
-          pathMatches = $THREE_QUOTES.*[a-z]+-[a-z]$THREE_QUOTES,
-          options = setOf(IGNORE_CASE),
-        )
+      pathMatches(
+        name = "B",
+        color = "limegreen",
+        pathMatches = $THREE_QUOTES.*[a-z]+-[a-z]$THREE_QUOTES,
+        options = setOf(RegexOption.IGNORE_CASE),
+      )
 
-        pathMatches(
-          name = "C",
-          color = "mediumslateblue",
-          pathMatches = $THREE_QUOTES^:HELLO$$THREE_QUOTES,
-          options = setOf(IGNORE_CASE),
-        )
+      pathMatches(
+        name = "C",
+        color = "mediumslateblue",
+        pathMatches = $THREE_QUOTES^:HELLO$$THREE_QUOTES,
+        options = setOf(RegexOption.IGNORE_CASE),
+      )
 
-        pathMatches(
-          name = "D",
-          color = "gainsboro",
-          pathMatches = $THREE_QUOTES:[a-z]\d-.*$THREE_QUOTES,
-          options = setOf(IGNORE_CASE),
-        )
+      pathMatches(
+        name = "D",
+        color = "gainsboro",
+        pathMatches = $THREE_QUOTES:[a-z]\d-.*$THREE_QUOTES,
+        options = setOf(RegexOption.IGNORE_CASE),
+      )
 
-        pathMatches(
-          name = "E",
-          color = "mediumorchid",
-          pathMatches = $THREE_QUOTES.*\w+-\w+$THREE_QUOTES,
-          options = setOf(DOT_MATCHES_ALL),
-        )
-      }
+      pathMatches(
+        name = "E",
+        color = "mediumorchid",
+        pathMatches = $THREE_QUOTES.*\w+-\w+$THREE_QUOTES,
+        options = setOf(RegexOption.DOT_MATCHES_ALL),
+      )
     }
-  """
+    """
       .trimIndent()
 
   override val subprojectBuildFiles =

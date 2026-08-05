@@ -177,17 +177,16 @@ Scenario rules that follow from Atlas being a settings plugin:
 - Build scripts must **not** declare plugin versions (e.g. `kotlin("jvm") version "..."`). Applying
   the plugin from settings puts the TestKit-injected classpath on the settings classloader, so a
   version request fails with "already on the classpath with an unknown version".
-- `ScenarioTest` emits blanket `atlas.core.*` / `atlas.core.internal.*` imports into the settings
-  file, because the `atlas` extension accessor shadows the `atlas` package and blocks fully
-  qualified references there.
+- `ScenarioTest` emits blanket imports into the settings file, because the `atlas` extension
+  accessor shadows the `atlas` package and blocks fully qualified references there. `atlas.core.*`
+  and `atlas.core.internal.*` always, plus `atlas.<framework>.*` and `atlas.<framework>.tasks.*` for
+  each framework the scenario declares. Framework packages are conditional on purpose: D2 and
+  Graphviz both export `FileFormat`, `LayoutEngine`, `Shape` and `ArrowType`, so importing both
+  unconditionally would make those names ambiguous.
+- `pluginManagement { }` is written before `plugins { }` and `dependencyResolutionManagement { }`
+  after it. Groovy settings scripts reject anything but `pluginManagement`/`buildscript` ahead of
+  `plugins`, which is why Blueprint's combined `DEFAULT_REPOSITORIES_KTS` isn't used here.
 - Every scenario runs with `org.gradle.unsafe.isolated-projects=true`.
-
-**Migration status:** the harness supports the settings-plugin shape, but most scenarios still put
-the plugin and its config in build files and will fail until migrated. Migrating one is mechanical:
-move the `atlas { }` body to `atlasConfig`, drop `id("$pluginId")` from build scripts, and drop
-plugin `version` strings. `ConfigureOnDemandTest` should be deleted rather than migrated - the
-configure-on-demand guards it covered are gone, since dependency resolution now pulls in whatever
-projects a task needs.
 
 ## Key Concepts
 

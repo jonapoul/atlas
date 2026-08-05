@@ -3,24 +3,17 @@ package atlas.test.scenarios
 import atlas.test.Scenario
 
 internal object GroovyGraphVizProjectTypes : Scenario by GroovyBasic {
-  override val rootBuildFile =
+  override val atlasConfig =
     """
-    plugins {
-      id 'org.jetbrains.kotlin.jvm'
-      id 'dev.jonpoulton.atlas'
-    }
+    projectTypes {
+      kotlinJvm {
+        color = "mediumorchid"
+        hasPluginId = "org.jetbrains.kotlin.jvm"
+      }
 
-    atlas {
-      projectTypes {
-        kotlinJvm {
-          color = "mediumorchid"
-          hasPluginId = "org.jetbrains.kotlin.jvm"
-        }
-
-        other {
-          color = "gainsboro"
-          pathMatches = ".*?"
-        }
+      other {
+        color = "gainsboro"
+        pathMatches = ".*?"
       }
     }
     """
