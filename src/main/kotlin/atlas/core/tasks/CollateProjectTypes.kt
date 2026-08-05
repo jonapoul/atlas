@@ -7,6 +7,7 @@ import atlas.core.internal.writeProjectTypes
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
+import org.gradle.api.file.FileCollection
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.InputFiles
@@ -51,13 +52,14 @@ public abstract class CollateProjectTypes : DefaultTask(), TaskWithOutputFile {
   internal companion object {
     private const val NAME = "collateProjectTypes"
 
-    internal fun get(target: Project): TaskProvider<CollateProjectTypes> =
-      target.tasks.named(NAME, CollateProjectTypes::class.java)
-
-    internal fun register(target: Project): TaskProvider<CollateProjectTypes> =
+    internal fun register(
+      target: Project,
+      projectTypeFiles: FileCollection,
+    ): TaskProvider<CollateProjectTypes> =
       with(target) {
         tasks.register(NAME, CollateProjectTypes::class.java) { task ->
           task.outputFile.convention(fileInBuildDirectory("project-types.json"))
+          task.projectTypeFiles.from(projectTypeFiles)
         }
       }
   }

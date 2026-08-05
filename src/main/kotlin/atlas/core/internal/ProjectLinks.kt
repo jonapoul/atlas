@@ -85,7 +85,10 @@ internal operator fun Iterable<ProjectLink>.contains(p: TypedProject): Boolean =
   }
 
 private fun ConfigurationContainer.filterUseful(ignoredConfigs: Iterable<String>) = filter { c ->
-  ignoredConfigs.none { blocked ->
-    c.name.contains(blocked, ignoreCase = true)
-  }
+  // Atlas's own aggregation configurations declare project dependencies purely to move files
+  // around, so they'd otherwise draw a link from every project to the root
+  !c.name.startsWith(ATLAS_CONFIGURATION_PREFIX) &&
+    ignoredConfigs.none { blocked ->
+      c.name.contains(blocked, ignoreCase = true)
+    }
 }

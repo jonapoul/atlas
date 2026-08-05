@@ -2,10 +2,9 @@ package atlas.core.tasks
 
 import atlas.core.LinkType
 import atlas.core.internal.ATLAS_TASK_GROUP
-import atlas.core.internal.AtlasExtensionImpl
+import atlas.core.internal.AtlasConfig
 import atlas.core.internal.createProjectLinks
 import atlas.core.internal.fileInBuildDirectory
-import atlas.core.internal.orderedLinkTypes
 import atlas.core.internal.writeProjectLinks
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -59,10 +58,7 @@ public abstract class WriteProjectLinks : DefaultTask(), TaskWithOutputFile {
         null
       }
 
-    internal fun register(
-      target: Project,
-      extension: AtlasExtensionImpl,
-    ): TaskProvider<WriteProjectLinks> =
+    internal fun register(target: Project, config: AtlasConfig): TaskProvider<WriteProjectLinks> =
       with(target) {
         val writeLinks =
           tasks.register(NAME, WriteProjectLinks::class.java) { task ->
@@ -71,8 +67,8 @@ public abstract class WriteProjectLinks : DefaultTask(), TaskWithOutputFile {
           }
 
         writeLinks.configure { task ->
-          task.projectLinks.convention(createProjectLinks(target, extension.ignoredConfigs.get()))
-          task.linkTypes.convention(extension.orderedLinkTypes())
+          task.projectLinks.convention(createProjectLinks(target, config.ignoredConfigs))
+          task.linkTypes.convention(config.linkTypes)
         }
 
         return writeLinks

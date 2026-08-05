@@ -29,19 +29,19 @@ import atlas.mermaid.MermaidSpec
 import atlas.mermaid.internal.MermaidSpecImpl
 import javax.inject.Inject
 import org.gradle.api.Action
-import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.ProviderFactory
 import org.gradle.api.provider.SetProperty
 
 internal open class AtlasExtensionImpl
 @Inject
 constructor(
   objects: ObjectFactory,
-  internal val project: Project,
+  providers: ProviderFactory,
 ) : AtlasExtension {
-  private val coreProperties = CoreGradleProperties(project)
+  private val coreProperties = CoreGradleProperties(providers)
   private val mutableFrameworks = linkedSetOf<Framework>()
 
   override val alsoTraverseUpwards: Property<Boolean> =
@@ -73,7 +73,7 @@ constructor(
   override val frameworks: Set<Framework>
     get() = mutableFrameworks.toSet()
 
-  override val d2: D2SpecImpl = D2SpecImpl(objects, project)
+  override val d2: D2SpecImpl = D2SpecImpl(objects, providers)
 
   override fun d2(action: Action<D2Spec>) {
     d2()
@@ -84,7 +84,7 @@ constructor(
     mutableFrameworks += D2
   }
 
-  override val graphviz: GraphvizSpecImpl = GraphvizSpecImpl(objects, project)
+  override val graphviz: GraphvizSpecImpl = GraphvizSpecImpl(objects, providers)
 
   override fun graphviz(action: Action<GraphvizSpec>) {
     graphviz()
@@ -95,7 +95,7 @@ constructor(
     mutableFrameworks += Graphviz
   }
 
-  override val mermaid: MermaidSpecImpl = MermaidSpecImpl(objects, project)
+  override val mermaid: MermaidSpecImpl = MermaidSpecImpl(objects, providers)
 
   override fun mermaid(action: Action<MermaidSpec>) {
     mermaid()
@@ -105,13 +105,6 @@ constructor(
   override fun mermaid() {
     mutableFrameworks += Mermaid
   }
-
-  internal fun specFor(framework: Framework) =
-    when (framework) {
-      D2 -> d2
-      Graphviz -> graphviz
-      Mermaid -> mermaid
-    }
 
   internal companion object {
     internal const val NAME: String = "atlas"

@@ -85,6 +85,7 @@ private const val DIR_NAME = "atlas"
  * alongside the project they describe, legends only in the root project.
  */
 internal fun Project.outputFile(
+  config: AtlasConfig,
   framework: Framework,
   variant: Variant,
   fileExtension: String,
@@ -92,8 +93,8 @@ internal fun Project.outputFile(
 ): File {
   val directory =
     when (variant) {
-      Variant.Chart -> project.rootDir().resolve(DIR_NAME)
-      Variant.Legend -> rootProject.rootDir().resolve(DIR_NAME)
+      Variant.Chart -> layout.projectDirectory.asFile.resolve(DIR_NAME)
+      Variant.Legend -> config.rootDir.resolve(DIR_NAME)
     }
   return directory.resolve(framework.string).resolve("$filename.$fileExtension")
 }
@@ -103,5 +104,3 @@ private fun defaultFilename(variant: Variant) =
     Variant.Chart -> "chart"
     Variant.Legend -> "legend"
   }
-
-private fun Project.rootDir() = layout.projectDirectory.asFile

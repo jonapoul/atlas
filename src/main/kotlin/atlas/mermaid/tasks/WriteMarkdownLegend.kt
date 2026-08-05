@@ -4,15 +4,12 @@ import atlas.core.Framework.Mermaid
 import atlas.core.LinkType
 import atlas.core.ProjectType
 import atlas.core.internal.ATLAS_TASK_GROUP
-import atlas.core.internal.AtlasExtensionImpl
+import atlas.core.internal.AtlasContext
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.internal.Variant.Legend
 import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.logIfConfigured
-import atlas.core.internal.orderedLinkTypes
-import atlas.core.internal.orderedProjectTypes
 import atlas.core.internal.outputFile
-import atlas.core.internal.projectType
 import atlas.core.internal.qualifier
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.TaskWithOutputFile
@@ -112,32 +109,29 @@ public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, A
     internal fun get(target: Project): TaskProvider<WriteMarkdownLegend> =
       target.tasks.named(TASK_NAME, WriteMarkdownLegend::class.java)
 
-    internal fun real(
-      target: Project,
-      extension: AtlasExtensionImpl,
-    ) =
+    internal fun real(context: AtlasContext) =
       register<WriteMarkdownLegend>(
-        target,
-        extension,
-        outputFile = target.outputFile(Mermaid, Legend, fileExtension = "md"),
+        context = context,
+        outputFile =
+          context.project.outputFile(
+            config = context.config,
+            framework = Mermaid,
+            variant = Legend,
+            fileExtension = "md",
+          ),
       )
 
-    internal fun dummy(
-      target: Project,
-      extension: AtlasExtensionImpl,
-    ) =
+    internal fun dummy(context: AtlasContext) =
       register<WriteMarkdownLegendDummy>(
-        target = target,
-        extension = extension,
-        outputFile = target.atlasBuildDirectory.get().file("legend-temp.md").asFile,
+        context = context,
+        outputFile = context.project.atlasBuildDirectory.get().file("legend-temp.md").asFile,
       )
 
     private inline fun <reified T : WriteMarkdownLegend> register(
-      target: Project,
-      extension: AtlasExtensionImpl,
+      context: AtlasContext,
       outputFile: File,
     ): TaskProvider<T> =
-      with(target) {
+      with(context.project) {
         val name = "write${T::class.qualifier}MermaidLegend"
         val writeLegend =
           tasks.register(name, T::class.java) { task ->
@@ -145,8 +139,8 @@ public abstract class WriteMarkdownLegend : DefaultTask(), TaskWithOutputFile, A
           }
 
         writeLegend.configure { task ->
-          task.projectTypes.convention(extension.orderedProjectTypes().map(::projectType))
-          task.linkTypes.convention(extension.orderedLinkTypes())
+          task.projectTypes.convention(context.projectTypes)
+          task.linkTypes.convention(context.linkTypes)
         }
 
         return writeLegend

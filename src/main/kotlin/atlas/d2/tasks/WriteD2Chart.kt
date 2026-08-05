@@ -1,21 +1,21 @@
 package atlas.d2.tasks
 
-import atlas.core.AtlasExtension
 import atlas.core.Replacement
 import atlas.core.internal.ATLAS_TASK_GROUP
+import atlas.core.internal.AtlasArtifact
+import atlas.core.internal.AtlasContext
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.internal.logIfConfigured
 import atlas.core.internal.qualifier
 import atlas.core.internal.readProjectLinks
 import atlas.core.internal.readProjectTypes
+import atlas.core.internal.singleFile
 import atlas.core.tasks.AtlasGenerationTask
-import atlas.core.tasks.CollateProjectTypes
 import atlas.core.tasks.TaskWithOutputFile
 import atlas.core.tasks.WriteProjectTree
 import atlas.d2.internal.D2Writer
 import java.io.File
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
@@ -76,41 +76,39 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
 
   internal companion object {
     internal fun real(
-      target: Project,
-      extension: AtlasExtension,
+      context: AtlasContext,
       outputFile: File,
       pathToClassesFile: Provider<String>,
-    ) = register<WriteD2Chart>(target, extension, outputFile, pathToClassesFile)
+    ) = register<WriteD2Chart>(context, outputFile, pathToClassesFile)
 
     internal fun dummy(
-      target: Project,
-      extension: AtlasExtension,
+      context: AtlasContext,
       outputFile: File,
       pathToClassesFile: Provider<String>,
-    ) = register<WriteD2ChartDummy>(target, extension, outputFile, pathToClassesFile)
+    ) = register<WriteD2ChartDummy>(context, outputFile, pathToClassesFile)
 
     private inline fun <reified T : WriteD2Chart> register(
-      target: Project,
-      extension: AtlasExtension,
+      context: AtlasContext,
       outputFile: File,
       pathToClassesFile: Provider<String>,
     ): TaskProvider<T> =
-      with(target) {
-        val collateProjectTypes = CollateProjectTypes.get(rootProject)
-        val writeProjectTree = WriteProjectTree.get(target)
+      with(context.project) {
+        val collatedTypes = context.fromRoot(AtlasArtifact.CollatedTypes)
+        val writeProjectTree = WriteProjectTree.get(this)
         val name = "write${T::class.qualifier}D2Chart"
         val writeChart =
           tasks.register(name, T::class.java) { task ->
             task.linksFile.convention(writeProjectTree.flatMap { it.outputFile })
-            task.projectTypesFile.convention(collateProjectTypes.flatMap { it.outputFile })
             task.outputFile.set(outputFile)
             task.pathToClassesFile.convention(pathToClassesFile)
-            task.thisPath.convention(target.path)
+            task.thisPath.convention(path)
           }
 
         writeChart.configure { task ->
-          task.groupProjects.convention(extension.groupProjects)
-          task.replacements.convention(extension.pathTransforms.replacements)
+          task.projectTypesFile.fileProvider(collatedTypes.singleFile())
+          task.dependsOn(collatedTypes)
+          task.groupProjects.convention(context.config.groupProjects)
+          task.replacements.convention(context.config.replacements)
         }
 
         return writeChart

@@ -3,6 +3,7 @@ package atlas.d2.tasks
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.Variant
 import atlas.core.internal.logIfConfigured
+import atlas.core.internal.singleFile
 import atlas.core.internal.withExtension
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.TaskWithOutputFile
@@ -13,6 +14,7 @@ import javax.inject.Inject
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
+import org.gradle.api.file.FileCollection
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
@@ -102,18 +104,19 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
       spec: D2Spec,
       variant: Variant,
       dotFileTask: TaskProvider<T>,
+      classesFile: FileCollection,
     ): TaskProvider<ExecD2> =
       with(target) {
         val name = "execD2$variant"
         val execGraphviz = tasks.register(name, ExecD2::class.java)
-        val d2Classes = WriteD2Classes.get(rootProject)
 
         execGraphviz.configure { task ->
           val d2File = dotFileTask.flatMap { it.outputFile }
           val outputFile =
             d2File.withExtension(target, extension = provider { spec.fileFormat.get() })
 
-          task.classesFile.convention(d2Classes.flatMap { it.outputFile })
+          task.classesFile.fileProvider(classesFile.singleFile())
+          task.dependsOn(classesFile)
           task.inputFile.convention(d2File)
           task.pathToD2Command.convention(spec.pathToD2Command)
           task.outputFormat.convention(spec.fileFormat)

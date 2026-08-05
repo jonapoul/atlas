@@ -1,9 +1,10 @@
 package atlas.mermaid.tasks
 
-import atlas.core.AtlasExtension
 import atlas.core.Framework.Mermaid
 import atlas.core.Replacement
 import atlas.core.internal.ATLAS_TASK_GROUP
+import atlas.core.internal.AtlasArtifact
+import atlas.core.internal.AtlasContext
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.internal.Variant.Chart
 import atlas.core.internal.atlasBuildDirectory
@@ -12,8 +13,8 @@ import atlas.core.internal.outputFile
 import atlas.core.internal.qualifier
 import atlas.core.internal.readProjectLinks
 import atlas.core.internal.readProjectTypes
+import atlas.core.internal.singleFile
 import atlas.core.tasks.AtlasGenerationTask
-import atlas.core.tasks.CollateProjectTypes
 import atlas.core.tasks.TaskWithOutputFile
 import atlas.core.tasks.WriteProjectTree
 import atlas.mermaid.MermaidConfig
@@ -21,7 +22,6 @@ import atlas.mermaid.MermaidSpec
 import atlas.mermaid.internal.MermaidWriter
 import java.io.File
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
@@ -85,53 +85,49 @@ public abstract class WriteMermaidChart : DefaultTask(), AtlasGenerationTask, Ta
   internal abstract class WriteMermaidChartDummy : WriteMermaidChart(), DummyAtlasGenerationTask
 
   internal companion object {
-    internal fun real(
-      target: Project,
-      extension: AtlasExtension,
-      spec: MermaidSpec,
-    ) =
+    internal fun real(context: AtlasContext, spec: MermaidSpec) =
       register<WriteMermaidChart>(
-        target = target,
-        extension = extension,
+        context = context,
         spec = spec,
-        outputFile = target.outputFile(Mermaid, Chart, spec.fileExtension.get()),
+        outputFile =
+          context.project.outputFile(
+            config = context.config,
+            framework = Mermaid,
+            variant = Chart,
+            fileExtension = spec.fileExtension.get(),
+          ),
       )
 
-    internal fun dummy(
-      target: Project,
-      extension: AtlasExtension,
-      spec: MermaidSpec,
-    ) =
+    internal fun dummy(context: AtlasContext, spec: MermaidSpec) =
       register<WriteMermaidChartDummy>(
-        target = target,
-        extension = extension,
+        context = context,
         spec = spec,
-        outputFile = target.atlasBuildDirectory.get().file("chart-temp.mmd").asFile,
+        outputFile = context.project.atlasBuildDirectory.get().file("chart-temp.mmd").asFile,
       )
 
     private inline fun <reified T : WriteMermaidChart> register(
-      target: Project,
-      extension: AtlasExtension,
+      context: AtlasContext,
       spec: MermaidSpec,
       outputFile: File,
     ): TaskProvider<WriteMermaidChart> =
-      with(target) {
-        val collateProjectTypes = CollateProjectTypes.get(rootProject)
-        val calculateProjectTree = WriteProjectTree.get(target)
+      with(context.project) {
+        val collatedTypes = context.fromRoot(AtlasArtifact.CollatedTypes)
+        val calculateProjectTree = WriteProjectTree.get(this)
 
         val name = "write${T::class.qualifier}MermaidChart"
         val writeChart = tasks.register(name, WriteMermaidChart::class.java)
 
         writeChart.configure { task ->
           task.linksFile.convention(calculateProjectTree.flatMap { it.outputFile })
-          task.projectTypesFile.convention(collateProjectTypes.flatMap { it.outputFile })
+          task.projectTypesFile.fileProvider(collatedTypes.singleFile())
+          task.dependsOn(collatedTypes)
           task.outputFile.set(outputFile)
 
-          task.groupProjects.convention(extension.groupProjects)
-          task.replacements.convention(extension.pathTransforms.replacements)
-          task.thisPath.convention(target.path)
+          task.groupProjects.convention(context.config.groupProjects)
+          task.replacements.convention(context.config.replacements)
+          task.thisPath.convention(path)
 
-          task.config.convention(provider { MermaidConfig(extension, spec) })
+          task.config.convention(provider { MermaidConfig(context.config, spec) })
         }
 
         return writeChart

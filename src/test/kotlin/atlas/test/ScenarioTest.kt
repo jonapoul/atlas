@@ -43,7 +43,7 @@ internal abstract class ScenarioTest : BlueprintScenarioTest() {
     FileTree.Builder(relativeRootPath = "")
       .apply {
         settingsFileName(settingsFile())
-        buildFileName(rootBuildFile + enableFrameworks())
+        buildFileName(rootBuildFile)
         "gradle.properties"(gradleProperties())
 
         subprojectBuildFiles.forEach { (path, contents) ->
@@ -54,33 +54,45 @@ internal abstract class ScenarioTest : BlueprintScenarioTest() {
       .build()
 
   private fun Scenario.settingsFile() = buildString {
+    listOf(
+        // TODO: More?
+        "atlas.core.internal.*",
+        "atlas.core.*",
+      )
+      .forEach { appendLine("import $it") }
+
     appendLine(DEFAULT_REPOSITORIES_KTS.trimIndent())
+    appendLine()
+
+    if (isGroovy) {
+      appendLine("plugins { id '$pluginId' }")
+    } else {
+      appendLine("plugins { id(\"$pluginId\") }")
+    }
+    appendLine()
+
     subprojectBuildFiles.keys.forEach { path ->
       if (isGroovy) appendLine("include(':$path')") else appendLine("include(\":$path\")")
     }
+    appendLine()
+
+    appendLine(atlasBlock())
+  }
+
+  private fun Scenario.atlasBlock(): String {
+    val body =
+      frameworks.map { framework -> "  ${framework.string}()" } +
+        atlasConfig.trimIndent().lines().filter(String::isNotBlank).map { "  $it" }
+    return if (body.isEmpty()) "" else body.joinToString("\n", "atlas {\n", "\n}\n")
   }
 
   private fun Scenario.gradleProperties() = buildString {
     appendLine("android.useAndroidX=true")
+    // Atlas is built to work under isolated projects, so every scenario runs with it enabled by
+    // default
+    appendLine("org.gradle.unsafe.isolated-projects=true")
     appendLine(gradlePropertiesFile)
   }
-
-  /**
-   * A framework only generates diagrams once its block has been configured, so switch on the ones
-   * this scenario declared. Configuring the same extension twice is fine, so scenarios which
-   * already configure a framework in detail don't need to care.
-   */
-  private fun Scenario.enableFrameworks(): String =
-    if (frameworks.isEmpty()) {
-      ""
-    } else {
-      frameworks.joinToString(
-        prefix = "\n\natlas {\n",
-        separator = "\n",
-        postfix = "\n}\n",
-        transform = { framework -> "  ${framework.string}()" },
-      )
-    }
 
   private fun String.toDirectoryPath() =
     split(":").filter(String::isNotEmpty).joinToString(File.separator)

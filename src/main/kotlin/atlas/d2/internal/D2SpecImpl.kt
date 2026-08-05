@@ -21,14 +21,14 @@ import atlas.d2.Font
 import atlas.d2.LayoutEngine
 import atlas.d2.tasks.SvgToPng
 import org.gradle.api.Action
-import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.ProviderFactory
 
 internal class D2SpecImpl(
   objects: ObjectFactory,
-  project: Project,
+  providers: ProviderFactory,
 ) : D2Spec {
-  internal val properties = D2GradleProperties(project)
+  internal val properties = D2GradleProperties(providers)
 
   override val name = "D2"
   override val fileExtension = objects.string(convention = "d2")
