@@ -3,7 +3,9 @@ package atlas.test
 import atlas.core.Framework
 
 internal interface Scenario {
-  val rootBuildFile: String
+  // Null means the root project has no build file at all, like any other group directory
+  val rootBuildFile: String?
+    get() = null
 
   // The body of the `atlas { }` block, which lives in `settings.gradle.kts`.
   val atlasConfig: String

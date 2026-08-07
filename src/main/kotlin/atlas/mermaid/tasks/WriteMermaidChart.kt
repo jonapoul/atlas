@@ -119,7 +119,7 @@ public abstract class WriteMermaidChart : DefaultTask(), AtlasGenerationTask, Ta
 
         writeChart.configure { task ->
           task.linksFile.convention(calculateProjectTree.flatMap { it.outputFile })
-          task.projectTypesFile.fileProvider(collatedTypes.singleFile())
+          task.projectTypesFile.fileProvider(collatedTypes.singleFile(AtlasArtifact.CollatedTypes))
           task.dependsOn(collatedTypes)
           task.outputFile.set(outputFile)
 

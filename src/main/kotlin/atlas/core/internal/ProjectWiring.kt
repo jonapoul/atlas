@@ -19,12 +19,15 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin
 import org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
 
 internal fun wireProject(target: Project, wiring: AtlasWiring) {
-  // Nested projects whose group directories have no build file shouldn't be nodes in the chart
-  if (!target.buildFile.exists()) return
+  val context = AtlasContext(project = target, config = wiring.config, wiring = wiring)
+
+  // Nested projects whose group directories have no build file shouldn't be nodes in the chart. The
+  // root is never a node either, but it still has to be wired: it's where every subproject resolves
+  // the collated files and the shared legends from, whether or not it has a build file of its own.
+  if (!context.isRoot && !target.buildFile.exists()) return
 
   target.pluginManager.apply(LifecycleBasePlugin::class.java)
 
-  val context = AtlasContext(project = target, config = wiring.config, wiring = wiring)
   if (context.isRoot) wireRoot(context) else wireChild(context)
 
   target.configurePrintFilesToConsole(context)
@@ -39,13 +42,13 @@ private fun wireRoot(context: AtlasContext) =
     val collateTypes =
       CollateProjectTypes.register(
         target = this,
-        projectTypeFiles = consumeAtlasArtifact(ProjectTypeArtifact, paths),
+        projectTypeFiles = consumeAtlasArtifact(ProjectTypeArtifact, paths, lenient = true),
       )
     val collateLinks =
       CollateProjectLinks.register(
         target = this,
         config = context.config,
-        projectLinkFiles = consumeAtlasArtifact(ProjectLinks, paths),
+        projectLinkFiles = consumeAtlasArtifact(ProjectLinks, paths, lenient = true),
       )
 
     publishAtlasArtifact(

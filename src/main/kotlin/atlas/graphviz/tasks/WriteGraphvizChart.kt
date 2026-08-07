@@ -119,7 +119,7 @@ public abstract class WriteGraphvizChart : DefaultTask(), TaskWithOutputFile, At
           }
 
         writeChart.configure { task ->
-          task.projectTypesFile.fileProvider(collatedTypes.singleFile())
+          task.projectTypesFile.fileProvider(collatedTypes.singleFile(AtlasArtifact.CollatedTypes))
           task.dependsOn(collatedTypes)
           task.groupProjects.convention(context.config.groupProjects)
           task.replacements.convention(context.config.replacements)

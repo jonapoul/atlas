@@ -1,6 +1,7 @@
 package atlas.d2.tasks
 
 import atlas.core.internal.ATLAS_TASK_GROUP
+import atlas.core.internal.AtlasArtifact
 import atlas.core.internal.Variant
 import atlas.core.internal.logIfConfigured
 import atlas.core.internal.singleFile
@@ -115,7 +116,7 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
           val outputFile =
             d2File.withExtension(target, extension = provider { spec.fileFormat.get() })
 
-          task.classesFile.fileProvider(classesFile.singleFile())
+          task.classesFile.fileProvider(classesFile.singleFile(AtlasArtifact.D2Classes))
           task.dependsOn(classesFile)
           task.inputFile.convention(d2File)
           task.pathToD2Command.convention(spec.pathToD2Command)

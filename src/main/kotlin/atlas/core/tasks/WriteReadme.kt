@@ -1,6 +1,7 @@
 package atlas.core.tasks
 
 import atlas.core.internal.ATLAS_TASK_GROUP
+import atlas.core.internal.AtlasArtifact
 import atlas.core.internal.ChartFiles
 import atlas.core.internal.logIfConfigured
 import atlas.core.internal.singleFile
@@ -176,7 +177,11 @@ public abstract class WriteReadme : DefaultTask(), AtlasGenerationTask, TaskWith
           charts.forEach { chart ->
             val diagram = objects.newInstance(Diagram::class.java)
             diagram.chartFile.set(chart.chart)
-            chart.legend?.let { legend -> diagram.legendFile.fileProvider(legend.singleFile()) }
+            chart.legend?.let { legend ->
+              diagram.legendFile.fileProvider(
+                legend.singleFile(AtlasArtifact.legend(chart.framework))
+              )
+            }
             task.diagrams.add(diagram)
           }
         }

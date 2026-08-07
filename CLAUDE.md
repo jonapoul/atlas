@@ -140,8 +140,16 @@ attribute, so a single project dependency can carry any number of them:
 - Each subproject resolves what it needs from `:`
 
 The two directions use different configurations distinguished by attribute, so there is no cycle.
-Resolution is lenient, because a project may legitimately publish nothing (e.g. a group directory
-with no build file, which Atlas leaves out of the graph entirely).
+Only the root-collating-from-subprojects direction resolves leniently, because a subproject may
+legitimately publish nothing (e.g. a group directory with no build file, which Atlas leaves out of
+the graph entirely). `AtlasContext.fromRoot` resolves strictly: the root always publishes, so a
+failure there is a real one and needs to be reported as itself. Under leniency it instead turned
+into an empty file collection, and only surfaced much later as `Collection is empty` while the
+configuration cache serialized whichever task property the file ended up in.
+
+Which is why the root project is wired even when it has **no build file of its own** - it isn't a
+node in the chart either way, but every subproject resolves the collated files and the shared legends
+from it.
 
 > **Every configuration Atlas creates must keep the `ATLAS_CONFIGURATION_PREFIX` (`"atlas"`) prefix.**
 > `createProjectLinks` scans `project.configurations` for `ProjectDependency` entries to build the

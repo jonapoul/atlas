@@ -82,7 +82,9 @@ internal object D2Tasks : FrameworkTasks {
           fileExtension = d2Spec.fileExtension.get(),
         )
       val pathToClassesFile =
-        classesFile.singleFile().map { it.relativeTo(outputFile.parentFile).path }
+        classesFile.singleFile(AtlasArtifact.D2Classes).map {
+          it.relativeTo(outputFile.parentFile).path
+        }
 
       val chartTask =
         WriteD2Chart.real(
