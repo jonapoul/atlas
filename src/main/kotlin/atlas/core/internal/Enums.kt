@@ -9,10 +9,6 @@ internal inline fun <reified E> parseEnum(string: String): E where E : StringEnu
       "No ${E::class.simpleName} matching '$string'. Expected one of ${stringOptionsOf<E>()}."
     )
 
-internal inline fun <reified E> parseEnum(value: Int): E where E : IntEnum, E : Enum<E> =
-  enumValues<E>().firstOrNull { it.value == value }
-    ?: error("No ${E::class.simpleName} matching '$value'. Expected one of ${intOptionsOf<E>()}.")
-
 /**
  * Gradle properties are strings, so an [IntEnum] can be given either as its number or by name -
  * `atlas.d2.theme=201` and `atlas.d2.theme=DarkFlagshipTerrastruct` mean the same thing. The DSL
