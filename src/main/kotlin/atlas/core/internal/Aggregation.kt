@@ -73,12 +73,15 @@ internal fun Project.publishAtlasArtifact(
 /**
  * Resolves [artifact] from each project in [fromPaths].
  *
- * The view is lenient because a project may legitimately not publish a given artifact - for example
- * one with no build file, which Atlas leaves out of the graph entirely.
+ * [lenient] is for the root collating from every subproject, where a project may legitimately
+ * publish nothing - for example one with no build file, which Atlas leaves out of the graph
+ * entirely. Resolving from the root is the other way around: it always publishes, so a failure
+ * there is a real one and should be reported as itself rather than silently resolving to no files.
  */
 internal fun Project.consumeAtlasArtifact(
   artifact: AtlasArtifact,
   fromPaths: List<String>,
+  lenient: Boolean,
 ): FileCollection {
   val scopeName = "${artifact.resolvableConfigurationName}Dependencies"
   val scope = configurations.dependencyScope(scopeName)
@@ -93,13 +96,25 @@ internal fun Project.consumeAtlasArtifact(
     dependencies.add(scopeName, dependencies.project(mapOf("path" to path)))
   }
 
-  return resolvable.get().incoming.artifactView { it.lenient(true) }.files
+  return resolvable.get().incoming.artifactView { it.lenient(lenient) }.files
 }
 
 /**
- * The single file this collection resolves to. Atlas aggregates at most one artifact per project
- * per kind, so anything resolved from the root project is always exactly one file.
+ * The single file this collection resolves to. Atlas publishes at most one artifact per project per
+ * kind, so anything resolved from the root project is always exactly one file.
+ *
+ * Anything else means the root project didn't publish what this project is asking it for, which
+ * surfaces a long way from its cause - usually as a configuration cache serialization failure while
+ * writing the task property this ends up in. So say what actually went wrong instead.
  */
-internal fun FileCollection.singleFile(): Provider<File> = elements.map { locations ->
-  locations.single().asFile
-}
+internal fun FileCollection.singleFile(artifact: AtlasArtifact): Provider<File> =
+  elements.map { locations ->
+    val file = locations.singleOrNull()?.asFile
+    checkNotNull(file) {
+      "Expected the root project to publish exactly one '${artifact.attributeValue}' artifact, but " +
+        "resolving ${artifact.resolvableConfigurationName} found ${locations.size}. This is a bug " +
+        "in Atlas - please report it at $ISSUES_URL."
+    }
+  }
+
+private const val ISSUES_URL = "https://github.com/jonapoul/atlas/issues"

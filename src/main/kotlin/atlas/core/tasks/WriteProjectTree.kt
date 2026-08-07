@@ -2,6 +2,7 @@ package atlas.core.tasks
 
 import atlas.core.LinkType
 import atlas.core.internal.ATLAS_TASK_GROUP
+import atlas.core.internal.AtlasArtifact
 import atlas.core.internal.AtlasConfig
 import atlas.core.internal.ProjectLink
 import atlas.core.internal.fileInBuildDirectory
@@ -147,7 +148,7 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
 
         writeProjectTree.configure { task ->
           task.linkTypes.convention(config.linkTypes)
-          task.collatedLinks.fileProvider(collatedLinks.singleFile())
+          task.collatedLinks.fileProvider(collatedLinks.singleFile(AtlasArtifact.CollatedLinks))
           task.dependsOn(collatedLinks)
         }
 

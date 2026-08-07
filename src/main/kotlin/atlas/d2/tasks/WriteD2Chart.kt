@@ -105,7 +105,7 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
           }
 
         writeChart.configure { task ->
-          task.projectTypesFile.fileProvider(collatedTypes.singleFile())
+          task.projectTypesFile.fileProvider(collatedTypes.singleFile(AtlasArtifact.CollatedTypes))
           task.dependsOn(collatedTypes)
           task.groupProjects.convention(context.config.groupProjects)
           task.replacements.convention(context.config.replacements)

@@ -44,7 +44,7 @@ internal class AtlasContext(
    */
   fun fromRoot(artifact: AtlasArtifact): FileCollection =
     resolved.getOrPut(artifact.attributeValue) {
-      project.consumeAtlasArtifact(artifact, listOf(":"))
+      project.consumeAtlasArtifact(artifact, listOf(":"), lenient = false)
     }
 
   fun specFor(framework: Framework) =

@@ -42,7 +42,7 @@ internal abstract class ScenarioTest : BlueprintScenarioTest() {
     FileTree.Builder(relativeRootPath = "")
       .apply {
         settingsFileName(settingsFile())
-        buildFileName(rootBuildFile)
+        rootBuildFile?.let { buildFileName(it) }
         "gradle.properties"(gradleProperties())
 
         subprojectBuildFiles.forEach { (path, contents) ->
