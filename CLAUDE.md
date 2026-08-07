@@ -48,7 +48,7 @@ To run a specific test method:
 ### Documentation
 This task will take a while, so don't run unless really necessary:
 ```bash
-./gradlew dokkaGeneratePublicationHtml --rerun-tasks --no-build-cache --no-configuration-cache       # Generate API docs to docs/api/
+./gradlew dokkaGeneratePublicationHtml --rerun-tasks --no-build-cache  # Generate API docs to docs/api/
 ```
 
 ### Plugin Development
