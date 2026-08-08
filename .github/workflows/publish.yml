@@ -1,0 +1,135 @@
+name: Publish
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "**" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# This ensures publish jobs run sequentially instead of in parallel
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+env:
+  CI: true
+  GRADLE_ENCRYPTION_KEY: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # The only fork guard in this file. Both publish jobs need this one, and a skipped dependency
+    # skips its dependents - so don't give them an `if` with always()/!cancelled() in it.
+    if: github.repository == 'jonapoul/atlas-gradle-plugin'
+    outputs:
+      version: ${{ steps.version.outputs.value }}
+      is-snapshot: ${{ steps.version.outputs.is-snapshot }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          sparse-checkout: gradle.properties
+          sparse-checkout-cone-mode: false
+
+      - name: Get Gradle version
+        id: version
+        run: |
+          GRADLE_VERSION="$(grep -E '^VERSION_NAME=' gradle.properties | cut -d "=" -f 2)"
+          echo "GRADLE_VERSION=$GRADLE_VERSION"
+          if [ -z "$GRADLE_VERSION" ]; then
+            echo "::error::No VERSION_NAME in gradle.properties"
+            exit 1
+          fi
+          echo "value=$GRADLE_VERSION" >> "$GITHUB_OUTPUT"
+          if [[ "$GRADLE_VERSION" == *"-SNAPSHOT"* ]]; then
+            echo "is-snapshot=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is-snapshot=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify Git tag matches Gradle version
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GRADLE_VERSION: ${{ steps.version.outputs.value }}
+          GIT_TAG: ${{ github.ref_name }}
+        run: |
+          echo "GIT_TAG=$GIT_TAG"
+          if [[ "$GRADLE_VERSION" == *"-SNAPSHOT"* ]]; then
+            echo "::error::Can't release a snapshot ($GRADLE_VERSION), tagged as $GIT_TAG"
+            exit 1
+          elif [ "$GRADLE_VERSION" != "$GIT_TAG" ]; then
+            echo "::error::Gradle version = $GRADLE_VERSION, Git tag = $GIT_TAG => MISMATCH!"
+            exit 1
+          fi
+
+      # A release lands the non-snapshot version bump on main before the tag is pushed, so this is
+      # expected. Say so, otherwise it's a green run with two skipped jobs and no explanation.
+      - name: Report nothing to publish
+        if: |
+          !startsWith(github.ref, 'refs/tags/') &&
+          steps.version.outputs.is-snapshot == 'false'
+        env:
+          GRADLE_VERSION: ${{ steps.version.outputs.value }}
+        run: echo "::notice::$GRADLE_VERSION is not a snapshot, nothing to publish. Push a tag to release it."
+
+  publish-snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: check-version
+    if: |
+      github.ref == 'refs/heads/main' &&
+      needs.check-version.outputs.is-snapshot == 'true'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - uses: ./.github/actions/setup-java
+      - uses: ./.github/actions/setup-gradle
+      - uses: ./.github/actions/setup-gradle-properties
+
+      - name: Publish snapshot
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_IN_MEMORY_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_KEY_PASSWORD }}
+        run: ./gradlew publishToMavenCentral -x dokkaGeneratePublicationHtml
+
+  publish-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    needs: check-version
+    # event_name guard: a manual dispatch on a tag ref would otherwise re-publish an existing
+    # release and try to recreate its GitHub release. Releases only ever happen on a tag push.
+    if: |
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/tags/') &&
+      needs.check-version.outputs.is-snapshot == 'false'
+    container:
+      image: gradle:9.6.1-jdk21@sha256:a91a96d5f8530b4a6766f6502f563510bb5df157dc864ef50659c4214611a3d9
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Publish
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_IN_MEMORY_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_KEY_PASSWORD }}
+        run: ./gradlew publishToMavenCentral -x dokkaGeneratePublicationHtml
+
+      - name: Create release
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1
+        with:
+          generateReleaseNotes: true
+          name: v${{ needs.check-version.outputs.version }}
