@@ -127,6 +127,7 @@ internal object D2Tasks : FrameworkTasks {
           svgTask = d2Task,
           isEnabled = runSvgToPng,
           converter = d2Spec.converter,
+          scale = d2Spec.scale,
         )
 
       val taskForReadme = svgToPng.flatMap { if (runSvgToPng.get()) svgToPng else d2Task }

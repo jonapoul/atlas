@@ -73,8 +73,14 @@ public interface D2Spec : AtlasSpec {
   /**
    * If called, a task will be registered to convert any SVG outputs to PNGs. Has no effect if
    * [D2Spec.fileFormat] is not [FileFormat.Svg].
+   *
+   * @param scale Optional scale factor applied to the rendered PNG's resolution, e.g. 0.25 to
+   *   render at a quarter of the SVG's native size. D2 diagrams can have huge native dimensions,
+   *   and rasterizing filters (like drop-shadows) at full resolution is expensive, so setting this
+   *   to a fraction well below 1 can drastically speed up conversion for large diagrams. Leave
+   *   unset to render at native resolution.
    */
-  public fun convertSvgToPng(converter: SvgToPng.Converter)
+  public fun convertSvgToPng(converter: SvgToPng.Converter, scale: Float? = null)
 }
 
 /** https://d2lang.com/tour/style/#root */
