@@ -16,6 +16,7 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity.NONE
@@ -28,6 +29,8 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
   @get:[PathSensitive(NONE) InputFile]
   public abstract val inputFile: RegularFileProperty
   @get:Input public abstract val converter: Property<Converter>
+  @get:[Input Optional]
+  public abstract val scale: Property<Float>
   @get:OutputFile abstract override val outputFile: RegularFileProperty
   @get:Inject public abstract val execOperations: ExecOperations
 
@@ -46,7 +49,13 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
 
     val outputFile = outputFile.get().asFile
     val converter = converter.get()
-    val command = buildConverterCommand(converter, inputFile.absolutePath, outputFile.absolutePath)
+    val command =
+      buildConverterCommand(
+        converter,
+        inputFile.absolutePath,
+        outputFile.absolutePath,
+        scale.orNull,
+      )
     logger.info("Converting SVG to PNG using '$converter': $command")
 
     val errorBuffer = ByteArrayOutputStream()
@@ -74,18 +83,61 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
     logIfConfigured(outputFile)
   }
 
+  @Suppress("CyclomaticComplexMethod")
   private fun buildConverterCommand(
     converter: Converter,
     inputPath: String,
     outputPath: String,
+    scale: Float?,
   ): List<String> =
     when (converter) {
-      Converter.ImageMagick6 -> listOf(converter.value, inputPath, outputPath)
-      Converter.ImageMagick7 -> listOf(converter.value, inputPath, outputPath)
+      Converter.ImageMagick6,
+      Converter.ImageMagick7 ->
+        buildList {
+          add(converter.value)
+          // -density must precede the input file to affect rasterization, not just the output size
+          if (scale != null) {
+            add("-density")
+            add((DEFAULT_DPI * scale).toString())
+          }
+          add(inputPath)
+          add(outputPath)
+        }
+
       Converter.Inkscape ->
-        listOf(converter.value, inputPath, "--export-type=png", "--export-filename=$outputPath")
-      Converter.LibRsvg -> listOf(converter.value, "-o", outputPath, inputPath)
-      Converter.CairoSvg -> listOf(converter.value, inputPath, "-o", outputPath)
+        buildList {
+          add(converter.value)
+          add(inputPath)
+          add("--export-type=png")
+          add("--export-filename=$outputPath")
+          if (scale != null) {
+            add("--export-dpi=${DEFAULT_DPI * scale}")
+          }
+        }
+
+      Converter.LibRsvg ->
+        buildList {
+          add(converter.value)
+          add("-o")
+          add(outputPath)
+          if (scale != null) {
+            add("-z")
+            add(scale.toString())
+          }
+          add(inputPath)
+        }
+
+      Converter.CairoSvg ->
+        buildList {
+          add(converter.value)
+          add(inputPath)
+          add("-o")
+          add(outputPath)
+          if (scale != null) {
+            add("--scale")
+            add(scale.toString())
+          }
+        }
     }
 
   public enum class Converter(internal val value: String) {
@@ -99,15 +151,20 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
   }
 
   internal companion object {
+    /** Assumed DPI baseline that each converter's density/DPI/zoom flag scales relative to. */
+    private const val DEFAULT_DPI = 96f
+
     internal fun <T : TaskWithOutputFile> register(
       target: Project,
       svgTask: TaskProvider<T>,
       isEnabled: Provider<Boolean>,
       converter: Property<Converter>,
+      scale: Property<Float>,
     ): TaskProvider<SvgToPng> =
       with(target) {
         tasks.register("svgToPng", SvgToPng::class.java) { task ->
           task.converter.convention(converter)
+          task.scale.convention(scale)
           task.inputFile.convention(svgTask.flatMap { it.outputFile })
           task.outputFile.convention(
             svgTask.flatMap { t ->

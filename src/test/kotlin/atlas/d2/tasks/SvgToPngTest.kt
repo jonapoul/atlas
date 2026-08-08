@@ -60,6 +60,18 @@ internal class SvgToPngTest : ScenarioTest() {
 
   @Test
   @RequiresImageMagick6
+  fun `Convert SVG to PNG with a scale factor`() =
+    runScenario(SpecifiedSvgPngConverterAndScale) {
+      // when
+      val result = runTask("svgToPng").build()
+
+      // then both SVG and PNG were output
+      assertThat(result).allTasksSuccessful()
+      assertThat(rootDir).childExists("a/atlas/d2/chart.svg").childExists("a/atlas/d2/chart.png")
+    }
+
+  @Test
+  @RequiresImageMagick6
   fun `Don't run PNG conversion if file format is not SVG`() =
     runScenario(SpecifiedConverterButWrongFormat) {
       // when
@@ -101,6 +113,17 @@ internal class SvgToPngTest : ScenarioTest() {
       """
       d2 {
         convertSvgToPng(SvgToPng.Converter.${converter.name})
+        fileFormat = FileFormat.Svg
+      }
+      """
+        .trimIndent()
+  }
+
+  private object SpecifiedSvgPngConverterAndScale : D2Scenario by D2Basic {
+    override val atlasConfig: String =
+      """
+      d2 {
+        convertSvgToPng(SvgToPng.Converter.ImageMagick6, scale = 0.5f)
         fileFormat = FileFormat.Svg
       }
       """

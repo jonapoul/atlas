@@ -714,7 +714,8 @@ public final class atlas/d2/D2RootStyleSpec$DefaultImpls {
 }
 
 public abstract interface class atlas/d2/D2Spec : atlas/core/AtlasSpec {
-	public abstract fun convertSvgToPng (Latlas/d2/tasks/SvgToPng$Converter;)V
+	public abstract fun convertSvgToPng (Latlas/d2/tasks/SvgToPng$Converter;Ljava/lang/Float;)V
+	public static synthetic fun convertSvgToPng$default (Latlas/d2/D2Spec;Latlas/d2/tasks/SvgToPng$Converter;Ljava/lang/Float;ILjava/lang/Object;)V
 	public abstract fun getAnimateInterval ()Lorg/gradle/api/provider/Property;
 	public abstract fun getAnimateLinks ()Lorg/gradle/api/provider/Property;
 	public abstract fun getCenter ()Lorg/gradle/api/provider/Property;
@@ -733,6 +734,10 @@ public abstract interface class atlas/d2/D2Spec : atlas/core/AtlasSpec {
 	public abstract fun globalProps (Lorg/gradle/api/Action;)V
 	public abstract fun layoutEngine (Lorg/gradle/api/Action;)V
 	public abstract fun rootStyle (Lorg/gradle/api/Action;)V
+}
+
+public final class atlas/d2/D2Spec$DefaultImpls {
+	public static synthetic fun convertSvgToPng$default (Latlas/d2/D2Spec;Latlas/d2/tasks/SvgToPng$Converter;Ljava/lang/Float;ILjava/lang/Object;)V
 }
 
 public abstract interface class atlas/d2/D2TalaSpec : atlas/core/PropertiesSpec {
@@ -978,6 +983,7 @@ public abstract class atlas/d2/tasks/SvgToPng : org/gradle/api/DefaultTask, atla
 	public abstract fun getExecOperations ()Lorg/gradle/process/ExecOperations;
 	public abstract fun getInputFile ()Lorg/gradle/api/file/RegularFileProperty;
 	public abstract fun getOutputFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getScale ()Lorg/gradle/api/provider/Property;
 }
 
 public final class atlas/d2/tasks/SvgToPng$Converter : java/lang/Enum {
