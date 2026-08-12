@@ -17,6 +17,10 @@ pluginManagement {
   }
 }
 
+plugins {
+  id("io.github.gmazzo.publications.report") version "1.4.0"
+}
+
 dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
   repositories {
