@@ -47,6 +47,9 @@ internal fun Assert<BuildResult>.tasksHadResult(
 internal fun Assert<BuildResult>.tasksWereSuccessful(vararg names: String): Assert<BuildResult> =
   tasksHadResult(SUCCESS, *names)
 
+internal fun Assert<BuildResult>.tasksWereSkipped(vararg names: String): Assert<BuildResult> =
+  tasksHadResult(SKIPPED, *names)
+
 internal fun Assert<File>.contentEquals(expected: String): Assert<File> = transform { file ->
   val contents = file.readText().removeSuffix("\n")
   if (contents == expected) {

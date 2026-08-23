@@ -9,7 +9,8 @@ import atlas.test.childDoesNotExist
 import atlas.test.childExists
 import atlas.test.noTasksFailed
 import atlas.test.scenarios.D2Basic
-import atlas.test.tasksHadResult
+import atlas.test.tasksWereSkipped
+import atlas.test.tasksWereSuccessful
 import blueprint.test.runTask
 import blueprint.test.taskHadResult
 import java.lang.ProcessBuilder.Redirect.PIPE
@@ -51,8 +52,8 @@ internal class SvgToPngTest : ScenarioTest() {
       // and the charts were generated, but the PNGs weren't
       assertThat(result)
         .noTasksFailed()
-        .tasksHadResult(SUCCESS, ":a:execD2Chart", ":b:execD2Chart", ":c:execD2Chart")
-        .tasksHadResult(SKIPPED, ":a:svgToPng", ":b:svgToPng", ":c:svgToPng")
+        .tasksWereSuccessful(":a:execD2Chart", ":b:execD2Chart", ":c:execD2Chart")
+        .tasksWereSkipped(":a:svgToPng", ":b:svgToPng", ":c:svgToPng")
     }
 
   @Test
@@ -82,8 +83,8 @@ internal class SvgToPngTest : ScenarioTest() {
       // and the charts were generated, but the PNGs weren't
       assertThat(result)
         .noTasksFailed()
-        .tasksHadResult(SUCCESS, ":a:execD2Chart", ":b:execD2Chart", ":c:execD2Chart")
-        .tasksHadResult(SKIPPED, ":a:svgToPng", ":b:svgToPng", ":c:svgToPng")
+        .tasksWereSuccessful(":a:execD2Chart", ":b:execD2Chart", ":c:execD2Chart")
+        .tasksWereSkipped(":a:svgToPng", ":b:svgToPng", ":c:svgToPng")
     }
 
   private fun assumeConverterIsInstalled(converter: SvgToPng.Converter) {

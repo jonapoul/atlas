@@ -106,6 +106,7 @@ kotlin {
 
     freeCompilerArgs.addAll(
       "-Xcontext-sensitive-resolution", // https://kotlinlang.org/docs/whatsnew22.html#preview-of-context-sensitive-resolution
+      "-Xintrinsic-const-evaluation", // https://kotlinlang.org/docs/whatsnew24.html#improved-compile-time-constants
       "-opt-in=kotlin.RequiresOptIn",
       "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
     )
