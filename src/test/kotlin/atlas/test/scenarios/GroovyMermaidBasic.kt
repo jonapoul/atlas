@@ -2,7 +2,9 @@ package atlas.test.scenarios
 
 import atlas.test.MermaidScenario
 
-/** No `atlasConfig` at all, so the only Mermaid config is the bare `mermaid()` call emitted for it. */
+/**
+ * No `atlasConfig` at all, so the only Mermaid config is the bare `mermaid()` call emitted for it.
+ */
 internal object GroovyMermaidBasic : MermaidScenario {
   override val isGroovy = true
 
