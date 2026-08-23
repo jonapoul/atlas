@@ -63,13 +63,13 @@ internal class WriteProjectTreeTest : ScenarioTest() {
             fromPath = ":a",
             toPath = ":b",
             configuration = "commonMainImplementation",
-            type = LinkType(configuration = "commonMainImplementation", style = LinkStyle.Solid),
+            type = LinkType(configuration = "commonMainImplementation", style = Solid),
           ),
           ProjectLink(
             fromPath = ":a",
             toPath = ":c",
             configuration = "commonMainApi",
-            type = LinkType(configuration = "commonMainApi", style = LinkStyle.Dotted),
+            type = LinkType(configuration = "commonMainApi", style = Dotted),
           ),
         )
     }

@@ -1,7 +1,6 @@
 package atlas.core.internal
 
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -16,7 +15,7 @@ internal val AtlasJson: Json = Json {
 
 internal object RegexSerializer : KSerializer<Regex> {
   override val descriptor =
-    PrimitiveSerialDescriptor(serialName = "kotlin.text.Regex", kind = PrimitiveKind.STRING)
+    PrimitiveSerialDescriptor(serialName = "kotlin.text.Regex", kind = STRING)
 
   override fun serialize(encoder: Encoder, value: Regex) = encoder.encodeString(value.pattern)
 

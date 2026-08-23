@@ -5,15 +5,13 @@ import atlas.core.internal.AtlasArtifact
 import atlas.core.internal.AtlasContext
 import atlas.core.internal.ChartFiles
 import atlas.core.internal.FrameworkTasks
-import atlas.core.internal.Variant.Chart
-import atlas.core.internal.Variant.Legend
 import atlas.core.internal.publishAtlasArtifact
 import atlas.core.tasks.CheckFileDiff
 import atlas.mermaid.tasks.WriteMarkdownLegend
 import atlas.mermaid.tasks.WriteMermaidChart
 
 internal object MermaidTasks : FrameworkTasks {
-  override val framework: Framework = Framework.Mermaid
+  override val framework: Framework = Mermaid
 
   override fun registerRootTasks(context: AtlasContext): Unit =
     with(context.project) {

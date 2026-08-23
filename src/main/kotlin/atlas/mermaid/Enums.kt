@@ -3,10 +3,6 @@
 package atlas.mermaid
 
 import atlas.core.StringEnum
-import atlas.mermaid.ConsiderModelOrder.NodesAndEdges
-import atlas.mermaid.CycleBreakingStrategy.GreedyModelOrder
-import atlas.mermaid.Look.Classic
-import atlas.mermaid.NodePlacementStrategy.BrandesKoepf
 
 /**
  * [ElkLayoutSpec]-specific option affecting how nodes are placed. Default value is [BrandesKoepf].

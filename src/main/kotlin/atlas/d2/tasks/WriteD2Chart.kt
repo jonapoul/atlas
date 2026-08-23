@@ -2,7 +2,6 @@ package atlas.d2.tasks
 
 import atlas.core.Replacement
 import atlas.core.internal.ATLAS_TASK_GROUP
-import atlas.core.internal.AtlasArtifact
 import atlas.core.internal.AtlasContext
 import atlas.core.internal.DummyAtlasGenerationTask
 import atlas.core.internal.logIfConfigured
@@ -25,7 +24,6 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.work.DisableCachingByDefault
@@ -93,7 +91,7 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
       pathToClassesFile: Provider<String>,
     ): TaskProvider<T> =
       with(context.project) {
-        val collatedTypes = context.fromRoot(AtlasArtifact.CollatedTypes)
+        val collatedTypes = context.fromRoot(CollatedTypes)
         val writeProjectTree = WriteProjectTree.get(this)
         val name = "write${T::class.qualifier}D2Chart"
         val writeChart =
@@ -105,7 +103,7 @@ public abstract class WriteD2Chart : DefaultTask(), TaskWithOutputFile, AtlasGen
           }
 
         writeChart.configure { task ->
-          task.projectTypesFile.fileProvider(collatedTypes.singleFile(AtlasArtifact.CollatedTypes))
+          task.projectTypesFile.fileProvider(collatedTypes.singleFile(CollatedTypes))
           task.dependsOn(collatedTypes)
           task.groupProjects.convention(context.config.groupProjects)
           task.replacements.convention(context.config.replacements)

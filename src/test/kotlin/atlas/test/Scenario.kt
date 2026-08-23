@@ -32,18 +32,18 @@ internal interface Scenario {
 }
 
 internal interface D2Scenario : Scenario {
-  override val frameworks
-    get() = setOf(Framework.D2)
+  override val frameworks: Set<Framework>
+    get() = setOf(D2)
 }
 
 internal interface GraphvizScenario : Scenario {
-  override val frameworks
-    get() = setOf(Framework.Graphviz)
+  override val frameworks: Set<Framework>
+    get() = setOf(Graphviz)
 }
 
 internal interface MermaidScenario : Scenario {
-  override val frameworks
-    get() = setOf(Framework.Mermaid)
+  override val frameworks: Set<Framework>
+    get() = setOf(Mermaid)
 }
 
 /** The single framework a scenario uses, for tests which assert on generated file paths. */

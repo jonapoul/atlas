@@ -1,6 +1,5 @@
 package atlas.graphviz.internal
 
-import atlas.core.Framework.Graphviz
 import atlas.core.Replacement
 import atlas.core.internal.ChartWriter
 import atlas.core.internal.IndentedStringBuilder

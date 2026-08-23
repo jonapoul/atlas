@@ -14,9 +14,6 @@ import blueprint.test.runTask
 import blueprint.test.taskHadResult
 import java.lang.ProcessBuilder.Redirect.PIPE
 import kotlin.test.Test
-import org.gradle.testkit.runner.TaskOutcome.SKIPPED
-import org.gradle.testkit.runner.TaskOutcome.SUCCESS
-import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
 import org.junit.jupiter.api.Assumptions.assumeTrue
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource

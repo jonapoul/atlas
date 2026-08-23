@@ -93,14 +93,14 @@ internal fun Project.outputFile(
 ): File {
   val directory =
     when (variant) {
-      Variant.Chart -> layout.projectDirectory.asFile.resolve(DIR_NAME)
-      Variant.Legend -> config.rootDir.resolve(DIR_NAME)
+      Chart -> layout.projectDirectory.asFile.resolve(DIR_NAME)
+      Legend -> config.rootDir.resolve(DIR_NAME)
     }
   return directory.resolve(framework.string).resolve("$filename.$fileExtension")
 }
 
 private fun defaultFilename(variant: Variant) =
   when (variant) {
-    Variant.Chart -> "chart"
-    Variant.Legend -> "legend"
+    Chart -> "chart"
+    Legend -> "legend"
   }

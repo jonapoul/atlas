@@ -1,12 +1,10 @@
 package atlas.graphviz.tasks
 
-import atlas.core.Framework.Graphviz
 import atlas.core.LinkType
 import atlas.core.ProjectType
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.AtlasContext
 import atlas.core.internal.DummyAtlasGenerationTask
-import atlas.core.internal.Variant.Legend
 import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.buildIndentedString
 import atlas.core.internal.logIfConfigured

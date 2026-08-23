@@ -1,7 +1,6 @@
 package atlas.test
 
 import assertk.Assert
-import assertk.assertThat
 import assertk.assertions.contains as assertkContains
 import assertk.assertions.doesNotContain as assertkDoesNotContain
 import assertk.assertions.exists as assertkExists
@@ -15,7 +14,6 @@ import java.io.File
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.BuildTask
 import org.gradle.testkit.runner.TaskOutcome
-import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
 internal fun RunningScenario.resolve(path: String): File = rootDir.resolve(path)
 
@@ -23,7 +21,7 @@ internal fun Assert<BuildResult>.allTasksSuccessful(): Assert<List<BuildTask>> =
   prop(BuildResult::getTasks).allSuccessful()
 
 internal fun Assert<BuildResult>.noTasksFailed(): Assert<BuildResult> = transform { result ->
-  val failures = result.tasks.filter { task -> task.outcome == TaskOutcome.FAILED }
+  val failures = result.tasks.filter { task -> task.outcome == FAILED }
   if (failures.isEmpty()) {
     result
   } else {

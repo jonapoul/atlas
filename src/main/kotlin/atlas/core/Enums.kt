@@ -29,9 +29,9 @@ public enum class LinkStyle(override val string: String) : StringEnum {
         Solid,
         Bold,
         Dashed,
-        Invisible -> setOf(Framework.D2, Framework.Graphviz, Framework.Mermaid)
-        Dotted -> setOf(Framework.D2, Framework.Graphviz)
-        Tapered -> setOf(Framework.Graphviz)
+        Invisible -> setOf(D2, Graphviz, Mermaid)
+        Dotted -> setOf(D2, Graphviz)
+        Tapered -> setOf(Graphviz)
       }
 
   override fun toString(): String = string

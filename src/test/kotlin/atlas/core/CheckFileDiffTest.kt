@@ -15,8 +15,6 @@ import atlas.test.scenarios.GraphVizBasicWithPngOutput
 import atlas.test.scenarios.GraphvizBasic
 import blueprint.test.runTask
 import blueprint.test.taskSucceeded
-import org.gradle.testkit.runner.TaskOutcome.FAILED
-import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.junit.jupiter.api.Test
 
 internal class CheckFileDiffTest : ScenarioTest() {

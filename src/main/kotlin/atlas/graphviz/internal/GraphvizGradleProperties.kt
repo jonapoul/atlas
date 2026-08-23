@@ -9,6 +9,6 @@ import org.gradle.api.provider.ProviderFactory
 
 internal class GraphvizGradleProperties(override val providers: ProviderFactory) :
   IGradleProperties {
-  val fileFormat: Provider<FileFormat> = enum("atlas.graphviz.fileFormat", default = FileFormat.Svg)
+  val fileFormat: Provider<FileFormat> = enum("atlas.graphviz.fileFormat", default = Svg)
   val layoutEngine: Provider<LayoutEngine> = enum("atlas.graphviz.layoutEngine", default = null)
 }

@@ -12,7 +12,6 @@ import atlas.test.scenarios.MermaidWithLinkTypes
 import blueprint.test.runTask
 import blueprint.test.taskHadResult
 import kotlin.test.Test
-import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
 internal class WriteReadmeTest : ScenarioTest() {
   @Test

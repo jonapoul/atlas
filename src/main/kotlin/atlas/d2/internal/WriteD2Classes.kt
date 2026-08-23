@@ -2,7 +2,6 @@
 
 package atlas.d2.internal
 
-import atlas.core.Framework.D2
 import atlas.core.LinkStyle
 import atlas.core.LinkType
 import atlas.core.ProjectType
@@ -14,8 +13,6 @@ import atlas.d2.Direction
 import atlas.d2.LayoutEngine
 import atlas.d2.Location
 import atlas.d2.Position
-import atlas.d2.Position.CenterLeft
-import atlas.d2.Position.CenterRight
 import atlas.d2.Theme
 import java.io.Serializable as JSerializable
 import kotlinx.serialization.Serializable as KSerializable
@@ -118,13 +115,13 @@ private fun linkAttributes(config: D2ClassesConfig, link: LinkType): List<Pair<S
 
   val style = link.style
   when (style) {
-    LinkStyle.Dashed -> attrs["style.stroke-dash"] = "4"
-    LinkStyle.Dotted -> attrs["style.stroke-dash"] = "2"
-    LinkStyle.Invisible -> attrs["style.opacity"] = "0"
-    LinkStyle.Bold -> attrs["style.stroke-width"] = "3"
+    Dashed -> attrs["style.stroke-dash"] = "4"
+    Dotted -> attrs["style.stroke-dash"] = "2"
+    Invisible -> attrs["style.opacity"] = "0"
+    Bold -> attrs["style.stroke-width"] = "3"
     // D2 has no tapered links, so they're drawn like any other solid one
-    LinkStyle.Solid,
-    LinkStyle.Tapered,
+    Solid,
+    Tapered,
     null -> Unit
   }
 
@@ -161,7 +158,7 @@ private fun IndentedStringBuilder.appendGroupLabelSpecifier(config: D2ClassesCon
     } else {
       // need to swap the order to "left-center" if we have a location specifier prefix
       val rejiggedPosition =
-        if (position in setOf(CenterLeft, CenterRight)) {
+        if (position in setOf<Position>(CenterLeft, CenterRight)) {
           position.toString().split("-").let { str -> "${str[1]}-${str[0]}" }
         } else {
           position.toString()
@@ -227,4 +224,4 @@ private fun IndentedStringBuilder.appendGlobs(config: D2ClassesConfig) =
     }
   }
 
-private val ANIMATABLE_LINK_TYPES = setOf(LinkStyle.Dashed, LinkStyle.Dotted)
+private val ANIMATABLE_LINK_TYPES = setOf<LinkStyle>(Dashed, Dotted)
