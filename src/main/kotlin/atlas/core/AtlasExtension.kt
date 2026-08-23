@@ -108,6 +108,7 @@ public interface AtlasExtension {
    */
   public val d2: D2Spec
 
+  /** Configures [d2], registering D2 chart generation. */
   public fun d2(action: Action<D2Spec>)
 
   /** Registers D2 chart generation with default configuration. */
@@ -119,6 +120,7 @@ public interface AtlasExtension {
    */
   public val graphviz: GraphvizSpec
 
+  /** Configures [graphviz], registering Graphviz chart generation. */
   public fun graphviz(action: Action<GraphvizSpec>)
 
   /** Registers Graphviz chart generation with default configuration. */
@@ -130,6 +132,7 @@ public interface AtlasExtension {
    */
   public val mermaid: MermaidSpec
 
+  /** Configures [mermaid], registering Mermaid chart generation. */
   public fun mermaid(action: Action<MermaidSpec>)
 
   /** Registers Mermaid chart generation with default configuration. */
