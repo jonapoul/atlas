@@ -5,8 +5,6 @@ import atlas.core.internal.AtlasArtifact
 import atlas.core.internal.AtlasContext
 import atlas.core.internal.ChartFiles
 import atlas.core.internal.FrameworkTasks
-import atlas.core.internal.Variant.Chart
-import atlas.core.internal.Variant.Legend
 import atlas.core.internal.publishAtlasArtifact
 import atlas.core.tasks.CheckFileDiff
 import atlas.graphviz.tasks.ExecGraphviz
@@ -14,7 +12,7 @@ import atlas.graphviz.tasks.WriteGraphvizChart
 import atlas.graphviz.tasks.WriteGraphvizLegend
 
 internal object GraphvizTasks : FrameworkTasks {
-  override val framework: Framework = Framework.Graphviz
+  override val framework: Framework = Graphviz
 
   override fun registerRootTasks(context: AtlasContext): Unit =
     with(context.project) {

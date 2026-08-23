@@ -19,7 +19,6 @@ import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.process.ExecOperations
@@ -91,8 +90,8 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
     scale: Float?,
   ): List<String> =
     when (converter) {
-      Converter.ImageMagick6,
-      Converter.ImageMagick7 ->
+      ImageMagick6,
+      ImageMagick7 ->
         buildList {
           add(converter.value)
           // -density must precede the input file to affect rasterization, not just the output size
@@ -104,7 +103,7 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
           add(outputPath)
         }
 
-      Converter.Inkscape ->
+      Inkscape ->
         buildList {
           add(converter.value)
           add(inputPath)
@@ -115,7 +114,7 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
           }
         }
 
-      Converter.LibRsvg ->
+      LibRsvg ->
         buildList {
           add(converter.value)
           add("-o")
@@ -127,7 +126,7 @@ public abstract class SvgToPng : DefaultTask(), AtlasGenerationTask, TaskWithOut
           add(inputPath)
         }
 
-      Converter.CairoSvg ->
+      CairoSvg ->
         buildList {
           add(converter.value)
           add(inputPath)

@@ -1,9 +1,5 @@
 package atlas.core.internal
 
-import atlas.core.internal.AtlasArtifact.Companion.CollatedLinks
-import atlas.core.internal.AtlasArtifact.Companion.CollatedTypes
-import atlas.core.internal.AtlasArtifact.Companion.ProjectLinks
-import atlas.core.internal.AtlasArtifact.Companion.ProjectType as ProjectTypeArtifact
 import atlas.core.tasks.AtlasGenerationTask
 import atlas.core.tasks.CheckFileDiff
 import atlas.core.tasks.CollateProjectLinks
@@ -42,7 +38,7 @@ private fun wireRoot(context: AtlasContext) =
     val collateTypes =
       CollateProjectTypes.register(
         target = this,
-        projectTypeFiles = consumeAtlasArtifact(ProjectTypeArtifact, paths, lenient = true),
+        projectTypeFiles = consumeAtlasArtifact(ProjectType, paths, lenient = true),
       )
     val collateLinks =
       CollateProjectLinks.register(
@@ -72,7 +68,7 @@ private fun wireChild(context: AtlasContext) =
     val writeLinks = WriteProjectLinks.register(this, context.config)
 
     publishAtlasArtifact(
-      artifact = ProjectTypeArtifact,
+      artifact = ProjectType,
       file = writeType.flatMap { it.outputFile },
       builtBy = writeType,
     )

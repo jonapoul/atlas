@@ -1,12 +1,10 @@
 package atlas.mermaid.tasks
 
-import atlas.core.Framework.Mermaid
 import atlas.core.LinkType
 import atlas.core.ProjectType
 import atlas.core.internal.ATLAS_TASK_GROUP
 import atlas.core.internal.AtlasContext
 import atlas.core.internal.DummyAtlasGenerationTask
-import atlas.core.internal.Variant.Legend
 import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.logIfConfigured
 import atlas.core.internal.outputFile

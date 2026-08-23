@@ -49,8 +49,8 @@ internal class AtlasContext(
 
   fun specFor(framework: Framework) =
     when (framework) {
-      Framework.D2 -> d2
-      Framework.Graphviz -> graphviz
-      Framework.Mermaid -> mermaid
+      D2 -> d2
+      Graphviz -> graphviz
+      Mermaid -> mermaid
     }
 }

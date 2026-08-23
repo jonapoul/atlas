@@ -38,27 +38,27 @@ internal value class AtlasArtifact(private val id: String) {
     get() = id.split("-").joinToString(separator = "") { it.replaceFirstChar(Char::uppercaseChar) }
 
   companion object {
-    /** One project's own type, produced by [atlas.core.tasks.WriteProjectType]. */
+    // One project's own type, produced by [atlas.core.tasks.WriteProjectType]
     val ProjectType = AtlasArtifact("project-type")
 
-    /** One project's direct links, produced by [atlas.core.tasks.WriteProjectLinks]. */
+    // One project's direct links, produced by [atlas.core.tasks.WriteProjectLinks]
     val ProjectLinks = AtlasArtifact("project-links")
 
-    /** Every project's type, produced by [atlas.core.tasks.CollateProjectTypes] on the root. */
+    // Every project's type, produced by [atlas.core.tasks.CollateProjectTypes] on the root
     val CollatedTypes = AtlasArtifact("collated-types")
 
-    /** Every project's links, produced by [atlas.core.tasks.CollateProjectLinks] on the root. */
+    // Every project's links, produced by [atlas.core.tasks.CollateProjectLinks] on the root
     val CollatedLinks = AtlasArtifact("collated-links")
 
-    /** The class definitions every D2 chart shares, written once on the root. */
+    // The class definitions every D2 chart shares, written once on the root
     val D2Classes = AtlasArtifact("d2-classes")
 
-    /** The shared legend a framework draws once on the root, and every README links to. */
+    // The shared legend a framework draws once on the root, and every README links to
     fun legend(framework: Framework) = AtlasArtifact("legend-${framework.string}")
   }
 }
 
-/** Publishes [file] so that other projects can resolve it as [artifact]. */
+// Publishes [file] so that other projects can resolve it as [artifact]
 internal fun Project.publishAtlasArtifact(
   artifact: AtlasArtifact,
   file: Provider<RegularFile>,

@@ -11,8 +11,6 @@ import atlas.test.scenarios.D2CustomLayoutEngine
 import blueprint.test.runTask
 import blueprint.test.taskHadResult
 import kotlin.test.Test
-import org.gradle.testkit.runner.TaskOutcome.SUCCESS
-import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
 
 internal class ExecD2Test : ScenarioTest() {
   @Test

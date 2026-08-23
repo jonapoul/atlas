@@ -1,7 +1,6 @@
 package atlas.d2.internal
 
 import assertk.assertThat
-import atlas.core.LinkStyle
 import atlas.core.Replacement
 import atlas.d2.d2Writer
 import atlas.test.Abc
@@ -318,8 +317,8 @@ internal class D2WriterTest {
   private object D2AbcWithLinkStyles : ProjectLayout by Abc {
     override val links =
       setOf(
-        projectLink(fromPath = ":a", toPath = ":b", style = LinkStyle.Dashed, color = "orange"),
-        projectLink(fromPath = ":a", toPath = ":c", style = LinkStyle.Bold),
+        projectLink(fromPath = ":a", toPath = ":b", style = Dashed, color = "orange"),
+        projectLink(fromPath = ":a", toPath = ":c", style = Bold),
       )
   }
 }

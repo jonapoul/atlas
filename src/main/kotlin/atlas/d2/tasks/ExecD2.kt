@@ -1,7 +1,6 @@
 package atlas.d2.tasks
 
 import atlas.core.internal.ATLAS_TASK_GROUP
-import atlas.core.internal.AtlasArtifact
 import atlas.core.internal.Variant
 import atlas.core.internal.logIfConfigured
 import atlas.core.internal.singleFile
@@ -25,7 +24,6 @@ import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.process.ExecOperations
@@ -68,7 +66,7 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
     val d2Executable = pathToD2Command.getOrElse("d2")
     val cliArguments = cliArguments.getOrElse(mutableMapOf())
 
-    if (outputFormat.get() == FileFormat.Gif) {
+    if (outputFormat.get() == Gif) {
       cliArguments += "animate-interval" to animateInterval.get().toString()
     }
 
@@ -116,7 +114,7 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
           val outputFile =
             d2File.withExtension(target, extension = provider { spec.fileFormat.get() })
 
-          task.classesFile.fileProvider(classesFile.singleFile(AtlasArtifact.D2Classes))
+          task.classesFile.fileProvider(classesFile.singleFile(D2Classes))
           task.dependsOn(classesFile)
           task.inputFile.convention(d2File)
           task.pathToD2Command.convention(spec.pathToD2Command)

@@ -1,12 +1,9 @@
 package atlas.d2.internal
 
 import atlas.core.Framework
-import atlas.core.internal.AtlasArtifact
 import atlas.core.internal.AtlasContext
 import atlas.core.internal.ChartFiles
 import atlas.core.internal.FrameworkTasks
-import atlas.core.internal.Variant.Chart
-import atlas.core.internal.Variant.Legend
 import atlas.core.internal.atlasBuildDirectory
 import atlas.core.internal.outputFile
 import atlas.core.internal.publishAtlasArtifact
@@ -20,7 +17,7 @@ import atlas.d2.tasks.WriteD2Classes
 import org.gradle.api.Project
 
 internal object D2Tasks : FrameworkTasks {
-  override val framework: Framework = Framework.D2
+  override val framework: Framework = D2
 
   override fun registerRootTasks(context: AtlasContext): Unit =
     with(context.project) {
@@ -46,7 +43,7 @@ internal object D2Tasks : FrameworkTasks {
       // Every project's chart references this one file, and under isolated projects a subproject
       // can't reach the task that writes it, so publish it as an artifact instead.
       publishAtlasArtifact(
-        artifact = AtlasArtifact.D2Classes,
+        artifact = D2Classes,
         file = classes.flatMap { it.outputFile },
         builtBy = classes,
       )
@@ -73,7 +70,7 @@ internal object D2Tasks : FrameworkTasks {
 
       // need to use the same pathToClassesFile string for real and dummy tasks, otherwise the check
       // operation might fail if the project and the build directory have different relative paths.
-      val classesFile = context.fromRoot(AtlasArtifact.D2Classes)
+      val classesFile = context.fromRoot(D2Classes)
       val outputFile =
         outputFile(
           config = context.config,
@@ -82,7 +79,7 @@ internal object D2Tasks : FrameworkTasks {
           fileExtension = d2Spec.fileExtension.get(),
         )
       val pathToClassesFile =
-        classesFile.singleFile(AtlasArtifact.D2Classes).map {
+        classesFile.singleFile(D2Classes).map {
           it.relativeTo(outputFile.parentFile).path
         }
 
@@ -118,7 +115,7 @@ internal object D2Tasks : FrameworkTasks {
           classesFile = classesFile,
         )
 
-      val isSvgInput = d2Spec.fileFormat.map { it == FileFormat.Svg }
+      val isSvgInput = d2Spec.fileFormat.map { it == Svg }
       val runSvgToPng = provider { isSvgInput.get() && d2Spec.converter.isPresent }
 
       val svgToPng =
@@ -143,7 +140,7 @@ internal object D2Tasks : FrameworkTasks {
     val d2 = context.d2
     val format = d2.fileFormat.get()
     val shouldSuppress = d2.properties.suppressPlaywrightWarning.get()
-    val simpleFormats = setOf(FileFormat.Svg, FileFormat.Ascii)
+    val simpleFormats = setOf<FileFormat>(Svg, Ascii)
     if (format !in simpleFormats && !shouldSuppress) {
       logger.warn(
         "Warning: Most of D2's output formats (including your selection: $format) require installation of " +
@@ -172,7 +169,7 @@ internal object D2Tasks : FrameworkTasks {
   private fun Project.warnIfAnimationSelectedWithNonAnimatedFileFormat(context: AtlasContext) {
     val d2 = context.d2
     val format = d2.fileFormat.get()
-    val animatedFormats = setOf(FileFormat.Svg, FileFormat.Gif)
+    val animatedFormats = setOf<FileFormat>(Svg, Gif)
     val animated = d2.animateLinks.orNull
     val shouldSuppress = d2.properties.suppressAnimationWarning.get()
     if (animated == true && format !in animatedFormats && !shouldSuppress) {

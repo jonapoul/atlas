@@ -17,8 +17,6 @@ import blueprint.test.runTask
 import blueprint.test.taskHadResult
 import blueprint.test.taskSucceeded
 import kotlin.test.Test
-import org.gradle.testkit.runner.TaskOutcome.SUCCESS
-import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
 
 internal class WriteProjectTypeTest : ScenarioTest() {
   @Test

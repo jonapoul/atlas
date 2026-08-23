@@ -1,6 +1,5 @@
 package atlas.mermaid.internal
 
-import atlas.core.Framework.Mermaid
 import atlas.core.LinkStyle
 import atlas.core.LinkType
 import atlas.core.Replacement
@@ -96,7 +95,7 @@ internal class MermaidWriter(
     val animateLinks = config.animateLinks == true
     links.forEachIndexed { i, link ->
       val arrowPrefix = if (animateLinks) "link$i@" else ""
-      val style = link.type?.style ?: LinkStyle.Solid
+      val style = link.type?.style ?: Solid
 
       val arrow = getArrow(link.type, style)
       val from = typedProjects.first { it.projectPath == link.fromPath }.cleaned().label
@@ -127,21 +126,21 @@ internal class MermaidWriter(
     // Mermaid has no dotted or tapered links, so they fall back to the closest thing it has
     return if (showLabels && name != null) {
       when (style) {
-        LinkStyle.Solid,
-        LinkStyle.Tapered -> "--$name-->"
-        LinkStyle.Bold -> "==$name==>"
-        LinkStyle.Dashed,
-        LinkStyle.Dotted -> "-.$name.->"
-        LinkStyle.Invisible -> "~~~|$name|"
+        Solid,
+        Tapered -> "--$name-->"
+        Bold -> "==$name==>"
+        Dashed,
+        Dotted -> "-.$name.->"
+        Invisible -> "~~~|$name|"
       }
     } else {
       when (style) {
-        LinkStyle.Solid,
-        LinkStyle.Tapered -> "-->"
-        LinkStyle.Bold -> "==>"
-        LinkStyle.Dashed,
-        LinkStyle.Dotted -> "-.->"
-        LinkStyle.Invisible -> "~~~"
+        Solid,
+        Tapered -> "-->"
+        Bold -> "==>"
+        Dashed,
+        Dotted -> "-.->"
+        Invisible -> "~~~"
       }
     }
   }

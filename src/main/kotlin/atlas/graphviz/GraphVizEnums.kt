@@ -3,7 +3,6 @@
 package atlas.graphviz
 
 import atlas.core.StringEnum
-import atlas.graphviz.LayoutEngine.Dot
 
 /**
  * The default style applied to every edge from [EdgeAttributes.linkStyle]. Individual link types

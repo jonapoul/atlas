@@ -105,6 +105,7 @@ kotlin {
     explicitApi()
 
     freeCompilerArgs.addAll(
+      "-Xcontext-sensitive-resolution", // https://kotlinlang.org/docs/whatsnew22.html#preview-of-context-sensitive-resolution
       "-opt-in=kotlin.RequiresOptIn",
       "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
     )

@@ -2,7 +2,6 @@ package atlas.core.tasks
 
 import atlas.core.LinkType
 import atlas.core.internal.ATLAS_TASK_GROUP
-import atlas.core.internal.AtlasArtifact
 import atlas.core.internal.AtlasConfig
 import atlas.core.internal.ProjectLink
 import atlas.core.internal.fileInBuildDirectory
@@ -20,7 +19,6 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity.NONE
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
@@ -51,9 +49,9 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
 
     val tree = mutableSetOf<ProjectLink>()
     if (alsoTraverseUpwards.get()) {
-      calculate(thisPath, Direction.Up, links, tree)
+      calculate(thisPath, Up, links, tree)
     }
-    calculate(thisPath, Direction.Down, links, tree)
+    calculate(thisPath, Down, links, tree)
 
     val outputFile = outputFile.get().asFile
     writeProjectLinks(tree, outputFile)
@@ -109,7 +107,7 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
     tree: MutableSet<ProjectLink>,
   ) {
     when (direction) {
-      Direction.Up -> {
+      Up -> {
         val relevantLinks = links.filter { it.toPath == targetPath }
         tree += relevantLinks
         for (link in relevantLinks) {
@@ -117,7 +115,7 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
         }
       }
 
-      Direction.Down -> {
+      Down -> {
         val relevantLinks = links.filter { it.fromPath == targetPath }
         tree += relevantLinks
         for (link in relevantLinks) {
@@ -148,7 +146,7 @@ public abstract class WriteProjectTree : DefaultTask(), TaskWithOutputFile {
 
         writeProjectTree.configure { task ->
           task.linkTypes.convention(config.linkTypes)
-          task.collatedLinks.fileProvider(collatedLinks.singleFile(AtlasArtifact.CollatedLinks))
+          task.collatedLinks.fileProvider(collatedLinks.singleFile(CollatedLinks))
           task.dependsOn(collatedLinks)
         }
 

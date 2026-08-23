@@ -10,16 +10,14 @@ import kotlin.test.assertFailsWith
 internal class EnumsTest {
   @Test
   fun `Parse an int enum from its number`() {
-    assertThat(parseIntEnum<Theme>("201")).isEqualTo(Theme.DarkFlagshipTerrastruct)
+    assertThat(parseIntEnum<Theme>("201")).isEqualTo(DarkFlagshipTerrastruct)
   }
 
   @Test
   fun `Parse an int enum from its name`() {
     // the DSL only ever names these, so a gradle property has to accept the name too
-    assertThat(parseIntEnum<Theme>("DarkFlagshipTerrastruct"))
-      .isEqualTo(Theme.DarkFlagshipTerrastruct)
-    assertThat(parseIntEnum<Theme>("darkflagshipterrastruct"))
-      .isEqualTo(Theme.DarkFlagshipTerrastruct)
+    assertThat(parseIntEnum<Theme>("DarkFlagshipTerrastruct")).isEqualTo(DarkFlagshipTerrastruct)
+    assertThat(parseIntEnum<Theme>("darkflagshipterrastruct")).isEqualTo(DarkFlagshipTerrastruct)
   }
 
   @Test

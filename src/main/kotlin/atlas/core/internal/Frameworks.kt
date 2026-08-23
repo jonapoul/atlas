@@ -1,9 +1,6 @@
 package atlas.core.internal
 
 import atlas.core.Framework
-import atlas.core.Framework.D2
-import atlas.core.Framework.Graphviz
-import atlas.core.Framework.Mermaid
 import atlas.d2.internal.D2Tasks
 import atlas.graphviz.internal.GraphvizTasks
 import atlas.mermaid.internal.MermaidTasks

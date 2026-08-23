@@ -19,6 +19,9 @@ import atlas.d2.ElkAlgorithm
 import atlas.d2.FillPattern
 import atlas.d2.Font
 import atlas.d2.LayoutEngine
+import atlas.d2.LayoutEngine.Dagre
+import atlas.d2.LayoutEngine.Elk
+import atlas.d2.LayoutEngine.Tala
 import atlas.d2.tasks.SvgToPng
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
@@ -93,17 +96,17 @@ internal class D2LayoutEngineSpecImpl(objects: ObjectFactory) :
   override val tala = D2TalaSpecImpl(this)
 
   override fun dagre(config: Action<D2DagreSpec>?) {
-    layoutEngine.set(LayoutEngine.Dagre)
+    layoutEngine.set(Dagre)
     config?.execute(dagre)
   }
 
   override fun elk(config: Action<D2ElkSpec>?) {
-    layoutEngine.set(LayoutEngine.Elk)
+    layoutEngine.set(Elk)
     config?.execute(elk)
   }
 
   override fun tala(config: Action<D2TalaSpec>?) {
-    layoutEngine.set(LayoutEngine.Tala)
+    layoutEngine.set(Tala)
     config?.execute(tala)
   }
 }

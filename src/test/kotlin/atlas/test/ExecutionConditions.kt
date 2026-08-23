@@ -2,6 +2,8 @@ package atlas.test
 
 import kotlin.test.fail
 import org.junit.jupiter.api.extension.ConditionEvaluationResult
+import org.junit.jupiter.api.extension.ConditionEvaluationResult.disabled
+import org.junit.jupiter.api.extension.ConditionEvaluationResult.enabled
 import org.junit.jupiter.api.extension.ExecutionCondition
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.ExtensionContext
@@ -23,15 +25,13 @@ internal class RequiresCommandExtension : ExecutionCondition {
         ?.mapNotNull { a -> a.commandOrNull() }
         .orEmpty()
         .ifEmpty {
-          return ConditionEvaluationResult.enabled("No element found")
+          return enabled("No element found")
         }
 
     val missingCommands = allCommands.filter { cmd -> !isCommandAvailable(cmd) }
 
     return if (missingCommands.isEmpty()) {
-      ConditionEvaluationResult.enabled(
-        "All required commands are available: ${allCommands.joinToString()}"
-      )
+      enabled("All required commands are available: ${allCommands.joinToString()}")
     } else {
       val reason = "Missing required commands: ${missingCommands.joinToString()}"
 
@@ -39,7 +39,7 @@ internal class RequiresCommandExtension : ExecutionCondition {
         fail(reason)
       } else {
         System.err.println("WARNING: $reason - skipping test")
-        ConditionEvaluationResult.disabled(reason)
+        disabled(reason)
       }
     }
   }
@@ -59,5 +59,5 @@ internal class RequiresCommandExtension : ExecutionCondition {
       false
     }
 
-  private fun isWindows() = System.getProperty("os.name").lowercase().contains("win")
+  private fun isWindows() = System.getProperty("os.name").contains("win", ignoreCase = true)
 }

@@ -8,13 +8,12 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.provider.ProviderFactory
 
 internal class CoreGradleProperties(override val providers: ProviderFactory) : IGradleProperties {
-  val alsoTraverseUpwards: Provider<Boolean> = bool("atlas.alsoTraverseUpwards", default = false)
-  val checkOutputs: Provider<Boolean> = bool(key = "atlas.checkOutputs", default = true)
-  val displayLinkLabels: Provider<Boolean> = bool(key = "atlas.addLinkLabels", default = false)
-  val generateOnSync: Provider<Boolean> = bool(key = "atlas.generateOnSync", default = false)
-  val groupProjects: Provider<Boolean> = bool(key = "atlas.groupProjects", default = false)
-  val printFilesToConsole: Provider<Boolean> =
-    bool(key = "atlas.printFilesToConsole", default = false)
+  val alsoTraverseUpwards = bool("atlas.alsoTraverseUpwards", default = false)
+  val checkOutputs = bool(key = "atlas.checkOutputs", default = true)
+  val displayLinkLabels = bool(key = "atlas.addLinkLabels", default = false)
+  val generateOnSync = bool(key = "atlas.generateOnSync", default = false)
+  val groupProjects = bool(key = "atlas.groupProjects", default = false)
+  val printFilesToConsole = bool(key = "atlas.printFilesToConsole", default = false)
 }
 
 internal interface IGradleProperties {
@@ -49,4 +48,4 @@ private inline fun <reified T : Any> IGradleProperties.prop(
   key: String,
   default: T?,
   noinline mapper: (String) -> T?,
-) = providers.gradleProperty(key).map(mapper).orElse(providers.provider { default })
+): Provider<T> = providers.gradleProperty(key).map(mapper).orElse(providers.provider { default })
