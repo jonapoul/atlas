@@ -18,7 +18,7 @@ pluginManagement {
 }
 
 plugins {
-  id("io.github.gmazzo.publications.report") version "1.4.0"
+  id("io.github.gmazzo.publications.report") version "1.4.1"
 }
 
 dependencyResolutionManagement {
