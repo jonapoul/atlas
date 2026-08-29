@@ -5,7 +5,7 @@ import atlas.graphviz.dotWriter
 import atlas.test.OneLevelOfSubprojects
 import atlas.test.ProjectWithNoLinks
 import atlas.test.TwoLevelsOfSubprojects
-import atlas.test.equalsDiffed
+import blueprint.test.isEqualToTrimmed
 import kotlin.test.Test
 
 internal class DotWriterTest {
@@ -18,7 +18,7 @@ internal class DotWriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         digraph {
           ":app"
@@ -55,7 +55,7 @@ internal class DotWriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         digraph {
           ":app"
@@ -101,7 +101,7 @@ internal class DotWriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         digraph {
           ":app"
@@ -153,7 +153,7 @@ internal class DotWriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         digraph {
           ":app" [fillcolor="red"]

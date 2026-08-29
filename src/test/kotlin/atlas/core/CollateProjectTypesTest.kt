@@ -13,19 +13,19 @@ import atlas.test.scenarios.PathMatches
 import atlas.test.scenarios.ThreeProjectWithCustomTypes
 import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
 import blueprint.test.Scenario
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
 import blueprint.test.taskSucceeded
+import blueprint.test.withArguments
 import kotlin.test.Test
 
 internal class CollateProjectTypesTest : ScenarioTest() {
   @Test
   fun `Collate three custom types`() =
     runScenario(ThreeProjectWithCustomTypes) {
-      // when
-      val result = runTask("collateProjectTypes").build()
-
-      // then three dependent tasks were run, and this one
-      assertThat(result)
+      // when, then three dependent tasks were run, and this one
+      assertThatTask("collateProjectTypes")
+        .buildsSuccessfully()
         .taskSucceeded(":test-data:writeProjectType")
         .taskSucceeded(":test-domain:writeProjectType")
         .taskSucceeded(":test-ui:writeProjectType")
@@ -52,11 +52,9 @@ internal class CollateProjectTypesTest : ScenarioTest() {
   @Test
   fun `Collate three built in types`() =
     runScenario(ThreeProjectsWithBuiltInTypes) {
-      // when
-      val result = runTask("collateProjectTypes").build()
-
-      // then three dependent tasks were run, and this one
-      assertThat(result)
+      // when, then three dependent tasks were run, and this one
+      assertThatTask("collateProjectTypes")
+        .buildsSuccessfully()
         .taskSucceeded(":test-data:writeProjectType")
         .taskSucceeded(":test-domain:writeProjectType")
         .taskSucceeded(":test-ui:writeProjectType")
@@ -84,11 +82,10 @@ internal class CollateProjectTypesTest : ScenarioTest() {
   fun `Collate with no subprojects`() =
     runScenario(NoSubprojects) {
       // when
-      val result = runTask("collateProjectTypes").build()
+      val result = runner.withArguments("collateProjectTypes").build()
 
       // then no write tasks were run
-      val taskPaths = result.tasks.map { it.path }
-      assertThat(taskPaths).isEqualTo(listOf(":collateProjectTypes"))
+      assertThat(result.tasks.map { it.path }).isEqualTo(listOf(":collateProjectTypes"))
 
       // and no types were collated, but the task still passed
       assertThat(result).taskSucceeded(":collateProjectTypes")
@@ -99,7 +96,7 @@ internal class CollateProjectTypesTest : ScenarioTest() {
   fun `Match with regex options`() =
     runScenario(PathMatches) {
       // when
-      runTask("collateProjectTypes").build()
+      assertThatTask("collateProjectTypes").buildsSuccessfully()
 
       // then
       assertThat(projectTypes)

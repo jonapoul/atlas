@@ -17,6 +17,11 @@ internal abstract class ScenarioTest : BlueprintScenarioTest() {
   override val fileTree: FileTree
     get() = current
 
+  protected operator fun Scenario.invoke(
+    runner: GradleRunner = defaultRunner(),
+    test: RunningScenario.() -> Unit,
+  ) = runScenario(this, runner, test)
+
   protected fun runScenario(
     scenario: Scenario,
     runner: GradleRunner = defaultRunner(),

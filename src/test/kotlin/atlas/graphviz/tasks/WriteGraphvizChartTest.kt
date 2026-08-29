@@ -2,8 +2,6 @@ package atlas.graphviz.tasks
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.contentEquals
-import atlas.test.exists
 import atlas.test.resolve
 import atlas.test.scenarios.GraphVizChartCustomConfig
 import atlas.test.scenarios.GraphVizChartWithCustomLinkTypes
@@ -12,7 +10,10 @@ import atlas.test.scenarios.GraphVizChartWithReplacements
 import atlas.test.scenarios.GraphvizBasic
 import atlas.test.scenarios.GraphvizNestedProject
 import atlas.test.scenarios.GraphvizNestedProjectNoProjectTypes
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.contentEquals
+import blueprint.test.exists
 import kotlin.test.Test
 
 internal class WriteGraphvizChartTest : ScenarioTest() {
@@ -20,7 +21,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
   fun `Run if no project types are declared`() =
     runScenario(GraphvizNestedProjectNoProjectTypes) {
       // when
-      runTask("writeGraphvizChart").build()
+      assertThatTask("writeGraphvizChart").buildsSuccessfully()
 
       // then
       assertThat(resolve("app/atlas/graphviz/chart.dot"))
@@ -55,7 +56,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
   fun `Generate dotfiles from basic config`() =
     runScenario(GraphvizBasic) {
       // when
-      runTask("writeGraphvizChart").build()
+      assertThatTask("writeGraphvizChart").buildsSuccessfully()
 
       // then the files were generated
       val dotFileA = resolve("a/atlas/graphviz/chart.dot")
@@ -101,7 +102,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
   fun `Customise dotfile from build script`() =
     runScenario(GraphVizChartCustomConfig) {
       // when
-      runTask("writeGraphvizChart").build()
+      assertThatTask("writeGraphvizChart").buildsSuccessfully()
 
       // then the file was generated, with projects in alphabetical order
       assertThat(resolve("a/atlas/graphviz/chart.dot"))
@@ -127,7 +128,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
   fun `Customise dotfile from gradle properties`() =
     runScenario(GraphVizChartWithProperties) {
       // when
-      runTask("writeGraphvizChart").build()
+      assertThatTask("writeGraphvizChart").buildsSuccessfully()
 
       // then the file was generated, with projects in alphabetical order
       assertThat(resolve("a/atlas/graphviz/chart.dot"))
@@ -151,7 +152,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
   fun `Replace project names`() =
     runScenario(GraphVizChartWithReplacements) {
       // when
-      runTask("writeGraphvizChart").build()
+      assertThatTask("writeGraphvizChart").buildsSuccessfully()
 
       // then the file was generated, with colons removed from project prefixes and "b" -> "B"
       assertThat(resolve("a/atlas/graphviz/chart.dot"))
@@ -174,7 +175,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
   fun `Handle custom link types`() =
     runScenario(GraphVizChartWithCustomLinkTypes) {
       // when
-      runTask("writeGraphvizChart").build()
+      assertThatTask("writeGraphvizChart").buildsSuccessfully()
 
       // then the file was generated, with the expected link styles
       assertThat(resolve("a/atlas/graphviz/chart.dot"))
@@ -199,7 +200,7 @@ internal class WriteGraphvizChartTest : ScenarioTest() {
   fun `Handle nested projects`() =
     runScenario(GraphvizNestedProject) {
       // when
-      runTask("writeGraphvizChart").build()
+      assertThatTask("writeGraphvizChart").buildsSuccessfully()
 
       // then the file was generated, with the expected link styles
       assertThat(resolve("app/atlas/graphviz/chart.dot"))

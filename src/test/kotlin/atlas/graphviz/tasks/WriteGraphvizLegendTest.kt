@@ -2,13 +2,14 @@ package atlas.graphviz.tasks
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.contentContains
-import atlas.test.contentEquals
-import atlas.test.exists
 import atlas.test.resolve
 import atlas.test.scenarios.GraphVizWithLinkTypes
 import atlas.test.scenarios.GraphvizBasic
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.contentContains
+import blueprint.test.contentEquals
+import blueprint.test.exists
 import kotlin.test.Test
 
 internal class WriteGraphvizLegendTest : ScenarioTest() {
@@ -16,7 +17,7 @@ internal class WriteGraphvizLegendTest : ScenarioTest() {
   fun `Generate dotfile legend from basic config`() =
     runScenario(GraphvizBasic) {
       // when
-      runTask("writeGraphvizLegend").build()
+      assertThatTask("writeGraphvizLegend").buildsSuccessfully()
 
       // then the file was generated, with projects in declaration order
       assertThat(resolve("atlas/graphviz/legend.dot"))
@@ -43,7 +44,7 @@ internal class WriteGraphvizLegendTest : ScenarioTest() {
   fun `Show projects and links next to each other`() =
     runScenario(GraphVizWithLinkTypes) {
       // when
-      runTask("writeGraphvizLegend").build()
+      assertThatTask("writeGraphvizLegend").buildsSuccessfully()
 
       // then the file was generated, overriding build script
       assertThat(resolve("atlas/graphviz/legend.dot"))

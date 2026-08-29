@@ -2,10 +2,11 @@ package atlas.d2
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.contentContains
 import atlas.test.resolve
 import atlas.test.scenarios.D2ConfiguredByProperties
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.contentContains
 import blueprint.test.taskSucceeded
 import kotlin.test.Test
 
@@ -14,11 +15,9 @@ internal class D2PropertiesTest : ScenarioTest() {
   fun `Configure D2 entirely through gradle properties`() =
     runScenario(D2ConfiguredByProperties) {
       // when
-      val result = runTask("writeD2Classes").build()
+      assertThatTask("writeD2Classes").buildsSuccessfully().taskSucceeded(":writeD2Classes")
 
       // then
-      assertThat(result).taskSucceeded(":writeD2Classes")
-
       val classes = resolve("atlas/d2/classes.d2")
       assertThat(classes)
         // the theme is an int enum, but the DSL names it, so the property takes the name too

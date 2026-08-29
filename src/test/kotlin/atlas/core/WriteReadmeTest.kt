@@ -2,15 +2,17 @@ package atlas.core
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.allSuccessful
-import atlas.test.contentEquals
-import atlas.test.doesNotExist
-import atlas.test.exists
 import atlas.test.resolve
 import atlas.test.scenarios.MermaidBasic
 import atlas.test.scenarios.MermaidWithLinkTypes
-import blueprint.test.runTask
+import blueprint.test.allTasksSuccessful
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.contentEquals
+import blueprint.test.doesNotExist
+import blueprint.test.exists
 import blueprint.test.taskHadResult
+import blueprint.test.withArgument
 import kotlin.test.Test
 
 internal class WriteReadmeTest : ScenarioTest() {
@@ -18,8 +20,7 @@ internal class WriteReadmeTest : ScenarioTest() {
   fun `Mermaid readme links correctly with default outputs`() =
     runScenario(MermaidBasic) {
       // when
-      val result = runTask("atlasGenerate").build()
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("atlasGenerate").buildsSuccessfully().allTasksSuccessful()
 
       // then
       assertThat(resolve("a/README.md"))
@@ -47,8 +48,7 @@ internal class WriteReadmeTest : ScenarioTest() {
   fun `Write mermaid readme with link types`() =
     runScenario(MermaidWithLinkTypes) {
       // when
-      val result = runTask("atlasGenerate").build()
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("atlasGenerate").buildsSuccessfully().allTasksSuccessful()
 
       // then
       assertThat(resolve("a/README.md"))
@@ -102,8 +102,7 @@ internal class WriteReadmeTest : ScenarioTest() {
       )
 
       // when
-      val result = runTask(":a:writeReadme").build()
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask(":a:writeReadme").buildsSuccessfully().allTasksSuccessful()
 
       // then
       val expected =
@@ -137,8 +136,10 @@ internal class WriteReadmeTest : ScenarioTest() {
       assertThat(readme).contentEquals(expected)
 
       // when we run again and force the regeneration
-      val result2 = runTask(":a:writeReadme", "--rerun-tasks").build()
-      assertThat(result2).taskHadResult(":a:writeReadme", SUCCESS)
+      assertThatTask(":a:writeReadme")
+        .withArgument("--rerun-tasks")
+        .buildsSuccessfully()
+        .taskHadResult(":a:writeReadme", SUCCESS)
       assertThat(readme).contentEquals(expected)
     }
 }

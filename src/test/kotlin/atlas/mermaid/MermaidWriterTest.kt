@@ -4,7 +4,7 @@ import assertk.assertThat
 import atlas.test.OneLevelOfSubprojects
 import atlas.test.ProjectWithNoLinks
 import atlas.test.TwoLevelsOfSubprojects
-import atlas.test.equalsDiffed
+import blueprint.test.isEqualToTrimmed
 import kotlin.test.Test
 
 internal class MermaidWriterTest {
@@ -17,7 +17,7 @@ internal class MermaidWriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         graph TD
           _app[":app"]
@@ -53,7 +53,7 @@ internal class MermaidWriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         graph TD
           _app[":app"]
@@ -95,7 +95,7 @@ internal class MermaidWriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         graph TD
           _app[":app"]
@@ -142,7 +142,7 @@ internal class MermaidWriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         graph TD
           _app[":app"]

@@ -6,15 +6,15 @@ import assertk.assertions.isEqualTo
 import atlas.core.internal.ProjectLink
 import atlas.core.internal.readProjectLinks
 import atlas.test.ScenarioTest
-import atlas.test.allSuccessful
-import atlas.test.doesNotExist
 import atlas.test.resolve
 import atlas.test.scenarios.DiamondGraph
 import atlas.test.scenarios.OneKotlinJvmProject
 import atlas.test.scenarios.OverrideProjectLinksFile
 import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
 import atlas.test.scenarios.TriangleGraph
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.doesNotExist
 import blueprint.test.taskSucceeded
 import java.io.File
 import kotlin.test.Test
@@ -24,10 +24,8 @@ internal class CollateProjectLinksTest : ScenarioTest() {
   fun `Empty file for single project with no dependencies`() =
     runScenario(OneKotlinJvmProject) {
       // when
-      val result = runTask("collateProjectLinks").build()
-
-      // then the task was run
-      assertThat(result)
+      assertThatTask("collateProjectLinks")
+        .buildsSuccessfully()
         .taskSucceeded(":test-jvm:writeProjectLinks")
         .taskSucceeded(":collateProjectLinks")
 
@@ -39,10 +37,7 @@ internal class CollateProjectLinksTest : ScenarioTest() {
   fun `Empty file for three projects with no dependencies`() =
     runScenario(ThreeProjectsWithBuiltInTypes) {
       // when
-      val result = runTask("collateProjectLinks").build()
-
-      // then the tasks were run
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("collateProjectLinks").buildsSuccessfully()
 
       // and the links file is empty
       assertThat(projectLinks).isEmpty()
@@ -52,10 +47,7 @@ internal class CollateProjectLinksTest : ScenarioTest() {
   fun `Single links for diamond`() =
     runScenario(DiamondGraph) {
       // when
-      val result = runTask("collateProjectLinks").build()
-
-      // then the task was run
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("collateProjectLinks").buildsSuccessfully()
 
       // and the links file contains the expected, in a-z order
       assertThat(projectLinks)
@@ -88,10 +80,7 @@ internal class CollateProjectLinksTest : ScenarioTest() {
   fun `Multiple links for triangle`() =
     runScenario(TriangleGraph) {
       // when
-      val result = runTask("collateProjectLinks").build()
-
-      // then the task was run
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("collateProjectLinks").buildsSuccessfully()
 
       // and the triangle links were detected, in a-z order
       assertThat(projectLinks)
@@ -141,7 +130,7 @@ internal class CollateProjectLinksTest : ScenarioTest() {
   fun `Can override task conventions from build script`() =
     runScenario(OverrideProjectLinksFile) {
       // when
-      runTask("collateProjectLinks").build()
+      assertThatTask("collateProjectLinks").buildsSuccessfully()
 
       // then the default config file wasn't created
       assertThat(projectLinksFile).doesNotExist()

@@ -13,7 +13,8 @@ import atlas.test.scenarios.ThreeProjectWithCustomTypes
 import atlas.test.scenarios.ThreeProjectsNoMatchingType
 import atlas.test.scenarios.ThreeProjectsOnlyMatchingOther
 import blueprint.test.Scenario
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
 import blueprint.test.taskHadResult
 import blueprint.test.taskSucceeded
 import kotlin.test.Test
@@ -23,10 +24,11 @@ internal class WriteProjectTypeTest : ScenarioTest() {
   fun `No project types declared`() =
     runScenario(NoProjectTypesDeclared) {
       // when
-      val result = runTask("writeProjectType").build()
+      assertThatTask("writeProjectType")
+        .buildsSuccessfully()
+        .taskHadResult(":test-jvm:writeProjectType", SUCCESS)
 
       // then
-      assertThat(result).taskHadResult(":test-jvm:writeProjectType", SUCCESS)
       assertThat(projectType("test-jvm")).isEqualTo(TypedProject(":test-jvm", type = null))
     }
 
@@ -34,10 +36,11 @@ internal class WriteProjectTypeTest : ScenarioTest() {
   fun `Project types declared but none match`() =
     runScenario(ProjectTypesDeclaredButNoneMatch) {
       // when
-      val result = runTask("writeProjectType").build()
+      assertThatTask("writeProjectType")
+        .buildsSuccessfully()
+        .taskHadResult(":test-jvm:writeProjectType", SUCCESS)
 
       // then
-      assertThat(result).taskHadResult(":test-jvm:writeProjectType", SUCCESS)
       assertThat(projectType("test-jvm")).isEqualTo(TypedProject(":test-jvm", type = null))
     }
 
@@ -45,28 +48,27 @@ internal class WriteProjectTypeTest : ScenarioTest() {
   fun `Write file if built-in type matches`() =
     runScenario(OneKotlinJvmProject) {
       // when
-      val result = runTask("writeProjectType").build()
+      assertThatTask("writeProjectType")
+        .buildsSuccessfully()
+        .taskSucceeded(":test-jvm:writeProjectType")
 
       // then
-      assertThat(result).taskSucceeded(":test-jvm:writeProjectType")
       assertThat(projectType("test-jvm"))
         .isEqualTo(
           TypedProject(":test-jvm", type = ProjectType("Kotlin JVM", color = "mediumorchid"))
         )
 
       // when running again, then it's cached
-      val result2 = runTask("writeProjectType").build()
-      assertThat(result2).taskHadResult(":test-jvm:writeProjectType", UP_TO_DATE)
+      assertThatTask("writeProjectType")
+        .buildsSuccessfully()
+        .taskHadResult(":test-jvm:writeProjectType", UP_TO_DATE)
     }
 
   @Test
   fun `Write files if custom types match`() =
     runScenario(ThreeProjectWithCustomTypes, runner = androidRunner()) {
-      // when
-      val result = runTask("writeProjectType").build()
-
-      // then
-      assertThat(result)
+      assertThatTask("writeProjectType")
+        .buildsSuccessfully()
         .taskSucceeded(":test-data:writeProjectType")
         .taskSucceeded(":test-domain:writeProjectType")
         .taskSucceeded(":test-ui:writeProjectType")
@@ -82,10 +84,8 @@ internal class WriteProjectTypeTest : ScenarioTest() {
   @Test
   fun `Fall back to other if no types match`() =
     runScenario(ThreeProjectsOnlyMatchingOther, runner = androidRunner()) {
-      // when
-      runTask("writeProjectType").build()
+      assertThatTask("writeProjectType").buildsSuccessfully()
 
-      // then
       assertThat(projectType("a"))
         .isEqualTo(TypedProject(":a", type = ProjectType("Other", color = "gainsboro")))
       assertThat(projectType("b"))
@@ -97,11 +97,10 @@ internal class WriteProjectTypeTest : ScenarioTest() {
   @Test
   fun `No types match`() =
     runScenario(ThreeProjectsNoMatchingType, runner = androidRunner()) {
-      // when
-      val result = runTask("a:writeProjectType").build()
+      assertThatTask("a:writeProjectType")
+        .buildsSuccessfully()
+        .taskHadResult(":a:writeProjectType", SUCCESS)
 
-      // then
-      assertThat(result).taskHadResult(":a:writeProjectType", SUCCESS)
       assertThat(projectType("a")).isEqualTo(TypedProject(":a", type = null))
     }
 

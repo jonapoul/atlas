@@ -1,3 +1,5 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
 pluginManagement {
   repositories {
     google {
@@ -8,6 +10,7 @@ pluginManagement {
     }
     mavenCentral()
     gradlePluginPortal()
+    mavenLocal()
   }
 }
 
@@ -16,5 +19,6 @@ dependencyResolutionManagement {
   repositories {
     google()
     mavenCentral()
+    mavenLocal()
   }
 }

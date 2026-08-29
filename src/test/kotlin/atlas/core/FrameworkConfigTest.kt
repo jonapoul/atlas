@@ -1,14 +1,15 @@
 package atlas.core
 
-import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.contains
-import atlas.test.doesNotContain
 import atlas.test.scenarios.MermaidBasic
 import atlas.test.scenarios.NoFrameworksConfigured
 import atlas.test.scenarios.PropertiesForUnusedFrameworks
 import atlas.test.scenarios.UnsupportedLinkStyle
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.outputContains
+import blueprint.test.outputDoesNotContain
+import blueprint.test.withArgument
 import kotlin.test.Test
 
 internal class FrameworkConfigTest : ScenarioTest() {
@@ -16,41 +17,36 @@ internal class FrameworkConfigTest : ScenarioTest() {
   fun `Warn about style properties which no configured framework reads`() =
     runScenario(PropertiesForUnusedFrameworks) {
       // when
-      val result = runner.withArguments("help").build()
+      assertThatTask("help")
+        .buildsSuccessfully()
 
-      // then the D2-only and Graphviz-only properties are called out, grouped by framework, but
-      // stroke is understood by Mermaid so it isn't mentioned
-      assertThat(result.output)
-        .contains(
+        // then the D2-only and Graphviz-only properties are called out, grouped by framework, but
+        // stroke is understood by Mermaid so it isn't mentioned
+        .outputContains(
           "Warning: project type 'Kotlin JVM' sets render3D and shadow, which only D2 uses. " +
             "Configure the d2 { } block to use them, or remove the config."
         )
-        .contains(
+        .outputContains(
           "Warning: project type 'Kotlin JVM' sets peripheries, which only Graphviz uses. " +
             "Configure the graphviz { } block to use it, or remove the config."
         )
-        .doesNotContain("sets stroke")
+        .outputDoesNotContain("sets stroke")
     }
 
   @Test
   fun `Don't warn about properties the configured framework reads`() =
     runScenario(MermaidBasic) {
       // when
-      val result = runner.withArguments("help").build()
-
-      // then
-      assertThat(result.output).doesNotContain("Warning")
+      assertThatTask("help").buildsSuccessfully().outputDoesNotContain("Warning")
     }
 
   @Test
   fun `Warn when a link style isn't supported by a configured framework`() =
     runScenario(UnsupportedLinkStyle) {
-      // when
-      val result = runner.withArguments("help").build()
-
-      // then
-      assertThat(result.output)
-        .contains(
+      // when, then
+      assertThatTask("help")
+        .buildsSuccessfully()
+        .outputContains(
           "Warning: link type 'api' uses the dotted style, which Mermaid can't draw - " +
             "Atlas will fall back to the closest style it has."
         )
@@ -59,12 +55,10 @@ internal class FrameworkConfigTest : ScenarioTest() {
   @Test
   fun `Warn when no frameworks are configured`() =
     runScenario(NoFrameworksConfigured) {
-      // when
-      val result = runner.withArguments("help").build()
-
-      // then
-      assertThat(result.output)
-        .contains(
+      // when, then
+      assertThatTask("help")
+        .buildsSuccessfully()
+        .outputContains(
           "Warning: no Atlas diagram frameworks are configured, so no charts will be generated."
         )
     }
@@ -73,12 +67,13 @@ internal class FrameworkConfigTest : ScenarioTest() {
   fun `Only register tasks for configured frameworks`() =
     runScenario(MermaidBasic) {
       // when
-      val result = runTask("tasks", "--all").build()
+      assertThatTask("tasks")
+        .withArgument("--all")
+        .buildsSuccessfully()
 
-      // then
-      assertThat(result.output)
-        .contains("writeMermaidChart")
-        .doesNotContain("writeGraphvizChart")
-        .doesNotContain("writeD2Chart")
+        // then
+        .outputContains("writeMermaidChart")
+        .outputDoesNotContain("writeGraphvizChart")
+        .outputDoesNotContain("writeD2Chart")
     }
 }

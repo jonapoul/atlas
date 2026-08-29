@@ -6,7 +6,6 @@ import assertk.assertions.isEqualTo
 import atlas.core.internal.ProjectLink
 import atlas.core.internal.readProjectLinks
 import atlas.test.ScenarioTest
-import atlas.test.allSuccessful
 import atlas.test.isEqualToSet
 import atlas.test.scenarios.CustomConfigurationExcluded
 import atlas.test.scenarios.CustomConfigurations
@@ -14,7 +13,9 @@ import atlas.test.scenarios.DiamondGraph
 import atlas.test.scenarios.OneKotlinJvmProject
 import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
 import atlas.test.scenarios.TriangleGraph
-import blueprint.test.runTask
+import blueprint.test.allTasksSuccessful
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
 import blueprint.test.taskSucceeded
 import kotlin.test.Test
 
@@ -23,10 +24,9 @@ internal class WriteProjectLinksTest : ScenarioTest() {
   fun `Empty file for single project with no dependencies`() =
     runScenario(OneKotlinJvmProject) {
       // when
-      val result = runTask("writeProjectLinks").build()
-
-      // then the task was run
-      assertThat(result).taskSucceeded(":test-jvm:writeProjectLinks")
+      assertThatTask("writeProjectLinks")
+        .buildsSuccessfully()
+        .taskSucceeded(":test-jvm:writeProjectLinks")
 
       // and the links file is empty
       assertThat(projectLinks(project = "test-jvm")).isEmpty()
@@ -36,10 +36,10 @@ internal class WriteProjectLinksTest : ScenarioTest() {
   fun `Empty files for three projects with no dependencies`() =
     runScenario(ThreeProjectsWithBuiltInTypes) {
       // when
-      val result = runTask("writeProjectLinks").build()
+      assertThatTask("writeProjectLinks")
+        .buildsSuccessfully()
 
-      // then the task was run
-      assertThat(result)
+        // then the task was run
         .taskSucceeded(":test-data:writeProjectLinks")
         .taskSucceeded(":test-domain:writeProjectLinks")
         .taskSucceeded(":test-ui:writeProjectLinks")
@@ -54,10 +54,10 @@ internal class WriteProjectLinksTest : ScenarioTest() {
   fun `Single links for diamond`() =
     runScenario(DiamondGraph) {
       // when
-      val result = runTask("writeProjectLinks").build()
+      assertThatTask("writeProjectLinks")
+        .buildsSuccessfully()
 
-      // then the task was run
-      assertThat(result)
+        // then the task was run
         .taskSucceeded(":top:writeProjectLinks")
         .taskSucceeded(":mid-a:writeProjectLinks")
         .taskSucceeded(":mid-b:writeProjectLinks")
@@ -94,10 +94,7 @@ internal class WriteProjectLinksTest : ScenarioTest() {
   fun `Multiple links for triangle`() =
     runScenario(TriangleGraph) {
       // when
-      val result = runTask("writeProjectLinks").build()
-
-      // then the task was run
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("writeProjectLinks").buildsSuccessfully().allTasksSuccessful()
 
       // and the triangle links were detected as expected
       assertThat(projectLinks(project = "a"))
@@ -154,10 +151,7 @@ internal class WriteProjectLinksTest : ScenarioTest() {
   fun `Custom configuration is picked up if we dont exclude it`() =
     runScenario(CustomConfigurations) {
       // when
-      val result = runTask("writeProjectLinks").build()
-
-      // then the task was run
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("writeProjectLinks").buildsSuccessfully().allTasksSuccessful()
 
       // and the two custom configs were detected as links
       assertThat(projectLinks(project = "a"))
@@ -172,10 +166,7 @@ internal class WriteProjectLinksTest : ScenarioTest() {
   fun `Custom configuration is excluded`() =
     runScenario(CustomConfigurationExcluded) {
       // when
-      val result = runTask("writeProjectLinks").build()
-
-      // then the task was run
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("writeProjectLinks").buildsSuccessfully().allTasksSuccessful()
 
       // and the two custom configs were detected as links, but the xyz config was excluded
       assertThat(projectLinks(project = "a"))

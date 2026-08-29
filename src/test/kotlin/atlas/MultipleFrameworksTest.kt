@@ -2,12 +2,13 @@ package atlas
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.childExists
-import atlas.test.contentContains
-import atlas.test.noTasksFailed
 import atlas.test.resolve
 import atlas.test.scenarios.MultipleFrameworks
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.childExists
+import blueprint.test.contentContains
+import blueprint.test.noTasksFailed
 import kotlin.test.Test
 
 internal class MultipleFrameworksTest : ScenarioTest() {
@@ -15,8 +16,7 @@ internal class MultipleFrameworksTest : ScenarioTest() {
   fun `Generate charts for every configured framework`() =
     runScenario(MultipleFrameworks) {
       // when
-      val result = runTask("atlasGenerate").build()
-      assertThat(result).noTasksFailed()
+      assertThatTask("atlasGenerate").buildsSuccessfully().noTasksFailed()
 
       // then each framework wrote to its own directory, so nothing was overwritten, and the shared
       // legends live in the root project
@@ -33,7 +33,7 @@ internal class MultipleFrameworksTest : ScenarioTest() {
   fun `Write every framework's diagram into a single readme`() =
     runScenario(MultipleFrameworks) {
       // when
-      runTask("atlasGenerate").build()
+      assertThatTask("atlasGenerate").buildsSuccessfully()
 
       // then
       assertThat(resolve("a/README.md"))

@@ -2,10 +2,11 @@ package atlas.d2.tasks
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.contentEquals
 import atlas.test.resolve
 import atlas.test.scenarios.D2AllProjectTypes
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.contentEquals
 import blueprint.test.taskSucceeded
 import kotlin.test.Test
 
@@ -14,10 +15,7 @@ internal class WriteD2ClassesTest : ScenarioTest() {
   fun `Generate classes from all default types`() =
     runScenario(D2AllProjectTypes) {
       // when
-      val result = runTask("writeD2Classes").build()
-
-      // then
-      assertThat(result).taskSucceeded(":writeD2Classes")
+      assertThatTask("writeD2Classes").buildsSuccessfully().taskSucceeded(":writeD2Classes")
 
       // and the file was generated
       assertThat(resolve("atlas/d2/classes.d2"))

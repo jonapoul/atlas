@@ -11,8 +11,8 @@ import atlas.test.ProjectLayout
 import atlas.test.ProjectWithNoLinks
 import atlas.test.SingleNestedProjectWithNoLinks
 import atlas.test.TwoLevelsOfSubprojects
-import atlas.test.equalsDiffed
 import atlas.test.projectLink
+import blueprint.test.isEqualToTrimmed
 import kotlin.test.Test
 
 internal class D2WriterTest {
@@ -25,7 +25,7 @@ internal class D2WriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         ...@../classes.d2
         app: :app
@@ -68,7 +68,7 @@ internal class D2WriterTest {
 
     // then the single project is written to the chart on its lonesome
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         ...@../classes.d2
         ui_c: :ui:c
@@ -86,7 +86,7 @@ internal class D2WriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         ...@../classes.d2
         app: :app
@@ -138,7 +138,7 @@ internal class D2WriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         ...@../classes.d2
         app: :app
@@ -189,7 +189,7 @@ internal class D2WriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         ...@../classes.d2
         app: :app
@@ -243,7 +243,7 @@ internal class D2WriterTest {
     val writer = d2Writer(layout = ProjectWithNoLinks)
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         ...@../classes.d2
         app: :app { class: project-red }
@@ -267,7 +267,7 @@ internal class D2WriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         ...@../classes.d2
         a: :a {
@@ -293,7 +293,7 @@ internal class D2WriterTest {
       )
 
     assertThat(writer())
-      .equalsDiffed(
+      .isEqualToTrimmed(
         """
         ...@../classes.d2
         a: :a

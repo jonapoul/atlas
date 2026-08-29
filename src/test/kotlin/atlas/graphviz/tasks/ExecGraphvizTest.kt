@@ -1,37 +1,39 @@
 package atlas.graphviz.tasks
 
 import assertk.assertThat
-import assertk.assertions.containsMatch
 import assertk.assertions.isEqualTo
 import atlas.graphviz.RequiresGraphviz
 import atlas.test.RequiresLn
 import atlas.test.RequiresWhereis
 import atlas.test.ScenarioTest
-import atlas.test.allSuccessful
-import atlas.test.childDoesNotExist
-import atlas.test.childExists
-import atlas.test.contains
-import atlas.test.exists
-import atlas.test.noTasksFailed
 import atlas.test.resolve
 import atlas.test.scenarios.GraphVizBasicWithPngOutput
 import atlas.test.scenarios.GraphVizCustomDotExecutable
 import atlas.test.scenarios.GraphVizCustomLayoutEngine
 import atlas.test.scenarios.GraphvizBasic
-import atlas.test.tasksWereSuccessful
-import blueprint.test.runTask
+import blueprint.test.allTasksSuccessful
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.childDoesNotExist
+import blueprint.test.childExists
+import blueprint.test.exists
+import blueprint.test.failsBuild
+import blueprint.test.noTasksFailed
+import blueprint.test.outputContains
+import blueprint.test.outputContainsMatch
+import blueprint.test.tasksSucceeded
+import blueprint.test.withArgument
 import kotlin.test.Test
 
 internal class ExecGraphvizTest : ScenarioTest() {
   @Test
   fun `No extras are generated if no file formats have been declared`() =
     runScenario(GraphvizBasic) {
-      // when
-      val result = runTask("atlasGenerate", "--dry-run").build()
-
-      // then no PNGs, SVGs, or anything else were generated besides the dotfile
-      assertThat(result.output)
-        .contains(
+      // when, then no PNGs, SVGs, or anything else were generated besides the dotfile
+      assertThatTask("atlasGenerate")
+        .withArgument("--dry-run")
+        .buildsSuccessfully()
+        .outputContains(
           """
           :a:writeProjectType SKIPPED
           :b:writeProjectType SKIPPED
@@ -69,12 +71,10 @@ internal class ExecGraphvizTest : ScenarioTest() {
   @RequiresGraphviz
   fun `Generate png file`() =
     runScenario(GraphVizBasicWithPngOutput) {
-      // when
-      val result = runTask("atlasGenerate").build()
-
-      // then PNG, SVG and EPS tasks were run for each subproject
-      assertThat(result)
-        .tasksWereSuccessful(
+      // when, then PNG, SVG and EPS tasks were run for each subproject
+      assertThatTask("atlasGenerate")
+        .buildsSuccessfully()
+        .tasksSucceeded(
           ":a:execGraphvizChart",
           ":b:execGraphvizChart",
           ":c:execGraphvizChart",
@@ -92,10 +92,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
   fun `Choose custom layout engine`() =
     runScenario(GraphVizCustomLayoutEngine) {
       // when we specify the "neato" layout engine
-      val result = runTask(":app:execGraphvizChart").build()
-
-      // There's probably more I can be checking here but ¯\_(ツ)_/¯
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask(":app:execGraphvizChart").buildsSuccessfully().allTasksSuccessful()
     }
 
   @Test
@@ -115,10 +112,7 @@ internal class ExecGraphvizTest : ScenarioTest() {
       assertThat(customDotFile).exists()
 
       // when
-      val result = runTask("atlasGenerate").build()
-
-      // then it's all good
-      assertThat(result).noTasksFailed()
+      assertThatTask("atlasGenerate").buildsSuccessfully().noTasksFailed()
 
       // if we don't add this we'll get a junit log warning
       customDotFile.delete()
@@ -131,12 +125,10 @@ internal class ExecGraphvizTest : ScenarioTest() {
       // Given we've made a symbolic link to a dot executable which doesn't exist
       assertThat(rootDir).childDoesNotExist("path/to/custom/dot")
 
-      // when
-      val result = runTask("atlasGenerate").buildAndFail()
-
-      // then it fails as expected
-      assertThat(result.output)
-        .containsMatch(
+      // when, then it fails as expected
+      assertThatTask("atlasGenerate")
+        .failsBuild()
+        .outputContainsMatch(
           """
           > A problem occurred starting process 'command '.*?/path/to/custom/dot''
           """
