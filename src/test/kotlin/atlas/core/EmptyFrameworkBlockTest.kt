@@ -2,13 +2,14 @@ package atlas.core
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.allSuccessful
-import atlas.test.exists
 import atlas.test.resolve
 import atlas.test.scenarios.GroovyD2Basic
 import atlas.test.scenarios.GroovyGraphVizBasic
 import atlas.test.scenarios.GroovyMermaidBasic
-import blueprint.test.runTask
+import blueprint.test.allTasksSuccessful
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.exists
 import kotlin.test.Test
 
 /**
@@ -21,10 +22,9 @@ internal class EmptyFrameworkBlockTest : ScenarioTest() {
   fun `Bare d2() with no config registers D2 generation`() =
     runScenario(GroovyD2Basic) {
       // when
-      val result = runTask("writeD2Chart").build()
+      assertThatTask("writeD2Chart").buildsSuccessfully().allTasksSuccessful()
 
       // then
-      assertThat(result.tasks).allSuccessful()
       assertThat(resolve("a/atlas/d2/chart.d2")).exists()
     }
 
@@ -32,10 +32,9 @@ internal class EmptyFrameworkBlockTest : ScenarioTest() {
   fun `Bare graphviz() with no config registers Graphviz generation`() =
     runScenario(GroovyGraphVizBasic) {
       // when
-      val result = runTask("writeGraphvizChart").build()
+      assertThatTask("writeGraphvizChart").buildsSuccessfully().allTasksSuccessful()
 
       // then
-      assertThat(result.tasks).allSuccessful()
       assertThat(resolve("a/atlas/graphviz/chart.dot")).exists()
     }
 
@@ -43,10 +42,9 @@ internal class EmptyFrameworkBlockTest : ScenarioTest() {
   fun `Bare mermaid() with no config registers Mermaid generation`() =
     runScenario(GroovyMermaidBasic) {
       // when
-      val result = runTask("writeMermaidChart").build()
+      assertThatTask("writeMermaidChart").buildsSuccessfully().allTasksSuccessful()
 
       // then
-      assertThat(result.tasks).allSuccessful()
       assertThat(resolve("a/atlas/mermaid/chart.mmd")).exists()
     }
 }

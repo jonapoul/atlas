@@ -11,9 +11,11 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+import org.gradle.kotlin.dsl.withType
 import org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier.Public
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   alias(libs.plugins.blueprint)
@@ -111,6 +113,10 @@ kotlin {
       "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
     )
   }
+}
+
+tasks.register("compileAll") {
+  dependsOn(tasks.withType(KotlinCompile::class))
 }
 
 java {

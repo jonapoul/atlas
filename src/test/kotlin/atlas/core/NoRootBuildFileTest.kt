@@ -2,12 +2,14 @@ package atlas.core
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.childExists
-import atlas.test.contentContains
-import atlas.test.noTasksFailed
 import atlas.test.resolve
 import atlas.test.scenarios.NoRootBuildFile
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.assertThatTasks
+import blueprint.test.buildsSuccessfully
+import blueprint.test.childExists
+import blueprint.test.contentContains
+import blueprint.test.noTasksFailed
 import kotlin.test.Test
 
 /**
@@ -21,10 +23,9 @@ internal class NoRootBuildFileTest : ScenarioTest() {
   fun `Collate links when the root has no build file`() =
     runScenario(NoRootBuildFile) {
       // when
-      val result = runTask("writeProjectTree").build()
+      assertThatTask("writeProjectTree").buildsSuccessfully().noTasksFailed()
 
       // then
-      assertThat(result).noTasksFailed()
       assertThat(resolve("a/build/atlas/project-tree.json")).contentContains(""""toPath":":b"""")
     }
 
@@ -32,11 +33,11 @@ internal class NoRootBuildFileTest : ScenarioTest() {
   fun `Generate every framework's chart when the root has no build file`() =
     runScenario(NoRootBuildFile) {
       // when
-      val result =
-        runTask("writeD2Chart", "writeGraphvizChart", "writeMermaidChart", "writeD2Classes").build()
+      assertThatTasks("writeD2Chart", "writeGraphvizChart", "writeMermaidChart", "writeD2Classes")
+        .buildsSuccessfully()
+        .noTasksFailed()
 
       // then
-      assertThat(result).noTasksFailed()
       assertThat(rootDir)
         .childExists("a/atlas/d2/chart.d2")
         .childExists("a/atlas/graphviz/chart.dot")

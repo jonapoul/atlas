@@ -2,14 +2,15 @@ package atlas.mermaid
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.allSuccessful
-import atlas.test.contentContains
-import atlas.test.contentEquals
-import atlas.test.exists
 import atlas.test.resolve
 import atlas.test.scenarios.MermaidWithLinkTypes
 import atlas.test.scenarios.MermaidWithProjectTypes
-import blueprint.test.runTask
+import blueprint.test.allTasksSuccessful
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.contentContains
+import blueprint.test.contentEquals
+import blueprint.test.exists
 import kotlin.test.Test
 
 internal class WriteMarkdownLegendTest : ScenarioTest() {
@@ -17,10 +18,9 @@ internal class WriteMarkdownLegendTest : ScenarioTest() {
   fun `Write markdown legend with no link types`() =
     runScenario(MermaidWithProjectTypes) {
       // when
-      val result = runTask(":writeMermaidLegend").build()
+      assertThatTask(":writeMermaidLegend").buildsSuccessfully().allTasksSuccessful()
 
       // then
-      assertThat(result.tasks).allSuccessful()
       assertThat(resolve("atlas/mermaid/legend.md"))
         .exists()
         .contentContains(
@@ -38,10 +38,9 @@ internal class WriteMarkdownLegendTest : ScenarioTest() {
   fun `Write markdown legend with no project types`() =
     runScenario(MermaidWithLinkTypes) {
       // when
-      val result = runTask(":writeMermaidLegend").build()
+      assertThatTask(":writeMermaidLegend").buildsSuccessfully().allTasksSuccessful()
 
       // then
-      assertThat(result.tasks).allSuccessful()
       assertThat(resolve("atlas/mermaid/legend.md"))
         .exists()
         .contentEquals(

@@ -1,11 +1,11 @@
 package atlas.graphviz
 
-import assertk.assertThat
 import atlas.test.ScenarioTest
 import atlas.test.scenarios.GroovyGraphVizBasic
 import atlas.test.scenarios.GroovyGraphVizFull
 import atlas.test.scenarios.GroovyGraphVizProjectTypes
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
 import blueprint.test.taskSucceeded
 import org.junit.jupiter.api.Test
 
@@ -15,10 +15,10 @@ internal class GraphvizGroovyTest : ScenarioTest() {
   fun `Configure graphviz`() =
     runScenario(GroovyGraphVizBasic) {
       // when
-      val result = runTask("atlasGenerate").build()
+      assertThatTask("atlasGenerate")
+        .buildsSuccessfully()
 
-      // then
-      assertThat(result)
+        // then
         .taskSucceeded(":a:atlasGenerate")
         .taskSucceeded(":b:atlasGenerate")
         .taskSucceeded(":c:atlasGenerate")
@@ -29,10 +29,10 @@ internal class GraphvizGroovyTest : ScenarioTest() {
   fun `Configure graphviz project types`() =
     runScenario(GroovyGraphVizProjectTypes) {
       // when
-      val result = runTask("atlasGenerate").build()
+      assertThatTask("atlasGenerate")
+        .buildsSuccessfully()
 
-      // then
-      assertThat(result)
+        // then
         .taskSucceeded(":a:atlasGenerate")
         .taskSucceeded(":b:atlasGenerate")
         .taskSucceeded(":c:atlasGenerate")
@@ -43,10 +43,10 @@ internal class GraphvizGroovyTest : ScenarioTest() {
   fun `Configure graphviz with everything`() =
     runScenario(GroovyGraphVizFull) {
       // when
-      val result = runTask("atlasGenerate").build()
+      assertThatTask("atlasGenerate")
+        .buildsSuccessfully()
 
-      // then
-      assertThat(result)
+        // then
         .taskSucceeded(":a:atlasGenerate")
         .taskSucceeded(":b:atlasGenerate")
         .taskSucceeded(":c:atlasGenerate")

@@ -1,20 +1,23 @@
 package atlas.core
 
 import assertk.assertThat
-import assertk.assertions.containsAtLeast
-import assertk.assertions.isEqualTo
 import atlas.test.ScenarioTest
-import atlas.test.contains
-import atlas.test.contentContains
-import atlas.test.doesNotContain
 import atlas.test.resolve
 import atlas.test.scenarios.CheckExplicitlyDisabled
 import atlas.test.scenarios.CheckExplicitlyEnabled
 import atlas.test.scenarios.D2Basic
 import atlas.test.scenarios.GraphVizBasicWithPngOutput
 import atlas.test.scenarios.GraphvizBasic
-import blueprint.test.runTask
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.contentContains
+import blueprint.test.failsBuild
+import blueprint.test.outputContains
+import blueprint.test.outputContainsLine
+import blueprint.test.outputDoesNotContain
+import blueprint.test.taskHadResult
 import blueprint.test.taskSucceeded
+import blueprint.test.withArgument
 import org.junit.jupiter.api.Test
 
 internal class CheckFileDiffTest : ScenarioTest() {
@@ -22,37 +25,36 @@ internal class CheckFileDiffTest : ScenarioTest() {
   fun `Write doesn't run as a dependency of check for graphviz`() =
     runScenario(GraphvizBasic) {
       // when
-      val result = runTask(":a:checkGraphvizChart", "--dry-run").build()
+      assertThatTask(":a:checkGraphvizChart")
+        .withArgument("--dry-run")
+        .buildsSuccessfully()
 
-      // then the chart wasn't written but the dummy and check tasks were run
-      assertThat(result.output)
-        .doesNotContain(":a:writeGraphvizChart")
-        .contains(":a:writeDummyGraphvizChart")
-        .contains(":a:checkGraphvizChart")
+        // then the chart wasn't written but the dummy and check tasks were run
+        .outputDoesNotContain(":a:writeGraphvizChart")
+        .outputContains(":a:writeDummyGraphvizChart")
+        .outputContains(":a:checkGraphvizChart")
     }
 
   @Test
   fun `Write doesn't run as a dependency of check for D2`() =
     runScenario(D2Basic) {
       // when
-      val result = runTask(":a:checkD2Chart", "--dry-run").build()
+      assertThatTask(":a:checkD2Chart")
+        .withArgument("--dry-run")
+        .buildsSuccessfully()
 
-      // then the chart wasn't written but the dummy and check tasks were run
-      assertThat(result.output)
-        .doesNotContain(":a:writeD2Chart")
-        .contains(":a:writeDummyD2Chart")
-        .contains(":a:checkD2Chart")
+        // then the chart wasn't written but the dummy and check tasks were run
+        .outputDoesNotContain(":a:writeD2Chart")
+        .outputContains(":a:writeDummyD2Chart")
+        .outputContains(":a:checkD2Chart")
     }
 
   @Test
   fun `Fail if the expected file hasn't been generated yet`() =
     runScenario(GraphvizBasic) {
-      // when
-      val result = runTask(":a:checkGraphvizChart").buildAndFail()
-
-      // then
-      assertThat(result.output)
-        .contains(
+      assertThatTask(":a:checkGraphvizChart")
+        .failsBuild()
+        .outputContains(
           """
           * What went wrong:
           Execution failed for task ':a:checkGraphvizChart' (registered by plugin 'dev.jonpoulton.atlas').
@@ -69,26 +71,21 @@ internal class CheckFileDiffTest : ScenarioTest() {
   fun `Verify projects of a basic project`() =
     runScenario(GraphVizBasicWithPngOutput) {
       // given initial dotfile is generated
-      runTask(":a:writeGraphvizChart").build()
+      assertThatTask(":a:writeGraphvizChart").buildsSuccessfully()
 
       // when we check it with no changes
-      val check1 = runTask(":a:checkGraphvizChart").build()
-
-      // then the check was successful
-      assertThat(check1.task(":a:checkGraphvizChart")?.outcome).isEqualTo(SUCCESS)
+      assertThatTask(":a:checkGraphvizChart")
+        .buildsSuccessfully()
+        .taskHadResult(":a:checkGraphvizChart", SUCCESS)
 
       // given we set a custom property set to adjust the output
       resolve("gradle.properties").writeText("atlas.graphviz.layoutEngine=circo")
 
-      // when we run a check again
-      val check2 = runTask(":a:checkGraphvizChart").buildAndFail()
-
-      // then it fails
-      assertThat(check2.task(":a:checkGraphvizChart")?.outcome).isEqualTo(FAILED)
-
-      // and spits out expected diff
-      assertThat(check2.output)
-        .contains(
+      // when we run a check again, then it fails and spits out the expected diff
+      assertThatTask(":a:checkGraphvizChart")
+        .failsBuild()
+        .taskHadResult(":a:checkGraphvizChart", FAILED)
+        .outputContains(
           """
           |          digraph {
           |      ---   graph [layout="circo"]
@@ -107,28 +104,23 @@ internal class CheckFileDiffTest : ScenarioTest() {
   fun `Verify legend of a basic project`() =
     runScenario(GraphvizBasic) {
       // given initial dotfile is generated
-      runTask("writeGraphvizLegend").build()
+      assertThatTask("writeGraphvizLegend").buildsSuccessfully()
 
       // when we check it with no changes
-      val check1 = runTask("checkGraphvizLegend").build()
-
-      // then the check was successful
-      assertThat(check1.task(":checkGraphvizLegend")?.outcome).isEqualTo(SUCCESS)
+      assertThatTask("checkGraphvizLegend")
+        .buildsSuccessfully()
+        .taskHadResult(":checkGraphvizLegend", SUCCESS)
 
       // given we manually adjust the generated file
       val legendFile = resolve("atlas/graphviz/legend.dot")
       val editedLegend = legendFile.readText().replace("CELLBORDER=\"1\"", "CELLBORDER=\"100\"")
       legendFile.writeText(editedLegend)
 
-      // when we run a check again
-      val check2 = runTask("checkGraphvizLegend").buildAndFail()
-
-      // then it fails
-      assertThat(check2.task(":checkGraphvizLegend")?.outcome).isEqualTo(FAILED)
-
-      // and spits out expected diff
-      assertThat(check2.output)
-        .contains(
+      // when we run a check again, then it fails and spits out the expected diff
+      assertThatTask("checkGraphvizLegend")
+        .failsBuild()
+        .taskHadResult(":checkGraphvizLegend", FAILED)
+        .outputContains(
           """
           |          digraph {
           |            node [shape="plaintext"]
@@ -150,42 +142,32 @@ internal class CheckFileDiffTest : ScenarioTest() {
   @Test
   fun `Register check tasks when checkOutputs is true`() =
     runScenario(CheckExplicitlyEnabled) {
-      // when
-      val result = runTask("check", "--dry-run").build()
-      val output = result.output.lines()
-
-      // then
-      assertThat(output)
-        .containsAtLeast(
-          ":check SKIPPED",
-          ":checkGraphvizLegend SKIPPED",
-          ":a:checkGraphvizChart SKIPPED",
-          ":b:checkGraphvizChart SKIPPED",
-          ":c:checkGraphvizChart SKIPPED",
-        )
+      assertThatTask("check")
+        .withArgument("--dry-run")
+        .buildsSuccessfully()
+        .outputContainsLine(":check SKIPPED")
+        .outputContainsLine(":checkGraphvizLegend SKIPPED")
+        .outputContainsLine(":a:checkGraphvizChart SKIPPED")
+        .outputContainsLine(":b:checkGraphvizChart SKIPPED")
+        .outputContainsLine(":c:checkGraphvizChart SKIPPED")
     }
 
   @Test
   fun `Don't register check tasks when checkOutputs is false`() =
     runScenario(CheckExplicitlyDisabled) {
-      // when
-      val result = runTask("check", "--dry-run").build()
-
-      // then
-      assertThat(result.output).doesNotContain("checkGraphvizLegend")
+      assertThatTask("check")
+        .withArgument("--dry-run")
+        .buildsSuccessfully()
+        .outputDoesNotContain("checkGraphvizLegend")
     }
 
   @Test
   fun `Run aggregated check task`() =
     runScenario(GraphvizBasic) {
-      // given
-      runTask("atlasGenerate").build()
+      assertThatTask("atlasGenerate").buildsSuccessfully()
 
-      // when
-      val result = runTask("atlasCheck").build()
-
-      // then
-      assertThat(result)
+      assertThatTask("atlasCheck")
+        .buildsSuccessfully()
         .taskSucceeded(":checkGraphvizLegend")
         .taskSucceeded(":a:checkGraphvizChart")
         .taskSucceeded(":b:checkGraphvizChart")

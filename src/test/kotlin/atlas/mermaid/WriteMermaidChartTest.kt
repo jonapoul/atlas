@@ -2,14 +2,15 @@ package atlas.mermaid
 
 import assertk.assertThat
 import atlas.test.ScenarioTest
-import atlas.test.allSuccessful
-import atlas.test.contentEquals
-import atlas.test.exists
 import atlas.test.resolve
 import atlas.test.scenarios.MermaidWithGroupsNested
 import atlas.test.scenarios.MermaidWithGroupsNotNested
 import atlas.test.scenarios.MermaidWithoutGroups
-import blueprint.test.runTask
+import blueprint.test.allTasksSuccessful
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.contentEquals
+import blueprint.test.exists
 import kotlin.test.Test
 
 internal class WriteMermaidChartTest : ScenarioTest() {
@@ -17,10 +18,9 @@ internal class WriteMermaidChartTest : ScenarioTest() {
   fun `Write chart without groups`() =
     runScenario(MermaidWithoutGroups) {
       // when
-      val result = runTask(":a:writeMermaidChart").build()
+      assertThatTask(":a:writeMermaidChart").buildsSuccessfully().allTasksSuccessful()
 
       // then
-      assertThat(result.tasks).allSuccessful()
       assertThat(resolve("a/atlas/mermaid/chart.mmd"))
         .exists()
         .contentEquals(
@@ -40,10 +40,9 @@ internal class WriteMermaidChartTest : ScenarioTest() {
   fun `Write chart with groups enabled but no nested projects`() =
     runScenario(MermaidWithGroupsNotNested) {
       // when
-      val result = runTask(":a:writeMermaidChart").build()
+      assertThatTask(":a:writeMermaidChart").buildsSuccessfully().allTasksSuccessful()
 
       // then
-      assertThat(result.tasks).allSuccessful()
       assertThat(resolve("a/atlas/mermaid/chart.mmd"))
         .exists()
         .contentEquals(
@@ -63,10 +62,9 @@ internal class WriteMermaidChartTest : ScenarioTest() {
   fun `Write chart with groups enabled and projects nested`() =
     runScenario(MermaidWithGroupsNested) {
       // when
-      val result = runTask(":a:writeMermaidChart").build()
+      assertThatTask(":a:writeMermaidChart").buildsSuccessfully().allTasksSuccessful()
 
       // then
-      assertThat(result.tasks).allSuccessful()
       assertThat(resolve("a/atlas/mermaid/chart.mmd"))
         .exists()
         .contentEquals(

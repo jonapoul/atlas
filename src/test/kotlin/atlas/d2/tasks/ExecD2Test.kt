@@ -3,25 +3,26 @@ package atlas.d2.tasks
 import assertk.assertThat
 import atlas.d2.RequiresD2
 import atlas.test.ScenarioTest
-import atlas.test.allSuccessful
-import atlas.test.childExists
-import atlas.test.contains
 import atlas.test.scenarios.D2Basic
 import atlas.test.scenarios.D2CustomLayoutEngine
-import blueprint.test.runTask
+import blueprint.test.allTasksSuccessful
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.childExists
+import blueprint.test.outputContains
 import blueprint.test.taskHadResult
+import blueprint.test.withArgument
 import kotlin.test.Test
 
 internal class ExecD2Test : ScenarioTest() {
   @Test
   fun `No extras are generated if no file formats have been declared`() =
     runScenario(D2Basic) {
-      // when
-      val result = runTask("atlasGenerate", "--dry-run").build()
-
-      // then no PNGs, SVGs, or anything else were generated besides the dotfile
-      assertThat(result.output)
-        .contains(
+      // when, then no PNGs, SVGs, or anything else were generated besides the dotfile
+      assertThatTask("atlasGenerate")
+        .withArgument("--dry-run")
+        .buildsSuccessfully()
+        .outputContains(
           """
           :writeD2Classes SKIPPED
           :a:writeProjectType SKIPPED
@@ -62,10 +63,9 @@ internal class ExecD2Test : ScenarioTest() {
   fun `Choose custom layout engine`() =
     runScenario(D2CustomLayoutEngine) {
       // when we specify the "neato" layout engine
-      val result = runTask("execD2Chart").build()
+      assertThatTask("execD2Chart").buildsSuccessfully().allTasksSuccessful()
 
       // then
-      assertThat(result.tasks).allSuccessful()
       assertThat(rootDir)
         .childExists("a/atlas/d2/chart.svg")
         .childExists("b/atlas/d2/chart.svg")
@@ -77,13 +77,15 @@ internal class ExecD2Test : ScenarioTest() {
   fun `Rerun when changing properties in the classes file`() =
     runScenario(D2CustomLayoutEngine) {
       // First run - all tasks run
-      assertThat(runTask(":a:execD2Chart").build())
+      assertThatTask(":a:execD2Chart")
+        .buildsSuccessfully()
         .taskHadResult(":writeD2Classes", SUCCESS)
         .taskHadResult(":a:writeD2Chart", SUCCESS)
         .taskHadResult(":a:execD2Chart", SUCCESS)
 
       // Second run with no changes - skipped
-      assertThat(runTask(":a:execD2Chart").build())
+      assertThatTask(":a:execD2Chart")
+        .buildsSuccessfully()
         .taskHadResult(":writeD2Classes", UP_TO_DATE)
         .taskHadResult(":a:writeD2Chart", UP_TO_DATE)
         .taskHadResult(":a:execD2Chart", UP_TO_DATE)
@@ -91,8 +93,9 @@ internal class ExecD2Test : ScenarioTest() {
       // Third run setting a property to change the classes file - classes are written, chart is not
       // but the output
       // file is regenerated
-      val result3 = runTask(":a:execD2Chart", "-Patlas.d2.theme=7").build()
-      assertThat(result3)
+      assertThatTask(":a:execD2Chart")
+        .withArgument("-Patlas.d2.theme=7")
+        .buildsSuccessfully()
         .taskHadResult(":writeD2Classes", SUCCESS)
         .taskHadResult(":a:writeD2Chart", UP_TO_DATE)
         .taskHadResult(":a:execD2Chart", SUCCESS)

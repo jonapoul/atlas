@@ -3,15 +3,16 @@ package atlas.d2.tasks
 import assertk.assertThat
 import atlas.d2.RequiresD2
 import atlas.test.ScenarioTest
-import atlas.test.allTasksSuccessful
-import atlas.test.childExists
-import atlas.test.contentEquals
-import atlas.test.exists
-import atlas.test.noTasksFailed
 import atlas.test.resolve
 import atlas.test.scenarios.D2Basic
 import atlas.test.scenarios.D2NestedProjects
-import blueprint.test.runTask
+import blueprint.test.allTasksSuccessful
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.childExists
+import blueprint.test.contentEquals
+import blueprint.test.exists
+import blueprint.test.noTasksFailed
 import blueprint.test.taskSucceeded
 import kotlin.test.Test
 
@@ -20,10 +21,7 @@ internal class WriteD2ChartTest : ScenarioTest() {
   fun `Generate charts from basic config`() =
     runScenario(D2Basic) {
       // when
-      val result = runTask("writeD2Chart").build()
-
-      // then
-      assertThat(result).allTasksSuccessful()
+      assertThatTask("writeD2Chart").buildsSuccessfully().allTasksSuccessful()
 
       // and the files were generated
       val d2FileA = resolve("a/atlas/d2/chart.d2")
@@ -84,10 +82,7 @@ internal class WriteD2ChartTest : ScenarioTest() {
   fun `Write correct classes file path for nested projects`() =
     runScenario(D2NestedProjects) {
       // when
-      val result = runTask("atlasGenerate").build()
-
-      // then
-      assertThat(result).noTasksFailed()
+      assertThatTask("atlasGenerate").buildsSuccessfully().noTasksFailed()
 
       // and the files were generated
       assertThat(rootDir).childExists("atlas/d2/classes.d2")
@@ -102,9 +97,6 @@ internal class WriteD2ChartTest : ScenarioTest() {
         )
 
       // when we check
-      val checkResult = runTask("check").build()
-
-      // then
-      assertThat(checkResult).taskSucceeded(":path:to:my:project:checkD2Chart")
+      assertThatTask("check").buildsSuccessfully().taskSucceeded(":path:to:my:project:checkD2Chart")
     }
 }

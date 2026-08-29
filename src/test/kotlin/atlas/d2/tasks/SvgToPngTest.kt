@@ -4,15 +4,16 @@ import assertk.assertThat
 import atlas.test.D2Scenario
 import atlas.test.RequiresImageMagick6
 import atlas.test.ScenarioTest
-import atlas.test.allTasksSuccessful
-import atlas.test.childDoesNotExist
-import atlas.test.childExists
-import atlas.test.noTasksFailed
 import atlas.test.scenarios.D2Basic
-import atlas.test.tasksWereSkipped
-import atlas.test.tasksWereSuccessful
-import blueprint.test.runTask
+import blueprint.test.allTasksSuccessful
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
+import blueprint.test.childDoesNotExist
+import blueprint.test.childExists
+import blueprint.test.noTasksFailed
 import blueprint.test.taskHadResult
+import blueprint.test.tasksHadResult
+import blueprint.test.tasksSucceeded
 import java.lang.ProcessBuilder.Redirect.PIPE
 import kotlin.test.Test
 import org.junit.jupiter.api.Assumptions.assumeTrue
@@ -28,32 +29,29 @@ internal class SvgToPngTest : ScenarioTest() {
       assumeConverterIsInstalled(converter)
 
       // when
-      val result = runTask("svgToPng").build()
+      assertThatTask("svgToPng").buildsSuccessfully().allTasksSuccessful()
 
       // then both SVG and PNG were output
-      assertThat(result).allTasksSuccessful()
       assertThat(rootDir).childExists("a/atlas/d2/chart.svg").childExists("a/atlas/d2/chart.png")
 
       // result is cached
-      assertThat(runTask("svgToPng").build()).taskHadResult(":a:svgToPng", UP_TO_DATE)
+      assertThatTask("svgToPng").buildsSuccessfully().taskHadResult(":a:svgToPng", UP_TO_DATE)
     }
 
   @Test
   fun `Don't run PNG conversion if converter not specified`() =
     runScenario(UnspecifiedConverter) {
-      // when
-      val result = runTask("atlasGenerate").build()
+      // when the charts were generated, but the PNGs weren't
+      assertThatTask("atlasGenerate")
+        .buildsSuccessfully()
+        .noTasksFailed()
+        .tasksSucceeded(":a:execD2Chart", ":b:execD2Chart", ":c:execD2Chart")
+        .tasksHadResult(SKIPPED, ":a:svgToPng", ":b:svgToPng", ":c:svgToPng")
 
       // then
       assertThat(rootDir)
         .childExists("a/atlas/d2/chart.svg")
         .childDoesNotExist("a/atlas/d2/chart.png")
-
-      // and the charts were generated, but the PNGs weren't
-      assertThat(result)
-        .noTasksFailed()
-        .tasksWereSuccessful(":a:execD2Chart", ":b:execD2Chart", ":c:execD2Chart")
-        .tasksWereSkipped(":a:svgToPng", ":b:svgToPng", ":c:svgToPng")
     }
 
   @Test
@@ -61,10 +59,9 @@ internal class SvgToPngTest : ScenarioTest() {
   fun `Convert SVG to PNG with a scale factor`() =
     runScenario(SpecifiedSvgPngConverterAndScale) {
       // when
-      val result = runTask("svgToPng").build()
+      assertThatTask("svgToPng").buildsSuccessfully().allTasksSuccessful()
 
       // then both SVG and PNG were output
-      assertThat(result).allTasksSuccessful()
       assertThat(rootDir).childExists("a/atlas/d2/chart.svg").childExists("a/atlas/d2/chart.png")
     }
 
@@ -72,19 +69,17 @@ internal class SvgToPngTest : ScenarioTest() {
   @RequiresImageMagick6
   fun `Don't run PNG conversion if file format is not SVG`() =
     runScenario(SpecifiedConverterButWrongFormat) {
-      // when
-      val result = runTask("atlasGenerate").build()
+      // when the charts were generated, but the PNGs weren't
+      assertThatTask("atlasGenerate")
+        .buildsSuccessfully()
+        .noTasksFailed()
+        .tasksSucceeded(":a:execD2Chart", ":b:execD2Chart", ":c:execD2Chart")
+        .tasksHadResult(SKIPPED, ":a:svgToPng", ":b:svgToPng", ":c:svgToPng")
 
       // then
       assertThat(rootDir)
         .childExists("a/atlas/d2/chart.txt")
         .childDoesNotExist("a/atlas/d2/chart.png")
-
-      // and the charts were generated, but the PNGs weren't
-      assertThat(result)
-        .noTasksFailed()
-        .tasksWereSuccessful(":a:execD2Chart", ":b:execD2Chart", ":c:execD2Chart")
-        .tasksWereSkipped(":a:svgToPng", ":b:svgToPng", ":c:svgToPng")
     }
 
   private fun assumeConverterIsInstalled(converter: SvgToPng.Converter) {

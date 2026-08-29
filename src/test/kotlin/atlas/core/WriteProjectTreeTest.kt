@@ -5,8 +5,6 @@ import assertk.assertions.isEmpty
 import atlas.core.internal.ProjectLink
 import atlas.core.internal.readProjectLinks
 import atlas.test.ScenarioTest
-import atlas.test.allSuccessful
-import atlas.test.allTasksSuccessful
 import atlas.test.isEqualToSet
 import atlas.test.scenarios.DiamondGraph
 import atlas.test.scenarios.DiamondGraphWithUpwardsTraversal
@@ -15,33 +13,25 @@ import atlas.test.scenarios.OneKotlinJvmProject
 import atlas.test.scenarios.ThreeProjectsWithBuiltInTypes
 import atlas.test.scenarios.TriangleGraph
 import atlas.test.scenarios.TriangleGraphWithUpwardsTraversal
-import blueprint.test.runTask
+import blueprint.test.allTasksSuccessful
+import blueprint.test.assertThatTask
+import blueprint.test.buildsSuccessfully
 import kotlin.test.Test
 
 internal class WriteProjectTreeTest : ScenarioTest() {
   @Test
   fun `Empty files for single project with no dependencies`() =
     runScenario(OneKotlinJvmProject) {
-      // when
-      val result = runTask("writeProjectTree").withPluginClasspath().build()
+      assertThatTask("writeProjectTree").buildsSuccessfully().allTasksSuccessful()
 
-      // then
-      assertThat(result.tasks).allSuccessful()
-
-      // and the tree file is empty
       assertThat(projectTree("test-jvm")).isEmpty()
     }
 
   @Test
   fun `Empty files for three projects with no dependencies`() =
     runScenario(ThreeProjectsWithBuiltInTypes) {
-      // when
-      val result = runTask("writeProjectTree").build()
+      assertThatTask("writeProjectTree").buildsSuccessfully().allTasksSuccessful()
 
-      // then the tasks were run
-      assertThat(result.tasks).allSuccessful()
-
-      // and the tree files are empty
       assertThat(projectTree("test-data")).isEmpty()
       assertThat(projectTree("test-domain")).isEmpty()
       assertThat(projectTree("test-ui")).isEmpty()
@@ -51,10 +41,7 @@ internal class WriteProjectTreeTest : ScenarioTest() {
   fun `Filter links between multiplatform projects including custom configurations`() =
     runScenario(MultiplatformProjectsCustomConfigurations) {
       // when
-      val result = runTask("writeProjectTree").build()
-
-      // then
-      assertThat(result).allTasksSuccessful()
+      assertThatTask("writeProjectTree").buildsSuccessfully().allTasksSuccessful()
 
       // and the specified link type takes precedence over the others
       assertThat(projectTree(project = "a"))
@@ -78,10 +65,7 @@ internal class WriteProjectTreeTest : ScenarioTest() {
   fun `Single links for diamond`() =
     runScenario(DiamondGraph) {
       // when
-      val result = runTask("writeProjectTree").build()
-
-      // then the task was run
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("writeProjectTree").buildsSuccessfully().allTasksSuccessful()
 
       // and the top project sees everything below it
       assertThat(projectTree("top"))
@@ -126,10 +110,7 @@ internal class WriteProjectTreeTest : ScenarioTest() {
   fun `Single links for diamond with upwards traversal`() =
     runScenario(DiamondGraphWithUpwardsTraversal) {
       // when
-      val result = runTask("writeProjectTree").build()
-
-      // then the task was run
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("writeProjectTree").buildsSuccessfully().allTasksSuccessful()
 
       // and the top project sees everything below it
       assertThat(projectTree("top"))
@@ -197,10 +178,7 @@ internal class WriteProjectTreeTest : ScenarioTest() {
   fun `Multiple links for triangle`() =
     runScenario(TriangleGraph) {
       // when
-      val result = runTask("writeProjectTree").build()
-
-      // then the task was run
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("writeProjectTree").buildsSuccessfully().allTasksSuccessful()
 
       // and the triangle links were detected, in a-z order
       assertThat(projectTree("a"))
@@ -281,10 +259,7 @@ internal class WriteProjectTreeTest : ScenarioTest() {
   fun `Multiple links for triangle with upwards traversal`() =
     runScenario(TriangleGraphWithUpwardsTraversal) {
       // when
-      val result = runTask("writeProjectTree").build()
-
-      // then the task was run
-      assertThat(result.tasks).allSuccessful()
+      assertThatTask("writeProjectTree").buildsSuccessfully().allTasksSuccessful()
 
       // and the triangle links were detected, in a-z order
       assertThat(projectTree("a"))
