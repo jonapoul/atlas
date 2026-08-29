@@ -6,6 +6,19 @@
   "labels": [
     "dependencies"
   ],
+  "customManagers": [
+    {
+      // d2 is installed from a shell script rather than a package manager, so its version is pinned in the Dockerfile
+      // and read from here. Left unpinned, an image rebuild silently changes the SVGs that CI diffs the samples against.
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^docker/Dockerfile$/",
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+ENV D2_VERSION=(?<currentValue>\\S+)",
+      ],
+    },
+  ],
   "packageRules": [
     {
       // The gradle image is used by both docker/Dockerfile and the container in release.yml, which are handled by
