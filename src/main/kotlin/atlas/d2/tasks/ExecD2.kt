@@ -66,8 +66,9 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
     val d2Executable = pathToD2Command.getOrElse("d2")
     val cliArguments = cliArguments.getOrElse(mutableMapOf())
 
+    // D2 defaults this to 1000ms for gifs, so it's only passed along when explicitly configured.
     if (outputFormat.get() == Gif) {
-      cliArguments += "animate-interval" to animateInterval.get().toString()
+      animateInterval.orNull?.let { cliArguments += "animate-interval" to it.toString() }
     }
 
     val errorBuffer = ByteArrayOutputStream()

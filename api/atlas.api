@@ -761,25 +761,14 @@ public final class atlas/d2/Direction : java/lang/Enum, atlas/core/StringEnum {
 }
 
 public final class atlas/d2/ElkAlgorithm : java/lang/Enum, atlas/core/StringEnum {
-	public static final field Box Latlas/d2/ElkAlgorithm;
-	public static final field Disco Latlas/d2/ElkAlgorithm;
-	public static final field Fixed Latlas/d2/ElkAlgorithm;
 	public static final field Force Latlas/d2/ElkAlgorithm;
-	public static final field GraphvizCirco Latlas/d2/ElkAlgorithm;
-	public static final field GraphvizDot Latlas/d2/ElkAlgorithm;
-	public static final field GraphvizFdp Latlas/d2/ElkAlgorithm;
-	public static final field GraphvizNeato Latlas/d2/ElkAlgorithm;
-	public static final field GraphvizTwopi Latlas/d2/ElkAlgorithm;
 	public static final field Layered Latlas/d2/ElkAlgorithm;
 	public static final field MrTree Latlas/d2/ElkAlgorithm;
 	public static final field Radial Latlas/d2/ElkAlgorithm;
 	public static final field Random Latlas/d2/ElkAlgorithm;
-	public static final field RectPacking Latlas/d2/ElkAlgorithm;
 	public static final field SporeCompaction Latlas/d2/ElkAlgorithm;
 	public static final field SporeOverlap Latlas/d2/ElkAlgorithm;
 	public static final field Stress Latlas/d2/ElkAlgorithm;
-	public static final field TopDownPacking Latlas/d2/ElkAlgorithm;
-	public static final field VertiFlex Latlas/d2/ElkAlgorithm;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun getString ()Ljava/lang/String;
 	public fun toString ()Ljava/lang/String;

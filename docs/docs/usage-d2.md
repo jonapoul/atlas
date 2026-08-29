@@ -70,7 +70,7 @@ atlas {
 }
 ```
 
-Only used if [fileFormat](#fileformat) is set to `FileFormat.Gif`.
+Only used if [fileFormat](#fileformat) is set to `FileFormat.Gif`. Optional - leave it unset and D2 falls back to its own default of 1000ms.
 
 ### animateLinks
 
@@ -169,7 +169,7 @@ FileFormat.Ascii
 
 !!! warning
 
-    Only SVG and ASCII outputs can be run on all (known?) machines without further supporting software. On my dev machine at least, trying to run PNG, PDR, PPTX or GIF output causes an automatic download attempt of Chromium. This is because D2 depends on [PlayWright](https://playwright.dev/docs/intro) to do the conversion. Annoyingly, D2 will try to start the download/install without asking first... [See here for other people complaining about this](https://github.com/terrastruct/d2/issues/2502#issuecomment-3305144085).
+    Only SVG and ASCII outputs can be run on all (known?) machines without further supporting software. PNG, PDF, PPTX and GIF are all rendered through a bundled Chromium, which D2 offers to download the first time you ask for one of them. As of D2 0.8.2 it asks before downloading, prompting `D2 needs to install Chromium vX. Continue? (y/N)` and reading your answer from stdin - which a Gradle build has no way to provide, so the task fails with `failed to read user input: EOF`. Run `d2` by hand once to accept the download, or stay on SVG and use [convertSvgToPng](#convertsvgtopng) instead. [See here for other people complaining about this](https://github.com/d2lang/d2/issues/2502#issuecomment-3305144085).
 
 For reference, an ASCII chart looks like below. It (hopefully obviously) doesn't support more complex features like coloring, animation, etc. It is pretty cool though!
 
