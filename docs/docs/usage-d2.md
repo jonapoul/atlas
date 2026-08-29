@@ -70,7 +70,7 @@ atlas {
 }
 ```
 
-Only used if [fileFormat](#fileformat) is set to `FileFormat.Gif`.
+Only used if [fileFormat](#fileformat) is set to `FileFormat.Gif`. Optional - leave it unset and D2 falls back to its own default of 1000ms.
 
 ### animateLinks
 
