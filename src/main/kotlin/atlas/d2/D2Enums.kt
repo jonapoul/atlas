@@ -173,28 +173,23 @@ public enum class TextTransform(override val string: String) : StringEnum {
 }
 
 /**
- * [https://eclipse.dev/elk/reference/algorithms.html](https://eclipse.dev/elk/reference/algorithms.html)
+ * The subset of [ELK's algorithms](https://eclipse.dev/elk/reference/algorithms.html) that D2's
+ * bundled ELK can actually lay out a dependency chart with.
+ *
+ * The rest of ELK's catalogue is left out because it doesn't work here: `disco` was dropped when D2
+ * 0.8.2 replaced ELK.js with the native elk-go port, `topdownpacking`, `vertiflex` and the
+ * `graphviz.*` family have never been bundled, and the packing algorithms (`box`, `fixed`,
+ * `rectpacking`) crash on any graph containing connections.
  */
 public enum class ElkAlgorithm(override val string: String) : StringEnum {
-  Box("box"),
-  Disco("disco"),
-  Fixed("fixed"),
   Force("force"),
   Layered("layered"),
   MrTree("mrtree"),
   Radial("radial"),
   Random("random"),
-  RectPacking("rectpacking"),
   SporeCompaction("sporeCompaction"),
   SporeOverlap("sporeOverlap"),
-  Stress("stress"),
-  TopDownPacking("topdownpacking"),
-  VertiFlex("vertiflex"),
-  GraphvizCirco("graphviz.circo"),
-  GraphvizDot("graphviz.dot"),
-  GraphvizFdp("graphviz.fdp"),
-  GraphvizNeato("graphviz.neato"),
-  GraphvizTwopi("graphviz.twopi");
+  Stress("stress");
 
   override fun toString(): String = string
 }
