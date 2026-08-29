@@ -1,4 +1,4 @@
-FROM gradle:9.6.1-jdk21@sha256:a91a96d5f8530b4a6766f6502f563510bb5df157dc864ef50659c4214611a3d9
+FROM gradle:9.7.1-jdk21@sha256:c0ce93e022ea2e705332dabe090019c749356576fc8fe39c38129b2aae9ed68f
 
 RUN apt-get update
 RUN apt-get install -y graphviz libgvplugin-neato-layout8 curl
