@@ -45,6 +45,8 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
   @get:[Input Optional]
   public abstract val animateInterval: Property<Int>
   @get:[Input Optional]
+  public abstract val scale: Property<Float>
+  @get:[Input Optional]
   public abstract val cliArguments: MapProperty<String, String>
   @get:[Input Optional]
   public abstract val pathToD2Command: Property<String>
@@ -70,6 +72,8 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
     if (outputFormat.get() == Gif) {
       animateInterval.orNull?.let { cliArguments += "animate-interval" to it.toString() }
     }
+
+    scale.orNull?.let { cliArguments += "scale" to it.toString() }
 
     val errorBuffer = ByteArrayOutputStream()
     val command = buildList {
@@ -123,6 +127,7 @@ public abstract class ExecD2 : DefaultTask(), AtlasGenerationTask, TaskWithOutpu
           task.outputFile.convention(outputFile)
           task.cliArguments.convention(spec.layoutEngine.properties)
           task.animateInterval.convention(spec.animateInterval)
+          task.scale.convention(spec.scale)
         }
 
         return execGraphviz

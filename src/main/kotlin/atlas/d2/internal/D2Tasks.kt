@@ -11,7 +11,6 @@ import atlas.core.internal.singleFile
 import atlas.core.tasks.CheckFileDiff
 import atlas.d2.FileFormat
 import atlas.d2.tasks.ExecD2
-import atlas.d2.tasks.SvgToPng
 import atlas.d2.tasks.WriteD2Chart
 import atlas.d2.tasks.WriteD2Classes
 import org.gradle.api.Project
@@ -114,23 +113,9 @@ internal object D2Tasks : FrameworkTasks {
           classesFile = classesFile,
         )
 
-      val isSvgInput = d2Spec.fileFormat.map { it == Svg }
-      val runSvgToPng = provider { isSvgInput.get() && d2Spec.converter.isPresent }
-
-      val svgToPng =
-        SvgToPng.register(
-          target = this,
-          svgTask = d2Task,
-          isEnabled = runSvgToPng,
-          converter = d2Spec.converter,
-          scale = d2Spec.scale,
-        )
-
-      val taskForReadme = svgToPng.flatMap { if (runSvgToPng.get()) svgToPng else d2Task }
-
       ChartFiles(
         framework = framework,
-        chart = taskForReadme.flatMap { it.outputFile },
+        chart = d2Task.flatMap { it.outputFile },
         legend = null,
       )
     }

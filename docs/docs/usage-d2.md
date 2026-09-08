@@ -33,11 +33,10 @@ atlas {
     layoutEngine = LayoutEngine.Dagre
     pad = 5
     pathToD2Command = "/path/to/d2"
+    scale = 0.5f
     sketch = true
     theme = Theme.ColorblindClear
     themeDark = Theme.DarkMauve
-
-    convertSvgToPng(SvgToPng.Converter.ImageMagick6)
 
     rootStyle {
       // ...
@@ -169,7 +168,7 @@ FileFormat.Ascii
 
 !!! warning
 
-    All six formats work out of the box on D2 0.9.0 and above, which renders PNG, PDF, PPTX and GIF with its own built-in rasteriser. On older versions those four go through a bundled Chromium that D2 offers to download the first time you ask for one of them, prompting `D2 needs to install Chromium vX. Continue? (y/N)` on stdin - which a Gradle build has no way to answer, so the task fails with `failed to read user input: EOF`. If you're stuck on an older D2, run `d2` by hand once to accept the download, or stay on SVG and use [convertSvgToPng](#convertsvgtopng) instead. [See here for the background](https://github.com/d2lang/d2/issues/2502#issuecomment-3305144085).
+    All six formats work out of the box on D2 0.9.0 and above, which renders PNG, PDF, PPTX and GIF with its own built-in rasteriser. On older versions those four go through a bundled Chromium that D2 offers to download the first time you ask for one of them, prompting `D2 needs to install Chromium vX. Continue? (y/N)` on stdin - which a Gradle build has no way to answer, so the task fails with `failed to read user input: EOF`. If you're stuck on an older D2, run `d2` by hand once to accept the download, or stay on SVG. [See here for the background](https://github.com/d2lang/d2/issues/2502#issuecomment-3305144085).
 
 For reference, an ASCII chart looks like below. It (hopefully obviously) doesn't support more complex features like coloring, animation, etc. It is pretty cool though!
 
@@ -278,6 +277,18 @@ atlas {
 
 By default, Atlas will try to call `d2` from the system path. Use this to call from a custom installation directory instead.
 
+### scale
+
+``` kotlin
+atlas {
+  d2 {
+    scale = 0.5f
+  }
+}
+```
+
+Scales the rendered chart, passed straight through to D2's `--scale`. Left unset, D2 fits SVGs to the viewer's screen and renders every other format at its natural size, so setting this to `1` turns that SVG fitting off and anything below `1` shrinks the output. Handy for PNGs of large charts, which D2 renders at full diagram size by default.
+
 ### sketch
 
 ``` kotlin
@@ -340,25 +351,6 @@ D2 comes with a suite of lovely built-in color schemes which you can apply to yo
 </div>
 
 ## Functions
-
-### convertSvgToPng
-
-``` kotlin
-atlas {
-  d2 {
-    fileFormat = FileFormat.Svg
-    convertSvgToPng(SvgToPng.Converter.ImageMagick6)
-  }
-}
-```
-
-This was added back when D2's own PNG output relied on auto-downloading a browser without asking you first. D2 0.9.0 rasterises PNGs itself, so on that version and above you can just set `fileFormat = FileFormat.Png` and skip this entirely. It's still here for older D2 installations, and for when you want a particular converter or the `scale` parameter (see [`fileFormat`](#fileformat)).
-
-A new task will be attached to `gradle atlasGenerate` called `svgToPng`, which spits out a PNG file at `atlas/chart.png` in each subproject.
-
-Uses the [`SvgToPng.Converter`](api/atlas/atlas.d2.tasks/-svg-to-png/-converter/index.html) enum as an input, which lists the supported third-party image-processing software to convert SVGs into PNGs. It's up to you to ensure this is installed on your machine at execution time.
-
-Requires the [`fileFormat`](#fileformat) property to be set to `FileFormat.Svg` (or unset, since SVG is the default) - otherwise no conversion will be done.
 
 ### layoutEngine
 
