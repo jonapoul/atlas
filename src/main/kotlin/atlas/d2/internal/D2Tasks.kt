@@ -23,8 +23,6 @@ internal object D2Tasks : FrameworkTasks {
     with(context.project) {
       val d2 = context.d2
 
-      warnIfSuppressPlaywrightWarningIsUsed(context)
-      warnIfFileFormatRequiresChromium(context)
       warnIfLabelLocationSpecifiedButNotPosition(context)
       warnIfAnimationSelectedWithNonAnimatedFileFormat(context)
 
@@ -136,37 +134,6 @@ internal object D2Tasks : FrameworkTasks {
         legend = null,
       )
     }
-
-  private fun Project.warnIfSuppressPlaywrightWarningIsUsed(context: AtlasContext) {
-    if (context.d2.properties.suppressPlaywrightWarning.orNull != null) {
-      logger.warn(
-        "Warning: 'atlas.d2.suppressPlaywrightWarning' is deprecated, because D2 no longer uses " +
-          "Playwright - it downloads Chromium itself as of 0.8.2. It still works for now, but " +
-          "rename it to 'atlas.d2.suppressChromiumWarning' in your gradle.properties file."
-      )
-    }
-  }
-
-  private fun Project.warnIfFileFormatRequiresChromium(context: AtlasContext) {
-    val d2 = context.d2
-    val format = d2.fileFormat.get()
-    val properties = d2.properties
-    val shouldSuppress =
-      properties.suppressChromiumWarning.orNull
-        ?: properties.suppressPlaywrightWarning.orNull
-        ?: false
-    val simpleFormats = setOf<FileFormat>(Svg, Ascii)
-    if (format !in simpleFormats && !shouldSuppress) {
-      logger.warn(
-        "Warning: most of D2's output formats (including your selection: $format) are rendered through a bundled " +
-          "Chromium, which D2 offers to download on first use. It asks for confirmation on stdin, so a Gradle build " +
-          "has no way to answer and d2 fails with 'failed to read user input: EOF'. Either run d2 once by hand to " +
-          "accept the download, or stick to SVG and use convertSvgToPng to rasterise it. See " +
-          "https://github.com/d2lang/d2/issues/2502 for a bit more context. If you want to suppress this warning, " +
-          "add 'atlas.d2.suppressChromiumWarning=true' to your gradle.properties file."
-      )
-    }
-  }
 
   private fun Project.warnIfLabelLocationSpecifiedButNotPosition(context: AtlasContext) {
     val d2 = context.d2

@@ -30,10 +30,6 @@ internal class D2GradleProperties(override val providers: ProviderFactory) : IGr
   val theme: Provider<Theme> = intEnum("atlas.d2.theme", default = null)
 
   // Warning suppressions
-  val suppressChromiumWarning: Provider<Boolean> =
-    bool("atlas.d2.suppressChromiumWarning", default = null)
-  val suppressPlaywrightWarning: Provider<Boolean> = // deprecated, prefer suppressChromiumWarning
-    bool("atlas.d2.suppressPlaywrightWarning", default = null)
   val suppressLabelLocationWarning: Provider<Boolean> =
     bool("atlas.d2.suppressLabelLocationWarning", default = false)
   val suppressAnimationWarning: Provider<Boolean> =

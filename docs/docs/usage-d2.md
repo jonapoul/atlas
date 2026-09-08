@@ -169,7 +169,7 @@ FileFormat.Ascii
 
 !!! warning
 
-    Only SVG and ASCII outputs can be run on all (known?) machines without further supporting software. PNG, PDF, PPTX and GIF are all rendered through a bundled Chromium, which D2 offers to download the first time you ask for one of them. As of D2 0.8.2 it asks before downloading, prompting `D2 needs to install Chromium vX. Continue? (y/N)` and reading your answer from stdin - which a Gradle build has no way to provide, so the task fails with `failed to read user input: EOF`. Run `d2` by hand once to accept the download, or stay on SVG and use [convertSvgToPng](#convertsvgtopng) instead. [See here for other people complaining about this](https://github.com/d2lang/d2/issues/2502#issuecomment-3305144085).
+    All six formats work out of the box on D2 0.9.0 and above, which renders PNG, PDF, PPTX and GIF with its own built-in rasteriser. On older versions those four go through a bundled Chromium that D2 offers to download the first time you ask for one of them, prompting `D2 needs to install Chromium vX. Continue? (y/N)` on stdin - which a Gradle build has no way to answer, so the task fails with `failed to read user input: EOF`. If you're stuck on an older D2, run `d2` by hand once to accept the download, or stay on SVG and use [convertSvgToPng](#convertsvgtopng) instead. [See here for the background](https://github.com/d2lang/d2/issues/2502#issuecomment-3305144085).
 
 For reference, an ASCII chart looks like below. It (hopefully obviously) doesn't support more complex features like coloring, animation, etc. It is pretty cool though!
 
