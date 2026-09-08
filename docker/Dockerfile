@@ -6,7 +6,7 @@ RUN apt-get install -y graphviz libgvplugin-neato-layout8 curl
 # https://d2lang.com/tour/install/
 # Pinned because d2's SVG output changes between releases, and the committed samples are diffed in CI.
 # renovate: datasource=github-releases depName=terrastruct/d2
-ENV D2_VERSION=v0.8.2
+ENV D2_VERSION=v0.9.0
 RUN curl -fsSL https://d2lang.com/install.sh | sh -s -- --version $D2_VERSION
 
 # SVG to PNG converters
