@@ -45,6 +45,15 @@ internal fun PropertiesSpec.float(key: String): Delegate<Float> =
 internal fun PropertiesSpec.string(key: String): Delegate<String> =
   Delegate(properties, key, fromString = { it })
 
+/** Comma-separated, which is how the D2 CLI parses its list-valued flags. */
+internal fun PropertiesSpec.longList(key: String): Delegate<List<Long>> =
+  Delegate(
+    mapProperty = properties,
+    key = key,
+    fromString = { str -> str.split(",").map(String::toLong) },
+    toString = { list -> list?.takeIf { it.isNotEmpty() }?.joinToString(separator = ",") },
+  )
+
 internal fun PropertiesSpec.number(key: String): Delegate<Number> =
   Delegate(
     mapProperty = properties,

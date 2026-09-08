@@ -6,6 +6,7 @@ import atlas.core.internal.bool
 import atlas.core.internal.enum
 import atlas.core.internal.int
 import atlas.core.internal.intEnum
+import atlas.core.internal.longList
 import atlas.core.internal.string
 import atlas.d2.ArrowType
 import atlas.d2.D2DagreSpec
@@ -124,4 +125,6 @@ internal class D2DagreSpecImpl(parent: PropertiesSpec) : D2DagreSpec, Properties
   override var edgeSep by int("dagre-edgesep")
 }
 
-internal class D2TalaSpecImpl(parent: PropertiesSpec) : D2TalaSpec, PropertiesSpec by parent
+internal class D2TalaSpecImpl(parent: PropertiesSpec) : D2TalaSpec, PropertiesSpec by parent {
+  override var seeds by longList("tala-seeds")
+}

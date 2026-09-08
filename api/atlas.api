@@ -741,6 +741,8 @@ public final class atlas/d2/D2Spec$DefaultImpls {
 }
 
 public abstract interface class atlas/d2/D2TalaSpec : atlas/core/PropertiesSpec {
+	public abstract fun getSeeds ()Ljava/util/List;
+	public abstract fun setSeeds (Ljava/util/List;)V
 }
 
 public final class atlas/d2/D2TalaSpec$DefaultImpls {
