@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 
 # https://d2lang.com/tour/install/
 # Pinned because d2's SVG output changes between releases, and the committed samples are diffed in CI.
-# renovate: datasource=github-releases depName=terrastruct/d2
+# renovate: datasource=github-releases depName=d2lang/d2
 ENV D2_VERSION=v0.9.0
 RUN curl -fsSL https://d2lang.com/install.sh | sh -s -- --version $D2_VERSION
 
