@@ -1,6 +1,11 @@
 x-atlas: &atlas
   # CI overrides the tag when a PR rebuilds the image; defaults to the published one.
   image: ghcr.io/jonapoul/atlas-gradle-plugin:${ATLAS_IMAGE_TAG:-latest}
+  # Lets scripts build the image locally, so they run against the tool versions
+  # pinned in the Dockerfile rather than whatever is installed on the host.
+  build:
+    context: ..
+    dockerfile: docker/Dockerfile
   volumes:
     - $HOME/.gradle:/home/gradle/.gradle
     - ..:/atlas
@@ -19,9 +24,4 @@ services:
 
   samples:
     <<: *atlas
-    command: >
-      /bin/bash -c "
-      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-d2 &&
-      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-graphviz &&
-      gradle -Dorg.gradle.java.home=/opt/java/openjdk/ atlasGenerate -p samples/sample-mermaid
-      "
+    command: ./scripts/runAtlasGenerate.sh

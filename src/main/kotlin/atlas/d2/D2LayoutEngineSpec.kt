@@ -20,8 +20,9 @@ public interface D2LayoutEngineSpec : PropertiesSpec {
   public fun dagre(config: Action<D2DagreSpec>? = null)
 
   /**
-   * Configure TALA layout engine for the output chart. This is probably not installed on your
-   * machine, but if it is you can call [D2TalaSpec.put] to apply custom config properties.
+   * Configure the TALA layout engine for the output chart. TALA is D2's own layout engine, bundled
+   * with D2 and open source since 0.9.0 - before that it was a paid closed-source plugin you had to
+   * install separately.
    */
   public val tala: D2TalaSpec
 
@@ -64,10 +65,18 @@ public interface D2DagreSpec : PropertiesSpec {
 }
 
 /**
- * Not installed in the default D2 installation so this won't normally work, unless you have a
- * custom build of D2.
+ * From running `d2 layout tala` in the CLI, where seeds is the engine's only setting. Requires D2
+ * 0.9.0 or newer.
  */
 @AtlasDsl
 public interface D2TalaSpec : PropertiesSpec {
-  // TBC?
+  /**
+   * Random seeds for TALA's layout attempts. D2 lays the chart out once per seed and keeps the best
+   * complete result, so more seeds gives a tidier chart at the cost of a slower build. Layout is
+   * deterministic for a given set of seeds.
+   *
+   * D2 takes at most 16 unique seeds and fails the build past that. Duplicates are dropped rather
+   * than rejected, and an empty list is ignored, leaving D2's default in place. (default [1, 2, 3])
+   */
+  public var seeds: List<Long>?
 }

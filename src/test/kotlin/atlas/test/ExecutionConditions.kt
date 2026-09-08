@@ -12,8 +12,6 @@ import org.junit.jupiter.api.extension.ExtensionContext
 
 @RequiresCommand(command = "whereis") annotation class RequiresWhereis
 
-@RequiresCommand(command = "convert") annotation class RequiresImageMagick6
-
 @ExtendWith(RequiresCommandExtension::class) annotation class RequiresCommand(val command: String)
 
 internal class RequiresCommandExtension : ExecutionCondition {

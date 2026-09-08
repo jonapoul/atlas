@@ -33,11 +33,10 @@ atlas {
     layoutEngine = LayoutEngine.Dagre
     pad = 5
     pathToD2Command = "/path/to/d2"
+    scale = 0.5f
     sketch = true
     theme = Theme.ColorblindClear
     themeDark = Theme.DarkMauve
-
-    convertSvgToPng(SvgToPng.Converter.ImageMagick6)
 
     rootStyle {
       // ...
@@ -169,7 +168,7 @@ FileFormat.Ascii
 
 !!! warning
 
-    Only SVG and ASCII outputs can be run on all (known?) machines without further supporting software. PNG, PDF, PPTX and GIF are all rendered through a bundled Chromium, which D2 offers to download the first time you ask for one of them. As of D2 0.8.2 it asks before downloading, prompting `D2 needs to install Chromium vX. Continue? (y/N)` and reading your answer from stdin - which a Gradle build has no way to provide, so the task fails with `failed to read user input: EOF`. Run `d2` by hand once to accept the download, or stay on SVG and use [convertSvgToPng](#convertsvgtopng) instead. [See here for other people complaining about this](https://github.com/d2lang/d2/issues/2502#issuecomment-3305144085).
+    All six formats work out of the box on D2 0.9.0 and above, which renders PNG, PDF, PPTX and GIF with its own built-in rasteriser. On older versions those four go through a bundled Chromium that D2 offers to download the first time you ask for one of them, prompting `D2 needs to install Chromium vX. Continue? (y/N)` on stdin - which a Gradle build has no way to answer, so the task fails with `failed to read user input: EOF`. If you're stuck on an older D2, run `d2` by hand once to accept the download, or stay on SVG. [See here for the background](https://github.com/d2lang/d2/issues/2502#issuecomment-3305144085).
 
 For reference, an ASCII chart looks like below. It (hopefully obviously) doesn't support more complex features like coloring, animation, etc. It is pretty cool though!
 
@@ -278,6 +277,18 @@ atlas {
 
 By default, Atlas will try to call `d2` from the system path. Use this to call from a custom installation directory instead.
 
+### scale
+
+``` kotlin
+atlas {
+  d2 {
+    scale = 0.5f
+  }
+}
+```
+
+Scales the rendered chart, passed straight through to D2's `--scale`. Left unset, D2 fits SVGs to the viewer's screen and renders every other format at its natural size, so setting this to `1` turns that SVG fitting off and anything below `1` shrinks the output. Handy for PNGs of large charts, which D2 renders at full diagram size by default.
+
 ### sketch
 
 ``` kotlin
@@ -341,25 +352,6 @@ D2 comes with a suite of lovely built-in color schemes which you can apply to yo
 
 ## Functions
 
-### convertSvgToPng
-
-``` kotlin
-atlas {
-  d2 {
-    fileFormat = FileFormat.Svg
-    convertSvgToPng(SvgToPng.Converter.ImageMagick6)
-  }
-}
-```
-
-This was added to help output charts in PNG format, since D2's built-in method relies on auto-downloading massive external software without asking you first (see [`fileFormat`](#fileformat)).
-
-A new task will be attached to `gradle atlasGenerate` called `svgToPng`, which spits out a PNG file at `atlas/chart.png` in each subproject.
-
-Uses the [`SvgToPng.Converter`](api/atlas/atlas.d2.tasks/-svg-to-png/-converter/index.html) enum as an input, which lists the supported third-party image-processing software to convert SVGs into PNGs. It's up to you to ensure this is installed on your machine at execution time.
-
-Requires the [`fileFormat`](#fileformat) property to be set to `FileFormat.Svg` (or unset, since SVG is the default) - otherwise no conversion will be done.
-
 ### layoutEngine
 
 ``` kotlin
@@ -381,7 +373,7 @@ atlas {
       }
 
       tala {
-        // nothing yet!
+        seeds = listOf(1L, 2L, 3L)
       }
     }
   }
@@ -392,7 +384,7 @@ Defines the underlying engine used by D2 to organise the project nodes in each c
 
 - **Dagre**: default option.
 - **Elk**: Framework from Eclipse for diagram generation - also supported by [Mermaid](usage-mermaid.md).
-- **Tala**: Technically supported but it's closed source, so you need an installation of this engine on your machine from somewhere other than the public D2 installation. Only included here because it's in the D2 docs ¯\_(ツ)_/¯. Since it's a private engine, I've no idea how it's supposed to look and I don't have an example screenshot for you. Sorry-not-sorry!
+- **Tala**: D2's own engine, built for software architecture diagrams. It was a paid closed-source plugin until D2 0.9.0, which open sourced it and bundled it into the standard installation, so it now works out of the box. Its only setting is `seeds`: D2 lays the chart out once per seed and keeps the best complete result, so more seeds gives a tidier chart and a slower build. Layout is deterministic for a given set of seeds, which matters if you commit your charts. D2 takes at most 16 of them.
 
 Screenshots below are with all default settings.
 
@@ -405,6 +397,11 @@ Screenshots below are with all default settings.
   <figure>
     <figcaption>Elk</figcaption>
     <img src="../img/d2-layoutEngine-elk.svg" alt="Elk">
+  </figure>
+
+  <figure>
+    <figcaption>Tala</figcaption>
+    <img src="../img/d2-layoutEngine-tala.svg" alt="Tala">
   </figure>
 </div>
 

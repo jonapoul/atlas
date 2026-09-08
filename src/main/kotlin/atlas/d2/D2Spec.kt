@@ -3,7 +3,6 @@ package atlas.d2
 import atlas.core.AtlasDsl
 import atlas.core.AtlasSpec
 import atlas.core.PropertiesSpec
-import atlas.d2.tasks.SvgToPng
 import org.gradle.api.Action
 import org.gradle.api.provider.Property
 
@@ -24,6 +23,7 @@ import org.gradle.api.provider.Property
  *     layoutEngine = LayoutEngine.Dagre
  *     pad = 5
  *     pathToD2Command = "/path/to/d2"
+ *     scale = 0.5f
  *     sketch = true
  *     theme = Theme.ColorblindClear
  *     themeDark = Theme.DarkMauve
@@ -54,6 +54,7 @@ public interface D2Spec : AtlasSpec {
   public val groupLabelPosition: Property<Position>
   public val pad: Property<Int>
   public val pathToD2Command: Property<String>
+  public val scale: Property<Float>
   public val sketch: Property<Boolean>
   public val theme: Property<Theme>
   public val themeDark: Property<Theme>
@@ -69,18 +70,6 @@ public interface D2Spec : AtlasSpec {
   public val globalProps: D2GlobalPropsSpec
 
   public fun globalProps(action: Action<D2GlobalPropsSpec>)
-
-  /**
-   * If called, a task will be registered to convert any SVG outputs to PNGs. Has no effect if
-   * [D2Spec.fileFormat] is not [FileFormat.Svg].
-   *
-   * @param scale Optional scale factor applied to the rendered PNG's resolution, e.g. 0.25 to
-   *   render at a quarter of the SVG's native size. D2 diagrams can have huge native dimensions,
-   *   and rasterizing filters (like drop-shadows) at full resolution is expensive, so setting this
-   *   to a fraction well below 1 can drastically speed up conversion for large diagrams. Leave
-   *   unset to render at native resolution.
-   */
-  public fun convertSvgToPng(converter: SvgToPng.Converter, scale: Float? = null)
 }
 
 /** https://d2lang.com/tour/style/#root */

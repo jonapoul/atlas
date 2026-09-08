@@ -4,8 +4,10 @@ import atlas.core.PropertiesSpec
 import atlas.core.internal.PropertiesSpecImpl
 import atlas.core.internal.bool
 import atlas.core.internal.enum
+import atlas.core.internal.float
 import atlas.core.internal.int
 import atlas.core.internal.intEnum
+import atlas.core.internal.longList
 import atlas.core.internal.string
 import atlas.d2.ArrowType
 import atlas.d2.D2DagreSpec
@@ -22,7 +24,6 @@ import atlas.d2.LayoutEngine
 import atlas.d2.LayoutEngine.Dagre
 import atlas.d2.LayoutEngine.Elk
 import atlas.d2.LayoutEngine.Tala
-import atlas.d2.tasks.SvgToPng
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ProviderFactory
@@ -45,6 +46,7 @@ internal class D2SpecImpl(
   override val groupLabelPosition = objects.enum(properties.groupLabelPosition)
   override val pad = objects.int(properties.pad)
   override val pathToD2Command = objects.string(properties.pathToD2Command)
+  override val scale = objects.float(properties.scale)
   override val sketch = objects.bool(properties.sketch)
   override val theme = objects.intEnum(properties.theme)
   override val themeDark = objects.intEnum(properties.darkTheme)
@@ -60,14 +62,6 @@ internal class D2SpecImpl(
   override val globalProps = D2GlobalPropsSpecImpl(objects)
 
   override fun globalProps(action: Action<D2GlobalPropsSpec>) = action.execute(globalProps)
-
-  internal val converter = objects.property(SvgToPng.Converter::class.java)
-  internal val scale = objects.property(Float::class.java)
-
-  override fun convertSvgToPng(converter: SvgToPng.Converter, scale: Float?) {
-    this.converter.set(converter)
-    this.scale.set(scale)
-  }
 }
 
 internal open class D2RootStyleSpecImpl(objects: ObjectFactory) :
@@ -124,4 +118,6 @@ internal class D2DagreSpecImpl(parent: PropertiesSpec) : D2DagreSpec, Properties
   override var edgeSep by int("dagre-edgesep")
 }
 
-internal class D2TalaSpecImpl(parent: PropertiesSpec) : D2TalaSpec, PropertiesSpec by parent
+internal class D2TalaSpecImpl(parent: PropertiesSpec) : D2TalaSpec, PropertiesSpec by parent {
+  override var seeds by longList("tala-seeds")
+}
