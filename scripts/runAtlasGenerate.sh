@@ -10,7 +10,15 @@ cd "$SCRIPT_DIR/.." || exit 1
 
 GRADLE="${GRADLE_CMD:-gradle -Dorg.gradle.java.home=/opt/java/openjdk/}"
 
-for sample in d2 graphviz mermaid; do
+for sample in sample-basic sample-d2 sample-graphviz sample-mermaid; do
   # shellcheck disable=SC2086 # GRADLE deliberately carries arguments
-  $GRADLE atlasGenerate -p "samples/sample-$sample"
+  $GRADLE atlasGenerate -p "samples/$sample"
+done
+
+# The layout engine comparison in docs/docs/usage-d2.md is one chart drawn by each engine.
+# sample-basic configures no layout engine, so its chart source is engine-agnostic and d2 can
+# render an image per engine straight from it.
+CHART="samples/sample-basic/android/app/atlas/d2/chart.d2"
+for engine in dagre elk tala; do
+  d2 "$CHART" "docs/docs/img/d2-layoutEngine-$engine.svg" --layout="$engine"
 done
