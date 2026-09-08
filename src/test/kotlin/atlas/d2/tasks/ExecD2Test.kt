@@ -36,19 +36,16 @@ internal class ExecD2Test : ScenarioTest() {
           :a:writeProjectTree SKIPPED
           :a:writeD2Chart SKIPPED
           :a:execD2Chart SKIPPED
-          :a:svgToPng SKIPPED
           :a:writeReadme SKIPPED
           :a:atlasGenerate SKIPPED
           :b:writeProjectTree SKIPPED
           :b:writeD2Chart SKIPPED
           :b:execD2Chart SKIPPED
-          :b:svgToPng SKIPPED
           :b:writeReadme SKIPPED
           :b:atlasGenerate SKIPPED
           :c:writeProjectTree SKIPPED
           :c:writeD2Chart SKIPPED
           :c:execD2Chart SKIPPED
-          :c:svgToPng SKIPPED
           :c:writeReadme SKIPPED
           :c:atlasGenerate SKIPPED
 
@@ -91,8 +88,7 @@ internal class ExecD2Test : ScenarioTest() {
         .taskHadResult(":a:execD2Chart", UP_TO_DATE)
 
       // Third run setting a property to change the classes file - classes are written, chart is not
-      // but the output
-      // file is regenerated
+      // but the output file is regenerated
       assertThatTask(":a:execD2Chart")
         .withArgument("-Patlas.d2.theme=7")
         .buildsSuccessfully()
