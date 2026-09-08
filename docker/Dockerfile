@@ -6,13 +6,6 @@ RUN apt-get update && apt-get install -y \
   curl \
   graphviz \
   libgvplugin-neato-layout8 \
-  # SVG to PNG converters, for D2Spec.convertSvgToPng
-  imagemagick \
-  inkscape \
-  librsvg2-bin \
-  python3 \
-  python3-pip \
-  && pip3 install --break-system-packages cairosvg \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
