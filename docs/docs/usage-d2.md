@@ -352,7 +352,7 @@ atlas {
 }
 ```
 
-This was added to help output charts in PNG format, since D2's built-in method relies on auto-downloading massive external software without asking you first (see [`fileFormat`](#fileformat)).
+This was added back when D2's own PNG output relied on auto-downloading a browser without asking you first. D2 0.9.0 rasterises PNGs itself, so on that version and above you can just set `fileFormat = FileFormat.Png` and skip this entirely. It's still here for older D2 installations, and for when you want a particular converter or the `scale` parameter (see [`fileFormat`](#fileformat)).
 
 A new task will be attached to `gradle atlasGenerate` called `svgToPng`, which spits out a PNG file at `atlas/chart.png` in each subproject.
 
@@ -381,7 +381,7 @@ atlas {
       }
 
       tala {
-        // nothing yet!
+        seeds = listOf(1L, 2L, 3L)
       }
     }
   }
@@ -392,7 +392,7 @@ Defines the underlying engine used by D2 to organise the project nodes in each c
 
 - **Dagre**: default option.
 - **Elk**: Framework from Eclipse for diagram generation - also supported by [Mermaid](usage-mermaid.md).
-- **Tala**: Technically supported but it's closed source, so you need an installation of this engine on your machine from somewhere other than the public D2 installation. Only included here because it's in the D2 docs ¯\_(ツ)_/¯. Since it's a private engine, I've no idea how it's supposed to look and I don't have an example screenshot for you. Sorry-not-sorry!
+- **Tala**: D2's own engine, built for software architecture diagrams. It was a paid closed-source plugin until D2 0.9.0, which open sourced it and bundled it into the standard installation, so it now works out of the box. Its only setting is `seeds`: D2 lays the chart out once per seed and keeps the best complete result, so more seeds gives a tidier chart and a slower build. Layout is deterministic for a given set of seeds, which matters if you commit your charts. D2 takes at most 16 of them.
 
 Screenshots below are with all default settings.
 
@@ -405,6 +405,11 @@ Screenshots below are with all default settings.
   <figure>
     <figcaption>Elk</figcaption>
     <img src="../img/d2-layoutEngine-elk.svg" alt="Elk">
+  </figure>
+
+  <figure>
+    <figcaption>Tala</figcaption>
+    <img src="../img/d2-layoutEngine-tala.svg" alt="Tala">
   </figure>
 </div>
 
