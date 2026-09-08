@@ -237,13 +237,7 @@ jobs:
       - uses: ./.github/actions/setup-gradle
       - uses: ./.github/actions/setup-gradle-properties
       - uses: ./.github/actions/docker-login
-
-      - name: Generate samples
-        run: docker compose -f docker/docker-compose.yml run --rm samples
-
-      - name: Fix permissions
-        run: sudo chown -R runner:runner .
-        if: ${{ !cancelled() }}
+      - run: ./scripts/generateSamples.sh
 
       - name: Check for uncommitted changes
         run: |
